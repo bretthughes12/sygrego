@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  classification: MyString
+  active: false
+  max_indiv_entries_group: 0
+  max_team_entries_group: 0
+  max_entries_indiv: 0
+  draw_type: Round Robin
+  bonus_for_officials: true
+  court_name: Court
+
+two:
+  name: MyString
+  classification: MyString
+  active: false
+  max_indiv_entries_group: 0
+  max_team_entries_group: 0
+  max_entries_indiv: 0
+  draw_type: Round Robin
+  bonus_for_officials: true
+  court_name: Court
