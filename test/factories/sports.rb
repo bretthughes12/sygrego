@@ -16,19 +16,14 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #
-require "test_helper"
-
-class SportTest < ActiveSupport::TestCase
-  test "should have 15 per page" do
-    assert_equal 15, Sport.per_page
-  end
-
-  test "should calculate total entries from indiv and team" do
-    sport = FactoryBot.create(:sport,
-                              max_indiv_entries_group: 10,
-                              max_team_entries_group: 10)
-
-    assert_equal 20, sport.max_entries_group
-  end
-
-end
+FactoryBot.define do
+    factory :sport do 
+        sequence(:name)             { |n| "Sport#{n}"}
+        active                      {true}
+        classification              {"Team"}
+        draw_type                   {"Open"}
+        max_indiv_entries_group     {99}
+        max_team_entries_group      {99}
+        max_entries_indiv           {1}
+    end
+end    
