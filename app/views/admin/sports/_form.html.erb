@@ -1,0 +1,29 @@
+<%= form_with model: [:admin, @sport] do |f| %> 
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+        <% @sport.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= f.label :classification %>
+        <%= f.text_field :classification %>
+        <% @sport.errors.full_messages_for(:classification).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= f.label :draw_type %>
+        <%= f.text_field :draw_type %>
+        <% @sport.errors.full_messages_for(:draw_type).each do |message| %>
+            <div><%= message %></div>
+        <% end %>
+    </div>
+
+    <div>
+        <%= f.submit %>
+    </div>
+<% end %>

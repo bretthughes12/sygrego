@@ -1,0 +1,14 @@
+<table>
+	<% for column in Sport.content_columns %>
+    	<tr>
+	      	<td><b><%= column.human_name %>:</b></td> <td><%=h @sport.send(column.name) %></td>
+    	</tr>
+	<% end %>
+</table>
+
+<ul>
+  <li><%= link_to "Edit", edit_admin_sport_path(@sport) %></li>
+  <li><%= link_to "Destroy", admin_sport_path(@sport),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>

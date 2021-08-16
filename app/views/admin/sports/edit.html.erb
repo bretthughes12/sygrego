@@ -1,0 +1,9 @@
+<h1>Edit sport</h1>
+
+<%= render "form", sport: @sport %>
+
+<ul>
+  <li><%= link_to "Destroy", admin_sport_path(@sport),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>

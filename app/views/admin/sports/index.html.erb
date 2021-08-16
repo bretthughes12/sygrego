@@ -1,0 +1,11 @@
+<h1>Sports</h1>
+
+<ul>
+  <% @sports.each do |sport| %>
+    <li>
+        <%= link_to sport.name, [:admin, sport] %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Sport", new_admin_sport_path %>
