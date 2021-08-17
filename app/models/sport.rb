@@ -15,7 +15,6 @@
 #  name                    :string(20)       not null
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-end
 #
 class Sport < ApplicationRecord
     include Comparable
