@@ -1,8 +1,10 @@
 require "test_helper"
+require "pp"
 
 class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @sport = FactoryBot.create(:sport)
+    @sport = FactoryBot.create(:sport,
+                                lock_version: 1)
   end
 
   test "should get index" do
@@ -79,5 +81,11 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_sports_path
+  end
+
+  test "should not destroy non existent sport" do
+    assert_raise(ActiveRecord::RecordNotFound) {
+      delete admin_sport_url(12345678)
+    }
   end
 end

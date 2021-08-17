@@ -93,10 +93,10 @@ class Admin::SportsController < ApplicationController
                     flash[:notice] = 'Sport was successfully updated.'
                     format.html { redirect_to(admin_sports_url) }
 #                    format.xml  { head :ok }
-                  else
+                else
                     format.html { render action: "edit" }
 #                    format.xml  { render xml: @sport.errors, status: :unprocessable_entity }
-                  end
+                end
             end
   
         rescue ActiveRecord::StaleObjectError
