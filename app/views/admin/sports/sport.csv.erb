@@ -1,0 +1,19 @@
+<%- headings = %w{Name Active Classification MaxIndivGrp MaxTeamGrp MaxIndiv Bonus CourtName DrawType } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+    @sports.each do |sport|
+	    line =  [  
+		          sport.name,
+		          sport.active,
+		          sport.classification,
+		          sport.max_indiv_entries_group,
+		          sport.max_team_entries_group,
+		          sport.max_entries_indiv,
+		          sport.bonus_for_officials,
+		          sport.court_name,
+				  sport.draw_type
+                ]
+
+    csv << line
+  end
+end.html_safe %>

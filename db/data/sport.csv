@@ -1,0 +1,39 @@
+Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType
+AFL,true,Team,0,99,1,true,Field,Round Robin
+Air Hockey,true,Individual,6,0,1,true,Table,Round Robin
+Arts Program,true,Individual,99,0,99,false,Venue,Round Robin
+Badminton,true,Individual,8,0,1,false,Court,Round Robin
+Baseball2,true,Team,0,0,0,false,Court,Round Robin
+Basketball,true,Team,0,99,1,true,Court,Round Robin
+Beep Test,true,Individual,10,0,1,false,Lane,Round Robin
+Bocce,true,Team,0,99,1,false,Field,Round Robin
+Bubble Soccer,true,Team,0,99,1,false,Field,Round Robin
+Chess,true,Individual,6,0,1,false,Board,Round Robin
+Cricket,true,Team,0,99,1,false,Ground,Round Robin
+Cross Country,true,Individual,12,0,1,false,Lane,Round Robin
+Darts,true,Individual,8,0,1,false,Board,Round Robin
+Dodgeball,true,Team,0,99,1,true,Court,Round Robin
+E-Sports,true,Individual,10,0,1,false,Station,Round Robin
+European Handball,true,Team,0,99,1,false,Court,Round Robin
+Four Square,true,Individual,10,0,1,false,Court,Round Robin
+Golf,true,Individual,0,0,0,false,Court,Open
+Indoor Soccer,true,Team,0,99,1,true,Court,Round Robin
+Lawn Bowls,true,Team,0,99,1,false,Rink,Round Robin
+Mini Golf,true,Individual,6,1,1,false,Course,Round Robin
+Mountain Bike Riding,true,Individual,8,0,1,false,Track,Round Robin
+Netball,true,Team,0,99,1,true,Court,Round Robin
+Pool,true,Individual,4,0,1,false,Table,Round Robin
+Pool Volleyball,true,Team,0,99,1,false,Court,Round Robin
+Roundnet,true,Individual,10,0,1,false,Set,Round Robin
+Scrabble,true,Individual,4,0,1,false,Board,Round Robin
+Soccer,true,Team,0,99,1,true,Field,Round Robin
+Sport,true,Team,0,99,1,true,Court,Round Robin
+Squash,true,Individual,4,0,1,false,Court,Round Robin
+Table Tennis,true,Individual,8,0,1,false,Table,Round Robin
+Tennis,true,Individual,8,0,1,false,Court,Knockout
+Ten Pin Bowling,true,Individual,8,3,1,false,Lane,Round Robin
+Thunder Hockey,true,Team,0,99,1,true,Court,Round Robin
+Touch Football,true,Team,0,99,1,true,Field,Round Robin
+Ultimate Frisbee,true,Team,0,99,1,true,Field,Round Robin
+Uno,true,Individual,8,0,1,false,Table,Round Robin
+Volleyball,true,Team,0,99,1,true,Court,Round Robin

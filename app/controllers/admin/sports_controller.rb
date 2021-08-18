@@ -1,5 +1,5 @@
 class Admin::SportsController < ApplicationController
-#    require 'csv'
+    require 'csv'
 
 #    before_filter :authorize_if_remote
 #    load_and_authorize_resource except: [:show]
@@ -9,22 +9,17 @@ class Admin::SportsController < ApplicationController
     # GET /admin/sports
     # GET /admin/sports.xml
     def index
-#      page_sym = save_page("Sport", params)
-#      session[page_sym] = params[:page].to_i if params[:page]
+#       page_sym = save_page("Sport", params)
+#       session[page_sym] = params[:page].to_i if params[:page]
   
         @sports = Sport.order(:name).all
   
-#      respond_to do |format|
-#        format.html { @sports = @sports.paginate(page: session[page_sym]) }
-#        format.xml  { render xml: @sports }
-#        format.csv  do
-#          if params[:option] == "download"
-#            render_csv "sport", "sport" 
-#          else
-#            render_csv "sport_checklist" 
-#          end
-#        end
-#      end
+        respond_to do |format|
+            format.html {  }
+#           format.html { @sports = @sports.paginate(page: session[page_sym]) }
+            format.csv  { render_csv "sport", "sport" }
+#           format.xml  { render xml: @sports }
+        end
     end
   
     # GET /sports/1
