@@ -3,4 +3,3 @@ rvm:
   - 2.6.6
 before_script:
   - cp config/database.travis.yml config/database.yml
-  - psql -c 'create database sygrego_test' -U postgres
