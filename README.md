@@ -1,5 +1,7 @@
 # README
 
+![TravisCI badge](https://travis-ci.com/bretthughes12/sygrego.png "Travis CI badge")
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
