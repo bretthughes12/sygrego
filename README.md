@@ -1,26 +1,5 @@
-# README
+# SYG Registrations Website
 
 ![TravisCI badge](https://travis-ci.com/bretthughes12/sygrego.png "Travis CI badge")
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This rails application represents the website used by State Youth Games in Victoria to manage registrations by groups and individuals for the event.
