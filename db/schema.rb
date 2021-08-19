@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_06_111806) do
+ActiveRecord::Schema.define(version: 2021_08_19_110747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "audit_trails", force: :cascade do |t|
+    t.integer "record_id"
+    t.string "record_type", limit: 30
+    t.string "event", limit: 20
+    t.integer "user_id"
+    t.datetime "created_at"
+  end
 
   create_table "sports", force: :cascade do |t|
     t.string "name", limit: 20, null: false

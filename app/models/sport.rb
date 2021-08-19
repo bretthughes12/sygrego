@@ -18,6 +18,7 @@
 #
 class Sport < ApplicationRecord
     include Comparable
+    include Auditable
 
     CLASSIFICATIONS = %w[Individual
                          Team]
@@ -54,5 +55,4 @@ class Sport < ApplicationRecord
     def max_entries_group
         max_indiv_entries_group + max_team_entries_group
     end
-    
 end
