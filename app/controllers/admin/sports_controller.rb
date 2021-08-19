@@ -7,7 +7,6 @@ class Admin::SportsController < ApplicationController
 #    layout "sports"
   
     # GET /admin/sports
-    # GET /admin/sports.xml
     def index
 #       page_sym = save_page("Sport", params)
 #       session[page_sym] = params[:page].to_i if params[:page]
@@ -18,39 +17,35 @@ class Admin::SportsController < ApplicationController
             format.html {  }
 #           format.html { @sports = @sports.paginate(page: session[page_sym]) }
             format.csv  { render_csv "sport", "sport" }
-#           format.xml  { render xml: @sports }
         end
     end
   
-    # GET /sports/1
-    # GET /sports/1.xml
+    # GET /admin/sports/1
+    # GET /admin/sports/1.xml
     # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
         @sport = Sport.find(params[:id])
 #      authorize! :show, @sport
       
-#      respond_to do |format|
-#        format.html # show.html.erb
-#        format.xml  { render xml: @sport }
-#      end
+        respond_to do |format|
+            format.html # show.html.erb
+            format.xml  { render xml: @sport }
+        end
         
-#    rescue ActiveRecord::RecordNotFound 
-#      respond_to do |format|
-#        format.html { raise }
-#        format.xml { render xml: "<sport></sport>", status: :not_found }
-#      end
+    rescue ActiveRecord::RecordNotFound 
+        respond_to do |format|
+            format.html { raise }
+            format.xml { render xml: "<sport></sport>", status: :not_found }
+        end
     end
   
-    # GET /sports/new
-    # GET /sports/new.xml
+    # GET /admin/sports/new
     def new
- #     @sport.max_indiv_entries_group = 0
         @sport = Sport.new
 
-#      respond_to do |format|
-#        format.html # new.html.erb
-#        format.xml  { render xml: @sport }
-#      end
+        respond_to do |format|
+            format.html # new.html.erb
+        end
     end
   
     # GET /sports/1/edit
@@ -58,39 +53,31 @@ class Admin::SportsController < ApplicationController
         @sport = Sport.find(params[:id])
     end
   
-    # POST /sports
-    # POST /sports.xml
+    # POST /admin/sports
     def create
         @sport = Sport.new(sport_params)
 
         respond_to do |format|
             if @sport.save
-#               log(@sport, "CREATE")
                 flash[:notice] = 'Sport was successfully created.'
                 format.html { render action: "edit" }
-#               format.xml  { render xml: @sport, status: :created }
             else
                 format.html { render action: "new" }
-#               format.xml  { render xml: @sport.errors, status: :unprocessable_entity }
             end
         end
     end
   
-    # PUT /sports/1
-    # PUT /sports/1.xml
+    # PUT /admin/sports/1
     def update
         @sport = Sport.find(params[:id])
 
         begin
             respond_to do |format|
                 if @sport.update(sport_params)
-#                    log(@sport, "UPDATE")
                     flash[:notice] = 'Sport was successfully updated.'
                     format.html { redirect_to(admin_sports_url) }
-#                    format.xml  { head :ok }
                 else
                     format.html { render action: "edit" }
-#                    format.xml  { render xml: @sport.errors, status: :unprocessable_entity }
                 end
             end
   
@@ -100,23 +87,19 @@ class Admin::SportsController < ApplicationController
   
             respond_to do |format|
                 format.html { render action: "edit" }
-#                format.xml  { render xml: @sport, status: :conflict }
             end
         end
     end
   
-    # DELETE /sports/1
-    # DELETE /sports/1.xml
+    # DELETE /admin/sports/1
     def destroy
         @sport = Sport.find(params[:id])
 
         begin
             @sport.destroy
-#            log(@sport, "DESTROY")
   
             respond_to do |format|
                 format.html { redirect_to(admin_sports_url) }
-#                format.xml  { head :ok }
             end
         
         rescue Exception
@@ -124,7 +107,6 @@ class Admin::SportsController < ApplicationController
         
             respond_to do |format|
                 format.html { redirect_to(admin_sports_url) }
-#                format.xml  { head :failure }
             end
         end
     end
