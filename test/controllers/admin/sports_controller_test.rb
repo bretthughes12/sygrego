@@ -13,6 +13,13 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should download sport data" do
+    get admin_sports_url(format: :csv)
+
+    assert_response :success
+    assert_match %r{text\/csv}, @response.content_type
+  end
+
   test "should show sport" do
     get admin_sport_url(@sport)
 
@@ -73,6 +80,17 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     @sport.reload
 
     assert_not_equal "Invalid", @sport.draw_type
+  end
+
+  test "should not update stale sport" do
+    patch admin_sport_url(@sport), params: { sport: { name: "Bungee",
+                                                      lock_version: 0 } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @sport.reload
+
+    assert_not_equal "Bungee", @sport.name
   end
 
   test "should destroy sport" do

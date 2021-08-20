@@ -31,4 +31,10 @@ class SportTest < ActiveSupport::TestCase
     assert_equal 20, sport.max_entries_group
   end
 
+  test "should use name to sort sports" do
+    sport1 = FactoryBot.create(:sport, name: "A")
+    sport2 = FactoryBot.create(:sport, name: "B")
+
+    assert_equal true, sport1 < sport2
+  end
 end
