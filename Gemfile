@@ -48,6 +48,7 @@ group :development do
   gem 'spring'
   gem 'annotate'
   gem 'brakeman'
+  gem 'foreman'
 end
 
 group :test do
