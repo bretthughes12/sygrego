@@ -9,6 +9,6 @@
 #  record_id   :integer
 #  user_id     :integer
 #
-class AuditTrail < ActiveRecord::Base
+class AuditTrail < ApplicationRecord
 
 end
