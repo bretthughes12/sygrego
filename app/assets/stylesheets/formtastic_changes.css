@@ -1,0 +1,46 @@
+/* -------------------------------------------------------------------------------------------------
+
+Load this stylesheet after formtastic.css in your layouts to override the CSS to suit your needs.
+This will allow you to update formtastic.css with new releases without clobbering your own changes.
+
+For example, to make the inline hint paragraphs a little darker in color than the standard #666:
+
+form.formtastic fieldset ol li p.inline-hints { color:#333; }
+
+--------------------------------------------------------------------------------------------------*/
+
+/* SEMANTIC ERRORS
+--------------------------------------------------------------------------------------------------*/
+form.formtastic ul.errors { list-style:none; }
+form.formtastic ul.errors li { font-weight:bold; }
+
+/* INPUT LIs - override for the auto_complete class
+--------------------------------------------------------------------------------------------------*/
+form.formtastic fieldset ol .auto_complete li { margin-bottom:0; }
+
+/* INLINE HINTS
+--------------------------------------------------------------------------------------------------*/
+.formtastic .input .inline-hints {
+  width:70%;
+}
+
+/* INLINE ERRORS
+--------------------------------------------------------------------------------------------------*/
+form.formtastic fieldset ol li p.inline-errors { font-weight:bold; }
+
+/* STRING & NUMERIC OVERRIDES
+--------------------------------------------------------------------------------------------------*/
+.formtastic .stringish input {
+  width:auto;
+}
+
+/* OVERRIDES for dates, fields with manually-filled-out options and info fields
+--------------------------------------------------------------------------------------------------*/
+form.formtastic fieldset ol li .date,
+form.formtastic fieldset ol li .options,
+form.formtastic fieldset ol li .info {
+  float:left;
+  width:74%;
+  margin:-1.5em 0 0 0;
+  padding:0 0 0 25%;
+ }

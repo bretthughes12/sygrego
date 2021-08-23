@@ -2,15 +2,15 @@
 	<%= f.semantic_errors %>
 
 	<%= f.inputs  do %>
-		<%= f.input :lock_version, :as => :hidden %>
-		<%= f.input :name, :required => true, :label => "Sport" %>
+		<%= f.input :lock_version, as: :hidden %>
+		<%= f.input :name, label: "Sport" %>
 		<%= f.input :active %>
-		<%= f.input :classification, :required => true, :as => :select, :collection => Sport::CLASSIFICATIONS %>
-		<%= f.input :draw_type, :required => true, :as => :select, :collection => Sport::DRAW_TYPES %>
-        <%= f.input :max_indiv_entries_group, :required => true, :label => "Max times each group may enter singles / doubles grades", :input_html => {:size => 4} %>
-		<%= f.input :max_team_entries_group, :required => true, :label => "Max times each group may enter team-individual grades", :input_html => {:size => 4} %>
-		<%= f.input :max_entries_indiv, :required => true, :label => "Max times each open-age participant may enter", :input_html => {:size => 4} %>
-		<%= f.input :court_name, :label => "What is a 'court' known as?" %>
+		<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS %>
+		<%= f.input :draw_type, as: :select, collection: Sport::DRAW_TYPES %>
+        <%= f.input :max_indiv_entries_group, min: 0, max: 99, label: "Max times each group may enter singles / doubles grades" %>
+		<%= f.input :max_team_entries_group, min: 0, max: 99, label: "Max times each group may enter team-individual grades" %>
+		<%= f.input :max_entries_indiv, min: 0, max: 99, label: "Max times each open-age participant may enter" %>
+		<%= f.input :court_name, label: "What is a 'court' known as?" %>
 	<% end %>
 
 	<%= f.actions %>
