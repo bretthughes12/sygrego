@@ -1,6 +1,8 @@
 <h1>Edit sport</h1>
 
-<%= render "form", sport: @sport %>
+<%= render partial: "form", locals: { 
+                              url: admin_sport_path(@sport), 
+                              method: :put } %>
 
 <ul>
   <li><%= link_to "Destroy", admin_sport_path(@sport),

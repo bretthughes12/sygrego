@@ -1,34 +1,17 @@
-<%= form_with model: [:admin, @sport] do |f| %> 
-    <div>
-        <%= f.label :name %>
-        <%= f.text_field :name %>
-        <% @sport.errors.full_messages_for(:name).each do |message| %>
-            <div><%= message %></div>
-        <% end %>
-    </div>
+<%= semantic_form_for(@sport, url: url, html: { method: method }) do |f| %> 
+	<%= f.semantic_errors %>
 
-    <div>
-        <%= f.label :classification %>
-        <%= f.text_field :classification %>
-        <% @sport.errors.full_messages_for(:classification).each do |message| %>
-            <div><%= message %></div>
-        <% end %>
-    </div>
+	<%= f.inputs  do %>
+		<%= f.input :lock_version, :as => :hidden %>
+		<%= f.input :name, :required => true, :label => "Sport" %>
+		<%= f.input :active %>
+		<%= f.input :classification, :required => true, :as => :select, :collection => Sport::CLASSIFICATIONS %>
+		<%= f.input :draw_type, :required => true, :as => :select, :collection => Sport::DRAW_TYPES %>
+        <%= f.input :max_indiv_entries_group, :required => true, :label => "Max times each group may enter singles / doubles grades", :input_html => {:size => 4} %>
+		<%= f.input :max_team_entries_group, :required => true, :label => "Max times each group may enter team-individual grades", :input_html => {:size => 4} %>
+		<%= f.input :max_entries_indiv, :required => true, :label => "Max times each open-age participant may enter", :input_html => {:size => 4} %>
+		<%= f.input :court_name, :label => "What is a 'court' known as?" %>
+	<% end %>
 
-    <div>
-        <%= f.label :draw_type %>
-        <%= f.text_field :draw_type %>
-        <% @sport.errors.full_messages_for(:draw_type).each do |message| %>
-            <div><%= message %></div>
-        <% end %>
-    </div>
-
-    <div>
-        <%= f.label :lock_version %>
-        <%= f.text_field :lock_version %>
-    </div>
-
-    <div>
-        <%= f.submit %>
-    </div>
-<% end %>
+	<%= f.actions %>
+<% end %>	
