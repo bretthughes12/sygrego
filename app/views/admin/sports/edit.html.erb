@@ -1,4 +1,6 @@
-<h1>Edit sport</h1>
+<% title "Editing #{@sport.name}" %>
+
+<h1><%= yield(:title) %></h1>
 
 <%= render partial: "form", locals: { 
                               url: admin_sport_path(@sport), 

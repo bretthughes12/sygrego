@@ -1,4 +1,6 @@
-<h1>New sport</h1>
+<% title "New sport" %>
+
+<h1><%= yield(:title) %></h1>
 
 <%= render partial: "form", locals: { 
                               url: admin_sports_path(@sport), 
