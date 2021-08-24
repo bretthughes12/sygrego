@@ -10,5 +10,7 @@
   <% end %>
 </ul>
 
-<%= link_to "New Sport", new_admin_sport_path %>
-<%= link_to "Download", admin_sports_path(format: :csv) %>
+<%= link_to "New Sport", new_admin_sport_path,
+                  class: "btn btn-primary btn-sm" %>
+<%= link_to "Download", admin_sports_path(format: :csv),
+                  class: "btn btn-primary btn-sm" %>

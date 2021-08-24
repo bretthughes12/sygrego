@@ -4,7 +4,7 @@ class Admin::SportsController < ApplicationController
 #    before_filter :authorize_if_remote
 #    load_and_authorize_resource except: [:show]
   
-#    layout "sports"
+    layout "sports"
   
     # GET /admin/sports
     def index
