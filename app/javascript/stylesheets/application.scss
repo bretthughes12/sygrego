@@ -3,6 +3,7 @@
 
 $white: white;
 $black: black;
+$grey: grey;
 
 .navbar {
         margin-bottom: 0;
@@ -22,7 +23,7 @@ p {
         color: $white;
 }
 a:visited {
-        color: $black;
+        color: $grey;
 }
 .jumbotron {
         background: #0048CD;

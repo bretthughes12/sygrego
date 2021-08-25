@@ -5,7 +5,7 @@
 <ul>
   <% @sports.each do |sport| %>
     <li>
-        <%= link_to sport.name, [:admin, sport] %>
+        <%= link_to sport.name, edit_admin_sport_path(sport) %>
     </li>
   <% end %>
 </ul>

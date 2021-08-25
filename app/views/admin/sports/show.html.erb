@@ -10,11 +10,7 @@
 	<% end %>
 </table>
 
-<ul>
-  <li><%= link_to "Edit", edit_admin_sport_path(@sport),
-                  class: "btn btn-primary btn-sm" %></li>
-  <li><%= link_to "Destroy", admin_sport_path(@sport),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" },
-                  class: "btn btn-primary btn-sm" %></li>
-</ul>
+<%= link_to "Edit", edit_admin_sport_path(@sport),
+                  class: "btn btn-primary btn-sm" %>
+<%= link_to "Back", admin_sports_path,
+                  class: "btn btn-primary btn-sm" %>
