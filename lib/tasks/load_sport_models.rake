@@ -39,9 +39,9 @@ namespace :syg do
                               court_name:                fields[7])
                     if sport.errors.empty?
 #                       log(sport, 'CREATE')
-                        puts "Created sport #{fields[1]}"
+                        puts "Created sport #{fields[0]}"
                     else
-                        puts "Sport create failed: #{fields[1]}"
+                        puts "Sport create failed: #{fields[0]}"
                         pp sport.errors                        
                     end
                 end
