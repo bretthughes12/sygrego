@@ -3,7 +3,6 @@ AFL,true,Team,0,99,1,true,Field,Round Robin
 Air Hockey,true,Individual,6,0,1,true,Table,Round Robin
 Arts Program,true,Individual,99,0,99,false,Venue,Round Robin
 Badminton,true,Individual,8,0,1,false,Court,Round Robin
-Baseball2,true,Team,0,0,0,false,Court,Round Robin
 Basketball,true,Team,0,99,1,true,Court,Round Robin
 Beep Test,true,Individual,10,0,1,false,Lane,Round Robin
 Bocce,true,Team,0,99,1,false,Field,Round Robin
