@@ -2,9 +2,13 @@ require "test_helper"
 require "pp"
 
 class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers 
+
   def setup
+    @user = FactoryBot.create(:user)
     @sport = FactoryBot.create(:sport,
                                 lock_version: 1)
+    sign_in @user
   end
 
   test "should get index" do

@@ -16,6 +16,14 @@
     </header>
 
     <main role="main">
+
+    <% if notice %>
+      <p class="alert alert-info"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-info"><%= alert %></p>
+    <% end %>
+    
     <%= content_for?(:content) ? yield(:content) : yield %>
     </main>
   </body>
