@@ -2,13 +2,7 @@
 
 <h1><%= yield(:title) %></h1>
 
-<table>
-	<% for column in Sport.content_columns %>
-    	<tr>
-	      	<td><b><%= column.human_name %>:</b></td> <td><%=h @sport.send(column.name) %></td>
-    	</tr>
-	<% end %>
-</table>
+<%= render 'show', model: @sport %>
 
 <%= link_to "Edit", edit_admin_sport_path(@sport),
                   class: "btn btn-primary btn-sm" %>

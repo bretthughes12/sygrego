@@ -1,0 +1,7 @@
+<table>
+	<% for column in model.class.content_columns %>
+    	<tr>
+	      	<td><b><%= column.human_name %>:</b></td> <td><%=h model.send(column.name) %></td>
+    	</tr>
+	<% end %>
+</table>
