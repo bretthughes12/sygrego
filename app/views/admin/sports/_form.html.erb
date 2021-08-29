@@ -1,17 +1,14 @@
-<%= semantic_form_for(@sport, url: url, html: { method: method }) do |f| %> 
-	<%= f.semantic_errors %>
+<%= simple_form_for(@sport, url: url, html: { method: method }) do |f| %> 
 
-	<%= f.inputs  do %>
-		<%= f.input :lock_version, as: :hidden %>
-		<%= f.input :name, label: "Sport" %>
-		<%= f.input :active %>
-		<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS %>
-		<%= f.input :draw_type, as: :select, collection: Sport::DRAW_TYPES %>
-        <%= f.input :max_indiv_entries_group, min: 0, max: 99, label: "Max times each group may enter singles / doubles grades" %>
-		<%= f.input :max_team_entries_group, min: 0, max: 99, label: "Max times each group may enter team-individual grades" %>
-		<%= f.input :max_entries_indiv, min: 0, max: 99, label: "Max times each open-age participant may enter" %>
-		<%= f.input :court_name, label: "What is a 'court' known as?" %>
-	<% end %>
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :name, label: "Sport" %>
+	<%= f.input :active %>
+	<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS %>
+	<%= f.input :draw_type, as: :select, collection: Sport::DRAW_TYPES %>
+    <%= f.input :max_indiv_entries_group, label: "Max times each group may enter singles / doubles grades" %>
+	<%= f.input :max_team_entries_group, label: "Max times each group may enter team-individual grades" %>
+	<%= f.input :max_entries_indiv, label: "Max times each open-age participant may enter" %>
+	<%= f.input :court_name, label: "What is a 'court' known as?" %>
 
-	<%= f.actions %>
+	<%= f.button :submit %>
 <% end %>	

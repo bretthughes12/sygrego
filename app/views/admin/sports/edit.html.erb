@@ -6,9 +6,9 @@
                               url: admin_sport_path(@sport), 
                               method: :put } %>
 
+<%= link_to "Back", admin_sports_path,
+                  class: "btn btn-primary btn-sm" %>
 <%= link_to "Destroy", admin_sport_path(@sport),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
-                  class: "btn btn-primary btn-sm" %>
-<%= link_to "Back", admin_sports_path,
                   class: "btn btn-primary btn-sm" %>

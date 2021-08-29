@@ -30,7 +30,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # SYG Application gems, not included by default with Rails
 gem 'delayed_job_active_record'
-gem 'formtastic'
+gem 'simple_form'
 gem 'devise'
 
 group :development, :test do
