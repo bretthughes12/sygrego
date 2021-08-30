@@ -57,6 +57,7 @@ class Admin::SportsController < ApplicationController
     # POST /admin/sports
     def create
         @sport = Sport.new(sport_params)
+        @sport.updated_by = current_user.id
 
         respond_to do |format|
             if @sport.save
@@ -71,6 +72,7 @@ class Admin::SportsController < ApplicationController
     # PUT /admin/sports/1
     def update
         @sport = Sport.find(params[:id])
+        @sport.updated_by = current_user.id
 
         begin
             respond_to do |format|
@@ -95,6 +97,7 @@ class Admin::SportsController < ApplicationController
     # DELETE /admin/sports/1
     def destroy
         @sport = Sport.find(params[:id])
+        @sport.updated_by = current_user.id
 
         begin
             @sport.destroy

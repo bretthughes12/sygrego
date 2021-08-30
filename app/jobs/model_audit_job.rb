@@ -1,7 +1,7 @@
 class ModelAuditJob < ApplicationJob
   queue_as :default
 
-  def perform(record, event, user_id = 1)
+  def perform(record, event, user_id = nil)
     AuditTrail.create(record_id: record.id,
       record_type: record.class.name,
       event: event,

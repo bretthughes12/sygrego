@@ -13,6 +13,7 @@
 #  max_indiv_entries_group :integer          default(0), not null
 #  max_team_entries_group  :integer          default(0), not null
 #  name                    :string(20)       not null
+#  updated_by              :integer
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #

@@ -10,14 +10,17 @@ module Auditable
   private
 
   def log_create
-    ModelAuditJob.perform_later(self, 'CREATE')
+    user_id = self.respond_to?(:updated_by) ? self.updated_by : nil
+    ModelAuditJob.perform_later(self, 'CREATE', user_id)
   end
 
   def log_update
-    ModelAuditJob.perform_later(self, 'UPDATE')
+    user_id = self.respond_to?(:updated_by) ? self.updated_by : nil
+    ModelAuditJob.perform_later(self, 'UPDATE', user_id)
   end
 
   def log_destroy
-    ModelAuditJob.perform_now(self, 'DESTROY')
+    user_id = self.respond_to?(:updated_by) ? self.updated_by : nil
+    ModelAuditJob.perform_now(self, 'DESTROY', user_id)
   end
 end
