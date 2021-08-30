@@ -1,0 +1,23 @@
+<% content_for :content do %>
+    <div class="jumbotron text-center">
+        <h1>State Youth Games (User)</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <p>
+                    <%= yield %>
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <p>
+                    <div class="caption">A sport and art event like no other</div>
+                    <%= image_tag("syg.png", size: "300x200", alt: 'State Youth Games', class: 'logo') %>
+                </p>
+
+            </div>
+        </div>
+    </div>
+<% end %>
+
+<%= render template: "layouts/application" %>
