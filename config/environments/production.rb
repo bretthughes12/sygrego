@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require 'uri'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -67,6 +68,19 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+
+  mailertogo        = URI.parse ENV['MAILERTOGO_URL']
+  mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "stateyouthgames.com")
+  
+  config.action_mailer.smtp_settings = {
+    :address              => mailertogo.host,
+    :port                 => mailertogo.port,
+    :user_name            => mailertogo.user,
+    :password             => mailertogo.password,
+    :domain               => mailertogo_domain,
+    :authentication       => :plain,
+    :enable_starttls_auto => true,
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
