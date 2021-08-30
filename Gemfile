@@ -51,6 +51,7 @@ group :development do
   gem 'annotate'
   gem 'brakeman'
   gem 'foreman'
+  gem 'letter_opener'
 end
 
 group :test do
