@@ -70,7 +70,9 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   mailertogo        = URI.parse ENV['MAILERTOGO_URL']
-  mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "stateyouthgames.com")
+  # TODO: Change this when sygrego.com becomes the domain
+  # mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "sygrego.com")
+  mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "sygrego.herokuapp.com")
   
   config.action_mailer.default_url_options = { host: 'stateyouthgames.com' }
   config.action_mailer.smtp_settings = {
