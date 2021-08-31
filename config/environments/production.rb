@@ -72,6 +72,7 @@ Rails.application.configure do
   mailertogo        = URI.parse ENV['MAILERTOGO_URL']
   mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "stateyouthgames.com")
   
+  config.action_mailer.default_url_options = { host: 'stateyouthgames.com' }
   config.action_mailer.smtp_settings = {
     :address              => mailertogo.host,
     :port                 => mailertogo.port,
