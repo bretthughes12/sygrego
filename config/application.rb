@@ -20,5 +20,23 @@ module Sygrego
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_job.queue_adapter = :delayed_job
+
+    # Exception Handler config hash (no initializer required)
+    config.exception_handler = {
+      dev:        false,
+      email:      "ticket@stateyouthgames.com",
+
+      # All keys interpolated as strings, so you can use symbols, strings or integers where necessary
+      exceptions: {
+        '4xx' => {
+          layout: "exception", # define layout
+          notification: false  # (false by default)
+        },    
+        '5xx' => {
+          layout: "exception", # define layout
+          notification: true   # (false by default)
+        }
+      }
+    }
   end
 end

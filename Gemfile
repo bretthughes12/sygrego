@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'delayed_job_active_record'
 gem 'simple_form'
 gem 'devise'
+gem 'exception_handler', '~> 0.8.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

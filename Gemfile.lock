@@ -96,6 +96,10 @@ GEM
       warden (~> 1.2.3)
     docile (1.4.0)
     erubi (1.10.0)
+    exception_handler (0.8.0.2)
+      bundler
+      rails (>= 4.2.0)
+      responders
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -249,6 +253,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   delayed_job_active_record
   devise
+  exception_handler (~> 0.8.0.0)
   factory_bot_rails
   foreman
   jbuilder (~> 2.7)
