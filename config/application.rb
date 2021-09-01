@@ -19,6 +19,16 @@ module Sygrego
     config.time_zone = "Melbourne"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Devise config
+    config.to_prepare do
+      # Configure single controller layout
+      # Devise::SessionsController.layout "layout_for_sessions_controller"
+    
+      # Or to configure mailer layout
+      Devise::Mailer.layout "mailer" 
+    end
+    
+
     config.active_job.queue_adapter = :delayed_job
 
     # Exception Handler config hash (no initializer required)
