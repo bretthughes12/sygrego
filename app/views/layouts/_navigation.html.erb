@@ -5,6 +5,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Sports', admin_sports_path, class: 'nav-link' %></li>
+                <li class='nav-item'><%= link_to 'Settings', edit_admin_setting_path(id: Setting.first.id), class: 'nav-link' %></li>
             </ul>
         </div>
     </div>
