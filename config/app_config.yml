@@ -1,0 +1,148 @@
+site_settings: &site_settings
+# General settings
+#    state_abbr: VIC
+#    state_name: Victoria
+#    camping_ground: Lardner Park
+    this_year: 2022
+#    first_day_of_syg: 8th June 2021
+    # not the early bird cutoff; the date that payments are due after early bird cutoff
+#    early_bird_cutoff: 26th April 2021
+#    site_opening_month: March
+    first_year: 1991
+    conference_name: Conference of Churches of Christ in Victoria and Tasmania
+    public_website: http://stateyouthgames.com/syg/
+    rego_website: https://sygrego.com
+    backend_website: https://sygrego.com
+    website_host: sygrego.com
+#    committee_name: committee
+#    state_area_code: 3
+    abn: 264 033 23 495
+
+# Volunteers
+#    helper_scheme: ratio
+#    volunteer_scheme: roles
+#    allow_junior_volunteer: false
+#    non_sport_officials_available: true 
+#    include_officials_in_sports_planner: true
+
+# Sports    
+#    allow_clashes: true
+#    sports_to_be_limited: true 
+#    sports_requiring_uploads: false 
+#    individual_sports_included: true
+#    junior_rules_for_open_and_junior_grades: false
+#    show_sports_draws: true
+#    default_session: 2
+    
+# Fees
+#    deposit_required: true
+#    show_refund_fields: true 
+#    charge_late_fees: true
+#    early_bird_regos_supported: true 
+
+# Participants
+#    show_participant_category: false
+#    allow_part_time_participation: true
+#    can_stay_offsite: true
+    
+# MySYG
+#    mysyg_default_enabled: true 
+#    mysyg_default_open: false
+#    mysyg_default_approve_option: Tolerant
+#    mysyg_default_participant_status: Accepted
+#    allow_mysyg_to_be_closed: true 
+#    allow_mysyg_approve_option: true
+
+# Evening
+#    show_service_preferences: true
+
+# Camping Requirements    
+#    show_camping_requirements: true 
+#    show_marquee_company: true
+#    buddy_groups_active: true 
+
+# Registration
+#    code_of_practice_required: false
+#    security_contact_required: false
+#    driver_nomination_form_required: true
+#    show_stickers_question: true
+
+# Divisions
+#    divisions_active: true
+
+# Lost Property
+#    lost_property_active: true
+
+# Contacts
+#    previous_year_history_available: true
+
+# Grounds
+#    security_roster_active: true
+#    village_roster_active: true
+#    cleaning_roster_active: true
+
+# Help pages
+#    show_help_pages: false 
+
+# Reports
+#    use_banner_for_reports: false 
+#    include_report_footer: false
+
+# Finance options
+#    cheque_address_available: false 
+#    direct_deposit_available: true 
+#    cheque_payable: Churches of Christ Vic/Tas Inc.
+#    cheque_address1: State Youth Games
+#    cheque_address2: Churches of Christ Centre
+#    cheque_address3: 1st Floor, 582 Heidelberg Road
+#    cheque_address4: Fairfield, VIC 3078
+
+# Email
+#    use_bcc_on_emails: false
+    email_subject: "[SYG Registrations]"
+    info_email: info@stateyouthgames.com
+    admin_email: juzzy@stateyouthgames.com
+    rego_email: registrations@stateyouthgames.com
+    sports_email: sports@stateyouthgames.com
+    sports_admin_email: sportadmin@stateyouthgames.com
+    ticket_email: ticket@stateyouthgames.com
+    lost_property_email: lostproperty@stateyouthgames.com
+    finance_email: juzzy@stateyouthgames.com
+    comms_email: comms@stateyouthgames.com
+
+# Social
+    social_twitter_url: https://twitter.com/sygvic
+    social_facebook_url: https://www.facebook.com/sygvic
+    social_facebook_gc_url: https://www.facebook.com/groups/273469726061279/
+
+# Charts
+#    chart_title_color: 000000
+#    chart_legend_text_color: 222222
+#    chart_background_color: EEEEEE
+#    chart_color_1: 07915D
+#    chart_color_2: 10518B
+#    chart_color_3: 54BE09
+#    chart_color_4: D74A0A
+
+# S3
+    s3_region: us-east-1
+
+development:  
+    s3_bucket: sygrego-development
+
+    <<: *site_settings
+
+test:  
+    s3_bucket: sygrego-test
+
+    <<: *site_settings
+
+production:  
+    s3_bucket: sygrego
+
+    <<: *site_settings
+    
+syg:  
+    s3_bucket: tests3bucket
+
+    <<: *site_settings

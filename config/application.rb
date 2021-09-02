@@ -1,6 +1,10 @@
 require_relative "boot"
 
+raw_config = File.read(File.expand_path("../app_config.yml", __FILE__))  
+
 require "rails/all"
+
+APP_CONFIG = YAML.load(raw_config)[Rails.env].symbolize_keys
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -35,6 +39,12 @@ module Sygrego
     config.exception_handler = {
       dev:        false,
       email:      "ticket@stateyouthgames.com",
+
+      # On default 5xx error page, social media links included
+      social: {        
+        facebook: 'sygvic',    
+        twitter:  'sygvic'  
+      },  
 
       # All keys interpolated as strings, so you can use symbols, strings or integers where necessary
       exceptions: {
