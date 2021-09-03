@@ -34,7 +34,15 @@
 require "test_helper"
 
 class SettingTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "respond_to finds app_config variables" do
+    @setting = Setting.create
+
+    assert_equal true, @setting.respond_to(:this_year)
+  end
+
+  test "method_missing uses app_config variables" do
+    @setting = Setting.create
+
+    assert_equal 1991, @setting.first_year
+  end
 end
