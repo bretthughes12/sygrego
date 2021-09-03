@@ -5,6 +5,8 @@
 <%= render 'show', model: @sport %>
 
 <%= link_to "Back", admin_sports_path,
-                  class: "btn btn-primary btn-sm" %>
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
 <%= link_to "Edit", edit_admin_sport_path(@sport),
-                  class: "btn btn-primary btn-sm" %>
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
