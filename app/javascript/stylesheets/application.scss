@@ -4,7 +4,7 @@
 $white: white;
 $black: black;
 $grey: grey;
-
+ 
 .navbar {
         margin-bottom: 0;
         background: $black;
@@ -22,9 +22,6 @@ p {
         font-size: 16px;
         color: $white;
 }
-a:visited {
-        color: $grey;
-}
 .jumbotron {
         background: #0048CD;
         color: $white;
@@ -35,7 +32,7 @@ a:visited {
         }
 }
 .link {
-        color: $white;
+        color: $grey;
 }
 .btn-primary {
         color: $white;
