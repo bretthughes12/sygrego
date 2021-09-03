@@ -33,6 +33,7 @@ gem 'delayed_job_active_record'
 gem 'simple_form'
 gem 'devise'
 gem 'exception_handler', '~> 0.8.0.0'
+gem 'cancancan'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -2,7 +2,7 @@ class Admin::SportsController < ApplicationController
     require 'csv'
 
 #    before_filter :authorize_if_remote
-#    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
     before_action :authenticate_user!
   
     layout "admin"
@@ -25,8 +25,8 @@ class Admin::SportsController < ApplicationController
     # GET /admin/sports/1.xml
     # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
-        @sport = Sport.find(params[:id])
-#      authorize! :show, @sport
+#        @sport = Sport.find(params[:id])
+#        authorize! :show, @sport
       
         respond_to do |format|
             format.html # show.html.erb
@@ -51,7 +51,7 @@ class Admin::SportsController < ApplicationController
   
     # GET /sports/1/edit
     def edit
-        @sport = Sport.find(params[:id])
+#        @sport = Sport.find(params[:id])
     end
   
     # POST /admin/sports
@@ -71,7 +71,7 @@ class Admin::SportsController < ApplicationController
   
     # PUT /admin/sports/1
     def update
-        @sport = Sport.find(params[:id])
+#        @sport = Sport.find(params[:id])
         @sport.updated_by = current_user.id
 
         begin
@@ -96,7 +96,7 @@ class Admin::SportsController < ApplicationController
   
     # DELETE /admin/sports/1
     def destroy
-        @sport = Sport.find(params[:id])
+#        @sport = Sport.find(params[:id])
         @sport.updated_by = current_user.id
 
         begin
