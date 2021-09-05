@@ -3,6 +3,7 @@
 <h1><%= yield(:title) %></h1>
 
 <%= simple_form_for(@setting, url: admin_setting_path(@setting)) do |f| %> 
+	<%= f.error_notification %>
 
 	<h3>Functionality Settings</h3>
 	<%= f.input :generate_stats, label: "Record statistics on Monday nights" %>
