@@ -1,8 +1,7 @@
 class Admin::SportsController < ApplicationController
     require 'csv'
 
-#    before_filter :authorize_if_remote
-    load_and_authorize_resource
+    load_and_authorize_resource except: [:show]
     before_action :authenticate_user!
   
     layout "admin"
@@ -25,8 +24,8 @@ class Admin::SportsController < ApplicationController
     # GET /admin/sports/1.xml
     # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
-#        @sport = Sport.find(params[:id])
-#        authorize! :show, @sport
+        @sport = Sport.find(params[:id])
+        authorize! :show, @sport
       
         respond_to do |format|
             format.html # show.html.erb

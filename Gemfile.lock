@@ -44,6 +44,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (6.1.4.1)
       activesupport (= 6.1.4.1)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (6.1.4.1)
       activemodel (= 6.1.4.1)
       activesupport (= 6.1.4.1)
@@ -247,6 +251,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activemodel-serializers-xml
   annotate
   bootsnap (>= 1.4.4)
   brakeman

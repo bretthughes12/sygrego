@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :sports
     resources :settings, only: [:show, :edit, :update]
+    resources :audit_trail, only: [:index]
   end
 end
