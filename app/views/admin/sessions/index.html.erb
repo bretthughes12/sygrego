@@ -1,0 +1,18 @@
+<% title "Listing sessions" %>
+
+<h1><%= yield(:title) %></h1>
+
+<ul>
+  <% @sessions.each do |session| %>
+    <li>
+        <%= link_to session.name, edit_admin_session_path(session) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Session", new_admin_session_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
+<%= link_to "Download", admin_sessions_path(format: :csv),
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

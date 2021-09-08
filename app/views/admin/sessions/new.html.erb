@@ -1,0 +1,11 @@
+<% title "New session" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_sessions_path(@session), 
+                              method: :post } %>
+
+<%= link_to "Back", admin_sessions_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

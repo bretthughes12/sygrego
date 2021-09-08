@@ -1,0 +1,12 @@
+<% title "Session details: #{@session.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @session %>
+
+<%= link_to "Back", admin_sessions_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_session_path(@session),
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

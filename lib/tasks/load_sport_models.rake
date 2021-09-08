@@ -4,6 +4,40 @@ namespace :syg do
     require 'csv'
     require 'pp'
 
+    desc 'Load / update sport sessions table into the database'
+    task load_sessions: ['db/data/sport_session.csv', 'db:migrate'] do |t|
+      puts 'Loading sport sessions...'
+
+      user = User.first
+
+      CSV.foreach(t.prerequisites.first) do |fields|
+        if fields[0] != 'RowID'
+          session = Session.find_by_id(fields[0].to_i)
+          if session
+            session.name = fields[1]
+            session.updated_by = user.id
+            
+            if session.save
+              puts "Updated session #{fields[1]}"
+            else
+              puts "Session update failed: #{fields[1]}"
+              pp session.errors                        
+            end
+          else
+            session = Session.create(name:           fields[1],
+                                     updated_by:     user.id)
+
+            if session.errors.empty?
+              puts "Created session #{fields[1]}"
+            else
+              puts "Session create failed: #{fields[1]}"
+              pp session.errors                        
+            end
+          end
+        end
+      end
+    end
+  
     desc 'Load / update sports table into the database'
     task load_sports: ['db/data/sport.csv', 'db:migrate'] do |t|
         puts 'Loading sports...'

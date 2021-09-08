@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     resources :sports
     resources :settings, only: [:show, :edit, :update]
     resources :audit_trail, only: [:index]
+    resources :sessions
   end
 end

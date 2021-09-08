@@ -1,0 +1,8 @@
+<%= simple_form_for(@session, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Session" %>
+	<%= f.input :active %>
+
+	<%= f.button :submit %>
+<% end %>	

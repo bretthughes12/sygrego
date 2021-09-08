@@ -50,7 +50,6 @@ class Admin::SportsController < ApplicationController
   
     # GET /sports/1/edit
     def edit
-#        @sport = Sport.find(params[:id])
     end
   
     # POST /admin/sports
@@ -70,7 +69,6 @@ class Admin::SportsController < ApplicationController
   
     # PUT /admin/sports/1
     def update
-#        @sport = Sport.find(params[:id])
         @sport.updated_by = current_user.id
 
         begin
@@ -95,7 +93,6 @@ class Admin::SportsController < ApplicationController
   
     # DELETE /admin/sports/1
     def destroy
-#        @sport = Sport.find(params[:id])
         @sport.updated_by = current_user.id
 
         begin
