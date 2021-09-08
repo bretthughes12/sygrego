@@ -26,13 +26,14 @@ module Sygrego
     # Devise config
     config.to_prepare do
       # Configure single controller layout
-      # Devise::SessionsController.layout "layout_for_sessions_controller"
+      Devise::SessionsController.layout "users"
+      Devise::RegistrationsController.layout "users"
+      Devise::PasswordsController.layout "users"
     
       # Or to configure mailer layout
       Devise::Mailer.layout "mailer" 
     end
     
-
     config.active_job.queue_adapter = :delayed_job
 
     # Exception Handler config hash (no initializer required)
