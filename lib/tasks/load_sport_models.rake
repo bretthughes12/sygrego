@@ -7,6 +7,9 @@ namespace :syg do
     desc 'Load / update sports table into the database'
     task load_sports: ['db/data/sport.csv', 'db:migrate'] do |t|
         puts 'Loading sports...'
+
+        user = User.first
+
         CSV.foreach(t.prerequisites.first) do |fields|
             if fields[1] == 'true' || fields[1] == 'TRUE' # sport is active this year
                 sport = Sport.find_by_name(fields[0].to_s)
@@ -19,8 +22,8 @@ namespace :syg do
                     sport.bonus_for_officials = fields[6]
                     sport.court_name = fields[7]
                     sport.draw_type = fields[8]
+                    sport.updated_by = user.id
                     if sport.save
-#                       log(sport, 'UPDATE')
                         puts "Updated sport #{fields[0]}"
                     else
                         puts "Sport update failed: #{fields[0]}"
@@ -36,9 +39,9 @@ namespace :syg do
                               max_team_entries_group:    fields[4].to_i,
                               max_entries_indiv:         fields[5].to_i,
                               bonus_for_officials:       fields[6],
-                              court_name:                fields[7])
+                              court_name:                fields[7],
+                              updated_by:                user.id)
                     if sport.errors.empty?
-#                       log(sport, 'CREATE')
                         puts "Created sport #{fields[0]}"
                     else
                         puts "Sport create failed: #{fields[0]}"
@@ -49,5 +52,3 @@ namespace :syg do
         end
     end
 end
-    
-  
