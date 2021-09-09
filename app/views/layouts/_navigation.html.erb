@@ -4,7 +4,13 @@
         </button> <%= link_to image_tag("syg.png", alt: 'State Youth Games', class: 'logo', width: 60, height: 40), root_path, class: 'navbar-brand' %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
-                <li class='nav-item'><%= link_to 'Sports', admin_sports_path, class: 'nav-link' %></li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sports</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Sports', admin_sports_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Sessions', admin_sessions_path %></li>
+                    </ul>
+                </li>
                 <li class='nav-item'><%= link_to 'Settings', edit_admin_setting_path(id: Setting.first.id), class: 'nav-link' %></li>
             </ul>
         </div>
