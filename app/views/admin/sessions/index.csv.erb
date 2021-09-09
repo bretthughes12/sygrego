@@ -2,7 +2,7 @@
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @sessions.each do |session|
-	line =  [ session.id, 
+	line =  [ session.database_rowid, 
 		      session.name ]
     csv << line 
   end

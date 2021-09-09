@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_09_08_105209) do
   create_table "sessions", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "active", default: true
+    t.integer "database_rowid"
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

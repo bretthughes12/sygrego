@@ -100,6 +100,7 @@ class Admin::SessionsController < ApplicationController
   
     def session_params
       params.require(:session).permit(:name, 
-                                      :active)
+                                      :active,
+                                      :database_rowid)
     end
 end

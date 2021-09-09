@@ -12,8 +12,9 @@ namespace :syg do
 
       CSV.foreach(t.prerequisites.first) do |fields|
         if fields[0] != 'RowID'
-          session = Session.find_by_id(fields[0].to_i)
+          session = Session.find_by_database_rowid(fields[0].to_i)
           if session
+            session.database_rowid = fields[0]
             session.name = fields[1]
             session.updated_by = user.id
             
@@ -24,7 +25,8 @@ namespace :syg do
               pp session.errors                        
             end
           else
-            session = Session.create(name:           fields[1],
+            session = Session.create(database_rowid: fields[0],
+                                     name:           fields[1],
                                      updated_by:     user.id)
 
             if session.errors.empty?

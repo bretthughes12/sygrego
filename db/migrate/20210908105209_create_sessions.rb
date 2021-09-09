@@ -3,6 +3,7 @@ class CreateSessions < ActiveRecord::Migration[6.1]
     create_table :sessions do |t|
       t.string :name, null:false
       t.boolean :active, default: true
+      t.integer :database_rowid
       t.bigint :updated_by
 
       t.timestamps
