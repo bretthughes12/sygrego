@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title><%= content_for?(:title) ? yield(:title) : "SYG Registrations" %></title>
+    <title><%= content_for?(:title) ? "SYG Registrations: #{yield(:title)}" : "SYG Registrations" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 

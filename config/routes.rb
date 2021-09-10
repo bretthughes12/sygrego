@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   } 
 
   namespace :admin do
+    resource :info, :controller => "info" do
+      collection do
+        get :tech_stats
+      end
+    end
+
     resources :sports
     resources :settings, only: [:show, :edit, :update]
     resources :audit_trail, only: [:index]

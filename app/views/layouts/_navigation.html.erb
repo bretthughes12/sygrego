@@ -11,6 +11,12 @@
                         <li class='dropdown-item'><%= link_to 'Sessions', admin_sessions_path %></li>
                     </ul>
                 </li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Statistics</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Technical', tech_stats_admin_info_path %></li>
+                    </ul>
+                </li>
                 <li class='nav-item'><%= link_to 'Settings', edit_admin_setting_path(id: Setting.first.id), class: 'nav-link' %></li>
             </ul>
         </div>
