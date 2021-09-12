@@ -40,6 +40,40 @@ namespace :syg do
       end
     end
   
+    desc 'Load / update sport venues table into the database'
+    task load_venues: ['db/data/sport_venue.csv', 'db:migrate'] do |t|
+      puts 'Loading sport venues...'
+
+      user = User.first
+
+      CSV.foreach(t.prerequisites.first) do |fields|
+        if fields[0] != 'RowID' && !fields[0].blank?
+          venue = Venue.find_by_database_code(fields[0].to_s)
+          if venue
+            venue.name                 = fields[1]
+            venue.address              = fields[2]
+  
+            if venue.save
+              puts "Updated venue #{fields[1]}"
+            else
+              puts "Venue update failed: #{fields[1]}"
+              pp venue.errors
+            end                        
+          else
+            venue = Venue.create(name:                 fields[1],
+                                 database_code:        fields[0],
+                                 address:              fields[2])
+            if venue.errors.empty?
+              puts "Created venue #{fields[1]}"
+            else
+              puts "Venue create failed: #{fields[1]}"
+              pp venue.errors                        
+            end
+          end
+        end
+      end
+    end
+  
     desc 'Load / update sports table into the database'
     task load_sports: ['db/data/sport.csv', 'db:migrate'] do |t|
         puts 'Loading sports...'

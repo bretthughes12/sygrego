@@ -26,7 +26,6 @@ Pool Volleyball,true,Team,0,99,1,false,Court,Round Robin
 Roundnet,true,Individual,10,0,1,false,Set,Round Robin
 Scrabble,true,Individual,4,0,1,false,Board,Round Robin
 Soccer,true,Team,0,99,1,true,Field,Round Robin
-Sport,true,Team,0,99,1,true,Court,Round Robin
 Squash,true,Individual,4,0,1,false,Court,Round Robin
 Table Tennis,true,Individual,8,0,1,false,Table,Round Robin
 Tennis,true,Individual,8,0,1,false,Court,Knockout
