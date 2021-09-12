@@ -1,0 +1,11 @@
+<% title "New venue" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_venues_path(@venue), 
+                              method: :post } %>
+
+<%= link_to "Back", admin_venues_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

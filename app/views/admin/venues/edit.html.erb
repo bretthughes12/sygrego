@@ -1,0 +1,16 @@
+<% title "Editing #{@venue.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_venue_path(@venue), 
+                              method: :put } %>
+
+<%= link_to "Back", admin_venues_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
+<%= link_to "Destroy", admin_venue_path(@venue),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

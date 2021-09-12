@@ -1,0 +1,13 @@
+<%- headings = %w{RowID Name Address } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+    @venues.each do |venue|
+	    line =  [  
+		          venue.database_code,
+				  venue.name,
+		          venue.address
+                ]
+
+    csv << line
+  end
+end.html_safe %>

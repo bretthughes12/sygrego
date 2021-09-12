@@ -1,0 +1,12 @@
+<% title "Venue details: #{@venue.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @venue %>
+
+<%= link_to "Back", admin_venues_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_venue_path(@venue),
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

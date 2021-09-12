@@ -1,0 +1,18 @@
+<% title "Listing venues" %>
+
+<h1><%= yield(:title) %></h1>
+
+<ul>
+  <% @venues.each do |venue| %>
+    <li>
+        <%= link_to venue.name, edit_admin_venue_path(venue) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Venue", new_admin_venue_path,
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
+<%= link_to "Download", admin_venues_path(format: :csv),
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>

@@ -14,7 +14,7 @@ class Session < ApplicationRecord
     include Comparable
     include Auditable
   
-    has_many :sport_grades
+#    has_many :sport_grades
   
     scope :active, -> { where(active: true) }
   

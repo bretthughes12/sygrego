@@ -1,0 +1,9 @@
+<%= simple_form_for(@venue, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Venue" %>
+	<%= f.input :database_code, label: "Venue code" %>
+	<%= f.input :address, :label => "Street address" %>
+
+	<%= f.button :submit %>
+<% end %>	
