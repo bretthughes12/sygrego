@@ -9,6 +9,7 @@ class Admin::InfoController < ApplicationController
 
         @tech_stats << model_stats(Sport)    
         @tech_stats << model_stats(Session)    
+        @tech_stats << model_stats(Venue)    
 
         @tech_stats << { type: "AuditTrail", 
                          low: "-",
