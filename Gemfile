@@ -35,6 +35,7 @@ gem 'devise'
 gem 'exception_handler', '~> 0.8.0.0'
 gem 'cancancan'
 gem 'activemodel-serializers-xml'
+gem 'gmaps4rails'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
