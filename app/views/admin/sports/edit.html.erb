@@ -9,6 +9,9 @@
 <%= link_to "Back", admin_sports_path,
                   class: "btn btn-primary btn-sm",
                   role: "button" %>
+<%= link_to "Details", admin_sport_path(@sport),
+                  class: "btn btn-primary btn-sm",
+                  role: "button" %>
 <%= link_to "Destroy", admin_sport_path(@sport),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
