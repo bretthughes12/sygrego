@@ -1,15 +1,21 @@
-<% title "Editing settings" %>
+<% title "Editing all settings" %>
 
 <h1><%= yield(:title) %></h1>
 
 <%= render partial: "functionality", 
            locals: { setting: @setting } %>
 
+<br/>
+
 <%= render partial: "fees",  
            locals: { setting: @setting } %>
 
+<br/>
+
 <%= render partial: "divisions",  
            locals: { setting: @setting } %>
+
+<br/>
 
 <%= render partial: "sports_factors",  
            locals: { setting: @setting } %>

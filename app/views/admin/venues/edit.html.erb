@@ -6,14 +6,16 @@
                               url: admin_venue_path(@venue), 
                               method: :put } %>
 
+<br/>
+
 <%= link_to "Back", admin_venues_path,
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Details", admin_venue_path(@venue),
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Destroy", admin_venue_path(@venue),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
-                  class: "btn btn-primary btn-sm",
+                  class: danger_button_class,
                   role: "button" %>

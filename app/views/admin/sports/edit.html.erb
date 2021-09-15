@@ -6,14 +6,16 @@
                               url: admin_sport_path(@sport), 
                               method: :put } %>
 
+<br/>
+
 <%= link_to "Back", admin_sports_path,
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Details", admin_sport_path(@sport),
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Destroy", admin_sport_path(@sport),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
-                  class: "btn btn-primary btn-sm",
+                  class: danger_button_class,
                   role: "button" %>

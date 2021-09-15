@@ -4,4 +4,12 @@ module ApplicationHelper
         content_for(:title) { title }
     end
     
+    def primary_button_class
+        "btn btn-primary btn-sm"
+    end
+    
+    def danger_button_class
+        "btn btn-danger btn-sm"
+    end
+    
 end

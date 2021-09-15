@@ -6,14 +6,16 @@
                               url: admin_session_path(@session), 
                               method: :put } %>
 
+<br/>
+
 <%= link_to "Back", admin_sessions_path,
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Details", admin_session_path(@session),
-                  class: "btn btn-primary btn-sm",
+                  class: primary_button_class,
                   role: "button" %>
 <%= link_to "Destroy", admin_session_path(@session),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
-                  class: "btn btn-primary btn-sm",
+                  class: danger_button_class,
                   role: "button" %>
