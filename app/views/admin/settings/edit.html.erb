@@ -2,34 +2,14 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= render partial: "functionality", locals: { 
-                              setting: @setting } %>
+<%= render partial: "functionality", 
+           locals: { setting: @setting } %>
 
-<%= simple_form_for(@setting, url: admin_setting_path(@setting)) do |f| %> 
-	<%= f.error_notification %>
+<%= render partial: "fees",  
+           locals: { setting: @setting } %>
 
-	<h3>Fees</h3>
-	<%= f.input :full_fee %>
-	<%= f.input :early_bird_discount %>
-	<%= f.input :day_visitor_adjustment %>
-	<%= f.input :coordinator_adjustment, :label => "Group Coordinator adjustment" %>
-	<%= f.input :helper_adjustment %>
-	<%= f.input :primary_age_adjustment %>
-	<%= f.input :spectator_adjustment %>
-	<%= f.input :daily_adjustment %>
+<%= render partial: "divisions",  
+           locals: { setting: @setting } %>
 
-    <%= f.button :submit %>
-
-	<h3>Divisions</h3>
-	<%= f.input :small_division_ceiling %>
-	<%= f.input :medium_division_ceiling %>	
-
-    <%= f.button :submit %>
-
-	<h3>Allocation Factors</h3>
-	<%= f.input :new_group_sports_allocation_factor, :label => "New groups" %>
-	<%= f.input :sport_coord_sports_allocation_factor, :label => "Sport coordinator" %>
-	<%= f.input :missed_out_sports_allocation_factor, :label => "When missed out" %>
-
-    <%= f.button :submit %>
-<% end %>
+<%= render partial: "sports_factors",  
+           locals: { setting: @setting } %>

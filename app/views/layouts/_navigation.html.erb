@@ -22,6 +22,9 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class='dropdown-item'><%= link_to 'Functionality', edit_functionality_admin_setting_path(id: Setting.first.id) %></li>
+                        <li class='dropdown-item'><%= link_to 'Fees', edit_fees_admin_setting_path(id: Setting.first.id) %></li>
+                        <li class='dropdown-item'><%= link_to 'Divisions', edit_divisions_admin_setting_path(id: Setting.first.id) %></li>
+                        <li class='dropdown-item'><%= link_to 'Sports Factors', edit_sports_factors_admin_setting_path(id: Setting.first.id) %></li>
                         <li><hr class="dropdown-divider"></li>
                          <li class='dropdown-item'><%= link_to 'All', edit_admin_setting_path(id: Setting.first.id) %></li>
                     </ul>

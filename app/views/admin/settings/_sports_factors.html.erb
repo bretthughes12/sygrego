@@ -1,0 +1,10 @@
+<%= simple_form_for(setting, url: update_sports_factors_admin_setting_path(setting)) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>Allocation Factors</h3>
+	<%= f.input :new_group_sports_allocation_factor, :label => "New groups" %>
+	<%= f.input :sport_coord_sports_allocation_factor, :label => "Sport coordinator" %>
+	<%= f.input :missed_out_sports_allocation_factor, :label => "When missed out" %>
+
+    <%= f.button :submit %>
+<% end %>

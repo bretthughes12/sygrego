@@ -1,0 +1,9 @@
+<%= simple_form_for(setting, url: update_divisions_admin_setting_path(setting)) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>Divisions</h3>
+	<%= f.input :small_division_ceiling %>
+	<%= f.input :medium_division_ceiling %>	
+
+    <%= f.button :submit %>
+<% end %>
