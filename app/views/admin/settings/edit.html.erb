@@ -2,24 +2,11 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= render partial: "functionality", locals: { 
+                              setting: @setting } %>
+
 <%= simple_form_for(@setting, url: admin_setting_path(@setting)) do |f| %> 
 	<%= f.error_notification %>
-
-	<h3>Functionality Settings</h3>
-	<%= f.input :generate_stats, label: "Record statistics on Monday nights" %>
-	<%= f.input :early_bird, :label => "Early bird fees active"  %>
-	<%= f.input :sports_loaded %>
-	<%= f.input :volunteers_loaded %>
-	<%= f.input :group_registrations_closed, label: "Prevent new Group signups" %>
-	<%= f.input :restricted_sports_allocated  %>
-	<%= f.input :team_draws_complete %>
-	<%= f.input :indiv_draws_complete, :label => "Individual draws complete" %>
-	<%= f.input :evening_sessions_final, :label => "Evening sessions have been finalised" %>
-	<%= f.input :updates_restricted, :label => "Updates restricted to Admins" %>
-	<%= f.input :syg_is_happening %>
-	<%= f.input :syg_is_finished %>
-
-    <%= f.button :submit %>
 
 	<h3>Fees</h3>
 	<%= f.input :full_fee %>

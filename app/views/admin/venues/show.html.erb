@@ -5,9 +5,10 @@
 <%= render 'show', model: @venue %>
 
 <div style='width: 300px;'>
-  <div id="map" style='width: 300px; height: 300px;'>
+  <div id="map" style='width: 450px; height: 450px;'>
     <p>
-        <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=300x300&center=#{@venue.address}&key=#{Rails.application.credentials.google_api_key}", alt: "Map" %>    </p>
+        <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=450x450&markers=color:red|#{@venue.address}&style=syg&key=#{Rails.application.credentials.google_api_key}", alt: "Map" %>
+    </p>
   </div>
 </div>
 

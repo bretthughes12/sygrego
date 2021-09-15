@@ -15,7 +15,12 @@ class Admin::SettingsController < ApplicationController
         @setting = Setting.find(params[:id])
     end
   
-    # PUT /settings/1
+    # GET /settings/1/edit_functionality
+    def edit_functionality
+      @setting = Setting.find(params[:id])
+  end
+
+  # PUT /settings/1
     def update
       @setting = Setting.find(params[:id])
 
