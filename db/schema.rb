@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_011716) do
+ActiveRecord::Schema.define(version: 2021_09_15_225015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,6 @@ ActiveRecord::Schema.define(version: 2021_09_12_011716) do
     t.string "draw_type", limit: 20, null: false
     t.boolean "bonus_for_officials", default: false
     t.string "court_name", limit: 20, default: "Court"
-    t.integer "lock_version", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "updated_by"
@@ -109,8 +108,6 @@ ActiveRecord::Schema.define(version: 2021_09_12_011716) do
     t.string "name", limit: 50, default: "", null: false
     t.string "database_code", limit: 4
     t.string "address"
-    t.float "lat"
-    t.float "lng"
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

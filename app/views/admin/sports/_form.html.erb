@@ -1,7 +1,6 @@
 <%= simple_form_for(@sport, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
-	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :name, label: "Sport" %>
 	<%= f.input :active %>
 	<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS %>

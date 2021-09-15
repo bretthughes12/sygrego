@@ -8,7 +8,6 @@
 #  classification          :string(10)       not null
 #  court_name              :string(20)       default("Court")
 #  draw_type               :string(20)       not null
-#  lock_version            :integer          default(0)
 #  max_entries_indiv       :integer          default(0), not null
 #  max_indiv_entries_group :integer          default(0), not null
 #  max_team_entries_group  :integer          default(0), not null

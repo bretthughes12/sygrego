@@ -6,8 +6,8 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user)
-    @sport = FactoryBot.create(:sport,
-                                lock_version: 1)
+    @sport = FactoryBot.create(:sport)
+
     sign_in @user
   end
 
@@ -84,17 +84,6 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     @sport.reload
 
     assert_not_equal "Invalid", @sport.draw_type
-  end
-
-  test "should not update stale sport" do
-    patch admin_sport_url(@sport), params: { sport: { name: "Bungee",
-                                                      lock_version: 0 } }
-
-    assert_response :success
-    # Reload association to fetch updated data and assert that title is updated.
-    @sport.reload
-
-    assert_not_equal "Bungee", @sport.name
   end
 
   test "should destroy sport" do

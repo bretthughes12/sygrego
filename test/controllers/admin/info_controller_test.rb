@@ -7,8 +7,8 @@ class Admin::InfoControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:setting)
     FactoryBot.create(:audit_trail)
     @user = FactoryBot.create(:user)
-    @sport = FactoryBot.create(:sport,
-                                lock_version: 1)
+    @sport = FactoryBot.create(:sport)
+    
     sign_in @user
   end
 

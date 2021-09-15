@@ -71,21 +71,11 @@ class Admin::SportsController < ApplicationController
     def update
         @sport.updated_by = current_user.id
 
-        begin
-            respond_to do |format|
-                if @sport.update(sport_params)
-                    flash[:notice] = 'Sport was successfully updated.'
-                    format.html { redirect_to(admin_sports_url) }
-                else
-                    format.html { render action: "edit" }
-                end
-            end
-  
-        rescue ActiveRecord::StaleObjectError
-            @sport = Sport.find(params[:id])
-            flash[:notice] = 'Somebody else has updated this sport. Please check your changes and update again.'
-  
-            respond_to do |format|
+        respond_to do |format|
+            if @sport.update(sport_params)
+                flash[:notice] = 'Sport was successfully updated.'
+                format.html { redirect_to(admin_sports_url) }
+            else
                 format.html { render action: "edit" }
             end
         end
@@ -115,7 +105,6 @@ class Admin::SportsController < ApplicationController
   
     def sport_params
       params.require(:sport).permit(:name, 
-                                    :lock_version,
                                     :max_indiv_entries_group, 
                                     :max_team_entries_group, 
                                     :max_entries_indiv, 
