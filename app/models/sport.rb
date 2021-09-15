@@ -20,6 +20,8 @@ class Sport < ApplicationRecord
     include Comparable
     include Auditable
 
+    scope :active, -> { where(active: true) }
+
     CLASSIFICATIONS = %w[Individual
                          Team]
 

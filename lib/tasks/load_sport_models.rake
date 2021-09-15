@@ -50,23 +50,25 @@ namespace :syg do
         if fields[0] != 'RowID' && !fields[0].blank?
           venue = Venue.find_by_database_code(fields[0].to_s)
           if venue
-            venue.name                 = fields[1]
-            venue.address              = fields[2]
+            venue.active               = fields[1]
+            venue.name                 = fields[2]
+            venue.address              = fields[3]
   
             if venue.save
-              puts "Updated venue #{fields[1]}"
+              puts "Updated venue #{fields[2]}"
             else
-              puts "Venue update failed: #{fields[1]}"
+              puts "Venue update failed: #{fields[2]}"
               pp venue.errors
             end                        
           else
-            venue = Venue.create(name:                 fields[1],
+            venue = Venue.create(name:                 fields[2],
                                  database_code:        fields[0],
-                                 address:              fields[2])
+                                 active:               fields[1],
+                                 address:              fields[3])
             if venue.errors.empty?
-              puts "Created venue #{fields[1]}"
+              puts "Created venue #{fields[2]}"
             else
-              puts "Venue create failed: #{fields[1]}"
+              puts "Venue create failed: #{fields[2]}"
               pp venue.errors                        
             end
           end

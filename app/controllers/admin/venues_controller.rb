@@ -107,6 +107,7 @@ class Admin::VenuesController < ApplicationController
     def venue_params
       params.require(:venue).permit(:name, 
                                     :database_code, 
+                                    :active,
                                     :address)
     end
   end

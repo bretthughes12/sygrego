@@ -3,6 +3,7 @@
 # Table name: venues
 #
 #  id            :bigint           not null, primary key
+#  active        :boolean
 #  address       :string
 #  database_code :string(4)
 #  name          :string(50)       default(""), not null
