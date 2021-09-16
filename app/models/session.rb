@@ -36,4 +36,11 @@ class Session < ApplicationRecord
     def self.total_sessions
       Session.active.count
     end
+
+    private
+
+    def self.sync_fields
+        ['database_rowid',
+         'name']
+    end
 end

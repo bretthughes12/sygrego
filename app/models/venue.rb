@@ -25,4 +25,11 @@ class Venue < ApplicationRecord
                                         length: { maximum: 4 }
     validates :address,                 length: { maximum: 255 }
   
+
+    private
+
+    def self.sync_fields
+        ['name',
+         'address']
+    end
 end

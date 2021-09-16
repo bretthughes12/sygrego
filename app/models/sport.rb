@@ -57,4 +57,15 @@ class Sport < ApplicationRecord
     def max_entries_group
         max_indiv_entries_group + max_team_entries_group
     end
+
+    private
+
+    def self.sync_fields
+        ['name',
+         'classification',
+         'max_entries_indiv',
+         'max_indiv_entries_group',
+         'max_team_entries_group',
+         'court_name']
+    end
 end
