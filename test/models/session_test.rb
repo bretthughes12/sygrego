@@ -14,6 +14,7 @@ require "test_helper"
 
 class SessionTest < ActiveSupport::TestCase
   def setup
+    FactoryBot.create(:user)
     @session = FactoryBot.create(:session)
   end
 

@@ -19,6 +19,10 @@
 require "test_helper"
 
 class SportTest < ActiveSupport::TestCase
+  def setup
+    FactoryBot.create(:user)
+  end
+
   test "should have 15 per page" do
     assert_equal 15, Sport.per_page
   end

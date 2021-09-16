@@ -53,6 +53,7 @@ namespace :syg do
             venue.active               = fields[1]
             venue.name                 = fields[2]
             venue.address              = fields[3]
+            venue.updated_by           = user.id
   
             if venue.save
               puts "Updated venue #{fields[2]}"
@@ -64,7 +65,8 @@ namespace :syg do
             venue = Venue.create(name:                 fields[2],
                                  database_code:        fields[0],
                                  active:               fields[1],
-                                 address:              fields[3])
+                                 address:              fields[3],
+                                 updated_by:           user.id)
             if venue.errors.empty?
               puts "Created venue #{fields[2]}"
             else

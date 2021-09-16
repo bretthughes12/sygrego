@@ -14,7 +14,8 @@
 require "test_helper"
 
 class VenueTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+#  def setup
+#    FactoryBot.create(:user)
+#  end
+
 end
