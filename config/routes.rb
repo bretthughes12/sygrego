@@ -28,7 +28,12 @@ Rails.application.routes.draw do
     resources :audit_trail, only: [:index]
 
     resources :sports
-    resources :sessions
+    resources :sessions do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
     resources :venues
   end
 end

@@ -1,9 +1,10 @@
-<%- headings = %w{RowID Name} -%>
+<%- headings = %w{RowID Active Name} -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @sessions.each do |session|
 	line =  [ session.database_rowid, 
-		      session.name ]
+            session.active,
+		        session.name ]
     csv << line 
   end
 end.html_safe %>

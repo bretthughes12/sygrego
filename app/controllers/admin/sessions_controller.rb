@@ -96,7 +96,22 @@ class Admin::SessionsController < ApplicationController
         end
     end
   
-  private
+    # GET /admin/sessions/new_import
+    def new_import
+      @session = Session.new
+    end
+  
+    # PATCH /admin/sessions/import
+    def import
+      Session.import(params[:session][:file], current_user)
+      flash[:notice] = "Sessions uploaded successfully"
+
+      respond_to do |format|
+          format.html { redirect_to admin_sessions_url }
+      end
+    end
+
+private
   
     def session_params
       params.require(:session).permit(:name, 
