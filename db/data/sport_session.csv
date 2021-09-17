@@ -1,8 +1,8 @@
-RowID,Name
-1,Saturday Morning
-2,Saturday Afternoon
-3,Saturday Evening
-4,Sunday Morning
-5,Sunday Afternoon
-6,Sunday Evening
-7,Monday Morning
+RowID,Active,Name
+1,TRUE,Saturday Morning
+2,TRUE,Saturday Afternoon
+3,TRUE,Saturday Evening
+4,TRUE,Sunday Morning
+5,TRUE,Sunday Afternoon
+6,TRUE,Sunday Evening
+7,FALSE,Monday Morning
