@@ -85,6 +85,32 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "Too Long....................................................", @session.name
   end
 
+  test "should get new import" do
+    get new_import_admin_sessions_url
+
+    assert_response :success
+  end
+
+  test "should import sessions" do
+    file = fixture_file_upload('session.csv','application/csv')
+
+    assert_difference('Session.count') do
+      post import_admin_sessions_url, params: { session: { file: file }}
+    end
+
+    assert_redirected_to admin_sessions_path 
+  end
+
+  test "should not import sessions when the file is not csv" do
+    file = fixture_file_upload('not_csv.txt','application/text')
+
+    assert_no_difference('Session.count') do
+      post import_admin_sessions_url, params: { session: { file: file }}
+    end
+
+    assert_response :success
+  end
+
   test "should destroy session" do
     assert_difference("Session.count", -1) do
       delete admin_session_url(@session)

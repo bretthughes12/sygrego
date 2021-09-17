@@ -42,6 +42,10 @@ class Session < ApplicationRecord
     end
 
     def self.import(file, user)
+      creates = 0
+      updates = 0
+      errors = 0
+
       CSV.foreach(file.path, headers: true) do |fields|
         session = Session.find_by_database_rowid(fields[0].to_i)
         if session
@@ -51,10 +55,9 @@ class Session < ApplicationRecord
           session.updated_by = user.id
           
           if session.save
-            puts "Updated session #{fields[2]}"
+            updates += 1
           else
-            puts "Session update failed: #{fields[2]}"
-#            pp session.errors                        
+            errors += 1
           end
         else
           session = Session.create(database_rowid: fields[0],
@@ -63,13 +66,14 @@ class Session < ApplicationRecord
                                    updated_by:     user.id)
 
           if session.errors.empty?
-            puts "Created session #{fields[2]}"
+            creates += 1
           else
-            puts "Session create failed: #{fields[2]}"
-#            pp session.errors                        
+            errors += 1
           end
         end
       end
+
+      { creates: creates, updates: updates, errors: errors }
     end
 
     private

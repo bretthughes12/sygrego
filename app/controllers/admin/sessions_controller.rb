@@ -8,7 +8,7 @@ class Admin::SessionsController < ApplicationController
   
     # GET /admin/sessions
     def index
-      @sessions = Session.order(:id).load
+      @sessions = Session.order(:database_rowid).load
   
       respond_to do |format|
         format.html # index.html.erb
@@ -101,13 +101,23 @@ class Admin::SessionsController < ApplicationController
       @session = Session.new
     end
   
-    # PATCH /admin/sessions/import
+    # POST /admin/sessions/import
     def import
-      Session.import(params[:session][:file], current_user)
-      flash[:notice] = "Sessions uploaded successfully"
+      if params[:session][:file].path =~ %r{\.csv$}i
+        result = Session.import(params[:session][:file], current_user)
 
-      respond_to do |format|
+        flash[:notice] = "Sessions upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"
+
+        respond_to do |format|
           format.html { redirect_to admin_sessions_url }
+        end
+      else
+        flash[:notice] = "Upload file must be in '.csv' format"
+        @session = Session.new
+
+        respond_to do |format|
+          format.html { render action: "new_import" }
+        end
       end
     end
 
