@@ -27,13 +27,23 @@ Rails.application.routes.draw do
     end
     resources :audit_trail, only: [:index]
 
-    resources :sports
+    resources :sports do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
     resources :sessions do
       collection do
         get :new_import
         post :import
       end
     end
-    resources :venues
+    resources :venues do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
   end
 end

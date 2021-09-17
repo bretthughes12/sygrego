@@ -58,6 +58,51 @@ class Sport < ApplicationRecord
         max_indiv_entries_group + max_team_entries_group
     end
 
+    def self.import(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+  
+        CSV.foreach(file.path, headers: true) do |fields|
+            sport = Sport.find_by_name(fields[0].to_s)
+            if sport
+                sport.active = fields[1]
+                sport.classification = fields[2].to_s
+                sport.max_indiv_entries_group = fields[3].to_i
+                sport.max_team_entries_group = fields[4].to_i
+                sport.max_entries_indiv = fields[5].to_i
+                sport.bonus_for_officials = fields[6]
+                sport.court_name = fields[7]
+                sport.draw_type = fields[8]
+                sport.updated_by = user.id
+                if sport.save
+                    updates += 1
+                else
+                    errors += 1
+                end
+            else
+                sport = Sport.create(
+                    name:                      fields[0],
+                    active:                    fields[1],
+                    classification:            fields[2],
+                    draw_type:                 fields[8],
+                    max_indiv_entries_group:   fields[3].to_i,
+                    max_team_entries_group:    fields[4].to_i,
+                    max_entries_indiv:         fields[5].to_i,
+                    bonus_for_officials:       fields[6],
+                    court_name:                fields[7],
+                    updated_by:                user.id)
+                if sport.errors.empty?
+                    creates += 1
+                else
+                errors += 1
+                end
+            end
+        end
+  
+        { creates: creates, updates: updates, errors: errors }
+    end
+  
     private
 
     def self.sync_fields

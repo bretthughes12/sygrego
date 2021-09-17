@@ -101,6 +101,31 @@ class Admin::VenuesController < ApplicationController
             end
         end
     end
+
+    # GET /admin/venues/new_import
+    def new_import
+      @venue = Venue.new
+    end
+  
+    # POST /admin/venues/import
+    def import
+      if params[:venue][:file].path =~ %r{\.csv$}i
+        result = Venue.import(params[:venue][:file], current_user)
+
+        flash[:notice] = "Venues upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"
+
+        respond_to do |format|
+          format.html { redirect_to admin_venues_url }
+        end
+      else
+        flash[:notice] = "Upload file must be in '.csv' format"
+        @venue = Venue.new
+
+        respond_to do |format|
+          format.html { render action: "new_import" }
+        end
+      end
+    end
   
   private
   

@@ -1,0 +1,2 @@
+Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType
+Hockey,true,Team,0,99,1,true,Field,Random

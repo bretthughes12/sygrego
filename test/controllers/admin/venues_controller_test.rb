@@ -86,6 +86,32 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "Invalid", @venue.database_code
   end
 
+  test "should get new import" do
+    get new_import_admin_venues_url
+
+    assert_response :success
+  end
+
+  test "should import venues" do
+    file = fixture_file_upload('venue.csv','application/csv')
+
+    assert_difference('Venue.count') do
+      post import_admin_venues_url, params: { venue: { file: file }}
+    end
+
+    assert_redirected_to admin_venues_path 
+  end
+
+  test "should not import venues when the file is not csv" do
+    file = fixture_file_upload('not_csv.txt','application/text')
+
+    assert_no_difference('Venue.count') do
+      post import_admin_venues_url, params: { venue: { file: file }}
+    end
+
+    assert_response :success
+  end
+
   test "should destroy venue" do
     assert_difference("Venue.count", -1) do
       delete admin_venue_url(@venue)

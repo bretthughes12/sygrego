@@ -86,6 +86,32 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "Invalid", @sport.draw_type
   end
 
+  test "should get new import" do
+    get new_import_admin_sports_url
+
+    assert_response :success
+  end
+
+  test "should import sports" do
+    file = fixture_file_upload('sport.csv','application/csv')
+
+    assert_difference('Sport.count') do
+      post import_admin_sports_url, params: { sport: { file: file }}
+    end
+
+    assert_redirected_to admin_sports_path 
+  end
+
+  test "should not import sports when the file is not csv" do
+    file = fixture_file_upload('not_csv.txt','application/text')
+
+    assert_no_difference('Sport.count') do
+      post import_admin_sports_url, params: { sport: { file: file }}
+    end
+
+    assert_response :success
+  end
+
   test "should destroy sport" do
     assert_difference("Sport.count", -1) do
       delete admin_sport_url(@sport)

@@ -1,0 +1,32 @@
+<% title "Upload sports" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Import file must be in '.csv' format, with columns the same as the download:</p>
+<ul>
+  <li>Name</li>
+  <li>Active</li>
+  <li>Classification</li>
+  <li>MaxIndivGrp</li>
+  <li>MaxTeamGrp</li>
+  <li>MaxIndiv</li>
+  <li>Bonus</li>
+  <li>CourtName</li>
+  <li>DrawType</li>
+</ul>
+
+<%= simple_form_for(@sport, url: import_admin_sports_path) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :file, as: :file, label: "Upload file" %>
+
+    <br/>
+
+	<%= f.button :submit, "Upload" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", admin_sports_path,
+                  class: primary_button_class,
+                  role: "button" %>

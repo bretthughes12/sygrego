@@ -19,8 +19,11 @@
 require "test_helper"
 
 class SportTest < ActiveSupport::TestCase
+  include ActionDispatch::TestProcess
+
   def setup
-    FactoryBot.create(:user)
+    @user = FactoryBot.create(:user)
+    @sport = FactoryBot.create(:sport)
   end
 
   test "should have 15 per page" do
@@ -40,5 +43,61 @@ class SportTest < ActiveSupport::TestCase
     sport2 = FactoryBot.create(:sport, name: "B")
 
     assert_equal true, sport1 < sport2
+  end
+
+  test "should import sports from file" do
+    file = fixture_file_upload('sport.csv','application/csv')
+    
+    assert_difference('Sport.count') do
+      @result = Sport.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting sports from file" do
+    sport = FactoryBot.create(:sport, name: 'Hockey')
+    file = fixture_file_upload('sport.csv','application/csv')
+    
+    assert_no_difference('Sport.count') do
+      @result = Sport.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    sport.reload
+    assert_equal "Field", sport.court_name
+  end
+
+  test "should not import sports with errors from file" do
+    file = fixture_file_upload('invalid_sport.csv','application/csv')
+    
+    assert_no_difference('Sport.count') do
+      @result = Sport.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update sports with errors from file" do
+    sport = FactoryBot.create(:sport, name: 'Hockey')
+    file = fixture_file_upload('invalid_sport.csv','application/csv')
+    
+    assert_no_difference('Sport.count') do
+      @result = Sport.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    sport.reload
+    assert_not_equal "Random", sport.court_name
   end
 end

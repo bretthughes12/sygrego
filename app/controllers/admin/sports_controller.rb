@@ -100,7 +100,32 @@ class Admin::SportsController < ApplicationController
             end
         end
     end
+
+    # GET /admin/sports/new_import
+    def new_import
+        @sport = Sport.new
+    end
+    
+    # POST /admin/sports/import
+    def import
+        if params[:sport][:file].path =~ %r{\.csv$}i
+          result = Sport.import(params[:sport][:file], current_user)
   
+          flash[:notice] = "Sports upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"
+  
+          respond_to do |format|
+            format.html { redirect_to admin_sports_url }
+          end
+        else
+          flash[:notice] = "Upload file must be in '.csv' format"
+          @sport = Sport.new
+  
+          respond_to do |format|
+            format.html { render action: "new_import" }
+          end
+        end
+    end
+    
   private
   
     def sport_params

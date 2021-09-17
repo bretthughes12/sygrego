@@ -14,8 +14,66 @@
 require "test_helper"
 
 class VenueTest < ActiveSupport::TestCase
-#  def setup
-#    FactoryBot.create(:user)
-#  end
+    include ActionDispatch::TestProcess
 
+    def setup
+        @user = FactoryBot.create(:user)
+        @venue = FactoryBot.create(:venue, database_code: 'ABC')
+    end
+
+  test "should import venues from file" do
+    file = fixture_file_upload('venue.csv','application/csv')
+    
+    assert_difference('Venue.count') do
+      @result = Venue.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting venues from file" do
+    venue = FactoryBot.create(:venue, database_code: 'MCG')
+    file = fixture_file_upload('venue.csv','application/csv')
+    
+    assert_no_difference('Venue.count') do
+      @result = Venue.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    venue.reload
+    assert_equal "Melbourne Cricket Ground", venue.name
+  end
+
+  test "should not import venues with errors from file" do
+    file = fixture_file_upload('invalid_venue.csv','application/csv')
+    
+    assert_no_difference('Venue.count') do
+      @result = Venue.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update venues with errors from file" do
+    venue = FactoryBot.create(:venue, database_code: 'MCG')
+    file = fixture_file_upload('invalid_venue.csv','application/csv')
+    
+    assert_no_difference('Venue.count') do
+      @result = Venue.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    venue.reload
+    assert_not_equal "This Venue Name is too long...................................................................", venue.name
+  end
 end

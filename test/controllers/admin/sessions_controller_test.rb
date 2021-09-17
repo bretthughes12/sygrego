@@ -7,6 +7,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user)
     @session = FactoryBot.create(:session)
+    
     sign_in @user
   end
 
