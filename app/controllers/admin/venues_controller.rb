@@ -112,7 +112,7 @@ class Admin::VenuesController < ApplicationController
       if params[:venue][:file].path =~ %r{\.csv$}i
         result = Venue.import(params[:venue][:file], current_user)
 
-        flash[:notice] = "Venues upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"
+        flash[:notice] = "Venues upload complete: #{result[:creates]} venues created; #{result[:updates]} updates; #{result[:errors]} errors"
 
         respond_to do |format|
           format.html { redirect_to admin_venues_url }
