@@ -1,0 +1,10 @@
+<%= simple_form_for(@page, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Page" %>
+	<%= f.input :admin %>
+	<%= f.input :permalink %>
+	<%= f.input :content, as: :rich_text_area %>
+
+	<%= f.button :submit %>
+<% end %>	

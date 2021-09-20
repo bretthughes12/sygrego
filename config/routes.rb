@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+
+  # Public routes
   root 'admin/sports#index'
+  resources :pages, only: [:show]
+  get 'static/:permalink' => 'pages#show', :as => :static
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -26,6 +30,7 @@ Rails.application.routes.draw do
       end
     end
     resources :audit_trail, only: [:index]
+    resources :pages
 
     resources :sports do
       collection do

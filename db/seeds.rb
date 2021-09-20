@@ -7,4 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Create the singleton Setting record...
-Setting.create
+# Setting.create
+
+# Create static page entries for the information and policy pages
+Page.create(name: "About Us",
+            permalink: "info",
+            admin: true)
+Page.create(name: "Terms and Conditions",
+            permalink: "terms",
+            admin: true)
+Page.create(name: "Privacy Policy",
+            permalink: "privacy",
+            admin: true)
