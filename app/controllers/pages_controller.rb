@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   
     before_action :find_page_by_permalink, only: :show
-#    load_and_authorize_resource
     
     layout 'users'
     

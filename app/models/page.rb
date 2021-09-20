@@ -12,7 +12,7 @@
 class Page < ActiveRecord::Base
   
     has_rich_text :content
-    
+
     scope :public_viewable, -> { where(admin: false) }
   
     validates :name,                   presence: true,
@@ -21,9 +21,4 @@ class Page < ActiveRecord::Base
                                        uniqueness: { case_sensitive: false },
                                        length: { maximum: 20 }
   
-#    searchable_by :name, :content
-  
-    def self.per_page
-      30
-    end
   end
