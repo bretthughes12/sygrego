@@ -3,7 +3,7 @@
 # Table name: pages
 #
 #  id         :bigint           not null, primary key
-#  admin      :boolean
+#  admin_use  :boolean
 #  name       :string(50)
 #  permalink  :string(20)
 #  created_at :datetime         not null

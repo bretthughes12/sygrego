@@ -3,7 +3,7 @@
 # Table name: pages
 #
 #  id         :bigint           not null, primary key
-#  admin      :boolean
+#  admin_use  :boolean
 #  name       :string(50)
 #  permalink  :string(20)
 #  created_at :datetime         not null
@@ -13,7 +13,7 @@ class Page < ActiveRecord::Base
   
     has_rich_text :content
 
-    scope :public_viewable, -> { where(admin: false) }
+    scope :public_viewable, -> { where(admin_use: false) }
   
     validates :name,                   presence: true,
                                        length: { maximum: 50 }

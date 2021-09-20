@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2021_09_19_220254) do
   create_table "pages", force: :cascade do |t|
     t.string "name", limit: 50
     t.string "permalink", limit: 20
-    t.boolean "admin"
+    t.boolean "admin_use"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

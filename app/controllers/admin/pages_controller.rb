@@ -74,7 +74,7 @@ class Admin::PagesController < ApplicationController
       params.require(:page).permit(:name, 
                                    :permalink,
                                    :content,
-                                   :admin)
+                                   :admin_use)
     end
   end
   
