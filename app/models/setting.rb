@@ -73,6 +73,16 @@ class Setting < ApplicationRecord
   validates :daily_adjustment,             numericality: true
   validates :early_bird_discount,          numericality: true
   validates :helper_adjustment,            numericality: true
+  validates :this_year,                    numericality: { only_integer: true }
+  validates :info_email,                   length: { maximum: 100 }
+  validates :admin_email,                  length: { maximum: 100 }
+  validates :rego_email,                   length: { maximum: 100 }
+  validates :sports_email,                 length: { maximum: 100 }
+  validates :sports_admin_email,           length: { maximum: 100 }
+  validates :ticket_email,                 length: { maximum: 100 }
+  validates :lost_property_email,          length: { maximum: 100 }
+  validates :finance_email,                length: { maximum: 100 }
+  validates :comms_email,                  length: { maximum: 100 }
 
   def method_missing(method_sym, *arguments, &block)
     APP_CONFIG.key?(method_sym) ? APP_CONFIG[method_sym] : super
