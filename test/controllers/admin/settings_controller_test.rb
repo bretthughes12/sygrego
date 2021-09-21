@@ -166,7 +166,7 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not update social settings with errors" do
-    patch update_fees_admin_setting_url(@setting), params: { setting: { full_fee: "a" } }
+    patch update_social_admin_setting_url(@setting), params: { setting: { full_fee: "a" } }
 
     assert_response :success
     # Reload association to fetch updated data and assert that title is updated.
