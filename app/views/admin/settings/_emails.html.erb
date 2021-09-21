@@ -1,0 +1,16 @@
+<%= simple_form_for(setting, url: url) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>Emails</h3>
+	<%= f.input :info_email %>
+	<%= f.input :admin_email %>
+	<%= f.input :rego_email %>
+	<%= f.input :sports_email %>
+	<%= f.input :sports_admin_email %>
+	<%= f.input :finance_email %>
+	<%= f.input :comms_email %>
+	<%= f.input :lost_property_email %>
+	<%= f.input :ticket_email %>
+
+    <%= f.button :submit %>
+<% end %>

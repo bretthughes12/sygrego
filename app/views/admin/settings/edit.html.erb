@@ -2,20 +2,48 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= render partial: "event", 
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
+
+<br/>
+
 <%= render partial: "functionality", 
-           locals: { setting: @setting } %>
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
 
 <br/>
 
 <%= render partial: "fees",  
-           locals: { setting: @setting } %>
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
+
+<br/>
+
+<%= render partial: "emails",  
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
+
+<br/>
+
+<%= render partial: "social",  
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
 
 <br/>
 
 <%= render partial: "divisions",  
-           locals: { setting: @setting } %>
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
 
 <br/>
 
 <%= render partial: "sports_factors",  
-           locals: { setting: @setting } %>
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>
+
+<br/>
+
+<%= render partial: "website",  
+           locals: { url: admin_setting_path(@setting),
+                     setting: @setting } %>

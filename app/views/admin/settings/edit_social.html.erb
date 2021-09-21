@@ -1,0 +1,7 @@
+<% title "Social Links" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "social", 
+           locals: { url: update_social_admin_setting_path(@setting),
+                     setting: @setting } %>

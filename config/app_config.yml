@@ -3,17 +3,17 @@ site_settings: &site_settings
 #    state_abbr: VIC
 #    state_name: Victoria
 #    camping_ground: Lardner Park
-    this_year: 2022
+#    this_year: 2022
 #    first_day_of_syg: 8th June 2021
     # not the early bird cutoff; the date that payments are due after early bird cutoff
 #    early_bird_cutoff: 26th April 2021
 #    site_opening_month: March
     first_year: 1991
     conference_name: Conference of Churches of Christ in Victoria and Tasmania
-    public_website: http://stateyouthgames.com/syg/
-    rego_website: https://sygrego.com
+#    public_website: http://stateyouthgames.com/syg/
+#    rego_website: https://sygrego.com
     backend_website: https://sygrego.com
-    website_host: sygrego.com
+#    website_host: sygrego.com
 #    committee_name: committee
 #    state_area_code: 3
     abn: 264 033 23 495
@@ -100,20 +100,20 @@ site_settings: &site_settings
 # Email
 #    use_bcc_on_emails: false
     email_subject: "[SYG Registrations]"
-    info_email: info@stateyouthgames.com
-    admin_email: juzzy@stateyouthgames.com
-    rego_email: registrations@stateyouthgames.com
-    sports_email: sports@stateyouthgames.com
-    sports_admin_email: sportadmin@stateyouthgames.com
-    ticket_email: ticket@stateyouthgames.com
-    lost_property_email: lostproperty@stateyouthgames.com
-    finance_email: juzzy@stateyouthgames.com
-    comms_email: comms@stateyouthgames.com
+#    info_email: info@stateyouthgames.com
+#    admin_email: juzzy@stateyouthgames.com
+#    rego_email: registrations@stateyouthgames.com
+#    sports_email: sports@stateyouthgames.com
+#    sports_admin_email: sportadmin@stateyouthgames.com
+#    ticket_email: ticket@stateyouthgames.com
+#    lost_property_email: lostproperty@stateyouthgames.com
+#    finance_email: juzzy@stateyouthgames.com
+#    comms_email: comms@stateyouthgames.com
 
 # Social
-    social_twitter_url: https://twitter.com/sygvic
-    social_facebook_url: https://www.facebook.com/sygvic
-    social_facebook_gc_url: https://www.facebook.com/groups/273469726061279/
+#    social_twitter_url: https://twitter.com/sygvic
+#    social_facebook_url: https://www.facebook.com/sygvic
+#    social_facebook_gc_url: https://www.facebook.com/groups/273469726061279/
 
 # Charts
 #    chart_title_color: 000000

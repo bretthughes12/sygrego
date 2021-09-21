@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_19_220254) do
+ActiveRecord::Schema.define(version: 2021_09_20_223006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,26 @@ ActiveRecord::Schema.define(version: 2021_09_19_220254) do
     t.decimal "early_bird_discount", precision: 8, scale: 2, default: "10.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "info_email", limit: 100, default: ""
+    t.string "admin_email", limit: 100, default: ""
+    t.string "rego_email", limit: 100, default: ""
+    t.string "sports_email", limit: 100, default: ""
+    t.string "sports_admin_email", limit: 100, default: ""
+    t.string "ticket_email", limit: 100, default: ""
+    t.string "lost_property_email", limit: 100, default: ""
+    t.string "finance_email", limit: 100, default: ""
+    t.string "comms_email", limit: 100, default: ""
+    t.string "social_twitter_url", default: ""
+    t.string "social_facebook_url", default: ""
+    t.string "social_facebook_gc_url", default: ""
+    t.string "social_instagram_url", default: ""
+    t.string "public_website", default: ""
+    t.string "rego_website", default: ""
+    t.string "website_host", default: ""
+    t.integer "this_year", default: 1991
+    t.date "first_day_of_syg"
+    t.date "early_bird_cutoff"
+    t.date "deposit_due_date"
   end
 
   create_table "sports", force: :cascade do |t|

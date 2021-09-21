@@ -1,0 +1,11 @@
+<%= simple_form_for(setting, url: url) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>Event Settings</h3>
+	<%= f.input :this_year %>
+	<%= f.input :first_day_of_syg %>
+	<%= f.input :early_bird_cutoff %>
+	<%= f.input :deposit_due_date %>
+
+    <%= f.button :submit %>
+<% end %>

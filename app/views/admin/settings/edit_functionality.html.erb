@@ -3,4 +3,5 @@
 <h1><%= yield(:title) %></h1>
 
 <%= render partial: "functionality", 
-		   locals: { setting: @setting } %>
+           locals: { url: update_functionality_admin_setting_path(@setting),
+                     setting: @setting } %>

@@ -14,9 +14,24 @@ class Admin::SettingsController < ApplicationController
     def edit
         @setting = Setting.find(params[:id])
     end
+
+    # GET /admin/settings/1/edit_event
+    def edit_event
+      @setting = Setting.find(params[:id])
+    end
   
     # GET /admin/settings/1/edit_functionality
     def edit_functionality
+      @setting = Setting.find(params[:id])
+    end
+
+    # GET /admin/settings/1/edit_email
+    def edit_email
+      @setting = Setting.find(params[:id])
+    end
+
+    # GET /admin/settings/1/edit_social
+    def edit_social
       @setting = Setting.find(params[:id])
     end
 
@@ -35,6 +50,11 @@ class Admin::SettingsController < ApplicationController
       @setting = Setting.find(params[:id])
     end
 
+    # GET /admin/settings/1/edit_website
+    def edit_website
+      @setting = Setting.find(params[:id])
+    end
+
   # PUT /admin/settings/1
     def update
       @setting = Setting.find(params[:id])
@@ -49,6 +69,20 @@ class Admin::SettingsController < ApplicationController
       end
     end
   
+  # PUT /admin/settings/1/update_event
+  def update_event
+    @setting = Setting.find(params[:id])
+
+    respond_to do |format|
+      if @setting.update(settings_params)
+        flash[:notice] = 'Event settings were successfully updated.'
+        format.html { render action: "edit_event" }
+      else
+        format.html { render action: "edit_event" }
+      end
+    end
+  end
+  
   # PUT /admin/settings/1/update_functionality
   def update_functionality
       @setting = Setting.find(params[:id])
@@ -62,6 +96,34 @@ class Admin::SettingsController < ApplicationController
         end
       end
     end
+  
+  # PUT /admin/settings/1/update_email
+  def update_email
+    @setting = Setting.find(params[:id])
+
+    respond_to do |format|
+      if @setting.update(settings_params)
+        flash[:notice] = 'Email settings were successfully updated.'
+        format.html { render action: "edit_email" }
+      else
+        format.html { render action: "edit_email" }
+      end
+    end
+  end
+  
+  # PUT /admin/settings/1/update_social
+  def update_social
+    @setting = Setting.find(params[:id])
+
+    respond_to do |format|
+      if @setting.update(settings_params)
+        flash[:notice] = 'Social links were successfully updated.'
+        format.html { render action: "edit_social" }
+      else
+        format.html { render action: "edit_social" }
+      end
+    end
+  end
   
   # PUT /admin/settings/1/update_fees
   def update_fees
@@ -104,6 +166,20 @@ class Admin::SettingsController < ApplicationController
       end
     end
   end
+  
+  # PUT /admin/settings/1/update_website
+  def update_website
+    @setting = Setting.find(params[:id])
+
+    respond_to do |format|
+      if @setting.update(settings_params)
+        flash[:notice] = 'Website admin settings were successfully updated.'
+        format.html { render action: "edit_website" }
+      else
+        format.html { render action: "edit_website" }
+      end
+    end
+  end
 
   private
   
@@ -132,6 +208,28 @@ class Admin::SettingsController < ApplicationController
                                       :primary_age_adjustment,
                                       :daily_adjustment,
                                       :helper_adjustment,
-                                      :early_bird_discount)
+                                      :early_bird_discount,
+                                      :info_email,
+                                      :admin_email,
+                                      :rego_email,
+                                      :sports_email,
+                                      :sports_admin_email,
+                                      :ticket_email,
+                                      :lost_property_email,
+                                      :finance_email,
+                                      :comms_email,
+                                      :this_year,
+                                      :first_day_of_syg,
+                                      :early_bird_cutoff,
+                                      :deposit_due_date,
+                                      :social_twitter_url,
+                                      :social_facebook_url,
+                                      :social_facebook_gc_url,
+                                      :social_instagram_url,
+                                      :public_website,
+                                      :rego_website,
+                                      :website_host
+                                    )
+
     end
   end

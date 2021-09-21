@@ -1,0 +1,7 @@
+<% title "Website admin settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "website", 
+           locals: { url: update_website_admin_setting_path(@setting),
+                     setting: @setting } %>

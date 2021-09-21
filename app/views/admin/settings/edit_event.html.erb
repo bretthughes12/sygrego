@@ -1,0 +1,7 @@
+<% title "Event settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "event", 
+           locals: { url: update_event_admin_setting_path(@setting),
+                     setting: @setting } %>

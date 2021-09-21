@@ -1,9 +1,10 @@
 <%= simple_form_for(setting, url: url) do |f| %> 
 	<%= f.error_notification %>
 
-	<h3>Divisions</h3>
-	<%= f.input :small_division_ceiling %>
-	<%= f.input :medium_division_ceiling %>	
+	<h3>Website Admin</h3>
+	<%= f.input :public_website %>
+	<%= f.input :rego_website %>
+	<%= f.input :website_host %>
 
     <%= f.button :submit %>
 <% end %>

@@ -1,0 +1,7 @@
+<% title "Email settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "emails", 
+           locals: { url: update_email_admin_setting_path(@setting),
+                     setting: @setting } %>

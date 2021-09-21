@@ -3,4 +3,5 @@
 <h1><%= yield(:title) %></h1>
 
 <%= render partial: "sports_factors", 
-           locals: { setting: @setting } %>
+           locals: { url: update_sports_factors_admin_setting_path(@setting),
+                     setting: @setting } %>

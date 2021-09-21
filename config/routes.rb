@@ -19,14 +19,22 @@ Rails.application.routes.draw do
 
     resources :settings, only: [:show, :edit, :update] do
       member do
+        get :edit_event
         get :edit_functionality
+        get :edit_email
+        get :edit_social
         get :edit_fees
         get :edit_divisions
         get :edit_sports_factors
+        get :edit_website
+        patch :update_event
         patch :update_functionality
+        patch :update_email
+        patch :update_social
         patch :update_fees
         patch :update_divisions
         patch :update_sports_factors
+        patch :update_website
       end
     end
     resources :audit_trail, only: [:index]

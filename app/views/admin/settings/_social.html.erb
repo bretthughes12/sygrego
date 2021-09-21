@@ -1,0 +1,11 @@
+<%= simple_form_for(setting, url: url) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>Socials</h3>
+	<%= f.input :social_twitter_url %>
+	<%= f.input :social_facebook_url %>
+	<%= f.input :social_facebook_gc_url %>
+	<%= f.input :social_instagram_url %>
+
+    <%= f.button :submit %>
+<% end %>
