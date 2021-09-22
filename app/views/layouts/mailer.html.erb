@@ -388,14 +388,20 @@ max-width:180px !important;
                                                 <tr>
                                                     <td colspan="2" valign="middle" id="social">
                                                         <div mc:edit="std_social">
-															<% unless APP_CONFIG[:social_twitter_url].blank? %>
-                                                            &nbsp;<a href="<%= APP_CONFIG[:social_twitter_url] %>">follow on Twitter</a> 
+															<% unless @settings.social_twitter_url.blank? %>
+                                                            &nbsp;<a href="<%= @settings.social_twitter_url %>">Twitter</a> 
 															<% end %>
-															<% unless APP_CONFIG[:social_twitter_url].blank? || APP_CONFIG[:social_facebook_url].blank? %>
-															|
+															<% unless @settings.social_facebook_url.blank? %>
+															<a href="<%= @settings.social_facebook_url %>">Facebook</a>&nbsp;
 															<% end %>
-															<% unless APP_CONFIG[:social_facebook_url].blank? %>
-															<a href="<%= APP_CONFIG[:social_facebook_url] %>">join on Facebook</a>&nbsp;
+															<% unless @settings.social_instagram_url.blank? %>
+															<a href="<%= @settings.social_instagram_url %>">Instagram</a>&nbsp;
+															<% end %>
+															<% unless @settings.social_youtube_url.blank? %>
+															<a href="<%= @settings.social_youtube_url %>">Youtube</a>&nbsp;
+															<% end %>
+															<% unless @settings.social_spotify_url.blank? %>
+															<a href="<%= @settings.social_spotify_url %>">Spotify</a>&nbsp;
 															<% end %>
                                                         </div>
                                                     </td>
@@ -403,7 +409,7 @@ max-width:180px !important;
                                                 <tr>
                                                     <td valign="top" width="350">
                                                         <div mc:edit="std_footer">
-															<em>Copyright &copy; <%= APP_CONFIG[:this_year] %> State Youth Games Victoria, All rights reserved.</em>
+															<em>Copyright &copy; <%= @settings.this_year %> State Youth Games Victoria, All rights reserved.</em>
                                                         </div>
                                                     </td>
                                                 </tr>
