@@ -19,3 +19,6 @@ Page.create(name: "Terms and Conditions",
 Page.create(name: "Privacy Policy",
             permalink: "privacy",
             admin_use: true)
+Page.create(name: "Participant Image Use Policy",
+            permalink: "image",
+            admin_use: true)
