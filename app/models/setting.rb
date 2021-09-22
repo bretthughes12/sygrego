@@ -34,7 +34,9 @@
 #  social_facebook_gc_url               :string           default("")
 #  social_facebook_url                  :string           default("")
 #  social_instagram_url                 :string           default("")
+#  social_spotify_url                   :string           default("")
 #  social_twitter_url                   :string           default("")
+#  social_youtube_url                   :string           default("")
 #  spectator_adjustment                 :decimal(8, 2)    default(0.77), not null
 #  sport_coord_sports_allocation_factor :integer          default(0)
 #  sports_admin_email                   :string(100)      default("")

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_223006) do
+ActiveRecord::Schema.define(version: 2021_09_22_001520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,8 @@ ActiveRecord::Schema.define(version: 2021_09_20_223006) do
     t.date "first_day_of_syg"
     t.date "early_bird_cutoff"
     t.date "deposit_due_date"
+    t.string "social_youtube_url", default: ""
+    t.string "social_spotify_url", default: ""
   end
 
   create_table "sports", force: :cascade do |t|

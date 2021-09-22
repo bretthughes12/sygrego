@@ -226,6 +226,8 @@ class Admin::SettingsController < ApplicationController
                                       :social_facebook_url,
                                       :social_facebook_gc_url,
                                       :social_instagram_url,
+                                      :social_youtube_url,
+                                      :social_spotify_url,
                                       :public_website,
                                       :rego_website,
                                       :website_host
