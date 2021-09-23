@@ -36,9 +36,12 @@ FactoryBot.define do
     sport
     sequence(:name)             { |n| "Grade#{n}"}
     max_age                     {130}
+    min_age                     {11}
     gender_type                 {"Open"}
     max_participants            {99}
     min_participants            {0}
+    min_males                   {0}
+    min_females                 {0}
     status                      {"Open"}
     active                      {true}
   end

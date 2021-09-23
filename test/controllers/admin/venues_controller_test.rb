@@ -147,8 +147,6 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not show  non existent venue via xhr" do
-    sign_out @user
-
     get admin_venue_url(123456, format: :xml),
         xhr: true,
         headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}

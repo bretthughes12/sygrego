@@ -202,6 +202,18 @@ class Grade < ApplicationRecord
   private
 
     def self.sync_fields
-        ['name']
+        ['name',
+         'active',
+         'database_rowid',
+         'entry_limit',
+         'gender_type',
+         'grade_type',
+         'max_age',
+         'min_age',
+         'max_participants',
+         'min_participants',
+         'sport_id',
+         'status'
+        ]
     end
 end
