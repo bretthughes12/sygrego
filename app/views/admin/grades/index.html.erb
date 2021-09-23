@@ -1,0 +1,21 @@
+<% title "Listing grades" %>
+
+<h1><%= yield(:title) %></h1>
+
+<ul>
+  <% @grades.each do |grade| %>
+    <li>
+        <%= link_to grade.name, edit_admin_grade_path(grade) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New grade", new_admin_grade_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_grades_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_grades_path,
+                  class: primary_button_class,
+                  role: "button" %>

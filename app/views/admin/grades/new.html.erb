@@ -1,0 +1,13 @@
+<% title "New grade" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_grades_path(@grade), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_grades_path,
+                  class: primary_button_class,
+                  role: "button" %>

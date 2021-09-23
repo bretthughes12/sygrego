@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_001520) do
+ActiveRecord::Schema.define(version: 2021_09_23_005211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,32 @@ ActiveRecord::Schema.define(version: 2021_09_22_001520) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.integer "database_rowid"
+    t.integer "sport_id", default: 0, null: false
+    t.string "name", limit: 50, null: false
+    t.boolean "active"
+    t.string "grade_type", limit: 10, default: "Team", null: false
+    t.string "gender_type", limit: 10, default: "Open", null: false
+    t.integer "max_age", default: 29, null: false
+    t.integer "min_age", default: 11, null: false
+    t.integer "max_participants", default: 0, null: false
+    t.integer "min_participants", default: 0, null: false
+    t.integer "min_males", default: 0, null: false
+    t.integer "min_females", default: 0, null: false
+    t.string "status", limit: 20, default: "Open", null: false
+    t.integer "entry_limit"
+    t.integer "starting_entry_limit"
+    t.integer "team_size", default: 1
+    t.datetime "waitlist_expires_at"
+    t.integer "entries_to_be_allocated", default: 999
+    t.boolean "over_limit"
+    t.boolean "one_entry_per_group"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "updated_by"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -184,4 +210,5 @@ ActiveRecord::Schema.define(version: 2021_09_22_001520) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "grades", "sports"
 end

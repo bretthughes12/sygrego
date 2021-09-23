@@ -1,0 +1,12 @@
+<% title "Grade details: #{@grade.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @grade %>
+
+<%= link_to "Back", admin_grades_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_grade_path(@grade),
+                  class: primary_button_class,
+                  role: "button" %>

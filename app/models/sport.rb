@@ -20,6 +20,14 @@ class Sport < ApplicationRecord
     include Comparable
     include Auditable
 
+    has_many :grades
+#    has_many :officials, as: :coord_rqmt
+#    has_many :downloads
+
+    attr_reader :grades_as_limited
+
+    scope :individual, -> { where(classification: 'Individual') }
+    scope :team, -> { where(classification: 'Team') }
     scope :active, -> { where(active: true) }
 
     CLASSIFICATIONS = %w[Individual
@@ -58,6 +66,13 @@ class Sport < ApplicationRecord
         max_indiv_entries_group + max_team_entries_group
     end
 
+    def limit_grades_to(grades)
+        @grades_as_limited = []
+        grades.each.collect do |grade|
+          @grades_as_limited << grade if grade.sport == self
+        end
+    end
+        
     def self.import(file, user)
         creates = 0
         updates = 0
@@ -95,7 +110,7 @@ class Sport < ApplicationRecord
                 if sport.errors.empty?
                     creates += 1
                 else
-                errors += 1
+                    errors += 1
                 end
             end
         end

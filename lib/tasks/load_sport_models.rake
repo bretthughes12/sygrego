@@ -39,4 +39,16 @@ namespace :syg do
   
         puts "Sports imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
     end
+  
+    desc 'Load / update sport grades table into the database'
+    task load_sports: ['db/data/sport_grade.csv', 'db:migrate'] do |t|
+        puts 'Loading sport grades...'
+
+        user = User.first
+        file = File.new(t.prerequisites.first)
+
+        result = Grade.import(file, user)
+  
+        puts "Grades imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
+    end
 end

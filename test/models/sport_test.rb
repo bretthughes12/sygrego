@@ -100,4 +100,20 @@ class SportTest < ActiveSupport::TestCase
     sport.reload
     assert_not_equal "Random", sport.court_name
   end
+
+  test "should limit grades for a sport" do
+    sport = FactoryBot.create(:sport)
+    include_grade1 = FactoryBot.create(:grade, sport: sport)
+    include_grade2 = FactoryBot.create(:grade, sport: sport)
+    exclude_grade = FactoryBot.create(:grade, sport: sport)
+    wrong_sport_grade = FactoryBot.create(:grade)
+
+    sport.limit_grades_to([include_grade1, include_grade2, wrong_sport_grade])
+
+    assert_equal 2, sport.grades_as_limited.size
+    assert_equal true, sport.grades_as_limited.include?(include_grade1)
+    assert_equal true, sport.grades_as_limited.include?(include_grade2)
+    assert_equal false, sport.grades_as_limited.include?(wrong_sport_grade)
+    assert_equal false, sport.grades_as_limited.include?(exclude_grade)
+  end
 end

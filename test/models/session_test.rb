@@ -38,7 +38,7 @@ class SessionTest < ActiveSupport::TestCase
     assert_equal [@session.name, other_session.name], Session.session_names
   end
   
-  test "should show the test count" do
+  test "should show the session count" do
     assert_equal 1, Session.total_sessions
   end
 

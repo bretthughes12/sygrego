@@ -1,0 +1,39 @@
+<% title "Upload grades" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Import file must be in '.csv' format, with columns the same as the download:</p>
+<ul>
+  <li>RowID</li>
+  <li>Sport</li>
+  <li>Name</li>
+  <li>Active</li>
+  <li>Type</li>
+  <li>Status</li>
+  <li>MaxAge</li>
+  <li>MinAge</li>
+  <li>GenderType</li>
+  <li>MaxPart</li>
+  <li>MinPart</li>
+  <li>MinMales</li>
+  <li>MinFemales</li>
+  <li>TeamSize</li>
+  <li>Limit</li>
+  <li>StartLimit</li>
+</ul>
+
+<%= simple_form_for(@grade, url: import_admin_grades_path) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :file, as: :file, label: "Upload file" %>
+
+    <br/>
+
+	<%= f.button :submit, "Upload" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", admin_grades_path,
+                  class: primary_button_class,
+                  role: "button" %>

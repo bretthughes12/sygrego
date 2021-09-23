@@ -1,0 +1,21 @@
+<%= simple_form_for(@grade, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Sports grade" %>
+	<%= f.input :sport_id, as: :select, collection: Sport.order(:name).load %>
+	<%= f.input :active %>
+	<%= f.input :grade_type, as: :select, collection: Grade::GRADE_TYPES %>
+	<%= f.input :gender_type, as: :select, collection: Grade::GENDER_TYPES %>
+	<%= f.input :max_age %>
+	<%= f.input :min_age %>
+	<%= f.input :max_participants %>
+	<%= f.input :min_participants %>
+	<%= f.input :min_males %>
+	<%= f.input :min_females %>
+	<%= f.input :starting_entry_limit %>
+	<%= f.input :entry_limit %>
+	<%= f.input :status, as: :select, collection: Grade::STATUSES %>
+	<%= f.input :team_size %>
+
+	<%= f.button :submit %>
+<% end %>	

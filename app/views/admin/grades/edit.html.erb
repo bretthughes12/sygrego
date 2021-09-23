@@ -1,0 +1,21 @@
+<% title "Editing #{@grade.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_grade_path(@grade), 
+                              method: :put } %>
+
+<br/>
+
+<%= link_to "Back", admin_grades_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_grade_path(@grade),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_grade_path(@grade),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

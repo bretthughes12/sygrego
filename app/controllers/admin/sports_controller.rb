@@ -85,14 +85,15 @@ class Admin::SportsController < ApplicationController
     def destroy
         @sport.updated_by = current_user.id
 
-        begin
+
+        if @sport.grades.empty?
             @sport.destroy
   
             respond_to do |format|
                 format.html { redirect_to(admin_sports_url) }
             end
         
-        rescue Exception
+        else
             flash[:notice] = "Can't delete, as grades exist"
         
             respond_to do |format|

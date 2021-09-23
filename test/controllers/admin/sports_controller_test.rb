@@ -126,6 +126,16 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "should not destroy sport with grades" do
+    FactoryBot.create(:grade, sport: @sport)
+
+    assert_no_difference("Sport.count") do
+      delete admin_sport_url(@sport)
+    end
+
+    assert_redirected_to admin_sports_path
+  end
+
   test "should show sport via xhr" do
     sign_out @user
 
@@ -146,7 +156,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     assert_response 401
   end
 
-  test "should not show  non existent sport via xhr" do
+  test "should not show non existent sport via xhr" do
     sign_out @user
 
     get admin_sport_url(123456, format: :xml),

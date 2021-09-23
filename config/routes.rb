@@ -46,6 +46,12 @@ Rails.application.routes.draw do
         post :import
       end
     end
+    resources :grades do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
     resources :sessions do
       collection do
         get :new_import
