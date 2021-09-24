@@ -62,5 +62,9 @@ namespace :syg do
         result = Section.import(file, user)
   
         puts "Sections imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
+        result[:error_list].each do |e|
+          puts "Section: #{e.name}"
+          pp e.errors
+        end
     end
 end

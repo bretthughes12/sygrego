@@ -27,6 +27,7 @@ class Section < ApplicationRecord
     include Auditable
 
     require 'csv'
+    require 'pp'
   
     attr_reader :file
 
@@ -73,6 +74,7 @@ class Section < ApplicationRecord
         creates = 0
         updates = 0
         errors = 0
+        error_list = []
   
         CSV.foreach(file.path, headers: true) do |fields|
             grade = Grade.where(name: fields[1]).first
@@ -95,6 +97,7 @@ class Section < ApplicationRecord
                     updates += 1
                 else
                     errors += 1
+                    error_list << section
                 end
             else
                 section = Section.create(
@@ -112,11 +115,12 @@ class Section < ApplicationRecord
                     creates += 1
                 else
                     errors += 1
+                    error_list << section
                 end
             end
         end
   
-        { creates: creates, updates: updates, errors: errors }
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
   private

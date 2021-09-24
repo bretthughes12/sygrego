@@ -1,5 +1,5 @@
 RowID,Grade,Name,Active,Venue,YearIntroduced,NbrOfCourts,Session
--1426823011,AFL Mixed B1,AFL Recreational Football Mixed B1,true,WLHT,2005,2,1
+-1426823011,AFL Mixed B1,AFL Recreational Football Mixed B1,true,WLHT,2005,2,11
 2033414554,AFL Mixed B2,AFL Recreational Football Mixed B2,true,WLHT,2006,2,2
 -441395917,AFL Mixed B3,AFL Recreational Football Mixed B3,true,BBD3,0,1,4
 1788564499,Air Hockey Open,Air Hockey Open,true,WTPB,2005,1,4
@@ -209,28 +209,3 @@ RowID,Grade,Name,Active,Venue,YearIntroduced,NbrOfCourts,Session
 1253879086,Volleyball Mixed C5 and C6,Volleyball Mixed C6,true,BBRD,2009,2,5
 1411432640,Volleyball Mixed Under 18-1,Volleyball Mixed Under 18-1,true,BBRD,0,1,1
 -1494326847,Volleyball Mixed Under 18-2,Volleyball Mixed Under 18-2,true,BBRD,0,1,2
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,Grade,,,,,
