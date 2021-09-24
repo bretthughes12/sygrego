@@ -9,6 +9,7 @@ class Admin::InfoController < ApplicationController
 
         @tech_stats << model_stats(Sport)    
         @tech_stats << model_stats(Grade) 
+        @tech_stats << model_stats(Section)    
         @tech_stats << model_stats(Session)    
         @tech_stats << model_stats(Venue)    
 

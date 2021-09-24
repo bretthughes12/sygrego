@@ -1,0 +1,13 @@
+<% title "New section" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_sections_path(@section), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>

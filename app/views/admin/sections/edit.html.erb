@@ -1,0 +1,21 @@
+<% title "Editing #{@section.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_section_path(@section), 
+                              method: :put } %>
+
+<br/>
+
+<%= link_to "Back", admin_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_section_path(@section),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_section_path(@section),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

@@ -1,0 +1,22 @@
+<% title "Section details: #{@section.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @section %>
+
+<br/>
+
+<% if @section.draw_file.attached? %>
+
+    <%= image_tag @section.draw_file.preview(resize_to_limit: [800, 1000]) %>
+
+<% end %>
+
+<br/>
+
+<%= link_to "Back", admin_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_section_path(@section),
+                  class: primary_button_class,
+                  role: "button" %>

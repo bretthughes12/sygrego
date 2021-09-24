@@ -1,0 +1,21 @@
+<% title "Listing sections" %>
+
+<h1><%= yield(:title) %></h1>
+
+<ul>
+  <% @sections.each do |section| %>
+    <li>
+        <%= link_to section.name, edit_admin_section_path(section) %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New section", new_admin_section_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_sections_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>

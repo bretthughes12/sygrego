@@ -1,0 +1,27 @@
+<%= simple_form_for(@section, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Sports section" %>
+	<%= f.input :grade_id, as: :select, collection: Grade.order(:name).load %>
+	<%= f.input :active %>
+	<%= f.input :venue_id, as: :select, collection: Venue.order(:name).load %>
+	<%= f.input :session_id, as: :select, collection: Session.order(:database_rowid).load %>
+	<%= f.input :number_of_courts %>
+	<%= f.input :year_introduced %>
+	<%= f.input :number_in_draw %>
+	
+	<% if @section.draw_file.attached? %>
+	    <%= image_tag @section.draw_file.preview(resize_to_limit: [80, 100]) %>
+		<%= link_to "Remove file", purge_file_admin_section_path(@section),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :draw_file, as: :file %>
+	<% end %>
+
+	<%= f.button :submit %>
+<% end %>

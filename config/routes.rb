@@ -52,6 +52,15 @@ Rails.application.routes.draw do
         post :import
       end
     end
+    resources :sections do
+      member do
+        patch :purge_file
+      end
+      collection do
+        get :new_import
+        post :import
+      end
+    end
     resources :sessions do
       collection do
         get :new_import

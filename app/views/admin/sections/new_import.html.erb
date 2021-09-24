@@ -1,0 +1,31 @@
+<% title "Upload sections" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Import file must be in '.csv' format, with columns the same as the download:</p>
+<ul>
+  <li>RowID</li>
+  <li>Grade</li>
+  <li>Name</li>
+  <li>Active</li>
+  <li>Venue</li>
+  <li>YearIntroduced</li>
+  <li>NbrOfCourts</li>
+  <li>Session</li>
+</ul>
+
+<%= simple_form_for(@section, url: import_admin_sections_path) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :file, as: :file, label: "Upload file" %>
+
+    <br/>
+
+	<%= f.button :submit, "Upload" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", admin_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>

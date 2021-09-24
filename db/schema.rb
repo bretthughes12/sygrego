@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_23_005211) do
+ActiveRecord::Schema.define(version: 2021_09_23_190432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,21 @@ ActiveRecord::Schema.define(version: 2021_09_23_005211) do
     t.string "name", limit: 50
     t.string "permalink", limit: 20
     t.boolean "admin_use"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.integer "grade_id", default: 0, null: false
+    t.string "name", limit: 50, null: false
+    t.boolean "active"
+    t.integer "venue_id", default: 0, null: false
+    t.integer "session_id", default: 0, null: false
+    t.integer "database_rowid"
+    t.integer "number_in_draw"
+    t.integer "year_introduced"
+    t.integer "number_of_courts", default: 1
+    t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -211,4 +226,7 @@ ActiveRecord::Schema.define(version: 2021_09_23_005211) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "grades", "sports"
+  add_foreign_key "sections", "grades"
+  add_foreign_key "sections", "sessions"
+  add_foreign_key "sections", "venues"
 end

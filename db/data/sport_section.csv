@@ -1,0 +1,236 @@
+RowID,Grade,Name,Active,Venue,YearIntroduced,NbrOfCourts,Session
+-1426823011,AFL Mixed B1,AFL Recreational Football Mixed B1,true,WLHT,2005,2,1
+2033414554,AFL Mixed B2,AFL Recreational Football Mixed B2,true,WLHT,2006,2,2
+-441395917,AFL Mixed B3,AFL Recreational Football Mixed B3,true,BBD3,0,1,4
+1788564499,Air Hockey Open,Air Hockey Open,true,WTPB,2005,1,4
+815192408,Air Hockey Under 18,Air Hockey Under 18,true,WTPB,2005,1,5
+286414890,Arts Cartoon Illustration,Arts Cartoon Illustration,true,LAPK,2018,1,4
+1515234943,Arts Typography - Saturday Morning,Arts Typography - Saturday Morning,true,LAPK,0,1,1
+-800833078,Arts Typography - Sunday Afternoon,Arts Typography – Sunday Afternoon,true,LAPK,0,1,5
+-1229862396,Arts Watercolour,Arts Watercolour,true,LAPK,2018,1,2
+1878723213,Badminton Ladies' Open,Badminton Ladies' Open,true,WBC,0,4,2
+-805533821,Badminton Ladies' Under 18,Badminton Ladies' Under 18,true,WBC,0,4,1
+48464904,Badminton Men's Open,Badminton Men's Open,true,WBC,0,4,2
+101132662,Badminton Men's Under 18,Badminton Men's Under 18,true,WBC,0,4,1
+235031999,Badminton Open Mixed Doubles,Badminton Open Mixed Doubles,true,WBC,0,4,2
+1574307333,Badminton Under 18 Mixed Doubles,Badminton Under 18 Mixed Doubles,true,WBC,0,4,1
+-1628053470,Basketball A,Basketball A,true,WLC,0,2,2
+-440115442,Basketball B1,Basketball B1,true,STP,0,2,1
+-831829641,Basketball B2,Basketball B2,true,STP,0,2,2
+-1247286287,Basketball B3,Basketball B3,true,WLC,0,2,4
+-872986499,Basketball C1,Basketball C1,true,WLC,0,2,1
+1327362863,Basketball C2,Basketball C2,true,STP,0,2,4
+339523315,Basketball C3 and C4,Basketball C3,true,WLC,0,2,5
+1905268417,Basketball C3 and C4,Basketball C4,true,STP,2010,2,5
+-1680285095,Basketball Ladies',Basketball Ladies',true,WSTJ,0,1,4
+-642007130,Basketball Under 18-1,Basketball Under 18-1,true,WSTJ,0,1,1
+-1152769922,Basketball Under 18-2,Basketball Under 18-2,true,WSTJ,0,1,2
+-347437500,Basketball Under 18-3,Basketball Under 18-3,true,WSTJ,0,1,5
+-26167548,Beep Test Ladies' Open,Beep Test Ladies' Open,true,LAPK,2010,1,6
+-1698984520,Beep Test Ladies' Under 18,Beep Test Ladies' Under 18,true,LAPK,2010,1,3
+2109923373,Beep Test Men's Open,Beep Test Men's Open,true,LAPK,2010,1,3
+-1641329251,Beep Test Men's Under 18,Beep Test Men's Under 18,true,LAPK,2010,1,6
+139221803,Bocce Open B,Bocce Open B1,true,LAPK,2014,3,5
+-308168409,Bocce Open C,Bocce Open C1,true,LAPK,2018,4,2
+-148563181,Bubble Soccer C1,Bubble Soccer C1,true,DSCS,2015,2,1
+-1263833833,Bubble Soccer C2,Bubble Soccer C2,true,DSCS,2015,2,2
+1344918813,Bubble Soccer C3,Bubble Soccer C3,true,DSCS,2015,2,4
+-1485788576,Bubble Soccer C4,Bubble Soccer C4,true,DSCS,2015,2,5
+435381778,Chess Open,Chess Open,true,LAPK,0,2,1
+-402842325,Chess Under 15,Chess Under 15,true,LAPK,0,3,1
+-479018352,Chess Under 18,Chess Under 18,true,LAPK,0,6,1
+752306993,Cricket Open C1,Cricket Open C1,true,DSPS,2015,1,1
+-777229244,Cricket Open C2,Cricket Open C2,true,DSPS,2015,1,2
+1350691884,Cricket Open C3,Cricket Open C3,true,DSPS,2019,1,4
+1222071430,Cricket Open C4,Cricket Open C4,true,DSPS,2019,1,5
+-369519791,Cross Country Ladies' Open,Cross Country Ladies' Open,true,LAPK,2001,,5
+1517923134,Cross Country Ladies' Under 15,Cross Country Ladies' Under 15,true,LAPK,2001,,5
+1354550759,Cross Country Ladies' Under 18,Cross Country Ladies' Under 18,true,LAPK,2001,,5
+149797788,Cross Country Men's Open,Cross Country Men's Open,true,LAPK,2001,,5
+56107629,Cross Country Men's Under 15,Cross Country Men's Under 15,true,LAPK,2001,,5
+-5506262,Cross Country Men's Under 18,Cross Country Men's Under 18,true,LAPK,2001,,5
+-1572321145,Dance - Broadway Workshop,Dance - Broadway Workshop,true,LAPK,2018,1,5
+-441514055,Dance - Contemporary Workshop,Dance - Contemporary Workshop,true,LAPK,0,1,2
+879540117,Dance - Hip Hop Workshop,Dance - Hip Hop Workshop,true,LAPK,0,1,1
+979801122,Dance - Worship Workshop,Dance - Worship Workshop,true,LAPK,0,1,4
+-312286621,Darts Open,Darts Open,true,LAPK,0,4,1
+2072427880,Darts Under 15,Darts Under 15,true,LAPK,0,4,4
+383433545,Darts Under 18,Darts Under 18,true,LAPK,0,4,4
+-1172156445,Dodgeball A1,Dodgeball A1,true,LAPK,2015,1,1
+68470852,Dodgeball A2,Dodgeball A2,true,LAPK,2015,1,4
+-996267159,Dodgeball B1,Dodgeball B1,true,WSPJ,2009,1,1
+-1469291077,Dodgeball B2 and B3,Dodgeball B2,true,LAPK,2009,1,2
+708827566,Dodgeball B2 and B3,Dodgeball B3,true,LAPK,2015,1,2
+579022461,Dodgeball B4,Dodgeball B4,true,WSPJ,2009,1,4
+586132649,"Dodgeball B5, B6 and B7",Dodgeball B7,true,WSPJ,2019,1,5
+1595180060,"Dodgeball B5, B6 and B7",Dodgeball B6,true,LAPK,2015,1,5
+-1749579217,"Dodgeball B5, B6 and B7",Dodgeball B5,true,LAPK,2009,1,5
+1507060099,Dodgeball C1 and C2,Dodgeball C1,true,LAPK,0,1,1
+499287059,Dodgeball C1 and C2,Dodgeball C2,true,LAPK,0,1,1
+288076772,Dodgeball C3,Dodgeball C3,true,WSPJ,0,1,2
+-793708800,Dodgeball C4 and C5,Dodgeball C4,true,LAPK,0,1,4
+1670438581,Dodgeball C4 and C5,Dodgeball C5,true,LAPK,0,1,4
+-2035286996,Dodgeball C6 and C7,Dodgeball C6,true,LAPK,0,1,5
+-1121985750,Dodgeball C6 and C7,Dodgeball C7,true,LAPK,2019,1,5
+1897309038,Dodgeball Under 18-1,Dodgeball Under 18-1,true,LAPK,2008,1,1
+-72208794,Dodgeball Under 18-2,Dodgeball Under 18-2,true,LAPK,0,1,4
+-1816815139,E-Sports Open B1,E-Sports Open B1,true,LAPK,2017,1,1
+31584955,E-Sports Open B2,E-Sports Open B2,true,LAPK,2017,1,2
+1564886183,E-Sports Under 18-1,E-Sports Under 18-1,true,LAPK,2017,1,1
+545837787,E-Sports Under 18-2,E-Sports Under 18-2,true,LAPK,2017,1,2
+-691946248,European Handball A1,European Handball A1,true,CCS,2016,1,1
+1435778845,European Handball A2,European Handball A2,true,CCS,2016,1,5
+366677943,European Handball B1,European Handball B1,true,CCS,2016,1,2
+816921893,European Handball B2,European Handball B2,true,CCS,2016,1,4
+1711713166,European Handball B3,European Handball B3,true,WSC,2017,1,5
+1312832475,European Handball C1,European Handball C1,true,WSC,2013,1,1
+1408105120,European Handball C2,European Handball C2,true,WSC,2013,1,2
+1236961063,European Handball C3,European Handball C3,true,WSC,2015,1,4
+1408510747,Four Square Open B,Four Square Open B1,true,LAPK,0,1,5
+-1332061697,Four Square Open B,Four Square Open B2,true,LAPK,2018,1,5
+-2029348071,Four Square Open C1 and C2,Four Square Open C2,true,LAPK,2015,1,1
+542961281,Four Square Open C1 and C2,Four Square Open C1,true,LAPK,2015,1,1
+2044390181,Four Square Under 18,Four Square Under 18-1,true,LAPK,2015,1,4
+-2077357276,Four Square Under 18,Four Square Under 18-2,true,LAPK,2015,1,4
+1822053978,Indoor Soccer A,Indoor Soccer A,true,MS34,2000,1,2
+-585937896,Indoor Soccer B1,Indoor Soccer B1,true,MS34,2001,1,1
+-1323546392,Indoor Soccer B2,Indoor Soccer B2,true,MS34,0,1,4
+-1484931750,Indoor Soccer B3,Indoor Soccer B3,true,MS34,0,1,5
+2143290307,Indoor Soccer C1,Indoor Soccer C1,true,MS34,2017,1,1
+75628319,Indoor Soccer C2,Indoor Soccer C2,true,MS34,2017,1,2
+631679683,Indoor Soccer C3,Indoor Soccer C3,true,MS34,2017,1,5
+1718965790,Indoor Soccer Mixed B1,Indoor Soccer Mixed B1,true,MS34,0,1,1
+1764004425,Indoor Soccer Mixed B2,Indoor Soccer Mixed B2,true,MS34,0,1,2
+-785747962,Indoor Soccer Mixed B3,Indoor Soccer Mixed B3,true,MS34,2001,1,4
+1809800661,Indoor Soccer Under 18-1,Indoor Soccer Under 18-1,true,MS34,2002,1,4
+-1793862401,Indoor Soccer Under 18-2,Indoor Soccer Under 18-2,true,MS34,0,1,5
+1389269519,Lawn Bowls,Lawn Bowls C1,true,WBL,2013,6,5
+226320409,Lawn Bowls,Lawn Bowls C2,true,WBL,2013,6,5
+-1853748207,Mini Golf Open,Mini Golf Open,true,WCCA,2019,1,2
+-2119781252,Mini Golf Open Teams,Mini Golf Open Teams,true,WCCA,2019,1,5
+1770401732,Mini Golf Under 18,Mini Golf Under 18,true,WCCA,2019,1,2
+-304376098,Mini Golf Under 18 Teams,Mini Golf Under 18 Teams,true,WCCA,2019,1,5
+-1328489358,Mountain Bike Riding Ladies' Open,Mountain Bike Riding Ladies' Open,true,LAPK,0,,5
+1450876912,Mountain Bike Riding Ladies' Under 18,Mountain Bike Riding Ladies' Under 18,true,LAPK,0,,5
+-1421886159,Mountain Bike Riding Men's Open,Mountain Bike Riding Men's Open,true,LAPK,0,,5
+-2069134834,Mountain Bike Riding Men's Under 15,Mountain Bike Riding Men's Under 15,true,LAPK,,1,5
+171608775,Mountain Bike Riding Men's Under 18,Mountain Bike Riding Men's Under 18,true,LAPK,0,,5
+1941516028,Netball Ladies' A,Netball Ladies' A1,true,WNC,0,2,2
+-519309682,Netball Mixed A,Netball Mixed A2,true,WNC,0,2,5
+-1966888371,Netball Mixed A,Netball Mixed A1,true,WNC,0,2,5
+411732534,Netball Mixed B1 to B5,Netball Mixed B3,true,WNC,0,2,1
+-1100119767,Netball Mixed B1 to B5,Netball Mixed B2,true,WNC,0,2,1
+-1614411183,Netball Mixed B1 to B5,Netball Mixed B5,true,WNC,0,2,1
+-936696120,Netball Mixed B1 to B5,Netball Mixed B1,true,WNC,0,2,1
+-939077761,Netball Mixed B1 to B5,Netball Mixed B4,true,WNC,0,2,1
+939677924,Netball Mixed B6,Netball Mixed B6,true,WNC,0,2,2
+222699067,Netball Mixed B7,Netball Mixed B7,true,WNC,0,2,4
+-1241686587,Netball Mixed Under 18,Netball Mixed Under 18-2,true,WNC,0,2,4
+-329346220,Netball Mixed Under 18,Netball Mixed Under 18-1,true,WNC,0,2,4
+47819541,Netball Mixed Under 18,Netball Mixed Under 18-3,true,WNC,0,2,4
+-770467890,Pool Open,Pool Open,true,CLUB,0,2,4
+1107933868,Pool Under 18,Pool Under 18,true,WTPB,0,1,4
+-975991778,Pool Volleyball A,Pool Volleyball A,true,WLC,0,1,2
+-802814122,Pool Volleyball B1,Pool Volleyball B1,true,WLC,0,1,2
+-321661645,Pool Volleyball B2,Pool Volleyball B2,true,WLC,0,1,5
+138482031,Pool Volleyball C,Pool Volleyball C,true,WLC,0,1,5
+-1966385994,Roundnet Ladies' Open,Roundnet Ladies' Open,true,WRCO,2018,3,4
+1553334341,Roundnet Ladies' Under 18,Roundnet Ladies' Under 18,true,WRCO,2018,1,5
+374384569,Roundnet Men's Open,Roundnet Men's Open,true,WRCO,2018,3,4
+843927536,Roundnet Men's Under 18,Roundnet Men's Under 18,true,WRCO,2018,2,5
+1269143724,Roundnet Mixed Open,Roundnet Mixed Open,true,WRCO,2018,2,4
+-1520391265,Roundnet Mixed Under 18,Roundnet Mixed Under 18,true,WRCO,2018,2,5
+1654570410,Scrabble Open,Scrabble Open,true,LAPK,2013,6,2
+2048981982,Scrabble Under 18,Scrabble Under 18,true,LAPK,2013,3,2
+-1191510193,Soccer Mixed B1,Soccer Mixed B1,true,BBDS,2009,2,2
+146432934,Soccer Mixed B2,Soccer Mixed B2,true,BBDS,0,2,4
+-1099141607,Soccer Open A,Soccer Open A,true,BBDS,2004,2,1
+1405823723,Squash Ladies' Open,Squash Ladies' Open,true,BBRD,0,2,2
+968185617,Squash Ladies' Under 18,Squash Ladies' Under 18,true,BBRD,0,1,1
+1079612414,Squash Men's Open,Squash Men's Open,true,BBRD,0,2,2
+-2078616996,Squash Men's Under 18,Squash Men's Under 18,true,BBRD,0,1,1
+2113300175,Table Tennis Ladies Open,Table Tennis Ladies' Open,true,LAPK,0,3,5
+1081738645,Table Tennis Ladies Under 18,Table Tennis Ladies' Under 18,true,LAPK,0,3,5
+850843954,Table Tennis Men's Open,Table Tennis Men's Open,true,LAPK,0,3,4
+1189866160,Table Tennis Men's Under 18,Table Tennis Men's Under 18,true,LAPK,0,3,4
+1516557447,Ten Pin Bowling Ladies Open,Ten Pin Bowling Ladies' Open,true,WTPB,0,,5
+-1415181811,Ten Pin Bowling Ladies Under 18,Ten Pin Bowling Ladies' Under 18,true,WTPB,0,,5
+1534554698,Ten Pin Bowling Mens Open,Ten Pin Bowling Men's Open,true,WTPB,0,,5
+-858289784,Ten Pin Bowling Mens Under 18,Ten Pin Bowling Men's Under 18,true,WTPB,0,,5
+1634950377,Ten Pin Bowling Open Team,Ten Pin Bowling Open Team,true,WTPB,0,1,6
+872458998,Ten Pin Bowling Under 18 Team,Ten Pin Bowling Under 18 Team,true,WTPB,0,1,6
+758583615,Tennis Ladies' Open,Tennis Ladies' Open Singles,true,WTC,0,2,1
+-1539934843,Tennis Ladies' Under 18,Tennis Ladies' Under 18 Singles,true,WTC,0,3,2
+1399334498,Tennis Men's Open,Tennis Men's Open Singles,true,WTC,0,4,1
+-914572448,Tennis Men's Under 18,Tennis Men's Under 18 Singles,true,WTC,0,3,2
+1933914081,Tennis Open Mixed Doubles,Tennis Open Mixed Doubles,true,WTC,0,2,1
+-207487753,Tennis Under 18 Mixed Doubles,Tennis Under 18 Mixed Doubles,true,WTC,0,1,2
+-1207518848,Thunder Hockey A,Thunder Hockey A,true,DSC,2009,2,4
+-1359205141,Thunder Hockey B,Thunder Hockey B,true,DSC,2010,2,1
+651835097,Thunder Hockey C1,Thunder Hockey C1,true,DSC,0,2,2
+1939703577,Thunder Hockey C2,Thunder Hockey C2,true,DSC,0,2,5
+-1768833936,Thunder Hockey C3,Thunder Hockey C3,true,WRCA,0,1,1
+-1573903741,Thunder Hockey C4,Thunder Hockey C4,true,WRCA,0,2,2
+-1720618199,Thunder Hockey C5,Thunder Hockey C5,true,WRCA,0,2,4
+2046708255,Thunder Hockey C6,Thunder Hockey C6,true,WRCA,0,2,5
+-651396838,Touch Football C,Touch Football C2,true,WLHT,0,2,5
+-1768546809,Touch Football C,Touch Football C1,true,WLHT,2009,2,5
+-2023730425,Touch Football Mixed A,Touch Football Mixed A,true,WRCO,0,1,1
+1677012482,Touch Football Mixed B,Touch Football Mixed B2,true,WLHT,0,2,4
+1786991994,Touch Football Mixed B,Touch Football Mixed B1,true,WLHT,2002,2,4
+1916949540,Ultimate Frisbee Mixed A,Ultimate Frisbee Mixed A,true,WRCO,0,2,2
+-800736807,Ultimate Frisbee Mixed B1 and B2,Ultimate Frisbee Mixed B1,true,LAPK,0,2,2
+981115174,Ultimate Frisbee Mixed B1 and B2,Ultimate Frisbee Mixed B2,true,LAPK,0,2,2
+2144761775,Ultimate Frisbee Mixed B3 and B4,Ultimate Frisbee Mixed B3,true,WRCO,0,2,4
+-386251836,Ultimate Frisbee Mixed B3 and B4,Ultimate Frisbee Mixed B4,true,WRCO,0,2,4
+1573396080,Ultimate Frisbee Mixed B5 and B6,Ultimate Frisbee Mixed B6,true,LAPK,0,2,5
+1723617132,Ultimate Frisbee Mixed B5 and B6,Ultimate Frisbee Mixed B5,true,LAPK,0,2,5
+1634793643,Ultimate Frisbee Mixed C1 and C2,Ultimate Frisbee Mixed C2,true,LAPK,0,2,1
+837771154,Ultimate Frisbee Mixed C1 and C2,Ultimate Frisbee Mixed C1,true,LAPK,2005,2,1
+-1028308215,Ultimate Frisbee Mixed C3 and C4,Ultimate Frisbee Mixed C4,true,LAPK,0,2,4
+-1481154588,Ultimate Frisbee Mixed C3 and C4,Ultimate Frisbee Mixed C3,true,LAPK,0,2,4
+1908468559,Ultimate Frisbee Mixed C5 and C6,Ultimate Frisbee Mixed C5,true,WRCO,0,2,5
+-1990326193,Ultimate Frisbee Mixed C5 and C6,Ultimate Frisbee Mixed C6,true,WRCO,0,2,5
+-2109649506,Ultimate Frisbee Mixed C7,Ultimate Frisbee Mixed C7,true,BBD3,0,1,1
+-2056287644,Ultimate Frisbee Mixed C8,Ultimate Frisbee Mixed C8,true,BBD3,0,2,2
+966190564,Ultimate Frisbee Mixed Under 18-1,Ultimate Frisbee Mixed Under 18-1,true,WRCM,2010,2,1
+2004645638,Ultimate Frisbee Mixed Under 18-2,Ultimate Frisbee Mixed Under 18-2,true,WRCM,0,2,2
+1031709866,Uno Open,Uno Open,true,LAPK,2001,1,5
+-273437213,Uno Under 18,Uno Under-18,true,LAPK,2003,1,4
+-628129048,Volleyball A,Volleyball A1,true,BBRD,0,1,5
+-233651370,Volleyball B1 and B2,Volleyball B1,true,BBRD,0,2,1
+273390111,Volleyball B1 and B2,Volleyball B2,true,BBRD,0,2,1
+-1142500185,Volleyball B3,Volleyball B3,true,BBRD,2009,1,4
+1641537093,Volleyball Mixed C1 and C2,Volleyball Mixed C2,true,BBRD,0,2,2
+-23864564,Volleyball Mixed C1 and C2,Volleyball Mixed C1,true,BBRD,0,2,2
+-1792047934,Volleyball Mixed C3 and C4,Volleyball Mixed C4,true,BBRD,0,2,4
+-246678116,Volleyball Mixed C3 and C4,Volleyball Mixed C3,true,BBRD,0,2,4
+1324964152,Volleyball Mixed C5 and C6,Volleyball Mixed C5,true,BBRD,2009,2,5
+1253879086,Volleyball Mixed C5 and C6,Volleyball Mixed C6,true,BBRD,2009,2,5
+1411432640,Volleyball Mixed Under 18-1,Volleyball Mixed Under 18-1,true,BBRD,0,1,1
+-1494326847,Volleyball Mixed Under 18-2,Volleyball Mixed Under 18-2,true,BBRD,0,1,2
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,Grade,,,,,
