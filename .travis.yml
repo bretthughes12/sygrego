@@ -6,7 +6,6 @@ node_js:
 services:
   - postgresql
 install:
-  - gem install gobject-introspection -v '3.4.9'
   - bundle config set --local deployment 'true'
   - bundle install --jobs=3 --retry=3 
   - nvm install
