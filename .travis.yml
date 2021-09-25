@@ -11,6 +11,7 @@ install:
   - nvm install
   - bin/yarn
 before_script:
+  - apt-get install imagemagick
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database sygrego_test;' -U postgres
   - RAILS_ENV=test bundle exec rails webpacker:compile
