@@ -42,10 +42,10 @@ module Sygrego
       email:      "ticket@stateyouthgames.com",
 
       # On default 5xx error page, social media links included
-      social: {        
-        facebook: 'sygvic',    
-        twitter:  'sygvic'  
-      },  
+      # social: {        
+      #  facebook: 'sygvic',    
+      #  twitter:  'sygvic'  
+      # },  
 
       # All keys interpolated as strings, so you can use symbols, strings or integers where necessary
       exceptions: {
