@@ -6,11 +6,12 @@ node_js:
 services:
   - postgresql
 install:
-  - bundle install --jobs=3 --retry=3 --deployment
+  - gem install gobject-introspection -v '3.4.9'
+  - bundle config set --local deployment 'true'
+  - bundle install --jobs=3 --retry=3 
   - nvm install
   - bin/yarn
 before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database sygrego_test;' -U postgres
   - RAILS_ENV=test bundle exec rails webpacker:compile
-  - gem install gobject-introspection -v '3.4.9'
