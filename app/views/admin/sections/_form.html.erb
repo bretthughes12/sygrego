@@ -11,7 +11,11 @@
 	<%= f.input :number_in_draw %>
 	
 	<% if @section.draw_file.attached? %>
-	    <%= image_tag @section.draw_file.preview(resize_to_limit: [80, 100]) %>
+		<% if @section.draw_file.previewable? %>
+		    <%= image_tag @section.draw_file.preview(resize_to_limit: [80, 100]) %>
+		<% else %>
+		    <p> File </p>
+		<% end %>
 		<%= link_to "Remove file", purge_file_admin_section_path(@section),
         	          method: :patch,
 					  class: danger_button_class,

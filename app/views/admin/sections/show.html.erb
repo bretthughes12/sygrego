@@ -6,7 +6,7 @@
 
 <br/>
 
-<% if @section.draw_file.attached? %>
+<% if @section.draw_file.attached? && &section.draw_file.previewable? %>
 
     <%= image_tag @section.draw_file.preview(resize_to_limit: [800, 1000]) %>
 
