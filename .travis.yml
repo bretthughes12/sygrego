@@ -13,3 +13,4 @@ before_script:
   - cp config/database.travis.yml config/database.yml
   - psql -c 'create database sygrego_test;' -U postgres
   - RAILS_ENV=test bundle exec rails webpacker:compile
+  - gem install gobject-introspection -v '3.4.9'
