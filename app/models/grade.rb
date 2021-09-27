@@ -159,6 +159,7 @@ class Grade < ApplicationRecord
         creates = 0
         updates = 0
         errors = 0
+        error_list = []
   
         CSV.foreach(file.path, headers: true) do |fields|
             limit = fields[14].to_i == 0 ? nil : fields[14].to_i
@@ -189,6 +190,7 @@ class Grade < ApplicationRecord
                     updates += 1
                 else
                     errors += 1
+                    error_list << grade
                 end
             else
                 grade = Grade.create(
@@ -214,11 +216,12 @@ class Grade < ApplicationRecord
                     creates += 1
                 else
                     errors += 1
+                    error_list << grade
                 end
             end
         end
   
-        { creates: creates, updates: updates, errors: errors }
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
   private

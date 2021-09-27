@@ -14,7 +14,12 @@ namespace :syg do
       result = Session.import(file, user)
 
       puts "Sessions imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
-    end
+
+      result[:error_list].each do |e|
+        puts "Session: #{e.name}"
+        pp e.errors
+      end
+  end
   
     desc 'Load / update sport venues table into the database'
     task load_venues: ['db/data/sport_venue.csv', 'db:migrate'] do |t|
@@ -26,7 +31,12 @@ namespace :syg do
       result = Venue.import(file, user)
 
       puts "Venues imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
-    end
+
+      result[:error_list].each do |e|
+        puts "Venue: #{e.name}"
+        pp e.errors
+      end
+  end
   
     desc 'Load / update sports table into the database'
     task load_sports: ['db/data/sport.csv', 'db:migrate'] do |t|
@@ -38,6 +48,11 @@ namespace :syg do
         result = Sport.import(file, user)
   
         puts "Sports imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
+
+        result[:error_list].each do |e|
+          puts "Sport: #{e.name}"
+          pp e.errors
+        end
     end
   
     desc 'Load / update sport grades table into the database'
@@ -50,6 +65,11 @@ namespace :syg do
         result = Grade.import(file, user)
   
         puts "Grades imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
+
+        result[:error_list].each do |e|
+          puts "Grade: #{e.name}"
+          pp e.errors
+        end
     end
   
     desc 'Load / update sport sections table into the database'
@@ -62,9 +82,5 @@ namespace :syg do
         result = Section.import(file, user)
   
         puts "Sections imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
-        result[:error_list].each do |e|
-          puts "Section: #{e.name}"
-          pp e.errors
-        end
     end
 end

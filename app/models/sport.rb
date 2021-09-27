@@ -77,6 +77,7 @@ class Sport < ApplicationRecord
         creates = 0
         updates = 0
         errors = 0
+        error_list = []
   
         CSV.foreach(file.path, headers: true) do |fields|
             sport = Sport.find_by_name(fields[0].to_s)
@@ -94,6 +95,7 @@ class Sport < ApplicationRecord
                     updates += 1
                 else
                     errors += 1
+                    error_list << sport
                 end
             else
                 sport = Sport.create(
@@ -111,11 +113,12 @@ class Sport < ApplicationRecord
                     creates += 1
                 else
                     errors += 1
+                    error_list << sport
                 end
             end
         end
   
-        { creates: creates, updates: updates, errors: errors }
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
   
     private
