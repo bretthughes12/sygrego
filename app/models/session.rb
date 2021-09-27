@@ -18,7 +18,7 @@ class Session < ApplicationRecord
   
     attr_reader :file
 
-#    has_many :sport_grades
+    has_many :sections
   
     scope :active, -> { where(active: true) }
   

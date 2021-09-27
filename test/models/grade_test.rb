@@ -49,6 +49,82 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal -1, @grade <=> other_grade
   end
 
+  test "should show non-final venue name for multiple possible venues" do
+    #grade has a couple of possible venues
+    FactoryBot.create(:section, grade: @grade)
+    FactoryBot.create(:section, grade: @grade)
+    
+    assert_equal '(not final)', @grade.venue_name
+  end
+
+  test "should show venue name and id for single venues" do
+    #grade has only one possibility
+    grade_with_one_venue = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade_with_one_venue)
+    FactoryBot.create(:section, grade: grade_with_one_venue,
+                                venue: section.venue)
+    
+    assert_equal section.venue.name, grade_with_one_venue.venue_name
+    assert_equal section.venue.id, grade_with_one_venue.venue_id
+  end
+
+  test "should show non-final venue name grade with no sections" do
+    #grade has no sections
+    grade_with_no_sections = FactoryBot.create(:grade)
+
+    assert_equal '(not final)', grade_with_no_sections.venue_name
+  end
+  
+  test "should have multiple possible venues" do
+    #grade has a couple of possible venues
+    FactoryBot.create(:section, grade: @grade)
+    FactoryBot.create(:section, grade: @grade)
+    
+    assert @grade.possible_venues.size > 1
+  end
+  
+  test "should have one possible venue for same venue" do
+    #grade has only one possibility
+    grade_with_one_venue = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade_with_one_venue)
+    FactoryBot.create(:section, grade: grade_with_one_venue,
+                                venue: section.venue)
+
+    assert_equal 1, grade_with_one_venue.possible_venues.size
+  end
+  
+  test "should have no possible venues for grade with no sections" do
+    #grade has no sections
+    grade_with_no_sections = FactoryBot.create(:grade)
+
+    assert_equal 0, grade_with_no_sections.possible_venues.size
+  end
+  
+  test "should have multiple possible sessions" do
+    #grade has a couple of possible venues
+    FactoryBot.create(:section, grade: @grade)
+    FactoryBot.create(:section, grade: @grade)
+    
+    assert @grade.possible_sessions.size > 1
+  end
+  
+  test "should have one possible session for same session" do
+    #grade has only one possibility
+    grade_with_one_session = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade_with_one_session)
+    FactoryBot.create(:section, grade: grade_with_one_session,
+                                session: section.session)
+
+    assert_equal 1, grade_with_one_session.possible_sessions.size
+  end
+  
+  test "should have no possible sessions for grade with no sections" do
+    #grade has no sections
+    grade_with_no_sections = FactoryBot.create(:grade)
+
+    assert_equal 0, grade_with_no_sections.possible_sessions.size
+  end
+
   test "should inherit sport name from sport" do
     assert_equal @grade.sport.name, @grade.sport_name
   end

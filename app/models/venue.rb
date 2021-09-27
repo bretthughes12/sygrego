@@ -14,7 +14,7 @@
 class Venue < ApplicationRecord
     include Auditable
  
-#    has_many :sport_sections
+    has_many :sections
 
     scope :active, -> { where(active: true) }
 

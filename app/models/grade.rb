@@ -39,13 +39,12 @@ class Grade < ApplicationRecord
   
     attr_reader :file
 
-#    has_many :sport_sections
 #    has_many :officials, as: :coord_rqmt
 #    has_many :sport_entries
 #    has_many :sport_preferences
 #    has_many :groups_sport_grades_filters
+    has_many :sections
     belongs_to :sport
-##    belongs_to :session
 
     default_scope { order(:name) }
     scope :active, -> { where(active: true) }
@@ -59,7 +58,6 @@ class Grade < ApplicationRecord
     scope :team, -> { where('sports.classification' => 'Team').includes(:sport) }
     scope :individual, -> { where('sports.classification' => 'Individual').includes(:sport) }
 
-##    delegate :name, to: :session, prefix: true
     delegate :name, to: :sport, prefix: true
     delegate :classificaion, to: :sport
 
@@ -116,6 +114,30 @@ class Grade < ApplicationRecord
         name <=> other.name
     end
 
+    def venue_name
+        venues = possible_venues
+        if venues.size == 1
+          venues[0].name
+        else
+          '(not final)'
+        end
+    end
+    
+    def venue_id
+        venues = possible_venues
+        venues[0].id if venues.size == 1
+    end
+    
+    def possible_venues
+        venues = sections.collect(&:venue)
+        venues.uniq
+    end
+    
+    def possible_sessions
+        sessions = sections.collect(&:session)
+        sessions.uniq
+    end
+    
     def max_entries_group
         if grade_type == 'Singles'
             sport.max_indiv_entries_group
