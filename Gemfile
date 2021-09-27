@@ -37,6 +37,7 @@ gem 'cancancan'
 gem 'activemodel-serializers-xml'
 gem 'aws-sdk-s3', require: false
 # gem 'gmaps4rails'
+# *** poppler is currently not handled by either heroku or travis
 # gem 'poppler'
 
 group :development, :test do

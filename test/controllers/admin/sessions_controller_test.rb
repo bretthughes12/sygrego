@@ -147,6 +147,8 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not show non existent session via xhr" do
+    sign_out @user
+
     get admin_session_url(123456, format: :xml),
         xhr: true,
         headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
