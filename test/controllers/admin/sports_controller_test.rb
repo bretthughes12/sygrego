@@ -48,6 +48,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /successfully created/, flash[:notice]
   end
 
   test "should not create sport with errors" do
@@ -70,6 +71,8 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     patch admin_sport_url(@sport), params: { sport: { name: "Bungee" } }
 
     assert_redirected_to admin_sports_path
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @sport.reload
 
@@ -100,6 +103,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_sports_path 
+    assert_match /upload complete/, flash[:notice]
   end
 
   test "should not import sports when the file is not csv" do
@@ -110,6 +114,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
   test "should destroy sport" do

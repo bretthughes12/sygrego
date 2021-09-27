@@ -52,6 +52,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /successfully created/, flash[:notice]
   end
 
   test "should not create section with errors" do
@@ -81,6 +82,8 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     patch admin_section_url(@section), params: { section: { name: "Hockey Open B1" } }
 
     assert_redirected_to admin_sections_path
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @section.reload
 
@@ -114,6 +117,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_sections_path 
+    assert_match /upload complete/, flash[:notice]
   end
 
   test "should not import sections when the file is not csv" do
@@ -127,6 +131,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
   test "should destroy section" do

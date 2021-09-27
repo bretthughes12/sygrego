@@ -41,6 +41,7 @@ class Admin::PagesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /successfully created/, flash[:notice]
   end
 
   test "should not create page with errors" do
@@ -63,6 +64,8 @@ class Admin::PagesControllerTest < ActionDispatch::IntegrationTest
     patch admin_page_url(@page), params: { page: { name: "Hello World" } }
 
     assert_redirected_to admin_pages_path
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @page.reload
 

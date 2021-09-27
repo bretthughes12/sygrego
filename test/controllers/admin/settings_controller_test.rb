@@ -79,6 +79,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch admin_setting_url(@setting), params: { setting: { new_group_sports_allocation_factor: 10 } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -99,6 +101,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_event_admin_setting_url(@setting), params: { setting: { this_year: 2010 } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -119,6 +123,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_functionality_admin_setting_url(@setting), params: { setting: { syg_is_happening: true } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -139,6 +145,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_email_admin_setting_url(@setting), params: { setting: { info_email: "test@test.com" } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -159,6 +167,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_social_admin_setting_url(@setting), params: { setting: { social_twitter_url: "https://test.com" } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -179,6 +189,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_fees_admin_setting_url(@setting), params: { setting: { full_fee: 120 } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -199,6 +211,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_divisions_admin_setting_url(@setting), params: { setting: { small_division_ceiling: 10 } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -219,6 +233,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_sports_factors_admin_setting_url(@setting), params: { setting: { new_group_sports_allocation_factor: 10 } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 
@@ -239,6 +255,8 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     patch update_website_admin_setting_url(@setting), params: { setting: { rego_website: "https://sygrego.test.com" } }
 
     assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @setting.reload
 

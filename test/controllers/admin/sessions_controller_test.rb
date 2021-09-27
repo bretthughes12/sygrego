@@ -48,6 +48,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /successfully created/, flash[:notice]
   end
 
   test "should not create session with errors" do
@@ -70,6 +71,8 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     patch admin_session_url(@session), params: { session: { name: "Friday Evening" } }
 
     assert_redirected_to admin_sessions_path
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @session.reload
 
@@ -100,6 +103,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_sessions_path 
+    assert_match /upload complete/, flash[:notice]
   end
 
   test "should not import sessions when the file is not csv" do
@@ -110,6 +114,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
   test "should destroy session" do

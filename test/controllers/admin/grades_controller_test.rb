@@ -50,6 +50,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /successfully created/, flash[:notice]
   end
 
   test "should not create grade with errors" do
@@ -75,6 +76,8 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     patch admin_grade_url(@grade), params: { grade: { name: "Hockey Open B" } }
 
     assert_redirected_to admin_grades_path
+    assert_match /successfully updated/, flash[:notice]
+
     # Reload association to fetch updated data and assert that title is updated.
     @grade.reload
 
@@ -106,6 +109,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_grades_path 
+    assert_match /upload complete/, flash[:notice]
   end
 
   test "should not import grades when the file is not csv" do
@@ -116,6 +120,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
+    assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
   test "should destroy grade" do
