@@ -2,13 +2,15 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @sessions.each do |session| %>
-    <li>
-        <%= link_to session.name, edit_admin_session_path(session) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Session</th>
+    <th>Database Code</th>
+    <th>#Sections</th>
+  </tr>
+
+	<%= render @sessions %>
+</table>
 
 <%= link_to "New Session", new_admin_session_path,
                   class: primary_button_class,

@@ -2,13 +2,15 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @venues.each do |venue| %>
-    <li>
-        <%= link_to venue.name, edit_admin_venue_path(venue) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Venue</th>
+    <th>Database Code</th>
+    <th>#Sections</th>
+  </tr>
+
+	<%= render @venues %>
+</table>
 
 <%= link_to "New Venue", new_admin_venue_path,
                   class: primary_button_class,

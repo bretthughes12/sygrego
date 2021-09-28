@@ -1,0 +1,13 @@
+<tr valign="top">
+	<td> 
+		<%= link_to h(session.name), edit_admin_session_path(session)  %></span></br>
+	</td>
+	
+	<td> 
+		<%= h(session.database_rowid) %>
+	</td>
+
+	<td> 
+		<%= h(session.sections.count) %>
+	</td>
+</tr>

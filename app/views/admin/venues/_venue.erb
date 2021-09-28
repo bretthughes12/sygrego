@@ -1,0 +1,13 @@
+<tr valign="top">
+	<td> 
+		<%= link_to h(venue.name), edit_admin_venue_path(venue) %></span></br>
+	</td>
+	
+	<td> 
+		<%= h(venue.database_code) %>
+	</td>
+	
+	<td> 
+		<%= h(venue.sections.count) %>
+	</td>
+</tr>

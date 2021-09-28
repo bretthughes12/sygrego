@@ -2,13 +2,15 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @sections.each do |section| %>
-    <li>
-        <%= link_to section.name, edit_admin_section_path(section) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Section</th>
+    <th>Session</th>
+    <th>Venue</th>
+  </tr>
+
+	<%= render @sections %>
+</table>
 
 <%= link_to "New section", new_admin_section_path,
                   class: primary_button_class,

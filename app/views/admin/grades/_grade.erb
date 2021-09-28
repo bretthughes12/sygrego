@@ -1,0 +1,13 @@
+<tr valign="top" class="<%= grade_display_class(grade) %>">
+	<td> 
+        <%= link_to grade.name, edit_admin_grade_path(grade) %>
+	</td>
+	
+	<td align="center"> 
+		<%= h(grade.sections.count) %>
+	</td>
+	
+	<td align="center"> 
+		<%= h(grade.entry_limit) %>
+	</td>
+</tr>

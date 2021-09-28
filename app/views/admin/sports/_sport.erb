@@ -1,0 +1,21 @@
+<tr valign="top">
+	<td> 
+		<%= link_to h(sport.name), edit_admin_sport_path(sport) %></br>
+	</td>
+	
+	<td> 
+		<%= h(sport.grades.count) %>
+	</td>
+	
+	<td> 
+		<%= h(sport.max_indiv_entries_group) %>
+	</td>
+	
+	<td> 
+		<%= h(sport.max_team_entries_group) %>
+	</td>
+	
+	<td> 
+		<%= h(sport.max_entries_indiv) %>
+	</td>
+</tr>

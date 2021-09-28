@@ -2,13 +2,17 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @sports.each do |sport| %>
-    <li>
-        <%= link_to sport.name, edit_admin_sport_path(sport) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Sport</th>
+    <th>#Grades</th>
+    <th>Max Group Entries (indiv)</th>
+    <th>Max Group Entries (team)</th>
+    <th>Max Individual Entries</th>
+  </tr>
+
+	<%= render @sports %>
+</table>
 
 <%= link_to "New Sport", new_admin_sport_path,
                   class: primary_button_class,

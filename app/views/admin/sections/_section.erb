@@ -1,0 +1,13 @@
+<tr valign="top">
+	<td> 
+        <%= link_to section.name, edit_admin_section_path(section) %>
+	</td>
+
+	<td> 
+		<%= h(section.session.name) %>
+	</td>
+
+	<td> 
+		<%= h(section.venue.name) %>
+	</td>
+</tr>

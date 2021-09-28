@@ -2,13 +2,14 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @pages.each do |page| %>
-    <li>
-        <%= link_to page.name, edit_admin_page_path(page) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Title</th>
+    <th>Permalink</th>
+  </tr>
+
+	<%= render @pages %>
+</table>
 
 <%= link_to "New page", new_admin_page_path,
                   class: primary_button_class,

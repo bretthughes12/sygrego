@@ -2,13 +2,15 @@
 
 <h1><%= yield(:title) %></h1>
 
-<ul>
-  <% @grades.each do |grade| %>
-    <li>
-        <%= link_to grade.name, edit_admin_grade_path(grade) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-dark table-striped">
+  <tr>
+    <th>Grade</th>
+    <th>#Sections</th>
+    <th>Entry Limit</th>
+  </tr>
+
+	<%= render @grades %>
+</table>
 
 <%= link_to "New grade", new_admin_grade_path,
                   class: primary_button_class,
