@@ -131,6 +131,17 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "should not destroy venue with sections" do
+    FactoryBot.create(:section, venue: @venue)
+
+    assert_no_difference("Venue.count") do
+      delete admin_venue_url(@venue)
+    end
+
+    assert_redirected_to admin_venues_path
+    assert_match /Can't delete/, flash[:notice]
+  end
+
   test "should show venue via xhr" do
     sign_out @user
 

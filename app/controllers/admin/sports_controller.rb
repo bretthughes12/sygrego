@@ -97,7 +97,7 @@ class Admin::SportsController < ApplicationController
             flash[:notice] = "Can't delete, as grades exist"
         
             respond_to do |format|
-                format.html { redirect_to(admin_sports_url) }
+                format.html { redirect_to admin_sports_url }
             end
         end
     end

@@ -80,20 +80,20 @@ class Admin::GradesController < ApplicationController
     def destroy
         @grade.updated_by = current_user.id
 
-#        begin
+        if @grade.sections.empty?
             @grade.destroy
   
             respond_to do |format|
                 format.html { redirect_to admin_grades_url }
             end
         
-#        rescue Exception
-#            flash[:notice] = "Can't delete, as sections are defined using this grade"
+          else
+            flash[:notice] = "Can't delete, as sections exist"
         
-#            respond_to do |format|
-#                format.html { redirect_to admin_grades_url }
-#            end
-#        end
+            respond_to do |format|
+                format.html { redirect_to admin_grades_url }
+            end
+        end
     end
   
     # GET /admin/grades/new_import

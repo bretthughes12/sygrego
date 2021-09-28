@@ -80,20 +80,20 @@ class Admin::SessionsController < ApplicationController
     def destroy
         @session.updated_by = current_user.id
 
-#        begin
+        if @session.sections.empty?
             @session.destroy
   
             respond_to do |format|
                 format.html { redirect_to admin_sessions_url }
             end
         
-#        rescue Exception
-#            flash[:notice] = "Can't delete, as grades are defined using this session"
+          else
+            flash[:notice] = "Can't delete, as sections exist"
         
-#            respond_to do |format|
-#                format.html { redirect_to admin_sessions_url }
-#            end
-#        end
+            respond_to do |format|
+                format.html { redirect_to admin_sessions_url }
+            end
+        end
     end
   
     # GET /admin/sessions/new_import

@@ -134,14 +134,6 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
-  test "should destroy section" do
-    assert_difference("Section.count", -1) do
-      delete admin_section_url(@section)
-    end
-
-    assert_redirected_to admin_sections_path
-  end
-
   test "should purge draw_file" do
     file = fixture_file_upload('test.pdf','application/pdf')
     @section.draw_file.attach(file)
@@ -153,6 +145,14 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     @section.reload
 
     assert_equal false, @section.draw_file.attached?
+  end
+
+  test "should destroy section" do
+    assert_difference("Section.count", -1) do
+      delete admin_section_url(@section)
+    end
+
+    assert_redirected_to admin_sections_path
   end
 
   test "should not destroy non existent section" do

@@ -139,6 +139,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_sports_path
+    assert_match /Can't delete/, flash[:notice]
   end
 
   test "should show sport via xhr" do

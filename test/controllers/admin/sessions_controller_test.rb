@@ -131,6 +131,17 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "should not destroy session with sections" do
+    FactoryBot.create(:section, session: @session)
+
+    assert_no_difference("Session.count") do
+      delete admin_session_url(@session)
+    end
+
+    assert_redirected_to admin_sessions_path
+    assert_match /Can't delete/, flash[:notice]
+  end
+
   test "should show session via xhr" do
     sign_out @user
 

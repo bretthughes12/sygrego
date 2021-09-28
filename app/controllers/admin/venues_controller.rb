@@ -86,20 +86,20 @@ class Admin::VenuesController < ApplicationController
     def destroy
         @venue.updated_by = current_user.id
 
-#        begin
-            @venue.destroy
+        if @venue.sections.empty?
+          @venue.destroy
   
             respond_to do |format|
                 format.html { redirect_to admin_venues_url }
             end
-
-#        rescue Exception
-#            flash[:notice] = "Can't delete, as section(s) are defined using this venue"
         
-#            respond_to do |format|
-#                format.html { redirect_to admin_venues_url }
-#            end
-#        end
+          else
+            flash[:notice] = "Can't delete, as sections exist"
+        
+            respond_to do |format|
+                format.html { redirect_to admin_venues_url }
+            end
+        end
     end
 
     # GET /admin/venues/new_import
