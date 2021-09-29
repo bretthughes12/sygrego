@@ -1,13 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 # Create the singleton Setting record...
-Setting.create if Setting.count = 0
+Setting.create if Setting.count == 0
 
 # Create static page entries for the information and policy pages
 Page.create(name: "About Us",
@@ -22,3 +14,39 @@ Page.create(name: "Privacy Policy",
 Page.create(name: "Participant Image Use Policy",
             permalink: "image",
             admin_use: true)
+
+# Create the Admin group
+Group.create(abbr: "ADM",
+             name: "Administration team",
+             short_name: "Admin",
+             coming: true,
+             new_group: false,
+             trading_name: "Administration team",
+             address: "Lardner Park office",
+             suburb: "Lardner",
+             postcode: 3821,
+             email: "info@stateyouthgames.com",
+             phone_number: "0444 111 222",
+             website: "https://stateyouthgames.com/vic",
+             denomination: "Churches of Christ",
+             status: "Approved",
+             updated_by: 1
+            )
+
+# Create the Default group
+Group.create(abbr: "DFLT",
+             name: "I can't find my group",
+             short_name: "No group",
+             coming: true,
+             new_group: false,
+             trading_name: "Choose this and we will help you",
+             address: "Lardner Park office",
+             suburb: "Lardner",
+             postcode: 3821,
+             email: "info@stateyouthgames.com",
+             phone_number: "0444 111 222",
+             website: "https://stateyouthgames.com/vic",
+             denomination: "None",
+             status: "Approved",
+             updated_by: 1
+            )

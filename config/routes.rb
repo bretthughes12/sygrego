@@ -40,6 +40,8 @@ Rails.application.routes.draw do
     resources :audit_trail, only: [:index]
     resources :pages
 
+    resources :groups
+
     resources :sports do
       collection do
         get :new_import
@@ -74,4 +76,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  namespace :gc do
+    resources :groups
+  end
 end
+

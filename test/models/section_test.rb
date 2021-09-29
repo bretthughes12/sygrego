@@ -18,7 +18,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (section_id => sections.id)
+#  fk_rails_...  (grade_id => grades.id)
 #  fk_rails_...  (session_id => sessions.id)
 #  fk_rails_...  (venue_id => venues.id)
 #
