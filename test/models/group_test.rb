@@ -78,6 +78,12 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal "BC", Group.assign_abbr("Baaargh")
   end
 
+  test "should retrieve the default group" do
+    group = FactoryBot.create(:group, abbr: "DFLT")
+    
+    assert_equal group, Group.default_group
+  end
+
   test "should reset allocation bonus" do
     g = FactoryBot.create(:group, allocation_bonus: 99)
     g.reset_allocation_bonus!
@@ -92,5 +98,61 @@ class GroupTest < ActiveSupport::TestCase
 
     g.reload
     assert_equal @setting.missed_out_sports_allocation_factor, g.allocation_bonus
+  end
+
+  test "should import groups from file" do
+    file = fixture_file_upload('group.csv','application/csv')
+    
+    assert_difference('Group.count') do
+      @result = Group.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting groups from file" do
+    group = FactoryBot.create(:group, abbr: 'CAF')
+    file = fixture_file_upload('group.csv','application/csv')
+    
+    assert_no_difference('Group.count') do
+      @result = Group.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    group.reload
+    assert_equal "Caffeine", group.short_name
+  end
+
+  test "should not import groups with errors from file" do
+    file = fixture_file_upload('invalid_group.csv','application/csv')
+    
+    assert_no_difference('Group.count') do
+      @result = Group.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update groups with errors from file" do
+    group = FactoryBot.create(:group, abbr: "CAF")
+    file = fixture_file_upload('invalid_group.csv','application/csv')
+    
+    assert_no_difference('Group.count') do
+      @result = Group.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    group.reload
+    assert_not_equal "Invalid", group.status
   end
 end
