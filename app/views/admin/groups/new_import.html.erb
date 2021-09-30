@@ -5,21 +5,22 @@
 <p>Import file must be in '.csv' format, with columns the same as the download:</p>
 <ul>
   <li>RowID</li>
-  <li>Sport</li>
+  <li>Abbr</li>
   <li>Name</li>
-  <li>Active</li>
-  <li>Type</li>
+  <li>ShortName</li>
+  <li>Coming</li>
   <li>Status</li>
-  <li>MaxAge</li>
-  <li>MinAge</li>
-  <li>GenderType</li>
-  <li>MaxPart</li>
-  <li>MinPart</li>
-  <li>MinMales</li>
-  <li>MinFemales</li>
-  <li>TeamSize</li>
-  <li>Limit</li>
-  <li>StartLimit</li>
+  <li>NewGroup</li>
+  <li>LastYear</li>
+  <li>Admin</li>
+  <li>TradingName</li>
+  <li>Address</li>
+  <li>Suburb</li>
+  <li>Postcode</li>
+  <li>Phone</li>
+  <li>Email</li>
+  <li>Website</li>
+  <li>Denomination</li>
 </ul>
 
 <%= simple_form_for(@group, url: import_admin_groups_path) do |f| %> 
