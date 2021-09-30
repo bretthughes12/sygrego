@@ -8,7 +8,7 @@ class Admin::SectionsController < ApplicationController
   
     # GET /admin/sections
     def index
-      @sections = Section.order(:name).load
+      @sections = Section.order(:name).includes(:session, :venue).load
   
       respond_to do |format|
         format.html # index.html.erb

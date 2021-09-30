@@ -11,7 +11,7 @@ class Admin::VenuesController < ApplicationController
 #      page_sym = save_page("Venue", params)
 #      session[page_sym] = params[:page].to_i if params[:page]
   
-      @venues = Venue.order("name").all
+      @venues = Venue.order("name").includes(:sections).all
   
       respond_to do |format|
         format.html {  }

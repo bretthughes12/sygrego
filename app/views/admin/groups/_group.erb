@@ -1,0 +1,13 @@
+<tr valign="top" class="<%= group_display_class(group) %>">
+	<td> 
+		<%= h(group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to group.name, edit_admin_group_path(group) %>
+	</td>
+	
+	<td> 
+		<%= h(group.short_name) %>
+	</td>
+</tr>

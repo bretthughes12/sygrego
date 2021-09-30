@@ -1,14 +1,14 @@
 class Admin::GradesController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource except: [:show, :index]
     before_action :authenticate_user!
     
     layout "admin"
   
     # GET /admin/grades
     def index
-      @grades = Grade.order(:name).load
+      @grades = Grade.order(:name).includes(:sections).load
   
       respond_to do |format|
         format.html # index.html.erb

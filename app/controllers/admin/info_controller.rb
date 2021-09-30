@@ -7,6 +7,7 @@ class Admin::InfoController < ApplicationController
     def tech_stats
         @tech_stats = []
 
+        @tech_stats << model_stats(Group)    
         @tech_stats << model_stats(Sport)    
         @tech_stats << model_stats(Grade) 
         @tech_stats << model_stats(Section)    
@@ -37,7 +38,7 @@ class Admin::InfoController < ApplicationController
 
     def model_stats(model)
         { type: model.name,
-          low: model.count > 0 ? model.order(:id).first.id : 0,
-          high: model.count > 0 ? model.order(:id).last.id : 0 }
+          low: model.count > 0 ? model.order(:id).minimum(:id) : 0,
+          high: model.count > 0 ? model.order(:id).maximum(:id) : 0 }
     end
 end

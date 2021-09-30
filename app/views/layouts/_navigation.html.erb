@@ -5,6 +5,12 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Regos</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Groups', admin_groups_path %></li>
+                    </ul>
+                </li>
+                <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sports</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class='dropdown-item'><%= link_to 'Sports', admin_sports_path %></li>

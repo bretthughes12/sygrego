@@ -3,11 +3,13 @@
 <h1><%= yield(:title) %></h1>
 
 <table class="table table-dark table-striped">
-  <tr>
-    <th>Venue</th>
-    <th>Database Code</th>
-    <th>#Sections</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Venue</th>
+      <th>Database Code</th>
+      <th>#Sections</th>
+    </tr>
+  </thead>
 
 	<%= render @venues %>
 </table>

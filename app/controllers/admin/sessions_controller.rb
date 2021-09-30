@@ -8,7 +8,7 @@ class Admin::SessionsController < ApplicationController
   
     # GET /admin/sessions
     def index
-      @sessions = Session.order(:database_rowid).load
+      @sessions = Session.order(:database_rowid).includes(:sections).load
   
       respond_to do |format|
         format.html # index.html.erb

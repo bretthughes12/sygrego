@@ -5,7 +5,7 @@
 #  id               :bigint           not null, primary key
 #  abbr             :string(4)        not null
 #  address          :string(200)      not null
-#  admin            :boolean
+#  admin_use        :boolean
 #  age_demographic  :string(40)
 #  allocation_bonus :integer          default(0)
 #  coming           :boolean          default(TRUE)

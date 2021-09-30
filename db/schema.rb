@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2021_09_28_225454) do
     t.integer "postcode", null: false
     t.string "phone_number", limit: 20
     t.boolean "last_year"
-    t.boolean "admin"
+    t.boolean "admin_use"
     t.decimal "late_fees", precision: 8, scale: 2, default: "0.0"
     t.integer "allocation_bonus", default: 0
     t.string "email", limit: 100

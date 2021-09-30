@@ -1,0 +1,39 @@
+<%= simple_form_for(@group, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, :as => :hidden %>
+	<%= f.input :coming %>
+	<%= f.input :abbr %>
+	<%= f.input :name %>
+	<%= f.input :short_name, :hint => group_short_name_hint(@group) %>
+   	<%= f.input :trading_name, :label => "Church Trading Name" %>
+	<%= f.input :address, :label => "Church Postal Address" %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :email %>
+	<%= f.input :website %>
+	<%= f.input :phone_number %>
+
+	<br/>
+
+	<h2>Group Demographics</h2>
+
+	<%= f.input :denomination %>
+	<%= f.input :age_demographic, as: :select, :label => "Age demographic of your team (largest part)", collection: Group::AGE_DEMOGRAPHIC, include_blank: true %>
+	<%= f.input :group_focus, as: :select, :label => "Primary focus of your group in attending SYG", collection: Group::GROUP_FOCUS, include_blank: true %>
+	<%= f.input :years_attended %>
+
+	<br/>
+
+	<h2>Admin Use Only</h2>
+
+	<%= f.input :status, as: :select, collection: Group::STATUS %>
+	<%= f.input :admin_use %>
+	<%= f.input :new_group %>
+	<%= f.input :last_year, label: "Came last year" %>
+	<%= f.input :late_fees %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

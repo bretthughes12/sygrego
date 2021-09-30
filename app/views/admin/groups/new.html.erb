@@ -1,0 +1,13 @@
+<% title "New group" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_groups_path(@group), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_groups_path,
+                  class: primary_button_class,
+                  role: "button" %>

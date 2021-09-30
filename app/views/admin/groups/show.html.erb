@@ -1,0 +1,12 @@
+<% title "Grade details: #{@group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @group %>
+
+<%= link_to "Back", admin_groups_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_group_path(@group),
+                  class: primary_button_class,
+                  role: "button" %>
