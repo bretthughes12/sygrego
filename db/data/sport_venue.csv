@@ -1,48 +1,27 @@
 RowID,Active,Name,Address
-BBRD,TRUE,Bellbird Park,"244 Settlement Rd, Drouin, VIC"
-BBD3,TRUE,Bellbird Park Field 3,"244 Settlement Rd, Drouin, VIC"
-BBDS,TRUE,Bellbird Park Grass Hockey Fields,"244 Settlement Rd, Drouin, VIC"
-BURK,TRUE,Burke St Park,"34 Burke St, Warragul, VIC"
-CCS,TRUE,Chairo Christian School,"76 Balfour Rd, Drouin, VIC"
-WCCA,TRUE,Crazy Cow Activity Centre,"126 North Rd, Warragul"
-DBC,FALSE,Drouin Badminton Club,
-DCC,FALSE,Drouin Country Club,"43 McGlones Rd, Drouin, VIC"
-DDSC,TRUE,Drouin Dragons Soccer Club,"243 Settlement Rd, Drouin, VIC"
-DHC,TRUE,Drouin Hockey Club,"244 Settlement Rd, Drouin, VIC"
-DSC,TRUE,Drouin Secondary College ,"52 Main South Rd, Drouin, VIC"
-DSCS,TRUE,Drouin Secondary College Stadium,"52 Main South Rd, Drouin, VIC"
-DSPS,TRUE,Drouin South Primary School,"3061 Westernport Rd, Drouin South VIC 3818"
-DTC,FALSE,Drouin Tennis Club,
-EPH,FALSE,Ellinbank Public Hall,
-LAHL,FALSE,Lardner Hall,
-LAPK,TRUE,Lardner Park,"155 Burnt Store Rd, Lardner, VIC"
-LRS,FALSE,Lardner Reserve,
-WLAO,TRUE,Logan Park (AFL Oval),"19 Howitt Street, Warragul, VIC"
-WLHT,TRUE,Logan Park (inside Harness Track),"19 Howitt Street, Warragul, VIC"
-MSC,TRUE,Marist-Sion College,"165 Burke St, Warragul, VIC"
-MRC,FALSE,Moe Recreation Centre,
-MRBC,FALSE,Moe Roller Blading Centre,
-NDSC,FALSE,Neerim District Secondary College,
-NEER,FALSE,Neerim South Sports Stadium,"17 Neerim East Rd, Neerim South, VIC"
-NWTC,FALSE,North Warragul Tennis Club,
-MS34,TRUE,Stadium 34 Moe,
-WSTJ,TRUE,St Joseph's Primary School,
-WSPJ,TRUE,St Paul's Anglican Junior Stadium,
-STP,TRUE,St Paul's Anglican Senior Stadium,"150 Bowen St, Warragul, VIC"
-WSPS,TRUE,St Paul's Anglican Synthetic Court,"150 Bowen St, Warragul, VIC"
-WTPB,TRUE,The Alley,"43 Queen St, Warragul, VIC"
-CLUB,TRUE,The Warragul Club,"55 Victoria St, Warragul, VIC"
-THS,TRUE,Trafalgar High School,"84 School Road, Trafalgar VIC 3824, Australia"
-TBC,TRUE,Venue To Be Confirmed,
-WBC,TRUE,Warragul Badminton Club,"2 Galloway St, Warragul, VIC"
-WCC,FALSE,Warragul Church of Christ,
-WBL,TRUE,Warragul Lawn Bowls,"Anderson St, Warragul, VIC"
-WLC,TRUE,Warragul Leisure Centre,"21 Burke St, Warragul, VIC"
-WNC,TRUE,Warragul Netball Courts,"70 Burke St, Warragul, VIC"
-WRCA,TRUE,Warragul Regional College Asphalt Courts,"37 Burke St, Warragul, VIC"
-WRCM,TRUE,Warragul Regional College Macaulay Field,"37 Burke St, Warragul, VIC"
-WRCO,TRUE,Warragul Regional College Oval,"37 Burke St, Warragul, VIC"
-WRCS,TRUE,Warragul Regional College Soccer Field,"37 Burke St, Warragul, VIC"
-WSC,TRUE,Warragul Regional College Stadium,"37 Burke St, Warragul, VIC"
-WTC,TRUE,Warragul Tennis Courts,"24 Burke St, Warragul, VIC"
-HILL,FALSE,Hillcrest College,
+DBBS,true,Bellbird Park,"244 Settlement Rd, Drouin, VIC"
+DBB3,true,Bellbird Park Field 3,"244 Settlement Rd, Drouin, VIC"
+DBBF,true,Bellbird Park Grass Hockey Fields,"244 Settlement Rd, Drouin, VIC"
+DCCS,true,Chairo Christian School,"76 Balfour Rd, Drouin, VIC"
+WCCA,true,Crazy Cow Activity Centre,"126 North Rd, Warragul"
+DSC,true,Drouin Secondary College ,"52 Main South Rd, Drouin, VIC"
+DSCS,true,Drouin Secondary College Stadium,"52 Main South Rd, Drouin, VIC"
+DSPS,true,Drouin South Primary School,"3061 Westernport Rd, Drouin South VIC 3818"
+LPK,true,Lardner Park,"155 Burnt Store Rd, Lardner, VIC"
+WLHT,true,Logan Park (inside Harness Track),"19 Howitt Street, Warragul, VIC"
+MS34,true,Stadium 34 Moe,
+WSTJ,true,St Joseph's Primary School,
+WSPJ,true,St Paul's Anglican Junior Stadium,
+WSPS,true,St Paul's Anglican Senior Stadium,"150 Bowen St, Warragul, VIC"
+WTPB,true,The Alley,"43 Queen St, Warragul, VIC"
+WTWC,true,The Warragul Club,"55 Victoria St, Warragul, VIC"
+VTBC,true,Venue To Be Confirmed,""
+WBC,true,Warragul Badminton Club,"2 Galloway St, Warragul, VIC"
+WBL,true,Warragul Lawn Bowls,"Anderson St, Warragul, VIC"
+WLC,true,Warragul Leisure Centre,"21 Burke St, Warragul, VIC"
+WNC,true,Warragul Netball Courts,"70 Burke St, Warragul, VIC"
+WRCA,true,Warragul Regional College Asphalt Courts,"37 Burke St, Warragul, VIC"
+WRCM,true,Warragul Regional College Macaulay Field,"37 Burke St, Warragul, VIC"
+WRCO,true,Warragul Regional College Oval,"37 Burke St, Warragul, VIC"
+WSC,true,Warragul Regional College Stadium,"37 Burke St, Warragul, VIC"
+WTC,true,Warragul Tennis Courts,"24 Burke St, Warragul, VIC"

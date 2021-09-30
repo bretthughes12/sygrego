@@ -1,3 +1,8 @@
+# Create the superuser
+User.create(email: "registrations@stateyouthgames.com",
+            password: Rails.application.credentials.su_password,
+            password_confirmation: Rails.application.credentials.su_password)
+
 # Create the singleton Setting record...
 Setting.create if Setting.count == 0
 
