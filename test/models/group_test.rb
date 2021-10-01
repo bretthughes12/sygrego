@@ -155,4 +155,17 @@ class GroupTest < ActiveSupport::TestCase
     group.reload
     assert_not_equal "Invalid", group.status
   end
+
+  # Tests for searchable concern
+  test "should search groups for matching :abbr" do
+    groups = Group.search(@group.abbr)
+
+    assert_equal true, groups.include?(@group)
+  end
+
+  test "should return empty when no match on search groups" do
+    groups = Group.search("ZZZZ")
+
+    assert_equal true, groups.empty?
+  end
 end

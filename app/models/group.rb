@@ -32,6 +32,7 @@
 #
 class Group < ApplicationRecord
     include Auditable
+    include Searchable
 
     require 'csv'
 
@@ -95,7 +96,7 @@ class Group < ApplicationRecord
     validates :late_fees,           numericality: true,
                                     allow_blank: true
 
-#    searchable_by :abbr, :name, :short_name, :trading_name
+    searchable_by :abbr, :name, :short_name, :trading_name
 
     before_save :uppercase_abbr!
 
