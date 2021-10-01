@@ -57,3 +57,22 @@ Group.create(abbr: "DFLT",
              status: "Approved",
              updated_by: 1
             )
+
+# Create the group for Day Visitors
+Group.create(abbr: "DAY",
+             name: "Day visitors",
+             short_name: "Day visitors",
+             coming: true,
+             admin_use: true,
+             new_group: false,
+             trading_name: "Day visitors",
+             address: "Lardner Park office",
+             suburb: "Lardner",
+             postcode: 3821,
+             email: "info@stateyouthgames.com",
+             phone_number: "0444 111 222",
+             website: "https://stateyouthgames.com/vic",
+             denomination: "None",
+             status: "Approved",
+             updated_by: 1
+            )
