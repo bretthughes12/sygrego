@@ -17,6 +17,12 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should search groups" do
+    get search_admin_groups_url
+
+    assert_response :success
+  end
+
   test "should download group data" do
     get admin_groups_url(format: :csv)
 
