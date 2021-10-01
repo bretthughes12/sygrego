@@ -15,7 +15,16 @@ class Admin::GroupsController < ApplicationController
         format.csv  { render_csv "group", "group" }
       end
     end
+
+    # GET /admin/groups/search
+    def search
+      @groups = Group.search(params[:search]).order("abbr")
   
+      respond_to do |format|
+        format.html { render action: 'index' }
+      end
+    end
+    
     # GET /admin/groups/1
     # GET /admin/groups/1.xml
     # 'show' must be explicitly invoked from the address bar - it is not available from the UI

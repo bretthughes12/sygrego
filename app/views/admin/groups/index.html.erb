@@ -2,6 +2,11 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= search_box search_admin_groups_path, "Search" %>
+<%= yield(:search_box)%>
+
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>

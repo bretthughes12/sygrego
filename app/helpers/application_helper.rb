@@ -12,4 +12,9 @@ module ApplicationHelper
         "btn btn-danger btn-sm"
     end
     
+    def search_box(path, label)
+        render :partial => '/application/search_box', 
+               :locals => {:path => path, :label => label}    
+    end
+    
 end
