@@ -1,8 +1,19 @@
+# Create user roles
+['admin', 'gc', 'church_rep', 'participant'].each do |role|
+    Role.find_or_create_by({name: role})
+end
+
+admin_role = Role.find_by_name('admin')
+
 # Create the superuser
 User.create(email: "registrations@stateyouthgames.com",
             password: Rails.application.credentials.su_password,
             password_confirmation: Rails.application.credentials.su_password)
 
+User.all.each do |u|
+    u.roles << admin_role if u.roles.empty?
+end
+            
 # Create the singleton Setting record...
 Setting.create if Setting.count == 0
 
