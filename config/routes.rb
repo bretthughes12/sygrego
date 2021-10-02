@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     end
     resources :audit_trail, only: [:index]
     resources :pages
+    resources :roles
 
     resources :groups do
       collection do

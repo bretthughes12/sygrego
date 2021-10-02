@@ -1,6 +1,9 @@
 # Create user roles
 ['admin', 'gc', 'church_rep', 'participant'].each do |role|
-    Role.find_or_create_by({name: role})
+    r = Role.find_or_create_by({name: role})
+    r.group_related = true if role == 'gc' || role == 'church_rep'
+    r.participant_related = true if role == 'participant'
+    r.save
 end
 
 admin_role = Role.find_by_name('admin')

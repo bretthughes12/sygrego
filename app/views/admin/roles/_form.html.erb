@@ -1,0 +1,9 @@
+<%= simple_form_for(@role, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Role" %>
+	<%= f.input :group_related %>
+	<%= f.input :participant_related %>
+
+	<%= f.button :submit %>
+<% end %>	

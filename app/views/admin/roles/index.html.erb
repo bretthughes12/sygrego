@@ -1,0 +1,19 @@
+<% title "Listing roles" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Group?</th>
+      <th>Participant?</th>
+    </tr>
+  </thead>
+
+	<%= render @roles %>
+</table>
+
+<%= link_to "New role", new_admin_role_path,
+                  class: primary_button_class,
+                  role: "button" %>

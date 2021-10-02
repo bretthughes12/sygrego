@@ -1,0 +1,12 @@
+<% title "Role details: #{@role.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @role %>
+
+<%= link_to "Back", admin_roles_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_role_path(@role),
+                  class: primary_button_class,
+                  role: "button" %>

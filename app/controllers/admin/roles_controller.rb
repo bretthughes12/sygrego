@@ -1,42 +1,42 @@
-class Admin::PagesController < ApplicationController
+class Admin::RolesController < ApplicationController
   
     load_and_authorize_resource
     before_action :authenticate_user!
     
     layout 'admin'
     
-    # GET /admin/pages
+    # GET /admin/roles
     def index
-      @pages = Page.order(:name).load
+      @roles = Role.order(:name).load
 
       respond_to do |format|
         format.html # index.html.erb
       end
     end
   
-    # GET /admin/pages/1
+    # GET /admin/roles/1
     def show
       respond_to do |format|
         format.html # show.html.erb
       end
     end
   
-    # GET /admin/pages/new
+    # GET /admin/roles/new
     def new
       respond_to do |format|
         format.html # new.html.erb
       end
     end
   
-    # GET /admin/pages/1/edit
+    # GET /admin/roles/1/edit
     def edit
     end
   
-    # POST /admin/pages
+    # POST /admin/roles
     def create
       respond_to do |format|
-        if @page.save
-          flash[:notice] = 'Page was successfully created.'
+        if @role.save
+          flash[:notice] = 'Role was successfully created.'
           format.html { render action: "edit" }
         else
           format.html { render action: "new" }
@@ -44,34 +44,32 @@ class Admin::PagesController < ApplicationController
       end
     end
   
-    # PUT /admin/pages/1
+    # PUT /admin/roles/1
     def update
       respond_to do |format|
-        if @page.update(page_params)
-          flash[:notice] = 'Page was successfully updated.'
-          format.html { redirect_to admin_pages_url }
+        if @role.update(role_params)
+          flash[:notice] = 'Role was successfully updated.'
+          format.html { redirect_to admin_roles_url }
         else
           format.html { render action: "edit" }
         end
       end
     end
   
-    # DELETE /admin/pages/1
+    # DELETE /admin/roles/1
     def destroy
-      @page.destroy
+      @role.destroy
   
       respond_to do |format|
-        format.html { redirect_to admin_pages_url }
+        format.html { redirect_to admin_roles_url }
       end
     end
   
     private
     
-    def page_params
-      params.require(:page).permit(:name, 
-                                   :permalink,
-                                   :content,
-                                   :admin_use)
+    def role_params
+      params.require(:role).permit(:name, 
+                                   :group_related,
+                                   :participant_related)
     end
-  end
-  
+end

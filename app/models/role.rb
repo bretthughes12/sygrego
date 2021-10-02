@@ -2,12 +2,16 @@
 #
 # Table name: roles
 #
-#  id         :bigint           not null, primary key
-#  name       :string(20)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  group_id   :integer
+#  id                  :bigint           not null, primary key
+#  group_related       :boolean          default(FALSE)
+#  name                :string(20)
+#  participant_related :boolean          default(FALSE)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 class Role < ApplicationRecord
     has_and_belongs_to_many :users
+
+    validates :name,                   presence: true,
+                                       length: { maximum: 20 }
 end
