@@ -5,6 +5,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @session = FactoryBot.create(:session)
     

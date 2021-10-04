@@ -5,6 +5,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @group = FactoryBot.create(:group)
     

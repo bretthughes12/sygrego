@@ -14,12 +14,13 @@
 require "test_helper"
 
 class VenueTest < ActiveSupport::TestCase
-    include ActionDispatch::TestProcess
+  include ActionDispatch::TestProcess
 
-    def setup
-        @user = FactoryBot.create(:user)
-        @venue = FactoryBot.create(:venue, database_code: 'ABC')
-    end
+  def setup
+      FactoryBot.create(:role, name: 'admin')
+      @user = FactoryBot.create(:user)
+      @venue = FactoryBot.create(:venue, database_code: 'ABC')
+  end
 
   test "should import venues from file" do
     file = fixture_file_upload('venue.csv','application/csv')

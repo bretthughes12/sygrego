@@ -3,6 +3,7 @@ require "test_helper"
 class Admin::AuditTrailControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
+    FactoryBot.create(:role, name: 'admin')
     @remote_user = FactoryBot.create(:user)
   end
 

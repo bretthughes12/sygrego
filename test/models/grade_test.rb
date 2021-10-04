@@ -37,6 +37,7 @@ class GradeTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @grade = FactoryBot.create(:grade, name: "Order1")
   end

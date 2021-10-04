@@ -5,6 +5,7 @@ class Admin::GroupsHelperTest < ActionView::TestCase
   include Admin::GroupsHelper
   
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group)

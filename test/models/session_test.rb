@@ -16,6 +16,7 @@ class SessionTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @session = FactoryBot.create(:session, database_rowid: 0)
   end

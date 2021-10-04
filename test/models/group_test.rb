@@ -36,6 +36,7 @@ class GroupTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group, name: "Order1")

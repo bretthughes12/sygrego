@@ -26,4 +26,16 @@ class User < ApplicationRecord
 
   validates :email,     presence: true,
                         uniqueness: { case_sensitive: false }
+  
+  before_create :set_default_role
+
+  def role?(role)
+    !roles.find_by_name(role.to_s).nil?
+  end
+
+  private
+
+  def set_default_role
+    self.roles << Role.find_by_name('admin')
+  end
 end

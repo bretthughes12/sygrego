@@ -5,6 +5,7 @@ class Admin::PagesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @page = FactoryBot.create(:page)
     

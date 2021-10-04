@@ -28,6 +28,7 @@ class SectionTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @section = FactoryBot.create(:section, name: "Order1")
   end

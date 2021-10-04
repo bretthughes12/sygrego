@@ -22,6 +22,7 @@ class SportTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
+    FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @sport = FactoryBot.create(:sport)
   end

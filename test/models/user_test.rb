@@ -19,7 +19,28 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  include ActionDispatch::TestProcess
+
+  def setup
+    FactoryBot.create(:role, name: 'admin')
+    @user = FactoryBot.create(:user)
+  end
+    
+  test "should indicate when user has a role" do
+    role = FactoryBot.create(:role, name: 'joker')
+    user = FactoryBot.create(:user)
+    user.roles << role
+
+    user.reload
+    assert_equal true, user.role?('joker')
+  end
+
+  test "should indicate when user does not have a role" do
+    role = FactoryBot.create(:role, name: 'joker')
+    user = FactoryBot.create(:user)
+    user.roles << role
+
+    user.reload
+    assert_equal false, user.role?('batman')
+  end
 end
