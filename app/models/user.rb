@@ -23,4 +23,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_and_belongs_to_many :roles
+
+  validates :email,     presence: true,
+                        uniqueness: { case_sensitive: false }
 end

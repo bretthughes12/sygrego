@@ -386,6 +386,7 @@ max-width:180px !important;
                                             <!-- // Begin Module: Standard Footer \\ -->
                                             <table border="0" cellpadding="10" cellspacing="0" width="100%">
                                                 <tr>
+												<% unless @settings.nil? %>
                                                     <td colspan="2" valign="middle" id="social">
                                                         <div mc:edit="std_social">
 															<% unless @settings.social_twitter_url.blank? %>
@@ -413,6 +414,7 @@ max-width:180px !important;
                                                         </div>
                                                     </td>
                                                 </tr>
+												<% end %>
                                                 <tr>
                                                     <td colspan="2" valign="middle" id="utility">
                                                         <div mc:edit="std_utility">
