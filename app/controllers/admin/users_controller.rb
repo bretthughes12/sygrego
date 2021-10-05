@@ -30,6 +30,7 @@ class Admin::UsersController < ApplicationController
   
     # GET /admin/users/1/edit
     def edit
+        @roles = Role.order(:name).load
     end
   
     # POST /admin/users
@@ -37,7 +38,10 @@ class Admin::UsersController < ApplicationController
       respond_to do |format|
         if @user.save
           flash[:notice] = 'User was successfully created.'
-          format.html { render action: "edit" }
+          format.html do 
+            @roles = Role.order(:name).load
+            render action: "edit" 
+          end
         else
           format.html { render action: "new" }
         end
@@ -51,8 +55,11 @@ class Admin::UsersController < ApplicationController
           flash[:notice] = 'User was successfully updated.'
           format.html { redirect_to admin_users_url }
         else
-          format.html { render action: "edit" }
-        end
+            format.html do 
+                @roles = Role.order(:name).load
+                render action: "edit" 
+              end
+            end
       end
     end
   

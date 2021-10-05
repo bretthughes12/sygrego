@@ -40,7 +40,14 @@ Rails.application.routes.draw do
     resources :audit_trail, only: [:index]
     resources :pages
     resources :roles
-    resources :users
+    resources :users do
+      resources :roles, only: [:index] do
+        member do
+          patch :add
+          delete :purge
+        end
+      end
+    end
 
     resources :groups do
       collection do

@@ -96,4 +96,29 @@ class Admin::RolesControllerTest < ActionDispatch::IntegrationTest
       delete admin_role_url(12345678)
     }
   end
+
+  test "should add a role to a user" do
+    role = FactoryBot.create(:role, name: 'gc')
+
+    patch add_admin_user_role_url(user_id: @user.id, id: role)
+
+    assert_redirected_to edit_admin_user_path(@user)
+
+    @user.reload
+
+    assert_equal true, @user.roles.include?(role)
+  end
+
+  test "should remove a role from a user" do
+    role = FactoryBot.create(:role, name: 'gc')
+    @user.roles << role
+
+    delete purge_admin_user_role_url(user_id: @user.id, id: role)
+
+    assert_redirected_to edit_admin_user_path(@user)
+
+    @user.reload
+
+    assert_equal false, @user.roles.include?(role)
+  end
 end

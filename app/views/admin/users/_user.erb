@@ -5,7 +5,7 @@
 
 	<td> 
 		<% user.roles.each do |r| %>
-			<span class="badge bg-primary"> <%= r.name %> </span>
+			<span class="<%= role_badge_class(r) %>"> <%= r.name %> </span>
 		<% end %>
 	</td>
 </tr>

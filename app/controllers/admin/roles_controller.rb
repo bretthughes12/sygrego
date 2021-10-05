@@ -65,6 +65,28 @@ class Admin::RolesController < ApplicationController
       end
     end
   
+    # PATCH /admin/user/1/role/1/add
+    def add
+      @user = User.find(params[:user_id])
+
+      @user.roles << @role unless @user.roles.include?(@role)
+
+      respond_to do |format|
+        format.html { redirect_to edit_admin_user_url(@user) }
+      end
+    end
+  
+    # DELETE /admin/user/1/role/1/purge
+    def purge
+      @user = User.find(params[:user_id])
+
+      @user.roles.delete(@role)
+  
+      respond_to do |format|
+        format.html { redirect_to edit_admin_user_url(@user) }
+      end
+    end
+
     private
     
     def role_params
