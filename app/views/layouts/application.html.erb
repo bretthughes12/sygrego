@@ -12,7 +12,7 @@
 
   <body>
     <header>
-      <%= render 'layouts/navigation' %>
+      <%= yield(:header) if content_for?(:header) %>
     </header>
 
     <main role="main">

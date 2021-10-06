@@ -1,0 +1,15 @@
+<nav class="navbar navbar-dark navbar-static-top navbar-expand-md">
+    <div class="container">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="navbar-toggler-icon"></span>
+        </button> <%= link_to image_tag("syg.png", alt: 'State Youth Games', class: 'logo', width: 60, height: 40), root_path, class: 'navbar-brand' %>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav mr-auto">
+                <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
+            </ul>
+        </div>
+    </div>
+    <%=  link_to_if(current_user.nil?, "Login", new_user_session_path, class: 'btn btn-primary m-5') do
+            link_to('Sign out',  destroy_user_session_path, :method => 'delete', class: 'btn btn-danger m-5')
+        end %>
+ 
+</nav>

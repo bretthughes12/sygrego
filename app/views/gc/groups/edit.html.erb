@@ -1,0 +1,7 @@
+<% title "Group Details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: gc_group_path(@group), 
+                              method: :put } %>

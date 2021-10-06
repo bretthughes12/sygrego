@@ -93,7 +93,7 @@ Rails.application.routes.draw do
   end
 
   namespace :gc do
-    resources :groups
+    resources :groups, only: [:edit, :update]
   end
 end
 
