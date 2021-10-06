@@ -15,7 +15,7 @@ class Gc::GroupsController < ApplicationController
       respond_to do |format|
         if @group.update(group_params)
           flash[:notice] = 'Successfully updated.'
-          format.html { render action: "edit" }
+          format.html { redirect_to home_gc_info_path }
         else
           format.html { render action: "edit" }
         end

@@ -21,8 +21,7 @@ class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
   test "should update group" do
     patch gc_group_url(@group), params: { group: { name: "Caffeine" } }
 
-    assert_response :success
-#    assert_redirected_to gc_groups_path
+    assert_redirected_to home_gc_info_path
     assert_match /Successfully updated/, flash[:notice]
 
     # Reload association to fetch updated data and assert that title is updated.

@@ -93,6 +93,12 @@ Rails.application.routes.draw do
   end
 
   namespace :gc do
+    resource :info, :controller => "info" do
+      collection do
+        get :home
+      end
+    end
+
     resources :groups, only: [:edit, :update]
   end
 end
