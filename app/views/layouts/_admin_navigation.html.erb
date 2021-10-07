@@ -52,8 +52,15 @@
             </ul>
         </div>
     </div>
+
+    <% if current_user && current_user.roles.count > 1 %>
+        <% role = Role.find_by_name(user_session["current_role"].to_s) %>
+        <span class="<%= role_badge_class(role) %>"> <%= role.name %> </span>
+        <%= link_to('Switch Roles', available_roles_admin_roles_path, class: 'btn btn-primary m-3') %>
+    <% end %>
+
     <%=  link_to_if(current_user.nil?, "Login", new_user_session_path, class: 'btn btn-primary m-5') do
-            link_to('Sign out',  destroy_user_session_path, :method => 'delete', class: 'btn btn-danger m-5')
+            link_to('Sign out', destroy_user_session_path, :method => 'delete', class: 'btn btn-danger m-5')
         end %>
  
 </nav>

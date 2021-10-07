@@ -1,5 +1,6 @@
 class Admin::SportsController < ApplicationController
     require 'csv'
+    require 'pp'
 
     load_and_authorize_resource except: [:show]
     before_action :authenticate_user!
@@ -10,7 +11,6 @@ class Admin::SportsController < ApplicationController
     def index
 #       page_sym = save_page("Sport", params)
 #       session[page_sym] = params[:page].to_i if params[:page]
-  
         @sports = Sport.order(:name).includes(:grades).all
   
         respond_to do |format|

@@ -33,6 +33,12 @@ class User < ApplicationRecord
     !roles.find_by_name(role.to_s).nil?
   end
 
+  def default_role
+    [:admin, :church_rep, :gc, :participant].each do |r|
+      return r if role?(r)
+    end
+  end
+
   private
 
   def set_default_role

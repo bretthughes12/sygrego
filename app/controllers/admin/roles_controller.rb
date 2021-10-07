@@ -87,6 +87,22 @@ class Admin::RolesController < ApplicationController
       end
     end
 
+    # GET /admin/roles/available_roles
+    def available_roles
+      current_role = Role.find_by_name(user_session["current_role"])
+      @roles = current_user.roles - [current_role]
+    end
+
+    # PATCH /admin/role/1/switch
+    def switch
+      user_session[:current_role] = @role.name
+      @roles = current_user.roles - [@role]
+
+      respond_to do |format|
+        format.html { redirect_to available_roles_admin_roles_path }
+      end
+    end
+
     private
     
     def role_params

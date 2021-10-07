@@ -39,7 +39,14 @@ Rails.application.routes.draw do
     end
     resources :audit_trail, only: [:index]
     resources :pages
-    resources :roles
+    resources :roles do
+      collection do
+        get :available_roles
+      end
+      member do
+        patch :switch
+      end
+    end
     resources :users do
       resources :roles, only: [:index] do
         member do
