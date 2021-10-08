@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
    
     def current_ability
-        Ability.new(current_user, user_session)
+        @current_ability ||= Ability.new(current_user, user_session)
     end
 
     def home_url(user)

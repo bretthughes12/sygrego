@@ -135,4 +135,4 @@ class Admin::RolesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to home_gc_info_url
   end
-end
+end 

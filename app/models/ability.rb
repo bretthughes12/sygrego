@@ -1,31 +1,33 @@
 # frozen_string_literal: true
+require 'pp'
 
 class Ability
   include CanCan::Ability
 
   def initialize(user, session)
 
-    can :manage, :all
+    if user.nil?
+      can :read, Page
 
-#    if user.nil?
-#      can :read, Page
+    elsif session["current_role"] == "admin"
+      can :manage, :all
 
-#    elsif session["current_role"] == "admin"
-#      can :manage, :all
+    elsif session["current_role"] == "church_rep"
+      can :update, Group
+      can :read, Page
+    
+    elsif session["current_role"] == "gc"
+      can :update, Group
+      can :read, Page
+   
+    elsif session["current_role"] == "participant"
+      can :update, Group
+      can :read, Page
+    
+    else
+      can :manage, :all
 
-#    elsif session["current_role"] == "church_rep"
-#      can :update, Group
-#      can :read, Page
-    
-#    elsif session["current_role"] == "gc"
-#      can :update, Group
-#      can :read, Page
-    
-#    elsif session["current_role"] == "participant"
-#      can :update, Group
-#      can :read, Page
-    
-#    end
+    end
     
     # Define abilities for the passed in user here. For example:
     #

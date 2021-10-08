@@ -1,7 +1,7 @@
 require "test_helper"
 
-class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers 
+class Gc::GroupsControllerTest < ActionController::TestCase
+  include Devise::Test::ControllerHelpers 
 
   def setup
     FactoryBot.create(:setting)
@@ -13,13 +13,17 @@ class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit" do
-    get edit_gc_group_url(@group)
+#    get edit_gc_group_url(@group)
+
+    get :edit, params: {id: @group.id}, session: {current_role: "gc"}
 
     assert_response :success
   end
 
   test "should update group" do
-    patch gc_group_url(@group), params: { group: { name: "Caffeine" } }
+#    patch gc_group_url(@group), params: { group: { name: "Caffeine" } }
+
+    patch :update, params: {id: @group.id, group: { name: "Caffeine" }}
 
     assert_redirected_to home_gc_info_path
     assert_match /Successfully updated/, flash[:notice]
@@ -31,7 +35,9 @@ class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not update group with errors" do
-    patch gc_group_url(@group), params: { group: { abbr: "a" } }
+#    patch gc_group_url(@group), params: { group: { abbr: "a" } }
+
+    patch :update, params: {id: @group.id, group: { abbr: "a" }}
 
     assert_response :success
     # Reload association to fetch updated data and assert that title is updated.
