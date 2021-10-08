@@ -133,6 +133,6 @@ class Admin::RolesControllerTest < ActionDispatch::IntegrationTest
 
     patch switch_admin_role_url(role)
 
-    assert_redirected_to available_roles_admin_roles_url
+    assert_redirected_to home_gc_info_url
   end
 end

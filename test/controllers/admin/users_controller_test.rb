@@ -1,15 +1,21 @@
 require "test_helper"
+require 'pp'
 
 class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers 
 
   def setup
+  #  @request.env['devise.mapping'] = Devise.mappings[:user]
+
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
+    admin_role = FactoryBot.create(:role, name: 'admin')
     @user1 = FactoryBot.create(:user)
     @user = FactoryBot.create(:user)
-    
+    @user.roles << admin_role
+    @user.reload
+
     sign_in @user
+#    ActionDispatch::Integration::Runner.session[:current_role] = 'admin'
   end
 
   test "should get index" do

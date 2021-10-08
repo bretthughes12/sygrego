@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   # Public routes
-  root 'admin/sports#index'
+  root 'welcome#home'
   resources :pages, only: [:show]
   get 'static/:permalink' => 'pages#show', :as => :static
 

@@ -3,9 +3,29 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize(user, session)
 
     can :manage, :all
+
+#    if user.nil?
+#      can :read, Page
+
+#    elsif session["current_role"] == "admin"
+#      can :manage, :all
+
+#    elsif session["current_role"] == "church_rep"
+#      can :update, Group
+#      can :read, Page
+    
+#    elsif session["current_role"] == "gc"
+#      can :update, Group
+#      can :read, Page
+    
+#    elsif session["current_role"] == "participant"
+#      can :update, Group
+#      can :read, Page
+    
+#    end
     
     # Define abilities for the passed in user here. For example:
     #

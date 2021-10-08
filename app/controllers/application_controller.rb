@@ -16,5 +16,37 @@ class ApplicationController < ActionController::Base
       
         render layout: false, action: action
     end
+   
+    def current_ability
+        Ability.new(current_user, user_session)
+    end
+
+    def home_url(user)
+        case
+          when user.nil?
+            new_user_session_url
+
+          else 
+            role = user_session["current_role"]
+            if role == "admin"
+                admin_sports_url
+            elsif role == "gc" || role == "church_rep"
+                home_gc_info_url
+            else
+                home_gc_info_url
+            end
+        end
+    end
     
+    rescue_from CanCan::AccessDenied do |exception|
+        case
+        when current_user.nil?
+            flash[:notice] = "Please sign in to continue"
+            redirect_to home_url(current_user)
+
+        else
+            flash[:notice] = "You are not authorised to perform the requested function"
+            redirect_to home_url(current_user)
+        end
+    end
 end

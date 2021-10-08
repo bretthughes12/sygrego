@@ -99,7 +99,7 @@ class Admin::RolesController < ApplicationController
       @roles = current_user.roles - [@role]
 
       respond_to do |format|
-        format.html { redirect_to available_roles_admin_roles_path }
+        format.html { redirect_to home_url(current_user) }
       end
     end
 
