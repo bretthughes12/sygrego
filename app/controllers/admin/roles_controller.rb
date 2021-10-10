@@ -95,7 +95,7 @@ class Admin::RolesController < ApplicationController
 
     # PATCH /admin/role/1/switch
     def switch
-      user_session["current_role"] = @role.name
+      session["current_role"] = @role.name
 
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }

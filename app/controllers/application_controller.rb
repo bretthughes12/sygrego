@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
    
     def current_ability
-        @current_ability ||= Ability.new(current_user, user_session)
+        @current_ability ||= Ability.new(current_user, session)
     end
 
     def home_url(user)
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
             new_user_session_url
 
           else 
-            role = user_session["current_role"]
+            role = session["current_role"]
             if role == "admin"
                 admin_sports_url
             elsif role == "gc" || role == "church_rep"

@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
   def create
     super
 
-    user_session[:current_role] = current_user.default_role
+    session[:current_role] = current_user.default_role
   end
 
   # DELETE /resource/sign_out

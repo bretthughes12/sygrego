@@ -15,6 +15,13 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
+module Devise::Test::IntegrationHelpers
+  def sign_in(user)
+    post new_user_session_url, params: { user: {email: user.email, password: user.password} }
+    assert_response :redirect
+  end
+end
+
 module RemoveUploadedFiles
   def after_teardown
     super
