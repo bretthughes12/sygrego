@@ -5,7 +5,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
+    @admin_role = FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @sport = FactoryBot.create(:sport)
 
@@ -16,6 +16,28 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     get admin_sports_url
 
     assert_response :success
+  end
+
+  test "should not get index if not logged in" do
+    sign_out @user
+
+    get admin_sports_url
+
+    assert_redirected_to new_user_session_url
+    assert_match /Please sign in/, flash[:notice]
+  end
+
+  test "should not get index if not an admin" do
+    sign_out @user
+    gc_role = FactoryBot.create(:role, name: 'gc')
+    @user.roles.delete(@admin_role)
+    @user.roles << gc_role
+    sign_in @user
+
+    get admin_sports_url
+
+    assert_redirected_to home_gc_info_url
+    assert_match /You are not authorised/, flash[:notice]
   end
 
   test "should download sport data" do

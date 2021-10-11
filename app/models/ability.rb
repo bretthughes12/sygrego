@@ -15,20 +15,17 @@ class Ability
     elsif session["current_role"] == "church_rep"
       can :update, Group
       can :read, Page
-      can [:available_roles, :switch], Role
+      can [:available_roles, :switch], Role if user.roles.count > 1
     
     elsif session["current_role"] == "gc"
       can :update, Group
       can :read, Page
-      can [:available_roles, :switch], Role
+      can [:available_roles, :switch], Role if user.roles.count > 1
    
     elsif session["current_role"] == "participant"
       can :update, Group
       can :read, Page
-      can [:available_roles, :switch], Role
-    
-#    else
-#      can :manage, :all
+      can [:available_roles, :switch], Role if user.roles.count > 1
 
     end
     
