@@ -57,7 +57,7 @@
         <% role = Role.find_by_name(session["current_role"].to_s) %>
         <% unless role.nil? %>
             <span class="<%= role_badge_class(role) %>"> <%= role.name %> </span>
-            <%= link_to('Switch Roles', available_roles_admin_roles_path, class: 'btn btn-primary m-3') %>
+            <%= link_to('Switch Roles', available_roles_roles_path, class: 'btn btn-primary m-3') %>
         <% end %>
     <% end %>
 

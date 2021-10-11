@@ -121,18 +121,4 @@ class Admin::RolesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal false, @user.roles.include?(role)
   end
-
-  test "should show available roles" do
-    get available_roles_admin_roles_url
-
-    assert_response :success
-  end
-
-  test "should switch roles" do
-    role = FactoryBot.create(:role, name: 'participant')
-
-    patch switch_admin_role_url(role)
-
-    assert_redirected_to home_gc_info_url
-  end
 end 

@@ -2,13 +2,23 @@ Rails.application.routes.draw do
 
   # Public routes
   root 'welcome#home'
-  resources :pages, only: [:show]
   get 'static/:permalink' => 'pages#show', :as => :static
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords'
   } 
+
+  resources :pages, only: [:show]
+
+  resources :roles do
+    collection do
+      get :available_roles
+    end
+    member do
+      patch :switch
+    end
+  end
 
   namespace :admin do
     resource :info, :controller => "info" do
@@ -39,14 +49,7 @@ Rails.application.routes.draw do
     end
     resources :audit_trail, only: [:index]
     resources :pages
-    resources :roles do
-      collection do
-        get :available_roles
-      end
-      member do
-        patch :switch
-      end
-    end
+    resources :roles
     resources :users do
       resources :roles, only: [:index] do
         member do
