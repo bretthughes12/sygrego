@@ -12,6 +12,7 @@ class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
     
     @user.roles.delete(admin_role)
     @user.roles << @gc_role
+    @user.groups << @group
     
     sign_in @user
   end

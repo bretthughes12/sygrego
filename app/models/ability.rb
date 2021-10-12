@@ -13,19 +13,28 @@ class Ability
       can :manage, :all
 
     elsif session["current_role"] == "church_rep"
-      can :update, Group
+      can :update, Group do |group|
+        user.groups.include?(group)
+      end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1
     
     elsif session["current_role"] == "gc"
-      can :update, Group
+      can :update, Group do |group|
+        user.groups.include?(group)
+      end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1
    
     elsif session["current_role"] == "participant"
-      can :update, Group
+      can :update, Group do |group|
+        user.groups.include?(group)
+      end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
+      can [:available_groups, :switch], Group if user.roles.count > 1
 
     end
     

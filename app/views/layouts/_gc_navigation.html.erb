@@ -6,9 +6,28 @@
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Dashboard', home_gc_info_path, class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Roles</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_gc_groups_path %></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
+
+    <% if current_user && current_user.roles.count > 1 %>
+        <% role = Role.find_by_name(session["current_role"].to_s) %>
+        <% unless role.nil? %>
+            <span class="<%= role_badge_class(role) %>"> <%= role.name %> </span>
+        <% end %>
+    <% end %>
+
+    <% if current_user && current_user.groups.count > 1 %>
+        <span class="badge bg-primary"> <%= @group.abbr %> </span>
+    <% end %>
+
     <%=  link_to_if(current_user.nil?, "Login", new_user_session_path, class: 'btn btn-primary m-5') do
             link_to('Sign out',  destroy_user_session_path, :method => 'delete', class: 'btn btn-danger m-5')
         end %>

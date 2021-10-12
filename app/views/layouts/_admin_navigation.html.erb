@@ -49,6 +49,13 @@
                         <li class='dropdown-item'><%= link_to 'Users', admin_users_path %></li>
                     </ul>
                 </li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Roles</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_gc_groups_path %></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -57,7 +64,6 @@
         <% role = Role.find_by_name(session["current_role"].to_s) %>
         <% unless role.nil? %>
             <span class="<%= role_badge_class(role) %>"> <%= role.name %> </span>
-            <%= link_to('Switch Roles', available_roles_roles_path, class: 'btn btn-primary m-3') %>
         <% end %>
     <% end %>
 

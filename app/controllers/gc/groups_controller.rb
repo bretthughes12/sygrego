@@ -1,6 +1,7 @@
 class Gc::GroupsController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user!
+    before_action :find_group
     
     layout "gc"
   
@@ -38,6 +39,7 @@ class Gc::GroupsController < ApplicationController
     # PATCH /gc/group/1/switch
     def switch
       session["current_group"] = @group.abbr
+      session["current_role"] = "gc"
 
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }
@@ -64,5 +66,17 @@ private
                                     :age_demographic,
                                     :group_focus
                                 )
+    end
+
+    def find_group
+      if @group.nil?
+        if session["current_group"]
+          @group = Group.find_by_abbr(session["current_group"])
+        elsif current_user.groups.count > 0
+          @group = current_user.groups.first
+        else
+          @group = Group.first
+        end
+      end
     end
 end
