@@ -57,6 +57,15 @@ Rails.application.routes.draw do
           delete :purge
         end
       end
+      resources :groups, only: [:index] do
+        collection do
+          patch :add_group
+        end
+        member do
+          patch :add
+          delete :purge
+        end
+      end
     end
 
     resources :groups do
@@ -109,7 +118,14 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :groups, only: [:edit, :update]
+    resources :groups, only: [:edit, :update] do
+      collection do
+        get :available_groups
+      end
+      member do
+        patch :switch
+      end
+    end
   end
 end
 

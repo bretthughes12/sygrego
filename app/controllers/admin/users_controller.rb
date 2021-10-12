@@ -31,7 +31,8 @@ class Admin::UsersController < ApplicationController
     # GET /admin/users/1/edit
     def edit
         @roles = Role.order(:name).load
-    end
+        @groups = Group.order(:short_name).load - current_user.groups
+      end
   
     # POST /admin/users
     def create
@@ -40,6 +41,7 @@ class Admin::UsersController < ApplicationController
           flash[:notice] = 'User was successfully created.'
           format.html do 
             @roles = Role.order(:name).load
+            @groups = Group.order(:short_name).load - current_user.groups
             render action: "edit" 
           end
         else
@@ -57,6 +59,7 @@ class Admin::UsersController < ApplicationController
         else
             format.html do 
                 @roles = Role.order(:name).load
+                @groups = Group.order(:short_name).load - current_user.groups
                 render action: "edit" 
               end
             end

@@ -23,6 +23,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :groups
 
   validates :email,     presence: true,
                         uniqueness: { case_sensitive: false }
@@ -37,6 +38,15 @@ class User < ApplicationRecord
     [:admin, :church_rep, :gc, :participant].each do |r|
       return r if role?(r)
     end
+  end
+
+  def available_groups
+    return Group.all.load if role?(:admin)
+    self.groups
+  end
+
+  def other_groups
+    Group.all.load - self.groups
   end
 
   private

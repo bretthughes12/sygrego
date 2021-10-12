@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_215812) do
+ActiveRecord::Schema.define(version: 2021_10_12_080843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,6 +129,13 @@ ActiveRecord::Schema.define(version: 2021_10_02_215812) do
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.index ["group_id"], name: "index_groups_users_on_group_id"
+    t.index ["user_id"], name: "index_groups_users_on_user_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -270,6 +277,8 @@ ActiveRecord::Schema.define(version: 2021_10_02_215812) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "grades", "sports"
+  add_foreign_key "groups_users", "groups"
+  add_foreign_key "groups_users", "users"
   add_foreign_key "sections", "grades"
   add_foreign_key "sections", "sessions"
   add_foreign_key "sections", "venues"

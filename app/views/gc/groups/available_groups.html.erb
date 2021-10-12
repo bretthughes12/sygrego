@@ -1,9 +1,9 @@
-<% title "Switch roles" %>
+<% title "Switch groups" %>
 
 <h1><%= yield(:title) %></h1>
 
 <table class="table table-dark table-striped">
-	<%= render partial: 'available_role', collection: @roles %>
+	<%= render partial: 'available_group', collection: @groups %>
 </table>
 
 <%= link_to "Back", :back,

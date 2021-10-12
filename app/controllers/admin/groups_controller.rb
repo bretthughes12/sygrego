@@ -128,6 +128,40 @@ class Admin::GroupsController < ApplicationController
         end
       end
     end
+  
+    # PATCH /admin/user/1/group/1/add
+    def add
+      @user = User.find(params[:user_id])
+
+      @user.groups << @group unless @user.groups.include?(@group)
+
+      respond_to do |format|
+        format.html { redirect_to edit_admin_user_url(@user) }
+      end
+    end
+  
+    # PATCH /admin/user/1/groups/add_group
+    def add_group
+      @user = User.find(params[:user_id])
+      @group = Group.find(params[:group_id])
+
+      @user.groups << @group unless @user.groups.include?(@group)
+
+      respond_to do |format|
+        format.html { redirect_to edit_admin_user_url(@user) }
+      end
+    end
+  
+    # DELETE /admin/user/1/group/1/purge
+    def purge
+      @user = User.find(params[:user_id])
+
+      @user.groups.delete(@group)
+  
+      respond_to do |format|
+        format.html { redirect_to edit_admin_user_url(@user) }
+      end
+    end
 
 private
   
