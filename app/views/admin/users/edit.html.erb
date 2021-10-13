@@ -39,7 +39,7 @@
 <h2>Groups</h2>
 
 <table class="table table-dark">
-    <% current_user.groups.order(:short_name).each do |group| %>
+    <% @user.groups.order(:short_name).each do |group| %>
     <tr>
     	<td> 
 	    	<%= group.short_name  %></span></br>
