@@ -41,12 +41,12 @@ class User < ApplicationRecord
   end
 
   def available_groups
-    return Group.all.load if role?(:admin)
-    self.groups
+    return Group.all.order(:short_name).load if role?(:admin)
+    self.groups.order(:short_name)
   end
 
   def other_groups
-    Group.all.load - self.groups
+    Group.all.order(:short_name).load - self.groups
   end
 
   private

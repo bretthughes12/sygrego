@@ -27,9 +27,9 @@ class Gc::GroupsController < ApplicationController
     def available_groups
       if session["current_group"]
         current_group = Group.find_by_abbr(session["current_group"])
-        @groups = current_user.groups - [current_group]
+        @groups = current_user.available_groups - [current_group]
       else
-        @groups = current_user.groups
+        @groups = current_user.available_groups
       end
 
       current_role = Role.find_by_name(session["current_role"])
@@ -66,17 +66,5 @@ private
                                     :age_demographic,
                                     :group_focus
                                 )
-    end
-
-    def find_group
-      if @group.nil?
-        if session["current_group"]
-          @group = Group.find_by_abbr(session["current_group"])
-        elsif current_user.groups.count > 0
-          @group = current_user.groups.first
-        else
-          @group = Group.first
-        end
-      end
     end
 end

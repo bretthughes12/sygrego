@@ -178,4 +178,31 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 404
   end
+
+
+  test "should add a group to a user" do
+    group = FactoryBot.create(:group)
+
+    patch add_group_admin_user_groups_url(user_id: @user.id, 
+                                         params: {group_id: group.id} )
+
+    assert_redirected_to edit_admin_user_path(@user)
+
+    @user.reload
+
+    assert_equal true, @user.groups.include?(group)
+  end
+
+  test "should remove a group from a user" do
+    group = FactoryBot.create(:group)
+    @user.groups << group
+
+    delete purge_admin_user_group_url(user_id: @user.id, id: group)
+
+    assert_redirected_to edit_admin_user_path(@user)
+
+    @user.reload
+
+    assert_equal false, @user.groups.include?(group)
+  end
 end

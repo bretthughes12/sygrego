@@ -37,7 +37,19 @@ class ApplicationController < ActionController::Base
             end
         end
     end
-    
+
+    def find_group
+        if @group.nil?
+            if session["current_group"]
+              @group = Group.find_by_abbr(session["current_group"])
+            elsif current_user.groups.count > 0
+              @group = current_user.groups.first
+            else
+              @group = Group.first
+            end
+        end
+    end
+     
     rescue_from CanCan::AccessDenied do |exception|
         case
         when current_user.nil?

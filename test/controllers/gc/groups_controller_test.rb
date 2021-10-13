@@ -62,4 +62,35 @@ class Gc::GroupsControllerTest < ActionDispatch::IntegrationTest
 
     assert_not_equal "a", @group.abbr
   end
+
+  test "should show available groups" do
+    group = FactoryBot.create(:group)
+    @user.groups << group
+
+    get available_groups_gc_groups_url
+
+    assert_response :success
+  end
+
+  test "should show available groups when editing a group" do
+    group = FactoryBot.create(:group)
+    @user.groups << group
+
+    patch switch_gc_group_url(group)
+    assert_equal group.abbr, session["current_group"]
+
+    get available_groups_gc_groups_url
+
+    assert_response :success
+  end
+
+  test "should switch groups" do
+    group = FactoryBot.create(:group)
+    @user.groups << group
+
+    patch switch_gc_group_url(group)
+
+    assert_redirected_to home_gc_info_url
+    assert_equal group.abbr, session["current_group"]
+  end
 end
