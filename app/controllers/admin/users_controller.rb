@@ -30,9 +30,9 @@ class Admin::UsersController < ApplicationController
   
     # GET /admin/users/1/edit
     def edit
-        @roles = Role.order(:name).load
-        @groups = @user.other_groups
-      end
+      @user_roles = Role.order(:name).load
+      @groups = @user.other_groups
+    end
   
     # POST /admin/users
     def create
@@ -40,7 +40,7 @@ class Admin::UsersController < ApplicationController
         if @user.save
           flash[:notice] = 'User was successfully created.'
           format.html do 
-            @roles = Role.order(:name).load
+            @user_roles = Role.order(:name).load
             @groups = @user.other_groups
             render action: "edit" 
           end
@@ -58,11 +58,11 @@ class Admin::UsersController < ApplicationController
           format.html { redirect_to admin_users_url }
         else
             format.html do 
-                @roles = Role.order(:name).load
-                @groups = @user.other_groups
-                render action: "edit" 
-              end
+              @user_roles = Role.order(:name).load
+              @groups = @user.other_groups
+              render action: "edit" 
             end
+        end
       end
     end
   

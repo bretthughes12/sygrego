@@ -1,0 +1,12 @@
+<tr>
+    <td> 
+        <%= user_group.short_name  %></span></br>
+    </td>
+
+    <td> 
+        <%= link_to "Remove", purge_admin_user_group_path(user_id: @user, id: user_group),
+	        	              class: danger_button_class,
+    	        	          user: "button",
+                              method: :delete %>
+    </td>
+</tr>

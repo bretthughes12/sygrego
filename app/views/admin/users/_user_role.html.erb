@@ -1,0 +1,19 @@
+<tr>
+	<td> 
+		<%= user_role.name  %></span></br>
+	</td>
+
+	<td> 
+		<% if @user.roles.include?(user_role) %>
+	    	<%= link_to "Remove", purge_admin_user_role_path(user_id: @user, id: user_role),
+	        	              class: danger_button_class,
+    	        	          user: "button",
+                              method: :delete %>
+		<% else %>
+	    	<%= link_to "Add", add_admin_user_role_path(user_id: @user, id: user_role),
+	        	              class: primary_button_class,
+    	        	          user: "button",
+                              method: :patch %>
+		<% end %>
+	</td>
+</tr>

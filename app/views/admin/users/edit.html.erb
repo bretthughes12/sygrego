@@ -11,27 +11,7 @@
 <h2>Roles</h2>
 
 <table class="table table-dark">
-    <% @roles.each do |role| %>
-    <tr>
-    	<td> 
-	    	<%= role.name  %></span></br>
-    	</td>
-
-    	<td> 
-            <% if @user.roles.include?(role) %>
-	    	<%= link_to "Remove", purge_admin_user_role_path(user_id: @user, id: role),
-	        	              class: danger_button_class,
-    	        	          user: "button",
-                              method: :delete %>
-            <% else %>
-	    	<%= link_to "Add", add_admin_user_role_path(user_id: @user, id: role),
-	        	              class: primary_button_class,
-    	        	          user: "button",
-                              method: :patch %>
-            <% end %>
-    	</td>
-    </tr>
-    <% end %>
+    <%= render partial: "user_role", collection: @user_roles %>
 </table>
 
 <br/>
@@ -39,20 +19,7 @@
 <h2>Groups</h2>
 
 <table class="table table-dark">
-    <% @user.groups.order(:short_name).each do |group| %>
-    <tr>
-    	<td> 
-	    	<%= group.short_name  %></span></br>
-    	</td>
-
-    	<td> 
-	    	<%= link_to "Remove", purge_admin_user_group_path(user_id: @user, id: group),
-	        	              class: danger_button_class,
-    	        	          user: "button",
-                              method: :delete %>
-    	</td>
-    </tr>
-    <% end %>
+    <%= render partial: "user_group", collection: @user.groups.order(:short_name) %>
     <tr>
         <%= form_with(url: add_group_admin_user_groups_path(user_id: @user), method: :patch) do |f| %> 
             <td><%= f.collection_select :group_id, @groups, :id, :short_name %></td>
