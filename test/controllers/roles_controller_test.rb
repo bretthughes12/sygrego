@@ -32,7 +32,7 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
     @user.roles << role
     @user.groups << @group1
 
-    patch switch_gc_group_url(@group1)
+    patch switch_group_url(@group1)
     assert_equal "gc", session["current_role"]
 
     get available_roles_roles_url

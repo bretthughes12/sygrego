@@ -19,6 +19,14 @@ Rails.application.routes.draw do
       patch :switch
     end
   end
+  resources :groups, only: [:index] do
+    collection do
+      get :available_groups
+    end
+    member do
+      patch :switch
+    end
+  end
 
   namespace :admin do
     resource :info, :controller => "info" do
@@ -118,14 +126,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :groups, only: [:edit, :update] do
-      collection do
-        get :available_groups
-      end
-      member do
-        patch :switch
-      end
-    end
+    resources :groups, only: [:edit, :update]
   end
 end
 
