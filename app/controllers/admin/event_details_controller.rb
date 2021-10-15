@@ -63,7 +63,7 @@ class Admin::EventDetailsController < ApplicationController
       if params[:event_detail][:file].path =~ %r{\.csv$}i
         result = EventDetail.import(params[:event_detail][:file], current_user)
 
-        flash[:notice] = "Event Details upload complete: #{result[:creates]} event_details created; #{result[:updates]} updates; #{result[:errors]} errors"
+        flash[:notice] = "Event Details upload complete: #{result[:creates]} details created; #{result[:updates]} updates; #{result[:errors]} errors"
 
         respond_to do |format|
           format.html { redirect_to admin_event_details_url }
