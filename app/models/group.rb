@@ -44,6 +44,7 @@ class Group < ApplicationRecord
 #    has_many :groups_sport_grades_filters
 #    has_many :fee_audit_trails
     has_and_belongs_to_many :users
+    has_one :event_detail
 
     scope :stale, -> { where(status: 'Stale') }
     scope :not_stale, -> { where("status != 'Stale'") }

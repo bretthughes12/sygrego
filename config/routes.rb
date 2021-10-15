@@ -83,6 +83,12 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :event_details, only: [:index, :show, :edit, :update] do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
 
     resources :sports do
       collection do

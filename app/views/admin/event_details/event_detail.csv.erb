@@ -1,0 +1,26 @@
+<%- headings = %w{RowID Abbr Onsite FirePit CampingRqmts Tents Caravans   
+	              Marquees MarqueeSizes MarqueeCo BuddyInterest BuddyComments
+				  ServiceSat ServiceSun EstNumbers Vehicles } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @event_details.each do |event_detail|
+  	line = [ event_detail.group.database_rowid,
+  		     event_detail.group.abbr,
+  		     event_detail.onsite,
+			 event_detail.fire_pit,
+  		     event_detail.camping_rqmts,
+  		     event_detail.tents,
+  		     event_detail.caravans,
+  		     event_detail.marquees,
+  		     event_detail.marquee_sizes,
+  		     event_detail.marquee_co,
+  		     event_detail.buddy_interest,
+  		     event_detail.buddy_comments,
+  		     event_detail.service_pref_sat,
+  		     event_detail.service_pref_sun,
+  		     event_detail.estimated_numbers,
+  		     event_detail.number_of_vehicles
+		 ]
+    csv << line
+  end
+end.html_safe %>

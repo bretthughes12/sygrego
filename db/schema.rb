@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_080843) do
+ActiveRecord::Schema.define(version: 2021_10_15_084333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,28 @@ ActiveRecord::Schema.define(version: 2021_10_12_080843) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "event_details", force: :cascade do |t|
+    t.boolean "onsite"
+    t.boolean "fire_pit"
+    t.text "camping_rqmts"
+    t.integer "tents"
+    t.integer "caravans"
+    t.integer "marquees"
+    t.string "marquee_sizes", limit: 255
+    t.string "marquee_co", limit: 50
+    t.string "buddy_interest", limit: 50
+    t.text "buddy_comments"
+    t.string "service_pref_sat", limit: 20, default: "No preference"
+    t.string "service_pref_sun", limit: 20, default: "No preference"
+    t.integer "estimated_numbers"
+    t.integer "number_of_vehicles"
+    t.bigint "updated_by"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_event_details_on_group_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -276,6 +298,7 @@ ActiveRecord::Schema.define(version: 2021_10_12_080843) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "event_details", "groups"
   add_foreign_key "grades", "sports"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"

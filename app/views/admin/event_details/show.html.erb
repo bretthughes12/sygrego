@@ -1,0 +1,12 @@
+<% title "Event details for: #{@event_detail.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @event_detail %>
+
+<%= link_to "Back", admin_event_details_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_event_detail_path(@event_detail),
+                  class: primary_button_class,
+                  role: "button" %>

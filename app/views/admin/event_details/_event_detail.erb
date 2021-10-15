@@ -1,0 +1,13 @@
+<tr valign="top" class="<%= group_display_class(event_detail.group) %>">
+	<td> 
+		<%= h(event_detail.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to event_detail.group.name, edit_admin_event_detail_path(event_detail) %>
+	</td>
+	
+	<td> 
+		<%= h(event_detail.group.short_name) %>
+	</td>
+</tr>
