@@ -6,17 +6,17 @@
 #  buddy_comments     :text
 #  buddy_interest     :string(50)
 #  camping_rqmts      :text
-#  caravans           :integer
-#  estimated_numbers  :integer
-#  fire_pit           :boolean
+#  caravans           :integer          default(0)
+#  estimated_numbers  :integer          default(0)
+#  fire_pit           :boolean          default(TRUE)
 #  marquee_co         :string(50)
 #  marquee_sizes      :string(255)
-#  marquees           :integer
-#  number_of_vehicles :integer
-#  onsite             :boolean
+#  marquees           :integer          default(0)
+#  number_of_vehicles :integer          default(0)
+#  onsite             :boolean          default(TRUE)
 #  service_pref_sat   :string(20)       default("No preference")
 #  service_pref_sun   :string(20)       default("No preference")
-#  tents              :integer
+#  tents              :integer          default(0)
 #  updated_by         :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
