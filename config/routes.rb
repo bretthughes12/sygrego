@@ -84,6 +84,9 @@ Rails.application.routes.draw do
       end
     end
     resources :event_details, only: [:index, :show, :edit, :update] do
+      member do
+        patch :purge_file
+      end
       collection do
         get :new_import
         post :import

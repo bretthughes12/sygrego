@@ -53,6 +53,17 @@ class Admin::EventDetailsController < ApplicationController
       end
     end
   
+    # PATCH /admin/event_details/1/purge_file
+    def purge_file
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.food_cert.purge
+
+      respond_to do |format|
+          format.html { render action: "edit" }
+      end
+    end
+
     # GET /admin/event_details/new_import
     def new_import
       @event_detail = EventDetail.new
@@ -94,7 +105,8 @@ class Admin::EventDetailsController < ApplicationController
                                     :service_pref_sat,
                                     :service_pref_sun,
                                     :estimated_numbers,
-                                    :number_of_vehicles
+                                    :number_of_vehicles,
+                                    :food_cert
                                 )
     end
 end
