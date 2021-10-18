@@ -124,4 +124,18 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response 404
   end
+
+  test "should purge the food cert from event details" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @event_detail.food_cert.attach(file)
+
+    patch purge_file_admin_event_detail_url(@event_detail)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @event_detail.reload
+
+    assert_equal false, @event_detail.food_cert.attached?
+  end
 end

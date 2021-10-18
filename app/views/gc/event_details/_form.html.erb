@@ -1,0 +1,53 @@
+<%= simple_form_for(@event_detail, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :onsite %>
+	<%= f.input :estimated_numbers %>
+	<%= f.input :number_of_vehicles %>
+	<%= f.input :fire_pit %>
+	<%= f.input :camping_rqmts, label: "Camping Requirements" %>
+   	<%= f.input :tents %>
+	<%= f.input :caravans %>
+	<%= f.input :marquees %>
+	<%= f.input :marquee_sizes %>
+	<%= f.input :marquee_co %>
+
+	<br/>
+
+	<h2>Buddy Groups</h2>
+
+	<%= f.input :buddy_interest, as: :select, collection: EventDetail::BUDDY_INTEREST, include_blank: false, label: "Interest" %>
+	<%= f.input :buddy_comments, label: "Comments" %>
+
+	<br/>
+
+	<h2>Service Preferences</h2>
+
+	<%= f.input :service_pref_sat, as: :select, collection: EventDetail::SERVICE_PREFERENCES, include_blank: false, label: "Saturday"  %>
+	<%= f.input :service_pref_sun, as: :select, collection: EventDetail::SERVICE_PREFERENCES, include_blank: false, label: "Sunday"  %>
+
+	<br/>
+
+	<h2>Food Certificate</h2>
+	
+	<% if @event_detail.food_cert.attached? %>
+		<% if @event_detail.food_cert.previewable? %>
+		    <%= link_to(image_tag(@event_detail.food_cert.preview(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.food_cert, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.food_cert, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_file_gc_event_detail_path(@event_detail),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :food_cert, as: :file %>
+	<% end %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

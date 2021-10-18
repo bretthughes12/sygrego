@@ -9,6 +9,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     @gc_role = FactoryBot.create(:role, name: 'gc')
     @user = FactoryBot.create(:user)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
     
     @user.roles.delete(admin_role)
     @user.roles << @gc_role
@@ -19,6 +20,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show available groups" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     @user.groups << group
 
     get available_groups_groups_url
@@ -28,6 +30,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show available groups when editing a group" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     @user.groups << group
 
     patch switch_group_url(group)
@@ -40,6 +43,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   test "should switch groups" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     @user.groups << group
 
     patch switch_group_url(group)

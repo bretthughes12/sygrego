@@ -16,6 +16,9 @@ class Ability
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end
+      can [:update, :purge_file], EventDetail do |ev|
+        user.groups.include?(ev.group) || user.role?(:admin)
+      end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1
@@ -23,6 +26,9 @@ class Ability
     elsif session["current_role"] == "gc"
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
+      end
+      can [:update, :purge_file], EventDetail do |ev|
+        user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1

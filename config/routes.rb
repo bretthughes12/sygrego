@@ -136,6 +136,11 @@ Rails.application.routes.draw do
     end
 
     resources :groups, only: [:edit, :update]
+    resources :event_details, only: [:edit, :update] do
+      member do
+        patch :purge_file
+      end
+    end
   end
 end
 

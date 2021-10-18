@@ -8,7 +8,9 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @group1 = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group1)
     @group2 = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group2)
     
     sign_in @user
   end

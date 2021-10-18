@@ -6,6 +6,7 @@
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Dashboard', home_gc_info_path, class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
+                <li class='nav-item'><%= link_to 'Event Details', edit_gc_event_detail_path(@group.event_detail), class: 'nav-link' %></li>
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Roles</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

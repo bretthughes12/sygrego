@@ -1,0 +1,7 @@
+<% title "Event Details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: gc_event_detail_path(@event_detail), 
+                              method: :put } %>
