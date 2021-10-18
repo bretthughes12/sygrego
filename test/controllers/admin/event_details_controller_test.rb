@@ -75,7 +75,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     group = FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('event_detail.csv','application/csv')
 
-    assert_difference('EventDetail.count') do
+    assert_no_difference('EventDetail.count') do
       post import_admin_event_details_url, params: { event_detail: { file: file }}
     end
 

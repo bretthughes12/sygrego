@@ -8,6 +8,7 @@ class Admin::InfoController < ApplicationController
         @tech_stats = []
 
         @tech_stats << model_stats(Group)    
+        @tech_stats << model_stats(EventDetail)    
         @tech_stats << model_stats(Sport)    
         @tech_stats << model_stats(Grade) 
         @tech_stats << model_stats(Section)    

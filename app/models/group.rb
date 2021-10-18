@@ -44,7 +44,7 @@ class Group < ApplicationRecord
 #    has_many :groups_sport_grades_filters
 #    has_many :fee_audit_trails
     has_and_belongs_to_many :users
-    has_one :event_detail
+    has_one :event_detail, dependent: :destroy
 
     scope :stale, -> { where(status: 'Stale') }
     scope :not_stale, -> { where("status != 'Stale'") }
@@ -100,6 +100,7 @@ class Group < ApplicationRecord
     searchable_by :abbr, :name, :short_name, :trading_name
 
     before_save :uppercase_abbr!
+    after_save :create_event_details!
 
     def <=>(other)
         name <=> other.name
@@ -196,6 +197,16 @@ class Group < ApplicationRecord
       abbr.upcase!
     end
   
+    def create_event_details!
+      unless self.event_detail
+        EventDetail.create(
+          group_id:            self.id,
+          buddy_interest:      "Not interested",
+          updated_by:          self.updated_by
+        )
+      end
+    end
+
     def self.assign_short_name(name)
       sname = name.split[0]
       group = Group.find_by_short_name(sname)

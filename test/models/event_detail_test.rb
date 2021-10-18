@@ -46,18 +46,21 @@ class EventDetailTest < ActiveSupport::TestCase
     group = FactoryBot.create(:group, abbr: 'CAF')
     file = fixture_file_upload('event_detail.csv','application/csv')
     
-    assert_difference('EventDetail.count') do
+    assert_no_difference('EventDetail.count') do
       @result = EventDetail.import(file, @user)
     end
 
-    assert_equal 1, @result[:creates]
-    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
     assert_equal 0, @result[:errors]
   end
 
   test "should update exiting event details from file" do
     group = FactoryBot.create(:group, abbr: 'CAF')
-    event_detail = FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:event_detail, 
+      group: group,
+      estimated_numbers: 20)
+    
     file = fixture_file_upload('event_detail.csv','application/csv')
     
     assert_no_difference('EventDetail.count') do
@@ -68,8 +71,9 @@ class EventDetailTest < ActiveSupport::TestCase
     assert_equal 1, @result[:updates]
     assert_equal 0, @result[:errors]
 
-    event_detail.reload
-    assert_equal 34, event_detail.estimated_numbers
+    group.reload
+    group.event_detail.reload
+    assert_equal 34, group.event_detail.estimated_numbers
   end
 
   test "should not import event details with errors from file" do
