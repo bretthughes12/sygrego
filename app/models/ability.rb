@@ -14,7 +14,7 @@ class Ability
 
     elsif session["current_role"] == "church_rep"
       can :update, Group do |group|
-        user.groups.include?(group)
+        user.groups.include?(group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
@@ -22,7 +22,7 @@ class Ability
     
     elsif session["current_role"] == "gc"
       can :update, Group do |group|
-        user.groups.include?(group)
+        user.groups.include?(group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
@@ -30,7 +30,7 @@ class Ability
    
     elsif session["current_role"] == "participant"
       can :update, Group do |group|
-        user.groups.include?(group)
+        user.groups.include?(group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
