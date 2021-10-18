@@ -12,9 +12,9 @@
 	
 	<% if @section.draw_file.attached? %>
 		<% if @section.draw_file.previewable? %>
-		    <%= image_tag @section.draw_file.preview(resize_to_limit: [80, 100]) %>
+		    <%= link_to(image_tag(@section.draw_file.preview(resize_to_limit: [80, 100])), rails_blob_path(@section.draw_file, disposition: "attachment")) %>
 		<% else %>
-		    <p> File </p>
+		    <%= link_to "File", rails_blob_path(@section.draw_file, disposition: "attachment") %>
 		<% end %>
 		<%= link_to "Remove file", purge_file_admin_section_path(@section),
         	          method: :patch,

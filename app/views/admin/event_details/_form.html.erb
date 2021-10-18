@@ -32,9 +32,9 @@
 	
 	<% if @event_detail.food_cert.attached? %>
 		<% if @event_detail.food_cert.previewable? %>
-		    <%= image_tag @event_detail.food_cert.preview(resize_to_limit: [80, 100]) %>
+		    <%= link_to(image_tag(@event_detail.food_cert.preview(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.food_cert, disposition: "attachment")) %>
 		<% else %>
-		    <p> File </p>
+		    <%= link_to "File", rails_blob_path(@event_detail.food_cert, disposition: "attachment") %>
 		<% end %>
 		<%= link_to "Remove file", purge_file_admin_event_detail_path(@event_detail),
         	          method: :patch,
