@@ -21,7 +21,7 @@ class Ability
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
-      can [:available_groups, :switch], Group if user.groups.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
     
     elsif session["current_role"] == "gc"
       can :update, Group do |group|
@@ -32,7 +32,7 @@ class Ability
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
-      can [:available_groups, :switch], Group if user.groups.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
    
     elsif session["current_role"] == "participant"
       can :update, Group do |group|
