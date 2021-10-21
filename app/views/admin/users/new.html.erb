@@ -2,7 +2,7 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= render partial: "form", locals: { 
+<%= render partial: "form_new", locals: { 
                               url: admin_users_path(@user), 
                               method: :post } %>
 

@@ -69,6 +69,8 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    attr_encrypted (3.1.0)
+      encryptor (~> 3.0.0)
     aws-eventstream (1.2.0)
     aws-partitions (1.516.0)
     aws-sdk-core (3.121.2)
@@ -116,6 +118,7 @@ GEM
       responders
       warden (~> 1.2.3)
     docile (1.4.0)
+    encryptor (3.0.0)
     erubi (1.10.0)
     exception_handler (0.8.0.2)
       bundler
@@ -278,6 +281,7 @@ PLATFORMS
 DEPENDENCIES
   activemodel-serializers-xml
   annotate
+  attr_encrypted
   aws-sdk-s3
   bootsnap (>= 1.4.4)
   brakeman

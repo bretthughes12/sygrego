@@ -36,9 +36,8 @@ gem 'exception_handler', '~> 0.8.0.0'
 gem 'cancancan'
 gem 'activemodel-serializers-xml'
 gem 'aws-sdk-s3', require: false
+gem 'attr_encrypted'
 # gem 'gmaps4rails'
-# *** poppler is currently not handled by either heroku or travis
-# gem 'poppler'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

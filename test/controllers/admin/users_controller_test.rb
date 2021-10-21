@@ -5,8 +5,6 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers 
 
   def setup
-  #  @request.env['devise.mapping'] = Devise.mappings[:user]
-
     FactoryBot.create(:setting)
     admin_role = FactoryBot.create(:role, name: 'admin')
     @user1 = FactoryBot.create(:user)
@@ -15,7 +13,6 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     @user.reload
 
     sign_in @user
-#    ActionDispatch::Integration::Runner.session[:current_role] = 'admin'
   end
 
   test "should get index" do

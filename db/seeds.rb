@@ -11,7 +11,8 @@ admin_role = Role.find_by_name('admin')
 # Create the superuser
 User.create(email: "registrations@stateyouthgames.com",
             password: Rails.application.credentials.su_password,
-            password_confirmation: Rails.application.credentials.su_password)
+            password_confirmation: Rails.application.credentials.su_password,
+            name: "Registrations")
 
 User.all.each do |u|
     u.roles << admin_role if u.roles.empty?
