@@ -2,7 +2,7 @@ class CreateGrades < ActiveRecord::Migration[6.1]
   def change
     create_table :grades do |t|
       t.integer :database_rowid
-      t.integer :sport_id, default: 0, null: false
+      t.bigint :sport_id, default: 0, null: false
       t.string :name, limit: 50, null: false
       t.boolean :active
       t.string :grade_type, limit: 10, default: "Team", null: false
@@ -26,6 +26,7 @@ class CreateGrades < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
+    add_index :grades, :name,                unique: true
     add_foreign_key :grades, :sports
   end
 end

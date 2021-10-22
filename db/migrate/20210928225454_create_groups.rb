@@ -28,5 +28,10 @@ class CreateGroups < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :groups, :name, unique: true
+    add_index :groups, :short_name, unique: true
+    add_index :groups, :trading_name, unique: true
+    add_index :groups, :abbr, unique: true
   end
 end

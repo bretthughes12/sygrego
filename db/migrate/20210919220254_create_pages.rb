@@ -7,5 +7,8 @@ class CreatePages < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :pages, :name,                unique: true
+    add_index :pages, :permalink,           unique: true
   end
 end

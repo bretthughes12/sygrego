@@ -8,5 +8,8 @@ class CreateSessions < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :sessions, :name,                unique: true
+    add_index :sessions, :database_rowid,      unique: true
   end
 end

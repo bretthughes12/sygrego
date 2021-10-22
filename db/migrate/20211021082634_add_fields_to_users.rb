@@ -12,5 +12,7 @@ class AddFieldsToUsers < ActiveRecord::Migration[6.1]
     add_column :users, :primary_gc, :boolean, default: false
     add_column :users, :encrypted_wwcc_number, :string
     add_column :users, :encrypted_wwcc_number_iv, :string
+
+    add_index :users, :name
   end
 end
