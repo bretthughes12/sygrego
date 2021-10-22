@@ -27,13 +27,11 @@ class Admin::GroupsController < ApplicationController
     
     # GET /admin/groups/1
     # GET /admin/groups/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @group = Group.find(params[:id])
-      authorize! :show, @group
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @group }
         format.xml  { render xml: @group }
       end
       

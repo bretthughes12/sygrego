@@ -18,13 +18,11 @@ class Admin::SessionsController < ApplicationController
   
     # GET /admin/sessions/1
     # GET /admin/sessions/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @session = Session.find(params[:id])
-      authorize! :show, @session
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @session }
         format.xml  { render xml: @session }
       end
       

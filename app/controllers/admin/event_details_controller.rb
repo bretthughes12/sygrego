@@ -18,13 +18,11 @@ class Admin::EventDetailsController < ApplicationController
 
     # GET /admin/event_details/1
     # GET /admin/event_details/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @event_detail = EventDetail.find(params[:id])
-      authorize! :show, @event_detail
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @event_detail }
         format.xml  { render xml: @event_detail }
       end
       

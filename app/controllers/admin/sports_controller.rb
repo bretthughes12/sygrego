@@ -22,13 +22,11 @@ class Admin::SportsController < ApplicationController
   
     # GET /admin/sports/1
     # GET /admin/sports/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
         @sport = Sport.find(params[:id])
-        authorize! :show, @sport
       
         respond_to do |format|
-            format.html # show.html.erb
+            format.html { authorize! :show, @sport }
             format.xml  { render xml: @sport }
         end
         

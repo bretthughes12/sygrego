@@ -23,14 +23,12 @@ class Admin::VenuesController < ApplicationController
   
     # GET /admin/venues/1
     # GET /admin/venues/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @venue = Venue.find(params[:id])
-      authorize! :show, @venue
 #      @venue_map = @venue.to_gmaps4rails unless @venue.lat.nil? or @venue.lng.nil? 
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @venue }
         format.xml  { render xml: @venue }
       end
       

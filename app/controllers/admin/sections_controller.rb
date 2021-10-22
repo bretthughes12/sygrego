@@ -18,13 +18,11 @@ class Admin::SectionsController < ApplicationController
   
     # GET /admin/sections/1
     # GET /admin/sections/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @section = Section.find(params[:id])
-      authorize! :show, @section
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @section }
         format.xml  { render xml: @section }
       end
       

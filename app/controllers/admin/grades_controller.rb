@@ -18,13 +18,11 @@ class Admin::GradesController < ApplicationController
   
     # GET /admin/grades/1
     # GET /admin/grades/1.xml
-    # 'show' must be explicitly invoked from the address bar - it is not available from the UI
     def show
       @grade = Grade.find(params[:id])
-      authorize! :show, @grade
       
       respond_to do |format|
-        format.html # show.html.erb
+        format.html { authorize! :show, @grade }
         format.xml  { render xml: @grade }
       end
       
