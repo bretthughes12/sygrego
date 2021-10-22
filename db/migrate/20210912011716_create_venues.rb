@@ -4,9 +4,8 @@ class CreateVenues < ActiveRecord::Migration[6.1]
       t.string :name,  :limit => 50, :default => "", :null => false
       t.string :database_code, :limit => 4
       t.string   "address"
-      t.float    "lat"
-      t.float    "lng"
       t.bigint :updated_by
+      t.boolean :active
 
       t.timestamps
     end

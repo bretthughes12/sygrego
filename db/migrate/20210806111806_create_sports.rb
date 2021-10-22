@@ -10,8 +10,7 @@ class CreateSports < ActiveRecord::Migration[6.1]
       t.string  :draw_type, limit: 20, null: false
       t.boolean :bonus_for_officials, default: false
       t.string  :court_name, limit: 20, default: "Court"
-
-      t.integer :lock_version, default: 0
+      t.bigint  :updated_by
 
       t.timestamps
     end
