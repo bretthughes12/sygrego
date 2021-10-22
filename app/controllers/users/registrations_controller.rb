@@ -10,9 +10,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+     super
+     session[:current_role] = current_user.default_role
+  end
 
   # GET /resource/edit
   # def edit

@@ -13,9 +13,8 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    super
-
     session[:current_role] = current_user.default_role
+    super
   end
 
   # DELETE /resource/sign_out
