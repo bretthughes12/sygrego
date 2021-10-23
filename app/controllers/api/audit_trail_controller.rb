@@ -1,7 +1,7 @@
-class Admin::AuditTrailController < ApplicationController
+class Api::AuditTrailController < ApplicationController
     before_action :authenticate_user!
 
-    # GET /audit_trail.xml?start=0&limit=20
+    # GET /api/audit_trail.xml?start=0&limit=20
     def index
       limit = params[:limit] || 20
       start = params[:start] || 0

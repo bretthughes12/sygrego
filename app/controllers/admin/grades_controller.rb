@@ -1,7 +1,7 @@
 class Admin::GradesController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show, :index]
+    load_and_authorize_resource except: [:index]
     before_action :authenticate_user!
     
     layout "admin"
@@ -9,7 +9,8 @@ class Admin::GradesController < ApplicationController
     # GET /admin/grades
     def index
       @grades = Grade.order(:name).includes(:sections).load
-  
+      authorize! :show, @grades
+
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "sport_grade", "sport_grade" }
@@ -17,27 +18,13 @@ class Admin::GradesController < ApplicationController
     end
   
     # GET /admin/grades/1
-    # GET /admin/grades/1.xml
     def show
-      @grade = Grade.find(params[:id])
-      
-      respond_to do |format|
-        format.html { authorize! :show, @grade }
-        format.xml  { render xml: @grade }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<grade></grade>", status: :not_found }
-      end
     end
   
     # GET /admin/grades/new
     def new
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render xml: @grade }
       end
     end
   

@@ -1,7 +1,7 @@
 class Admin::SessionsController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
     before_action :authenticate_user!
     
     layout "admin"
@@ -17,27 +17,13 @@ class Admin::SessionsController < ApplicationController
     end
   
     # GET /admin/sessions/1
-    # GET /admin/sessions/1.xml
     def show
-      @session = Session.find(params[:id])
-      
-      respond_to do |format|
-        format.html { authorize! :show, @session }
-        format.xml  { render xml: @session }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<session></session>", status: :not_found }
-      end
     end
   
     # GET /admin/sessions/new
     def new
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render xml: @session }
       end
     end
   

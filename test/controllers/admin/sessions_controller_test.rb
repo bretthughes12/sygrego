@@ -142,34 +142,4 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_sessions_path
     assert_match /Can't delete/, flash[:notice]
   end
-
-  test "should show session via xhr" do
-    sign_out @user
-
-    get admin_session_url(@session, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response :success
-  end
-
-  test "should not show session via xhr when not authorised" do
-    sign_out @user
-
-    get admin_session_url(@session, format: :xml),
-        xhr: true,
-        headers: {}
-
-    assert_response 401
-  end
-
-  test "should not show non existent session via xhr" do
-    sign_out @user
-
-    get admin_session_url(123456, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response 404
-  end
 end

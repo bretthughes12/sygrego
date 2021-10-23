@@ -56,7 +56,6 @@ Rails.application.routes.draw do
         patch :update_website
       end
     end
-    resources :audit_trail, only: [:index]
     resources :pages
     resources :roles
     resources :users do
@@ -127,6 +126,17 @@ Rails.application.routes.draw do
         post :import
       end
     end
+  end
+
+  namespace :api do
+    resources :audit_trail, only: [:index]
+    resources :groups, only: [:show]
+    resources :event_details, only: [:show]
+    resources :sports, only: [:show]
+    resources :grades, only: [:show]
+    resources :sections, only: [:show]
+    resources :sessions, only: [:show]
+    resources :venues, only: [:show]
   end
 
   namespace :gc do

@@ -1,7 +1,7 @@
 class Admin::VenuesController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
     before_action :authenticate_user!
   
     layout "admin"
@@ -16,34 +16,18 @@ class Admin::VenuesController < ApplicationController
       respond_to do |format|
         format.html {  }
 #        format.html { @venues = @venues.paginate(page: session[page_sym]) }
-        format.xml  { render xml: @venues }
         format.csv  { render_csv "sport_venue" }
       end
     end
   
     # GET /admin/venues/1
-    # GET /admin/venues/1.xml
     def show
-      @venue = Venue.find(params[:id])
-#      @venue_map = @venue.to_gmaps4rails unless @venue.lat.nil? or @venue.lng.nil? 
-      
-      respond_to do |format|
-        format.html { authorize! :show, @venue }
-        format.xml  { render xml: @venue }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<venue></venue>", status: :not_found }
-      end
     end
   
     # GET /admin/venues/new
     def new
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render xml: @venue }
       end
     end
   

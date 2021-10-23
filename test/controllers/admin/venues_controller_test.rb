@@ -142,34 +142,4 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_venues_path
     assert_match /Can't delete/, flash[:notice]
   end
-
-  test "should show venue via xhr" do
-    sign_out @user
-
-    get admin_venue_url(@venue, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response :success
-  end
-
-  test "should not show venue via xhr when not authorised" do
-    sign_out @user
-
-    get admin_venue_url(@venue, format: :xml),
-        xhr: true,
-        headers: {}
-
-    assert_response 401
-  end
-
-  test "should not show non existent venue via xhr" do
-    sign_out @user
-
-    get admin_venue_url(123456, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response 404
-  end
 end

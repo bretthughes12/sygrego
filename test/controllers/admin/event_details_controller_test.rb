@@ -95,36 +95,6 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
-  test "should show event_detail via xhr" do
-    sign_out @user
-
-    get admin_event_detail_url(@event_detail, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response :success
-  end
-
-  test "should not show event_detail via xhr when not authorised" do
-    sign_out @user
-
-    get admin_event_detail_url(@event_detail, format: :xml),
-        xhr: true,
-        headers: {}
-
-    assert_response 401
-  end
-
-  test "should not show non existent event_detail via xhr" do
-    sign_out @user
-
-    get admin_event_detail_url(123456, format: :xml),
-        xhr: true,
-        headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@user.email, @user.password)}
-
-    assert_response 404
-  end
-
   test "should purge the food cert from event details" do
     file = fixture_file_upload('test.pdf','application/pdf')
     @event_detail.food_cert.attach(file)

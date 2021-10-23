@@ -1,7 +1,7 @@
 class Admin::EventDetailsController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
     before_action :authenticate_user!
     
     layout "admin"
@@ -17,20 +17,7 @@ class Admin::EventDetailsController < ApplicationController
     end
 
     # GET /admin/event_details/1
-    # GET /admin/event_details/1.xml
     def show
-      @event_detail = EventDetail.find(params[:id])
-      
-      respond_to do |format|
-        format.html { authorize! :show, @event_detail }
-        format.xml  { render xml: @event_detail }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<event-detail></event-detail>", status: :not_found }
-      end
     end
   
     # GET /admin/event_details/1/edit

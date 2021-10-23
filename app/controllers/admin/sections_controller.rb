@@ -1,7 +1,7 @@
 class Admin::SectionsController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource 
     before_action :authenticate_user!
     
     layout "admin"
@@ -17,27 +17,13 @@ class Admin::SectionsController < ApplicationController
     end
   
     # GET /admin/sections/1
-    # GET /admin/sections/1.xml
     def show
-      @section = Section.find(params[:id])
-      
-      respond_to do |format|
-        format.html { authorize! :show, @section }
-        format.xml  { render xml: @section }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<section></section>", status: :not_found }
-      end
     end
   
     # GET /admin/sections/new
     def new
       respond_to do |format|
         format.html # new.html.erb
-        format.xml  { render xml: @section }
       end
     end
   

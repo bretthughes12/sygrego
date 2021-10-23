@@ -1,7 +1,7 @@
 class Admin::GroupsController < ApplicationController
     require 'csv'
 
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
     before_action :authenticate_user!
     
     layout "admin"
@@ -26,20 +26,7 @@ class Admin::GroupsController < ApplicationController
     end
     
     # GET /admin/groups/1
-    # GET /admin/groups/1.xml
     def show
-      @group = Group.find(params[:id])
-      
-      respond_to do |format|
-        format.html { authorize! :show, @group }
-        format.xml  { render xml: @group }
-      end
-      
-    rescue ActiveRecord::RecordNotFound 
-      respond_to do |format|
-        format.html { raise }
-        format.xml { render xml: "<group></group>", status: :not_found }
-      end
     end
   
     # GET /admin/groups/new

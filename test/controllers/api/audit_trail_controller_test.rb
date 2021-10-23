@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Admin::AuditTrailControllerTest < ActionDispatch::IntegrationTest
+class Api::AuditTrailControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     FactoryBot.create(:role, name: 'admin')
@@ -12,7 +12,7 @@ class Admin::AuditTrailControllerTest < ActionDispatch::IntegrationTest
       FactoryBot.create(:audit_trail)
     end
     
-    get admin_audit_trail_index_url(format: :xml),
+    get api_audit_trail_index_url(format: :xml),
         xhr: true,
         headers: {'HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic.encode_credentials(@remote_user.email, @remote_user.password)}
     assert_response :success
@@ -25,7 +25,7 @@ class Admin::AuditTrailControllerTest < ActionDispatch::IntegrationTest
       FactoryBot.create(:audit_trail)
     end
 
-    get admin_audit_trail_index_url(format: :xml),
+    get api_audit_trail_index_url(format: :xml),
     xhr: true,
     headers: {}
 
