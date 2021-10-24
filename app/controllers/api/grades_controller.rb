@@ -1,4 +1,5 @@
 class Api::GradesController < ApplicationController
+    before_action :authorize_xml
     before_action :authenticate_user!
     
     # GET /api/grades/1.xml

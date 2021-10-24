@@ -1,4 +1,5 @@
 class Api::SessionsController < ApplicationController
+    before_action :authorize_xml
     before_action :authenticate_user!
     
     # GET /api/sessions/1.xml
