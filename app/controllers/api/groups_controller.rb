@@ -7,13 +7,11 @@ class Api::GroupsController < ApplicationController
       @group = Group.find(params[:id])
       
       respond_to do |format|
-        format.html { authorize! :show, @group }
         format.xml  { render xml: @group }
       end
       
     rescue ActiveRecord::RecordNotFound 
       respond_to do |format|
-        format.html { raise }
         format.xml { render xml: "<group></group>", status: :not_found }
       end
     end
