@@ -1,0 +1,15 @@
+<% title "Group Signup" %>
+
+<h1>Group Signup</h1>
+
+<% if should_display_contact_form %>
+	<p>Please complete the form below to update your details for <%= @settings.this_year %>. </p>
+	
+	<p>Before beginning this registration, please ensure that you are part of the church, agency, or organisation’s leadership, Eldership, or Board, and that you are accountable to and appropriately authorised to represent the listed church, agency, or organisation on matters regarding policy, insurance, and decision making.</p> 
+	
+    <%= render :partial => 'form_signup_details' %>
+
+<% else %>
+	<p>State Youth Games is closed to new groups for <%= @settings.this_year %>.</p>
+	<p>Please check back early next year to register your group's interest for <%= (@settings.this_year + 1).to_s %>.</p>
+<% end %>

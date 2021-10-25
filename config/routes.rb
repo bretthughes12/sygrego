@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :group_signups, :only => [:new, :create]
+
   namespace :admin do
     resource :info, :controller => "info" do
       collection do

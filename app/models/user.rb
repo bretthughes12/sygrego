@@ -82,6 +82,20 @@ class User < ApplicationRecord
     Group.all.order(:short_name).load - self.groups
   end
 
+  protected
+
+  def self.random_password
+    User.random_string(10)
+  end
+
+  def self.random_string(len)
+    # generate a random string consisting of strings and digits
+    chars = ('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a
+    string = ''.dup
+    1.upto(len) { |_i| string << chars[rand(chars.size - 1)] }
+    string
+  end
+
   private
 
   def set_default_role

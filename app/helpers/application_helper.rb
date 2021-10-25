@@ -16,5 +16,8 @@ module ApplicationHelper
         render :partial => '/application/search_box', 
                :locals => {:path => path, :label => label}    
     end
-    
+   
+    def should_display_contact_form
+        !@settings.group_registrations_closed
+    end
 end
