@@ -15,7 +15,11 @@ class RolesController < ApplicationController
     # PATCH /admin/role/1/switch
     def switch
       session["current_role"] = @role.name
-      session["current_group"] = nil unless @role.group_related
+      if @role.group_related 
+        session["current_group"] = current_user.default_group
+      else
+        session["current_group"] = nil 
+      end
 
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }

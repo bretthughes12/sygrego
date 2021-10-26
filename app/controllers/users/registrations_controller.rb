@@ -4,6 +4,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+  layout 'users', except: [:edit]
+
   # GET /resource/sign_up
   # def new
   #   super
@@ -11,19 +13,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
-     super
-     session[:current_role] = current_user.default_role
+    super
+    session[:current_role] = current_user.default_role
   end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    render layout: session[:current_role]
+  end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super
+  end
 
   # DELETE /resource
   # def destroy

@@ -20,9 +20,11 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # PUT /resource/password
-  # def update
-  #   super
-  # end
+  def update
+    super
+    session["current_role"] = current_user.default_role
+    session["current_group"] = current_user.default_group
+  end
 
   # protected
 
