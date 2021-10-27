@@ -42,7 +42,7 @@ FactoryBot.define do
     sequence(:abbr)       { |n| "T#{n%990 + 10}" }
     sequence(:name)       { |n| "Test group#{n}" }
     sequence(:short_name) { |n| "Test#{n}" }
-    trading_name          {"Test trading name"}
+    sequence(:trading_name)  { |n| "Test trading name#{n}" }
     address               {"123 Main St"}
     suburb                {"Maintown"}
     postcode              {"3999"}

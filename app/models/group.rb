@@ -87,6 +87,7 @@ class Group < ApplicationRecord
                                     uniqueness: true,
                                     length: { maximum: 50 }
     validates :trading_name,        presence: true,
+                                    uniqueness: true,
                                     length: { maximum: 100 }
     validates :denomination,        presence: true,
                                     length: { maximum: 40 }

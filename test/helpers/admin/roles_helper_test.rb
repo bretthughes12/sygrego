@@ -5,15 +5,14 @@ class Admin::RolesHelperTest < ActionView::TestCase
   include Admin::RolesHelper
   
   def setup
-    FactoryBot.create(:role, name: 'admin')
+    @admin = FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @role = FactoryBot.create(:role)
   end
   
   test "should use primary class for admin role" do
-    role = FactoryBot.create(:role, name: 'admin')
-    assert_match /primary/, role_badge_class(role)
+    assert_match /primary/, role_badge_class(@admin)
   end
   
   test "should use success class for gc role" do

@@ -16,7 +16,7 @@
 #
 FactoryBot.define do
     factory :page do
-        name                        {"My page"}
+        sequence(:name)             { |n| "My page#{n}" }
         sequence(:permalink)        { |n| "my_page#{n}" }
         admin_use                   {true}
     end
