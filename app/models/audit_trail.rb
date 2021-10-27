@@ -6,8 +6,8 @@
 #  event       :string(20)
 #  record_type :string(30)
 #  created_at  :datetime
-#  record_id   :integer
-#  user_id     :integer
+#  record_id   :bigint
+#  user_id     :bigint
 #
 class AuditTrail < ApplicationRecord
 

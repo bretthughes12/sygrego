@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
   end
 
   create_table "audit_trails", force: :cascade do |t|
-    t.integer "record_id"
+    t.bigint "record_id"
     t.string "record_type", limit: 30
     t.string "event", limit: 20
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at"
   end
 
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
 
   create_table "grades", force: :cascade do |t|
     t.integer "database_rowid"
-    t.integer "sport_id", default: 0, null: false
+    t.bigint "sport_id", default: 0, null: false
     t.string "name", limit: 50, null: false
     t.boolean "active"
     t.string "grade_type", limit: 10, default: "Team", null: false
@@ -119,9 +119,10 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.integer "entries_to_be_allocated", default: 999
     t.boolean "over_limit"
     t.boolean "one_entry_per_group"
+    t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "updated_by"
+    t.index ["name"], name: "index_grades_on_name", unique: true
   end
 
   create_table "groups", force: :cascade do |t|
@@ -151,6 +152,10 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["abbr"], name: "index_groups_on_abbr", unique: true
+    t.index ["name"], name: "index_groups_on_name", unique: true
+    t.index ["short_name"], name: "index_groups_on_short_name", unique: true
+    t.index ["trading_name"], name: "index_groups_on_trading_name", unique: true
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
@@ -166,29 +171,32 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.boolean "admin_use"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_pages_on_name", unique: true
+    t.index ["permalink"], name: "index_pages_on_permalink", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
     t.string "name", limit: 20
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.boolean "group_related", default: false
     t.boolean "participant_related", default: false
-  end
-
-  create_table "roles_users", force: :cascade do |t|
-    t.integer "role_id"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.bigint "role_id"
+    t.bigint "user_id"
+    t.index ["role_id"], name: "index_roles_users_on_role_id"
+    t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "sections", force: :cascade do |t|
-    t.integer "grade_id", default: 0, null: false
+    t.bigint "grade_id", default: 0, null: false
     t.string "name", limit: 50, null: false
     t.boolean "active"
-    t.integer "venue_id", default: 0, null: false
-    t.integer "session_id", default: 0, null: false
+    t.bigint "venue_id", default: 0, null: false
+    t.bigint "session_id", default: 0, null: false
     t.integer "database_rowid"
     t.integer "number_in_draw"
     t.integer "year_introduced"
@@ -196,6 +204,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_sections_on_name", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -205,6 +214,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["database_rowid"], name: "index_sessions_on_database_rowid", unique: true
+    t.index ["name"], name: "index_sessions_on_name", unique: true
   end
 
   create_table "settings", force: :cascade do |t|
@@ -233,8 +244,6 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.decimal "daily_adjustment", precision: 8, scale: 2, default: "0.55", null: false
     t.decimal "helper_adjustment", precision: 8, scale: 2, default: "0.55", null: false
     t.decimal "early_bird_discount", precision: 8, scale: 2, default: "10.0", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "info_email", limit: 100, default: ""
     t.string "admin_email", limit: 100, default: ""
     t.string "rego_email", limit: 100, default: ""
@@ -248,6 +257,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.string "social_facebook_url", default: ""
     t.string "social_facebook_gc_url", default: ""
     t.string "social_instagram_url", default: ""
+    t.string "social_youtube_url", default: ""
+    t.string "social_spotify_url", default: ""
     t.string "public_website", default: ""
     t.string "rego_website", default: ""
     t.string "website_host", default: ""
@@ -255,8 +266,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.date "first_day_of_syg"
     t.date "early_bird_cutoff"
     t.date "deposit_due_date"
-    t.string "social_youtube_url", default: ""
-    t.string "social_spotify_url", default: ""
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sports", force: :cascade do |t|
@@ -269,9 +280,10 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.string "draw_type", limit: 20, null: false
     t.boolean "bonus_for_officials", default: false
     t.string "court_name", limit: 20, default: "Court"
+    t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "updated_by"
+    t.index ["name"], name: "index_sports_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -295,6 +307,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.string "encrypted_wwcc_number"
     t.string "encrypted_wwcc_number_iv"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -303,9 +316,11 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.string "database_code", limit: 4
     t.string "address"
     t.bigint "updated_by"
+    t.boolean "active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "active"
+    t.index ["database_code"], name: "index_venues_on_database_code", unique: true
+    t.index ["name"], name: "index_venues_on_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -314,6 +329,8 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
   add_foreign_key "grades", "sports"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
+  add_foreign_key "roles_users", "roles"
+  add_foreign_key "roles_users", "users"
   add_foreign_key "sections", "grades"
   add_foreign_key "sections", "sessions"
   add_foreign_key "sections", "venues"

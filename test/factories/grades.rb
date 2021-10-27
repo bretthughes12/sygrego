@@ -25,7 +25,11 @@
 #  waitlist_expires_at     :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  sport_id                :integer          default(0), not null
+#  sport_id                :bigint           default(0), not null
+#
+# Indexes
+#
+#  index_grades_on_name  (name) UNIQUE
 #
 # Foreign Keys
 #

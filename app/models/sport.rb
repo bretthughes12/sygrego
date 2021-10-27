@@ -16,6 +16,10 @@
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #
+# Indexes
+#
+#  index_sports_on_name  (name) UNIQUE
+#
 class Sport < ApplicationRecord
     include Comparable
     include Auditable

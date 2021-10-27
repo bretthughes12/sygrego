@@ -11,6 +11,11 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
+# Indexes
+#
+#  index_venues_on_database_code  (database_code) UNIQUE
+#  index_venues_on_name           (name) UNIQUE
+#
 require "test_helper"
 
 class VenueTest < ActiveSupport::TestCase

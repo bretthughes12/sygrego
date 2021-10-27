@@ -12,9 +12,13 @@
 #  year_introduced  :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  grade_id         :integer          default(0), not null
-#  session_id       :integer          default(0), not null
-#  venue_id         :integer          default(0), not null
+#  grade_id         :bigint           default(0), not null
+#  session_id       :bigint           default(0), not null
+#  venue_id         :bigint           default(0), not null
+#
+# Indexes
+#
+#  index_sections_on_name  (name) UNIQUE
 #
 # Foreign Keys
 #

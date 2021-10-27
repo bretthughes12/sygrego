@@ -9,6 +9,11 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_pages_on_name       (name) UNIQUE
+#  index_pages_on_permalink  (permalink) UNIQUE
+#
 class Page < ActiveRecord::Base
   
     has_rich_text :content

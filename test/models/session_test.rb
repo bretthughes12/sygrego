@@ -10,6 +10,11 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
+# Indexes
+#
+#  index_sessions_on_database_rowid  (database_rowid) UNIQUE
+#  index_sessions_on_name            (name) UNIQUE
+#
 require "test_helper"
 
 class SessionTest < ActiveSupport::TestCase
