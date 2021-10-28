@@ -5,12 +5,12 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    admin_role = FactoryBot.create(:role, name: 'admin')
+    @admin_role = FactoryBot.create(:role, name: 'admin')
     @gc_role = FactoryBot.create(:role, name: 'gc')
     @user = FactoryBot.create(:user)
     @group = FactoryBot.create(:group)
     
-    @user.roles.delete(admin_role)
+    @user.roles.delete(@admin_role)
     @user.roles << @gc_role
     @user.groups << @group
     
@@ -21,6 +21,17 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     group = FactoryBot.create(:group)
     FactoryBot.create(:event_detail, group: group)
     @user.groups << group
+
+    get available_groups_groups_url
+
+    assert_response :success
+  end
+
+  test "should show available groups for an admin" do
+    sign_out @user
+
+    user = FactoryBot.create(:user)
+    sign_in user
 
     get available_groups_groups_url
 
