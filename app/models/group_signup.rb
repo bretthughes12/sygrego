@@ -7,8 +7,6 @@ class GroupSignup
     include ActiveModel::Conversion
     extend ActiveModel::Naming
   
-    require 'pp'
-
     attr_accessor :id,
                   :name,
                   :address,
@@ -148,11 +146,6 @@ class GroupSignup
       @gc = find_or_create_gc
     end
   
-    def update_attributes(attributes = {})
-      send_attributes(attributes)
-      save
-    end
-  
     def save
       if valid?
         update_group
@@ -192,17 +185,6 @@ class GroupSignup
       else
         false
       end
-    end
-  
-    def save!
-      update_group
-      @group.save!
-  
-      update_church_rep
-      @church_rep.save!
-  
-      update_gc
-      @gc.save!
     end
   
     def persisted?
