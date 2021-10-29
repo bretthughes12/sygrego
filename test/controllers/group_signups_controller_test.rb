@@ -24,7 +24,7 @@ class GroupSignupsControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
-    assert_redirected_to home_gc_info_url
+    assert_redirected_to edit_user_registration_path
     assert_match /Thank you for registering/, flash[:notice]
   end
 
@@ -37,7 +37,7 @@ class GroupSignupsControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
-    assert_redirected_to home_gc_info_url
+    assert_redirected_to edit_user_registration_path
     assert_match /Thank you for registering/, flash[:notice]
   end
 
@@ -50,7 +50,7 @@ class GroupSignupsControllerTest < ActionDispatch::IntegrationTest
         end
     end
 
-    assert_redirected_to home_gc_info_url
+    assert_redirected_to edit_user_registration_path
     assert_match /Thank you for registering/, flash[:notice]
   end
 

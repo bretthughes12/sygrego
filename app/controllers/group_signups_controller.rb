@@ -38,8 +38,8 @@ class GroupSignupsController < ApplicationController
 #          @group.save
   
           flash[:notice] = "Thank you for registering your group. You are signed in as #{@church_rep.name}. Please set your password."
-          sign_in :user, @church_rep
-          format.html { redirect_to home_url(@church_rep) }
+          bypass_sign_in @church_rep
+          format.html { redirect_to edit_user_registration_path }
         else
           flash[:notice] = "There was a problem with your signup. Please see the errors below"
           @groups = Group.order(:name).load
