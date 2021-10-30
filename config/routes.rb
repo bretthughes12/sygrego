@@ -61,6 +61,10 @@ Rails.application.routes.draw do
     resources :pages
     resources :roles
     resources :users do
+      member do
+        get :edit_password
+        patch :update_password
+      end
       resources :roles, only: [:index] do
         member do
           patch :add
@@ -145,6 +149,12 @@ Rails.application.routes.draw do
     resource :info, :controller => "info" do
       collection do
         get :home
+      end
+    end
+    resources :users, only: [:edit, :update] do
+      member do
+        get :edit_password
+        patch :update_password
       end
     end
 

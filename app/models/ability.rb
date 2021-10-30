@@ -24,6 +24,9 @@ class Ability
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
     
     elsif session["current_role"] == "gc"
+      can [:update, :edit_password, :update_password], User do |u|
+        user == u
+      end
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end

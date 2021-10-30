@@ -1,33 +1,11 @@
-class Admin::UsersController < ApplicationController
+class Gc::UsersController < ApplicationController
   
     load_and_authorize_resource
     before_action :authenticate_user!
+    before_action :find_group
     
-    layout 'admin'
+    layout 'gc'
     
-    # GET /admin/users
-    def index
-      @users = User.order(:email).load
-
-      respond_to do |format|
-        format.html # index.html.erb
-      end
-    end
-  
-    # GET /admin/users/1
-    def show
-      respond_to do |format|
-        format.html # show.html.erb
-      end
-    end
-  
-    # GET /admin/users/new
-    def new
-      respond_to do |format|
-        format.html # new.html.erb
-      end
-    end
-  
     # GET /admin/users/1/edit
     def edit
       @user_roles = Role.order(:name).load
@@ -38,28 +16,12 @@ class Admin::UsersController < ApplicationController
     def edit_password
     end
   
-    # POST /admin/users
-    def create
-      respond_to do |format|
-        if @user.save
-          flash[:notice] = 'User was successfully created.'
-          format.html do 
-            @user_roles = Role.order(:name).load
-            @groups = @user.other_groups
-            render action: "edit" 
-          end
-        else
-          format.html { render action: "new" }
-        end
-      end
-    end
-  
     # PUT /admin/users/1
     def update
       respond_to do |format|
         if @user.update(user_params)
           flash[:notice] = 'User was successfully updated.'
-          format.html { redirect_to admin_users_url }
+          format.html { redirect_to home_url(current_user) }
         else
             format.html do 
               @user_roles = Role.order(:name).load
@@ -80,15 +42,6 @@ class Admin::UsersController < ApplicationController
         else
           format.html { render action: "edit_password" }
         end
-      end
-    end
-  
-    # DELETE /admin/users/1
-    def destroy
-      @user.destroy
-  
-      respond_to do |format|
-        format.html { redirect_to admin_users_url }
       end
     end
   

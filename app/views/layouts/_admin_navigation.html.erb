@@ -53,7 +53,7 @@
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li class='dropdown-item'><%= link_to 'Change Password', edit_user_registration_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Change Password', edit_password_admin_user_path(current_user) %></li>
                         <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
                         <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
                     </ul>
