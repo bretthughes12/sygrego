@@ -57,9 +57,6 @@ class EventDetailTest < ActiveSupport::TestCase
 
   test "should update exiting event details from file" do
     group = FactoryBot.create(:group, abbr: 'CAF')
-    FactoryBot.create(:event_detail, 
-      group: group,
-      estimated_numbers: 20)
     
     file = fixture_file_upload('event_detail.csv','application/csv')
     

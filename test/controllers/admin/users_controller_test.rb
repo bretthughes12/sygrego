@@ -86,6 +86,25 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal @user.email, @user1.email
   end
 
+  test "should edit password" do
+    get edit_password_admin_user_url(@user1)
+
+    assert_response :success
+  end
+
+  test "should update user password" do
+    patch update_password_admin_user_url(@user1), params: { user: { password: "secret", password_confirmation: "secret" } }
+
+    assert_redirected_to admin_sports_path
+    assert_match /Password updated/, flash[:notice]
+  end
+
+  test "should not update user password with errors" do
+    patch update_password_admin_user_url(@user1), params: { user: { password: "secret", password_confirmation: "notsosecret" } }
+
+    assert_response :success
+  end
+
   test "should destroy user" do
     assert_difference("User.count", -1) do
       delete admin_user_url(@user1)
