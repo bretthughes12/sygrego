@@ -86,6 +86,34 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal @user.email, @user1.email
   end
 
+  test "should edit profile" do
+    get profile_admin_user_url(@user1)
+
+    assert_response :success
+  end
+
+  test "should update profile" do
+    patch update_profile_admin_user_url(@user1), params: { user: { email: "test@example.com" } }
+
+    assert_redirected_to admin_sports_path
+    assert_match /Profile updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @user1.reload
+
+    assert_equal "test@example.com", @user1.email
+  end
+
+  test "should not update profile with errors" do
+    patch update_profile_admin_user_url(@user1), params: { user: { email: @user.email } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @user1.reload
+
+    assert_not_equal @user.email, @user1.email
+  end
+
   test "should edit password" do
     get edit_password_admin_user_url(@user1)
 

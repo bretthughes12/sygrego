@@ -1,0 +1,13 @@
+<% title "Update profile" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: update_profile_admin_user_path(@user), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>

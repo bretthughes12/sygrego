@@ -38,6 +38,10 @@ class Admin::UsersController < ApplicationController
     def edit_password
     end
   
+    # GET /admin/users/1/profile
+    def profile
+    end
+  
     # POST /admin/users
     def create
       respond_to do |format|
@@ -79,6 +83,18 @@ class Admin::UsersController < ApplicationController
           format.html { redirect_to home_url(@user) }
         else
           format.html { render action: "edit_password" }
+        end
+      end
+    end
+  
+    # PUT /admin/users/1/update_profile
+    def update_profile
+      respond_to do |format|
+        if @user.update(user_params)
+          flash[:notice] = 'Profile updated.'
+          format.html { redirect_to home_url(@user) }
+        else
+          format.html { render action: "profile" }
         end
       end
     end

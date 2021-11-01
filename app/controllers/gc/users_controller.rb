@@ -8,8 +8,6 @@ class Gc::UsersController < ApplicationController
     
     # GET /admin/users/1/edit
     def edit
-      @user_roles = Role.order(:name).load
-      @groups = @user.other_groups
     end
   
     # GET /admin/users/1/edit_password
@@ -20,14 +18,10 @@ class Gc::UsersController < ApplicationController
     def update
       respond_to do |format|
         if @user.update(user_params)
-          flash[:notice] = 'User was successfully updated.'
+          flash[:notice] = 'Profile updated.'
           format.html { redirect_to home_url(current_user) }
         else
-            format.html do 
-              @user_roles = Role.order(:name).load
-              @groups = @user.other_groups
-              render action: "edit" 
-            end
+          format.html { render action: "edit" }
         end
       end
     end

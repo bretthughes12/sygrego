@@ -13,6 +13,9 @@ class Ability
       can :manage, :all
 
     elsif session["current_role"] == "church_rep"
+      can [:update, :edit_password, :update_password], User do |u|
+        user == u
+      end
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end

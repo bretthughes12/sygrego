@@ -64,6 +64,8 @@ Rails.application.routes.draw do
       member do
         get :edit_password
         patch :update_password
+        get :profile
+        patch :update_profile
       end
       resources :roles, only: [:index] do
         member do
