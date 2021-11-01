@@ -1,0 +1,48 @@
+<% content_for(:title) { "New group signup details" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>New group signup details have been recorded on the SYG Registrations website:</p>
+
+<table>
+	<tr><td>Group Name:</td><td><%= @group.name %></td></tr>
+	<tr><td>Group Address:</td><td><%= @group.address %></td></tr>
+	<tr><td>Group Suburb:</td><td><%= @group.suburb %></td></tr>
+	<tr><td>Group Postcode:</td><td><%= @group.postcode %></td></tr>
+	<tr><td>Group Email:</td><td><%= @group.email %></td></tr>
+	<tr><td>Group Website:</td><td><%= @group.website %></td></tr>
+	<tr><td>Group Phone Number:</td><td><%= @group.phone_number %></td></tr>
+	<tr><td>Denomination:</td><td><%= @group.denomination %></td></tr>
+</table>
+
+<h3 class="h3">Church Representative</h3>
+
+<table>
+	<tr><td>Name:</td><td><%= @church_rep.name %></td></tr>
+	<tr><td>Role within organisation:</td><td><%= @church_rep.group_role %></td></tr>
+	<tr><td>Address:</td><td><%= @church_rep.address %></td></tr>
+	<tr><td>Suburb:</td><td><%= @church_rep.suburb %></td></tr>
+	<tr><td>Postcode:</td><td><%= @church_rep.postcode %></td></tr>
+	<tr><td>Email:</td><td><%= @church_rep.email %></td></tr>
+	<tr><td>Phone Number:</td><td><%= @church_rep.phone_number %></td></tr>
+	<tr><td>WWCC Number:</td><td><%= @church_rep.wwcc_number %></td></tr>
+</table>
+
+<h3 class="h3">Group Coordinator</h3>
+
+<table>
+	<tr><td>Name:</td><td><%= @gc.name %></td></tr>
+	<tr><td>Address:</td><td><%= @gc.address %></td></tr>
+	<tr><td>Suburb:</td><td><%= @gc.suburb %></td></tr>
+	<tr><td>Postcode:</td><td><%= @gc.postcode %></td></tr>
+	<tr><td>Email:</td><td><%= @gc.email %></td></tr>
+	<tr><td>Phone Number:</td><td><%= @gc.phone_number %></td></tr>
+	<tr><td>WWCC Number:</td><td><%= @gc.wwcc_number %></td></tr>
+	<tr><td>Referee:</td><td><%= @gc.gc_reference %></td></tr>
+	<tr><td>Referee contact:</td><td><%= @gc.gc_reference_phone %></td></tr>
+	<tr><td>Number of years as GC:</td><td><%= @gc.years_as_gc %></td></tr>
+</table>
+
+<p>Thanks,</p>
+
+<p>SYG Registrations Web Support</p>

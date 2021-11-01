@@ -29,7 +29,7 @@ class GroupSignupsController < ApplicationController
 #            log(@group, "UPDATE")
 #          end
     
-#          GroupMailer.new_group_signup(@group, @church_rep, @gc).deliver_now
+          GroupMailer.new_group_signup(@group, @church_rep, @gc).deliver_now
 #          UserMailer.gc_nomination(@gc, @group, @church_rep, @settings.front_end_open).deliver_now
 #          UserMailer.welcome_church_rep(@church_rep).deliver_now
   
