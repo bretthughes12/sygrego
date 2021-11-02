@@ -1,0 +1,19 @@
+<% content_for(:title) { "Welcome" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>Hi <%= @user.name %></p>
+
+<p>Thank you for registering the details of your church, agency or organisation with State Youth Games.</p> 
+
+<p>Full access to the site will be granted to your nominated Group Coordinator shortly.</p> 
+
+<strong>Please retain this email as a reference of your login details:</strong>
+<table>
+	<tr><td>Login ID:</td><td><%= @user.email %></td></tr>
+	<tr><td>Name:</td><td><%= @user.name %></td></tr>
+</table>
+
+<p>Thanks,</p>
+
+<p>The SYG Registrations Team</p>

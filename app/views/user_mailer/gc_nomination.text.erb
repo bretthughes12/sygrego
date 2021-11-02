@@ -1,0 +1,21 @@
+Hi <%= @user.name %>
+
+Your details have recently been registered with the SYG Registrations website (<%= APP_CONFIG[:rego_website] %>). You have been nominated as either the primary or secondary contact for your group. 
+
+You have been nominated as the Group Coordinator for <%= @group.name %> by <%= @church_rep.name %> for State Youth Games <%= @settings.this_year %>.
+
+Group Coordinators are the lead organisers for their team and the point person between the team and SYG. GCs are responsible for communicating to and from their team and will need to keep on top of email communication. GC’s are also required to attend a compulsory orientation evening, details are in the registration link below.
+
+To confirm yourself as GC for your team, please complete the registration form here. <%= edit_password_url(@user, reset_password_token: @token) %>
+
+If you cannot GC for your team, please inform <%= @church_rep.name %> or email <%= @settings.info_email %> so we can pass this onto the correct person.
+
+Following the completion of your registration and having completed the correct checks, we look forward to seeing you at orientation and working with you to get your team to the <%= APP_CONFIG[:this_year] %> event!
+
+Please retain this email as a reference of your login details:
+- Login ID:  <%= @user.email %>
+- Name:      <%= @user.name %>
+
+Kind regards,
+
+The SYG Committee Team

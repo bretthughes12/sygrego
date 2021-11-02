@@ -87,6 +87,10 @@ class User < ApplicationRecord
     Group.all.order(:short_name).load - self.groups
   end
 
+  def get_reset_password_token
+    set_reset_password_token
+  end
+
   protected
 
   def self.random_password
