@@ -16,6 +16,16 @@ class Admin::EventDetailsController < ApplicationController
       end
     end
 
+    # GET /admin/groups/search
+    def search
+      @groups = Group.search(params[:search]).order("abbr")
+      @event_details = @groups.collect(&:event_detail)
+  
+      respond_to do |format|
+        format.html { render action: 'index' }
+      end
+    end
+
     # GET /admin/event_details/1
     def show
     end

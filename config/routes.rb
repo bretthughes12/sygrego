@@ -98,6 +98,7 @@ Rails.application.routes.draw do
       collection do
         get :new_import
         post :import
+        get :search
       end
     end
 
