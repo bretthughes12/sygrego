@@ -18,6 +18,12 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should search event details" do
+    get search_admin_event_details_url
+
+    assert_response :success
+  end
+
   test "should download event detail data" do
     get admin_event_details_url(format: :csv)
 

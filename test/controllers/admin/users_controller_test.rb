@@ -21,6 +21,12 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should search users" do
+    get search_admin_users_url
+
+    assert_response :success
+  end
+
   test "should show user" do
     get admin_user_url(@user1)
 

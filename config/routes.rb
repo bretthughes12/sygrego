@@ -67,6 +67,9 @@ Rails.application.routes.draw do
         get :profile
         patch :update_profile
       end
+      collection do
+        get :search
+      end
       resources :roles, only: [:index] do
         member do
           patch :add

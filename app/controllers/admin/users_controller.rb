@@ -13,6 +13,15 @@ class Admin::UsersController < ApplicationController
         format.html # index.html.erb
       end
     end
+
+    # GET /admin/users/search
+    def search
+      @users = User.search(params[:search]).order("email")
+  
+      respond_to do |format|
+        format.html { render action: 'index' }
+      end
+    end
   
     # GET /admin/users/1
     def show
