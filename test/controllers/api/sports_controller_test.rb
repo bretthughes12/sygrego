@@ -3,8 +3,7 @@ require "test_helper"
 class Api::SportsControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
-    @admin_role = FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @sport = FactoryBot.create(:sport)
   end
 

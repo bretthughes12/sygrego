@@ -6,8 +6,7 @@ class Admin::InfoControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     FactoryBot.create(:audit_trail)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @sport = FactoryBot.create(:sport)
     
     sign_in @user

@@ -3,11 +3,11 @@ require "test_helper"
 class Api::AuditTrailControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @remote_user = FactoryBot.create(:user)
+    @remote_user = FactoryBot.create(:user, :admin)
   end
 
   test "should get audit trails" do
+    assert_equal true, @remote_user.role?('admin')
     1.upto(50) do 
       FactoryBot.create(:audit_trail)
     end

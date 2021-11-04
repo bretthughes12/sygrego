@@ -5,10 +5,10 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    @admin = FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @group1 = FactoryBot.create(:group)
     @group2 = FactoryBot.create(:group)
+    @admin = Role.find_by_name('admin')
     
     sign_in @user
   end
@@ -20,7 +20,7 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should switch roles" do
-    role = FactoryBot.create(:role, name: 'gc', group_related: true)
+    role = FactoryBot.create(:role, :gc)
 
     patch switch_role_url(role)
 
@@ -34,7 +34,7 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should use session for current group" do
-    role = FactoryBot.create(:role, name: 'gc', group_related: true)
+    role = FactoryBot.create(:role, :gc)
     @user.roles << role
     @user.groups << @group1
 
@@ -48,7 +48,7 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should use users groups for current group" do
-    role = FactoryBot.create(:role, name: 'gc', group_related: true)
+    role = FactoryBot.create(:role, :gc)
     @user.roles << role
     @user.groups << @group1
     @user.groups << @group2

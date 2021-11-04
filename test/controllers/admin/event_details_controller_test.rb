@@ -5,8 +5,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @event_detail = FactoryBot.create(:event_detail)
     
     sign_in @user

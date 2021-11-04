@@ -35,5 +35,21 @@ FactoryBot.define do
     sequence(:name)       { |n| "Peter Piper #{n}" }
     password              {"secret"}
     password_confirmation {"secret"}
+
+    trait :admin do
+      roles               { [association(:role, :admin)] }
+    end
+
+    trait :church_rep do
+      roles               { [association(:role, :church_rep)] }
+    end
+
+    trait :gc do
+      roles               { [association(:role, :gc)] }
+    end
+
+    trait :participant do
+      roles               { [association(:role, :participant)] }
+    end
   end
 end

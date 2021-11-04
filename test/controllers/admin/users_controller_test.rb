@@ -6,11 +6,8 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    admin_role = FactoryBot.create(:role, name: 'admin')
     @user1 = FactoryBot.create(:user)
-    @user = FactoryBot.create(:user)
-    @user.roles << admin_role
-    @user.reload
+    @user = FactoryBot.create(:user, :admin)
 
     sign_in @user
   end

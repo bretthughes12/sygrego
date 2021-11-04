@@ -3,8 +3,7 @@ require "test_helper"
 class Api::VenuesControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @venue = FactoryBot.create(:venue)
   end
 

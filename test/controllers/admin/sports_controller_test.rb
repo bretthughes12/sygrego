@@ -5,8 +5,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    @admin_role = FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @sport = FactoryBot.create(:sport)
 
     sign_in @user
@@ -29,10 +28,9 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not get index if not an admin" do
     sign_out @user
-    gc_role = FactoryBot.create(:role, name: 'gc')
-    @user.roles.delete(@admin_role)
-    @user.roles << gc_role
-    sign_in @user
+
+    gc_user = FactoryBot.create(:user, :gc)
+    sign_in gc_user
 
     get admin_sports_url
 

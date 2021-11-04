@@ -62,8 +62,6 @@ class User < ApplicationRecord
 
   searchable_by :name, :email
 
-  before_create :set_default_role
-
   def role?(role)
     !roles.find_by_name(role.to_s).nil?
   end
@@ -103,11 +101,5 @@ class User < ApplicationRecord
     string = ''.dup
     1.upto(len) { |_i| string << chars[rand(chars.size - 1)] }
     string
-  end
-
-  private
-
-  def set_default_role
-    self.roles << Role.find_by_name('admin')
   end
 end

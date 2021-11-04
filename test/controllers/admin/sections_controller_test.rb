@@ -5,8 +5,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @section = FactoryBot.create(:section)
     
     sign_in @user

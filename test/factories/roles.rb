@@ -15,8 +15,27 @@
 #
 FactoryBot.define do
   factory :role do
-    sequence(:name)             { |n| "Role#{n}"}
-    group_related { false }
-    participant_related { false }
+    sequence(:name)       { |n| "Role#{n}"}
+    group_related         { false }
+    participant_related   { false }
+
+    trait :admin do
+      name                { "admin" }
+    end
+
+    trait :church_rep do
+      name                { "church_rep" }
+      group_related       { true }
+      end
+
+    trait :gc do
+      name                { "gc" }
+      group_related       { true }
+    end
+
+    trait :participant do
+      name                { "participant" }
+      participant_related { true }
+    end
   end
 end

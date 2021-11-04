@@ -5,13 +5,8 @@ class Gc::InfoControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    admin_role = FactoryBot.create(:role, name: 'admin')
-    gc_role = FactoryBot.create(:role, name: 'gc')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :gc)
     @group = FactoryBot.create(:group)
-    
-    @user.roles.delete(admin_role)
-    @user.roles << gc_role
     @user.groups << @group
 
     sign_in @user

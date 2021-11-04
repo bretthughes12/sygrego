@@ -5,13 +5,8 @@ class Gc::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    admin_role = FactoryBot.create(:role, name: 'admin')
-    @gc_role = FactoryBot.create(:role, name: 'gc')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :gc)
     @event_detail = FactoryBot.create(:event_detail)
-    
-    @user.roles.delete(admin_role)
-    @user.roles << @gc_role
     @user.groups << @event_detail.group
     
     sign_in @user
@@ -37,10 +32,10 @@ class Gc::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update event details as church_rep" do
     sign_out @user
-    church_rep_role = FactoryBot.create(:role, name: 'church_rep')
-    @user.roles.delete(@gc_role)
-    @user.roles << church_rep_role
-    sign_in @user
+
+    church_rep_user = FactoryBot.create(:user, :church_rep)
+    church_rep_user.groups << @event_detail.group
+    sign_in church_rep_user
 
     patch gc_event_detail_url(@event_detail), params: { event_detail: { estimated_numbers: 40 } }
 

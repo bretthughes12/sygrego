@@ -6,19 +6,10 @@ class Gc::UsersControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    admin_role = FactoryBot.create(:role, name: 'admin')
-    gc_role = FactoryBot.create(:role, name: 'gc')
-    church_rep_role = FactoryBot.create(:role, name: 'church_rep')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :gc)
     @group = FactoryBot.create(:group)
-    @church_rep = FactoryBot.create(:user)
-    
-    @user.roles.delete(admin_role)
-    @user.roles << gc_role
+    @church_rep = FactoryBot.create(:user, :church_rep)
     @user.groups << @group
-
-    @church_rep.roles.delete(admin_role)
-    @church_rep.roles << church_rep_role
     @church_rep.groups << @group
 
     sign_in @user

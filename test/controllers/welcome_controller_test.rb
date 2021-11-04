@@ -5,8 +5,7 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    @admin_role = FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     FactoryBot.create(:group)
   end
 
@@ -19,10 +18,8 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "gc user should land on group info page" do
-    gc_role = FactoryBot.create(:role, name: 'gc')
-    @user.roles.delete(@admin_role)
-    @user.roles << gc_role
-    sign_in @user
+    gc_user = FactoryBot.create(:user, :gc)
+    sign_in gc_user
 
     assert_redirected_to root_url
     follow_redirect!
@@ -30,10 +27,8 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "church_rep user should land on group info page" do
-    church_rep_role = FactoryBot.create(:role, name: 'church_rep')
-    @user.roles.delete(@admin_role)
-    @user.roles << church_rep_role
-    sign_in @user
+    church_rep_user = FactoryBot.create(:user, :church_rep)
+    sign_in church_rep_user
 
     assert_redirected_to root_url
     follow_redirect!
@@ -41,10 +36,8 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "participant user should land on group info page" do
-    participant_role = FactoryBot.create(:role, name: 'participant')
-    @user.roles.delete(@admin_role)
-    @user.roles << participant_role
-    sign_in @user
+    participant_user = FactoryBot.create(:user, :participant)
+    sign_in participant_user
 
     assert_redirected_to root_url
     follow_redirect!

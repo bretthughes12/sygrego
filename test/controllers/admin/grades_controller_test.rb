@@ -5,8 +5,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @grade = FactoryBot.create(:grade)
     
     sign_in @user

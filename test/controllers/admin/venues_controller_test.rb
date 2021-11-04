@@ -5,8 +5,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     FactoryBot.create(:setting)
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
+    @user = FactoryBot.create(:user, :admin)
     @venue = FactoryBot.create(:venue)
 
     sign_in @user

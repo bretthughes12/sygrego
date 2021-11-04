@@ -58,11 +58,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should default role to participant when only that role" do
-    role = FactoryBot.create(:role, name: 'participant')
-    admin = Role.find_by_name('admin')
-    user = FactoryBot.create(:user)
-    user.roles << role
-    user.roles.delete(admin)
+    user = FactoryBot.create(:user, :participant)
 
     user.reload
     assert_equal :participant, user.default_role
@@ -71,11 +67,9 @@ class UserTest < ActiveSupport::TestCase
   test "should default role to gc when both gc and participant" do
     role1 = FactoryBot.create(:role, name: 'participant')
     role2 = FactoryBot.create(:role, name: 'gc')
-    admin = Role.find_by_name('admin')
     user = FactoryBot.create(:user)
     user.roles << role1
     user.roles << role2
-    user.roles.delete(admin)
 
     user.reload
     assert_equal :gc, user.default_role
@@ -84,11 +78,9 @@ class UserTest < ActiveSupport::TestCase
   test "should default role to church_rep when both gc and church_rep" do
     role1 = FactoryBot.create(:role, name: 'church_rep')
     role2 = FactoryBot.create(:role, name: 'gc')
-    admin = Role.find_by_name('admin')
     user = FactoryBot.create(:user)
     user.roles << role1
     user.roles << role2
-    user.roles.delete(admin)
 
     user.reload
     assert_equal :church_rep, user.default_role
@@ -97,7 +89,9 @@ class UserTest < ActiveSupport::TestCase
   test "should default role to admin when admin and anything else" do
     role1 = FactoryBot.create(:role, name: 'participant')
     role2 = FactoryBot.create(:role, name: 'gc')
+    admin_role = Role.find_by_name('admin')
     user = FactoryBot.create(:user)
+    user.roles << admin_role
     user.roles << role1
     user.roles << role2
 
