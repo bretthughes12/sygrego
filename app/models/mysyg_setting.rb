@@ -45,6 +45,8 @@ class MysygSetting < ApplicationRecord
         'Show sport entries only',
         'Show listed'].freeze
 
+    validates :mysyg_code,      
+        length: { maximum: 25 }
     validates :approve_option,      
         length: { maximum: 10 },
         inclusion: { in: APPROVAL_OPTIONS }

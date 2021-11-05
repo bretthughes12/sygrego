@@ -1,8 +1,12 @@
 <%= simple_form_for(@mysyg_setting, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
-	<%= f.input :mysyg_enabled %>
-	<%= f.input :mysyg_open %>
+	<%= f.input :mysyg_enabled,
+	            label: "MySYG Enabled" %>
+	<%= f.input :mysyg_open,
+	            label: "MySYG Open" %>
+	<%= f.input :mysyg_code,
+	            label: "MySYG Code" %>
 	<br />
 
 	<h2>Signup Behaviour</h2>
@@ -11,10 +15,11 @@
 	<br />
 
 	<%= f.input :approve_option, 
-				:as => :select, 
-				:collection => MysygSetting::APPROVAL_OPTIONS,
-				:label => "How people who sign up are approved",
-				:hint => "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
+				as: :select, 
+				collection: MysygSetting::APPROVAL_OPTIONS,
+				include_blank: false,
+				label: "How people who sign up are approved",
+				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br />
 
 	<h2>Extras</h2>
@@ -23,8 +28,9 @@
 	<br />
 
 	<%= f.input :show_group_extras_in_mysyg, 
-				:label => "Show Custom Extras in MySYG",
-				:hint => "untick this box if you do not want your participants to see any information about your Customer / Extra Costs when they log in to your MySYG site." %>
+				label: "Show Custom Extras in MySYG" %>
+	<%= f.hint  "untick this box if you do not want your participants to see any information about your Customer / Extra Costs when they log in to your MySYG site." %>
+	<br />
 	<br />
 
 	<h2>Sports</h2>
@@ -34,8 +40,9 @@
 	<br />
 
 	<%= f.input :show_sports_in_mysyg, 
-				label: "Show Sports Preferences in MySYG",
-				hint: "untick this box if you do not want your participants to see any information about Sports when they log in to your MySYG site." %>
+				label: "Show Sports Preferences in MySYG" %>
+	<%= f.hint  "untick this box if you do not want your participants to see any information about Sports when they log in to your MySYG site." %>
+	<br />
 	<br />
 
 	<h2>Volunteers</h2>
@@ -45,24 +52,25 @@
 	<br />
 
 	<%= f.input :show_volunteers_in_mysyg, 
-				:label => "Show Volunteer Positions in MySYG",
-				:hint => "untick this box if you do not want your participants to see any information about Volunteer positions when they log in to your MySYG site." %>
+				label: "Show Volunteer Positions in MySYG" %>
+	<%= f.hint  "untick this box if you do not want your participants to see any information about Volunteer positions when they log in to your MySYG site." %>
+	<br />
 	<br />
 
 	<h2>Finances</h2>
 
 	<%= f.input :show_finance_in_mysyg, 
-				:label => "Show Finance Information in MySYG",
-				:hint => "untick this box if you do not want your participants to see any information about Finances when they log in to your MySYG site." %>
+				label: "Show Finance Information in MySYG" %>
+	<%= f.hint  "untick this box if you do not want your participants to see any information about Finances when they log in to your MySYG site." %>
 	<%= f.input :participant_instructions, 
-				:hint => "your participants will see this on their Finances page when they log on. Example: 'Make cheques payable to Springfield Church of Christ'" %>
+				hint: "your participants will see this on their Finances page when they log on. Example: 'Make cheques payable to Springfield Church of Christ'" %>
 	<%= f.input :extra_fee_total, 
-				:label => "Additional Costs (full weekend)", 
-				:hint => "all costs you intend to charge, in addition to the SYG fees. This figure, plus the SYG fee will be your group's basic fee" %>
+				label: "Additional Costs (full weekend)", 
+				hint: "all costs you intend to charge, in addition to the SYG fees. This figure, plus the SYG fee will be your group's basic fee" %>
 	<%= f.input :extra_fee_per_day, 
-				:label => "Additional Costs (each day)", 
-				:hint => "your additional daily costs for people who are only attending for one or two days or nights. If they are attending full time, this figure will be ignored" %> 
+				label: "Additional Costs (each day)", 
+				hint: "your additional daily costs for people who are only attending for one or two days or nights. If they are attending full time, this figure will be ignored" %> 
 	<br />
 
-	<%= f.button :submit %>
+	<%= f.button :submit, "Update Settings" %>
 <% end %>	
