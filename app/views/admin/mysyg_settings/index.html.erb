@@ -1,0 +1,27 @@
+<% title "Listing group MySYG settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= search_box search_admin_mysyg_settings_path, "Search" %>
+<%= yield(:search_box)%>
+
+<br/>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Abbr</th>
+      <th>Full Name</th>
+      <th>Short Name</th>
+    </tr>
+  </thead>
+
+	<%= render @mysyg_settings %>
+</table>
+
+<%= link_to "Download", admin_mysyg_settings_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_mysyg_settings_path,
+                  class: primary_button_class,
+                  role: "button" %>

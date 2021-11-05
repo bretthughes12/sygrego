@@ -52,6 +52,7 @@ class Group < ApplicationRecord
 #    has_many :fee_audit_trails
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
+    has_one :mysyg_setting, dependent: :destroy
 
     scope :stale, -> { where(status: 'Stale') }
     scope :not_stale, -> { where("status != 'Stale'") }
@@ -109,6 +110,7 @@ class Group < ApplicationRecord
 
     before_save :uppercase_abbr!
     after_save :create_event_details!
+    after_save :create_mysyg_setting!
 
     def <=>(other)
         name <=> other.name
@@ -211,6 +213,15 @@ class Group < ApplicationRecord
           group_id:            self.id,
           buddy_interest:      "Not interested",
           updated_by:          self.updated_by
+        )
+      end
+    end
+
+    def create_mysyg_setting!
+      unless self.mysyg_setting
+        MysygSetting.create(
+          group_id:            self.id,
+          mysyg_name:          self.short_name.downcase
         )
       end
     end

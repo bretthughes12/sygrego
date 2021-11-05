@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_21_082634) do
+ActiveRecord::Schema.define(version: 2021_11_05_082906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,6 +163,27 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
     t.bigint "user_id"
     t.index ["group_id"], name: "index_groups_users_on_group_id"
     t.index ["user_id"], name: "index_groups_users_on_user_id"
+  end
+
+  create_table "mysyg_settings", force: :cascade do |t|
+    t.string "mysyg_name", limit: 50
+    t.boolean "mysyg_enabled", default: false
+    t.boolean "mysyg_open", default: false
+    t.text "participant_instructions"
+    t.decimal "extra_fee_total", precision: 8, scale: 2, default: "0.0"
+    t.decimal "extra_fee_per_day", precision: 8, scale: 2, default: "0.0"
+    t.boolean "show_sports_in_mysyg", default: true
+    t.boolean "show_volunteers_in_mysyg", default: true
+    t.boolean "show_finance_in_mysyg", default: true
+    t.boolean "show_group_extras_in_mysyg", default: true
+    t.string "approve_option", default: "Normal"
+    t.string "team_sport_view_strategy", default: "Show all"
+    t.string "indiv_sport_view_strategy", default: "Show all"
+    t.string "mysyg_code", limit: 25
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -329,6 +350,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_082634) do
   add_foreign_key "grades", "sports"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
+  add_foreign_key "mysyg_settings", "groups"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"
   add_foreign_key "sections", "grades"

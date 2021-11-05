@@ -104,6 +104,13 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :mysyg_settings, only: [:index, :show, :edit, :update] do
+      collection do
+        get :new_import
+        post :import
+        get :search
+      end
+    end
 
     resources :sports do
       collection do
@@ -170,6 +177,7 @@ Rails.application.routes.draw do
         patch :purge_file
       end
     end
+    resources :mysyg_settings, only: [:edit, :update]
   end
 end
 

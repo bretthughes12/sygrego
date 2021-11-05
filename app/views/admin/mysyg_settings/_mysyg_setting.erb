@@ -1,0 +1,13 @@
+<tr valign="top" class="<%= group_display_class(mysyg_setting.group) %>">
+	<td> 
+		<%= h(mysyg_setting.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to mysyg_setting.group.name, edit_admin_mysyg_setting_path(mysyg_setting) %>
+	</td>
+	
+	<td> 
+		<%= h(mysyg_setting.group.short_name) %>
+	</td>
+</tr>

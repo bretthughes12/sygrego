@@ -1,0 +1,37 @@
+<% title "Upload group MySYG settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Import file must be in '.csv' format, with columns the same as the download:</p>
+<ul>
+  <li>RowID</li>
+  <li>Abbr</li>
+  <li>Enabled</li>
+  <li>Open</li>
+  <li>Instr</li>
+  <li>ExtraFee</li>
+  <li>ExtraFeePerDay</li>
+  <li>ShowSports</li>
+  <li>ShowVol</li>
+  <li>ShowFinance</li>
+  <li>ShowExtras</li>
+  <li>ApproveOption</li>
+  <li>TeamView</li>
+  <li>IndivView</li>
+</ul>
+
+<%= simple_form_for(@mysyg_setting, url: import_admin_mysyg_settings_path) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :file, as: :file, label: "Upload file" %>
+
+    <br/>
+
+	<%= f.button :submit, "Upload" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", admin_mysyg_settings_path,
+                  class: primary_button_class,
+                  role: "button" %>

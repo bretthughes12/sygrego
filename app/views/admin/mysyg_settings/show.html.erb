@@ -1,0 +1,12 @@
+<% title "MySYG settings for: #{@mysyg_setting.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @mysyg_setting %>
+
+<%= link_to "Back", admin_mysyg_settings_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_mysyg_setting_path(@mysyg_setting),
+                  class: primary_button_class,
+                  role: "button" %>
