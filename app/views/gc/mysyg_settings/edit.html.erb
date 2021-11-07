@@ -1,0 +1,7 @@
+<% title "MySYG Settings" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: gc_mysyg_setting_path(@mysyg_setting), 
+                              method: :patch } %>
