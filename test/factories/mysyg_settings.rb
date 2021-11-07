@@ -31,19 +31,21 @@
 #
 FactoryBot.define do
   factory :mysyg_setting do
-    mysyg_name { "MyString" }
+    group
+
+    sequence(:mysyg_name)  { |n| "test#{n}" }
     mysyg_enabled { false }
     mysyg_open { false }
     participant_instructions { "MyText" }
-    extra_fee_total { "9.99" }
-    extra_fee_per_day { "9.99" }
-    show_sports_in_mysyg { false }
-    show_volunteers_in_mysyg { false }
-    show_finance_in_mysyg { false }
-    show_group_extras_in_mysyg { false }
-    approve_option { "MyString" }
-    team_sport_view_strategy { "MyString" }
-    indiv_sport_view_strategy { "MyString" }
-    mysyg_code { "MyString" }
+    extra_fee_total { "0.00" }
+    extra_fee_per_day { "0.00" }
+    show_sports_in_mysyg { true }
+    show_volunteers_in_mysyg { true }
+    show_finance_in_mysyg { true }
+    show_group_extras_in_mysyg { true }
+    approve_option { "Normal" }
+    team_sport_view_strategy { "Show all" }
+    indiv_sport_view_strategy { "Show all" }
+    mysyg_code { "ABC123" }
   end
 end

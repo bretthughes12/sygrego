@@ -36,23 +36,9 @@ class EventDetailTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
-    FactoryBot.create(:role, name: 'admin')
-    @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
+    @user = FactoryBot.create(:user, :admin)
     @event_detail = FactoryBot.create(:event_detail)
-  end
-
-  test "should import event details from file" do
-    group = FactoryBot.create(:group, abbr: 'CAF')
-    file = fixture_file_upload('event_detail.csv','application/csv')
-    
-    assert_no_difference('EventDetail.count') do
-      @result = EventDetail.import(file, @user)
-    end
-
-    assert_equal 0, @result[:creates]
-    assert_equal 1, @result[:updates]
-    assert_equal 0, @result[:errors]
   end
 
   test "should update exiting event details from file" do
@@ -73,19 +59,6 @@ class EventDetailTest < ActiveSupport::TestCase
     assert_equal 34, group.event_detail.estimated_numbers
   end
 
-  test "should not import event details with errors from file" do
-    group = FactoryBot.create(:group, abbr: 'CAF')
-    file = fixture_file_upload('invalid_event_detail.csv','application/csv')
-    
-    assert_no_difference('EventDetail.count') do
-      @result = EventDetail.import(file, @user)
-    end
-
-    assert_equal 0, @result[:creates]
-    assert_equal 0, @result[:updates]
-    assert_equal 1, @result[:errors]
-  end
-
   test "should not update event details with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
     event_detail = FactoryBot.create(:event_detail, group: group)
@@ -99,7 +72,8 @@ class EventDetailTest < ActiveSupport::TestCase
     assert_equal 0, @result[:updates]
     assert_equal 1, @result[:errors]
 
-    event_detail.reload
-    assert_not_equal "Not for us", event_detail.buddy_interest
+    group.reload
+    group.event_detail.reload
+    assert_not_equal "Not for us", group.event_detail.buddy_interest
   end
 end

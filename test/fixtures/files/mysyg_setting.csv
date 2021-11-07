@@ -1,0 +1,2 @@
+RowID,Abbr,Enabled,Open,Instr,ExtraFee,ExtraFeePerDay,ShowSports,ShowVol,ShowFinance,ShowExtras,ApproveOption,TeamView,IndivView
+123,CAF,TRUE,TRUE,Put payment into a paper bag,20,10,TRUE,TRUE,TRUE,TRUE,Tolerant,Show all,Show all
