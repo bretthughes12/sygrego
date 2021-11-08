@@ -8,38 +8,38 @@
     <p>OR</p>
     <%= f.input :name, label: "Group Name" %>
     <br\>
-    <%= f.input :address, :required => true %>
-    <%= f.input :suburb, :input_html => {:size => 40}, :required => true %>
-    <%= f.input :postcode, :input_html => {:size => 4}, :required => true %>
-    <%= f.input :email, :required => true %>
+    <%= f.input :address %>
+    <%= f.input :suburb %>
+    <%= f.input :postcode %>
+    <%= f.input :email %>
     <%= f.input :website %>
-    <%= f.input :phone_number, :required => true %>
-    <%= f.input :denomination, required: true %>
+    <%= f.input :phone_number %>
+    <%= f.input :denomination %>
 
     <h2>Church, Agency or Organisation Representative</h2>
 
-    <%= f.input :church_rep_name, label: "Name", :required => true %>
-    <%= f.input :church_rep_role, label: "Role in Church or Organisation", :required => true %>
-    <%= f.input :church_rep_address, label: "Address", :required => true %>
-    <%= f.input :church_rep_suburb, label: "Suburb", :input_html => {:size => 40}, :required => true %>
-    <%= f.input :church_rep_postcode, label: "Postcode", :input_html => {:size => 4}, :required => true %>
-    <%= f.input :church_rep_email, label: "Direct email address", :required => true %>
-    <%= f.input :church_rep_phone_number, label: "Phone number", :required => true %>
-    <%= f.input :church_rep_wwcc_number, label: "Working With Children Check number", :required => true %>
+    <%= f.input :church_rep_name, label: "Name" %>
+    <%= f.input :church_rep_role, label: "Role in Church or Organisation" %>
+    <%= f.input :church_rep_wwcc_number, label: "Working With Children Check number", as: :string %>
+    <%= f.input :church_rep_address, label: "Address" %>
+    <%= f.input :church_rep_suburb, label: "Suburb" %>
+    <%= f.input :church_rep_postcode, label: "Postcode" %>
+    <%= f.input :church_rep_email, label: "Direct email address" %>
+    <%= f.input :church_rep_phone_number, label: "Phone number" %>
 
     <h2>Nominated Group Coordinator</h2>
     <strong>This person should be a different individual to the Church, Agency or Organisation representative</strong>
     <p>This individual will be responsible for representing, organising, and liaising with your organisation and the SYG event</p>
 
-    <%= f.input :gc_name, label: "Name", :required => true %>
-    <%= f.input :gc_address, label: "Address", :required => true %>
-    <%= f.input :gc_suburb, label: "Suburb", :input_html => {:size => 40}, :required => true %>
-    <%= f.input :gc_postcode, label: "Postcode", :input_html => {:size => 4}, :required => true %>
-    <%= f.input :gc_email, label: "Direct email address", :required => true %>
-    <%= f.input :gc_phone_number, label: "Phone number", :required => true %>
-    <%= f.input :gc_wwcc_number, label: "Working With Children Check number", :required => true %>
-    <%= f.input :gc_reference, label: "Referee", :required => true %>
-    <%= f.input :gc_reference_phone, label: "Referee contact number", :required => true %>
+    <%= f.input :gc_name, label: "Name", as: :string %>
+    <%= f.input :gc_wwcc_number, label: "Working With Children Check number" %>
+    <%= f.input :gc_address, label: "Address" %>
+    <%= f.input :gc_suburb, label: "Suburb" %>
+    <%= f.input :gc_postcode, label: "Postcode" %>
+    <%= f.input :gc_email, label: "Direct email address" %>
+    <%= f.input :gc_phone_number, label: "Phone number" %>
+    <%= f.input :gc_reference, label: "Referee" %>
+    <%= f.input :gc_reference_phone, label: "Referee contact number" %>
     <%= f.input :years_as_gc, label: "Years as GC", hint: "How many times has this individual been a GC before?" %>
 
     <%= f.button :submit, label: "Sign up" %>
