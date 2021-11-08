@@ -4,10 +4,14 @@
 	</td>
 
 	<td> 
-        <%= link_to mysyg_setting.group.name, edit_admin_mysyg_setting_path(mysyg_setting) %>
+        <%= link_to mysyg_setting.group.short_name, edit_admin_mysyg_setting_path(mysyg_setting) %>
 	</td>
 	
 	<td> 
-		<%= h(mysyg_setting.group.short_name) %>
+		<%= mysyg_setting.mysyg_open ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= mysyg_setting.approve_option %>
 	</td>
 </tr>

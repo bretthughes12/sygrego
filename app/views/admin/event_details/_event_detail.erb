@@ -4,10 +4,14 @@
 	</td>
 
 	<td> 
-        <%= link_to event_detail.group.name, edit_admin_event_detail_path(event_detail) %>
+        <%= link_to event_detail.group.short_name, edit_admin_event_detail_path(event_detail) %>
 	</td>
 	
 	<td> 
-		<%= h(event_detail.group.short_name) %>
+		<%= event_detail.onsite ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= h(event_detail.estimated_numbers) %>
 	</td>
 </tr>
