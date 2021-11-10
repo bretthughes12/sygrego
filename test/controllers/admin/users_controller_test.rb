@@ -98,7 +98,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   test "should update profile" do
     patch update_profile_admin_user_url(@user1), params: { user: { email: "test@example.com" } }
 
-    assert_redirected_to admin_sports_path
+    assert_redirected_to home_admin_info_url
     assert_match /Profile updated/, flash[:notice]
 
     # Reload association to fetch updated data and assert that title is updated.
@@ -126,7 +126,7 @@ class Admin::UsersControllerTest < ActionDispatch::IntegrationTest
   test "should update user password" do
     patch update_password_admin_user_url(@user1), params: { user: { password: "secret", password_confirmation: "secret" } }
 
-    assert_redirected_to admin_sports_path
+    assert_redirected_to home_admin_info_url
     assert_match /Password updated/, flash[:notice]
   end
 

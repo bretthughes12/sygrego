@@ -3,6 +3,11 @@ class Admin::InfoController < ApplicationController
 
     layout 'admin'
 
+    # GET /admin/info/home
+    def home
+        @total_groups = Group.coming.count
+    end
+
     # GET /admin/info/tech_stats
     def tech_stats
         @tech_stats = []

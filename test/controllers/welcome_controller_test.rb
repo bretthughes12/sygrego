@@ -14,7 +14,7 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_url
     follow_redirect!
-    assert_redirected_to admin_sports_url
+    assert_redirected_to home_admin_info_url
   end
 
   test "gc user should land on group info page" do

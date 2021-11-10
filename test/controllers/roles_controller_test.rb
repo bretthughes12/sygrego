@@ -30,7 +30,7 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
   test "should switch roles for an admin" do
     patch switch_role_url(@admin)
 
-    assert_redirected_to admin_sports_url
+    assert_redirected_to home_admin_info_url
   end
 
   test "should use session for current group" do

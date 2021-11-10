@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
           else 
             role = session["current_role"]
             if role == "admin"
-                admin_sports_url
+                home_admin_info_url
             elsif role == "gc" || role == "church_rep"
                 home_gc_info_url
             else

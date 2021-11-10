@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :info, :controller => "info" do
       collection do
+        get :home
         get :tech_stats
       end
     end
