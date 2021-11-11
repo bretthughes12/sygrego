@@ -8,7 +8,7 @@ site_settings: &site_settings
     conference_name: Conference of Churches of Christ in Victoria and Tasmania
     backend_website: https://sygrego.com
 #    committee_name: committee
-#    state_area_code: 3
+    state_area_code: 3
     abn: 264 033 23 495
 
 # Volunteers

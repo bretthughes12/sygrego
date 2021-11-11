@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_082906) do
+ActiveRecord::Schema.define(version: 2021_11_11_090530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,6 +196,57 @@ ActiveRecord::Schema.define(version: 2021_11_05_082906) do
     t.index ["permalink"], name: "index_pages_on_permalink", unique: true
   end
 
+  create_table "participants", force: :cascade do |t|
+    t.bigint "group_id", default: 0, null: false
+    t.string "first_name", limit: 20, null: false
+    t.string "surname", limit: 20, null: false
+    t.boolean "coming", default: true
+    t.integer "age", default: 30, null: false
+    t.string "gender", limit: 1, default: "M", null: false
+    t.integer "days", default: 3, null: false
+    t.string "address", limit: 200
+    t.string "suburb", limit: 40
+    t.integer "postcode"
+    t.string "phone_number", limit: 20
+    t.string "encrypted_medicare_number"
+    t.string "encrypted_medicare_number_iv"
+    t.string "medical_info", limit: 255
+    t.string "medications", limit: 255
+    t.integer "years_attended"
+    t.integer "database_rowid"
+    t.integer "lock_version", default: 0
+    t.boolean "spectator", default: false
+    t.boolean "onsite", default: true
+    t.boolean "helper", default: false
+    t.boolean "group_coord", default: false
+    t.boolean "sport_coord", default: false
+    t.boolean "guest", default: false
+    t.boolean "withdrawn", default: false
+    t.decimal "fee_when_withdrawn", precision: 8, scale: 2, default: "0.0"
+    t.boolean "late_fee_charged", default: false
+    t.boolean "driver", default: false
+    t.string "number_plate", limit: 10
+    t.boolean "early_bird", default: false
+    t.string "email", limit: 100
+    t.string "mobile_phone_number", limit: 20
+    t.string "dietary_requirements", limit: 255
+    t.string "emergency_contact", limit: 40
+    t.string "emergency_relationship", limit: 20
+    t.string "emergency_phone_number", limit: 20
+    t.decimal "amount_paid", precision: 8, scale: 2, default: "0.0"
+    t.string "status", limit: 20, default: "Accepted"
+    t.string "encrypted_wwcc_number"
+    t.string "encrypted_wwcc_number_iv"
+    t.boolean "driver_signature", default: false
+    t.datetime "driver_signature_date"
+    t.bigint "updated_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coming"], name: "index_participants_on_coming"
+    t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
+    t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name", limit: 20
     t.boolean "group_related", default: false
@@ -351,6 +402,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_082906) do
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"
+  add_foreign_key "participants", "groups"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"
   add_foreign_key "sections", "grades"
