@@ -1,0 +1,13 @@
+<% title "New participant" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_participants_path(@participant), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

@@ -113,6 +113,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :participants do
+      collection do
+        get :new_import
+        post :import
+        get :search
+      end
+    end
+
     resources :sports do
       collection do
         get :new_import

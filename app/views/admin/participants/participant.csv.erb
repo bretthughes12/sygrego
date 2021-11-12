@@ -1,0 +1,46 @@
+<%- headings = %w{RowID Group FirstName Surname Coming Status Age   
+	              Gender Days Address Suburb Postcode Phone Mobile 
+	              Email Medicare MedicalInfo Medications YearsAttended
+				  Spectator Onsite Helper GC SC Guest Driver NumberPlate
+				  EarlyBird DietaryRqmts EmergContact EmergRel EmergPhone 
+				  WWCC } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @participants.each do |participant|
+  	line = [ participant.database_rowid,
+  		     participant.group.abbr,
+  		     participant.first_name,
+			 participant.surname,
+  		     participant.coming,
+  		     participant.status,
+  		     participant.age,
+  		     participant.gender,
+  		     participant.days,
+  		     participant.address,
+  		     participant.suburb,
+  		     participant.postcode,
+  		     participant.phone_number,
+  		     participant.mobile_phone_number,
+  		     participant.email,
+  		     participant.medicare_number,
+			 participant.medical_info,
+			 participant.medications,
+			 participant.years_attended,
+			 participant.spectator,
+			 participant.onsite,
+			 participant.helper,
+			 participant.group_coord,
+			 participant.sport_coord,
+			 participant.guest,
+			 participant.driver,
+			 participant.number_plate,
+			 participant.early_bird,
+			 participant.dietary_requirements,
+			 participant.emergency_contact,
+			 participant.emergency_relationship,
+			 participant.emergency_phone_number,
+			 participant.wwcc_number
+		   ]
+    csv << line
+  end
+end.html_safe %>

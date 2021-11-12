@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+		<%= link_to participant.surname, edit_admin_participant_path(participant) %>
+	</td>
+
+	<td> 
+        <%= link_to participant.first_name, edit_admin_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.group.short_name %>
+	</td>
+	
+	<td> 
+		<%= participant.coming ? "Yes" : "No" %>
+	</td>
+</tr>

@@ -181,7 +181,10 @@ class Participant < ApplicationRecord
     SEX = %w[M F].freeze
     DAYS = [3, 2, 1].freeze
 
-
+    def name
+        first_name + ' ' + surname
+    end
+    
 private
 
     def validate_eligibility_for_team_helper
