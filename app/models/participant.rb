@@ -185,6 +185,108 @@ class Participant < ApplicationRecord
         first_name + ' ' + surname
     end
     
+    def self.import(file, user)
+      creates = 0
+      updates = 0
+      errors = 0
+      error_list = []
+
+      CSV.foreach(file.path, headers: true) do |fields|
+          group = Group.find_by_abbr(fields[1].to_s)
+          if group.nil?
+            group = Group.find_by_abbr("DFLT")
+          end
+
+          participant = Participant.where(first_name: fields[2], surname: fields[3], group_id: group.id).first
+          
+          if participant
+              participant.database_rowid          = fields[0].to_i
+              participant.coming                  = fields[4]
+              participant.status                  = fields[5]
+              participant.age                     = fields[6].to_i
+              participant.gender                  = fields[7]
+              participant.days                    = fields[8].to_i
+              participant.address                 = fields[9]
+              participant.suburb                  = fields[10]
+              participant.postcode                = fields[11].to_i
+              participant.phone_number            = fields[12]
+              participant.mobile_phone_number     = fields[13]
+              participant.email                   = fields[14]
+              participant.medicare_number         = fields[15]
+              participant.medical_info            = fields[16]
+              participant.medications             = fields[17]
+              participant.years_attended          = fields[18].to_i
+              participant.spectator               = fields[19]
+              participant.onsite                  = fields[20]
+              participant.helper                  = fields[21]
+              participant.group_coord             = fields[22]
+              participant.sport_coord             = fields[23]
+              participant.guest                   = fields[24]
+              participant.driver                  = fields[25]
+              participant.number_plate            = fields[26]
+              participant.early_bird              = fields[27]
+              participant.dietary_requirements    = fields[28]
+              participant.emergency_contact       = fields[29]
+              participant.emergency_relationship  = fields[30]
+              participant.emergency_phone_number  = fields[31]
+              participant.wwcc_number             = fields[32]
+              participant.updated_by = user.id
+
+              if participant.save
+                  updates += 1
+              else
+                  errors += 1
+                  error_list << participant
+              end
+          else
+              participant = Participant.create(
+                 database_rowid:          fields[0],
+                 group_id:                group.id,
+                 first_name:              fields[2],
+                 surname:                 fields[3],
+                 coming:                  fields[4],
+                 status:                  fields[5],
+                 age:                     fields[6].to_i,
+                 gender:                  fields[7],
+                 days:                    fields[8].to_i,
+                 address:                 fields[9],
+                 suburb:                  fields[10],
+                 postcode:                fields[11].to_i,
+                 phone_number:            fields[12],
+                 mobile_phone_number:     fields[13],
+                 email:                   fields[14],
+                 medicare_number:         fields[15],
+                 medical_info:            fields[16],
+                 medications:             fields[17],
+                 years_attended:          fields[18].to_i,
+                 spectator:               fields[19],
+                 onsite:                  fields[20],
+                 helper:                  fields[21],
+                 group_coord:             fields[22],
+                 sport_coord:             fields[23],
+                 guest:                   fields[24],
+                 driver:                  fields[25],
+                 number_plate:            fields[26],
+                 early_bird:              fields[27],
+                 dietary_requirements:    fields[28],
+                 emergency_contact:       fields[29],
+                 emergency_relationship:  fields[30],
+                 emergency_phone_number:  fields[31],
+                 wwcc_number:             fields[32],
+                 updated_by:              user.id)
+
+              if participant.errors.empty?
+                  creates += 1
+              else
+                  errors += 1
+                  error_list << participant
+              end
+          end
+      end
+
+      { creates: creates, updates: updates, errors: errors, error_list: error_list }
+  end
+  
 private
 
     def validate_eligibility_for_team_helper
@@ -345,4 +447,27 @@ private
       end
       words.join(' ')
     end
+
+    def self.sync_fields
+      ['first_name',
+       'surname', 
+       'group_id',
+       'coming',
+       'database_rowid',
+       'age',
+       'gender',
+       'days',
+       'onsite',
+       'address',
+       'suburb',
+       'postcode',
+       'phone_number',
+       'mobile_phone_number',
+       'spectator',
+       'helper',
+       'group_coord',
+       'sport_coord',
+       'guest'
+      ]
+  end
 end
