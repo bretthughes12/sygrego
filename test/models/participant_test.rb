@@ -62,7 +62,77 @@
 require "test_helper"
 
 class ParticipantTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  include ActionDispatch::TestProcess
+
+  def setup
+    @user = FactoryBot.create(:user, :admin)
+    @setting = FactoryBot.create(:setting)
+    @participant = FactoryBot.create(:participant)
+  end
+
+  test "should import participants from file" do
+    FactoryBot.create(:group, abbr: "CAF")
+    file = fixture_file_upload('participant.csv','application/csv')
+    
+    assert_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting participants from file" do
+    group = FactoryBot.create(:group, abbr: "CAF")
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      first_name: "Amos",
+      surname: "Burton")
+    file = fixture_file_upload('participant.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    participant.reload
+    assert_equal 35, participant.age
+  end
+
+  test "should not import participants with errors from file" do
+    FactoryBot.create(:group, abbr: "CAF")
+    file = fixture_file_upload('invalid_participant.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update participants with errors from file" do
+    group = FactoryBot.create(:group, abbr: "CAF")
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      first_name: "Amos",
+      surname: "Burton")
+    file = fixture_file_upload('invalid_participant.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    participant.reload
+    assert_not_equal "X", participant.gender
+  end
 end
