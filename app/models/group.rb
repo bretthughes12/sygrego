@@ -43,7 +43,7 @@ class Group < ApplicationRecord
 
     require 'csv'
 
-#    has_many :participants
+    has_many :participants
 #    has_many :payments
 #    has_many :sport_entries
 #    has_many :downloads

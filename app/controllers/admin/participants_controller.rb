@@ -113,29 +113,6 @@ class Admin::ParticipantsController < ApplicationController
         end
       end
     end
-  
-    # PATCH /admin/user/1/participants/add_participant
-    def add_participant
-      @user = User.find(params[:user_id])
-      @participant = Participant.find(params[:participant_id])
-
-      @user.participants << @participant unless @user.participants.include?(@participant)
-
-      respond_to do |format|
-        format.html { redirect_to edit_admin_user_url(@user) }
-      end
-    end
-  
-    # DELETE /admin/user/1/participant/1/purge
-    def purge
-      @user = User.find(params[:user_id])
-
-      @user.participants.delete(@participant)
-  
-      respond_to do |format|
-        format.html { redirect_to edit_admin_user_url(@user) }
-      end
-    end
 
 private
   

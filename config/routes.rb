@@ -160,6 +160,7 @@ Rails.application.routes.draw do
     resources :audit_trail, only: [:index]
     resources :groups, only: [:show]
     resources :event_details, only: [:show]
+    resources :participants, only: [:show]
     resources :sports, only: [:show]
     resources :grades, only: [:show]
     resources :sections, only: [:show]
