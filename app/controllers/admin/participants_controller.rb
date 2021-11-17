@@ -8,7 +8,9 @@ class Admin::ParticipantsController < ApplicationController
   
     # GET /admin/participants
     def index
-      @participants = Participant.order(:surname, :first_name).load
+      @participants = Participant.
+        order(:surname, :first_name).
+        paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|
         format.html # index.html.erb
@@ -18,7 +20,10 @@ class Admin::ParticipantsController < ApplicationController
 
     # GET /admin/participants/search
     def search
-      @participants = Participant.search(params[:search]).order(:surname, :first_name)
+      @participants = Participant.
+        search(params[:search]).
+        order(:surname, :first_name).
+        paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|
         format.html { render action: 'index' }
