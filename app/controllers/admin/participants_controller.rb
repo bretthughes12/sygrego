@@ -9,11 +9,10 @@ class Admin::ParticipantsController < ApplicationController
     # GET /admin/participants
     def index
       @participants = Participant.
-        order(:surname, :first_name).
-        paginate(page: params[:page], per_page: 100)
+        order(:surname, :first_name).load
   
       respond_to do |format|
-        format.html # index.html.erb
+        format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
         format.csv  { render_csv "participant", "participant" }
       end
     end
