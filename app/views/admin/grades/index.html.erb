@@ -1,6 +1,7 @@
 <% title "Listing grades" %>
 
 <h1><%= yield(:title) %></h1>
+<%= will_paginate @grades, :container => false %>
 
 <table class="table table-dark table-striped">
   <thead>
@@ -13,6 +14,8 @@
 
 	<%= render @grades %>
 </table>
+
+<%= will_paginate @grades, :container => false %>
 
 <%= link_to "New grade", new_admin_grade_path,
                   class: primary_button_class,

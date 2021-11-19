@@ -8,10 +8,12 @@ class Admin::SectionsController < ApplicationController
   
     # GET /admin/sections
     def index
-      @sections = Section.order(:name).includes(:session, :venue).load
+      @sections = Section.
+        order(:name).
+        includes(:session, :venue).load
   
       respond_to do |format|
-        format.html # index.html.erb
+        format.html { @sections = @sections.paginate(page: params[:page], per_page: 50) }
         format.csv  { render_csv "sport_section", "sport_section" }
       end
     end

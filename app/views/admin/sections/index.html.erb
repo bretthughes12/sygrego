@@ -1,6 +1,7 @@
 <% title "Listing sections" %>
 
 <h1><%= yield(:title) %></h1>
+<%= will_paginate @sections, :container => false %>
 
 <table class="table table-dark table-striped">
   <thead>
@@ -13,6 +14,8 @@
 
 	<%= render @sections %>
 </table>
+
+<%= will_paginate @sections, :container => false %>
 
 <%= link_to "New section", new_admin_section_path,
                   class: primary_button_class,

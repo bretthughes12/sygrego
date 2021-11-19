@@ -8,11 +8,13 @@ class Admin::GradesController < ApplicationController
   
     # GET /admin/grades
     def index
-      @grades = Grade.order(:name).includes(:sections).load
+      @grades = Grade.
+        order(:name).
+        includes(:sections).load
       authorize! :show, @grades
 
       respond_to do |format|
-        format.html # index.html.erb
+        format.html { @grades = @grades.paginate(page: params[:page], per_page: 50) }
         format.csv  { render_csv "sport_grade", "sport_grade" }
       end
     end
