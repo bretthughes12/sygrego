@@ -66,7 +66,7 @@ class Admin::EventDetailsController < ApplicationController
   
     # POST /admin/event_details/import
     def import
-      if params[:event_detail][:file].path =~ %r{\.csv$}i
+      if params[:event_detail] && params[:event_detail][:file].path =~ %r{\.csv$}i
         result = EventDetail.import(params[:event_detail][:file], current_user)
 
         flash[:notice] = "Event Details upload complete: #{result[:creates]} details created; #{result[:updates]} updates; #{result[:errors]} errors"

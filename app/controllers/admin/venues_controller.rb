@@ -8,14 +8,10 @@ class Admin::VenuesController < ApplicationController
   
     # GET /admin/venues
     def index
-#      page_sym = save_page("Venue", params)
-#      session[page_sym] = params[:page].to_i if params[:page]
-  
       @venues = Venue.order("name").includes(:sections).all
   
       respond_to do |format|
         format.html {  }
-#        format.html { @venues = @venues.paginate(page: session[page_sym]) }
         format.csv  { render_csv "sport_venue" }
       end
     end
@@ -91,7 +87,7 @@ class Admin::VenuesController < ApplicationController
   
     # POST /admin/venues/import
     def import
-      if params[:venue][:file].path =~ %r{\.csv$}i
+      if params[:venue] && params[:venue][:file].path =~ %r{\.csv$}i
         result = Venue.import(params[:venue][:file], current_user)
 
         flash[:notice] = "Venues upload complete: #{result[:creates]} venues created; #{result[:updates]} updates; #{result[:errors]} errors"

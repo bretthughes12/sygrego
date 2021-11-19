@@ -90,7 +90,7 @@ class Admin::GradesController < ApplicationController
   
     # POST /admin/grades/import
     def import
-      if params[:grade][:file].path =~ %r{\.csv$}i
+      if params[:grade] && params[:grade][:file].path =~ %r{\.csv$}i
         result = Grade.import(params[:grade][:file], current_user)
 
         flash[:notice] = "Grades upload complete: #{result[:creates]} grades created; #{result[:updates]} updates; #{result[:errors]} errors"

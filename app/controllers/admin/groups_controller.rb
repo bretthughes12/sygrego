@@ -96,7 +96,7 @@ class Admin::GroupsController < ApplicationController
   
     # POST /admin/groups/import
     def import
-      if params[:group][:file].path =~ %r{\.csv$}i
+      if params[:group] && params[:group][:file].path =~ %r{\.csv$}i
         result = Group.import(params[:group][:file], current_user)
 
         flash[:notice] = "Groups upload complete: #{result[:creates]} groups created; #{result[:updates]} updates; #{result[:errors]} errors"

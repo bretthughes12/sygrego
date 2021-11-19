@@ -8,13 +8,10 @@ class Admin::SportsController < ApplicationController
   
     # GET /admin/sports
     def index
-#       page_sym = save_page("Sport", params)
-#       session[page_sym] = params[:page].to_i if params[:page]
         @sports = Sport.order(:name).includes(:grades).all
   
         respond_to do |format|
             format.html {  }
-#           format.html { @sports = @sports.paginate(page: session[page_sym]) }
             format.csv  { render_csv "sport", "sport" }
         end
     end
@@ -93,7 +90,7 @@ class Admin::SportsController < ApplicationController
     
     # POST /admin/sports/import
     def import
-        if params[:sport][:file].path =~ %r{\.csv$}i
+        if params[:sport] && params[:sport][:file].path =~ %r{\.csv$}i
           result = Sport.import(params[:sport][:file], current_user)
   
           flash[:notice] = "Sports upload complete: #{result[:creates]} sports created; #{result[:updates]} updates; #{result[:errors]} errors"

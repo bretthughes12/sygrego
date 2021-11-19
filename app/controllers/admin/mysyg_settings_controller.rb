@@ -53,7 +53,7 @@ class Admin::MysygSettingsController < ApplicationController
   
     # POST /admin/mysyg_settings/import
     def import
-      if params[:mysyg_setting][:file].path =~ %r{\.csv$}i
+      if params[:mysyg_setting] && params[:mysyg_setting][:file].path =~ %r{\.csv$}i
         result = MysygSetting.import(params[:mysyg_setting][:file], current_user)
 
         flash[:notice] = "MySYG Settings upload complete: #{result[:creates]} details created; #{result[:updates]} updates; #{result[:errors]} errors"

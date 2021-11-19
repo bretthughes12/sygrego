@@ -87,7 +87,7 @@ class Admin::SessionsController < ApplicationController
   
     # POST /admin/sessions/import
     def import
-      if params[:session][:file].path =~ %r{\.csv$}i
+      if params[:session] && params[:session][:file].path =~ %r{\.csv$}i
         result = Session.import(params[:session][:file], current_user)
 
         flash[:notice] = "Sessions upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"

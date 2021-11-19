@@ -100,7 +100,7 @@ class Admin::ParticipantsController < ApplicationController
   
     # POST /admin/participants/import
     def import
-      if params[:participant][:file].path =~ %r{\.csv$}i
+      if params[:participant] && params[:participant][:file].path =~ %r{\.csv$}i
         result = Participant.import(params[:participant][:file], current_user)
 
         flash[:notice] = "Participants upload complete: #{result[:creates]} participants created; #{result[:updates]} updates; #{result[:errors]} errors"

@@ -91,7 +91,7 @@ class Admin::SectionsController < ApplicationController
   
     # POST /admin/sections/import
     def import
-      if params[:section][:file].path =~ %r{\.csv$}i
+      if params[:section] && params[:section][:file].path =~ %r{\.csv$}i
         result = Section.import(params[:section][:file], current_user)
 
         flash[:notice] = "Sections upload complete: #{result[:creates]} sections created; #{result[:updates]} updates; #{result[:errors]} errors"
