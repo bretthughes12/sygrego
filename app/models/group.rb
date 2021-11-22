@@ -53,6 +53,7 @@ class Group < ApplicationRecord
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
     has_one :mysyg_setting, dependent: :destroy
+    has_one :rego_checklist, dependent: :destroy
 
     scope :stale, -> { where(status: 'Stale') }
     scope :not_stale, -> { where("status != 'Stale'") }
@@ -111,6 +112,7 @@ class Group < ApplicationRecord
     before_save :uppercase_abbr!
     after_save :create_event_details!
     after_save :create_mysyg_setting!
+    after_save :create_rego_checklist!
 
     def <=>(other)
         name <=> other.name
@@ -222,6 +224,14 @@ class Group < ApplicationRecord
         MysygSetting.create(
           group_id:            self.id,
           mysyg_name:          self.short_name.downcase
+        )
+      end
+    end
+
+    def create_rego_checklist!
+      unless self.rego_checklist
+        RegoChecklist.create(
+          group_id:            self.id
         )
       end
     end

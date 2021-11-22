@@ -1,0 +1,12 @@
+<% title "Registration for: #{@rego_checklist.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @rego_checklist %>
+
+<%= link_to "Back", admin_rego_checklists_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_rego_checklist_path(@rego_checklist),
+                  class: primary_button_class,
+                  role: "button" %>

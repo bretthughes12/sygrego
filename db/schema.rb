@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_11_090530) do
+ActiveRecord::Schema.define(version: 2021_11_22_095654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -247,6 +247,24 @@ ActiveRecord::Schema.define(version: 2021_11_11_090530) do
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
   end
 
+  create_table "rego_checklists", force: :cascade do |t|
+    t.boolean "registered", default: false
+    t.string "rego_rep", limit: 40
+    t.string "rego_mobile", limit: 30
+    t.string "admin_rep", limit: 40
+    t.string "second_rep", limit: 40
+    t.string "second_mobile", limit: 30
+    t.boolean "disabled_participants", default: false
+    t.text "disabled_notes"
+    t.boolean "driver_form", default: false
+    t.text "finance_notes"
+    t.text "sport_notes"
+    t.bigint "group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_rego_checklists_on_group_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name", limit: 20
     t.boolean "group_related", default: false
@@ -403,6 +421,7 @@ ActiveRecord::Schema.define(version: 2021_11_11_090530) do
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"
   add_foreign_key "participants", "groups"
+  add_foreign_key "rego_checklists", "groups"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"
   add_foreign_key "sections", "grades"

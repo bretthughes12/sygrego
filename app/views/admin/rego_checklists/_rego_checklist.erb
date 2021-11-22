@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= group_display_class(rego_checklist.group) %>">
+	<td> 
+		<%= h(rego_checklist.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to rego_checklist.group.short_name, edit_admin_rego_checklist_path(rego_checklist) %>
+	</td>
+	
+	<td> 
+		<%= rego_checklist.registered ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= rego_checklist.rego_mobile %>
+	</td>
+</tr>

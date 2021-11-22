@@ -1,0 +1,16 @@
+<% title "Registration Checklist for #{@rego_checklist.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_rego_checklist_path(@rego_checklist), 
+                              method: :put } %>
+
+<br/>
+
+<%= link_to "Back", admin_rego_checklists_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_rego_checklist_path(@rego_checklist),
+                  class: primary_button_class,
+                  role: "button" %>

@@ -112,6 +112,11 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :rego_checklists, only: [:index, :show, :edit, :update] do
+      collection do
+        get :search
+      end
+    end
 
     resources :participants do
       collection do
