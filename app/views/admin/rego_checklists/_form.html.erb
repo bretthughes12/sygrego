@@ -13,37 +13,174 @@
 	<%= f.input :finance_notes, :label => "Notes about finances" %>
 
 	<h2>Camping</h2>
-	<li class="stringish input optional"><label>Safety</label><span class="info">Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved.</span></li>
-	<li class="stringish input optional"><label>Evacuations</label><span class="info">Have you read the Emergency Procedures manual (SYG Emergency Plan)?</span></li>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Evacuation</strong>
+			</td>
+			<td> 
+				Have you read the Emergency Procedures manual (SYG Emergency Plan)?
+			</td>
+		</tr>
+	</table>
 
 	<h2>Emergency</h2>
+	<table class="table table-dark table-striped">
 	<% if @rego_checklist.group.event_detail.onsite %>
-		<li class="stringish input optional"><label>In case of emergency</label><span class="info">In the event of an emergency please return back to your camp site and wait for further instruction from SYG wardens wearing red SYG jackets or red vests.</span></li>
+		<tr>
+			<td> 
+				<strong>In case of emergency</strong>
+			</td>
+			<td> 
+				In the event of an emergency please return back to your camp site and wait for further instruction from SYG wardens wearing red SYG jackets or red vests.
+			</td>
+		</tr>
 	<% else %>
-		<li class="stringish input optional"><label>In case of emergency</label><span class="info">In the event of an emergency please gather in front of the Admin office and wait for further instruction from SYG wardens wearing red SYG jackets or red vests.</span></li>
+		<tr>
+			<td> 
+				<strong>In case of emergency</strong>
+			</td>
+			<td> 
+				In the event of an emergency please gather in front of the Admin office and wait for further instruction from SYG wardens wearing red SYG jackets or red vests.
+			</td>
+		</tr>
 	<% end %>
-	<li class="stringish input optional"><label>Accidents</label><span class="info">If an accident/incident occurs please contact 000 and inform SYG admin. Please advise emergency services to enter Lardner Park via Gate 4 and send a representative of your group to Gate 4 to meet them and guide them to your site.</span></li>
+		<tr>
+			<td> 
+				<strong>Accidents</strong>
+			</td>
+			<td> 
+				If an accident/incident occurs please contact 000 and inform SYG admin. Please advise emergency services to enter Lardner Park via Gate 4 and send a representative of your group to Gate 4 to meet them and guide them to your site.
+			</td>
+		</tr>
+	</table> 
 	<%= f.input :disabled_participants, :label => "Do you have any participants with special needs that would be unable to easily participate in an emergency evacuation? You will need to allocate a person to be with them." %>
 	<%= f.input :disabled_notes, :label => "Notes about disabled participants" %>
 
 	<h2>Driving</h2>
 	<%= f.input :driver_form, :label => "Driver Nomination Form?" %>
-	<li class="stringish input optional"><label>Parking</label><span class="info">Car permits for the number of cars you registered with your group are in the GC pack. These need to be handed to your drivers, and displayed by them on their dashboard, or security will direct them to park in the day visitors' car park. Security will be checking the parking passes of all cars entering Lardner Park on Saturday and Sunday.</span></li>
-	<li class="stringish input optional"><label>Driving Safely</label><span class="info">Please inform your team they must drive at 5km or under around the site</span></li>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Parking</strong>
+			</td>
+			<td> 
+				Car permits for the number of cars you registered with your group are in the GC pack. These need to be handed to your drivers, and displayed by them on their dashboard, or security will direct them to park in the day visitors' car park. Security will be checking the parking passes of all cars entering Lardner Park on Saturday and Sunday.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Driving Safely</strong>
+			</td>
+			<td> 
+				Please inform your team they must drive at 5km or under around the site
+			</td>
+		</tr>
+	</table>
 
 	<h2>Good Sports and Spirit Awards</h2>
-	<li class="stringish input optional"><label>Awards</label><span class="info">Make sure groups are aware of the awards.</span></li>
-	<li class="stringish input optional"><label>Spirit if the Games</label><span class="info">The Spirit award is given to a group that consistently demonstrates the SYG values of fairness, inclusion, welcome, and Gospel-centred love for all as demonstrated through action.</span></li>
-	<li class="stringish input optional"><label>Good Sports Award</label><span class="info">The Mark Hughes award is given to an individual who demonstrates the SYG values as described above.</span></li>
-	<li class="stringish input optional"><label>Volunteers Award</label><span class="info">The Graham Ball Award highlights the contributions of volunteers, helpers, and teams in making their own communities and the SYG community great.</span></li>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Awards</strong>
+			</td>
+			<td> 
+				Make sure groups are aware of the awards.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Spirit of the Games</strong>
+			</td>
+			<td> 
+				The Spirit award is given to a group that consistently demonstrates the SYG values of fairness, inclusion, welcome, and Gospel-centred love for all as demonstrated through action.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Good Sports Award</strong>
+			</td>
+			<td> 
+				The Mark Hughes award is given to an individual who demonstrates the SYG values as described above.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Volunteers Award</strong>
+			</td>
+			<td> 
+				The Graham Ball Award highlights the contributions of volunteers, helpers, and teams in making their own communities and the SYG community great.
+			</td>
+		</tr>
+	</table>
 
 	<h2>Wrist Bands</h2>
-	<li class="stringish input optional"><label>Wrist Bands</label><span class="info">All registrants are required to wear their wristbands while not participating in sports - They must have their wristbands with them at SYG. Replacements are available here at the office if needed.</span></li>
-	<li class="stringish input optional"><label>Night Session access?</label><span class="info">Wrist bands are needed for access to the night session.</span></li>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Parking</strong>
+			</td>
+			<td> 
+				Car permits for the number of cars you registered with your group are in the GC pack. These need to be handed to your drivers, and displayed by them on their dashboard, or security will direct them to park in the day visitors' car park. Security will be checking the parking passes of all cars entering Lardner Park on Saturday and Sunday.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Driving Safely</strong>
+			</td>
+			<td> 
+				Please inform your team they must drive at 5km or under around the site
+			</td>
+		</tr>
+	</table>
+
+	<h2>Good Sports and Spirit Awards</h2>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Wrist Bands</strong>
+			</td>
+			<td> 
+				All registrants are required to wear their wristbands while not participating in sports - They must have their wristbands with them at SYG. Replacements are available here at the office if needed.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Night Session access?</strong>
+			</td>
+			<td> 
+				Wrist bands are needed for access to the night session.
+			</td>
+		</tr>
+	</table>
 
 	<h2>Village</h2>
-	<li class="stringish input optional"><label>Massages</label><span class="info">Massages are available here at the office 9.00pm - 11.00pm both Sat and Sun, 15 min for $10.</span></li>
-	<li class="stringish input optional"><label>Meet & Greet</label><span class="info">Group Coordinators / pastors meeting in the Exhibition Building on Saturday at 10pm</span></li>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Massages</strong>
+			</td>
+			<td> 
+				Massages are available here at the office 9.00pm - 11.00pm both Sat and Sun, 15 min for $10.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Meet and Greet</strong>
+			</td>
+			<td> 
+				Group Coordinators / pastors meeting in the Exhibition Building on Saturday at 10pm
+			</td>
+		</tr>
+	</table>
 
 	<br />
 
