@@ -17,26 +17,26 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should search event details" do
+  test "should search mysyg settings" do
     get search_admin_mysyg_settings_url
 
     assert_response :success
   end
 
-  test "should download event detail data" do
+  test "should download mysyg settings data" do
     get admin_mysyg_settings_url(format: :csv)
 
     assert_response :success
     assert_match %r{text\/csv}, @response.content_type
   end
 
-  test "should show mysyg_setting" do
+  test "should show mysyg setting" do
     get admin_mysyg_setting_url(@mysyg_setting)
 
     assert_response :success
   end
 
-  test "should not show non existent mysyg_setting" do
+  test "should not show non existent mysyg setting" do
     assert_raise(ActiveRecord::RecordNotFound) {
       get admin_mysyg_setting_url(12345678)
     }
@@ -48,7 +48,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update event detail" do
+  test "should update mysyg settings" do
     patch admin_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { approve_option: "Strict" } }
 
     assert_redirected_to admin_mysyg_settings_path
@@ -60,7 +60,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Strict", @mysyg_setting.approve_option
   end
 
-  test "should not update event detail with errors" do
+  test "should not update mysyg settings with errors" do
     patch admin_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { approve_option: "a" } }
 
     assert_response :success
@@ -76,7 +76,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should import event details" do
+  test "should import mysyg settings" do
     group = FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('mysyg_setting.csv','application/csv')
 
@@ -88,7 +88,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import mysyg_settings when the file is not csv" do
+  test "should not import mysyg settings when the file is not csv" do
     group = FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('not_csv.txt','application/text')
 
