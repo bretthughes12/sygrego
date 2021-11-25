@@ -1,0 +1,54 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :first_name %>
+	<%= f.input :surname %>
+	<%= f.input :coming %>
+	<%= f.input :onsite %>
+	<%= f.input :spectator %>
+	<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
+	<%= f.hint "must also be a spectator" if can_display_helper_flag %>
+	<%= f.input :group_coord, label: "Group Coordinator" if can_display_group_coord_flag %>
+	<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
+
+	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
+	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
+	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
+	<%= f.input :days, as: :select, collection: Participant::DAYS, :hint => "number of nights for campers, days for day-visitors", include_blank: false %>
+	<%= f.input :wwcc_number, label: "WWCC Number" %>
+
+  	<%= f.input :amount_paid %>
+
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number, label: "Home phone number"  %>
+	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want this participant to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
+	<%= f.input :email, hint: "enter an email address if you would like this participant to receive automatic updates and exciting news from the SYG team, like the launch of new sports, entertainment personalities confirmed, prize giveaways throughout the year and much more!" %>
+
+	<br/>
+
+	<h2>Driver Info</h2>
+
+   	<%= f.input :driver, label: "Nominated Driver"  %>
+   	<%= f.input :number_plate, label: "Number Plate", hint: "drivers only"%>
+   	<%= f.input :driver_signature, label: "Driver Electronic Signature" %>
+   	<%= f.input :driver_signature_date, as: :date, label: "Date Signed", include_blank: true %>
+
+	<br/>
+
+	<h2>Medical</h2>
+
+	<%= f.input :medicare_number %>
+	<%= f.input :medical_info, label: "Medical information" %>
+	<%= f.input :medications %>
+	<%= f.input :dietary_requirements %>
+	<%= f.input :emergency_contact %>
+	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
+	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

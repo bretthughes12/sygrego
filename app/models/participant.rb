@@ -287,6 +287,93 @@ class Participant < ApplicationRecord
       { creates: creates, updates: updates, errors: errors, error_list: error_list }
   end
   
+  def self.import_gc(file, group, user)
+    creates = 0
+    updates = 0
+    errors = 0
+    error_list = []
+
+    CSV.foreach(file.path, headers: true) do |fields|
+        participant = Participant.where(first_name: fields[0], surname: fields[1], group_id: group.id).first
+        
+        if participant
+            participant.coming                  = fields[2]
+            participant.age                     = fields[3].to_i
+            participant.gender                  = fields[4]
+            participant.days                    = fields[5].to_i
+            participant.address                 = fields[6]
+            participant.suburb                  = fields[7]
+            participant.postcode                = fields[8].to_i
+            participant.phone_number            = fields[9]
+            participant.mobile_phone_number     = fields[10]
+            participant.email                   = fields[11]
+            participant.medicare_number         = fields[12]
+            participant.medical_info            = fields[13]
+            participant.medications             = fields[14]
+            participant.years_attended          = fields[15].to_i
+            participant.spectator               = fields[16]
+            participant.onsite                  = fields[17]
+            participant.helper                  = fields[18]
+            participant.group_coord             = fields[19]
+            participant.driver                  = fields[20]
+            participant.number_plate            = fields[21]
+            participant.dietary_requirements    = fields[22]
+            participant.emergency_contact       = fields[23]
+            participant.emergency_relationship  = fields[24]
+            participant.emergency_phone_number  = fields[25]
+            participant.wwcc_number             = fields[26]
+            participant.updated_by = user.id
+
+            if participant.save
+                updates += 1
+            else
+                errors += 1
+                error_list << participant
+            end
+        else
+            participant = Participant.create(
+               group_id:                group.id,
+               first_name:              fields[0],
+               surname:                 fields[1],
+               coming:                  fields[2],
+               age:                     fields[3].to_i,
+               gender:                  fields[4],
+               days:                    fields[5].to_i,
+               address:                 fields[6],
+               suburb:                  fields[7],
+               postcode:                fields[8].to_i,
+               phone_number:            fields[9],
+               mobile_phone_number:     fields[10],
+               email:                   fields[11],
+               medicare_number:         fields[12],
+               medical_info:            fields[13],
+               medications:             fields[14],
+               years_attended:          fields[15].to_i,
+               spectator:               fields[16],
+               onsite:                  fields[17],
+               helper:                  fields[18],
+               group_coord:             fields[19],
+               driver:                  fields[20],
+               number_plate:            fields[21],
+               dietary_requirements:    fields[22],
+               emergency_contact:       fields[23],
+               emergency_relationship:  fields[24],
+               emergency_phone_number:  fields[25],
+               wwcc_number:             fields[26],
+               updated_by:              user.id)
+
+            if participant.errors.empty?
+                creates += 1
+            else
+                errors += 1
+                error_list << participant
+            end
+        end
+    end
+
+    { creates: creates, updates: updates, errors: errors, error_list: error_list }
+end
+
 private
 
     def validate_eligibility_for_team_helper

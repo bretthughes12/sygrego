@@ -193,6 +193,13 @@ Rails.application.routes.draw do
       end
     end
     resources :mysyg_settings, only: [:edit, :update]
+    resources :participants do
+      collection do
+        get :new_import
+        post :import
+        get :search
+      end
+    end
   end
 end
 

@@ -1,0 +1,21 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+		<%= link_to participant.surname, edit_gc_participant_path(participant) %>
+	</td>
+
+	<td> 
+        <%= link_to participant.first_name, edit_gc_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.coming ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= participant.onsite ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= participant.days %>
+	</td>
+</tr>
