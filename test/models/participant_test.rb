@@ -152,6 +152,72 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_not_equal "X", participant.gender
   end
 
+  test "should import GC participants from file" do
+    group = FactoryBot.create(:group)
+    file = fixture_file_upload('participant_gc.csv','application/csv')
+    
+    assert_difference('Participant.count') do
+      @result = Participant.import_gc(file, group, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting GC participants from file" do
+    group = FactoryBot.create(:group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      first_name: "Amos",
+      surname: "Burton")
+    file = fixture_file_upload('participant_gc.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import_gc(file, group, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    participant.reload
+    assert_equal 35, participant.age
+  end
+
+  test "should not import GC participants with errors from file" do
+    group = FactoryBot.create(:group)
+    file = fixture_file_upload('invalid_participant_gc.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import_gc(file, group, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update GC participants with errors from file" do
+    group = FactoryBot.create(:group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      first_name: "Amos",
+      surname: "Burton")
+    file = fixture_file_upload('invalid_participant_gc.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import_gc(file, group, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    participant.reload
+    assert_not_equal "X", participant.gender
+  end
+
   def test_should_normalize_phone_number
     #local number
     assert_equal "(0#{APP_CONFIG[:state_area_code]}) 9555-1122", Participant.normalize_phone_number("95551122")
