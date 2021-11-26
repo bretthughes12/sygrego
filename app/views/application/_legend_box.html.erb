@@ -1,0 +1,12 @@
+<% content_for :legend do -%>
+	<div id="legend">
+		<table class="table table-dark table-sm">
+		    <thead><tr><th><%= label %></th></tr></thead>
+			<% entries.each do |entry| -%>
+				<tr class="<%= entry[:class] %>">
+					<td><%= entry[:name] %></td>
+				</tr>
+			<% end -%>
+		</table>
+	</div>
+<% end -%>

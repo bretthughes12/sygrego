@@ -17,6 +17,11 @@ module ApplicationHelper
                :locals => {:path => path, :label => label}    
     end
    
+    def legend_box(entries, label="Legend")
+        render :partial => '/application/legend_box', 
+               :locals => {:entries => entries, :label => label}    
+    end
+    
     def should_display_contact_form
         !@settings.group_registrations_closed
     end
