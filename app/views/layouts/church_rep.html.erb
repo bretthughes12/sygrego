@@ -17,6 +17,9 @@
                 <p>
                     <div class="caption">A sport and art event like no other</div>
                     <%= image_tag("syg.png", size: "300x200", alt: 'State Youth Games', class: 'logo') %>
+                    <br/>
+                    <br/>
+                    <%= yield(:legend) if content_for?(:legend) %>
                 </p>
 
             </div>

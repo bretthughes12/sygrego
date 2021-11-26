@@ -19,7 +19,7 @@
                     <%= image_tag("syg.png", size: "300x200", alt: 'State Youth Games', class: 'logo') %>
                     <br/>
                     <br/>
-                    <%= content_for?(:legend) ? yield(:legend) : yield %>
+                    <%= yield(:legend) if content_for?(:legend) %>
                 </p>
             </div>
         </div>

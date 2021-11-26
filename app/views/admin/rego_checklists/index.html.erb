@@ -7,7 +7,7 @@
 
 <br/>
 
-<table class="table table-dark table-striped">
+<table class="table table-dark">
   <thead>
     <tr>
       <th>Abbr</th>
@@ -23,3 +23,6 @@
 <%= link_to "Download", admin_rego_checklists_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
+
+<%= legend_box [{:name => "Registered", :class => "table-primary"},
+					{:name => "Not Registered", :class => "table-dark"}] %>

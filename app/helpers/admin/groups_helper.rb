@@ -10,6 +10,26 @@ module Admin::GroupsHelper
       end
     end
  
+    def mysyg_settings_display_class(ms)
+      case
+      when ms.mysyg_open
+        "table-primary"
+      when ms.mysyg_enabled
+        "table-warning"
+      else
+        "table-dark"
+      end
+    end
+ 
+    def rego_display_class(rc)
+      case
+      when rc.registered
+        "table-primary"
+      else
+        "table-dark"
+      end
+    end
+ 
     def group_short_name_hint(group)
         "Warning: changing this field will change your custom registration link"
     end

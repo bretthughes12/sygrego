@@ -1,6 +1,13 @@
 module Admin::ParticipantsHelper
     def participant_display_class(participant)
-    
+        case
+        when participant.coming && participant.spectator
+            "table-warning"
+        when participant.coming
+            "table-primary"
+        else
+            "table-dark"
+        end
     end
 
     def can_display_onsite_flag
