@@ -26,4 +26,19 @@ module Admin::ParticipantsHelper
 #        @current_user.role?(:admin) || @participant.group_coord || (group.participants.coming.accepted.group_coords.size < group.coordinators_allowed)
     end
     
+    def name_with_group_name(participant)
+        if participant.group.nil?
+          participant.name
+        else
+          participant.name + ' (' + participant.group.short_name + ')'
+        end
+    end
+
+    def name_with_captaincy_suffix(participant, captain)
+        if participant == captain
+            participant.name + ' (c)'
+        else
+            participant.name
+        end
+    end
 end

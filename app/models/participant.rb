@@ -64,6 +64,7 @@ class Participant < ApplicationRecord
     include Searchable
 
     require 'csv'
+    require 'pp'
 
     belongs_to :group
 #    has_many   :officials
@@ -159,9 +160,9 @@ class Participant < ApplicationRecord
     validates :emergency_phone_number, 
         length: { maximum: 20 }
 
-#    before_validation :validate_eligibility_for_team_helper
-#    before_validation :validate_eligibility_for_group_coordinator
-#    before_validation :validate_years_attended
+    before_validation :validate_eligibility_for_team_helper
+    before_validation :validate_eligibility_for_group_coordinator
+    before_validation :validate_years_attended
 #    before_validation :validate_participant_limits_on_create, on: :create
 #    before_validation :validate_participant_limits_on_update, on: :update
 
@@ -181,10 +182,133 @@ class Participant < ApplicationRecord
     SEX = %w[M F].freeze
     DAYS = [3, 2, 1].freeze
   
+    def self.finances
+      h = {}
+      Participant.coming.accepted.each do |participant|
+        cat = participant.category
+        a = h[cat] || Array.new(2, 0)
+        a[0] += 1
+        a[1] += participant.fee
+        h[cat] = a
+      end
+      h.sort
+    end
+  
+    def self.total_fees
+      coming.accepted.to_a.sum(&:fee)
+    end
+  
+    def camper?
+      onsite
+    end
+  
     def name
         first_name + ' ' + surname
     end
     
+    def fee
+      return fee_when_withdrawn if withdrawn
+      settings = Setting.first
+  
+      base_fee = settings.full_fee
+      # special 2019 hack due to spectator fee and early bird fee not 
+      # being a multiple of 5
+      base_fee -= 30 if spectator
+      base_fee = 50 if spectator && days == 1
+  
+      # check for conditions requiring no charge
+      return 0 unless coming
+      return 0 if status == 'Requiring Approval'
+      return 0 if age && (age < 6)
+      return 0 if guest
+      return 0 if !onsite && helper
+  
+      # other set-price conditions
+      return 15 if !onsite && spectator && days == 1 && age && age >= 14
+      return 30 if !onsite && spectator && age && age >= 14
+  
+      # subtract the early bird discount if appropriate
+      base_fee -= settings.early_bird_discount if early_bird_applies?
+  
+      # check for other fee modifiers
+      fee = base_fee
+      fee *= settings.day_visitor_adjustment unless onsite
+      # special 2019 hack due to spectator fee and early bird fee not 
+      # being a multiple of 5
+      # fee *= settings.spectator_adjustment if spectator
+      fee *= settings.primary_age_adjustment if age && (age < 14) && spectator
+  
+      gc_fee = group_coord ? fee * settings.coordinator_adjustment : fee
+#      sc_fee = sport_coord ? fee - sport_coord_discount : fee
+      helper_fee = helper ? fee * settings.helper_adjustment : fee
+  
+      fee = [gc_fee, sc_fee, helper_fee].min
+  
+      # calculate the daily fee, and apply if staying for fewer than 3 days
+      if spectator 
+        daily_fee = base_fee
+      else
+        daily_fee = Participant.round_up_to_5(fee * settings.daily_adjustment)
+      end
+      total_fee = [Participant.round_up_to_5(fee), daily_fee * days, base_fee].min
+  
+      total_fee
+    end
+
+    def early_bird_applies?
+      !discount? && !group_coord && early_bird && (days >= 2)
+    end
+    
+    def category
+      if guest && spectator
+        'SYG Guest - Not playing sport'
+      elsif guest && !spectator
+        'SYG Guest - Playing sport'
+      elsif sport_coord && spectator
+        'SYG Sport Coordinator - Not playing sport'
+      elsif sport_coord && !spectator
+        'SYG Sport Coordinator - Playing sport'
+      elsif group_coord && spectator
+        'Group Coordinator - Not playing sport'
+      elsif group_coord && !spectator
+        'Group Coordinator - Playing sport'
+      elsif helper && !onsite
+        'Team Helper - Not staying onsite'
+      elsif helper
+        'Team Helper'
+      elsif !onsite && spectator
+        'Day Visitor'
+      elsif !onsite && spectator && early_bird && days >= 2
+        'Spectator (early bird)'
+      elsif !onsite && spectator
+        'Spectator'
+      elsif !onsite && !spectator && early_bird && days >= 2
+        'Sport Participant (early bird)'
+      elsif !onsite && !spectator
+        'Sport Participant'
+      elsif age && age < 6
+        'Ages 0-5'
+      elsif age && age < 14 && spectator
+        'Child'
+      elsif spectator && early_bird && days >= 2
+        'Spectator (early bird)'
+      elsif spectator
+        'Spectator'
+      elsif early_bird && days >= 2
+        'Sport Participant (early bird)'
+      else
+        'Sport Participant'
+      end
+    end
+  
+    def driver_sign
+      self.driver_signature ? "[electronic]" : ""
+    end
+  
+    def date_driver_signed
+      self.driver_signature_date.nil? ? '' : driver_signature_date.in_time_zone.strftime('%d/%m/%Y')
+    end
+  
     def self.import(file, user)
       creates = 0
       updates = 0
@@ -198,6 +322,7 @@ class Participant < ApplicationRecord
           end
 
           participant = Participant.where(first_name: fields[2], surname: fields[3], group_id: group.id).first
+          years_attended = fields[18].nil? ? nil : fields[18].to_i
           
           if participant
               participant.database_rowid          = fields[0].to_i
@@ -215,7 +340,7 @@ class Participant < ApplicationRecord
               participant.medicare_number         = fields[15]
               participant.medical_info            = fields[16]
               participant.medications             = fields[17]
-              participant.years_attended          = fields[18].to_i
+              participant.years_attended          = years_attended
               participant.spectator               = fields[19]
               participant.onsite                  = fields[20]
               participant.helper                  = fields[21]
@@ -258,7 +383,7 @@ class Participant < ApplicationRecord
                  medicare_number:         fields[15],
                  medical_info:            fields[16],
                  medications:             fields[17],
-                 years_attended:          fields[18].to_i,
+                 years_attended:          years_attended,
                  spectator:               fields[19],
                  onsite:                  fields[20],
                  helper:                  fields[21],
@@ -295,6 +420,7 @@ class Participant < ApplicationRecord
 
     CSV.foreach(file.path, headers: true) do |fields|
         participant = Participant.where(first_name: fields[0], surname: fields[1], group_id: group.id).first
+        years_attended = fields[15].nil? ? nil : fields[15].to_i
         
         if participant
             participant.coming                  = fields[2]
@@ -310,7 +436,7 @@ class Participant < ApplicationRecord
             participant.medicare_number         = fields[12]
             participant.medical_info            = fields[13]
             participant.medications             = fields[14]
-            participant.years_attended          = fields[15].to_i
+            participant.years_attended          = years_attended
             participant.spectator               = fields[16]
             participant.onsite                  = fields[17]
             participant.helper                  = fields[18]
@@ -348,7 +474,7 @@ class Participant < ApplicationRecord
                medicare_number:         fields[12],
                medical_info:            fields[13],
                medications:             fields[14],
-               years_attended:          fields[15].to_i,
+               years_attended:          years_attended,
                spectator:               fields[16],
                onsite:                  fields[17],
                helper:                  fields[18],
@@ -372,7 +498,11 @@ class Participant < ApplicationRecord
     end
 
     { creates: creates, updates: updates, errors: errors, error_list: error_list }
-end
+  end
+
+  def self.round_up_to_5(num)
+    (num.to_f / 5).ceil * 5
+  end
 
 private
 
@@ -387,8 +517,9 @@ private
     end
   
     def validate_years_attended
+      setting = Setting.first
       unless years_attended.nil?
-        max_year = APP_CONFIG[:this_year] - APP_CONFIG[:first_year] + 1
+        max_year = setting.this_year - APP_CONFIG[:first_year] + 1
         errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended >= 1 && years_attended <= max_year
       end
     end

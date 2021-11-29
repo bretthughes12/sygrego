@@ -118,6 +118,38 @@ class Group < ApplicationRecord
         name <=> other.name
     end
     
+    def division
+      players = participants.coming.accepted.playing_sport.size
+      settings = Setting.first
+  
+      if players <= settings.small_division_ceiling
+        'Small Churches'
+      elsif players <= settings.medium_division_ceiling
+        'Medium Churches'
+      else
+        'Large Churches'
+      end
+    end
+  
+    def self.divisions
+      h = {}
+      Group.coming.each do |group|
+        div = group.division
+        a = h[div] || 0
+        a += 1
+        h[div] = a
+      end
+      h
+    end
+  
+    def self.group_divisions
+      h = {}
+      Group.coming.each do |group|
+        h[group.id] = group.division
+      end
+      h
+    end
+  
     def self.default_group
         Group.find_by_abbr('DFLT')
     end
@@ -126,11 +158,107 @@ class Group < ApplicationRecord
         2
     end
     
+    def mysyg_status
+      if mysyg_open
+        'Open'
+      elsif mysyg_enabled
+        'Enabled'
+      else
+        'Not enabled'
+      end
+    end
+  
     def reset_allocation_bonus!
         self.allocation_bonus = 0
         save(validate: false)
     end
     
+    def volunteers_required
+      (participants.coming.accepted.playing_sport.count / 10).to_i
+    end
+  
+    # Deposit is based on the expected numbers, not the actual numbers
+    def deposit
+      if admin 
+        0
+      elsif estimated_numbers < 20
+        150
+      elsif estimated_numbers < 40
+        300
+      else
+        600
+      end
+    end
+
+    def fees
+      @fees ||= calculated_fees
+    end
+
+    def calculated_fees
+      fee = calculated_fee_total
+
+      if fee < deposit
+        0
+      else
+        fee - deposit
+      end
+    end
+
+    def fee_total
+      @fee_total ||= calculated_fee_total
+    end
+
+    def calculated_fee_total
+      participants.to_be_charged.to_a.sum(&:fee)
+    end
+
+    def participants_allowed_per_session 
+      [estimated_numbers, participants.size].max * 1.5    
+    end
+  
+    def number_playing_sport
+      @number_playing_sport ||= participants.playing_sport.coming.accepted.size
+    end
+  
+    def can_have_more_gcs?
+      participants.coming.group_coords.size < coordinators_allowed
+    end
+  
+    def helpers_allowed
+      if APP_CONFIG[:helper_scheme] == 'none'
+        0
+      elsif APP_CONFIG[:helper_scheme] == 'set_number_free'
+        4 + (participants.coming.accepted.playing_sport.size >= 40 ?
+         (participants.coming.accepted.playing_sport.size / 20).to_i : 0)
+      else
+        (participants.coming.accepted.size / 5).to_i
+      end
+    end
+  
+    def helpers
+      participants.coming.accepted.helpers
+    end
+  
+    def can_have_more_helpers?
+      participants.coming.accepted.helpers.size < helpers_allowed
+    end
+  
+    def free_helpers
+      if division == 'Small Churches'
+        2
+      elsif division == 'Medium Churches'
+        4
+      else
+        6
+      end
+    end
+  
+    def helper_rebate
+      helper_fees = helpers.collect(&:fee)
+  
+      helper_fees.sort.last(free_helpers).sum
+    end
+  
     def increment_allocation_bonus!
         settings = Setting.first
         self.allocation_bonus += settings.missed_out_sports_allocation_factor
