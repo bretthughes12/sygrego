@@ -66,6 +66,8 @@ class Group < ApplicationRecord
     scope :is_admin, -> { where(admin_use: true) }
     scope :not_admin, -> { where(admin_use: false) }
 
+    delegate :estimated_numbers, to: :event_detail
+
     AGE_DEMOGRAPHIC = ['Early high school, Years 7-9',
                        'Senior high school, Years 10-12',
                        'Young adults, aged 18 to 24',
@@ -173,13 +175,9 @@ class Group < ApplicationRecord
         save(validate: false)
     end
     
-    def volunteers_required
-      (participants.coming.accepted.playing_sport.count / 10).to_i
-    end
-  
     # Deposit is based on the expected numbers, not the actual numbers
     def deposit
-      if admin 
+      if admin_use
         0
       elsif estimated_numbers < 20
         150
@@ -225,14 +223,8 @@ class Group < ApplicationRecord
     end
   
     def helpers_allowed
-      if APP_CONFIG[:helper_scheme] == 'none'
-        0
-      elsif APP_CONFIG[:helper_scheme] == 'set_number_free'
-        4 + (participants.coming.accepted.playing_sport.size >= 40 ?
+      4 + (participants.coming.accepted.playing_sport.size >= 40 ?
          (participants.coming.accepted.playing_sport.size / 20).to_i : 0)
-      else
-        (participants.coming.accepted.size / 5).to_i
-      end
     end
   
     def helpers

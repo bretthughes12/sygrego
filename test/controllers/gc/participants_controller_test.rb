@@ -65,7 +65,7 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Participant.count') do
       post gc_participants_path, params: { 
         participant: FactoryBot.attributes_for(:participant,
-          age: "a") }
+          years_attended: 99) }
     end
 
     assert_response :success

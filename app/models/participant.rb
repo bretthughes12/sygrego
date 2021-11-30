@@ -198,10 +198,6 @@ class Participant < ApplicationRecord
       coming.accepted.to_a.sum(&:fee)
     end
   
-    def camper?
-      onsite
-    end
-  
     def name
         first_name + ' ' + surname
     end
@@ -240,6 +236,7 @@ class Participant < ApplicationRecord
   
       gc_fee = group_coord ? fee * settings.coordinator_adjustment : fee
 #      sc_fee = sport_coord ? fee - sport_coord_discount : fee
+      sc_fee = base_fee
       helper_fee = helper ? fee * settings.helper_adjustment : fee
   
       fee = [gc_fee, sc_fee, helper_fee].min
@@ -256,7 +253,7 @@ class Participant < ApplicationRecord
     end
 
     def early_bird_applies?
-      !discount? && !group_coord && early_bird && (days >= 2)
+      !group_coord && early_bird && (days >= 2)
     end
     
     def category
@@ -278,10 +275,6 @@ class Participant < ApplicationRecord
         'Team Helper'
       elsif !onsite && spectator
         'Day Visitor'
-      elsif !onsite && spectator && early_bird && days >= 2
-        'Spectator (early bird)'
-      elsif !onsite && spectator
-        'Spectator'
       elsif !onsite && !spectator && early_bird && days >= 2
         'Sport Participant (early bird)'
       elsif !onsite && !spectator

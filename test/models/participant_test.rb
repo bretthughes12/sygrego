@@ -70,6 +70,95 @@ class ParticipantTest < ActiveSupport::TestCase
     @participant = FactoryBot.create(:participant)
   end
 
+  test "should display driver fields" do
+    assert_equal '', @participant.driver_sign
+    assert_equal '', @participant.date_driver_signed
+
+    @participant.driver_signature = true
+    @participant.driver_signature_date = '1/2/2020'
+
+    assert_equal '[electronic]', @participant.driver_sign
+    assert_equal '01/02/2020', @participant.date_driver_signed
+  end
+
+  def test_participant_fee_values
+    full_participant = FactoryBot.create(:participant)
+    early_participant = FactoryBot.create(:participant, early_bird: true)
+    eleven_year_old_playing_sport = FactoryBot.create(:participant, age: 11)
+    spectator = FactoryBot.create(:participant, spectator: true)
+    primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, age: 5)
+    day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, days: 2)
+    early_day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, days: 2, early_bird: true)
+    day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, days: 1)
+    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, days: 1, early_bird: true)
+    group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
+    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group_coord: true, spectator: true)
+    sport_coordinator_playing_sport = FactoryBot.create(:participant, sport_coord: true)
+    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, sport_coord: true, spectator: true)
+    guest_playing_sport = FactoryBot.create(:participant, guest: true)
+    guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
+
+    assert_equal @setting.full_fee, full_participant.fee
+    assert_equal @setting.full_fee, eleven_year_old_playing_sport.fee
+    assert_equal 75, early_participant.fee
+    assert_equal 50, spectator.fee
+    assert_equal 20, primary_aged.fee
+    assert_equal 0, pre_schooler.fee
+    assert_equal 25, day_visitor_playing_sport.fee
+    assert_equal 25, early_day_visitor_playing_sport.fee
+    assert_equal 30, day_visitor_not_playing_sport.fee
+    assert_equal 30, early_day_visitor_not_playing_sport.fee
+    assert_equal 60, group_coordinator_playing_sport.fee
+    assert_equal 40, group_coordinator_not_playing_sport.fee
+    assert_equal 80, sport_coordinator_playing_sport.fee
+    assert_equal 50, sport_coordinator_not_playing_sport.fee
+    assert_equal 0, guest_playing_sport.fee
+    assert_equal 0, guest_not_playing_sport.fee
+  end
+
+  def test_participant_category_values
+    full_participant = FactoryBot.create(:participant)
+    early_participant = FactoryBot.create(:participant, early_bird: true)
+    spectator = FactoryBot.create(:participant, spectator: true)
+    early_spectator = FactoryBot.create(:participant, spectator: true, early_bird: true)
+    primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, age: 5)
+    day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false)
+    day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false)
+    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, early_bird: true)
+    group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
+    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group_coord: true, spectator: true)
+    sport_coordinator_playing_sport = FactoryBot.create(:participant, sport_coord: true)
+    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, sport_coord: true, spectator: true)
+    guest_playing_sport = FactoryBot.create(:participant, guest: true)
+    guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
+    10.times do
+      FactoryBot.create(:participant, group: full_participant.group)      
+    end
+    full_participant.group.reload
+    team_helper = FactoryBot.create(:participant, spectator: true, helper: true, group: full_participant.group)
+    offsite_team_helper = FactoryBot.create(:participant, spectator: true, helper: true, onsite: false, group: full_participant.group)
+
+    assert_equal "Child", primary_aged.category
+    assert_equal "Sport Participant", full_participant.category
+    assert_equal "Sport Participant (early bird)", early_participant.category
+    assert_equal "SYG Sport Coordinator - Not playing sport", sport_coordinator_not_playing_sport.category
+    assert_equal "Spectator", spectator.category
+    assert_equal "Spectator (early bird)", early_spectator.category
+    assert_equal "Ages 0-5", pre_schooler.category
+    assert_equal "Sport Participant", day_visitor_playing_sport.category
+    assert_equal "Sport Participant (early bird)", early_day_visitor_playing_sport.category
+    assert_equal "Day Visitor", day_visitor_not_playing_sport.category
+    assert_equal "Group Coordinator - Playing sport", group_coordinator_playing_sport.category
+    assert_equal "Group Coordinator - Not playing sport", group_coordinator_not_playing_sport.category
+    assert_equal "SYG Sport Coordinator - Playing sport", sport_coordinator_playing_sport.category
+    assert_equal "SYG Guest - Playing sport", guest_playing_sport.category
+    assert_equal "SYG Guest - Not playing sport", guest_not_playing_sport.category
+    assert_equal "Team Helper", team_helper.category
+    assert_equal "Team Helper - Not staying onsite", offsite_team_helper.category
+  end
+
   test "should import participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('participant.csv','application/csv')

@@ -57,6 +57,79 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal -1, @group <=> other_group
   end
 
+  def test_group_deposit
+    # group expects fewer than 20 (small group)
+    group = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 19, 
+      group: group)
+    assert_equal 150, group.deposit
+
+    # group expects no one coming
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 0, 
+      group: group)
+    assert_equal 150, group.deposit
+    
+    # medium group 
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group)
+    assert_equal 300, group.deposit
+    
+    # medium group (upper boundary)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 39, 
+      group: group)
+    assert_equal 300, group.deposit
+    
+    # large
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 40, 
+      group: group)
+    assert_equal 600, group.deposit
+    
+    # admin
+    group.admin_use = true
+    assert_equal 0, group.deposit
+  end
+
+#  def test_group_fees
+    #group has people registered
+#    group_with_people = FactoryBot.create(:group)
+#    5.times do
+#      FactoryBot.create(:participant, 
+#                     group: group_with_people, 
+#                     coming: true)
+#    end
+#    group_with_people = Group.find(group_with_people.id)
+
+#    assert group_with_people.fees > @setting.full_fee
+    
+    #group has one participant, who is not coming
+#    group_with_noone_coming = FactoryBot.create(:group)
+#    FactoryBot.create(:participant, 
+#                   group: group_with_noone_coming, 
+#                   coming: false)
+#    group_with_noone_coming = Group.find(group_with_noone_coming.id)
+
+#    assert_equal 0, group_with_noone_coming.fees
+    
+    #group has one normal camper
+#    group_with_one_coming = FactoryBot.create(:group)
+#    FactoryBot.create(:participant, 
+#                   group: group_with_one_coming, 
+#                   coming: true)
+#    group_with_one_coming = Group.find(group_with_one_coming.id)
+
+#    assert_equal 0, group_with_one_coming.fees
+    
+    #group with no participants
+#    group_with_no_participants = FactoryBot.create(:group)
+
+#    assert_equal 0, group_with_no_participants.fees
+#  end
+
   test "should allow 2 group coordinators" do
     #at present this is always '2'
     assert_equal 2, @group.coordinators_allowed

@@ -21,4 +21,20 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     @participant.coming = false
     assert_equal "table-dark", participant_display_class(@participant)
   end
+
+  test "should include group name with name" do
+    name = @participant.name + ' (' + @participant.group.short_name + ')'
+    assert_equal name, name_with_group_name(@participant)
+
+    @participant.group = nil
+    assert_equal @participant.name, name_with_group_name(@participant)
+  end
+
+  test "should include captain with name" do
+    name = @participant.name + ' (c)'
+    assert_equal name, name_with_captaincy_suffix(@participant, @participant)
+
+    not_captain = FactoryBot.create(:participant)
+    assert_equal @participant.name, name_with_captaincy_suffix(@participant, not_captain)
+  end
 end
