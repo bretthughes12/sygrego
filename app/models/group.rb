@@ -161,9 +161,9 @@ class Group < ApplicationRecord
     end
     
     def mysyg_status
-      if mysyg_open
+      if mysyg_setting.mysyg_open
         'Open'
-      elsif mysyg_enabled
+      elsif mysyg_setting.mysyg_enabled
         'Enabled'
       else
         'Not enabled'
@@ -202,10 +202,6 @@ class Group < ApplicationRecord
       end
     end
 
-    def fee_total
-      @fee_total ||= calculated_fee_total
-    end
-
     def calculated_fee_total
       participants.to_be_charged.to_a.sum(&:fee)
     end
@@ -218,10 +214,6 @@ class Group < ApplicationRecord
       @number_playing_sport ||= participants.playing_sport.coming.accepted.size
     end
   
-    def can_have_more_gcs?
-      participants.coming.group_coords.size < coordinators_allowed
-    end
-  
     def helpers_allowed
       4 + (participants.coming.accepted.playing_sport.size >= 40 ?
          (participants.coming.accepted.playing_sport.size / 20).to_i : 0)
@@ -229,10 +221,6 @@ class Group < ApplicationRecord
   
     def helpers
       participants.coming.accepted.helpers
-    end
-  
-    def can_have_more_helpers?
-      participants.coming.accepted.helpers.size < helpers_allowed
     end
   
     def free_helpers

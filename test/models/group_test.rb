@@ -94,45 +94,199 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal 0, group.deposit
   end
 
-#  def test_group_fees
+  def test_group_fees
     #group has people registered
-#    group_with_people = FactoryBot.create(:group)
-#    5.times do
-#      FactoryBot.create(:participant, 
-#                     group: group_with_people, 
-#                     coming: true)
-#    end
-#    group_with_people = Group.find(group_with_people.id)
+    group = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group)
+    5.times do
+      FactoryBot.create(:participant, 
+                     group: group, 
+                     coming: true)
+    end
+    group.reload
 
-#    assert group_with_people.fees > @setting.full_fee
+    assert group.fees > @setting.full_fee
     
     #group has one participant, who is not coming
-#    group_with_noone_coming = FactoryBot.create(:group)
-#    FactoryBot.create(:participant, 
-#                   group: group_with_noone_coming, 
-#                   coming: false)
-#    group_with_noone_coming = Group.find(group_with_noone_coming.id)
+    group_with_noone_coming = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group_with_noone_coming)
+    FactoryBot.create(:participant, 
+                   group: group_with_noone_coming, 
+                   coming: false)
+    group_with_noone_coming.reload
 
-#    assert_equal 0, group_with_noone_coming.fees
+    assert_equal 0, group_with_noone_coming.fees
     
     #group has one normal camper
-#    group_with_one_coming = FactoryBot.create(:group)
-#    FactoryBot.create(:participant, 
-#                   group: group_with_one_coming, 
-#                   coming: true)
-#    group_with_one_coming = Group.find(group_with_one_coming.id)
+    group_with_one_coming = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group_with_one_coming)
+    FactoryBot.create(:participant, 
+                   group: group_with_one_coming, 
+                   coming: true)
+    group_with_one_coming.reload
 
-#    assert_equal 0, group_with_one_coming.fees
+    assert_equal 0, group_with_one_coming.fees
     
     #group with no participants
-#    group_with_no_participants = FactoryBot.create(:group)
+    group_with_no_participants = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group_with_no_participants)
 
-#    assert_equal 0, group_with_no_participants.fees
-#  end
+    assert_equal 0, group_with_no_participants.fees
+  end
 
   test "should allow 2 group coordinators" do
     #at present this is always '2'
     assert_equal 2, @group.coordinators_allowed
+  end
+
+  def test_division_boundaries
+    #Small church
+    small_church = FactoryBot.create(:group)
+    @setting.small_division_ceiling.times do
+      FactoryBot.create(:participant, 
+                     group: small_church, 
+                     coming: true, 
+                     spectator: false)  
+    end
+    small_church.reload
+
+    assert_equal "Small Churches", small_church.division
+    assert_equal 2, small_church.free_helpers
+
+    #Medium church
+    medium_church_low = FactoryBot.create(:group)
+    (@setting.small_division_ceiling + 1).times do
+      FactoryBot.create(:participant, 
+                     group_id: medium_church_low.id, 
+                     coming: true, 
+                     spectator: false)  
+    end
+    medium_church_low.reload
+
+    medium_church_high = FactoryBot.create(:group)
+    @setting.medium_division_ceiling.times do
+      FactoryBot.create(:participant, 
+                     group: medium_church_high, 
+                     coming: true, 
+                     spectator: false)  
+    end
+    medium_church_high.reload
+
+    assert_equal "Medium Churches", medium_church_low.division
+    assert_equal "Medium Churches", medium_church_high.division
+    assert_equal 4, medium_church_low.free_helpers
+    
+    #Large church
+    large_church = FactoryBot.create(:group)
+    (@setting.medium_division_ceiling + 1).times do
+      FactoryBot.create(:participant, 
+                     group: large_church, 
+                     coming: true, 
+                     spectator: false)  
+    end
+    large_church.reload
+
+    assert_equal "Large Churches", large_church.division
+    assert_equal 6, large_church.free_helpers
+  end
+  
+  test "divisions should list all groups" do
+    FactoryBot.create(:group)
+    divisions = Group.divisions
+
+    assert divisions["Small Churches"] > 0
+  end
+  
+  test "group divisions should include all groups" do
+    group = FactoryBot.create(:group)
+    divisions = Group.group_divisions
+
+    assert_equal "Small Churches", divisions[group.id]
+  end
+
+  test "should show mysyg status" do
+    ms = FactoryBot.create(:mysyg_setting, mysyg_open: true)
+    assert_equal 'Open', ms.group.mysyg_status
+
+    ms.mysyg_open = false
+    ms.mysyg_enabled = true
+    assert_equal 'Enabled', ms.group.mysyg_status
+
+    ms.mysyg_enabled = false
+    assert_equal 'Not enabled', ms.group.mysyg_status
+  end
+
+  test "should determine participants allowed per session" do
+    # based on estimated numbers
+    ed = FactoryBot.create(:event_detail, estimated_numbers: 10)
+    assert_equal 15, ed.group.participants_allowed_per_session
+
+    # based on actual numbers
+    12.times do
+      FactoryBot.create(:participant, group: ed.group)
+    end
+    ed.group.reload
+    assert_equal 18, ed.group.participants_allowed_per_session
+  end
+
+  test "should calculate the number playing sport" do
+    group = FactoryBot.create(:group)
+    12.times do
+      FactoryBot.create(:participant, 
+        group: group,
+        spectator: false,
+        status: 'Accepted',
+        coming: true)
+    end
+    group.reload
+    assert_equal 12, group.number_playing_sport
+  end
+
+  test "should determine helpers allowed" do
+    # basic number
+    group = FactoryBot.create(:group)
+    assert_equal 4, group.helpers_allowed
+
+    # larger groups
+    40.times do
+      FactoryBot.create(:participant, 
+        group: group,
+        spectator: false,
+        status: 'Accepted',
+        coming: true)
+    end
+    group.reload
+    assert_equal 6, group.helpers_allowed
+  end
+
+  test "should calculate the helper rebate" do
+    group = FactoryBot.create(:group)
+    80.times do
+      FactoryBot.create(:participant, 
+        group: group,
+        spectator: false,
+        status: 'Accepted',
+        coming: true)
+    end
+    8.times do
+      FactoryBot.create(:participant, 
+        group: group,
+        spectator: true,
+        helper: true,
+        status: 'Accepted',
+        coming: true)
+    end
+
+    group.reload
+    assert_equal 180, group.helper_rebate
   end
 
   test "should assign short name" do
