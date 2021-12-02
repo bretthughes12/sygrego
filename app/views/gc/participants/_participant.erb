@@ -8,14 +8,14 @@
 	</td>
 	
 	<td> 
-		<%= participant.coming ? "Yes" : "No" %>
-	</td>
-	
-	<td> 
-		<%= participant.onsite ? "Yes" : "No" %>
+		<%= participant.category %>
 	</td>
 	
 	<td> 
 		<%= participant.days %>
+	</td>
+	
+	<td align="right"> 
+		<%= number_to_currency(participant.fee) %>
 	</td>
 </tr>
