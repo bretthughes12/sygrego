@@ -39,6 +39,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :reports, :controller => "reports" do
+      collection do
+        get :finance_summary
+      end
+    end
+
     resources :settings, only: [:show, :edit, :update] do
       member do
         get :edit_event

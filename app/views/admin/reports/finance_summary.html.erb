@@ -1,0 +1,53 @@
+<% title "Finance Summary" %>
+
+<div id="finance-summary">
+	<h1><%= yield(:title) %></h1>
+
+	<% unless @finances.empty? %>
+	<table class="table table-dark table-striped">
+        <thead>
+            <tr>
+    	       <th align="left">Registration Type</th>
+    	       <th>Number</th>
+    	       <th>Total Fees</th>
+            </tr>
+        </thead>
+
+        <% @total_participants = 0 %>
+        <% @total_fees = 0 %>
+	    
+	    <% @finances.each do |name, values| %>
+	      <% @total_participants += values[0] %>
+	      <% @total_fees += values[1] %>
+	      
+	      <tr valign="top">
+
+	        <td>
+	            <%= h(name) %>
+	        </td>
+	
+	        <td align = "center">
+	            <%= h(values[0]) %>
+	        </td>
+	
+	        <td align = "right">
+	            <%= number_to_currency(values[1]) %>
+	        </td>
+	
+	      </tr>
+	    <% end %>
+	    <tr>
+	        <td class="list-title">Totals</td>
+            <td class="list-title" align="center">
+                <%= @total_participants %>
+            </td>
+
+	        <td class="list-title" align="right">
+	            <%= number_to_currency(@total_fees) %>
+	        </td>
+		</tr>
+	  </table>
+	<% end %>
+</div>    
+
+<br />
