@@ -13,7 +13,11 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <h2>Dashboard</h2>
 
-<strong>Groups attending:</strong> <%= @total_groups %>
+<%= render :partial => 'application/pie_chart', 
+	:locals => { :chart_data => @groups_data,
+				 :chart_element => "groups",
+			     :chart_class => "chart",
+				 :title => "Groups (#{@total_groups})" } %>
 
 <%= render :partial => 'application/pie_chart', 
     :locals => { :chart_data => @participants_data,
