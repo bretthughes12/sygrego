@@ -1,5 +1,7 @@
 <% title "Admin Home" %>
 
+<%= raw Seer::init_visualization -%>
+
 <h1><%= yield(:title) %></h1>
 
 Welcome! <br />
@@ -13,31 +15,8 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <strong>Groups attending:</strong> <%= @total_groups %>
 
-<div id="participants" class="chart col-lg-2"></div>
-
-<%= raw Seer::visualize(
-    @participants_data, 
-    :as => :pie_chart,
-    :in_element => "participants",
-    :series => {
-      :series_label => 'title',
-      :data_method => 'data'
-    },
-    :chart_options => { 
-      :height => 200,
-      :width => 260,
-      :axis_font_size => 11,
-      :title_font_size => 15,
-      :title_color => 000000,
-      :title => "Participants (#{@total_participants})",
-      :point_size => 5,
-      :is_3_d => true,
-      :colors => "[{color:'#07915D', darker:'#07915D'}, 
-				   {color:'#10518B', darker:'#10518B'}, 
-				   {color:'#54BE09', darker:'#54BE09'}, 
-				   {color:'#D74A0A', darker:'#D74A0A'}]",
-	  :legend => 'label',
-	  :legend_text_color => 222222
-    }
-   )
--%>
+<%= render :partial => 'application/pie_chart', 
+    :locals => { :chart_data => @participants_data,
+                :chart_element => "participants",
+                :chart_class => "chart",
+                :title => "Participants (#{@total_participants})" } %>
