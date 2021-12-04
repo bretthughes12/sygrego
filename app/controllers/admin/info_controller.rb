@@ -6,6 +6,12 @@ class Admin::InfoController < ApplicationController
     # GET /admin/info/home
     def home
         @total_groups = Group.coming.count
+        @total_participants = Participant.accepted.coming.count
+
+        @participants_data = []
+        @participants_data << ChartData.new("Spectators", Participant.coming.accepted.spectators.count)
+        @participants_data << ChartData.new("Playing", Participant.coming.accepted.playing_sport.count)
+        @participants_data << ChartData.new("Not Approved", Participant.coming.requiring_approval.count)
     end
 
     # GET /admin/info/tech_stats

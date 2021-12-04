@@ -1,24 +1,9 @@
-<% title "Admin Home" %>
-
-<h1><%= yield(:title) %></h1>
-
-Welcome! <br />
-<br />
-
-It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
-
-<br/><br/>
-
-<h2>Dashboard</h2>
-
-<strong>Groups attending:</strong> <%= @total_groups %>
-
-<div id="participants" class="chart col-lg-2"></div>
+<div id="<%= chart_element %>" class="chart col-lg-2"></div>
 
 <%= raw Seer::visualize(
-    @participants_data, 
+    chart_data, 
     :as => :pie_chart,
-    :in_element => "participants",
+    :in_element => chart_element,
     :series => {
       :series_label => 'title',
       :data_method => 'data'
@@ -29,7 +14,7 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
       :axis_font_size => 11,
       :title_font_size => 15,
       :title_color => 000000,
-      :title => "Participants (#{@total_participants})",
+      :title => title,
       :point_size => 5,
       :is_3_d => true,
       :colors => "[{color:'#07915D', darker:'#07915D'}, 
