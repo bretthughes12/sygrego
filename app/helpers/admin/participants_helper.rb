@@ -39,4 +39,12 @@ module Admin::ParticipantsHelper
             participant.name
         end
     end
+
+    def participant_status_class(participant)
+        if participant.status == "Accepted"
+            "badge bg-success"
+        else
+            "badge bg-danger"
+        end
+    end
 end

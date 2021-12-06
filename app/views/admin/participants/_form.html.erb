@@ -4,7 +4,7 @@
 	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
-	<li><label>Status</label><span class="info"><%= @participant.status %></span></li>
+	<div><label class="string">Status</label> <span class="<%= participant_status_class(@participant) %>"><%= @participant.status %></span></div>
 	<%= f.input :coming %>
 	<%= f.input :onsite %>
 	<%= f.input :spectator %>
