@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     resource :reports, :controller => "reports" do
       collection do
         get :finance_summary
+        get :service_preferences
       end
     end
 

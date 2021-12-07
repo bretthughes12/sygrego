@@ -1,0 +1,105 @@
+<% title "Evening Service Preferences" %>
+
+<h1><%= yield(:title) %></h1>
+    
+<div id="basic-list">
+	<h2>Saturday</h2>
+
+	<h3>Early Session</h3>
+	
+	<% unless @sat_early.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sat_early.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>Late Session</h3>
+	
+	<% unless @sat_late.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sat_late.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>No Preference</h3>
+	
+	<% unless @sat_no_pref.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sat_no_pref.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h2>Sunday</h2>
+
+	<h3>Early Session</h3>
+	
+	<% unless @sun_early.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sun_early.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>Late Session</h3>
+	
+	<% unless @sun_late.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sun_late.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>No Preference</h3>
+	
+	<% unless @sun_no_pref.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @sun_no_pref.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+</div>    
