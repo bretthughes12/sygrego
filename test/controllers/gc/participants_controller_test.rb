@@ -6,8 +6,10 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :gc)
+    @church_rep = FactoryBot.create(:user, :church_rep)
     @group = FactoryBot.create(:group)
     @user.groups << @group
+    @church_rep.groups << @group
     @participant = FactoryBot.create(:participant, group: @group)
     
     sign_in @user
@@ -33,6 +35,15 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show participant" do
+    get gc_participant_url(@participant)
+
+    assert_response :success
+  end
+
+  test "should show participant for church rep user" do
+    sign_out @user
+    sign_in @church_rep
+
     get gc_participant_url(@participant)
 
     assert_response :success

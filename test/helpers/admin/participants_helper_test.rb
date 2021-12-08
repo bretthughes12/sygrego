@@ -22,6 +22,13 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     assert_equal "table-dark", participant_display_class(@participant)
   end
 
+  test "participant acceptance display classes" do
+    assert_equal "badge bg-success", participant_status_class(@participant)
+
+    @participant.status = "Requiring Approval"
+    assert_equal "badge bg-danger", participant_status_class(@participant)
+  end
+
   test "should include group name with name" do
     name = @participant.name + ' (' + @participant.group.short_name + ')'
     assert_equal name, name_with_group_name(@participant)
