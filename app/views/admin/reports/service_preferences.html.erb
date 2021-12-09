@@ -103,3 +103,7 @@
 		<p>No groups have nominated for this session</p>
 	<% end %>
 </div>    
+
+<%= link_to "Download", service_preferences_admin_reports_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
