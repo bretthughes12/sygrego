@@ -46,12 +46,6 @@ class EventDetail < ApplicationRecord
     scope :onsite, -> { where(onsite: true) }
     scope :offsite, -> { where(onsite: false) }
     scope :buddy_interest, -> { where("not (buddy_interest = 'Not interested')") }
-    scope :sat_early_service, -> { where(service_pref_sat: '7:00pm') }
-    scope :sat_late_service, -> { where(service_pref_sat: '8:30pm') }
-    scope :sat_no_pref_service, -> { where(service_pref_sat: 'No preference') }
-    scope :sun_early_service, -> { where(service_pref_sun: '7:00pm') }
-    scope :sun_late_service, -> { where(service_pref_sun: '8:30pm') }
-    scope :sun_no_pref_service, -> { where(service_pref_sun: 'No preference') }
     
     SERVICE_PREFERENCES = ['7:00pm',
         '8:30pm',
@@ -80,6 +74,54 @@ class EventDetail < ApplicationRecord
                                     numericality: { only_integer: true }
     validates :number_of_vehicles,  presence: true,
                                     numericality: { only_integer: true }
+
+    def self.sat_early_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sat == '7:00pm'
+        end
+        groups
+    end
+
+    def self.sat_late_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sat == '8:30pm'
+        end
+        groups
+    end
+
+    def self.sat_no_pref_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sat == 'No preference'
+        end
+        groups
+    end
+
+    def self.sun_early_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sun == '7:00pm'
+        end
+        groups
+    end
+
+    def self.sun_late_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sun == '8:30pm'
+        end
+        groups
+    end
+
+    def self.sun_no_pref_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sun == 'No preference'
+        end
+        groups
+    end
 
     def self.import(file, user)
         creates = 0

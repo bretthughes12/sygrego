@@ -10,12 +10,12 @@ class Admin::ReportsController < ApplicationController
 
     # GET /admin/reports/service_preferences
     def service_preferences
-        @sat_early = EventDetail.sat_early_service.collect(&:group).sort
-        @sat_late = EventDetail.sat_late_service.collect(&:group).sort
-        @sat_no_pref = EventDetail.sat_no_pref_service.collect(&:group).sort
-        @sun_early = EventDetail.sun_early_service.collect(&:group).sort
-        @sun_late = EventDetail.sun_late_service.collect(&:group).sort
-        @sun_no_pref = EventDetail.sun_no_pref_service.collect(&:group).sort
+        @sat_early = EventDetail.sat_early_service.sort
+        @sat_late = EventDetail.sat_late_service.sort
+        @sat_no_pref = EventDetail.sat_no_pref_service.sort
+        @sun_early = EventDetail.sun_early_service.sort
+        @sun_late = EventDetail.sun_late_service.sort
+        @sun_no_pref = EventDetail.sun_no_pref_service.sort
 
         respond_to do |format|
             format.html { render layout: 'admin' }
