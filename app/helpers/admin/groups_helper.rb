@@ -1,4 +1,13 @@
 module Admin::GroupsHelper
+    def group_submission_class(group)
+      case
+      when group.status == "Submitted"
+        "table-warning"
+      else
+        "table-primary"
+      end
+    end
+ 
     def group_display_class(group)
       case
       when group.coming && group.event_detail.onsite

@@ -160,6 +160,38 @@ class Group < ApplicationRecord
         2
     end
     
+    def church_rep
+      @church_rep ||= users.church_reps.not_stale.first
+    end
+
+    def church_rep_name
+      church_rep.nil? ? '' : church_rep.fullname
+    end
+
+    def church_rep_phone_number
+      church_rep.nil? ? '' : church_rep.phone_number
+    end
+
+    def church_rep_wwcc
+      church_rep.nil? ? '' : church_rep.wwcc_number
+    end
+
+    def gc
+      @gc ||= users.gcs.not_stale.primary.first
+    end
+
+    def gc_name
+      gc.nil? ? '' : gc.fullname
+    end
+
+    def gc_phone_number
+      gc.nil? ? '' : gc.phone_number
+    end
+
+    def gc_wwcc
+      gc.nil? ? '' : gc.wwcc_number
+    end
+
     def mysyg_status
       if mysyg_setting.mysyg_open
         'Open'

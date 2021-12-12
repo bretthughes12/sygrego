@@ -16,6 +16,16 @@ class Admin::GroupsController < ApplicationController
       end
     end
 
+    # GET /admin/groups/approvals
+    def approvals
+      @groups = Group.not_stale.order(:abbr).load
+  
+      respond_to do |format|
+        format.html # approvals.html.erb
+        format.csv  { render_csv "submissions", "submissions" }
+      end
+    end
+
     # GET /admin/groups/search
     def search
       @groups = Group.search(params[:search]).order("abbr")

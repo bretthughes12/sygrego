@@ -100,6 +100,7 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+        get :approvals
       end
     end
     resources :event_details, only: [:index, :show, :edit, :update] do
