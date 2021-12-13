@@ -6,14 +6,28 @@
     </td>
 
     <td align="left">
+    	<% if group.church_rep.nil? %>
+	        <%= group.church_rep_name %>
+	    <% else %>
+	        <%= link_to h(group.church_rep_name), 
+	             edit_admin_user_path(id: group.church_rep.id) -%>
+	    <% end %>
     </td>
 
     <td align="center">
+        <%= group.church_rep_phone_number %>
     </td>
 
     <td align="left">
+    	<% if group.gc.nil? %>
+	        <%= group.gc_name %>
+	    <% else %>
+	        <%= link_to h(group.gc_name), 
+	             edit_admin_user_path(id: group.gc.id) -%>
+	    <% end %>
     </td>
 
     <td align="center">
+        <%= group.gc_phone_number %>
     </td>
 </tr>

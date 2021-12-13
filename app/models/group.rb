@@ -160,12 +160,20 @@ class Group < ApplicationRecord
         2
     end
     
+    def church_reps
+      church_reps = []
+      users.each do |u|
+        church_reps << u if u.role?(:church_rep)
+      end
+      church_reps
+    end
+
     def church_rep
-      @church_rep ||= users.church_reps.not_stale.first
+      @church_rep ||= church_reps.first
     end
 
     def church_rep_name
-      church_rep.nil? ? '' : church_rep.fullname
+      church_rep.nil? ? '' : church_rep.name
     end
 
     def church_rep_phone_number
@@ -176,12 +184,20 @@ class Group < ApplicationRecord
       church_rep.nil? ? '' : church_rep.wwcc_number
     end
 
+    def gcs
+      gcs = []
+      users.each do |u|
+        gcs << u if u.role?(:gc)
+      end
+      gcs
+    end
+
     def gc
-      @gc ||= users.gcs.not_stale.primary.first
+      @gc ||= gcs.first
     end
 
     def gc_name
-      gc.nil? ? '' : gc.fullname
+      gc.nil? ? '' : gc.name
     end
 
     def gc_phone_number
