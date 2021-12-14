@@ -27,6 +27,13 @@ class Admin::GroupsHelperTest < ActionView::TestCase
     assert_equal "table-dark", group_display_class(@group)
   end
   
+  test "group submission display classes" do
+    assert_equal "table-primary", group_submission_class(@group)
+
+    @group.status = "Submitted"
+    assert_equal "table-warning", group_submission_class(@group)
+  end
+  
   test "group mysyg settings display classes" do
     mysyg_setting = FactoryBot.create(:mysyg_setting, mysyg_enabled: true, mysyg_open: true)
     assert_equal "table-primary", mysyg_settings_display_class(mysyg_setting)

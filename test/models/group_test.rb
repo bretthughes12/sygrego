@@ -289,6 +289,46 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal 180, group.helper_rebate
   end
 
+  test "should aggregate church reps" do
+    cr_role = FactoryBot.create(:role, "church_rep")
+    cr1 = FactoryBot.create(:user)
+    cr2 = FactoryBot.create(:user)
+    cr1.roles << cr_role
+    cr2.roles << cr_role
+    gc = FactoryBot.create(:user, :gc)
+    @group.users << cr1
+    @group.users << cr2
+    @group.users << gc
+
+    assert @group.church_reps.include?(cr1)
+    assert @group.church_reps.include?(cr2)
+    assert !@group.church_reps.include?(gc)
+    assert_equal cr1, @group.church_rep
+    assert_equal cr1.name, @group.church_rep_name
+    assert_equal cr1.phone_number, @group.church_rep_phone_number
+    assert_equal cr1.wwcc_number, @group.church_rep_wwcc
+  end
+
+  test "should aggregate gcs" do
+    gc_role = FactoryBot.create(:role, "gc")
+    cr = FactoryBot.create(:user, :church_rep)
+    gc1 = FactoryBot.create(:user)
+    gc2 = FactoryBot.create(:user)
+    gc1.roles << gc_role
+    gc2.roles << gc_role
+    @group.users << cr
+    @group.users << gc1
+    @group.users << gc2
+
+    assert @group.gcs.include?(gc1)
+    assert @group.gcs.include?(gc2)
+    assert !@group.gcs.include?(cr)
+    assert_equal gc1, @group.gc
+    assert_equal gc1.name, @group.gc_name
+    assert_equal gc1.phone_number, @group.gc_phone_number
+    assert_equal gc1.wwcc_number, @group.gc_wwcc
+  end
+
   test "should assign short name" do
     FactoryBot.create(:group, short_name: "Aaaargh")
     

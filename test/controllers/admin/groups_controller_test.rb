@@ -17,6 +17,12 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get group approvals" do
+    get approvals_admin_groups_url
+
+    assert_response :success
+  end
+
   test "should search groups" do
     get search_admin_groups_url
 

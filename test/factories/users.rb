@@ -35,6 +35,8 @@ FactoryBot.define do
     sequence(:name)       { |n| "Peter Piper #{n}" }
     password              {"secret"}
     password_confirmation {"secret"}
+    sequence(:phone_number) { |n| "555-#{n}"}
+    sequence(:wwcc_number) { |n| "222222#{n}"}
 
     trait :admin do
       roles               { [association(:role, :admin)] }
