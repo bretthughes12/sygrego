@@ -102,6 +102,9 @@ Rails.application.routes.draw do
         get :search
         get :approvals
       end
+      member do
+        patch :approve
+      end
     end
     resources :event_details, only: [:index, :show, :edit, :update] do
       member do

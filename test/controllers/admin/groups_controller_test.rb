@@ -101,6 +101,18 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "a", @group.abbr
   end
 
+  test "should approve group" do
+    patch approve_admin_group_url(@group)
+
+    assert_redirected_to approvals_admin_groups_path
+    assert_match /approved/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @group.reload
+
+    assert_equal "Approved", @group.status
+  end
+
   test "should get new import" do
     get new_import_admin_groups_url
 

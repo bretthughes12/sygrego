@@ -79,6 +79,15 @@ class Admin::GroupsController < ApplicationController
       end
     end
   
+    # PUT /admin/groups/1/approve
+    def approve
+      @group.updated_by = current_user.id
+      @group.status = "Approved"
+      @group.save
+      flash[:notice] = 'Group approved'
+      redirect_to approvals_admin_groups_url
+    end
+  
     # DELETE /admin/groups/1
     def destroy
         @group.updated_by = current_user.id
