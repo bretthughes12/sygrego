@@ -272,11 +272,10 @@ class GroupSignup
         @church_rep.send("#{model_name}=", send(name))
       end
   
-#      @church_rep.status = 'Not Verified'
+      @church_rep.status = 'Not Verified'
 #      @church_rep.stale = false
 #      @church_rep.active = true
       @church_rep.password = @church_rep.password_confirmation = User.random_password
-#      @church_rep.reset_password = true
       @church_rep.groups << @group unless @church_rep.groups.include?(@group)
     end
   
@@ -285,7 +284,7 @@ class GroupSignup
         @gc.send("#{model_name}=", send(name))
       end
   
-#      @gc.status = 'Nominated'
+      @gc.status = 'Nominated'
 #      @gc.stale = false
 #      @gc.active = true
       @gc.password = @gc.password_confirmation = User.random_password

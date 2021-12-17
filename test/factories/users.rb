@@ -18,6 +18,7 @@
 #  remember_created_at      :datetime
 #  reset_password_sent_at   :datetime
 #  reset_password_token     :string
+#  status                   :string(12)       default("Not Verified")
 #  suburb                   :string(40)
 #  years_as_gc              :integer          default(0)
 #  created_at               :datetime         not null
@@ -33,10 +34,11 @@ FactoryBot.define do
   factory :user do
     sequence(:email)      { |n| "peter#{n}@piper.com" }
     sequence(:name)       { |n| "Peter Piper #{n}" }
-    password              {"secret"}
-    password_confirmation {"secret"}
+    password              { "secret" }
+    password_confirmation { "secret" }
     sequence(:phone_number) { |n| "555-#{n}"}
     sequence(:wwcc_number) { |n| "222222#{n}"}
+    status                { "Verified" }
 
     trait :admin do
       roles               { [association(:role, :admin)] }

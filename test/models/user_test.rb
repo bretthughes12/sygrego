@@ -18,6 +18,7 @@
 #  remember_created_at      :datetime
 #  reset_password_sent_at   :datetime
 #  reset_password_token     :string
+#  status                   :string(12)       default("Not Verified")
 #  suburb                   :string(40)
 #  years_as_gc              :integer          default(0)
 #  created_at               :datetime         not null

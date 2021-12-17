@@ -18,6 +18,7 @@
 #  remember_created_at      :datetime
 #  reset_password_sent_at   :datetime
 #  reset_password_token     :string
+#  status                   :string(12)       default("Not Verified")
 #  suburb                   :string(40)
 #  years_as_gc              :integer          default(0)
 #  created_at               :datetime         not null
@@ -41,13 +42,22 @@ class User < ApplicationRecord
   has_and_belongs_to_many :groups
 
   scope :primary, -> { where(primary_gc: true) }
+  scope :stale, -> { where(status: "Stale") }
+  scope :not_stale, -> { where("status != 'Stale'") }
 
   attr_encrypted :wwcc_number, key: 'b8fb31b1c77b81b307615296b7f5ccec'
+
+  STATUS = ['Stale',
+    'Verified',
+    'Not Verified',
+    'Nominated'].freeze
 
   validates :email,         presence: true,
                             uniqueness: { case_sensitive: false }
   validates :name,          presence: true,
                             length: { maximum: 40 }
+  validates :status,        length: { maximum: 12 },
+                            inclusion: { in: STATUS }
   validates :address,       length: { maximum: 200 }
   validates :suburb,        length: { maximum: 40 }
   validates :postcode,      numericality: { only_integer: true }
