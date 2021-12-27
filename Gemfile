@@ -38,7 +38,6 @@ gem 'exception_handler', '~> 0.8.0.0'
 gem 'cancancan'
 gem 'activemodel-serializers-xml'
 gem 'aws-sdk-s3', require: false
-# gem 'attr_encrypted' # not required after Rails 7
 # gem 'gmaps4rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap-style'
@@ -59,7 +58,8 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  # gem 'annotate' # incompatible with Rails 7
+  # TODO: Once annotate is updated to handle Rails7, remove git, and branch from below 
+  gem 'annotate', git: 'https://github.com/dabit/annotate_models.git', branch: "rails-7"
   gem 'brakeman'
   gem 'foreman'
   gem 'letter_opener'

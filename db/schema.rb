@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_26_233236) do
+ActiveRecord::Schema.define(version: 2021_12_27_221618) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -208,8 +208,6 @@ ActiveRecord::Schema.define(version: 2021_12_26_233236) do
     t.string "suburb", limit: 40
     t.integer "postcode"
     t.string "phone_number", limit: 20
-    t.string "encrypted_medicare_number"
-    t.string "encrypted_medicare_number_iv"
     t.string "medical_info", limit: 255
     t.string "medications", limit: 255
     t.integer "years_attended"
@@ -235,8 +233,6 @@ ActiveRecord::Schema.define(version: 2021_12_26_233236) do
     t.string "emergency_phone_number", limit: 20
     t.decimal "amount_paid", precision: 8, scale: 2, default: "0.0"
     t.string "status", limit: 20, default: "Accepted"
-    t.string "encrypted_wwcc_number"
-    t.string "encrypted_wwcc_number_iv"
     t.boolean "driver_signature", default: false
     t.datetime "driver_signature_date"
     t.bigint "updated_by"
@@ -396,8 +392,6 @@ ActiveRecord::Schema.define(version: 2021_12_26_233236) do
     t.string "gc_reference_phone", limit: 30
     t.integer "years_as_gc", default: 0
     t.boolean "primary_gc", default: false
-    t.string "encrypted_wwcc_number"
-    t.string "encrypted_wwcc_number_iv"
     t.string "status", limit: 12, default: "Not Verified"
     t.string "wwcc_number"
     t.index ["email"], name: "index_users_on_email", unique: true
