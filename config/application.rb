@@ -22,7 +22,8 @@ module Sygrego
     #
     config.time_zone = "Melbourne"
     # config.eager_load_paths << Rails.root.join("extras")
-
+    config.active_support.remove_deprecated_time_with_zone_name = true
+    
     # Devise config
     config.to_prepare do
       # Configure single controller layout
@@ -34,7 +35,7 @@ module Sygrego
       Devise::Mailer.layout "mailer" 
     end
     
-    config.active_job.queue_adapter = :delayed_job
+#    config.active_job.queue_adapter = :delayed_job
 
     # Exception Handler config hash (no initializer required)
     config.exception_handler = {

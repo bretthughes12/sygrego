@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 7.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
@@ -29,14 +29,16 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 # SYG Application gems, not included by default with Rails
-gem 'delayed_job_active_record'
+# TODO: Once delayed_job_active_record is updated to handle Rails7, remove git, and branch from below and remove delayed_job from gemfile
+gem 'delayed_job_active_record', git: "https://github.com/willnet/delayed_job_active_record.git", branch: "rails7"
+gem 'delayed_job', git: "https://github.com/willnet/delayed_job.git", branch: "rails7"
 gem 'simple_form'
 gem 'devise'
 gem 'exception_handler', '~> 0.8.0.0'
 gem 'cancancan'
 gem 'activemodel-serializers-xml'
 gem 'aws-sdk-s3', require: false
-gem 'attr_encrypted'
+# gem 'attr_encrypted' # not required after Rails 7
 # gem 'gmaps4rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap-style'
@@ -57,7 +59,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'annotate'
+  # gem 'annotate' # incompatible with Rails 7
   gem 'brakeman'
   gem 'foreman'
   gem 'letter_opener'

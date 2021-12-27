@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_17_094809) do
+ActiveRecord::Schema.define(version: 2021_12_26_233236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_094809) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
+    t.string "checksum"
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -242,6 +242,8 @@ ActiveRecord::Schema.define(version: 2021_12_17_094809) do
     t.bigint "updated_by"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "wwcc_number"
+    t.string "medicare_number"
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
@@ -397,6 +399,7 @@ ActiveRecord::Schema.define(version: 2021_12_17_094809) do
     t.string "encrypted_wwcc_number"
     t.string "encrypted_wwcc_number_iv"
     t.string "status", limit: 12, default: "Not Verified"
+    t.string "wwcc_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

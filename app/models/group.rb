@@ -284,7 +284,7 @@ class Group < ApplicationRecord
     def helper_rebate
       helper_fees = helpers.collect(&:fee)
   
-      helper_fees.sort.last(free_helpers).sum
+      helper_fees.sort.last(free_helpers).sum(0)
     end
   
     def increment_allocation_bonus!
@@ -412,7 +412,7 @@ class Group < ApplicationRecord
     def self.assign_abbr(name)
       # grab the first character of each word in the name (maximum of 4
       # and minimum of 2)
-      abbr = name.split.collect { |word| word[0, 1] }.sum.to_s.upcase
+      abbr = name.split.collect { |word| word[0, 1] }.sum('').to_s.upcase
       abbr *= 2 until abbr.length > 1
       abbr = abbr[0, 4]
   

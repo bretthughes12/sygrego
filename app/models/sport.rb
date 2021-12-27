@@ -24,6 +24,8 @@ class Sport < ApplicationRecord
     include Comparable
     include Auditable
 
+    require 'csv'
+
     has_many :grades
 #    has_many :officials, as: :coord_rqmt
 #    has_many :downloads

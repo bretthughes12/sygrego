@@ -96,8 +96,9 @@ class Participant < ApplicationRecord
     scope :females, -> { where("gender IN ('F', 'f')") }
     scope :day_visitors, -> { where(spectator: true).where(onsite: false) }
 
-    attr_encrypted :wwcc_number, key: 'b8fb31b1c77b81b307615296b7f5ccec'
-    attr_encrypted :medicare_number, key: 'b8fb31b1c77b81b307615296b7f5ccec'
+#    attr_encrypted :wwcc_number, key: 'b8fb31b1c77b81b307615296b7f5ccec'
+#    attr_encrypted :medicare_number, key: 'b8fb31b1c77b81b307615296b7f5ccec'
+    encrypts :wwcc_number, :medicare_number
 
     validates :first_name,             
         presence: true,
