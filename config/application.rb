@@ -13,7 +13,7 @@ Bundler.require(*Rails.groups)
 module Sygrego
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -22,7 +22,7 @@ module Sygrego
     #
     config.time_zone = "Melbourne"
     # config.eager_load_paths << Rails.root.join("extras")
-    config.active_support.remove_deprecated_time_with_zone_name = true
+    # config.active_support.remove_deprecated_time_with_zone_name = true
     
     # Devise config
     config.to_prepare do
