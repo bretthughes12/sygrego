@@ -84,6 +84,14 @@ class Admin::GroupsController < ApplicationController
       @group.updated_by = current_user.id
       @group.status = "Approved"
       @group.save
+
+      @group.users.not_stale.each do |u|
+        u.status = "Verified"
+        u.save(validate: false)
+        
+        UserMailer.gc_approval(u).deliver_now if u.role?(:gc)
+      end
+
       flash[:notice] = 'Group approved'
       redirect_to approvals_admin_groups_url
     end

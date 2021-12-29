@@ -102,6 +102,9 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should approve group" do
+    gc = FactoryBot.create(:user, :gc, status: "Nominated")
+    gc.groups << @group
+
     patch approve_admin_group_url(@group)
 
     assert_redirected_to approvals_admin_groups_path

@@ -14,7 +14,6 @@ class UserMailerTest < ActionMailer::TestCase
     test "should send a welcome church rep email" do
       group = FactoryBot.create(:group, lock_version: 0)
       church_rep = FactoryBot.create(:user)
-      church_rep.roles.delete(@admin_role)
       church_rep.roles << @church_rep_role
       church_rep.groups << group
   
@@ -30,7 +29,6 @@ class UserMailerTest < ActionMailer::TestCase
     test "should send a gc nomination email" do
       group = FactoryBot.create(:group, lock_version: 0)
       gc = FactoryBot.create(:user)
-      gc.roles.delete(@admin_role)
       gc.roles << @gc_role
       gc.groups << group
       token = gc.get_reset_password_token
@@ -46,6 +44,20 @@ class UserMailerTest < ActionMailer::TestCase
       assert_equal gc.email, email.to[0]
       assert_match /You have been nominated/, email.parts[0].body.to_s
       assert_match /#{gc.email}/, email.parts[0].body.to_s
+      assert_match /#{gc.name}/, email.parts[0].body.to_s
+    end
+    
+    test "should send a gc approval email" do
+      group = FactoryBot.create(:group, lock_version: 0)
+      gc = FactoryBot.create(:user)
+      gc.roles << @gc_role
+      gc.groups << group
+
+      email = UserMailer.gc_approval(gc)
+      
+      assert_match /Welcome Group Coordinator/, email.subject  
+      assert_equal gc.email, email.to[0]
+      assert_match /Your group has now been approved/, email.parts[0].body.to_s
       assert_match /#{gc.name}/, email.parts[0].body.to_s
     end
   end
