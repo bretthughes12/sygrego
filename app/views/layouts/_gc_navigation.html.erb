@@ -4,7 +4,7 @@
         </button> <%= link_to image_tag("syg.png", alt: 'State Youth Games', class: 'logo', width: 60, height: 40), root_path, class: 'navbar-brand' %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
-                <li class='nav-item'><%= link_to 'Dashboard', home_gc_info_path, class: 'nav-link' %></li>
+                <li class='nav-item'><%= link_to 'Dashboard', home_gc_info_url, class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Event Details', edit_gc_event_detail_path(@group.event_detail), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Participants', gc_participants_path, class: 'nav-link' %></li>

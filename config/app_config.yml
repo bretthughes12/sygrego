@@ -39,8 +39,8 @@ site_settings: &site_settings
 #    can_stay_offsite: true
     
 # MySYG
-#    mysyg_default_enabled: true 
-#    mysyg_default_open: false
+    mysyg_default_enabled: true 
+    mysyg_default_open: false
 #    mysyg_default_approve_option: Tolerant
 #    mysyg_default_participant_status: Accepted
 #    allow_mysyg_to_be_closed: true 
