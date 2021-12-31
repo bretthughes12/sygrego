@@ -13,6 +13,16 @@ class Ability
       can :manage, :all
 
     elsif session["current_role"] == "church_rep"
+      if user.status == "Verified"
+        can :update, MysygSetting do |ms|
+          user.groups.include?(ms.group) || user.role?(:admin)
+        end
+        can [:index, :search, :create, :new_import, :import], Participant
+        can [:show, :update, :destroy], Participant do |participant|
+          user.groups.include?(participant.group) || user.role?(:admin)
+        end
+      end
+      
       can [:update, :edit_password, :update_password], User do |u|
         user == u
       end
@@ -21,19 +31,22 @@ class Ability
       end
       can [:update, :purge_file], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
-      end
-      can :update, MysygSetting do |ms|
-        user.groups.include?(ms.group) || user.role?(:admin)
-      end
-      can [:index, :search, :create, :new_import, :import], Participant
-      can [:show, :update, :destroy], Participant do |participant|
-        user.groups.include?(participant.group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
     
     elsif session["current_role"] == "gc"
+      if user.status == "Verified"
+        can :update, MysygSetting do |ms|
+          user.groups.include?(ms.group) || user.role?(:admin)
+        end
+        can [:index, :search, :create, :new_import, :import], Participant
+        can [:show, :update, :destroy], Participant do |participant|
+          user.groups.include?(participant.group) || user.role?(:admin)
+        end
+      end
+      
       can [:update, :edit_password, :update_password], User do |u|
         user == u
       end
@@ -42,13 +55,6 @@ class Ability
       end
       can [:update, :purge_file], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
-      end
-      can :update, MysygSetting do |ms|
-        user.groups.include?(ms.group) || user.role?(:admin)
-      end
-      can [:index, :search, :create, :new_import, :import], Participant
-      can [:show, :update, :destroy], Participant do |participant|
-        user.groups.include?(participant.group) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1

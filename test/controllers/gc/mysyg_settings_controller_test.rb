@@ -18,7 +18,7 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update event details" do
+  test "should update mysyg settings" do
     patch gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { approve_option: "Tolerant" } }
 
     assert_redirected_to home_gc_info_path
@@ -30,7 +30,7 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Tolerant", @mysyg_setting.approve_option
   end
 
-  test "should update event details as church_rep" do
+  test "should update mysyg settings as church_rep" do
     sign_out @user
 
     church_rep_user = FactoryBot.create(:user, :church_rep)
@@ -48,7 +48,7 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Tolerant", @mysyg_setting.approve_option
   end
 
-  test "should not update group with errors" do
+  test "should not update mysyg settings with errors" do
     patch gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { approve_option: "a" } }
 
     assert_response :success

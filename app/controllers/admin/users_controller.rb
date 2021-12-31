@@ -32,6 +32,8 @@ class Admin::UsersController < ApplicationController
   
     # GET /admin/users/new
     def new
+      @user.status = "Verified"
+      
       respond_to do |format|
         format.html # new.html.erb
       end
@@ -124,6 +126,7 @@ class Admin::UsersController < ApplicationController
                                    :password,
                                    :password_confirmation,
                                    :name,
+                                   :status,
                                    :address,
                                    :suburb,
                                    :postcode,

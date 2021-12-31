@@ -6,6 +6,7 @@
 	<%= f.input :password_confirmation %>
 
 	<%= f.input :name %>
+	<%= f.input :status, as: :select, collection: User::STATUS, include_blank: false %>
 	<%= f.input :address %>
 	<%= f.input :suburb %>
 	<%= f.input :postcode %>

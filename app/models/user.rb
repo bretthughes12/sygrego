@@ -55,7 +55,8 @@ class User < ApplicationRecord
                             uniqueness: { case_sensitive: false }
   validates :name,          presence: true,
                             length: { maximum: 40 }
-  validates :status,        length: { maximum: 12 },
+  validates :status,        presence: true,
+                            length: { maximum: 12 },
                             inclusion: { in: STATUS }
   validates :address,       length: { maximum: 200 }
   validates :suburb,        length: { maximum: 40 }
