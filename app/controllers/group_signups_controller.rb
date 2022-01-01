@@ -39,7 +39,7 @@ class GroupSignupsController < ApplicationController
           format.html { redirect_to edit_password_gc_user_path(@church_rep) }
         else
           flash[:notice] = "There was a problem with your signup. Please see the errors below"
-          @groups = Group.order(:name).load
+          @groups = Group.stale.order(:name).load
           format.html { render action: "new" }
         end
       end

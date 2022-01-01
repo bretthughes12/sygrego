@@ -7,6 +7,8 @@ class GroupSignup
     include ActiveModel::Conversion
     extend ActiveModel::Naming
   
+    require 'pp'
+
     attr_accessor :id,
                   :name,
                   :address,
@@ -91,7 +93,8 @@ class GroupSignup
                                        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
                                                  message: 'invalid format' }
     validates :website,                length: { maximum: 100 }
-    validates :denomination,           length: { maximum: 40 }
+    validates :denomination,           presence: true,
+                                       length: { maximum: 40 }
     validates :church_rep_name,        presence: true,
                                        length: { maximum: 40 }
     validates :church_rep_role,        presence: true,
@@ -138,6 +141,7 @@ class GroupSignup
     before_validation :normalize_church_rep_name!
     before_validation :normalize_gc_name!
     before_validation :validate_group_has_not_registered
+    before_validation :validate_different_email_for_church_rep_and_gc
   
     def initialize(attributes = {})
       send_attributes(attributes)
@@ -149,12 +153,14 @@ class GroupSignup
     def save
       if valid?
         update_group
+        @group.status = 'Submitted'
   
         if @group.valid?
           @group.save
         else
+          pp @group.errors
           @group.errors.each do |key, value|
-            errors.add key, value
+            errors.add key.to_s, value
           end
           return false
         end
@@ -165,20 +171,23 @@ class GroupSignup
           @church_rep.save
         else
           error_map = CHURCH_REP_ATTRIBUTES.invert
+          pp @church_rep.errors
           @church_rep.errors.each do |key, value|
-            errors.add error_map[key.to_sym], value
+            errors.add error_map[key.to_s], value
           end
           false
         end
-  
+        @group.status = 'Submitted'
+
         update_gc
   
         if @gc.valid?
           @gc.save
         else
           error_map = GC_ATTRIBUTES.invert
+          pp @gc.errors
           @gc.errors.each do |key, value|
-            errors.add error_map[key.to_sym], value
+            errors.add error_map[key.to_s], value
           end
           false
         end
@@ -211,6 +220,12 @@ class GroupSignup
       end
     end
   
+    def validate_different_email_for_church_rep_and_gc
+      if @gc_email == @church_rep_email
+        errors.add(:gc_name, '/ email cannot be the same as the Church Representative')
+      end
+    end
+
     def find_or_create_group
       group = Group.find(@id) if @id && !@id.zero?
       if group.nil?
