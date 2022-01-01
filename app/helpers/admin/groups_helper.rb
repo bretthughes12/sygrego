@@ -10,12 +10,14 @@ module Admin::GroupsHelper
  
     def group_display_class(group)
       case
+      when group.status == 'Stale'
+        "table-dark"
       when group.coming && group.event_detail.onsite
         "table-primary"
       when group.coming
         "table-warning"
       else
-        "table-dark"
+        "table-secondary"
       end
     end
  

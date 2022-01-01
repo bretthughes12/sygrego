@@ -51,5 +51,6 @@ FactoryBot.define do
     sequence(:email)      { |n| "group#{n}email@email.com" }
     sequence(:website)    { |n| "www.group#{n}.com" }      
     denomination          {"Baptist"}
+    status                {"Approved"}
   end
 end

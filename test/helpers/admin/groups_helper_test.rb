@@ -24,6 +24,9 @@ class Admin::GroupsHelperTest < ActionView::TestCase
     assert_equal "table-warning", group_display_class(@group)
 
     @group.coming = false
+    assert_equal "table-secondary", group_display_class(@group)
+
+    @group.status = 'Stale'
     assert_equal "table-dark", group_display_class(@group)
   end
   

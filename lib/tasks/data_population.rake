@@ -10,7 +10,7 @@ namespace :syg do
       group_count = 0
 
       Group.order(:abbr).load.each do |group|
-        group.status = 'Stale'
+        group.status = 'Stale' unless group.admin_use
         group.last_year = group.coming
         group.coming = false unless group.admin_use
         group.new_group = false
