@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_27_221618) do
+ActiveRecord::Schema.define(version: 2021_12_31_233031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,8 +138,8 @@ ActiveRecord::Schema.define(version: 2021_12_27_221618) do
     t.string "suburb", limit: 40, null: false
     t.integer "postcode", null: false
     t.string "phone_number", limit: 20
-    t.boolean "last_year"
-    t.boolean "admin_use"
+    t.boolean "last_year", default: false
+    t.boolean "admin_use", default: false
     t.decimal "late_fees", precision: 8, scale: 2, default: "0.0"
     t.integer "allocation_bonus", default: 0
     t.string "email", limit: 100

@@ -10,12 +10,12 @@ module Auditable
   private
 
   def log_create
-    ModelAuditJob.perform_later(self, 'CREATE', audit_user_id)
+    ModelAuditJob.perform_now(self, 'CREATE', audit_user_id)
   end
 
   def log_update
     if sync_fields_updated?
-      ModelAuditJob.perform_later(self, 'UPDATE', audit_user_id)
+      ModelAuditJob.perform_now(self, 'UPDATE', audit_user_id)
     end
   end
 

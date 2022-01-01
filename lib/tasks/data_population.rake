@@ -2,20 +2,23 @@ namespace :syg do
     require 'csv'
     require 'pp'
 
-    desc 'Make all groups stale'
-    task make_groups_stale: ['db:migrate'] do |t|
-      puts 'Updating groups - setting to stale...'
+    desc 'Initialise groups for new year'
+    task initialise_groups: ['db:migrate'] do |t|
+      puts 'Initialising groups for new year...'
 
       user = User.first
       group_count = 0
 
-      Group.all.each do |group|
+      Group.order(:abbr).load.each do |group|
         group.status = 'Stale'
+        group.last_year = group.coming
+        group.coming = false unless group.admin_use
+        group.new_group = false
         group.save
         group_count += 1
       end
 
-      puts "Groups updated - #{group_count}"
+      puts "Groups initialised - #{group_count}"
     end
 
     desc 'Create default event details'

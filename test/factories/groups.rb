@@ -5,7 +5,7 @@
 #  id               :bigint           not null, primary key
 #  abbr             :string(4)        not null
 #  address          :string(200)      not null
-#  admin_use        :boolean
+#  admin_use        :boolean          default(FALSE)
 #  age_demographic  :string(40)
 #  allocation_bonus :integer          default(0)
 #  coming           :boolean          default(TRUE)
@@ -13,7 +13,7 @@
 #  denomination     :string(40)       not null
 #  email            :string(100)
 #  group_focus      :string(100)
-#  last_year        :boolean
+#  last_year        :boolean          default(FALSE)
 #  late_fees        :decimal(8, 2)    default(0.0)
 #  lock_version     :integer          default(0)
 #  name             :string(100)      not null
