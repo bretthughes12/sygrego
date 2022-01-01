@@ -12,7 +12,6 @@ class GroupsController < ApplicationController
         @groups = current_user.available_groups
       end
 
-      current_role = Role.find_by_name(session["current_role"])
       render layout: current_role.name
     end
 

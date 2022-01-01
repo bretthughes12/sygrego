@@ -82,6 +82,12 @@ class User < ApplicationRecord
     end
   end
 
+  def church_rep_or_gc_role
+    [:church_rep, :gc].each do |r|
+      return r if role?(r)
+    end
+  end
+
   def default_group
     self.groups.first ? self.groups.first.abbr : ""
   end

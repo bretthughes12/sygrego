@@ -6,7 +6,6 @@ class RolesController < ApplicationController
     
     # GET /admin/roles/available_roles
     def available_roles
-      current_role = Role.find_by_name(session["current_role"])
       @roles = current_user.roles - [current_role]
 
       render layout: current_role.name

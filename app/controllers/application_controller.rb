@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 
     before_action :get_settings
+    before_action :current_role
 
     def get_settings
         @settings ||= Setting.first
@@ -28,6 +29,10 @@ class ApplicationController < ActionController::Base
    
     def current_ability
         @current_ability ||= Ability.new(current_user, session)
+    end
+
+    def current_role 
+        @current_role ||= Role.find_by_name(session["current_role"].to_s)
     end
 
     def home_url(user)
