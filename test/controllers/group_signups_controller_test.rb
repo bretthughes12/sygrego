@@ -67,9 +67,18 @@ class GroupSignupsControllerTest < ActionDispatch::IntegrationTest
     assert_match /There was a problem/, flash[:notice]
   end
 
-  test "should not create a group signup with errors on group" do
-    group = FactoryBot.create(:group)
+  test "should not create a group signup with same church rep and gc" do
+    assert_no_difference('Group.count') do
+        assert_no_difference('User.count') do
+            post group_signups_path, params: { group_signup: FactoryBot.attributes_for(:group_signup, gc_email: "a@abc.com", church_rep_email: "a@abc.com") }
+        end
+    end
 
+    assert_response :success
+    assert_match /There was a problem/, flash[:notice]
+  end
+
+  test "should not create a group signup with errors on group" do
     assert_no_difference('Group.count') do
         assert_no_difference('User.count') do
             post group_signups_path, params: { group_signup: FactoryBot.attributes_for(:group_signup, email: "A") }

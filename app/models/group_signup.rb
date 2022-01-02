@@ -158,7 +158,6 @@ class GroupSignup
         if @group.valid?
           @group.save
         else
-          pp @group.errors
           @group.errors.each do |key, value|
             errors.add key.to_s, value
           end
@@ -171,7 +170,6 @@ class GroupSignup
           @church_rep.save
         else
           error_map = CHURCH_REP_ATTRIBUTES.invert
-          pp @church_rep.errors
           @church_rep.errors.each do |key, value|
             errors.add error_map[key.to_s], value
           end
@@ -185,7 +183,6 @@ class GroupSignup
           @gc.save
         else
           error_map = GC_ATTRIBUTES.invert
-          pp @gc.errors
           @gc.errors.each do |key, value|
             errors.add error_map[key.to_s], value
           end
