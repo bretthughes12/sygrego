@@ -18,7 +18,9 @@ class GroupsController < ApplicationController
     # PATCH /gc/group/1/switch
     def switch
       session["current_group"] = @group.abbr
-      session["current_role"] = "gc"
+      unless session["current_role"] == "church_rep" || session["current_role"] == "gc"
+        session["current_role"] = current_user.church_rep_or_gc_role.to_s
+      end
 
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }

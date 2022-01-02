@@ -15,7 +15,7 @@ class RolesController < ApplicationController
     def switch
       session["current_role"] = @role.name
       if @role.group_related 
-        session["current_group"] = current_user.default_group
+        session["current_group"] = current_user.default_group unless session["current_group"]
       else
         session["current_group"] = nil 
       end
