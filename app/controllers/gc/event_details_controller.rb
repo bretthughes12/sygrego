@@ -7,6 +7,7 @@ class Gc::EventDetailsController < ApplicationController
   
     # GET /gc/event_details/1/edit
     def edit
+      render layout: @current_role.name
     end
   
     # PUT /gc/event_details/1
@@ -18,7 +19,7 @@ class Gc::EventDetailsController < ApplicationController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to home_gc_info_path }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
         end
       end
     end
@@ -30,7 +31,7 @@ class Gc::EventDetailsController < ApplicationController
       @event_detail.food_cert.purge
 
       respond_to do |format|
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
       end
     end
 

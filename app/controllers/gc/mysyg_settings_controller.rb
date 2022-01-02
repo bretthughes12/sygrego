@@ -7,6 +7,7 @@ class Gc::MysygSettingsController < ApplicationController
   
     # GET /gc/mysyg_settings/1/edit
     def edit
+      render layout: @current_role.name
     end
   
     # PUT /gc/mysyg_settings/1
@@ -16,7 +17,7 @@ class Gc::MysygSettingsController < ApplicationController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to home_gc_info_path }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
         end
       end
     end

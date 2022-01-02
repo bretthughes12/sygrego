@@ -11,7 +11,10 @@ class Gc::ParticipantsController < ApplicationController
         order(:surname, :first_name).load
   
       respond_to do |format|
-        format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
+        format.html do
+          @participants = @participants.paginate(page: params[:page], per_page: 100)
+          render layout: @current_role.name
+        end
         format.csv  { render_csv "participant", "participant" }
       end
     end
@@ -24,23 +27,25 @@ class Gc::ParticipantsController < ApplicationController
         paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|
-        format.html { render action: 'index' }
+        format.html { render action: 'index', layout: @current_role.name }
       end
     end
     
     # GET /gc/participants/1
     def show
+      render layout: @current_role.name
     end
   
     # GET /gc/participants/new
     def new
       respond_to do |format|
-        format.html # new.html.erb
+        format.html { render layout: @current_role.name }
       end
     end
   
     # GET /gc/participants/1/edit
     def edit
+      render layout: @current_role.name
     end
   
     # POST /admin/participants
@@ -52,9 +57,9 @@ class Gc::ParticipantsController < ApplicationController
       respond_to do |format|
           if @participant.save
               flash[:notice] = 'Participant was successfully created.'
-              format.html { render action: "edit" }
+              format.html { render action: "edit", layout: @current_role.name }
           else
-              format.html { render action: "new" }
+              format.html { render action: "new", layout: @current_role.name }
           end
       end
     end
@@ -68,7 +73,7 @@ class Gc::ParticipantsController < ApplicationController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to gc_participants_url }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
         end
       end
     end
@@ -87,6 +92,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants/new_import
     def new_import
       @participant = Participant.new
+      render layout: @current_role.name
     end
   
     # POST /gc/participants/import
@@ -104,7 +110,7 @@ class Gc::ParticipantsController < ApplicationController
         @participant = Participant.new
 
         respond_to do |format|
-          format.html { render action: "new_import" }
+          format.html { render action: "new_import", layout: @current_role.name }
         end
       end
     end

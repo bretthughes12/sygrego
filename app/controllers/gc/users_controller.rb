@@ -8,10 +8,12 @@ class Gc::UsersController < ApplicationController
     
     # GET /admin/users/1/edit
     def edit
+      render layout: @current_role.name
     end
   
     # GET /admin/users/1/edit_password
     def edit_password
+      render layout: @current_role.name
     end
   
     # PUT /admin/users/1
@@ -21,7 +23,7 @@ class Gc::UsersController < ApplicationController
           flash[:notice] = 'Profile updated.'
           format.html { redirect_to home_url(current_user) }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
         end
       end
     end
@@ -34,7 +36,7 @@ class Gc::UsersController < ApplicationController
           bypass_sign_in(@user)
           format.html { redirect_to home_url(@user) }
         else
-          format.html { render action: "edit_password" }
+          format.html { render action: "edit_password", layout: @current_role.name }
         end
       end
     end

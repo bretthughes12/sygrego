@@ -7,6 +7,7 @@ class Gc::GroupsController < ApplicationController
   
     # GET /gc/groups/1/edit
     def edit
+      render layout: @current_role.name
     end
   
     # PUT /gc/groups/1
@@ -18,7 +19,7 @@ class Gc::GroupsController < ApplicationController
           flash[:notice] = 'Successfully updated.'
           format.html { redirect_to home_gc_info_path }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit", layout: @current_role.name }
         end
       end
     end
