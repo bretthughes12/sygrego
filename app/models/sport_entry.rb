@@ -209,7 +209,7 @@ end
 #        p.participant.spectator ||
 #        !p.participant.can_play_grade(cached_grade)
 #    end
-  end
+#  end
 
   def reset!
     self.status = 'Requested'
