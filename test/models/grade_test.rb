@@ -73,7 +73,7 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal section.venue.id, grade_with_one_venue.venue_id
   end
 
-  test "should show non-final venue name grade with no sections" do
+  test "should show non-final venue name for grade with no sections" do
     #grade has no sections
     grade_with_no_sections = FactoryBot.create(:grade)
 
@@ -111,6 +111,7 @@ class GradeTest < ActiveSupport::TestCase
     FactoryBot.create(:section, grade: @grade)
     
     assert @grade.possible_sessions.size > 1
+    assert_equal '(not final)', @grade.session_name
   end
   
   test "should have one possible session for same session" do
@@ -121,6 +122,7 @@ class GradeTest < ActiveSupport::TestCase
                                 session: section.session)
 
     assert_equal 1, grade_with_one_session.possible_sessions.size
+    assert_equal section.session_name, grade_with_one_session.session_name
   end
   
   test "should have no possible sessions for grade with no sections" do
@@ -128,6 +130,7 @@ class GradeTest < ActiveSupport::TestCase
     grade_with_no_sections = FactoryBot.create(:grade)
 
     assert_equal 0, grade_with_no_sections.possible_sessions.size
+    assert_equal '(not final)', grade_with_no_sections.session_name
   end
 
   test "should inherit sport name from sport" do

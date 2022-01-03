@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_31_233031) do
+ActiveRecord::Schema.define(version: 2022_01_02_224427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -245,6 +245,11 @@ ActiveRecord::Schema.define(version: 2021_12_31_233031) do
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
   end
 
+  create_table "participants_sport_entries", id: false, force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "sport_entry_id", null: false
+  end
+
   create_table "rego_checklists", force: :cascade do |t|
     t.boolean "registered", default: false
     t.string "rego_rep", limit: 40
@@ -358,6 +363,22 @@ ActiveRecord::Schema.define(version: 2021_12_31_233031) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "sport_entries", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "grade_id", null: false
+    t.bigint "section_id"
+    t.string "status", limit: 20, default: "Requested"
+    t.integer "team_number", default: 1, null: false
+    t.boolean "multiple_teams", default: false
+    t.bigint "captaincy_id"
+    t.integer "chance_of_entry", default: 100
+    t.bigint "updated_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["grade_id"], name: "index_sport_entries_on_grade_id"
+    t.index ["group_id"], name: "index_sport_entries_on_group_id"
+  end
+
   create_table "sports", force: :cascade do |t|
     t.string "name", limit: 20, null: false
     t.string "classification", limit: 10, null: false
@@ -425,4 +446,6 @@ ActiveRecord::Schema.define(version: 2021_12_31_233031) do
   add_foreign_key "sections", "grades"
   add_foreign_key "sections", "sessions"
   add_foreign_key "sections", "venues"
+  add_foreign_key "sport_entries", "grades"
+  add_foreign_key "sport_entries", "groups"
 end

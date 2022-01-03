@@ -222,7 +222,13 @@ class Group < ApplicationRecord
         self.allocation_bonus = 0
         save(validate: false)
     end
-    
+  
+    def increment_allocation_bonus!
+      settings = Setting.first
+      self.allocation_bonus += settings.missed_out_sports_allocation_factor
+      save(validate: false)
+  end
+  
     # Deposit is based on the expected numbers, not the actual numbers
     def deposit
       if admin_use
@@ -285,12 +291,6 @@ class Group < ApplicationRecord
       helper_fees = helpers.collect(&:fee)
   
       helper_fees.sort.last(free_helpers).sum(0)
-    end
-  
-    def increment_allocation_bonus!
-        settings = Setting.first
-        self.allocation_bonus += settings.missed_out_sports_allocation_factor
-        save(validate: false)
     end
 
     def self.import(file, user)

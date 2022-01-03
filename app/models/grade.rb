@@ -133,13 +133,22 @@ class Grade < ApplicationRecord
     end
     
     def possible_venues
-        venues = sections.collect(&:venue)
-        venues.uniq
+        @venues ||= sections.collect(&:venue)
+        @venues.uniq
+    end
+    
+    def session_name
+        sessions = possible_sessions
+        if sessions.size == 1
+          sessions[0].name
+        else
+          '(not final)'
+        end
     end
     
     def possible_sessions
-        sessions = sections.collect(&:session)
-        sessions.uniq
+        @sessions ||= sections.collect(&:session)
+        @sessions.uniq
     end
     
     def max_entries_group
