@@ -44,7 +44,7 @@ class Grade < ApplicationRecord
     attr_reader :file
 
 #    has_many :officials, as: :coord_rqmt
-#    has_many :sport_entries
+    has_many :sport_entries
 #    has_many :sport_preferences
 #    has_many :groups_sport_grades_filters
     has_many :sections

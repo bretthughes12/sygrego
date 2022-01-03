@@ -72,6 +72,12 @@ class Sport < ApplicationRecord
         max_indiv_entries_group + max_team_entries_group
     end
 
+    def group_entries(group)
+        grades.to_a.sum do |grade|
+          grade.sport_entries.where(['group_id = ?', group.id]).count
+        end
+    end
+    
     def limit_grades_to(grades)
         @grades_as_limited = []
         grades.each.collect do |grade|

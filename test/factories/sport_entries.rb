@@ -26,15 +26,9 @@
 #  fk_rails_...  (group_id => groups.id)
 #
 FactoryBot.define do
-  factory :sport_entry do
-    group { nil }
-    grade { nil }
-    section_id { "" }
-    status { "MyString" }
-    team_number { 1 }
-    multiple_teams { false }
-    captaincy_id { "" }
-    chance_of_entry { 1 }
-    updated_by { "" }
+  factory :sport_entry do 
+    grade
+    status                      {"Entered"}
+    group
   end
 end

@@ -68,12 +68,12 @@ class Participant < ApplicationRecord
 #    has_many   :officials
 #    has_many   :helpers
 #    has_many   :securities
-#    has_many   :participants_sport_entries
+    has_many   :participants_sport_entries
 #    has_many   :fee_audit_trails
-#    has_many   :sport_entries, through: :participants_sport_entries
+    has_many   :sport_entries, through: :participants_sport_entries
 #    has_many   :sport_preferences, dependent: :destroy
 #    has_many   :participant_extras, dependent: :destroy
-#    has_many   :captaincies, class_name: 'SportEntry'
+    has_many   :captaincies, class_name: 'SportEntry'
 
     scope :coming, -> { where(coming: true) }
     scope :not_coming, -> { where(coming: false) }

@@ -32,8 +32,9 @@ class SportEntry < ApplicationRecord
 
   belongs_to :group
   belongs_to :grade
-  belongs_to :section
-  belongs_to :captaincy, class_name: 'Participant'
+  belongs_to :section, optional: true
+  belongs_to :captaincy, class_name: 'Participant', optional: true
+  has_many   :participants_sport_entries
   has_many   :participants, through: :participants_sport_entries
 
   scope :entered, -> { where(status: 'Entered') }
@@ -50,7 +51,7 @@ class SportEntry < ApplicationRecord
 #           :sport_preferences,
            :team_size, to: :grade
 
-#  before_validation :validate_number_of_entries_in_sport, on: :create
+  before_validation :validate_number_of_entries_in_sport, on: :create
 
   STATUSES = ['Requested',
     'To Be Confirmed',
@@ -61,7 +62,7 @@ class SportEntry < ApplicationRecord
     presence: true,
     length: { maximum: 20 },
     inclusion: { in: STATUSES }
-  validates :sport_grade_id,         
+  validates :grade_id,         
     presence: true
   validates :group_id,               
     presence: true
@@ -90,9 +91,9 @@ class SportEntry < ApplicationRecord
     @participants ||= participants
   end
 
-  def sport_id
-    cached_grade.nil? ? 0 : cached_grade.sport.id
-  end
+#  def sport_id
+#    cached_grade.nil? ? 0 : cached_grade.sport.id
+#  end
 
   def name
     if cached_grade.grade_type == 'Singles'
@@ -291,17 +292,18 @@ end
 
 private
 
-#  def validate_number_of_entries_in_sport
-#    if cached_grade && cached_grade.sport.group_entries(group) >= cached_grade.sport.max_entries_group
-#      errors.add(:grade_id, 'too many entries in this sport')
-#    end
-#  end
-
-  def validate_if_entry_can_be_deleted
-    unless entry_can_be_deleted
-      errors.add(:base, 'Sport grade is closed - deletion is not allowed')
+  def validate_number_of_entries_in_sport
+    if cached_grade && cached_grade.sport.group_entries(group) >= cached_grade.sport.max_entries_group
+      errors.add(:grade_id, 'too many entries in this sport')
     end
   end
+
+#  Cannot work, as calls entry_can_be_deleted without 'settings' parameter
+#  def validate_if_entry_can_be_deleted
+#    unless entry_can_be_deleted
+#      errors.add(:base, 'Sport grade is closed - deletion is not allowed')
+#    end
+#  end
 
   def draw_complete(settings)
     if cached_sport_grade.sport.classification == 'Team'

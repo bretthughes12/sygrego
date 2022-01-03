@@ -36,7 +36,7 @@ class Section < ApplicationRecord
     attr_reader :file
 
 #    has_many :officials, as: :coord_rqmt
-#    has_many :sport_entries
+    has_many :sport_entries
     belongs_to :grade
     belongs_to :venue
     belongs_to :session
