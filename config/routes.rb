@@ -211,6 +211,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :sport_entries
   end
 end
 

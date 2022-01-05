@@ -94,6 +94,8 @@ class Participant < ApplicationRecord
     scope :females, -> { where("gender IN ('F', 'f')") }
     scope :day_visitors, -> { where(spectator: true).where(onsite: false) }
 
+#    delegate :group_extras, to: :group
+
     encrypts :wwcc_number, :medicare_number
 
     validates :first_name,             
@@ -252,7 +254,36 @@ class Participant < ApplicationRecord
     def early_bird_applies?
       !group_coord && early_bird && (days >= 2)
     end
-    
+
+#    def group_fee
+#      fee + extra_fee
+#    end
+  
+#    def extra_fee
+#      if days.nil? || days == 3
+#        group.extra_fee_total
+#      else
+#        [group.extra_fee_total, days * group.extra_fee_per_day].min
+#      end
+#    end
+  
+#    def total_owing
+#      group_fee + total_extras_costs
+#    end
+  
+#    def total_extras_costs
+#      participant_extras.wanted.to_a.sum(&:cost)
+#    end
+  
+#    def sport_coord_discount
+#      sessions_coordinating = officials
+#                              .sport_coords
+#                              .where('participant_id is not null')
+#                              .count
+  
+#      sessions_coordinating == 0 ? 0 : sessions_coordinating * 5 + 10
+#    end
+      
     def category
       if guest && spectator
         'SYG Guest - Not playing sport'
@@ -291,7 +322,126 @@ class Participant < ApplicationRecord
       end
     end
   
-    def driver_sign
+#    def accept!
+#      self.status = 'Accepted'
+#      save(validate: false)
+#    end
+  
+#    def reject!
+#      self.group = Group.default_group
+#      self.coming = false
+#      save(validate: false)
+#    end
+  
+    # Mark this participant as having had a late fee charged,
+    # so that we know not to charge it again
+#    def charge_late_fee!
+#      if coming && !late_fee_charged
+#        self.late_fee_charged = true
+#        save(validate: false)
+#        group.charge_late_fee!
+#      end
+#    end
+
+#    def withdraw!(old_fee)
+#      self.withdrawn = true
+#      self.coming = false
+#      self.fee_when_withdrawn = old_fee
+#      save(validate: false)
+#    end
+
+#    def reverse_withdrawal!
+#      self.withdrawn = false
+#      self.fee_when_withdrawn = 0
+#      save(validate: false)
+#    end
+
+#    def first_entry_in_sport_grade(grade)
+#      sport_entries.select { |entry| entry.sport_grade == grade }.first
+#    end
+
+    def is_entered_in?(grade)
+      sport_entries.collect(&:grade).include?(grade)
+    end
+
+#    def is_entered_in_session?(session)
+#      sport_entries.collect(&:session).include?(session)
+#    end
+
+    def is_entered_in_sport?(sport)
+      sport_entries.collect(&:sport).include?(sport)
+    end
+
+    def can_play_sport(sport)
+      sport.indiv_entries(self) < sport.max_entries_indiv
+    end
+
+#    def can_play_grade(grade)
+#      grade.sport.indiv_entries(self) < grade.sport.max_entries_indiv
+#    end
+    
+#  def sports_in_session(session)
+#    sports = []
+
+#    sport_entries.each do |entry|
+#      sports << entry.sport.name if entry.sport_session.name == session
+#    end
+
+#    officials.each do |official|
+#      if official.session && official.session.name == session
+#        sports << official.sport_name
+#      end
+#    end
+
+#    sports
+#  end
+
+  def available_sport_entries
+    entries = []
+    (group.sport_entries - sport_entries).sort.each do |entry|
+      next unless can_play_sport(entry.sport) &&
+                  can_play_grade(entry.grade) &&
+#                  can_play_in_session(entry.session) &&
+                  entry.can_take_participants? &&
+                  entry.eligible_to_participate?(self)
+      entries << entry
+    end
+    entries
+  end
+
+  def available_grades
+    grades = []
+    group.grades_available(false).each do |grade|
+      next unless can_play_sport(grade.sport) &&
+                  can_play_grade(grade) &&
+#                  can_play_in_session(grade.session) &&
+                  grade.eligible_to_participate?(self)
+      grades << grade
+    end
+    grades
+  end
+
+  def grades
+    sport_entries.each.collect(&:grade)
+  end
+
+  def group_sport_grades_i_can_join
+    grades = []
+    group.grades.each do |grade|
+      next unless can_play_sport(grade.sport) &&
+                  can_play_grade(grade) &&
+#                  can_play_in_session(grade.session) &&
+                  grade.eligible_to_participate?(self)
+      grades << grade
+    end
+    grades
+  end
+
+  def sport_entry_ids
+    sport_entries.collect(&:id)
+  end
+
+  def driver_sign
       self.driver_signature ? "[electronic]" : ""
     end
   

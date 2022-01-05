@@ -21,6 +21,10 @@ class Ability
         can [:show, :update, :destroy], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
+        can [:index, :create], SportEntry
+        can [:show, :update, :destroy], SportEntry do |entry|
+          user.groups.include?(entry.group) || user.role?(:admin)
+        end
       end
       
       can [:update, :edit_password, :update_password], User do |u|
@@ -44,6 +48,10 @@ class Ability
         can [:index, :search, :create, :new_import, :import], Participant
         can [:show, :update, :destroy], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
+        end
+        can [:index, :create], SportEntry
+        can [:show, :update, :destroy], SportEntry do |entry|
+          user.groups.include?(entry.group) || user.role?(:admin)
         end
       end
       

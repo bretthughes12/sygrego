@@ -119,7 +119,11 @@ class Group < ApplicationRecord
     def <=>(other)
         name <=> other.name
     end
-    
+
+    def cached_sport_entries
+      @sport_entries ||= sport_entries
+    end
+      
     def division
       players = participants.coming.accepted.playing_sport.size
       settings = Setting.first
@@ -155,15 +159,19 @@ class Group < ApplicationRecord
     def self.default_group
         Group.find_by_abbr('DFLT')
     end
-    
-    def coordinators_allowed
-        2
+
+    def active
+      !users.not_stale.empty?
     end
-    
+  
+    def active_users
+      users.not_stale
+    end
+      
     def church_reps
       church_reps = []
-      users.each do |u|
-        church_reps << u if u.role?(:church_rep)
+      active_users.each do |u|
+        church_reps << u if u.role?(:church_rep) 
       end
       church_reps
     end
@@ -186,7 +194,7 @@ class Group < ApplicationRecord
 
     def gcs
       gcs = []
-      users.each do |u|
+      active_users.each do |u|
         gcs << u if u.role?(:gc)
       end
       gcs
@@ -208,6 +216,18 @@ class Group < ApplicationRecord
       gc.nil? ? '' : gc.wwcc_number
     end
 
+    def email_recipients
+      a = active_users.collect(&:email)
+      a.uniq
+    end
+
+#    def participant_users
+#      User.participants.active
+#          .joins(participant: :group)
+#          .where(participants: { group_id: id })
+#          .includes(:participant)
+#    end
+    
     def mysyg_status
       if mysyg_setting.mysyg_open
         'Open'
@@ -217,17 +237,158 @@ class Group < ApplicationRecord
         'Not enabled'
       end
     end
+
+#    def mysyg_selection_name
+#      "#{abbr} - #{name}"
+#    end
   
+#    def self.mysyg_actives
+#      active_groups = []
+#      Group.order(:name).each do |group|
+#        active_groups << group if group.active && group.mysyg_open
+#      end
+#      active_groups
+#    end
+  
+#    def self.actives
+#      active_groups = []
+#      Group.order(:abbr).each do |group|
+#        active_groups << group if group.active
+#      end
+#      active_groups
+#    end
+    
+  #def cached_officials
+  #  @officials ||= officials
+  #end
+
+  #def officials
+  #  this_group_officials = []
+  #  participants.coming.includes(:officials).each do |participant|
+  #    unless participant.officials.empty?
+  #      this_group_officials += participant.officials
+  #    end
+  #  end
+  #  this_group_officials
+  #end
+
+#  def sport_coords
+#    this_group_officials = []
+#    participants.includes(:officials).each do |participant|
+#      unless participant.officials.sport_coords.empty?
+#        this_group_officials += participant.officials.sport_coords
+#      end
+#    end
+#    this_group_officials.sort_by { |o| o.session.id }
+#  end
+
+#  def cleaners
+#    this_group_cleaners = []
+#    participants.includes(:officials).each do |participant|
+#      unless participant.officials.cleaners.empty?
+#        this_group_cleaners += participant.officials.cleaners
+#      end
+#    end
+#    this_group_cleaners.sort_by { |o| o.session.id }
+#  end
+
+#  def participants_with_no_extras
+#    participants_with_no_extras = []
+#    participants.includes(:participant_extras).each do |participant|
+#      if participant.participant_extras.empty?
+#        participants_with_no_extras << participant
+#      end
+#    end
+#    participants_with_no_extras
+#  end
+
+#  def volunteers_required
+#    (participants.coming.accepted.playing_sport.count / 10).to_i
+#  end
+
+#  def unique_number_plates
+#    participants.coming
+#                .accepted
+#                .drivers
+#                .collect(&:number_plate)
+#                .uniq
+#                .size
+#  end
+
+#  def warden_zone_name
+#    warden_zone.nil? ? '' : warden_zone.name
+#  end
+
+#  def warden_info
+#    warden_zone.nil? ? '' : warden_zone.warden_info
+#  end
+
+  def entries_requiring_participants
+    entries = []
+    cached_sport_entries.each do |entry|
+      entries << entry if entry.requires_participants?
+    end
+    entries
+  end
+
+  def entries_requiring_females
+    entries = []
+    cached_sport_entries.each do |entry|
+      entries << entry if entry.requires_females?
+    end
+    entries
+  end
+
+  def entries_requiring_males
+    entries = []
+    cached_sport_entries.each do |entry|
+      entries << entry if entry.requires_males?
+    end
+    entries
+  end
+
+  def entries_that_must_be_confirmed
+    cached_sport_entries.to_be_confirmed.collect
+  end
+
+#  def first_entry_in_sport_grade(grade)
+#    cached_sport_entries.select { |entry| entry.sport_grade == grade }.first
+#  end
+
+#  def sport_preferences
+#    participants.collect do |p|
+#      p.sport_preferences
+#      .entered
+#      .includes(:sport_grade)
+#      .order('sport_grades.name')
+#    end
+#  end
+
+#  def participant_extras
+#    participants.coming.accepted.collect do |p|
+#      p.participant_extras
+#      .wanted
+#      .includes(:group_extra)
+#      .order('group_extras.name')
+#    end.flatten
+#  end
+
+#  def initialise_new_participant_extras
+#    participants.each do |p|
+#      ParticipantExtra.initialise_for_participant(p)
+#    end
+#  end
+
     def reset_allocation_bonus!
         self.allocation_bonus = 0
         save(validate: false)
     end
-  
+
     def increment_allocation_bonus!
       settings = Setting.first
       self.allocation_bonus += settings.missed_out_sports_allocation_factor
       save(validate: false)
-  end
+    end
   
     # Deposit is based on the expected numbers, not the actual numbers
     def deposit
@@ -260,13 +421,160 @@ class Group < ApplicationRecord
       participants.to_be_charged.to_a.sum(&:fee)
     end
 
+#    def amount_paid
+#      @amount_paid ||= calculated_amount_paid
+#    end
+  
+#    def calculated_amount_paid
+#      payments.credits.to_a.sum(&:amount)
+#    end
+  
+#    def other_charges
+#      @other_charges ||= calculated_other_charges
+#    end
+  
+#    def calculated_other_charges
+#      payments.debits.to_a.sum(&:amount)
+#    end
+  
+#    def outstanding_amount
+#      fees + deposit + nz(late_fees) + other_charges - helper_rebate - amount_paid
+#    end
+  
+#    def total_amount_payable
+#      fees + deposit + nz(late_fees) + other_charges - helper_rebate
+#    end
+  
+#    def amount_outstanding
+#      fees +
+#        deposit +
+#        nz(late_fees) +
+#        other_charges -
+#        helper_rebate -
+#        amount_paid -
+#        nz(cash_paid_at_syg) -
+#        nz(cheques_paid_at_syg)
+#    end
+  
+    def sections
+      sections = []
+      cached_sport_entries.entered.each do |entry|
+        sections << entry.section if entry.section
+      end
+      sections.sort.uniq
+    end
+  
+    def sports_participants_for_grade(grade)
+      players = []
+      participants.order('surname, first_name').each do |participant|
+        next unless participant.coming &&
+                    participant.status == 'Accepted' &&
+                    !participant.spectator? &&
+                    participant.age <= grade.max_age &&
+                    participant.age >= grade.min_age &&
+                    participant.can_play_sport(grade.sport) &&
+                    participant.can_play_in_session(grade.session)
+        if gender_matches_gender_type(participant.gender, grade.gender_type)
+          players << participant
+        end
+      end
+      players
+    end
+  
+    def grades_available(include_all = false)
+      grades_available = []
+      grades = Grade.active.order('sport_id, name').includes(:sport).load
+  
+      grades.each do |grade|
+        next unless include_all || grade.can_accept_entries
+        next unless grade_type_entries(grade.sport, grade.grade_type) <
+                    grade.max_entries_group
+#        next unless grade.team_size +
+#                    participants_requested_for_session(grade.sport_session_id) <=
+#                    participants_allowed_per_session 
+        grades_available << grade
+      end
+  
+      grades_available
+    end
+  
     def participants_allowed_per_session 
       [estimated_numbers, participants.size].max * 1.5    
     end
   
+    def grades
+      cached_sport_entries.each.collect(&:grade).uniq
+    end
+  
+    def can_enter_grade(grade)
+      grades_available.include?(grade)
+    end
+  
+    def sports_available(include_all)
+      grades_available(include_all).collect(&:sport).uniq
+    end
+  
+#    def filtered_sport_grades
+#      filtered_team_sport_grades + filtered_indiv_sport_grades
+#    end
+  
+#    def filtered_team_sport_grades
+#      if team_sport_view_strategy == 'Show none'
+#        []
+#      elsif team_sport_view_strategy == 'Show sport entries only'
+#        sport_grades & SportGrade.team.load
+#      elsif team_sport_view_strategy == 'Show listed'
+#        SportGrade.team.load - sport_grade_filters
+#      else
+#        SportGrade.team.load
+#      end
+#    end
+  
+#    def filtered_indiv_sport_grades
+#      if indiv_sport_view_strategy == 'Show none'
+#        []
+#      elsif indiv_sport_view_strategy == 'Show sport entries only'
+#        sport_grades & SportGrade.individual.load
+#      elsif indiv_sport_view_strategy == 'Show listed'
+#        SportGrade.individual.load - sport_grade_filters
+#      else
+#        SportGrade.individual.load
+#      end
+#    end
+  
+#    def sport_grade_filters
+#      groups_sport_grades_filters.each.collect(&:sport_grade)
+#    end
+  
     def number_playing_sport
       @number_playing_sport ||= participants.playing_sport.coming.accepted.size
     end
+  
+#    def participants_needed_for_session(session)
+#      number_of_participants = 0
+#      cached_sport_entries.entered.includes(:grade).each do |e|
+#        number_of_participants += e.team_size if e.session.id == session
+#      end
+#      number_of_participants
+#    end
+  
+#    def participants_requested_for_session(session)
+#      number_of_participants = 0
+#      cached_sport_entries.entered_or_requested
+#                          .includes(:grade)
+#                          .each do |e|
+#        number_of_participants += e.team_size if e.sport_session.id == session
+#      end
+#      number_of_participants
+#    end
+    
+    def coordinators_allowed
+      2
+    end
+
+#    def can_have_more_gcs?
+#      participants.coming.group_coords.size < coordinators_allowed
+#    end
   
     def helpers_allowed
       4 + (participants.coming.accepted.playing_sport.size >= 40 ?
@@ -276,7 +584,11 @@ class Group < ApplicationRecord
     def helpers
       participants.coming.accepted.helpers
     end
-  
+
+#    def can_have_more_helpers?
+#      participants.coming.accepted.helpers.size < helpers_allowed
+#    end
+    
     def free_helpers
       if division == 'Small Churches'
         2
@@ -293,6 +605,28 @@ class Group < ApplicationRecord
       helper_fees.sort.last(free_helpers).sum(0)
     end
 
+    def update_team_numbers(grade)
+      entries = cached_sport_entries.where(['grade_id = ?', grade.id])
+                                    .order(:id).load
+      multi_flag = entries.size > 1
+      team_number = 1
+  
+      entries.each do |e|
+        e.team_number = team_number
+        e.multiple_teams = multi_flag
+        e.save(validate: false)
+  
+        team_number += 1
+      end
+    end
+  
+#    def refresh_sport_entry_chances!
+#      cached_sport_entries.each do |e|
+#        e.chance_of_entry = e.allocation_chance
+#        e.save(validate: false)
+#      end
+#    end
+  
     def self.import(file, user)
         creates = 0
         updates = 0
@@ -392,6 +726,35 @@ class Group < ApplicationRecord
       end
     end
 
+    def active?
+      !participants.coming.accepted.empty? || coming
+    end
+  
+    # TODO: Move this to either Participant or SportGrade
+    def gender_matches_gender_type(gender, gender_type)
+      if gender_type == 'Mens' && gender.casecmp('m').zero? ||
+         gender_type == 'Ladies' && gender.casecmp('f').zero? ||
+         gender_type == 'Mixed' ||
+         gender_type == 'Open'
+        true
+      end
+    end
+  
+    def grade_type_entries(sport, type)
+      type_hash = { 'Singles' => 'Individual',
+                    'Doubles' => 'Individual',
+                    'Team' => 'Team' }
+  
+      entry_count = 0
+      cached_sport_entries.collect do |entry|
+        if type_hash[entry.grade_type] == type_hash[type] &&
+           entry.sport.id == sport.id
+          entry_count += 1
+        end
+      end
+      entry_count
+    end
+  
     def self.assign_short_name(name)
       sname = name.split[0]
       group = Group.find_by_short_name(sname)

@@ -1,0 +1,39 @@
+<% title "Listing participants" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= search_box search_gc_participants_path, "Search" %>
+<%= yield(:search_box)%>
+<%= will_paginate @participants, :container => false %>
+
+<br/>
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th>Surname</th>
+      <th>First Name</th>
+      <th>Category</th>
+      <th>Days</th>
+      <th>Cost</th>
+    </tr>
+  </thead>
+
+	<%= render @participants %>
+</table>
+
+<%= will_paginate @participants, :container => false %>
+
+<%= link_to "New participant", new_gc_participant_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
+					{:name => "Spectator", :class => "table-warning"},
+					{:name => "Not Coming", :class => "table-dark"}] %>

@@ -118,6 +118,10 @@ class Grade < ApplicationRecord
         name <=> other.name
     end
 
+    def cached_sport_entries
+        @sport_entries ||= sport_entries
+    end
+    
     def venue_name
         venues = possible_venues
         if venues.size == 1
@@ -151,6 +155,73 @@ class Grade < ApplicationRecord
         @sessions.uniq
     end
     
+    def name_with_percentage_full
+        if entry_limit && entry_limit > 0
+          name + " (#{percentage_full}% full)"
+        else
+          name
+        end
+    end
+    
+    def percentage_full
+        if entry_limit && entry_limit > 0
+          number_of_teams * 100 / entry_limit
+        else
+          0
+        end
+    end
+    
+    def entries_entered
+        cached_sport_entries.entered
+    end
+    
+    def entries_requested
+        cached_sport_entries.requested
+    end
+    
+    def entries_waiting
+        cached_sport_entries.waiting_list
+    end
+    
+    def entries_to_be_confirmed
+        cached_sport_entries.to_be_confirmed
+    end
+
+    def number_of_teams
+        cached_sport_entries.count
+    end
+
+    def starting_status
+        if entry_limit && status == 'Open'
+          'Requested'
+        else
+          if entry_limit &&
+             entries_entered.size + entries_requested.size >= entry_limit
+              'Waiting List'
+          else
+              'Entered'
+          end
+        end
+    end
+    
+    def starting_sport_section
+        if sections.size == 1
+          sections[0]
+        else
+          start_section = nil
+    
+          sections.each do |section|
+            next unless section.number_in_draw
+            if section.sport_entries.size < section.number_in_draw
+              start_section = section
+              break
+            end
+          end
+    
+          start_section
+        end
+    end
+            
     def max_entries_group
         if grade_type == 'Singles'
             sport.max_indiv_entries_group
@@ -163,11 +234,138 @@ class Grade < ApplicationRecord
         end
     end
 
+    def eligible_to_participate?(participant)
+        return false if participant.age && participant.age < min_age
+        return false if participant.age && participant.age > max_age
+        return false if participant.spectator
+        return true if %w[Open Mixed].include?(gender_type)
+        return false if gender_type == 'Mens' && participant.gender == 'F'
+        return false if gender_type == 'Ladies' && participant.gender == 'M'
+        true
+    end
+    
+    def can_accept_entries
+        active && 
+           (status == 'Open' ||
+            entry_limit && sport_entries.count < entry_limit)
+    end
+
+#    def sport_entry_ids
+#        cached_sport_entries.collect(&:id)
+#    end
+
+#    def self.reset_all_restricted_entries_to_requested!
+#        Grade.restricted.each do |g|
+#            g.sport_entries.each(&:reset!)
+#        end
+#    end
+    
     def close!
         self.status = 'Closed'
         save(validate: false)
     end
 
+#    def coordinators
+#        coords = []
+#        coords += officials.sport_coords unless officials.sport_coords.empty?
+#        coords += sport.officials.sport_coords unless sport.officials.sport_coords.empty?
+#        sport_sections.each do |s|
+#          coords += s.officials.sport_coords unless s.officials.empty?
+#        end
+#        coords
+#    end
+    
+#    def coordinators_groups
+#        groups = coordinators.collect do |c|
+#          c.participant&.group
+#        end
+#        groups.uniq
+#    end
+    
+#    def update_for_change_in_entries(save_record = true)
+#        self.entries_to_be_allocated = entry_limit.nil? ? 999 : entry_limit - entries_entered.size
+#        self.over_limit = entries_to_be_allocated < entries_requested.size
+#        self.one_entry_per_group = groups_requested.size >= entries_to_be_allocated
+    
+#        save(validate: false) if save_record
+#    end
+    
+#    def allocate_requested_entries_by_ballot(allocated, missed_out)
+#        factors = requested_entry_factors
+    
+        # The allocation bonus changes from grade to grade, so must
+        # be added for each ballot
+#        factors.each do |e|
+#          entry = SportEntry.find(e[0])
+#          factors[e[0]] += entry.group.allocation_bonus
+#        end
+    
+        # Do the allocation now
+#        entries_to_be_allocated.times do
+#          allocate_random_entry(factors, allocated)
+#        end
+    
+        # All entries remaining have not been allocated - hence these
+        # are the ones that missed out
+#        factors.each do |e|
+#          entry = SportEntry.find(e[0])
+#          entry.reject!
+#          missed_out[e[0]] = e[1]
+#        end
+#      end
+    
+#    def requested_entry_factors
+#        factors = {}
+#        cached_sport_entries.requested.each { |e| factors[e.id] = e.allocation_factor }
+#        factors
+#    end
+    
+#    def allocate_random_entry(factors, allocated)
+#        alloc = rand(factors.values.sum)
+    
+#        total = 0
+#        factors.each do |e|
+#          total += e[1]
+#          next unless total > alloc
+#          entry = SportEntry.find(e[0])
+#          entry.enter!
+#          allocated[e[0]] = e[1]
+#          factors.reject! { |k, _v| k == e[0] }
+#          break
+#        end
+#    end
+    
+#    def refresh_sport_entry_chances!
+#        cached_sport_entries.each do |e|
+#          e.chance_of_entry = e.allocation_chance
+#          e.save(validate: false)
+#        end
+#    end
+    
+#    def set_waiting_list_expiry!
+#        self.waitlist_expires_at = Time.now + 2.days
+#        save(validate: false) 
+#    end
+    
+#    def check_waiting_list_status!
+#        unless waitlist_expires_at.nil?
+#          if entries_missed_out.size == 0 ||
+#             entries_entered.size == entry_limit
+#            self.waitlist_expires_at = nil
+#            save(validate: false) 
+#          end
+#        end
+#    end
+    
+#    def expire_wait_list!
+#        entries_missed_out.each do |entry|
+#          entry.destroy
+#        end
+        
+#        self.waitlist_expires_at = nil
+#        save(validate: false) 
+#    end
+    
     def self.import(file, user)
         creates = 0
         updates = 0
@@ -238,6 +436,11 @@ class Grade < ApplicationRecord
     end
 
   private
+
+#    def groups_requested
+#        groups = entries_requested.collect(&:group)
+#        groups.uniq
+#    end
 
     def self.sync_fields
         ['name',

@@ -1,0 +1,18 @@
+<% title "Editing #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: gc_participant_path(@participant), 
+                              method: :put } %>
+
+<br/>
+
+<%= link_to "Back", gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", gc_participant_path(@participant),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>
