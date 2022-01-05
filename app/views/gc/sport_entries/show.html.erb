@@ -1,12 +1,12 @@
-<% title "Participant details: #{@participant.name}" %>
+<% title "Sport Entry details: #{@sport_entry.name}" %>
 
 <h1><%= yield(:title) %></h1>
 
-<%= render 'show', model: @participant %>
+<%= render 'show', model: @sport_entry %>
 
-<%= link_to "Back", gc_participants_path,
+<%= link_to "Back", gc_sport_entries_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Edit", edit_gc_participant_path(@participant),
+<%= link_to "Edit", edit_gc_sport_entry_path(@sport_entry),
                   class: primary_button_class,
                   role: "button" %>
