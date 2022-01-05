@@ -7,7 +7,7 @@ class Gc::SportEntriesController < ApplicationController
   
     # GET /gc/sport_entries
     def index
-      @sport_entries = @group.sport_entries.load.sort
+      @sport_entries = @group.sport_entries.all
   
       respond_to do |format|
         format.html do
