@@ -92,9 +92,9 @@ class SportEntry < ApplicationRecord
     @participants ||= participants
   end
 
-#  def sport_id
-#    cached_grade.nil? ? 0 : cached_grade.sport.id
-#  end
+  def sport_id
+    cached_grade.nil? ? 0 : cached_grade.sport.id
+  end
 
   def name
     if cached_grade.grade_type == 'Singles'
@@ -114,9 +114,9 @@ class SportEntry < ApplicationRecord
     @number_of_participants ||= cached_participants.count
   end
 
-#  def section_name
-#    section.nil? ? cached_grade.name : section.name
-#  end
+  def section_name
+    section.nil? ? cached_grade.name : section.name
+  end
 
   def requires_participants?
     number_of_participants < cached_grade.min_participants

@@ -26,7 +26,7 @@ class Gc::SportEntriesController < ApplicationController
     # GET /gc/sport_entries/new
     def new
       @sports = @group.sports_available(false).sort
-      @grades = @group.sport_grades_available(false)
+      @grades = @group.grades_available(false)
 
       respond_to do |format|
         format.html { render layout: @current_role.name }
@@ -66,7 +66,7 @@ class Gc::SportEntriesController < ApplicationController
 #            Reg::SportEntriesController.delay.refresh_sport_entry_chances!(@group, @grade)
 #          end
   
-          format.html { redirect_to action: "edit" }
+          format.html { redirect_to edit_gc_sport_entry_url(@sport_entry) }
         else
           format.html { redirect_to action: "new" }
         end

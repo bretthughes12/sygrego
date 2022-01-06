@@ -78,6 +78,25 @@ class Sport < ApplicationRecord
         end
     end
     
+    def indiv_entries(participant)
+        #    entry_count = 0
+        #    self.sport_grades.each do |grade|
+        #      grade.sport_entries.each do |entry|
+        #        if entry.participants.include?(participant)
+        #          entry_count += 1
+        #        end
+        #      end
+        #    end
+        entry_count = ParticipantsSportEntry.count_by_sql(
+          'select count(*) from sport_entries, grades, participants_sport_entries ' \
+          'where sport_entries.id = participants_sport_entries.sport_entry_id ' \
+          'and sport_entries.grade_id = grades.id ' \
+          'and grades.sport_id = ' + id.to_s + ' ' \
+          'and participants_sport_entries.participant_id = ' + participant.id.to_s
+        )
+        entry_count
+    end
+    
     def limit_grades_to(grades)
         @grades_as_limited = []
         grades.each.collect do |grade|

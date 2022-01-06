@@ -154,7 +154,11 @@ class Grade < ApplicationRecord
         @sessions ||= sections.collect(&:session)
         @sessions.uniq
     end
-    
+
+    def name_with_session
+        name + " (#{session_name})"
+      end
+        
     def name_with_percentage_full
         if entry_limit && entry_limit > 0
           name + " (#{percentage_full}% full)"
@@ -204,7 +208,7 @@ class Grade < ApplicationRecord
         end
     end
     
-    def starting_sport_section
+    def starting_section
         if sections.size == 1
           sections[0]
         else

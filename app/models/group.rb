@@ -472,8 +472,7 @@ class Group < ApplicationRecord
                     !participant.spectator? &&
                     participant.age <= grade.max_age &&
                     participant.age >= grade.min_age &&
-                    participant.can_play_sport(grade.sport) &&
-                    participant.can_play_in_session(grade.session)
+                    participant.can_play_sport(grade.sport)
         if gender_matches_gender_type(participant.gender, grade.gender_type)
           players << participant
         end

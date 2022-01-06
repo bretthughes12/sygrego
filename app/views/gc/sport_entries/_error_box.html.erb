@@ -1,0 +1,10 @@
+<% unless @sport_entry.issues.empty? %>
+	<div class="float-box" style="width: 200px">
+		<strong>Issue(s)</strong>
+		<ul>
+			<% @sport_entry.issues.each do |issue| %>
+				<li><%= issue %></li>
+			<% end %>
+		</ul>
+	</div>
+<% end %>
