@@ -2,23 +2,14 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= render "application/error_messages", :target => @sport_entry %>
+<%= simple_form_for(@sport_entry, :url => gc_sport_entries_path, 
+        :html => { :method => :post }) do |f| %>
 
-    <table>
+	<%= f.error_notification %>
 
-<%= form_for(@sport_entry, :url => gc_sport_entries_path) do |f| %>
-	   <tr id="grade_field">
-		  <td><label for="sport_entry_grade_id">Grade:</label></td>
-		  <td>&nbsp</td>
-		  <td><%= collection_select :sport_entry, :grade_id, 
-			 					   @grades, :id, :name_with_session,
-			 					   {:include_blank => true}  %></td>
-	   </tr>
-    </table>
-    
-    <p>
-        <%= f.submit "Create", class: primary_button_class, role: "button" %>
-    </p>
+    <%= f.input :grade_id, as: :select, collection: @grades, label_method: :name_with_session, include_blank: true %>
+
+	<%= f.button :submit %>
 <% end %>
 
 <%= link_to "Back", gc_sport_entries_path,

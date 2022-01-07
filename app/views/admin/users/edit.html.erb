@@ -23,7 +23,7 @@
     <tr>
         <%= form_with(url: add_group_admin_user_groups_path(user_id: @user), method: :patch) do |f| %> 
             <td><%= f.collection_select :group_id, @groups, :id, :short_name %></td>
-	        <td><%= f.submit "Add", class: primary_button_class %></td>
+	        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
         <% end %>	
     </tr>
 

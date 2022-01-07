@@ -73,7 +73,11 @@ class Section < ApplicationRecord
     def <=>(other)
       name <=> other.name if other
     end
-   
+
+    def session_and_venue
+        session.name + " - " + venue.name
+    end
+
     def self.import(file, user)
         creates = 0
         updates = 0

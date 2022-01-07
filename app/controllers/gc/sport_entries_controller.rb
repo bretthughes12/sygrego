@@ -36,11 +36,13 @@ class Gc::SportEntriesController < ApplicationController
     # GET /gc/sport_entries/1/edit
     def edit
       @participant = Participant.new
+      @sections = @sport_entry.grade.sections
+      @participants = @sport_entry.participants
     
-      if @sport_entry.participants.size < @sport_entry.grade.max_participants
-        @participants = @group.sports_participants_for_grade(@sport_entry.grade) - @sport_entry.participants
+      if @participants.size < @sport_entry.grade.max_participants
+        @eligible_participants = @group.sports_participants_for_grade(@sport_entry.grade) - @sport_entry.participants
       else
-        @participants = []
+        @eligible_participants = []
       end
   
       render layout: @current_role.name
@@ -77,7 +79,6 @@ class Gc::SportEntriesController < ApplicationController
     def update
       @sport_entry.updated_by = current_user.id
 
-
       respond_to do |format|
         if @sport_entry.update(sport_entry_params)
           flash[:notice] = 'Details were successfully updated.'
@@ -93,6 +94,7 @@ class Gc::SportEntriesController < ApplicationController
               @participants = []
             end
 
+            @sections = @sport_entry.grade.sections
             render action: "edit", layout: @current_role.name
           end
         end

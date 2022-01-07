@@ -211,7 +211,13 @@ Rails.application.routes.draw do
         get :search
       end
     end
-    resources :sport_entries
+    resources :sport_entries do
+      resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do
+        member do
+          patch :make_captain
+        end
+      end
+    end
   end
 end
 

@@ -25,6 +25,7 @@ class Ability
         can [:show, :update, :destroy], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
         end
+        can [:create, :destroy, :make_captain], ParticipantsSportEntry
       end
       
       can [:update, :edit_password, :update_password], User do |u|
@@ -53,6 +54,7 @@ class Ability
         can [:show, :update, :destroy], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
         end
+        can [:create, :destroy, :make_captain], ParticipantsSportEntry
       end
       
       can [:update, :edit_password, :update_password], User do |u|
