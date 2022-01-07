@@ -14,7 +14,7 @@ class Gc::SportEntriesController < ApplicationController
           @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100)
           render layout: @current_role.name
         end
-        format.csv  { render_csv "sport_entry", "sport_entry" }
+        format.csv  { render_csv "sport_entries", "sport_entries" }
       end
     end
     
