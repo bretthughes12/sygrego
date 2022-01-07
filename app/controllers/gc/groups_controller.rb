@@ -10,7 +10,7 @@ class Gc::GroupsController < ApplicationController
       render layout: @current_role.name
     end
   
-    # PUT /gc/groups/1
+    # PATCH /gc/groups/1
     def update
       @group.updated_by = current_user.id
 

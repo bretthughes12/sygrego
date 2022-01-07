@@ -46,7 +46,7 @@ class Admin::VenuesController < ApplicationController
         end
     end
   
-    # PUT /admin/venues/1
+    # PATCH /admin/venues/1
     def update
         @venue.updated_by = current_user.id
 

@@ -10,7 +10,7 @@ class Gc::MysygSettingsController < ApplicationController
       render layout: @current_role.name
     end
   
-    # PUT /gc/mysyg_settings/1
+    # PATCH /gc/mysyg_settings/1
     def update
       respond_to do |format|
         if @mysyg_setting.update(mysyg_setting_params)

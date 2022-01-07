@@ -23,7 +23,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #  super
   # end
 
-  # PUT /resource
+  # PATCH /resource
   def update
     super
   end

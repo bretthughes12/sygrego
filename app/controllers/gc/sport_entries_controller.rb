@@ -75,7 +75,7 @@ class Gc::SportEntriesController < ApplicationController
       end
     end
 
-    # PUT /gc/sport_entries/1
+    # PATCH /gc/sport_entries/1
     def update
       @sport_entry.updated_by = current_user.id
 

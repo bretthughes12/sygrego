@@ -34,7 +34,7 @@ class Admin::EventDetailsController < ApplicationController
     def edit
     end
   
-    # PUT /admin/event_details/1
+    # PATCH /admin/event_details/1
     def update
       @event_detail.updated_by = current_user.id
 

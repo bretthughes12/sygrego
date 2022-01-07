@@ -69,7 +69,7 @@ class Admin::UsersController < ApplicationController
       end
     end
   
-    # PUT /admin/users/1
+    # PATCH /admin/users/1
     def update
       respond_to do |format|
         if @user.update(user_params)
@@ -85,7 +85,7 @@ class Admin::UsersController < ApplicationController
       end
     end
   
-    # PUT /admin/users/1/update_password
+    # PATCH /admin/users/1/update_password
     def update_password
       respond_to do |format|
         if @user.update(user_password_params)
@@ -98,7 +98,7 @@ class Admin::UsersController < ApplicationController
       end
     end
   
-    # PUT /admin/users/1/update_profile
+    # PATCH /admin/users/1/update_profile
     def update_profile
       respond_to do |format|
         if @user.update(user_params)

@@ -64,7 +64,7 @@ class Gc::ParticipantsController < ApplicationController
       end
     end
 
-    # PUT /gc/participants/1
+    # PATCH /gc/participants/1
     def update
       @participant.updated_by = current_user.id
 

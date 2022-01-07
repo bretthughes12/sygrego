@@ -65,7 +65,7 @@ class Admin::GroupsController < ApplicationController
         end
     end
   
-    # PUT /admin/groups/1
+    # PATCH /admin/groups/1
     def update
       @group.updated_by = current_user.id
 
@@ -79,7 +79,7 @@ class Admin::GroupsController < ApplicationController
       end
     end
   
-    # PUT /admin/groups/1/approve
+    # PATCH /admin/groups/1/approve
     def approve
       @group.updated_by = current_user.id
       @group.status = "Approved"

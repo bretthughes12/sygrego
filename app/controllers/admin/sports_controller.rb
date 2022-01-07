@@ -48,7 +48,7 @@ class Admin::SportsController < ApplicationController
         end
     end
   
-    # PUT /admin/sports/1
+    # PATCH /admin/sports/1
     def update
         @sport.updated_by = current_user.id
 

@@ -16,7 +16,7 @@ class Gc::UsersController < ApplicationController
       render layout: @current_role.name
     end
   
-    # PUT /admin/users/1
+    # PATCH /admin/users/1
     def update
       respond_to do |format|
         if @user.update(user_params)
@@ -28,7 +28,7 @@ class Gc::UsersController < ApplicationController
       end
     end
   
-    # PUT /admin/users/1/update_password
+    # PATCH /admin/users/1/update_password
     def update_password
       respond_to do |format|
         if @user.update(user_password_params)

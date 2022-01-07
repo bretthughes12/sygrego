@@ -55,7 +55,7 @@ class Admin::SettingsController < ApplicationController
       @setting = Setting.find(params[:id])
     end
 
-  # PUT /admin/settings/1
+  # PATCH /admin/settings/1
     def update
       @setting = Setting.find(params[:id])
 
@@ -69,7 +69,7 @@ class Admin::SettingsController < ApplicationController
       end
     end
   
-  # PUT /admin/settings/1/update_event
+  # PATCH /admin/settings/1/update_event
   def update_event
     @setting = Setting.find(params[:id])
 
@@ -83,7 +83,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_functionality
+  # PATCH /admin/settings/1/update_functionality
   def update_functionality
       @setting = Setting.find(params[:id])
 
@@ -97,7 +97,7 @@ class Admin::SettingsController < ApplicationController
       end
     end
   
-  # PUT /admin/settings/1/update_email
+  # PATCH /admin/settings/1/update_email
   def update_email
     @setting = Setting.find(params[:id])
 
@@ -111,7 +111,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_social
+  # PATCH /admin/settings/1/update_social
   def update_social
     @setting = Setting.find(params[:id])
 
@@ -125,7 +125,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_fees
+  # PATCH /admin/settings/1/update_fees
   def update_fees
     @setting = Setting.find(params[:id])
 
@@ -139,7 +139,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_divisions
+  # PATCH /admin/settings/1/update_divisions
   def update_divisions
     @setting = Setting.find(params[:id])
 
@@ -153,7 +153,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_sports_factors
+  # PATCH /admin/settings/1/update_sports_factors
   def update_sports_factors
     @setting = Setting.find(params[:id])
 
@@ -167,7 +167,7 @@ class Admin::SettingsController < ApplicationController
     end
   end
   
-  # PUT /admin/settings/1/update_website
+  # PATCH /admin/settings/1/update_website
   def update_website
     @setting = Setting.find(params[:id])
 

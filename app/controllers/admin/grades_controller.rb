@@ -49,7 +49,7 @@ class Admin::GradesController < ApplicationController
         end
     end
   
-    # PUT /admin/grades/1
+    # PATCH /admin/grades/1
     def update
       @grade.updated_by = current_user.id
 

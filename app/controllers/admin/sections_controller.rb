@@ -48,7 +48,7 @@ class Admin::SectionsController < ApplicationController
         end
     end
   
-    # PUT /admin/sections/1
+    # PATCH /admin/sections/1
     def update
       @section.updated_by = current_user.id
 

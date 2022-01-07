@@ -34,7 +34,7 @@ class Admin::MysygSettingsController < ApplicationController
     def edit
     end
   
-    # PUT /admin/mysyg_settings/1
+    # PATCH /admin/mysyg_settings/1
     def update
       respond_to do |format|
         if @mysyg_setting.update(mysyg_setting_params)

@@ -10,7 +10,7 @@ class Gc::EventDetailsController < ApplicationController
       render layout: @current_role.name
     end
   
-    # PUT /gc/event_details/1
+    # PATCH /gc/event_details/1
     def update
       @event_detail.updated_by = current_user.id
 

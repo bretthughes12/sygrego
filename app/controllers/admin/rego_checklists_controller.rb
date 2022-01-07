@@ -34,7 +34,7 @@ class Admin::RegoChecklistsController < ApplicationController
     def edit
     end
   
-    # PUT /admin/rego_checklists/1
+    # PATCH /admin/rego_checklists/1
     def update
       respond_to do |format|
         if @rego_checklist.update(rego_checklist_params)

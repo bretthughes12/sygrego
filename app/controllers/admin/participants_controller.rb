@@ -59,7 +59,7 @@ class Admin::ParticipantsController < ApplicationController
         end
     end
   
-    # PUT /admin/participants/1
+    # PATCH /admin/participants/1
     def update
       @participant.updated_by = current_user.id
 

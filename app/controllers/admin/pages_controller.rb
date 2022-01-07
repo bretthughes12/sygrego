@@ -44,7 +44,7 @@ class Admin::PagesController < ApplicationController
       end
     end
   
-    # PUT /admin/pages/1
+    # PATCH /admin/pages/1
     def update
       respond_to do |format|
         if @page.update(page_params)

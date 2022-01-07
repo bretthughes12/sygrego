@@ -46,7 +46,7 @@ class Admin::SessionsController < ApplicationController
         end
     end
   
-    # PUT /admin/sessions/1
+    # PATCH /admin/sessions/1
     def update
       @session.updated_by = current_user.id
 

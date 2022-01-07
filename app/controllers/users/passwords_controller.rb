@@ -19,7 +19,7 @@ class Users::PasswordsController < Devise::PasswordsController
   #   super
   # end
 
-  # PUT /resource/password
+  # PATCH /resource/password
   def update
     super
     session["current_role"] = current_user.default_role

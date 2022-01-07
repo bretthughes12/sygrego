@@ -44,7 +44,7 @@ class Admin::RolesController < ApplicationController
       end
     end
   
-    # PUT /admin/roles/1
+    # PATCH /admin/roles/1
     def update
       respond_to do |format|
         if @role.update(role_params)
