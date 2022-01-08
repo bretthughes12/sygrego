@@ -22,8 +22,7 @@ module Sygrego
     #
     config.time_zone = "Melbourne"
     # config.eager_load_paths << Rails.root.join("extras")
-    # config.active_support.remove_deprecated_time_with_zone_name = true
-    
+
     # Devise config
     config.to_prepare do
       # Configure single controller layout
