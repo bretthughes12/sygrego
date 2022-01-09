@@ -71,6 +71,9 @@ class SportEntry < ApplicationRecord
     presence: true,
     numericality: { only_integer: true },
     allow_blank: true
+  validates :preferred_section_id,            
+    numericality: { only_integer: true },
+    allow_blank: true
 
 #  validate :validate_if_entry_can_be_deleted, on: :destroy
 

@@ -35,17 +35,7 @@ class Gc::SportEntriesController < ApplicationController
   
     # GET /gc/sport_entries/1/edit
     def edit
-      @participant = Participant.new
-      @sections = @sport_entry.grade.sections
-      @participants = @sport_entry.participants
-    
-      if @participants.size < @sport_entry.grade.max_participants
-        @eligible_participants = @group.sports_participants_for_grade(@sport_entry.grade) - @sport_entry.participants
-      else
-        @eligible_participants = []
-      end
-  
-      render layout: @current_role.name
+      render_for_edit
     end
   
     # POST /gc/sport_entries
@@ -85,18 +75,7 @@ class Gc::SportEntriesController < ApplicationController
 
           format.html { redirect_to gc_sport_entries_url }
         else
-          format.html do 
-            @participant = Participant.new
-            
-            if @sport_entry.participants.size < @sport_entry.grade.max_participants
-              @participants = @group.sports_participants_for_grade(@sport_entry.grade) - @sport_entry.participants
-            else
-              @participants = []
-            end
-
-            @sections = @sport_entry.grade.sections
-            render action: "edit", layout: @current_role.name
-          end
+          format.html { render_for_edit } 
         end
       end
     end
@@ -119,6 +98,20 @@ class Gc::SportEntriesController < ApplicationController
 
     private
   
+    def render_for_edit
+      @participant = Participant.new
+      @sections = @sport_entry.grade.sections
+      @participants = @sport_entry.participants
+            
+      if @sport_entry.participants.size < @sport_entry.grade.max_participants
+        @eligible_participants = @group.sports_participants_for_grade(@sport_entry.grade) - @sport_entry.participants
+      else
+        @eligible_participants = []
+      end
+
+      render action: "edit", layout: @current_role.name
+    end
+
     def sport_entry_params
       params.require(:sport_entry).permit(
         :captaincy_id, 
