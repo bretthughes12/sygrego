@@ -1,0 +1,18 @@
+<% title "New sports entry" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= simple_form_for(@sport_entry, :url => admin_sport_entries_path, 
+        :html => { :method => :post }) do |f| %>
+
+	<%= f.error_notification %>
+
+    <%= f.input :group_id, as: :select, collection: @groups, label_method: :short_name, include_blank: true %>
+    <%= f.input :grade_id, as: :select, collection: @grades, label_method: :name_with_session, include_blank: true %>
+
+	<%= f.button :submit %>
+<% end %>
+
+<%= link_to "Back", admin_sport_entries_path,
+                  class: primary_button_class,
+                  role: "button" %>

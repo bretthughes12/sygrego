@@ -1,0 +1,8 @@
+<% unless @sport_entry.issues.empty? %>
+    <h3>Issue(s)</h3>
+    <ul>
+        <% @sport_entry.issues.each do |issue| %>
+            <li><%= issue %></li>
+        <% end %>
+    </ul>
+<% end %>

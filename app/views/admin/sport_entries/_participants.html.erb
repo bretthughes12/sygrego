@@ -1,0 +1,22 @@
+<table class="table table-dark table-striped">
+	<% for participant in @sport_entry.participants %>
+      	<tr valign="top">
+            <td> 
+				<%= name_with_captaincy_suffix(participant, @sport_entry.captaincy) %>
+            </td>
+    
+            <td>
+                <%= unless participant == @sport_entry.captaincy || @sport_entry.sport.classification == 'Individual'
+                      link_to 'Make captain', make_captain_admin_sport_entry_participant_path(sport_entry_id: @sport_entry.id, id: participant.id),
+                        class: primary_button_class,
+                        role: :button,
+					    method: :patch 
+					end %>
+                <%= link_to 'Delete', admin_sport_entry_participant_path(sport_entry_id: @sport_entry.id, id: participant.id), 
+                    class: danger_button_class,
+                    role: :button,
+                    method: :delete %>
+            </td>
+        </tr>
+    <% end %>
+</table>

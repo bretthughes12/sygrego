@@ -137,6 +137,18 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :sport_entries do
+      collection do
+        get :new_import
+        post :import
+      end
+      resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do
+        member do
+          patch :make_captain
+        end
+      end
+    end
+
     resources :sports do
       collection do
         get :new_import

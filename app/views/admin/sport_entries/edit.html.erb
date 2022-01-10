@@ -1,0 +1,83 @@
+<% title "Editing sports entry" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+    <tr><td>Sport / Grade</td><td><%= @sport_entry.section_name %></td></tr>
+    <tr><td>Session</td><td><%= @sport_entry.session_name %></td></tr>
+    <tr><td>Venue</td><td><%= @sport_entry.venue_name %></td></tr>
+    <tr><td>Minimum age</td><td><%= @sport_entry.grade.min_age %></td></tr>
+    <tr><td>Maximum age</td><td><%= @sport_entry.grade.max_age %></td></tr>
+    <tr><td>Team size</td><td><%= @sport_entry.grade.team_size %></td></tr>
+    <% if @sport_entry.grade.min_participants && @sport_entry.grade.min_participants > 0 %>
+        <tr><td>Minimum number of participants</td><td><%= @sport_entry.grade.min_participants %></td></tr>
+    <% end %> 
+    <% if @sport_entry.grade.max_participants && @sport_entry.grade.max_participants < 999 %>
+        <tr><td>Maximum number of participants</td><td><%= @sport_entry.grade.max_participants %></td></tr>
+    <% end %> 
+    <tr><td>Gender restrictions</td><td><%= @sport_entry.grade.gender_type %></td></tr>
+    <% if @sport_entry.grade.min_females && @sport_entry.grade.min_females > 0 %>
+        <tr><td>Minimum number of females</td><td><%= @sport_entry.grade.min_females %></td></tr>
+    <% end %> 
+    <% if @sport_entry.grade.min_males && @sport_entry.grade.min_males > 0 %>
+        <tr><td>Minimum number of males</td><td><%= @sport_entry.grade.min_males %></td></tr>
+    <% end %> 
+</table>
+
+<% unless @sport_entry.venue_known? && @sport_entry.session_known? %>
+    <%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(:id => @sport_entry.id), 
+            :html => { :method => :patch, :multipart => true }) do |f| %>
+
+        <%= f.error_notification %>
+
+        <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
+
+        <%= f.button :submit %>
+    <% end %>
+<% end %>
+
+<br/>
+
+<h2>Participants</h2>
+
+<table class="table table-dark">
+    <%= render partial: "participants", collection: @participants %>
+
+    <% unless @eligible_participants.empty? %>
+        <tr>
+            <%= form_with(url: admin_sport_entry_participants_path(@sport_entry), method: :post) do |f| %> 
+                <td><%= f.collection_select :id, @eligible_participants, :id, :name %></td>
+                <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+            <% end %>	
+        </tr>
+    <% else %> 
+        <% if @participants.empty? %>
+            <tr>
+                Note: There are no participants registered with your group that are
+                eligible for this sport entry. To be eligible, a participant must:<br/>
+                - Be coming to SYG<br/>
+                - Be in a suitable age range for this sport grade<br/>
+                - Be of a suitable gender for this sport grade<br/>
+                - Not already be participating in this sport<br/>
+                <br/>
+                Please update your Participants list and come back to add your participants
+                here
+            </tr>
+        <% end %>
+    <% end %>
+</table>
+
+<div>
+  <%= render :partial => 'error_box' %>
+</div>
+
+<br/>
+
+<%= link_to "Back", admin_sport_entries_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_sport_entry_path(@sport_entry),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

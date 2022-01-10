@@ -25,7 +25,7 @@ class Gc::SportEntriesController < ApplicationController
   
     # GET /gc/sport_entries/new
     def new
-      @sports = @group.sports_available(false).sort
+#      @sports = @group.sports_available(false).sort
       @grades = @group.grades_available(false)
 
       respond_to do |format|

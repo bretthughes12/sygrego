@@ -1,0 +1,29 @@
+<tr valign="top" class="<%= sport_entry_display_class(sport_entry) %>">
+	<td>
+	    <%= h(sport_entry.grade.session_name) %>
+	</td>
+	
+	<td>
+	    <%= link_to h(sport_entry.grade.name), edit_admin_sport_entry_path(sport_entry) %>
+	</td>
+	
+	<td>
+	    <%= h(sport_entry.name) %>
+	</td>
+	
+	<td>
+		<%= h(sport_entry.venue_name) %>
+	</td>
+	 
+	<% if sport_entry.grade.entry_limit %> 
+		<td align="center">
+			<%= h(sport_entry.grade.entry_limit) %>
+		</td>
+	<% else %> 
+		<td align="center">-</td>
+	<% end %> 
+	 
+	<td align="center">
+	    <%= h(sport_entry.grade.sport_entries.count) %>
+	</td>
+</tr>
