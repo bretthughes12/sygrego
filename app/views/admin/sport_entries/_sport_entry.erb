@@ -8,6 +8,10 @@
 	</td>
 	
 	<td>
+	    <%= h(sport_entry.group.short_name) %>
+	</td>
+	
+	<td>
 	    <%= h(sport_entry.name) %>
 	</td>
 	
@@ -15,15 +19,4 @@
 		<%= h(sport_entry.venue_name) %>
 	</td>
 	 
-	<% if sport_entry.grade.entry_limit %> 
-		<td align="center">
-			<%= h(sport_entry.grade.entry_limit) %>
-		</td>
-	<% else %> 
-		<td align="center">-</td>
-	<% end %> 
-	 
-	<td align="center">
-	    <%= h(sport_entry.grade.sport_entries.count) %>
-	</td>
 </tr>

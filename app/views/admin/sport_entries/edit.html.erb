@@ -24,16 +24,17 @@
     <% end %> 
 </table>
 
-<% unless @sport_entry.venue_known? && @sport_entry.session_known? %>
-    <%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(:id => @sport_entry.id), 
-            :html => { :method => :patch, :multipart => true }) do |f| %>
+<%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(:id => @sport_entry.id), 
+        :html => { :method => :patch, :multipart => true }) do |f| %>
 
-        <%= f.error_notification %>
+    <%= f.error_notification %>
 
-        <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
+    <%= f.input :group_id, as: :select, collection: @groups, label_method: :short_name %>
+    <%= f.input :status, as: :select, collection: SportEntry::STATUSES %>
+    <%= f.input :section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
+    <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
 
-        <%= f.button :submit %>
-    <% end %>
+    <%= f.button :submit %>
 <% end %>
 
 <br/>

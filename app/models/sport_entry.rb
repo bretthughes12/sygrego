@@ -53,6 +53,8 @@ class SportEntry < ApplicationRecord
            :team_size, to: :grade
 
   before_validation :validate_number_of_entries_in_sport, on: :create
+  after_create :update_team_numbers
+  after_destroy :update_team_numbers
 
   STATUSES = ['Requested',
     'To Be Confirmed',
@@ -119,6 +121,10 @@ class SportEntry < ApplicationRecord
 
   def section_name
     section.nil? ? cached_grade.name : section.name
+  end
+
+  def preferred_section_name
+    preferred_section_id.nil? ? "" : Section.find(preferred_section_id).name
   end
 
   def requires_participants?
@@ -315,5 +321,9 @@ private
     else
       settings.indiv_draws_complete
     end
+  end
+
+  def update_team_numbers
+    self.group.update_team_numbers(grade)
   end
 end

@@ -8,7 +8,8 @@ class Admin::SportEntriesController < ApplicationController
   
     # GET /admin/sport_entries
     def index
-      @sport_entries = SportEntry.all
+      @sport_entries = SportEntry.includes([:grade, :group]).
+      order('grades.name, sport_entries.status, groups.short_name').load
   
       respond_to do |format|
         format.html { @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100) }
@@ -110,6 +111,7 @@ private
     def render_for_edit
       @participant = Participant.new
       @sections = @sport_entry.grade.sections
+      @groups = Group.coming.order(:short_name).all
       @participants = @sport_entry.participants
             
       if @sport_entry.participants.size < @sport_entry.grade.max_participants
