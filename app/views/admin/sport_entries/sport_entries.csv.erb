@@ -1,4 +1,4 @@
-Type,Session,Grade,Section,Preferred,Group,Venue,Status,Name,Team Size,Number of Participants,Captain,Participants
+Type,Session,Grade,Section,Preferred,Group,Venue,Status,Name,Team #,Team Size,Number of Participants,Captain,Participants
 <%= CSV.generate do |csv|
   @sport_entries.each do |e|
   	participants = e.participants.clone
@@ -22,6 +22,7 @@ Type,Session,Grade,Section,Preferred,Group,Venue,Status,Name,Team Size,Number of
 			 e.venue_name,
 			 e.status,
 			 e.name,
+			 e.team_number,
 			 e.grade.team_size,
 			 e.participants.size,
 			 captain_name ] + players

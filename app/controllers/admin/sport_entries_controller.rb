@@ -91,7 +91,7 @@ class Admin::SportEntriesController < ApplicationController
       if params[:sport_entry] && params[:sport_entry][:file].path =~ %r{\.csv$}i
         result = SportEntry.import(params[:sport_entry][:file], current_user)
 
-        flash[:notice] = "Sport entries upload complete: #{result[:creates]} sport_entries created; #{result[:updates]} updates; #{result[:errors]} errors"
+        flash[:notice] = "Sport entries upload complete: #{result[:creates]} sport entries created; #{result[:updates]} updates; #{result[:errors]} errors"
 
         respond_to do |format|
           format.html { redirect_to admin_sport_entries_url }
