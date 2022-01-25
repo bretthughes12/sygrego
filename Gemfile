@@ -29,9 +29,7 @@ gem 'image_processing', '~> 1.2'
 gem 'bootsnap', '>= 1.4.4', require: false
 
 # SYG Application gems, not included by default with Rails
-# TODO: Once delayed_job_active_record is updated to handle Rails7, remove git, and branch from below and remove delayed_job from gemfile
-gem 'delayed_job_active_record', git: "https://github.com/willnet/delayed_job_active_record.git", branch: "rails7"
-gem 'delayed_job', git: "https://github.com/willnet/delayed_job.git", branch: "rails7"
+gem 'delayed_job_active_record'
 gem 'simple_form'
 gem 'devise'
 gem 'exception_handler', '~> 0.8.0.0'
@@ -60,8 +58,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  # TODO: Once annotate is updated to handle Rails7, remove git, and branch from below 
-  gem 'annotate', git: 'https://github.com/dabit/annotate_models.git', branch: "rails-7"
+  gem 'annotate'
   gem 'brakeman'
   gem 'foreman'
   gem 'letter_opener'
