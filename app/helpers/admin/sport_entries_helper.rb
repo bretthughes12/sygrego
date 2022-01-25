@@ -13,7 +13,7 @@ module Admin::SportEntriesHelper
     end
 
     def should_show_draw_link(entry)
-        entry.section && entry.section.draw?
+        entry.section && entry.section.draw_file.attached?
     end
     
     def should_show_delete_link(entry)

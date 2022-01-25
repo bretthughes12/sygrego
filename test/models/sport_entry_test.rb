@@ -323,6 +323,25 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_equal "(not final)", entry.session_name
   end
 
+  test "should be able to be deleted" do
+    @setting.team_draws_complete = @setting.indiv_draws_complete = false
+    @entry.grade.sport.classification = "Team"
+    @entry.grade.status = "Open"
+    assert_equal true, @entry.entry_can_be_deleted(@setting)
+
+    @entry.grade.status = "Closed"
+    @entry.status = "Waiting List"
+    assert_equal true, @entry.entry_can_be_deleted(@setting)
+
+    @entry.status = "Entered"
+    @setting.team_draws_complete = true
+    assert_equal false, @entry.entry_can_be_deleted(@setting)
+
+    @setting.indiv_draws_complete = true
+    @entry.grade.sport.classification = "Individual"
+    assert_equal false, @entry.entry_can_be_deleted(@setting)
+  end
+
 #  def test_sport_entry_venue
     #entry has sport section
 #    section = FactoryBot.create(:section)

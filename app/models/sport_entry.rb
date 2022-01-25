@@ -97,9 +97,9 @@ class SportEntry < ApplicationRecord
     @participants ||= participants
   end
 
-  def sport_id
-    cached_grade.nil? ? 0 : cached_grade.sport.id
-  end
+#  def sport_id
+#    cached_grade.nil? ? 0 : cached_grade.sport.id
+#  end
 
   def name
     if cached_grade.grade_type == 'Singles'
@@ -309,7 +309,7 @@ end
     CSV.foreach(file.path, headers: true) do |fields|
       group = Group.find_by_short_name(fields[5].to_s)
       if group.nil?
-        group = Group.find_by_abbr("No group")
+        group = Group.find_by_short_name("No group")
       end
 
       grade = Grade.find_by_name(fields[2].to_s)
@@ -373,7 +373,7 @@ private
 #  end
 
   def draw_complete(settings)
-    if cached_sport_grade.sport.classification == 'Team'
+    if cached_grade.sport.classification == 'Team'
       settings.team_draws_complete
     else
       settings.indiv_draws_complete

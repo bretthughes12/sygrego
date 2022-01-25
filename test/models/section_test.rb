@@ -57,6 +57,10 @@ class SectionTest < ActiveSupport::TestCase
     assert_equal @section.session.name, @section.session_name
   end
 
+  test "should provide section session and venuw" do
+    assert_equal @section.session.name + ' - ' + @section.venue.name, @section.session_and_venue
+  end
+
   test "should import sections from file" do
     FactoryBot.create(:grade, name: "Hockey Open B")
     FactoryBot.create(:venue, database_code: "HOCK")

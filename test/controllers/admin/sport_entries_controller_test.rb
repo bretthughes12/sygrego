@@ -70,6 +70,16 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit with enough participants" do
+    99.times do
+      @sport_entry.participants << FactoryBot.create(:participant, group: @group)
+    end
+
+    get edit_admin_sport_entry_url(@sport_entry)
+
+    assert_response :success
+  end
+
   test "should update sport_entry" do
     section = FactoryBot.create(:section, grade: @sport_entry.grade)
 

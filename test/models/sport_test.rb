@@ -50,6 +50,15 @@ class SportTest < ActiveSupport::TestCase
     assert_equal true, sport1 < sport2
   end
 
+  test "should count the number of entries for a participant in a sport" do
+    grade = FactoryBot.create(:grade)
+    entry = FactoryBot.create(:sport_entry, grade: grade)
+    participant = FactoryBot.create(:participant, group: entry.group)
+    entry.participants << participant
+    
+    assert_equal 1, grade.sport.indiv_entries(participant)
+  end
+
   test "should import sports from file" do
     file = fixture_file_upload('sport.csv','application/csv')
     
