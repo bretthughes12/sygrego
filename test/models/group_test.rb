@@ -329,6 +329,102 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal gc1.wwcc_number, @group.gc_wwcc
   end
 
+  def test_should_be_active_with_a_non_stale_user
+    active_group = FactoryBot.create(:group)
+    active_group.users << FactoryBot.create(:user)
+    
+    assert active_group.active
+  end
+
+  def test_should_not_be_active_with_no_non_stale_users
+    inactive_group = FactoryBot.create(:group)
+    inactive_group.users << FactoryBot.create(:user, status: 'Stale')
+    
+    assert !inactive_group.active
+  end
+  
+  test "email recipients should include email of fresh user" do
+    group = FactoryBot.create(:group)
+    fresh_user = FactoryBot.create(:user, status: 'Verified')
+    stale_user = FactoryBot.create(:user, status: 'Stale')
+
+    group.users << fresh_user
+    group.users << stale_user
+
+    assert group.email_recipients.include?(fresh_user.email)
+  end
+  
+  test "email recipients should not include email of stale user" do
+    group = FactoryBot.create(:group)
+    fresh_user = FactoryBot.create(:user, status: 'Verified')
+    stale_user = FactoryBot.create(:user, status: 'Stale')
+
+    group.users << fresh_user
+    group.users << stale_user
+
+    assert !group.email_recipients.include?(stale_user.email)
+  end
+
+  def test_group_entries_requiring_participants
+    other_group = FactoryBot.create(:group)
+    participant1 = FactoryBot.create(:participant, group: @group)
+    participant2 = FactoryBot.create(:participant, group: @group)
+    singles_grade = FactoryBot.create(:grade,
+                            grade_type: "Singles",
+                            min_participants: 1)
+    doubles_grade = FactoryBot.create(:grade,
+                            grade_type: "Doubles",
+                            min_participants: 2)
+    team_grade = FactoryBot.create(:grade,
+                         grade_type: "Team",
+                         min_participants: 0)
+
+    singles_entry_with_participants = FactoryBot.create(:sport_entry, 
+                                              group: @group,
+                                              grade: singles_grade)
+    singles_entry_with_participants.participants << participant1
+    singles_entry_with_participants.save
+
+    singles_entry_with_no_participants = FactoryBot.create(:sport_entry, 
+                                                 group: @group,
+                                                 grade: singles_grade)
+
+    doubles_entry_with_two_participants = FactoryBot.create(:sport_entry, 
+                                                  group: @group,
+                                                  grade: doubles_grade)
+    doubles_entry_with_two_participants.participants << participant1
+    doubles_entry_with_two_participants.participants << participant2
+    doubles_entry_with_two_participants.save
+
+    doubles_entry_with_one_participant = FactoryBot.create(:sport_entry, 
+                                                  group: @group,
+                                                  grade: doubles_grade)
+    doubles_entry_with_one_participant.participants << participant1
+    doubles_entry_with_one_participant.save
+
+    team_entry = FactoryBot.create(:sport_entry, 
+                         group: @group,
+                         grade: team_grade)
+
+    #singles entry with enough participants
+    assert !@group.entries_requiring_participants.include?(singles_entry_with_participants)
+
+    #singles entry with no participants
+    assert @group.entries_requiring_participants.include?(singles_entry_with_no_participants)
+
+    #doubles entry with enough participants
+    assert !@group.entries_requiring_participants.include?(doubles_entry_with_two_participants)
+
+    #doubles entry with not enough participants
+    assert @group.entries_requiring_participants.include?(doubles_entry_with_one_participant)
+
+    #team entry
+    assert !@group.entries_requiring_participants.include?(team_entry)
+
+    #another group won't see my entries
+    assert !other_group.entries_requiring_participants.include?(singles_entry_with_no_participants)
+  end
+
   test "should assign short name" do
     FactoryBot.create(:group, short_name: "Aaaargh")
     

@@ -79,6 +79,16 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal '01/02/2020', @participant.date_driver_signed
   end
 
+  test "should validate years attended" do
+    @setting.this_year = 2000
+    @setting.save
+
+    @participant.years_attended = 99
+
+    assert !@participant.save
+    assert @participant.errors[:years_attended].any?
+  end
+
   def test_participant_fee_values
     full_participant = FactoryBot.create(:participant)
     early_participant = FactoryBot.create(:participant, early_bird: true)
@@ -157,6 +167,98 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal "Team Helper - Not staying onsite", offsite_team_helper.category
   end
 
+  def test_participant_can_play_sport
+    player = FactoryBot.create(:participant)
+
+    #OK
+    sport = FactoryBot.create(:sport)
+    assert player.can_play_sport(sport)
+
+    #already playing sport
+    entry = FactoryBot.create(:sport_entry)
+    entry.participants << player
+    entry.save
+    
+    assert !player.can_play_sport(entry.sport)
+    
+    #playing sport, but allowed to play more times
+    sport_that_can_be_played_more_than_once = FactoryBot.create(:sport, max_entries_indiv: 2)
+    entry = FactoryBot.create(:sport_entry, 
+                    grade: FactoryBot.create(:grade, 
+                                            sport: sport_that_can_be_played_more_than_once))
+    entry.participants << player
+    entry.save
+    
+    assert player.can_play_sport(sport_that_can_be_played_more_than_once)
+  end
+
+  test "available sport entries should include entries participant can enter" do
+    participant = FactoryBot.create(:participant)
+    entry = FactoryBot.create(:sport_entry, group: participant.group)
+    participant.stubs(:can_play_sport).returns(true)
+    SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
+    SportEntry.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert participant.available_sport_entries.include?(entry)
+  end
+  
+  test "available sport entries should not include entries in sports that participants cannot play" do
+    participant = FactoryBot.create(:participant)
+    entry = FactoryBot.create(:sport_entry, group: participant.group)
+    participant.stubs(:can_play_sport).returns(false)
+    SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
+    SportEntry.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.available_sport_entries.include?(entry)
+  end
+  
+  test "available sport entries should not include entries that cannot take participants" do
+    participant = FactoryBot.create(:participant)
+    entry = FactoryBot.create(:sport_entry, group: participant.group)
+    participant.stubs(:can_play_sport).returns(true)
+    SportEntry.any_instance.stubs(:can_take_participants?).returns(false)
+    SportEntry.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.available_sport_entries.include?(entry)
+  end
+  
+  test "available sport entries should not include entries for which participant is ineligible" do
+    participant = FactoryBot.create(:participant)
+    entry = FactoryBot.create(:sport_entry, group: participant.group)
+    participant.stubs(:can_play_sport).returns(true)
+    SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
+    SportEntry.any_instance.stubs(:eligible_to_participate?).with(participant).returns(false)
+    
+    assert !participant.available_sport_entries.include?(entry)
+  end
+  
+  test "available sport grades should include grades participant can enter" do
+    participant = FactoryBot.create(:participant)
+    grade = FactoryBot.create(:grade)
+    participant.stubs(:can_play_sport).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert participant.available_grades.include?(grade)
+  end
+  
+  test "available sport grades should not include grades in sports that participants cannot play" do
+    participant = FactoryBot.create(:participant)
+    grade = FactoryBot.create(:grade)
+    participant.stubs(:can_play_sport).returns(false)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.available_grades.include?(grade)
+  end
+  
+  test "available sport grades should not include grades for which participant is ineligible" do
+    participant = FactoryBot.create(:participant)
+    grade = FactoryBot.create(:grade)
+    participant.stubs(:can_play_sport).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(false)
+    
+    assert !participant.available_grades.include?(grade)
+  end
+  
   test "should import participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('participant.csv','application/csv')

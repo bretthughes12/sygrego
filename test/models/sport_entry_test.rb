@@ -342,6 +342,93 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_equal false, @entry.entry_can_be_deleted(@setting)
   end
 
+  test "should import sport entries from file" do
+    FactoryBot.create(:group, short_name: "Caffeine")
+    FactoryBot.create(:grade, name: "Kite Flying Open A")
+    file = fixture_file_upload('sport_entry.csv','application/csv')
+    
+    assert_difference('SportEntry.count') do
+      @result = SportEntry.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should assign sport entries to default group if group not found" do
+    group = FactoryBot.create(:group, short_name: "No group")
+    FactoryBot.create(:grade, name: "Kite Flying Open A")
+    file = fixture_file_upload('sport_entry.csv','application/csv')
+    
+    assert_difference('SportEntry.count') do
+      @result = SportEntry.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    group.reload
+    assert_equal 1, group.sport_entries.size
+  end
+
+  test "should update exiting sport_entries from file" do
+    group = FactoryBot.create(:group, short_name: "Caffeine")
+    grade = FactoryBot.create(:grade, name: "Kite Flying Open A")
+    sport_entry = FactoryBot.create(:sport_entry, 
+      group: group,
+      grade: grade,
+      status: "Requested")
+    file = fixture_file_upload('sport_entry.csv','application/csv')
+    
+    assert_no_difference('SportEntry.count') do
+      @result = SportEntry.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    sport_entry.reload
+    assert_equal "Entered", sport_entry.status
+  end
+
+  test "should not import sport_entries with errors from file" do
+    FactoryBot.create(:group, short_name: "Caffeine")
+    FactoryBot.create(:grade, name: "Kite Flying Open A")
+    file = fixture_file_upload('invalid_sport_entry.csv','application/csv')
+    
+    assert_no_difference('SportEntry.count') do
+      @result = SportEntry.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update sport_entries with errors from file" do
+    group = FactoryBot.create(:group, short_name: "Caffeine")
+    grade = FactoryBot.create(:grade, name: "Kite Flying Open A")
+    sport_entry = FactoryBot.create(:sport_entry, 
+      group: group,
+      grade: grade,
+      status: "Requested")
+    file = fixture_file_upload('invalid_sport_entry.csv','application/csv')
+    
+    assert_no_difference('SportEntry.count') do
+      @result = SportEntry.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    sport_entry.reload
+    assert_not_equal "Invalid", sport_entry.status
+  end
+
 #  def test_sport_entry_venue
     #entry has sport section
 #    section = FactoryBot.create(:section)

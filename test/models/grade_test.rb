@@ -162,6 +162,209 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal 0, invalid.max_entries_group
   end
     
+  def test_grade_entries_entered
+    #"Entered"
+    entered = FactoryBot.create(:sport_entry, grade: @grade, status: "Entered")
+
+    assert @grade.entries_entered.include?(entered)
+
+    #not "Entered"
+    other_grade = FactoryBot.create(:grade)
+    not_entered = FactoryBot.create(:sport_entry, grade: other_grade, status: "Entered")
+    
+    assert !@grade.entries_entered.include?(not_entered)
+    
+    #nil list
+    grade_with_no_entries = FactoryBot.create(:grade)
+
+    assert grade_with_no_entries.entries_entered.empty?
+  end
+
+  def test_grade_entries_requested
+    #"Requested"
+    requested = FactoryBot.create(:sport_entry, grade: @grade, status: "Requested")
+
+    assert @grade.entries_requested.include?(requested)
+    
+    #not "Requested"
+    other_grade = FactoryBot.create(:grade)
+    not_requested = FactoryBot.create(:sport_entry, grade: other_grade, status: "Requested")
+    
+    assert !@grade.entries_requested.include?(not_requested)
+    
+    #nil list
+    grade_with_no_entries = FactoryBot.create(:grade)
+
+    assert grade_with_no_entries.entries_requested.empty?
+  end
+
+  def test_grade_entries_waiting
+    #"Waiting List"
+    missed_out = FactoryBot.create(:sport_entry, grade: @grade, status: "Waiting List")
+
+    assert @grade.entries_waiting.include?(missed_out)
+    
+    #not "Waiting List"
+    other_grade = FactoryBot.create(:grade)
+    not_missed_out = FactoryBot.create(:sport_entry, grade: other_grade, status: "Waiting List")
+    
+    assert !@grade.entries_waiting.include?(not_missed_out)
+    
+    #nil list
+    grade_with_no_entries = FactoryBot.create(:grade)
+
+    assert grade_with_no_entries.entries_waiting.empty?
+  end
+
+  def test_grade_entries_to_be_confirmed
+    #"Waiting List"
+    missed_out = FactoryBot.create(:sport_entry, grade: @grade, status: "To Be Confirmed")
+
+    assert @grade.entries_to_be_confirmed.include?(missed_out)
+    
+    #not "Waiting List"
+    other_grade = FactoryBot.create(:grade)
+    not_missed_out = FactoryBot.create(:sport_entry, grade: other_grade, status: "To Be Confirmed")
+    
+    assert !@grade.entries_to_be_confirmed.include?(not_missed_out)
+    
+    #nil list
+    grade_with_no_entries = FactoryBot.create(:grade)
+
+    assert grade_with_no_entries.entries_to_be_confirmed.empty?
+  end
+
+  def test_sport_grade_starting_status
+    #No entry limit
+    grade = FactoryBot.create(:grade, entry_limit: nil, status: "Open")
+
+    assert_equal "Entered", grade.starting_status
+    
+    #Entry limit, but grade is still open
+    grade = FactoryBot.create(:grade, entry_limit: 8, status: "Open")
+    
+    assert_equal "Requested", grade.starting_status
+    
+    #Entry limit, filled and grade is closed
+    grade = FactoryBot.create(:grade, entry_limit: 8, status: "Closed")
+    8.times do
+      FactoryBot.create(:sport_entry, grade: grade)
+    end
+    
+    assert_equal "Waiting List", grade.starting_status
+  end
+
+  def test_sport_grade_starting_sport_section
+    #Grade with only one section
+    section = FactoryBot.create(:section, grade: @grade)
+    assert_equal section, @grade.starting_section
+    
+    #Section(s) are all full
+    full_grade = FactoryBot.create(:grade)
+    section1 = FactoryBot.create(:section, grade: full_grade, number_in_draw: 4)
+    section2 = FactoryBot.create(:section, grade: full_grade, number_in_draw: 4)
+    4.times do
+      FactoryBot.create(:sport_entry, grade: full_grade, section: section1)
+      FactoryBot.create(:sport_entry, grade: full_grade, section: section2)
+    end
+    
+    assert_nil full_grade.starting_section
+    
+    #Multiple sections - first is full, but second has space
+    not_quite_full_grade = FactoryBot.create(:grade)
+    section1 = FactoryBot.create(:section, grade: not_quite_full_grade, number_in_draw: 4)
+    section2 = FactoryBot.create(:section, grade: not_quite_full_grade, number_in_draw: 4)
+    4.times do
+      FactoryBot.create(:sport_entry, grade: not_quite_full_grade, section: section1)
+    end
+    3.times do
+      FactoryBot.create(:sport_entry, grade: not_quite_full_grade, section: section2)
+    end
+
+    assert_equal section2, not_quite_full_grade.starting_section
+    
+    #Multiple sections - none have 'number_in_draw' filled out
+    grade_with_sections = FactoryBot.create(:grade)
+    section1 = FactoryBot.create(:section, grade: grade_with_sections, number_in_draw: nil)
+    section2 = FactoryBot.create(:section, grade: grade_with_sections, number_in_draw: nil)
+
+    assert_nil grade_with_sections.starting_section
+  end
+  
+  test "participant should not be eligible to participate if they are too young" do
+    grade = FactoryBot.create(:grade, min_age: 18)
+    participant = FactoryBot.create(:participant, age: 17)
+    
+    assert !grade.eligible_to_participate?(participant)
+  end
+  
+  test "participant should be eligible to participate if they are old enough" do
+    grade = FactoryBot.create(:grade, min_age: 18)
+    participant = FactoryBot.create(:participant, age: 18)
+    
+    assert grade.eligible_to_participate?(participant)
+  end
+  
+  test "participant should not be eligible to participate if they are too old" do
+    grade = FactoryBot.create(:grade, max_age: 17)
+    participant = FactoryBot.create(:participant, age: 18)
+    
+    assert !grade.eligible_to_participate?(participant)
+  end
+  
+  test "participant should be eligible to participate if they are young enough" do
+    grade = FactoryBot.create(:grade, max_age: 17)
+    participant = FactoryBot.create(:participant, age: 17)
+    
+    assert grade.eligible_to_participate?(participant)
+  end
+  
+  test "either sex should be eligible to participate in open grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Open")
+    male = FactoryBot.create(:participant, gender: "M")
+    female = FactoryBot.create(:participant, gender: "F")
+    
+    assert grade.eligible_to_participate?(male)
+    assert grade.eligible_to_participate?(female)
+  end
+  
+  test "either sex should be eligible to participate in mixed grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Mixed")
+    male = FactoryBot.create(:participant, gender: "M")
+    female = FactoryBot.create(:participant, gender: "F")
+    
+    assert grade.eligible_to_participate?(male)
+    assert grade.eligible_to_participate?(female)
+  end
+  
+  test "females should be eligible to participate in ladies grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Ladies")
+    female = FactoryBot.create(:participant, gender: "F")
+    
+    assert grade.eligible_to_participate?(female)
+  end
+  
+  test "males should not be eligible to participate in ladies grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Ladies")
+    male = FactoryBot.create(:participant, gender: "M")
+    
+    assert !grade.eligible_to_participate?(male)
+  end
+  
+  test "males should be eligible to participate in mens grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Mens")
+    male = FactoryBot.create(:participant, gender: "M")
+    
+    assert grade.eligible_to_participate?(male)
+  end
+  
+  test "females should not be eligible to participate in mens grades" do
+    grade = FactoryBot.create(:grade, gender_type: "Mens")
+    female = FactoryBot.create(:participant, gender: "F")
+    
+    assert !grade.eligible_to_participate?(female)
+  end
+
   test "should close a sport grade" do
     @grade.close!
 

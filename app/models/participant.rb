@@ -193,9 +193,9 @@ class Participant < ApplicationRecord
       h.sort
     end
   
-    def self.total_fees
-      coming.accepted.to_a.sum(&:fee)
-    end
+#    def self.total_fees
+#      coming.accepted.to_a.sum(&:fee)
+#    end
   
     def name
         first_name + ' ' + surname
@@ -360,25 +360,25 @@ class Participant < ApplicationRecord
 #      sport_entries.select { |entry| entry.sport_grade == grade }.first
 #    end
 
-    def is_entered_in?(grade)
-      sport_entries.collect(&:grade).include?(grade)
-    end
+#    def is_entered_in?(grade)
+#      sport_entries.collect(&:grade).include?(grade)
+#    end
 
 #    def is_entered_in_session?(session)
 #      sport_entries.collect(&:session).include?(session)
 #    end
 
-    def is_entered_in_sport?(sport)
-      sport_entries.collect(&:sport).include?(sport)
-    end
+#    def is_entered_in_sport?(sport)
+#      sport_entries.collect(&:sport).include?(sport)
+#    end
 
     def can_play_sport(sport)
       sport.indiv_entries(self) < sport.max_entries_indiv
     end
 
-#    def can_play_grade(grade)
-#      grade.sport.indiv_entries(self) < grade.sport.max_entries_indiv
-#    end
+    def can_play_grade(grade)
+      grade.sport.indiv_entries(self) < grade.sport.max_entries_indiv
+    end
     
 #  def sports_in_session(session)
 #    sports = []
@@ -421,27 +421,27 @@ class Participant < ApplicationRecord
     grades
   end
 
-  def grades
-    sport_entries.each.collect(&:grade)
-  end
+#  def grades
+#    sport_entries.each.collect(&:grade)
+#  end
 
-  def group_sport_grades_i_can_join
-    grades = []
-    group.grades.each do |grade|
-      next unless can_play_sport(grade.sport) &&
-                  can_play_grade(grade) &&
+#  def group_sport_grades_i_can_join
+#    grades = []
+#    group.grades.each do |grade|
+#      next unless can_play_sport(grade.sport) &&
+#                  can_play_grade(grade) &&
 #                  can_play_in_session(grade.session) &&
-                  grade.eligible_to_participate?(self)
-      grades << grade
-    end
-    grades
-  end
+#                  grade.eligible_to_participate?(self)
+#      grades << grade
+#    end
+#    grades
+#  end
 
-  def sport_entry_ids
-    sport_entries.collect(&:id)
-  end
+#  def sport_entry_ids
+#    sport_entries.collect(&:id)
+#  end
 
-  def driver_sign
+    def driver_sign
       self.driver_signature ? "[electronic]" : ""
     end
   

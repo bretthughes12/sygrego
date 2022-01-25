@@ -159,21 +159,21 @@ class Grade < ApplicationRecord
         name + " (#{session_name})"
       end
         
-    def name_with_percentage_full
-        if entry_limit && entry_limit > 0
-          name + " (#{percentage_full}% full)"
-        else
-          name
-        end
-    end
+#    def name_with_percentage_full
+#        if entry_limit && entry_limit > 0
+#          name + " (#{percentage_full}% full)"
+#        else
+#          name
+#        end
+#    end
     
-    def percentage_full
-        if entry_limit && entry_limit > 0
-          number_of_teams * 100 / entry_limit
-        else
-          0
-        end
-    end
+#    def percentage_full
+#        if entry_limit && entry_limit > 0
+#          number_of_teams * 100 / entry_limit
+#        else
+#          0
+#        end
+#    end
     
     def entries_entered
         cached_sport_entries.entered
@@ -191,9 +191,9 @@ class Grade < ApplicationRecord
         cached_sport_entries.to_be_confirmed
     end
 
-    def number_of_teams
-        cached_sport_entries.count
-    end
+#    def number_of_teams
+#        cached_sport_entries.count
+#    end
 
     def starting_status
         if entry_limit && status == 'Open'

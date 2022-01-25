@@ -217,8 +217,7 @@ class Group < ApplicationRecord
     end
 
     def email_recipients
-      a = active_users.collect(&:email)
-      a.uniq
+      active_users.collect(&:email)
     end
 
 #    def participant_users
