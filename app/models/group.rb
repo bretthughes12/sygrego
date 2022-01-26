@@ -346,9 +346,9 @@ class Group < ApplicationRecord
     entries
   end
 
-  def entries_that_must_be_confirmed
-    cached_sport_entries.to_be_confirmed.collect
-  end
+#  def entries_that_must_be_confirmed
+#    cached_sport_entries.to_be_confirmed.collect
+#  end
 
 #  def first_entry_in_sport_grade(grade)
 #    cached_sport_entries.select { |entry| entry.sport_grade == grade }.first
@@ -455,13 +455,13 @@ class Group < ApplicationRecord
 #        nz(cheques_paid_at_syg)
 #    end
   
-    def sections
-      sections = []
-      cached_sport_entries.entered.each do |entry|
-        sections << entry.section if entry.section
-      end
-      sections.sort.uniq
-    end
+#    def sections
+#      sections = []
+#      cached_sport_entries.entered.each do |entry|
+#        sections << entry.section if entry.section
+#      end
+#      sections.sort.uniq
+#    end
   
     def sports_participants_for_grade(grade)
       players = []
@@ -500,13 +500,13 @@ class Group < ApplicationRecord
       [estimated_numbers, participants.size].max * 1.5    
     end
   
-    def grades
-      cached_sport_entries.each.collect(&:grade).uniq
-    end
+#    def grades
+#      cached_sport_entries.each.collect(&:grade).uniq
+#    end
   
-    def can_enter_grade(grade)
-      grades_available.include?(grade)
-    end
+#    def can_enter_grade(grade)
+#      grades_available.include?(grade)
+#    end
   
     def sports_available(include_all)
       grades_available(include_all).collect(&:sport).uniq
@@ -724,9 +724,9 @@ class Group < ApplicationRecord
       end
     end
 
-    def active?
-      !participants.coming.accepted.empty? || coming
-    end
+#    def active?
+#      !participants.coming.accepted.empty? || coming
+#    end
   
     # TODO: Move this to either Participant or SportGrade
     def gender_matches_gender_type(gender, gender_type)

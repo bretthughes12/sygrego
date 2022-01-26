@@ -425,6 +425,322 @@ class GroupTest < ActiveSupport::TestCase
     assert !other_group.entries_requiring_participants.include?(singles_entry_with_no_participants)
   end
 
+  test "should list all entries requiring males" do
+    other_group = FactoryBot.create(:group)
+    participant1 = FactoryBot.create(:participant, group: @group, gender: "M")
+    participant2 = FactoryBot.create(:participant, group: @group, gender: "F")
+    mens_grade = FactoryBot.create(:grade,
+      gender_type: "Mens",
+      min_participants: 1,
+      max_participants: 1,
+      min_males: 1)
+    ladies_grade = FactoryBot.create(:grade,
+      gender_type: "Ladies",
+      min_participants: 1,
+      max_participants: 1,
+      min_females: 1)
+    mixed_grade = FactoryBot.create(:grade,
+      gender_type: "Mixed",
+      min_participants: 2,
+      max_participants: 2,
+      min_males: 1,
+      min_females: 1)
+    open_grade = FactoryBot.create(:grade,
+      gender_type: "Open",
+      min_participants: 1,
+      max_participants: 1,
+      min_males: 0,
+      min_females: 0)
+ 
+    mens_entry_with_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mens_grade)
+    mens_entry_with_participants.participants << participant1
+    mens_entry_with_participants.save
+
+    mens_entry_with_no_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mens_grade)
+
+    ladies_entry = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: ladies_grade)
+                      
+    mixed_entry_with_two_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mixed_grade)
+    mixed_entry_with_two_participants.participants << participant1
+    mixed_entry_with_two_participants.participants << participant2
+    mixed_entry_with_two_participants.save
+
+    mixed_entry_with_one_male = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mixed_grade)
+    mixed_entry_with_one_male.participants << participant1
+    mixed_entry_with_one_male.save
+
+    open_entry = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: open_grade)
+
+    #mens entry with enough males
+    assert !@group.entries_requiring_males.include?(mens_entry_with_participants)
+
+    #mens entry with no males
+    assert @group.entries_requiring_males.include?(mens_entry_with_no_participants)
+
+    #mixed entry with enough males
+    assert !@group.entries_requiring_males.include?(mixed_entry_with_two_participants)
+
+    #mixed entry with one male
+    assert !@group.entries_requiring_males.include?(mixed_entry_with_one_male)
+
+    #open entry
+    assert !@group.entries_requiring_males.include?(open_entry)
+
+    #ladies entry
+    assert !@group.entries_requiring_males.include?(ladies_entry)
+
+    #another group won't see my entries
+    assert !other_group.entries_requiring_males.include?(mens_entry_with_no_participants)
+  end
+
+  test "should list all entries requiring females" do
+    other_group = FactoryBot.create(:group)
+    participant1 = FactoryBot.create(:participant, group: @group, gender: "M")
+    participant2 = FactoryBot.create(:participant, group: @group, gender: "F")
+    mens_grade = FactoryBot.create(:grade,
+      gender_type: "Mens",
+      min_participants: 1,
+      max_participants: 1,
+      min_males: 1)
+    ladies_grade = FactoryBot.create(:grade,
+      gender_type: "Ladies",
+      min_participants: 1,
+      max_participants: 1,
+      min_females: 1)
+    mixed_grade = FactoryBot.create(:grade,
+      gender_type: "Mixed",
+      min_participants: 2,
+      max_participants: 2,
+      min_males: 1,
+      min_females: 1)
+    open_grade = FactoryBot.create(:grade,
+      gender_type: "Open",
+      min_participants: 1,
+      max_participants: 1,
+      min_males: 0,
+      min_females: 0)
+ 
+    ladies_entry_with_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: ladies_grade)
+    ladies_entry_with_participants.participants << participant2
+    ladies_entry_with_participants.save
+
+    ladies_entry_with_no_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: ladies_grade)
+
+    mens_entry = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mens_grade)
+                      
+    mixed_entry_with_two_participants = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mixed_grade)
+    mixed_entry_with_two_participants.participants << participant1
+    mixed_entry_with_two_participants.participants << participant2
+    mixed_entry_with_two_participants.save
+
+    mixed_entry_with_one_female = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: mixed_grade)
+    mixed_entry_with_one_female.participants << participant2
+    mixed_entry_with_one_female.save
+
+    open_entry = FactoryBot.create(:sport_entry, 
+      group: @group,
+      grade: open_grade)
+
+    #ladies entry with enough females
+    assert !@group.entries_requiring_females.include?(ladies_entry_with_participants)
+
+    #mens entry with no females
+    assert @group.entries_requiring_females.include?(ladies_entry_with_no_participants)
+
+    #mixed entry with enough males
+    assert !@group.entries_requiring_females.include?(mixed_entry_with_two_participants)
+
+    #mixed entry with one male
+    assert !@group.entries_requiring_females.include?(mixed_entry_with_one_female)
+
+    #open entry
+    assert !@group.entries_requiring_females.include?(open_entry)
+
+    #ladies entry
+    assert !@group.entries_requiring_females.include?(mens_entry)
+
+    #another group won't see my entries
+    assert !other_group.entries_requiring_females.include?(ladies_entry_with_no_participants)
+  end
+
+  def test_group_sports_participants_for_grade
+    male = FactoryBot.create(:participant, gender: "M", group: @group)
+    female = FactoryBot.create(:participant, gender: "F", group: @group)
+    too_old = FactoryBot.create(:participant, age: 55, group: @group)
+    too_young = FactoryBot.create(:participant, age: 5, group: @group)
+    spectator = FactoryBot.create(:participant, spectator: true, group: @group)
+    not_coming = FactoryBot.create(:participant, coming: false, group: @group)
+    player = FactoryBot.create(:participant, group: @group)
+
+    mens_grade = FactoryBot.create(:grade, gender_type: "Mens")
+    ladies_grade = FactoryBot.create(:grade, gender_type: "Ladies")
+    mixed_grade = FactoryBot.create(:grade, gender_type: "Mixed")
+    open_grade = FactoryBot.create(:grade, gender_type: "Open")
+    under_18_grade = FactoryBot.create(:grade, max_age: 17)
+    min_age_grade = FactoryBot.create(:grade, min_age: 16)
+    playing_grade = FactoryBot.create(:grade)
+
+    entry = FactoryBot.create(:sport_entry, grade: playing_grade, group: @group)
+    entry.participants << player
+    entry.save
+    
+    group = Group.find(@group.id)
+    
+    #satisfies all of the criteria (male grade)
+    assert group.sports_participants_for_grade(mens_grade).
+      include?(male)
+
+    #satisfies all of the criteria (female grade)
+    assert group.sports_participants_for_grade(ladies_grade).
+      include?(female)
+    
+    #satisfies all of the criteria (mixed grade)
+    assert group.sports_participants_for_grade(mixed_grade).
+      include?(male)
+    assert group.sports_participants_for_grade(mixed_grade).
+      include?(female)
+    
+    #satisfies all of the criteria (open grade)
+    assert group.sports_participants_for_grade(open_grade).
+      include?(male)
+    assert group.sports_participants_for_grade(open_grade).
+      include?(female)
+    
+    #already playing this sport
+    assert !group.sports_participants_for_grade(playing_grade).
+      include?(player)
+    
+    #wrong sex (male grade)
+    assert !group.sports_participants_for_grade(mens_grade).
+      include?(female)
+    
+    #wrong sex (female grade)
+    assert !group.sports_participants_for_grade(ladies_grade).
+      include?(male)
+    
+    #too old
+    assert !group.sports_participants_for_grade(under_18_grade).
+      include?(too_old)
+    
+    #too young
+    assert !group.sports_participants_for_grade(min_age_grade).
+      include?(too_young)
+    
+    #spectator
+    assert !group.sports_participants_for_grade(mens_grade).
+      include?(spectator)
+    
+    #not coming
+    assert !group.sports_participants_for_grade(mens_grade).
+      include?(not_coming)
+  end
+
+  def test_group_grades_available
+    open_team_grade = FactoryBot.create(:grade, 
+                              status: "Open", 
+                              grade_type: "Team")
+    open_indiv_grade = FactoryBot.create(:grade, 
+                               status: "Open", 
+                               grade_type: "Singles")
+
+    used_team_grade = FactoryBot.create(:grade, 
+                              grade_type: "Team",
+                              sport: FactoryBot.create(:sport, max_team_entries_group: 1))
+    used_indiv_grade = FactoryBot.create(:grade, 
+                               grade_type: "Singles",
+                               sport: FactoryBot.create(:sport, max_indiv_entries_group: 1))
+    FactoryBot.create(:sport_entry, grade: used_team_grade, group: @group)
+    FactoryBot.create(:sport_entry, grade: used_indiv_grade, group: @group)
+    
+    closed_team_grade = FactoryBot.create(:grade, 
+                                status: "Closed", 
+                                grade_type: "Team",
+                                entry_limit: 1)
+    closed_indiv_grade = FactoryBot.create(:grade, 
+                                 status: "Closed", 
+                                 grade_type: "Singles",
+                                 entry_limit: 1)
+    FactoryBot.create(:sport_entry, grade: closed_team_grade)
+    FactoryBot.create(:sport_entry, grade: closed_indiv_grade)
+    
+    #normal entries, still available
+    assert @group.grades_available(false).include?(open_team_grade)
+    assert @group.grades_available(false).include?(open_indiv_grade)
+    
+    #group has used up their allowance in this sport
+    assert !@group.grades_available(false).include?(used_team_grade)
+    assert !@group.grades_available(false).include?(used_indiv_grade)
+    
+    #grades are not accepting entries
+    assert !@group.grades_available(false).include?(closed_team_grade)
+    assert !@group.grades_available(false).include?(closed_indiv_grade)
+    
+    #override grades that are not accepting entries
+    assert @group.grades_available(true).include?(closed_team_grade)
+    assert @group.grades_available(true).include?(closed_indiv_grade)
+    
+    #override doesn't help groups that have used their allowance
+    assert !@group.grades_available(true).include?(used_team_grade)
+    assert !@group.grades_available(true).include?(used_indiv_grade)
+  end
+
+  def test_group_sports_available
+    open_sport = FactoryBot.create(:sport)
+    FactoryBot.create(:grade, 
+                   status: "Open", 
+                   sport: open_sport)
+
+    used_sport = FactoryBot.create(:sport, max_team_entries_group: 1)
+    used_grade = FactoryBot.create(:grade, 
+                         grade_type: "Team",
+                         sport: used_sport)
+    FactoryBot.create(:sport_entry, grade: used_grade, group: @group)
+    
+    closed_sport = FactoryBot.create(:sport)
+    closed_grade = FactoryBot.create(:grade, 
+                           status: "Closed", 
+                           entry_limit: 1,
+                           sport: closed_sport)
+    FactoryBot.create(:sport_entry, grade: closed_grade)
+    
+    #normal entries, still available
+    assert @group.sports_available(false).include?(open_sport)
+
+    #group has used up their allowance in this sport
+    assert !@group.sports_available(false).include?(used_sport)
+    
+    #sport with only grades are not accepting entries
+    assert !@group.sports_available(false).include?(closed_sport)
+    
+    #override sports that are not accepting entries
+    assert @group.sports_available(true).include?(closed_sport)
+    
+    #override doesn't help groups that have used their allowance
+    assert !@group.sports_available(true).include?(used_sport)
+  end
+
   test "should assign short name" do
     FactoryBot.create(:group, short_name: "Aaaargh")
     

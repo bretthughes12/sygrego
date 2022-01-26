@@ -24,7 +24,7 @@ class Gc::ParticipantsController < ApplicationController
       @participants = @group.participants.
         search(params[:search]).
         order(:surname, :first_name).
-        paginate(page: params[:page], per_page: 100)
+        paginate(page: params[:page].to_i, per_page: 100)
   
       respond_to do |format|
         format.html { render action: 'index', layout: @current_role.name }
