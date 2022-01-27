@@ -1,7 +1,5 @@
 <% title "Admin Home" %>
 
-<%= raw Seer::init_visualization -%>
-
 <h1><%= yield(:title) %></h1>
 
 Welcome! <br />
@@ -13,14 +11,10 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <h2>Dashboard</h2>
 
-<%= render :partial => 'application/pie_chart', 
-	:locals => { :chart_data => @groups_data,
-				 :chart_element => "groups",
-			     :chart_class => "chart",
-				 :title => "Groups (#{@total_groups})" } %>
+<h3>Groups (<%= @total_groups%>)</h3>
 
-<%= render :partial => 'application/pie_chart', 
-    :locals => { :chart_data => @participants_data,
-                :chart_element => "participants",
-                :chart_class => "chart",
-                :title => "Participants (#{@total_participants})" } %>
+<%= pie_chart admin_groups_charts_path %>
+
+<h3>Participants (<%= @total_participants%>)</h3>
+
+<%= pie_chart admin_participants_charts_path %>

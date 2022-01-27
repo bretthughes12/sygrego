@@ -1,7 +1,5 @@
 <% title "SYG Registration for #{@group.short_name}" %>
 
-<%= raw Seer::init_visualization -%>
-
 <h1><%= yield(:title) %></h1>
 
 Welcome! <br />
@@ -16,8 +14,6 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <br/>
 
-<%= render partial: 'application/pie_chart', 
-	locals: { chart_data: @participants_data,
-		      chart_element: "participants",
-			  chart_class: "chart",
-			  title: "Our participants (#{@participants_registered})" } %>
+<h3>Our participants (<%= @participants_registered%>)</h3>
+
+<%= pie_chart gc_participants_charts_path %>

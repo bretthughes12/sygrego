@@ -31,6 +31,14 @@ Rails.application.routes.draw do
 
   resources :group_signups, :only => [:new, :create]
 
+  resources :charts, only: [] do
+    collection do
+      get :admin_groups
+      get :admin_participants
+      get :gc_participants
+    end
+  end
+
   namespace :admin do
     resource :info, :controller => "info" do
       collection do
