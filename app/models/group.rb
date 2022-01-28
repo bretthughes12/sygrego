@@ -120,6 +120,19 @@ class Group < ApplicationRecord
         name <=> other.name
     end
 
+    def short_name_with_status
+      case 
+      when status == 'Stale'
+        short_name + ' (Stale)'
+        
+      when !coming
+        short_name + ' (Not coming)'
+        
+      else
+        short_name
+      end
+    end
+
     def cached_sport_entries
       @sport_entries ||= sport_entries
     end

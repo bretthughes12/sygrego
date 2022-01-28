@@ -57,6 +57,22 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal -1, @group <=> other_group
   end
 
+  test "should show status with short_name" do
+    #all good
+    @group.short_name = "Springfield"
+    @group.status = "Accepted"
+    @group.coming = true
+    assert_equal 'Springfield', @group.short_name_with_status 
+
+    #not coming
+    @group.coming = false
+    assert_equal 'Springfield (Not coming)', @group.short_name_with_status 
+
+    #stale
+    @group.status = "Stale"
+    assert_equal 'Springfield (Stale)', @group.short_name_with_status 
+  end
+
   def test_group_deposit
     # group expects fewer than 20 (small group)
     group = FactoryBot.create(:group)
