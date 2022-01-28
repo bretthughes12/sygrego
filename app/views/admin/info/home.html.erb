@@ -11,12 +11,8 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <h2>Dashboard</h2>
 
-<h3>Groups (<%= @total_groups%>)</h3>
-
-<%= pie_chart admin_groups_charts_path, refresh: 60 %>
+<%= pie_chart admin_groups_charts_path, title: "Groups (#{@total_groups})", refresh: 60 %>
 
 <br/><br/>
 
-<h3>Participants (<%= @total_participants%>)</h3>
-
-<%= pie_chart admin_participants_charts_path, refresh: 60 %>
+<%= pie_chart admin_participants_charts_path, title: "Participants (#{@total_participants})", refresh: 60 %>

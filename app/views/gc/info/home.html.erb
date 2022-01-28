@@ -14,6 +14,4 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 
 <br/>
 
-<h3>Our participants (<%= @participants_registered%>)</h3>
-
-<%= pie_chart gc_participants_charts_path %>
+<%= pie_chart gc_participants_charts_path, title: "Our participants (#{@participants_registered})" %>

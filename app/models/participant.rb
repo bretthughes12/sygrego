@@ -122,7 +122,8 @@ class Participant < ApplicationRecord
     validates :number_plate,           
         length: { maximum: 10 }
     validates :amount_paid,            
-        numericality: true
+        numericality: true,
+        allow_blank: true
     validates :fee_when_withdrawn,     
         numericality: true,
         allow_blank: true
