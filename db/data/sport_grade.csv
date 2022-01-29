@@ -22,7 +22,6 @@ RowID,Sport,Name,Active,Type,Status,MaxAge,MinAge,GenderType,MaxPart,MinPart,Min
 -1924449133,Beep Test,Beep Test Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,60,60
 -2064696624,Bocce,Bocce Open B,TRUE,Team,Open,130,11,Open,6,0,0,0,4,16,16
 541009346,Bocce,Bocce Open C,TRUE,Team,Open,130,11,Open,6,0,0,0,4,16,16
--908817727,Bubble Soccer,Bubble Soccer C,TRUE,Team,Open,130,11,Open,14,0,0,0,5,64,64
 -2023821986,Chess,Chess Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
 376581511,Chess,Chess Under 15,TRUE,Singles,Open,14,11,Open,1,1,0,0,1,16,16
 -2051454276,Chess,Chess Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,16,16

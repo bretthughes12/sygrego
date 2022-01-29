@@ -6,7 +6,6 @@ Badminton,true,Individual,8,0,1,false,Court,Round Robin
 Basketball,true,Team,0,99,1,true,Court,Round Robin
 Beep Test,true,Individual,10,0,1,false,Lane,Round Robin
 Bocce,true,Team,0,99,1,false,Field,Round Robin
-Bubble Soccer,true,Team,0,99,1,false,Field,Round Robin
 Chess,true,Individual,6,0,1,false,Board,Round Robin
 Cricket,true,Team,0,99,1,false,Ground,Round Robin
 Cross Country,true,Individual,12,0,1,false,Lane,Round Robin
