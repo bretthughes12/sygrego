@@ -5,7 +5,7 @@
                 "heroku-postgresql"
             ],
             "scripts": {
-                "test-setup": "bin/rails assets:precompile"
+                "test-setup": "bundle exec rake assets:precompile"
             }
         }
     }
