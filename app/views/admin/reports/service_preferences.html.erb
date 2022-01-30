@@ -1,7 +1,13 @@
 <% title "Evening Service Preferences" %>
 
 <h1><%= yield(:title) %></h1>
-    
+
+<%= pie_chart evening_saturday_preferences_charts_path, title: "Saturday (#{@total_groups})" %>
+
+<br/><br/>
+
+<%= pie_chart evening_sunday_preferences_charts_path, title: "Sunday (#{@total_groups})" %>
+
 <div id="basic-list">
 	<h2>Saturday</h2>
 
