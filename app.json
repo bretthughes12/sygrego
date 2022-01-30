@@ -2,10 +2,10 @@
     "environments": {
         "test": {
             "addons":[
-                "heroku-postgresql"
+                "heroku-postgresql:in-dyno"
             ],
             "scripts": {
-                "test-setup": "bundle exec rake assets:precompile"
+                "test-setup": "bin/bundle exec rake assets:precompile"
             }
         }
     }
