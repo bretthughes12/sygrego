@@ -1,9 +1,12 @@
 {
     "environments": {
         "test": {
-          "addons":[
-             "heroku-postgresql"
-          ]
+            "addons":[
+                "heroku-postgresql"
+            ],
+            "scripts": {
+                "test-setup": "bin/rails assets:precompile"
+            }
         }
-      }
+    }
 }
