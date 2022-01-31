@@ -42,6 +42,7 @@ gem 'will_paginate-bootstrap-style'
 gem 'chartkick'
 # gem 'coffee-rails'
 # gem 'jquery-rails'
+gem 'newrelic_rpm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

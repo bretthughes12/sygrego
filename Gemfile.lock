@@ -185,6 +185,7 @@ GEM
       digest
       net-protocol
       timeout
+    newrelic_rpm (8.4.0)
     nio4r (2.5.8)
     nokogiri (1.13.0)
       mini_portile2 (~> 2.7.0)
@@ -333,6 +334,7 @@ DEPENDENCIES
   letter_opener
   listen (~> 3.3)
   mocha
+  newrelic_rpm
   pg (~> 1.1)
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
