@@ -16,7 +16,8 @@
                 "heroku-postgresql:in-dyno"
             ],
             "scripts": {
-                "test-setup": "bin/bundle exec rake assets:precompile"
+                "test-setup": "bin/bundle exec rake assets:precompile",
+                "test": "bin/bundle exec rake test"
             }
         }
     }
