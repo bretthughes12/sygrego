@@ -68,17 +68,17 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  mailertogo        = URI.parse ENV['MAILERTOGO_URL']
-  mailertogo_domain = ENV.fetch("MAILERTOGO_DOMAIN", "stateyouthgames.com")
+  mailertogo_host     = ENV.fetch("MAILERTOGO_SMTP_HOST")
+  mailertogo_port     = ENV.fetch("MAILERTOGO_SMTP_PORT", 587)
+  mailertogo_user     = ENV.fetch("MAILERTOGO_SMTP_USER")
+  mailertogo_password = ENV.fetch("MAILERTOGO_SMTP_PASSWORD")
+  mailertogo_domain   = ENV.fetch("MAILERTOGO_DOMAIN", "stateyouthgames.com")
   
-  # TODO: Change this when sygrego.com becomes the domain
-  # config.action_mailer.default_url_options = { host: 'sygrego.com' }
-  config.action_mailer.default_url_options = { host: 'sygrego.herokuapp.com' }
   config.action_mailer.smtp_settings = {
-    :address              => mailertogo.host,
-    :port                 => mailertogo.port,
-    :user_name            => mailertogo.user,
-    :password             => mailertogo.password,
+    :address              => mailertogo_host,
+    :port                 => mailertogo_port,
+    :user_name            => mailertogo_user,
+    :password             => mailertogo_password,
     :domain               => mailertogo_domain,
     :authentication       => :plain,
     :enable_starttls_auto => true,
