@@ -271,6 +271,19 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 0, @result[:updates]
     assert_equal 0, @result[:errors]
   end
+  
+  test "should import alterenate participants from file" do
+    FactoryBot.create(:group, abbr: "CAF")
+    file = fixture_file_upload('participant2.csv','application/csv')
+    
+    assert_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
 
   test "should assign participants to default group if group not found" do
     group = FactoryBot.create(:group, abbr: "DFLT")
@@ -344,6 +357,19 @@ class ParticipantTest < ActiveSupport::TestCase
   test "should import GC participants from file" do
     group = FactoryBot.create(:group)
     file = fixture_file_upload('participant_gc.csv','application/csv')
+    
+    assert_difference('Participant.count') do
+      @result = Participant.import_gc(file, group, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should import alternate GC participants from file" do
+    group = FactoryBot.create(:group)
+    file = fixture_file_upload('participant2_gc.csv','application/csv')
     
     assert_difference('Participant.count') do
       @result = Participant.import_gc(file, group, @user)

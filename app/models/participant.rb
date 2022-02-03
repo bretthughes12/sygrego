@@ -463,7 +463,7 @@ class Participant < ApplicationRecord
           end
 
           participant = Participant.where(first_name: fields[2], surname: fields[3], group_id: group.id).first
-          if fields[18].nil? || fields[18] = '0'
+          if fields[18].nil? || fields[18] == '0'
             years_attended = nil
           else
             years_attended = fields[18].to_i
@@ -565,7 +565,7 @@ class Participant < ApplicationRecord
 
     CSV.foreach(file.path, headers: true) do |fields|
         participant = Participant.where(first_name: fields[0], surname: fields[1], group_id: group.id).first
-        if fields[15].nil? || fields[15] = '0'
+        if fields[15].nil? || fields[15] == '0'
           years_attended = nil
         else
           years_attended = fields[15].to_i
