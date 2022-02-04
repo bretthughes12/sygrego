@@ -26,4 +26,14 @@
 	<td align="center">
 	    <%= h(sport_entry.grade.sport_entries.count) %>
 	</td>
+
+	<td>
+		<%- if should_show_delete_link(sport_entry) -%>
+			<%= link_to "X", gc_sport_entry_path(sport_entry),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>
+		<%- end -%>
+	</td>
 </tr>

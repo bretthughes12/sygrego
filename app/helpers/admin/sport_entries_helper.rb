@@ -37,4 +37,16 @@ module Admin::SportEntriesHelper
         end
     end
 
+    def sport_entry_status_tooltip(entry)
+        case 
+        when entry.status == "Requested"
+            "This sport grade has limited availability. This entry is 'requested' until restricted sports are allocated"
+        when entry.status == "Entered"
+            "You have been entered into this sport grade"
+        when entry.status == "To Be Confirmed"
+            "You must confirm your entry in this sport grade"
+        else
+            "You are on the waiting list for this sport grade, in case another team withdraws"
+        end
+    end
 end

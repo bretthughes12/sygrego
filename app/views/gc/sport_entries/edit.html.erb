@@ -6,6 +6,7 @@
     <tr><td>Sport / Grade</td><td><%= @sport_entry.section_name %></td></tr>
     <tr><td>Session</td><td><%= @sport_entry.session_name %></td></tr>
     <tr><td>Venue</td><td><%= @sport_entry.venue_name %></td></tr>
+    <tr><td>Status</td><td data-bs-toggle="tooltip" data-bs-placement="right" title="<%= sport_entry_status_tooltip(@sport_entry) %>"><%= @sport_entry.status %>  <span class="badge rounded-pill bg-info text-dark">i</span></td></tr>
     <tr><td>Minimum age</td><td><%= @sport_entry.grade.min_age %></td></tr>
     <tr><td>Maximum age</td><td><%= @sport_entry.grade.max_age %></td></tr>
     <tr><td>Team size</td><td><%= @sport_entry.grade.team_size %></td></tr>
@@ -41,7 +42,7 @@
 <h2>Participants</h2>
 
 <table class="table table-dark">
-    <%= render partial: "participants", collection: @participants %>
+    <%= render partial: "participants" %>
 
     <% unless @eligible_participants.empty? %>
         <tr>
@@ -76,7 +77,7 @@
 <%= link_to "Back", gc_sport_entries_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Destroy", gc_sport_entry_path(@sport_entry),
+<%= link_to "Delete", gc_sport_entry_path(@sport_entry),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
                   class: danger_button_class,

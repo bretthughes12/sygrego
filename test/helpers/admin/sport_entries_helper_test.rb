@@ -24,6 +24,20 @@ class Admin::SportEntriesHelperTest < ActionView::TestCase
     assert_equal "table-danger", sport_entry_display_class(@sport_entry)
   end
   
+  test "sport entry status tooltips" do
+    @sport_entry.status = "Entered"
+    assert_match /You have been entered/, sport_entry_status_tooltip(@sport_entry)
+
+    @sport_entry.status = "Requested"
+    assert_match /This entry is 'requested'/, sport_entry_status_tooltip(@sport_entry)
+
+    @sport_entry.status = "Waiting List"
+    assert_match /You are on the waiting list/, sport_entry_status_tooltip(@sport_entry)
+
+    @sport_entry.status = "To Be Confirmed"
+    assert_match /You must confirm your entry/, sport_entry_status_tooltip(@sport_entry)
+  end
+  
   test "should show draw link when section has a draw file" do
     draw = fixture_file_upload('test.pdf', 'application/pdf')
     section = FactoryBot.create(:section, draw_file: draw)
