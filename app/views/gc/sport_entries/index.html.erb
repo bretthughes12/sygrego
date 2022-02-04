@@ -2,6 +2,8 @@
 
 <h1><%= yield(:title) %></h1>
 
+<% if @settings.sports_loaded %>
+
 <%= will_paginate @sport_entries, :container => false %>
 
 <br/>
@@ -34,3 +36,9 @@
 					{:name => "Requested", :class => "table-warning"},
 					{:name => "Requiring Confirmation", :class => "table-danger"},
 					{:name => "Waiting List", :class => "table-dark"}] %>
+<% else %>
+
+	<p>The sports program has not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
+	<p>Keep an eye on your email inbox, the Group Coordinators' Facebook page for advice on when this is available.</p>
+
+<% end %>
