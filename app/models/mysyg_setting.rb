@@ -2,33 +2,30 @@
 #
 # Table name: mysyg_settings
 #
-#  id                         :bigint           not null, primary key
+#  id                         :integer          not null, primary key
+#  mysyg_name                 :string(50)
+#  mysyg_enabled              :boolean          default("false")
+#  mysyg_open                 :boolean          default("false")
+#  participant_instructions   :text
+#  extra_fee_total            :decimal(8, 2)    default("0.0")
+#  extra_fee_per_day          :decimal(8, 2)    default("0.0")
+#  show_sports_in_mysyg       :boolean          default("true")
+#  show_volunteers_in_mysyg   :boolean          default("true")
+#  show_finance_in_mysyg      :boolean          default("true")
+#  show_group_extras_in_mysyg :boolean          default("true")
 #  approve_option             :string           default("Normal")
-#  extra_fee_per_day          :decimal(8, 2)    default(0.0)
-#  extra_fee_total            :decimal(8, 2)    default(0.0)
+#  team_sport_view_strategy   :string           default("Show all")
 #  indiv_sport_view_strategy  :string           default("Show all")
 #  mysyg_code                 :string(25)
-#  mysyg_enabled              :boolean          default(FALSE)
-#  mysyg_name                 :string(50)
-#  mysyg_open                 :boolean          default(FALSE)
-#  participant_instructions   :text
-#  show_finance_in_mysyg      :boolean          default(TRUE)
-#  show_group_extras_in_mysyg :boolean          default(TRUE)
-#  show_sports_in_mysyg       :boolean          default(TRUE)
-#  show_volunteers_in_mysyg   :boolean          default(TRUE)
-#  team_sport_view_strategy   :string           default("Show all")
+#  group_id                   :integer
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
-#  group_id                   :bigint
 #
 # Indexes
 #
 #  index_mysyg_settings_on_group_id  (group_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (group_id => groups.id)
-#
+
 class MysygSetting < ApplicationRecord
     require 'csv'
   

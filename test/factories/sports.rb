@@ -2,17 +2,17 @@
 #
 # Table name: sports
 #
-#  id                      :bigint           not null, primary key
-#  active                  :boolean          default(TRUE)
-#  bonus_for_officials     :boolean          default(FALSE)
-#  classification          :string(10)       not null
-#  court_name              :string(20)       default("Court")
-#  draw_type               :string(20)       not null
-#  max_entries_indiv       :integer          default(0), not null
-#  max_indiv_entries_group :integer          default(0), not null
-#  max_team_entries_group  :integer          default(0), not null
+#  id                      :integer          not null, primary key
 #  name                    :string(20)       not null
-#  updated_by              :bigint
+#  classification          :string(10)       not null
+#  active                  :boolean          default("true")
+#  max_indiv_entries_group :integer          default("0"), not null
+#  max_team_entries_group  :integer          default("0"), not null
+#  max_entries_indiv       :integer          default("0"), not null
+#  draw_type               :string(20)       not null
+#  bonus_for_officials     :boolean          default("false")
+#  court_name              :string(20)       default("Court")
+#  updated_by              :integer
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
 #
@@ -20,6 +20,7 @@
 #
 #  index_sports_on_name  (name) UNIQUE
 #
+
 FactoryBot.define do
     factory :sport do 
         sequence(:name)             { |n| "Sport#{n}"}

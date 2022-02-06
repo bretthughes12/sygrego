@@ -2,12 +2,12 @@
 #
 # Table name: venues
 #
-#  id            :bigint           not null, primary key
-#  active        :boolean
-#  address       :string
-#  database_code :string(4)
+#  id            :integer          not null, primary key
 #  name          :string(50)       default(""), not null
-#  updated_by    :bigint
+#  database_code :string(4)
+#  address       :string
+#  updated_by    :integer
+#  active        :boolean
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
@@ -16,6 +16,7 @@
 #  index_venues_on_database_code  (database_code) UNIQUE
 #  index_venues_on_name           (name) UNIQUE
 #
+
 class Venue < ApplicationRecord
     include Auditable
  

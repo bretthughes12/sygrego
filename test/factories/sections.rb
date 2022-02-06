@@ -2,30 +2,25 @@
 #
 # Table name: sections
 #
-#  id               :bigint           not null, primary key
-#  active           :boolean
-#  database_rowid   :integer
+#  id               :integer          not null, primary key
+#  grade_id         :integer          default("0"), not null
 #  name             :string(50)       not null
+#  active           :boolean
+#  venue_id         :integer          default("0"), not null
+#  session_id       :integer          default("0"), not null
+#  database_rowid   :integer
 #  number_in_draw   :integer
-#  number_of_courts :integer          default(1)
-#  updated_by       :bigint
 #  year_introduced  :integer
+#  number_of_courts :integer          default("1")
+#  updated_by       :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  grade_id         :bigint           default(0), not null
-#  session_id       :bigint           default(0), not null
-#  venue_id         :bigint           default(0), not null
 #
 # Indexes
 #
 #  index_sections_on_name  (name) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_...  (grade_id => grades.id)
-#  fk_rails_...  (session_id => sessions.id)
-#  fk_rails_...  (venue_id => venues.id)
-#
+
 FactoryBot.define do
   factory :section do
     grade

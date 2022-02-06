@@ -2,11 +2,11 @@
 #
 # Table name: sessions
 #
-#  id             :bigint           not null, primary key
-#  active         :boolean          default(TRUE)
-#  database_rowid :integer
+#  id             :integer          not null, primary key
 #  name           :string           not null
-#  updated_by     :bigint
+#  active         :boolean          default("true")
+#  database_rowid :integer
+#  updated_by     :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #
@@ -15,6 +15,7 @@
 #  index_sessions_on_database_rowid  (database_rowid) UNIQUE
 #  index_sessions_on_name            (name) UNIQUE
 #
+
 require "test_helper"
 
 class SessionTest < ActiveSupport::TestCase

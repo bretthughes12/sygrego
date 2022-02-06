@@ -2,26 +2,26 @@
 #
 # Table name: users
 #
-#  id                     :bigint           not null, primary key
-#  address                :string(200)
+#  id                     :integer          not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  gc_reference           :string(40)
-#  gc_reference_phone     :string(30)
-#  group_role             :string(100)
-#  name                   :string(40)       default(""), not null
-#  phone_number           :string(30)
-#  postcode               :integer          default(0)
-#  primary_gc             :boolean          default(FALSE)
-#  remember_created_at    :datetime
-#  reset_password_sent_at :datetime
 #  reset_password_token   :string
-#  status                 :string(12)       default("Not Verified")
-#  suburb                 :string(40)
-#  wwcc_number            :string
-#  years_as_gc            :integer          default(0)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  name                   :string(40)       default(""), not null
+#  group_role             :string(100)
+#  address                :string(200)
+#  suburb                 :string(40)
+#  postcode               :integer          default("0")
+#  phone_number           :string(30)
+#  gc_reference           :string(40)
+#  gc_reference_phone     :string(30)
+#  years_as_gc            :integer          default("0")
+#  primary_gc             :boolean          default("false")
+#  status                 :string(12)       default("Not Verified")
+#  wwcc_number            :string
 #
 # Indexes
 #
@@ -29,6 +29,7 @@
 #  index_users_on_name                  (name)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
