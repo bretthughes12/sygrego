@@ -65,7 +65,7 @@ class Participant < ApplicationRecord
 #    has_many   :officials
 #    has_many   :helpers
 #    has_many   :securities
-    has_many   :participants_sport_entries
+    has_many   :participants_sport_entries, dependent: :destroy
 #    has_many   :fee_audit_trails
     has_many   :sport_entries, through: :participants_sport_entries
 #    has_many   :sport_preferences, dependent: :destroy
