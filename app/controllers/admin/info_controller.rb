@@ -46,6 +46,15 @@ class Admin::InfoController < ApplicationController
         end
     end
 
+    # GET /admin/info/event_stats
+    def event_stats
+        @event_stats = Statistic.order(weeks_to_syg: :desc).load
+
+        respond_to do |format|
+            format.html { render layout: 'admin' }
+        end
+    end
+
     private
 
     def model_stats(model)

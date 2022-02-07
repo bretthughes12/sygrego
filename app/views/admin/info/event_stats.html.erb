@@ -1,0 +1,20 @@
+<% title "Event Statistics" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+        <th>Date</th>
+        <th>Weeks to SYG</th>
+        <th>Groups</th>
+        <th>Participants</th>
+        <th>Sport Entries</th>
+        <th>Volunteer Vacancies</th>
+    </tr>
+  </thead>
+
+	<%= render partial: 'event_stats', collection: @event_stats %>
+</table>
+
+<%= line_chart admin_group_stats_charts_path, title: "Groups", xtitle: "Weeks to SYG", legend: false, order: :descending %>

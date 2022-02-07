@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     collection do
       get :admin_groups
       get :admin_participants
+      get :admin_group_stats
       get :gc_participants
       get :evening_saturday_preferences
       get :evening_sunday_preferences
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
       collection do
         get :home
         get :tech_stats
+        get :event_stats
       end
     end
 

@@ -25,6 +25,14 @@ class ChartsController < ApplicationController
         render json: participants_data
     end
 
+    def admin_group_stats
+        group_data = Statistic.all.map do |p|
+            [ p.weeks_to_syg, p.number_of_groups ]
+        end
+
+        render json: group_data
+    end
+
     def gc_participants
         find_group
 
