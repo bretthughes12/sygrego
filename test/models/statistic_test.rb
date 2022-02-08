@@ -10,6 +10,7 @@
 #  weeks_to_syg                  :integer
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
+#  year                          :integer          default("2022")
 #
 
 require "test_helper"

@@ -36,6 +36,9 @@ Rails.application.routes.draw do
       get :admin_groups
       get :admin_participants
       get :admin_group_stats
+      get :admin_participant_stats
+      get :admin_sport_entry_stats
+      get :admin_volunteer_stats
       get :gc_participants
       get :evening_saturday_preferences
       get :evening_sunday_preferences

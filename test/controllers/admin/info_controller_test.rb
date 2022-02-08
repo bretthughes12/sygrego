@@ -23,4 +23,10 @@ class Admin::InfoControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test "should get event stats" do
+    get event_stats_admin_info_url
+
+    assert_response :success
+  end
 end

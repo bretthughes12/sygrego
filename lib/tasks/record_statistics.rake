@@ -14,7 +14,8 @@ namespace :syg do
                         number_of_participants: participants,
                         number_of_sport_entries: sport_entries,
                         number_of_volunteer_vacancies: volunteer_vacancies,
-                        weeks_to_syg: weeks_to_syg)
+                        weeks_to_syg: weeks_to_syg,
+                        year: settings.this_year)
     end
   
     desc 'Create a statistics record for the weekly run'
@@ -33,5 +34,26 @@ namespace :syg do
         puts 'No statistics recorded, as it is not Monday night'
       end
     end
-  end
+
+    require 'csv'
+    require 'pp'
+
+    desc 'Load past statistics into the database'
+    task load_statistics: ['db/data/statistics.csv', 'db:migrate'] do |t|
+      puts 'Loading statistics...'
+
+      CSV.foreach(t.prerequisites.first) do |fields|
+        if fields[0] != 'Date'
+          Statistic.create(
+            year: fields[1].to_i,
+            weeks_to_syg: fields[2].to_i,
+            number_of_groups: fields[3].to_i,
+            number_of_participants: fields[4].to_i,
+            number_of_sport_entries: fields[5].to_i,
+            number_of_volunteer_vacancies: fields[6].to_i
+          )
+        end
+      end
+    end
+end
   

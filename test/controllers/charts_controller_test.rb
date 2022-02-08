@@ -37,6 +37,58 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, json[1][1]
   end
 
+  test "should prepare admin group stats chart" do
+    FactoryBot.create(:statistic, year: 2022, weeks_to_syg: 5, number_of_groups: 55)
+
+    get admin_group_stats_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 1, json.length
+    assert_equal 2022, json[0]["name"]
+    assert_equal 55, json[0]["data"][0][1]
+  end
+
+  test "should prepare admin participant stats chart" do
+    FactoryBot.create(:statistic, year: 2022, weeks_to_syg: 5, number_of_participants: 555)
+
+    get admin_participant_stats_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 1, json.length
+    assert_equal 2022, json[0]["name"]
+    assert_equal 555, json[0]["data"][0][1]
+  end
+
+  test "should prepare admin sport entry stats chart" do
+    FactoryBot.create(:statistic, year: 2022, weeks_to_syg: 5, number_of_sport_entries: 5555)
+
+    get admin_sport_entry_stats_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 1, json.length
+    assert_equal 2022, json[0]["name"]
+    assert_equal 5555, json[0]["data"][0][1]
+  end
+
+  test "should prepare admin volunteer stats chart" do
+    FactoryBot.create(:statistic, year: 2022, weeks_to_syg: 5, number_of_volunteer_vacancies: 5)
+
+    get admin_volunteer_stats_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 1, json.length
+    assert_equal 2022, json[0]["name"]
+    assert_equal 5, json[0]["data"][0][1]
+  end
+
   test "should prepare gc participants chart" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:participant, group: group, spectator: false)

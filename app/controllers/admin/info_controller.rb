@@ -48,7 +48,7 @@ class Admin::InfoController < ApplicationController
 
     # GET /admin/info/event_stats
     def event_stats
-        @event_stats = Statistic.order(weeks_to_syg: :desc).load
+        @event_stats = Statistic.order(year: :desc, weeks_to_syg: :desc).load
 
         respond_to do |format|
             format.html { render layout: 'admin' }
