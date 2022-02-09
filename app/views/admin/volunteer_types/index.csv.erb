@@ -1,0 +1,16 @@
+<%- headings = %w{RowID Active Name SportRelated T-Shirt Description } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+    @volunteer_types.each do |volunteer_type|
+	    line =  [  
+		          volunteer_type.database_code,
+              volunteer_type.active,
+    				  volunteer_type.name,
+		          volunteer_type.sport_related,
+              volunteer_type.t_shirt,
+              volunteer_type.description
+              ]
+
+    csv << line
+  end
+end.html_safe %>

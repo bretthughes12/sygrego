@@ -1,0 +1,13 @@
+<tr valign="top">
+	<td> 
+		<%= link_to h(volunteer_type.name), edit_admin_volunteer_type_path(volunteer_type) %></span></br>
+	</td>
+	
+	<td> 
+		<%= h(volunteer_type.database_code) %>
+	</td>
+	
+	<td> 
+		<%= volunteer_type.sport_related ? "Yes" : "No" %>
+	</td>
+</tr>

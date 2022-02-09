@@ -1,0 +1,21 @@
+<% title "Editing #{@volunteer_type.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_volunteer_type_path(@volunteer_type), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", admin_volunteer_types_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_volunteer_type_path(@volunteer_type),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_volunteer_type_path(@volunteer_type),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

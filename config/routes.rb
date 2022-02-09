@@ -197,6 +197,13 @@ Rails.application.routes.draw do
         post :import
       end
     end
+
+    resources :volunteer_types do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
   end
 
   namespace :api do

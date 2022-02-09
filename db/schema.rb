@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_08_085458) do
+ActiveRecord::Schema.define(version: 2022_02_09_090125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -442,6 +442,19 @@ ActiveRecord::Schema.define(version: 2022_02_08_085458) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["database_code"], name: "index_venues_on_database_code", unique: true
     t.index ["name"], name: "index_venues_on_name", unique: true
+  end
+
+  create_table "volunteer_types", force: :cascade do |t|
+    t.string "name", limit: 100, null: false
+    t.boolean "sport_related", default: false
+    t.boolean "t_shirt", default: false
+    t.text "description"
+    t.string "database_code", limit: 4
+    t.boolean "active", default: true
+    t.bigint "updated_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_volunteer_types_on_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -20,6 +20,8 @@
 class Venue < ApplicationRecord
     include Auditable
  
+    require 'csv'
+
     has_many :sections
 
     scope :active, -> { where(active: true) }

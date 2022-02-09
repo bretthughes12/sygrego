@@ -1,0 +1,13 @@
+<% title "New volunteer type" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_volunteer_types_path(@volunteer_type), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_volunteer_types_path,
+                  class: primary_button_class,
+                  role: "button" %>

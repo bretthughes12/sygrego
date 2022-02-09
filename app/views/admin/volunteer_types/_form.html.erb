@@ -1,0 +1,12 @@
+<%= simple_form_for(@volunteer_type, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name, label: "Type" %>
+	<%= f.input :database_code, label: "Type code" %>
+	<%= f.input :active %>
+	<%= f.input :sport_related %>
+	<%= f.input :t_shirt, :label => "Do volunteers get a T-Shirt?" %>
+	<%= f.input :description, :label => "Tool Tip" %>
+
+	<%= f.button :submit %>
+<% end %>	
