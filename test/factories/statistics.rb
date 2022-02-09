@@ -20,5 +20,6 @@ FactoryBot.define do
     number_of_sport_entries { 1 }
     number_of_volunteer_vacancies { 1 }
     weeks_to_syg { 1 }
+    year { 2020 }
   end
 end
