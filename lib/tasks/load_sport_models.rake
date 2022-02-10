@@ -83,4 +83,21 @@ namespace :syg do
   
         puts "Sections imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
     end
+
+    desc 'Load / update volunteer types table into the database'
+    task load_volunteer_types: ['db/data/volunteer_type.csv', 'db:migrate'] do |t|
+      puts 'Loading volunteer types...'
+
+      user = User.first
+      file = File.new(t.prerequisites.first)
+
+      result = VolunteerType.import(file, user)
+
+      puts "Volunteer Types imported - #{result[:creates]} added; #{result[:updates]} updated; #{result[:errors]} errors"
+
+      result[:error_list].each do |e|
+        puts "Volunteer Type: #{e.name}"
+        pp e.errors
+      end
+  end
 end

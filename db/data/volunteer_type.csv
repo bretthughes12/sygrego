@@ -1,0 +1,16 @@
+RowID,Active,Name,SportRelated,T-Shirt,Description
+FGWC,TRUE,Front Gate Welcome Crew,FALSE,FALSE,"Man the Number 4 front main Gate between 7:00 to 9.30 pm on the Friday night.
+ 
+The role is for several members of a group to guide campers arriving and to hand out site maps to those who don’t know where they are going.
+"
+GRND,TRUE,Grounds Cleanup,FALSE,FALSE,Volunteer your group to clean up some of the Lardner Park grounds on Monday. Approximately 10 people required from each volunteer group. Good bonus points on offer.
+HALL,TRUE,Hall Cleaning,FALSE,FALSE,Volunteer your group to clean up one of the Lardner Park stadiums on Monday. Approximately 10 people needed from each volunteer group. Good bonus points on offer.
+MRSH,TRUE,Marshal,TRUE,FALSE,"Performs marshalling activities such as ensuring all competitors follow the correct race route; timing specific swimming lanes, etc. Marshalls must report to the Sports Coordinator 15 mins before the first game starts."
+SPTC,TRUE,Sport Coordinator,TRUE,TRUE,Coordinates one or more sections of a sport (at a single venue). Teams that have been entered into a grade with non-final venues or sessions will be allocated to a section in the same session and at the same venue as the sport coordinator volunteer.
+SHLP,TRUE,Sports Helper,FALSE,TRUE,Assist the SYG Sports Team in setting up and packing up sports fields at the start and end of the day
+TKEP,TRUE,Timekeeper,TRUE,FALSE,Assist the sport coordinator by recording the start/finish times of the competitors.
+SHWR,TRUE,Toilet Cleaning Roster,FALSE,FALSE,Cleaning roster. Volunteer your group to clean the toilet / shower block near you for a session. The 'helper' will be your group's cleaning coordinator for this session. 5 bonus points awarded for each appointment.
+TRAF,TRUE,Traffic Management,FALSE,FALSE,"Person with a traffic management ticket to manage flow of traffic into Lardner Park, through gate  separating passes and visitors, making sure that Burnt Store Rd is kept clear."
+SECR,TRUE,Usher,FALSE,TRUE,Assisting with marshalling people into the Evening rallies on Saturday and Sunday nights.
+VILL,TRUE,Village Helper,FALSE,TRUE,The Village requires volunteers to be on hand from about 9:30 until midnight assisting with things like making sure all tents are set up as they should be or helping to start the fire pits that keep our campers toasty while they socialise. These volunteers are imperative to ensure that The Village is successful and runs smoothly. The commitment is is quite low but the fun is through the roof!
+VKSK,TRUE,Village Helper - Kiosk,FALSE,FALSE,Assisting with the kiosk in the Village area
