@@ -20,11 +20,11 @@
 
 FactoryBot.define do
   factory :volunteer_type do
-    name { "Lolly Pop Man" }
+    sequence(:database_code)    { |n| "V#{n}"}
+    sequence(:name)             { |n| "VType#{n}"}
     sport_related { false }
     t_shirt { false }
     description { "Ipsup Lorem..." }
-    database_code { "ABCD" }
     active { true }
   end
 end

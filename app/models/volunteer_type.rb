@@ -30,7 +30,7 @@ class VolunteerType < ApplicationRecord
     scope :non_sport_related, -> { where(sport_related: false) }
     scope :active, -> { where(active: true) }
   
-    validates :name, presence: true,
+    validates :name, presence: true, uniqueness: true,
         length: { maximum: 100 }
     validates :database_code, uniqueness: true,
         length: { maximum: 4 }
