@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_09_090125) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_11_093548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,8 +19,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.text "body"
     t.string "record_type", null: false
     t.bigint "record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
@@ -30,7 +29,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -43,7 +42,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -58,7 +57,7 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "record_type", limit: 30
     t.string "event", limit: 20
     t.bigint "user_id"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -66,13 +65,13 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
@@ -93,8 +92,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.integer "number_of_vehicles", default: 0
     t.bigint "updated_by"
     t.bigint "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_event_details_on_group_id"
   end
 
@@ -115,13 +114,13 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.integer "entry_limit"
     t.integer "starting_entry_limit"
     t.integer "team_size", default: 1
-    t.datetime "waitlist_expires_at"
+    t.datetime "waitlist_expires_at", precision: nil
     t.integer "entries_to_be_allocated", default: 999
     t.boolean "over_limit"
     t.boolean "one_entry_per_group"
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_grades_on_name", unique: true
   end
 
@@ -150,8 +149,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "age_demographic", limit: 40
     t.string "group_focus", limit: 100
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["abbr"], name: "index_groups_on_abbr", unique: true
     t.index ["name"], name: "index_groups_on_name", unique: true
     t.index ["short_name"], name: "index_groups_on_short_name", unique: true
@@ -181,8 +180,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "indiv_sport_view_strategy", default: "Show all"
     t.string "mysyg_code", limit: 25
     t.bigint "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
   end
 
@@ -190,8 +189,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "name", limit: 50
     t.string "permalink", limit: 20
     t.boolean "admin_use"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_pages_on_name", unique: true
     t.index ["permalink"], name: "index_pages_on_permalink", unique: true
   end
@@ -234,10 +233,10 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.decimal "amount_paid", precision: 8, scale: 2, default: "0.0"
     t.string "status", limit: 20, default: "Accepted"
     t.boolean "driver_signature", default: false
-    t.datetime "driver_signature_date"
+    t.datetime "driver_signature_date", precision: nil
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "wwcc_number"
     t.string "medicare_number"
     t.index ["coming"], name: "index_participants_on_coming"
@@ -263,8 +262,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.text "finance_notes"
     t.text "sport_notes"
     t.bigint "group_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_rego_checklists_on_group_id"
   end
 
@@ -272,8 +271,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "name", limit: 20
     t.boolean "group_related", default: false
     t.boolean "participant_related", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
@@ -295,8 +294,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.integer "year_introduced"
     t.integer "number_of_courts", default: 1
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_sections_on_name", unique: true
   end
 
@@ -305,8 +304,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.boolean "active", default: true
     t.integer "database_rowid"
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["database_rowid"], name: "index_sessions_on_database_rowid", unique: true
     t.index ["name"], name: "index_sessions_on_name", unique: true
   end
@@ -359,8 +358,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.date "first_day_of_syg"
     t.date "early_bird_cutoff"
     t.date "deposit_due_date"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sport_entries", force: :cascade do |t|
@@ -373,8 +372,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.bigint "captaincy_id"
     t.integer "chance_of_entry", default: 100
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "preferred_section_id"
     t.index ["grade_id"], name: "index_sport_entries_on_grade_id"
     t.index ["group_id"], name: "index_sport_entries_on_group_id"
@@ -391,8 +390,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.boolean "bonus_for_officials", default: false
     t.string "court_name", limit: 20, default: "Court"
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_sports_on_name", unique: true
   end
 
@@ -402,8 +401,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.integer "number_of_sport_entries"
     t.integer "number_of_volunteer_vacancies"
     t.integer "weeks_to_syg"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "year", default: 2022
   end
 
@@ -411,10 +410,10 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name", limit: 40, default: "", null: false
     t.string "group_role", limit: 100
     t.string "address", limit: 200
@@ -438,8 +437,8 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "address"
     t.bigint "updated_by"
     t.boolean "active"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["database_code"], name: "index_venues_on_database_code", unique: true
     t.index ["name"], name: "index_venues_on_name", unique: true
   end
@@ -452,9 +451,33 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
     t.string "database_code", limit: 4
     t.boolean "active", default: true
     t.bigint "updated_by"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_volunteer_types_on_name", unique: true
+  end
+
+  create_table "volunteers", force: :cascade do |t|
+    t.string "description", limit: 100, null: false
+    t.string "email", limit: 40
+    t.string "mobile_number", limit: 20
+    t.string "t_shirt_size", limit: 10
+    t.boolean "mobile_confirmed", default: false
+    t.boolean "details_confirmed", default: false
+    t.string "equipment_out"
+    t.string "equipment_in"
+    t.boolean "collected", default: false
+    t.boolean "returned", default: false
+    t.text "notes"
+    t.bigint "session_id"
+    t.bigint "section_id"
+    t.bigint "participant_id"
+    t.integer "lock_version", default: 0
+    t.bigint "updated_by"
+    t.bigint "volunteer_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_volunteers_on_participant_id"
+    t.index ["volunteer_type_id"], name: "index_volunteers_on_volunteer_type_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -473,4 +496,5 @@ ActiveRecord::Schema.define(version: 2022_02_09_090125) do
   add_foreign_key "sections", "venues"
   add_foreign_key "sport_entries", "grades"
   add_foreign_key "sport_entries", "groups"
+  add_foreign_key "volunteers", "volunteer_types"
 end

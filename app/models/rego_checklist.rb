@@ -2,25 +2,29 @@
 #
 # Table name: rego_checklists
 #
-#  id                    :integer          not null, primary key
-#  registered            :boolean          default("false")
-#  rego_rep              :string(40)
-#  rego_mobile           :string(30)
+#  id                    :bigint           not null, primary key
 #  admin_rep             :string(40)
-#  second_rep            :string(40)
-#  second_mobile         :string(30)
-#  disabled_participants :boolean          default("false")
 #  disabled_notes        :text
-#  driver_form           :boolean          default("false")
+#  disabled_participants :boolean          default(FALSE)
+#  driver_form           :boolean          default(FALSE)
 #  finance_notes         :text
+#  registered            :boolean          default(FALSE)
+#  rego_mobile           :string(30)
+#  rego_rep              :string(40)
+#  second_mobile         :string(30)
+#  second_rep            :string(40)
 #  sport_notes           :text
-#  group_id              :integer
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
+#  group_id              :bigint
 #
 # Indexes
 #
 #  index_rego_checklists_on_group_id  (group_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => groups.id)
 #
 
 class RegoChecklist < ApplicationRecord

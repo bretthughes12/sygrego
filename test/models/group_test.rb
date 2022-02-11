@@ -2,31 +2,31 @@
 #
 # Table name: groups
 #
-#  id               :integer          not null, primary key
+#  id               :bigint           not null, primary key
 #  abbr             :string(4)        not null
-#  name             :string(100)      not null
-#  short_name       :string(50)       not null
-#  coming           :boolean          default("true")
-#  lock_version     :integer          default("0")
-#  database_rowid   :integer
-#  new_group        :boolean          default("true")
-#  trading_name     :string(100)      not null
 #  address          :string(200)      not null
-#  suburb           :string(40)       not null
-#  postcode         :integer          not null
-#  phone_number     :string(20)
-#  last_year        :boolean          default("false")
-#  admin_use        :boolean          default("false")
-#  late_fees        :decimal(8, 2)    default("0.0")
-#  allocation_bonus :integer          default("0")
-#  email            :string(100)
-#  website          :string(100)
-#  denomination     :string(40)       not null
-#  years_attended   :integer          default("0")
-#  status           :string(12)       default("Stale")
+#  admin_use        :boolean          default(FALSE)
 #  age_demographic  :string(40)
+#  allocation_bonus :integer          default(0)
+#  coming           :boolean          default(TRUE)
+#  database_rowid   :integer
+#  denomination     :string(40)       not null
+#  email            :string(100)
 #  group_focus      :string(100)
-#  updated_by       :integer
+#  last_year        :boolean          default(FALSE)
+#  late_fees        :decimal(8, 2)    default(0.0)
+#  lock_version     :integer          default(0)
+#  name             :string(100)      not null
+#  new_group        :boolean          default(TRUE)
+#  phone_number     :string(20)
+#  postcode         :integer          not null
+#  short_name       :string(50)       not null
+#  status           :string(12)       default("Stale")
+#  suburb           :string(40)       not null
+#  trading_name     :string(100)      not null
+#  updated_by       :bigint
+#  website          :string(100)
+#  years_attended   :integer          default(0)
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #

@@ -2,26 +2,26 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
+#  id                     :bigint           not null, primary key
+#  address                :string(200)
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  name                   :string(40)       default(""), not null
-#  group_role             :string(100)
-#  address                :string(200)
-#  suburb                 :string(40)
-#  postcode               :integer          default("0")
-#  phone_number           :string(30)
 #  gc_reference           :string(40)
 #  gc_reference_phone     :string(30)
-#  years_as_gc            :integer          default("0")
-#  primary_gc             :boolean          default("false")
+#  group_role             :string(100)
+#  name                   :string(40)       default(""), not null
+#  phone_number           :string(30)
+#  postcode               :integer          default(0)
+#  primary_gc             :boolean          default(FALSE)
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
 #  status                 :string(12)       default("Not Verified")
+#  suburb                 :string(40)
 #  wwcc_number            :string
+#  years_as_gc            :integer          default(0)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 # Indexes
 #

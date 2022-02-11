@@ -2,29 +2,33 @@
 #
 # Table name: event_details
 #
-#  id                 :integer          not null, primary key
-#  onsite             :boolean          default("true")
-#  fire_pit           :boolean          default("true")
-#  camping_rqmts      :text
-#  tents              :integer          default("0")
-#  caravans           :integer          default("0")
-#  marquees           :integer          default("0")
-#  marquee_sizes      :string(255)
-#  marquee_co         :string(50)
-#  buddy_interest     :string(50)
+#  id                 :bigint           not null, primary key
 #  buddy_comments     :text
+#  buddy_interest     :string(50)
+#  camping_rqmts      :text
+#  caravans           :integer          default(0)
+#  estimated_numbers  :integer          default(0)
+#  fire_pit           :boolean          default(TRUE)
+#  marquee_co         :string(50)
+#  marquee_sizes      :string(255)
+#  marquees           :integer          default(0)
+#  number_of_vehicles :integer          default(0)
+#  onsite             :boolean          default(TRUE)
 #  service_pref_sat   :string(20)       default("No preference")
 #  service_pref_sun   :string(20)       default("No preference")
-#  estimated_numbers  :integer          default("0")
-#  number_of_vehicles :integer          default("0")
-#  updated_by         :integer
-#  group_id           :integer
+#  tents              :integer          default(0)
+#  updated_by         :bigint
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  group_id           :bigint
 #
 # Indexes
 #
 #  index_event_details_on_group_id  (group_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => groups.id)
 #
 
 FactoryBot.define do

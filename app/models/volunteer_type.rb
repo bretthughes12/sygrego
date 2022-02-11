@@ -2,14 +2,14 @@
 #
 # Table name: volunteer_types
 #
-#  id            :integer          not null, primary key
-#  name          :string(100)      not null
-#  sport_related :boolean          default("false")
-#  t_shirt       :boolean          default("false")
-#  description   :text
+#  id            :bigint           not null, primary key
+#  active        :boolean          default(TRUE)
 #  database_code :string(4)
-#  active        :boolean          default("true")
-#  updated_by    :integer
+#  description   :text
+#  name          :string(100)      not null
+#  sport_related :boolean          default(FALSE)
+#  t_shirt       :boolean          default(FALSE)
+#  updated_by    :bigint
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

@@ -2,10 +2,10 @@
 #
 # Table name: roles
 #
-#  id                  :integer          not null, primary key
+#  id                  :bigint           not null, primary key
+#  group_related       :boolean          default(FALSE)
 #  name                :string(20)
-#  group_related       :boolean          default("false")
-#  participant_related :boolean          default("false")
+#  participant_related :boolean          default(FALSE)
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #

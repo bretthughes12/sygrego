@@ -2,11 +2,11 @@
 #
 # Table name: sessions
 #
-#  id             :integer          not null, primary key
-#  name           :string           not null
-#  active         :boolean          default("true")
+#  id             :bigint           not null, primary key
+#  active         :boolean          default(TRUE)
 #  database_rowid :integer
-#  updated_by     :integer
+#  name           :string           not null
+#  updated_by     :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #

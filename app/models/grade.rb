@@ -2,34 +2,38 @@
 #
 # Table name: grades
 #
-#  id                      :integer          not null, primary key
-#  database_rowid          :integer
-#  sport_id                :integer          default("0"), not null
-#  name                    :string(50)       not null
+#  id                      :bigint           not null, primary key
 #  active                  :boolean
-#  grade_type              :string(10)       default("Team"), not null
-#  gender_type             :string(10)       default("Open"), not null
-#  max_age                 :integer          default("29"), not null
-#  min_age                 :integer          default("11"), not null
-#  max_participants        :integer          default("0"), not null
-#  min_participants        :integer          default("0"), not null
-#  min_males               :integer          default("0"), not null
-#  min_females             :integer          default("0"), not null
-#  status                  :string(20)       default("Open"), not null
+#  database_rowid          :integer
+#  entries_to_be_allocated :integer          default(999)
 #  entry_limit             :integer
-#  starting_entry_limit    :integer
-#  team_size               :integer          default("1")
-#  waitlist_expires_at     :datetime
-#  entries_to_be_allocated :integer          default("999")
-#  over_limit              :boolean
+#  gender_type             :string(10)       default("Open"), not null
+#  grade_type              :string(10)       default("Team"), not null
+#  max_age                 :integer          default(29), not null
+#  max_participants        :integer          default(0), not null
+#  min_age                 :integer          default(11), not null
+#  min_females             :integer          default(0), not null
+#  min_males               :integer          default(0), not null
+#  min_participants        :integer          default(0), not null
+#  name                    :string(50)       not null
 #  one_entry_per_group     :boolean
-#  updated_by              :integer
+#  over_limit              :boolean
+#  starting_entry_limit    :integer
+#  status                  :string(20)       default("Open"), not null
+#  team_size               :integer          default(1)
+#  updated_by              :bigint
+#  waitlist_expires_at     :datetime
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  sport_id                :bigint           default(0), not null
 #
 # Indexes
 #
 #  index_grades_on_name  (name) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (sport_id => sports.id)
 #
 
 class Grade < ApplicationRecord

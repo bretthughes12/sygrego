@@ -2,12 +2,12 @@
 #
 # Table name: venues
 #
-#  id            :integer          not null, primary key
-#  name          :string(50)       default(""), not null
-#  database_code :string(4)
-#  address       :string
-#  updated_by    :integer
+#  id            :bigint           not null, primary key
 #  active        :boolean
+#  address       :string
+#  database_code :string(4)
+#  name          :string(50)       default(""), not null
+#  updated_by    :bigint
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #

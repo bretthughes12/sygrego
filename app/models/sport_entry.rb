@@ -2,24 +2,29 @@
 #
 # Table name: sport_entries
 #
-#  id                   :integer          not null, primary key
-#  group_id             :integer          not null
-#  grade_id             :integer          not null
-#  section_id           :integer
+#  id                   :bigint           not null, primary key
+#  chance_of_entry      :integer          default(100)
+#  multiple_teams       :boolean          default(FALSE)
 #  status               :string(20)       default("Requested")
-#  team_number          :integer          default("1"), not null
-#  multiple_teams       :boolean          default("false")
-#  captaincy_id         :integer
-#  chance_of_entry      :integer          default("100")
-#  updated_by           :integer
+#  team_number          :integer          default(1), not null
+#  updated_by           :bigint
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  preferred_section_id :integer
+#  captaincy_id         :bigint
+#  grade_id             :bigint           not null
+#  group_id             :bigint           not null
+#  preferred_section_id :bigint
+#  section_id           :bigint
 #
 # Indexes
 #
 #  index_sport_entries_on_grade_id  (grade_id)
 #  index_sport_entries_on_group_id  (group_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (grade_id => grades.id)
+#  fk_rails_...  (group_id => groups.id)
 #
 
 class SportEntry < ApplicationRecord
