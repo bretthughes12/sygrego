@@ -25,6 +25,7 @@ class Session < ApplicationRecord
     attr_reader :file
 
     has_many :sections
+    has_many :volunteers
   
     scope :active, -> { where(active: true) }
   

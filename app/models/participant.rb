@@ -66,7 +66,7 @@ class Participant < ApplicationRecord
     require 'pp'
 
     belongs_to :group
-#    has_many   :officials
+    has_many   :volunteers
 #    has_many   :helpers
 #    has_many   :securities
     has_many   :participants_sport_entries, dependent: :destroy

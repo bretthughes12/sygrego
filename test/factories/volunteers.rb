@@ -34,20 +34,7 @@
 #
 FactoryBot.define do
   factory :volunteer do
-    description { "MyString" }
-    email { "MyString" }
-    mobile_number { "MyString" }
-    t_shirt_size { "MyString" }
-    mobile_confirmed { false }
-    details_confirmed { false }
-    equipment_out { "MyString" }
-    equipment_in { "MyString" }
-    collected { false }
-    returned { false }
-    notes { "MyText" }
-    session_id { "" }
-    section_id { "" }
-    participant_id { "" }
-    volunteer_type_id { "" }
+    description           {"Official Person"}
+    volunteer_type
   end
 end

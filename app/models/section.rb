@@ -36,7 +36,7 @@ class Section < ApplicationRecord
   
     attr_reader :file
 
-#    has_many :officials, as: :coord_rqmt
+    has_many :volunteers
     has_many :sport_entries
     belongs_to :grade
     belongs_to :venue
@@ -75,6 +75,14 @@ class Section < ApplicationRecord
       name <=> other.name if other
     end
 
+    def sport_coords
+        volunteers.sport_coords
+    end
+    
+    def number_of_teams
+        sport_entries.count
+    end
+    
     def session_and_venue
         session.name + " - " + venue.name
     end

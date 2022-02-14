@@ -24,7 +24,7 @@ class VolunteerType < ApplicationRecord
 
     require 'csv'
 
-#    has_many :volunteers
+    has_many :volunteers
 
     scope :sport_related, -> { where(sport_related: true) }
     scope :non_sport_related, -> { where(sport_related: false) }

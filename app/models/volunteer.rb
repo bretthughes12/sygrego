@@ -33,4 +33,157 @@
 #  fk_rails_...  (volunteer_type_id => volunteer_types.id)
 #
 class Volunteer < ApplicationRecord
+    include Auditable
+    include Searchable
+
+    require 'csv'
+
+    belongs_to :volunteer_type
+    belongs_to :section, optional: true
+    belongs_to :session, optional: true
+    belongs_to :participant, optional: true
+  
+    scope :filled, -> { where('participant_id is not null') }
+    scope :unfilled, -> { where('participant_id is null') }
+    scope :sport_related, -> { where('volunteer_types.sport_related' => true).includes(:volunteer_type).references(:volunteer_type) }
+    scope :cleaning_roster, -> { where("volunteer_types.name in ('Toilet Cleaning Roster', 'Hall Cleaning', 'Grounds Cleanup')").includes(:volunteer_type).references(:volunteer_type) }
+    scope :cleaners, -> { where('volunteer_types.name' => 'Toilet Cleaning Roster').includes(:volunteer_type).references(:volunteer_type) }
+    scope :security, -> { where('volunteer_types.name' => 'Usher').includes(:volunteer_type).references(:volunteer_type) }
+    scope :village, -> { where('volunteer_types.name' => 'Village Helper').includes(:volunteer_type).references(:volunteer_type) }
+    scope :sport_coords, -> { where('volunteer_types.name' => 'Sport Coordinator').includes(:volunteer_type).references(:volunteer_type) }
+    scope :marshals, -> { where('volunteer_types.name' => 'Marshal').includes(:volunteer_type).references(:volunteer_type) }
+    scope :timekeepers, -> { where('volunteer_types.name' => 'Timekeeper').includes(:volunteer_type).references(:volunteer_type) }
+    scope :first_aid, -> { where('volunteer_types.name' => 'First Aider').includes(:volunteer_type).references(:volunteer_type) }
+    scope :umpires, -> { where('volunteer_types.name' => 'Umpire').includes(:volunteer_type).references(:volunteer_type) }
+    scope :saturday, -> { where("sessions.name like 'Saturday%'").includes(:session).references(:session) }
+    scope :sunday, -> { where("sessions.name like 'Sunday%'").includes(:session).references(:session) }
+  
+    delegate :t_shirt, to: :volunteer_type
+  
+    T_SHIRT_SIZES = %w[XS S M L
+                       XL XXL XXXL].freeze
+  
+    EQUIPMENT_OUT_OPTIONS = ['Equipment given',
+                             'Equipment to be collected at venue'].freeze
+    EQUIPMENT_IN_OPTIONS  = ['Equipment returned',
+                             'Equipment left at venue'].freeze
+  
+    validates :description,            presence: true,
+                                       length: { maximum: 100 }
+    validates :email,                  length: { maximum: 40 }
+    validates :email,                  format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
+                                       allow_blank: true,
+                                       unless: proc { |o| o.email.blank? }
+    validates :mobile_number,          length: { maximum: 20 }
+    validates :volunteer_type_id,      presence: true,
+                                       numericality: { only_integer: true }
+    validates :t_shirt_size,           length: { maximum: 10 },
+                                       inclusion: { in: T_SHIRT_SIZES },
+                                       allow_blank: true
+    validates :equipment_out,          length: { maximum: 255 },
+                                       inclusion: { in: EQUIPMENT_OUT_OPTIONS },
+                                       allow_blank: true
+    validates :equipment_in,           length: { maximum: 255 },
+                                       inclusion: { in: EQUIPMENT_IN_OPTIONS },
+                                       allow_blank: true
+  
+    searchable_by 'officials.description'
+  
+    def venue_name
+        if section.nil?
+          '(not venue-specific)'
+        else
+          section.venue_name
+        end
+    end
+    
+    def session_name
+        if session
+          session.name
+        elsif section.nil?
+          '(not session-specific)'
+        else
+          section.session_name
+        end
+    end
+    
+    def participant_name
+        if participant
+          participant.name
+        else
+          ''
+        end
+    end
+    
+    def self.sport_coords_saturday
+        coords = []
+        sport_coords.order('volunteers.description').each do |o|
+          coords << o if o.session_name =~ /^Saturday.*/
+        end
+        coords
+    end
+    
+    def self.sport_coords_sunday
+        coords = []
+        sport_coords.order('volunteers.description').each do |o|
+          coords << o if o.session_name =~ /^Sunday.*/
+        end
+        coords
+    end
+   
+    def self.sport_volunteers
+        volunteers = []
+        sport_related.order('volunteers.description').each do |o|
+          volunteers << o
+        end
+        volunteers.sort_by(&:name)
+    end
+    
+    def number_of_teams
+        if section.nil?
+          nil
+        else
+          section.number_of_teams
+        end
+    end
+    
+    def sport_name
+        if section.nil?
+          description
+        else
+          section.sport_name
+        end
+    end
+    
+    def sport
+        if section.nil?
+          nil
+        else
+          section.sport
+        end
+    end
+    
+    def name
+        if section.nil?
+          description
+        else
+          section.name
+        end
+    end
+    
+    def mobile_phone_number
+        if mobile_number.present?
+          Participant.normalize_phone_number(mobile_number)
+        elsif participant && participant.mobile_phone_number.present?
+          participant.mobile_phone_number
+          end
+    end
+   
+    def email_recipients
+        if email.blank?
+          participant.group.email_recipients
+        else
+          email
+        end
+    end
 end
