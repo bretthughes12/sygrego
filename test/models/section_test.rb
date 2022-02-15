@@ -58,8 +58,15 @@ class SectionTest < ActiveSupport::TestCase
     assert_equal @section.session.name, @section.session_name
   end
 
-  test "should provide section session and venuw" do
+  test "should provide section session and venue" do
     assert_equal @section.session.name + ' - ' + @section.venue.name, @section.session_and_venue
+  end
+
+  test "should list all sport coordinators" do
+    vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: @section)
+
+    assert @section.sport_coords.include?(sc)
   end
 
   test "should import sections from file" do

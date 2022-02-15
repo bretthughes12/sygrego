@@ -83,12 +83,29 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal @volunteer.description, @volunteer.sport_name
   end
 
+  def test_volunteer_sport
+    #volunteer has a Section
+    assert_equal @section_volunteer.section.sport, @section_volunteer.sport
+    
+    #no coordinator requirement
+    assert_nil @volunteer.sport
+  end
+
   def test_volunteer_t_shirt_required
     volunteer_with_t_shirt = FactoryBot.create(:volunteer, volunteer_type: FactoryBot.create(:volunteer_type, t_shirt: true))
     volunteer_without_t_shirt = FactoryBot.create(:volunteer, volunteer_type: FactoryBot.create(:volunteer_type, t_shirt: false))
     
     assert_equal true, volunteer_with_t_shirt.t_shirt
     assert_equal false, volunteer_without_t_shirt.t_shirt
+  end
+  
+  test "participant name should come from participant" do
+    assert_equal '', @volunteer.participant_name
+
+    participant = FactoryBot.create(:participant)
+    volunteer = FactoryBot.create(:volunteer, participant: participant)
+    
+    assert_equal participant.name, volunteer.participant_name
   end
   
   test "email recipients should include volunteer email" do
@@ -143,5 +160,32 @@ class VolunteerTest < ActiveSupport::TestCase
     volunteer = FactoryBot.create(:volunteer, participant: participant, mobile_number: nil)
     
     assert_nil volunteer.mobile_phone_number
+  end
+
+  test "should list all saturday sport coordinators" do
+    sat_arvo = FactoryBot.create(:session, name: "Saturday Afternoon")
+    section = FactoryBot.create(:section, session: sat_arvo)
+    vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: section)
+
+    assert Volunteer.sport_coords_saturday.include?(sc)
+    assert !Volunteer.sport_coords_sunday.include?(sc)
+  end
+
+  test "should list all sunday sport coordinators" do
+    sun_arvo = FactoryBot.create(:session, name: "Sunday Afternoon")
+    section = FactoryBot.create(:section, session: sun_arvo)
+    vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: section)
+
+    assert Volunteer.sport_coords_sunday.include?(sc)
+    assert !Volunteer.sport_coords_saturday.include?(sc)
+  end
+
+  test "should list all sport volunteers" do
+    vt = FactoryBot.create(:volunteer_type, sport_related: true)
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt)
+
+    assert Volunteer.sport_volunteers.include?(sc)
   end
 end

@@ -50,11 +50,6 @@ class Section < ApplicationRecord
     delegate :name, to: :session, prefix: 'session'
     delegate :sport_name, :sport, to: :grade
   
-#    before_validation :clear_draw
-#    before_save :set_database_rowid!
-  
-#    validates_attachment_content_type :draw, :content_type => ["application/pdf"]
-  
     validates :name,                   presence: true,
                                        uniqueness: true,
                                        length: { maximum: 50 }
@@ -67,9 +62,6 @@ class Section < ApplicationRecord
                                        allow_blank: true
     validates :year_introduced,        numericality: true,
                                        allow_blank: true
-#    validates :database_rowid,         uniqueness: true,
-#                                       numericality: true,
-#                                       allow_blank: true
   
     def <=>(other)
       name <=> other.name if other
