@@ -1,0 +1,22 @@
+<tr valign="top">
+	<td> 
+		<%= volunteer.volunteer_type.name %></span></br>
+	</td>
+	
+	<td> 
+		<%= link_to h(volunteer.description), edit_admin_volunteer_path(volunteer) %></span></br>
+	</td>
+
+	<% if volunteer.participant %>	
+		<td> 
+			<%= h(volunteer.participant.name) %>
+		</td>
+		
+		<td> 
+			<%= h(volunteer.participant.group.short_name) %>
+		</td>
+	<% else %>
+		<td>&nbsp</td>
+		<td>&nbsp</td>
+	<% end %>
+</tr>

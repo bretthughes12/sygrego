@@ -1,0 +1,26 @@
+<%- headings = %w{Type Description Section Session Name Email Mobile T-Shirt } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+    @volunteers.each do |volunteer|
+    session = volunteer.session.nil? ? nil : volunteer.session.name
+    section = volunteer.section.nil? ? nil : volunteer.section.name
+    participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
+    group_name = volunteer.participant.nil? ? nil : volunteer.participant.group.abbr
+    email = volunteer.email.blank? ? nil : volunteer.email
+    mobile = volunteer.mobile_number.blank? ? nil : volunteer.mobile_number
+    t_shirt = volunteer.t_shirt_size.blank? ? nil : volunteer.t_shirt_size
+
+    line =  [  
+		          volunteer.volunteer_type.database_code,
+              volunteer.description,
+              section,
+              session,
+              participant_name,
+              email,
+              mobile,
+              t_shirt
+            ]
+
+    csv << line
+  end
+end.html_safe %>

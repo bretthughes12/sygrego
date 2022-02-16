@@ -204,6 +204,12 @@ Rails.application.routes.draw do
         post :import
       end
     end
+    resources :volunteers do
+      collection do
+        get :new_import
+        post :import
+      end
+    end
   end
 
   namespace :api do

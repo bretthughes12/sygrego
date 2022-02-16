@@ -1,0 +1,12 @@
+<% title "Volunteer details: #{@volunteer.description}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @volunteer %>
+
+<%= link_to "Back", admin_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_volunteer_path(@volunteer),
+                  class: primary_button_class,
+                  role: "button" %>

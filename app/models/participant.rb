@@ -203,6 +203,14 @@ class Participant < ApplicationRecord
         first_name + ' ' + surname
     end
     
+    def name_with_group_name
+      if group.nil?
+        name
+      else
+        name + ' (' + group.short_name + ')'
+      end
+    end
+
     def fee
       return fee_when_withdrawn if withdrawn
       settings = Setting.first
