@@ -194,26 +194,42 @@ class Volunteer < ApplicationRecord
         error_list = []
   
         CSV.foreach(file.path, headers: true) do |fields|
-          session = Session.find_by_database_rowid(fields[0].to_i)
-          if session
-            session.database_rowid = fields[0]
-            session.active = fields[1]
-            session.name = fields[2]
-            session.updated_by = user.id
+          volunteer = fields[0].nil? ? nil : Volunteer.find(fields[0].to_i)
+          type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
+          section = fields[3].nil? ? nil : Section.find_by_name(fields[3])
+          session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
+          participant = fields[5].nil? ? nil : Participant.find(fields[5].to_i)
+
+          if volunteer
+
+            volunteer.volunteer_type = type
+            volunteer.section = section
+            volunteer.session = session
+            volunteer.participant = participant
+            volunteer.email = fields[8]
+            volunteer.mobile_number = fields[9]
+            volunteer.t_shirt_size = fields[10]
+            volunteer.updated_by = user.id
             
-            if session.save
+            if volunteer.save
               updates += 1
             else
               errors += 1
-              error_list << session
+              error_list << volunteer
             end
           else
-            session = Session.create(database_rowid: fields[0],
-                                     active:         fields[1],
-                                     name:           fields[2],
-                                     updated_by:     user.id)
+            volunteer = Volunteer.create(
+                volunteer_type: type,
+                section:        section,
+                session:        session,
+                participant:    participant,
+                email:          fields[8],
+                mobile_number:  fields[9],
+                t_shirt_size:   fields[10],
+                updated_by:     user.id
+            )
   
-            if session.errors.empty?
+            if volunteer.errors.empty?
               creates += 1
             else
               errors += 1
