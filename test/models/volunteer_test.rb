@@ -188,4 +188,64 @@ class VolunteerTest < ActiveSupport::TestCase
 
     assert Volunteer.sport_volunteers.include?(sc)
   end
+
+  test "should import volunteer from file" do
+    FactoryBot.create(:volunteer_type, database_code: "SPTC")
+    file = fixture_file_upload('volunteer.csv','application/csv')
+    
+    assert_difference('Volunteer.count') do
+      @result = Volunteer.import(file, @user)
+    end
+
+    assert_equal 1, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update exiting volunteer from file" do
+    FactoryBot.create(:volunteer_type, database_code: "SPTC")
+    volunteer = FactoryBot.create(:volunteer, id: 123456, description: "Child Minding")
+    file = fixture_file_upload('volunteer.csv','application/csv')
+    
+    assert_no_difference('Volunteer.count') do
+      @result = Volunteer.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    volunteer.reload
+    assert_equal "Kitten Wrangling", volunteer.description
+  end
+
+  test "should not import volunteers with errors from file" do
+    FactoryBot.create(:volunteer_type, database_code: "SPTC")
+    file = fixture_file_upload('invalid_volunteer.csv','application/csv')
+    
+    assert_no_difference('Volunteer.count') do
+      @result = Volunteer.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
+  test "should not update volunteers with errors from file" do
+    FactoryBot.create(:volunteer_type, database_code: "SPTC")
+    volunteer = FactoryBot.create(:volunteer, id: 123456, t_shirt_size: "M")
+    file = fixture_file_upload('invalid_volunteer.csv','application/csv')
+    
+    assert_no_difference('Volunteer.count') do
+      @result = Volunteer.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+
+    volunteer.reload
+    assert_not_equal "BIG", volunteer.t_shirt_size
+  end
 end

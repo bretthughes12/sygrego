@@ -193,6 +193,14 @@ class ParticipantTest < ActiveSupport::TestCase
     assert player.can_play_sport(sport_that_can_be_played_more_than_once)
   end
 
+  test "should include group name with name" do
+    name = @participant.name + ' (' + @participant.group.short_name + ')'
+    assert_equal name, @participant.name_with_group_name
+
+    @participant.group = nil
+    assert_equal @participant.name, @participant.name_with_group_name
+  end
+
   test "available sport entries should include entries participant can enter" do
     participant = FactoryBot.create(:participant)
     entry = FactoryBot.create(:sport_entry, group: participant.group)

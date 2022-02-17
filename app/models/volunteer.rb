@@ -194,11 +194,11 @@ class Volunteer < ApplicationRecord
         error_list = []
   
         CSV.foreach(file.path, headers: true) do |fields|
-          volunteer = fields[0].nil? ? nil : Volunteer.find(fields[0].to_i)
+          volunteer = fields[0].nil? ? nil : Volunteer.find_by_id(fields[0].to_i)
           type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
           section = fields[3].nil? ? nil : Section.find_by_name(fields[3])
           session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
-          participant = fields[5].nil? ? nil : Participant.find(fields[5].to_i)
+          participant = fields[5].nil? ? nil : Participant.find_by_id(fields[5].to_i)
 
           if volunteer
 
@@ -206,6 +206,7 @@ class Volunteer < ApplicationRecord
             volunteer.section = section
             volunteer.session = session
             volunteer.participant = participant
+            volunteer.description = fields[2]
             volunteer.email = fields[8]
             volunteer.mobile_number = fields[9]
             volunteer.t_shirt_size = fields[10]
@@ -223,6 +224,7 @@ class Volunteer < ApplicationRecord
                 section:        section,
                 session:        session,
                 participant:    participant,
+                description:    fields[2],
                 email:          fields[8],
                 mobile_number:  fields[9],
                 t_shirt_size:   fields[10],
