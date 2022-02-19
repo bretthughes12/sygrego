@@ -281,15 +281,15 @@ class Group < ApplicationRecord
   #  @officials ||= officials
   #end
 
-  #def officials
-  #  this_group_officials = []
-  #  participants.coming.includes(:officials).each do |participant|
-  #    unless participant.officials.empty?
-  #      this_group_officials += participant.officials
-  #    end
-  #  end
-  #  this_group_officials
-  #end
+  def volunteers
+    this_group_volunteers = []
+    participants.includes(:volunteers).each do |participant|
+      unless participant.volunteers.empty?
+        this_group_volunteers += participant.volunteers
+      end
+    end
+    this_group_volunteers
+  end
 
 #  def sport_coords
 #    this_group_officials = []

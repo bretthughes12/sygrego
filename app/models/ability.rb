@@ -26,6 +26,10 @@ class Ability
           user.groups.include?(entry.group) || user.role?(:admin)
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
+        can [:index, :available], Volunteer
+        can [:edit, :update, :show], Volunteer do |volunteer|
+          volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
+        end
       end
       
       can [:update, :edit_password, :update_password], User do |u|
@@ -55,6 +59,10 @@ class Ability
           user.groups.include?(entry.group) || user.role?(:admin)
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
+        can [:index, :available], Volunteer
+        can [:edit, :update, :show], Volunteer do |volunteer|
+          volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
+        end
       end
       
       can [:update, :edit_password, :update_password], User do |u|

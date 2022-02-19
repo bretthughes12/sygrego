@@ -1,0 +1,17 @@
+<% title "Editing #{@volunteer.description}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Please note: only participants that are 'coming' will appear in the drop-down boxes.
+If you are looking for someone that does not display, please ensure they are coming, by 
+checking the appropriate box in the 'Participants' link.</p>
+
+<%= render partial: "form", locals: { 
+                              url: gc_volunteer_path(@volunteer), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", gc_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>

@@ -1,0 +1,21 @@
+<% title "Our volunteers" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Name</th>
+      <th>Session</th>
+      <th>Venue</th>
+    </tr>
+  </thead>
+
+	<%= render @volunteers %>
+</table>
+
+<%= link_to "Vacancies", available_gc_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>

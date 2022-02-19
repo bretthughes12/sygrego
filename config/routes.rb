@@ -223,6 +223,8 @@ Rails.application.routes.draw do
     resources :sections, only: [:show]
     resources :sessions, only: [:show]
     resources :venues, only: [:show]
+    resources :volunteer_types, only: [:show]
+    resources :volunteers, only: [:show]
   end
 
   namespace :gc do
@@ -250,6 +252,11 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+      end
+    end
+    resources :volunteers, only: [:index, :show, :edit, :update] do
+      collection do
+        get :available
       end
     end
     resources :sport_entries do

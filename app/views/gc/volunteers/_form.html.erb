@@ -1,0 +1,23 @@
+<%= simple_form_for(@volunteer, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<table class="table table-dark table-striped">
+		<tr><td>Type</td><td><%= @volunteer.volunteer_type.name %></td></tr>
+		<tr><td>Description</td><td><%= @volunteer.volunteer_type.description %></td></tr>
+		<% if @volunteer.section  %>
+			<tr><td>Sport Section</td><td><%= @volunteer.section.name %></td></tr>
+		<% end %> 
+		<tr><td>Session</td><td><%= @volunteer.session_name %></td></tr>
+		<% if @volunteer.section  %>
+			<tr><td>Venue</td><td><%= @volunteer.venue_name %></td></tr>
+		<% end %> 
+	</table>
+
+	<%= f.input :participant_id, as: :select, :label => "Volunteer", :collection => @participants, :include_blank => true %>
+
+	<%= f.input :email %>
+	<%= f.input :mobile_number %>
+	<%= f.input :t_shirt_size, :as => :select, :collection => Volunteer::T_SHIRT_SIZES, :include_blank => true %>
+
+	<%= f.button :submit %>
+<% end %>	
