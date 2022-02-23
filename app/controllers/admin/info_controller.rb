@@ -25,6 +25,7 @@ class Admin::InfoController < ApplicationController
         @tech_stats << model_stats(Section)    
         @tech_stats << model_stats(Session)    
         @tech_stats << model_stats(Venue)    
+        @tech_stats << model_stats(Volunteer)    
         @tech_stats << model_stats(VolunteerType)    
 
         @tech_stats << { type: "AuditTrail", 

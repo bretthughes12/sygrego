@@ -258,6 +258,9 @@ Rails.application.routes.draw do
       collection do
         get :available
       end
+      member do
+        patch :release
+      end
     end
     resources :sport_entries do
       resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do

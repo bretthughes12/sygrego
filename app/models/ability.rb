@@ -27,7 +27,7 @@ class Ability
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
         can [:index, :available], Volunteer
-        can [:edit, :update, :show], Volunteer do |volunteer|
+        can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
         end
       end
@@ -60,7 +60,7 @@ class Ability
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
         can [:index, :available], Volunteer
-        can [:edit, :update, :show], Volunteer do |volunteer|
+        can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
         end
       end

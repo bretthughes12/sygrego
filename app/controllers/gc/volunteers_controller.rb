@@ -55,6 +55,23 @@ class Gc::VolunteersController < ApplicationController
         end
       end
     end
+  
+    # PATCH /gc/volunteers/1/release
+    def release
+      @volunteer.participant_id = nil
+      @volunteer.mobile_number = nil
+      @volunteer.email = nil
+      @volunteer.t_shirt_size = nil
+
+      @volunteer.updated_by = current_user.id
+
+      respond_to do |format|
+        if @volunteer.save
+          flash[:notice] = 'Volunteer released.'
+          format.html { redirect_to gc_volunteers_url }
+        end
+      end
+    end
 
     private
   

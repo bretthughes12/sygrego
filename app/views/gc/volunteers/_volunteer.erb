@@ -22,4 +22,12 @@
 	<td> 
 		<%= volunteer.venue_name %></span></br>
 	</td>
+
+	<td>
+		<%= link_to "X", release_gc_volunteer_path(volunteer),
+				method: :patch,
+				data: { confirm: "Are you sure?" },
+				class: danger_button_class,
+				role: "button" %>
+	</td>
 </tr>

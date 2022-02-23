@@ -2,6 +2,8 @@
 
 <h1><%= yield(:title) %></h1>
 
+<% if @settings.volunteers_loaded %>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>
@@ -19,3 +21,9 @@
 <%= link_to "Vacancies", available_gc_volunteers_path,
                   class: primary_button_class,
                   role: "button" %>
+<% else %>
+
+	<p>Required volunteer positions have not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
+	<p>Keep an eye on your email inbox and the Group Coordinators' Facebook page for advice on when this is available.</p>
+
+<% end %>
