@@ -1,7 +1,9 @@
 RowID,Active,Name
+0,TRUE,Friday Evening
 1,TRUE,Saturday Morning
 2,TRUE,Saturday Afternoon
 3,TRUE,Saturday Evening
 4,TRUE,Sunday Morning
 5,TRUE,Sunday Afternoon
 6,TRUE,Sunday Evening
+7,TRUE,Monday Morning

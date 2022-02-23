@@ -17,7 +17,6 @@ Four Square,true,Individual,10,0,1,false,Court,Round Robin
 Golf,true,Individual,0,0,0,false,Court,Open
 Indoor Soccer,true,Team,0,99,1,true,Court,Round Robin
 Lawn Bowls,true,Team,0,99,1,false,Rink,Round Robin
-Mini Golf,true,Individual,6,1,1,false,Course,Round Robin
 Mountain Bike Riding,true,Individual,8,0,1,false,Track,Round Robin
 Netball,true,Team,0,99,1,true,Court,Round Robin
 Pool,true,Individual,4,0,1,false,Table,Round Robin

@@ -57,10 +57,6 @@ RowID,Sport,Name,Active,Type,Status,MaxAge,MinAge,GenderType,MaxPart,MinPart,Min
 -1249716389,Indoor Soccer,Indoor Soccer Mixed B,TRUE,Team,Open,130,11,Mixed,12,0,0,3,6,18,18
 1988615718,Indoor Soccer,Indoor Soccer Under 18,TRUE,Team,Open,17,11,Open,12,0,0,0,6,12,12
 -974144376,Lawn Bowls,Lawn Bowls,TRUE,Team,Open,130,11,Open,6,0,0,0,4,32,32
--158211323,Mini Golf,Mini Golf Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,40,40
-1329205383,Mini Golf,Mini Golf Open Teams,TRUE,Team,Open,130,11,Open,4,4,0,0,4,10,10
-630110888,Mini Golf,Mini Golf Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,40,40
-1981263399,Mini Golf,Mini Golf Under 18 Teams,TRUE,Team,Open,17,11,Open,4,4,0,0,4,10,10
 855126191,Mountain Bike Riding,Mountain Bike Riding Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,,
 -1365482891,Mountain Bike Riding,Mountain Bike Riding Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,,
 1177709714,Mountain Bike Riding,Mountain Bike Riding Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,,
