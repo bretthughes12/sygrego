@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   # Public routes
   root 'welcome#home'
+  get '/group_signup' => 'group_signups#new', :as => :group_signup
   get 'static/:permalink' => 'pages#show', :as => :static
 
   devise_for :users, controllers: {
