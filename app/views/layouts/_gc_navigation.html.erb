@@ -9,13 +9,15 @@
                 <li class='nav-item'><%= link_to 'Event Details', edit_gc_event_detail_path(@group.event_detail), class: 'nav-link' if can? :update, @group.event_detail %></li>
                 <li class='nav-item'><%= link_to 'Participants', gc_participants_path, class: 'nav-link' if can? :update, Participant %></li>
                 <li class='nav-item'><%= link_to 'Sports', gc_sport_entries_path, class: 'nav-link' if can? :update, SportEntry %></li>
-                <li class='nav-item dropdown'>
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Volunteers</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li class='dropdown-item'><%= link_to 'Our Volunteers', gc_volunteers_path %></li>
-                        <li class='dropdown-item'><%= link_to 'Vacancies', available_gc_volunteers_path %></li>
-                    </ul>
-                </li>
+                <%- if can? :index, Volunteer %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Volunteers</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Our Volunteers', gc_volunteers_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Vacancies', available_gc_volunteers_path %></li>
+                        </ul>
+                    </li>
+                <%- end %>
                 <li class='nav-item'><%= link_to 'MySYG', edit_gc_mysyg_setting_path(@group.mysyg_setting), class: 'nav-link'  if can? :update, @group.mysyg_setting %></li>
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
