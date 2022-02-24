@@ -11,6 +11,12 @@ class Admin::ReportsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
+  test "should get fees table" do
+    get fees_admin_reports_url
+
+    assert_response :success
+  end
+
   test "should get finance summary" do
     20.times do
       FactoryBot.create(:participant)

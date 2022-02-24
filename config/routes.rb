@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       collection do
         get :finance_summary
         get :service_preferences
+        get :fees
       end
     end
 

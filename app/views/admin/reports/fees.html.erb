@@ -1,0 +1,25 @@
+<% title "Participant Fees" %>
+
+<h1><%= yield(:title) %></h1>
+
+<% unless @participants.empty? %>
+	<table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th align="left">Category</th>
+                <th align="right">Fee</th>
+            </tr>
+        </thead>
+
+	<% for participant in @participants %>
+	  	<tr valign="top">
+	        <td> 
+		        <%= participant.days == 1 ? participant.category + " (per day)" : participant.category %>
+	    	</td>
+	        <td align="right"> 
+		        <%= number_to_currency(participant.fee) %>
+	        </td>
+	    </tr>
+	<% end %>
+	</table>
+<% end %>
