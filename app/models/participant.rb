@@ -7,6 +7,10 @@
 #  age                    :integer          default(30), not null
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  coming                 :boolean          default(TRUE)
+#  coming_friday          :boolean          default(TRUE)
+#  coming_monday          :boolean          default(TRUE)
+#  coming_saturday        :boolean          default(TRUE)
+#  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
 #  days                   :integer          default(3), not null
 #  dietary_requirements   :string(255)
@@ -34,12 +38,16 @@
 #  onsite                 :boolean          default(TRUE)
 #  phone_number           :string(20)
 #  postcode               :integer
+#  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null
 #  updated_by             :bigint
+#  vaccinated             :boolean          default(FALSE)
+#  vaccination_document   :string(20)
+#  vaccination_sighted_by :string(20)
 #  withdrawn              :boolean          default(FALSE)
 #  wwcc_number            :string
 #  years_attended         :integer
@@ -99,6 +107,10 @@ class Participant < ApplicationRecord
 
     encrypts :wwcc_number, :medicare_number
 
+    SEX = %w[M F].freeze
+    DAYS = [3, 2, 1].freeze
+    REGO_TYPES = ["Full Time", "Part Time"].freeze
+  
     validates :first_name,             
         presence: true,
         uniqueness: { scope: %i[surname group_id],
@@ -120,6 +132,9 @@ class Participant < ApplicationRecord
         presence: true,
         numericality: { only_integer: true },
         inclusion: { in: 1..3, message: 'should be between 1 and 3' }
+    validates :rego_type,                   
+        presence: true,
+        inclusion: { in: REGO_TYPES }
     validates :number_plate,           
         length: { maximum: 10 }
     validates :amount_paid,            
@@ -180,9 +195,6 @@ class Participant < ApplicationRecord
 
     searchable_by :first_name, :surname, :email, :number_plate
 
-    SEX = %w[M F].freeze
-    DAYS = [3, 2, 1].freeze
-  
     def self.finances
       h = {}
       Participant.coming.accepted.each do |participant|

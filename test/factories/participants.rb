@@ -7,6 +7,10 @@
 #  age                    :integer          default(30), not null
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  coming                 :boolean          default(TRUE)
+#  coming_friday          :boolean          default(TRUE)
+#  coming_monday          :boolean          default(TRUE)
+#  coming_saturday        :boolean          default(TRUE)
+#  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
 #  days                   :integer          default(3), not null
 #  dietary_requirements   :string(255)
@@ -34,12 +38,16 @@
 #  onsite                 :boolean          default(TRUE)
 #  phone_number           :string(20)
 #  postcode               :integer
+#  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null
 #  updated_by             :bigint
+#  vaccinated             :boolean          default(FALSE)
+#  vaccination_document   :string(20)
+#  vaccination_sighted_by :string(20)
 #  withdrawn              :boolean          default(FALSE)
 #  wwcc_number            :string
 #  years_attended         :integer
@@ -67,6 +75,7 @@ FactoryBot.define do
     age                   {"18"}
     gender                {"M"}
     days                  {"3"}
+    rego_type             {"Full Time"}
     coming                {true}
     address               {"123 Main St"}
     suburb                {"Disneyland"}
