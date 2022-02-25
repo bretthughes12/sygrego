@@ -33,9 +33,9 @@ class Admin::ReportsController < ApplicationController
 
         @participants << Participant.new(spectator: true)
         @participants << Participant.new(spectator: true, early_bird: true) 
-        @participants << Participant.new(onsite: true, days: 1)
-        @participants << Participant.new(onsite: true, days: 1, spectator: true)
-        @participants << Participant.new(onsite: false, spectator: true, days: 1)
+        @participants << Participant.new(onsite: true, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
+        @participants << Participant.new(onsite: true, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false, spectator: true)
+        @participants << Participant.new(onsite: false, spectator: true, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
         @participants << Participant.new(helper: true, spectator: true)
         @participants << Participant.new(onsite: false, helper: true, spectator: true)
         @participants << Participant.new(group_coord: true)

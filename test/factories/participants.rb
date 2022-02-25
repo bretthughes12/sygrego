@@ -74,8 +74,11 @@ FactoryBot.define do
     sequence(:surname)    { |n| "Smith#{n}"}
     age                   {"18"}
     gender                {"M"}
-    days                  {"3"}
     rego_type             {"Full Time"}
+    coming_friday         {true}
+    coming_saturday       {true}
+    coming_sunday         {true}
+    coming_monday         {true}
     coming                {true}
     address               {"123 Main St"}
     suburb                {"Disneyland"}

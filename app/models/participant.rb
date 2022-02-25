@@ -223,6 +223,15 @@ class Participant < ApplicationRecord
       end
     end
 
+    def dayss
+      return 3 if self.rego_type == "Full Time"
+      d = 0
+      [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
+        d += 1 if self.send(b) == true
+      end
+      [d, 3].min
+    end
+
     def fee
       return fee_when_withdrawn if withdrawn
       settings = Setting.first
@@ -231,7 +240,7 @@ class Participant < ApplicationRecord
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       base_fee -= 30 if spectator
-      base_fee = 50 if spectator && days == 1
+      base_fee = 50 if spectator && dayss == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
@@ -241,7 +250,7 @@ class Participant < ApplicationRecord
       return 0 if !onsite && helper
   
       # other set-price conditions
-      return 15 if !onsite && spectator && days == 1 && age && age >= 14
+      return 15 if !onsite && spectator && dayss == 1 && age && age >= 14
       return 30 if !onsite && spectator && age && age >= 14
   
       # subtract the early bird discount if appropriate
@@ -268,13 +277,13 @@ class Participant < ApplicationRecord
       else
         daily_fee = Participant.round_up_to_5(fee * settings.daily_adjustment)
       end
-      total_fee = [Participant.round_up_to_5(fee), daily_fee * days, base_fee].min
+      total_fee = [Participant.round_up_to_5(fee), daily_fee * dayss, base_fee].min
   
       total_fee
     end
 
     def early_bird_applies?
-      !group_coord && early_bird && (days >= 2)
+      !group_coord && early_bird && (dayss >= 2)
     end
 
 #    def group_fee
@@ -325,7 +334,7 @@ class Participant < ApplicationRecord
         'Team Helper'
       elsif !onsite && spectator
         'Day Visitor'
-      elsif !onsite && !spectator && early_bird && days >= 2
+      elsif !onsite && !spectator && early_bird && dayss >= 2
         'Sport Participant (early bird)'
       elsif !onsite && !spectator
         'Sport Participant'
@@ -333,11 +342,11 @@ class Participant < ApplicationRecord
         'Ages 0-5'
       elsif age && age < 14 && spectator
         'Child'
-      elsif spectator && early_bird && days >= 2
+      elsif spectator && early_bird && dayss >= 2
         'Spectator (early bird)'
       elsif spectator
         'Spectator'
-      elsif early_bird && days >= 2
+      elsif early_bird && dayss >= 2
         'Sport Participant (early bird)'
       else
         'Sport Participant'
