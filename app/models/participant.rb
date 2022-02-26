@@ -853,7 +853,6 @@ private
        'database_rowid',
        'age',
        'gender',
-       'days',
        'onsite',
        'address',
        'suburb',

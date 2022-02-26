@@ -6,7 +6,7 @@
 	<%= f.input :surname %>
 	<div><label class="string">Status</label> <span class="<%= participant_status_class(@participant) %>"><%= @participant.status %></span></div>
 	<%= f.input :coming %>
-	<%= f.input :onsite %>
+	<%= f.input :onsite, label: "Staying onsite at Lardner Park" %>
 	<%= f.input :spectator %>
 	<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
 	<%= f.hint "must also be a spectator" if can_display_helper_flag %>
@@ -14,6 +14,13 @@
 	<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
 	<%= f.input :sport_coord, label: "Sport Coordinator" %>
 	<%= f.input :guest %>
+	<br/>
+	<%= f.input :rego_type, label: "Participation (days are only relevant if part time)", as: :select, collection: Participant::REGO_TYPES, include_blank: false %>
+	<%= f.input :coming_friday, label: "Friday" %>
+	<%= f.input :coming_saturday, label: "Saturday" %>
+	<%= f.input :coming_sunday, label: "Sunday" %>
+	<%= f.input :coming_monday, label: "Monday" %>
+	<br/>
 	<%= f.input :group_id, as: :select, collection: Group.all.order(:short_name).map { |g| [g.short_name_with_status, g.id] } %>
 
 	<%= f.input :early_bird, label: "Early Bird Discount" %>
@@ -21,7 +28,6 @@
 	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
 	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
-	<%= f.input :days, as: :select, collection: Participant::DAYS, :hint => "number of nights for campers, days for day-visitors", include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number" %>
 
   	<%= f.input :amount_paid %>
