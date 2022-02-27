@@ -1,2 +1,2 @@
 RowID,Group,FirstName,Surname,Coming,Status,Age,Gender,Days,Address,Suburb,Postcode,Phone,Mobile,Email,Medicare,MedicalInfo,Medications,YearsAttended,Spectator,Onsite,Helper,GC,SC,Guest,Driver,NumberPlate,EarlyBird,DietaryRqmts,EmergContact,EmergRel,EmergPhone,WWCC
--437868471,CAF,Amos,Burton,true,Accepted,35,M,3,123 Main St,Mordialloc,3195,+61434006439,"",amos@burton.com.au,"",,,3,false,true,false,false,false,false,false,"",true,"","","","",""
+-437868471,CAF,Amos,Burton,true,Accepted,35,M,Full Time,true,true,true,true,123 Main St,Mordialloc,3195,+61434006439,"",amos@burton.com.au,"",,,3,false,true,false,false,false,false,false,"",true,"","","","",""

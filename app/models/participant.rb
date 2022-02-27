@@ -493,10 +493,10 @@ class Participant < ApplicationRecord
           end
 
           participant = Participant.where(first_name: fields[2], surname: fields[3], group_id: group.id).first
-          if fields[18].nil? || fields[18] == '0'
+          if fields[22].nil? || fields[22] == '0'
             years_attended = nil
           else
-            years_attended = fields[18].to_i
+            years_attended = fields[22].to_i
           end
           
           if participant
@@ -505,31 +505,35 @@ class Participant < ApplicationRecord
               participant.status                  = fields[5]
               participant.age                     = fields[6].to_i
               participant.gender                  = fields[7]
-              participant.days                    = fields[8].to_i
-              participant.address                 = fields[9]
-              participant.suburb                  = fields[10]
-              participant.postcode                = fields[11].to_i
-              participant.phone_number            = fields[12]
-              participant.mobile_phone_number     = fields[13]
-              participant.email                   = fields[14]
-              participant.medicare_number         = fields[15]
-              participant.medical_info            = fields[16]
-              participant.medications             = fields[17]
+              participant.rego_type               = fields[8]
+              participant.coming_friday           = fields[9]
+              participant.coming_saturday         = fields[10]
+              participant.coming_sunday           = fields[11]
+              participant.coming_monday           = fields[12]
+              participant.address                 = fields[13]
+              participant.suburb                  = fields[14]
+              participant.postcode                = fields[15].to_i
+              participant.phone_number            = fields[16]
+              participant.mobile_phone_number     = fields[17]
+              participant.email                   = fields[18]
+              participant.medicare_number         = fields[19]
+              participant.medical_info            = fields[20]
+              participant.medications             = fields[21]
               participant.years_attended          = years_attended
-              participant.spectator               = fields[19]
-              participant.onsite                  = fields[20]
-              participant.helper                  = fields[21]
-              participant.group_coord             = fields[22]
-              participant.sport_coord             = fields[23]
-              participant.guest                   = fields[24]
-              participant.driver                  = fields[25]
-              participant.number_plate            = fields[26]
-              participant.early_bird              = fields[27]
-              participant.dietary_requirements    = fields[28]
-              participant.emergency_contact       = fields[29]
-              participant.emergency_relationship  = fields[30]
-              participant.emergency_phone_number  = fields[31]
-              participant.wwcc_number             = fields[32]
+              participant.spectator               = fields[23]
+              participant.onsite                  = fields[24]
+              participant.helper                  = fields[25]
+              participant.group_coord             = fields[26]
+              participant.sport_coord             = fields[27]
+              participant.guest                   = fields[28]
+              participant.driver                  = fields[29]
+              participant.number_plate            = fields[30]
+              participant.early_bird              = fields[31]
+              participant.dietary_requirements    = fields[32]
+              participant.emergency_contact       = fields[33]
+              participant.emergency_relationship  = fields[34]
+              participant.emergency_phone_number  = fields[35]
+              participant.wwcc_number             = fields[36]
               participant.updated_by = user.id
 
               if participant.save
@@ -548,31 +552,35 @@ class Participant < ApplicationRecord
                  status:                  fields[5],
                  age:                     fields[6].to_i,
                  gender:                  fields[7],
-                 days:                    fields[8].to_i,
-                 address:                 fields[9],
-                 suburb:                  fields[10],
-                 postcode:                fields[11].to_i,
-                 phone_number:            fields[12],
-                 mobile_phone_number:     fields[13],
-                 email:                   fields[14],
-                 medicare_number:         fields[15],
-                 medical_info:            fields[16],
-                 medications:             fields[17],
+                 rego_type:               fields[8],
+                 coming_friday:           fields[9],
+                 coming_saturday:         fields[10],
+                 coming_sunday:           fields[11],
+                 coming_monday:           fields[12],
+                 address:                 fields[13],
+                 suburb:                  fields[14],
+                 postcode:                fields[15].to_i,
+                 phone_number:            fields[16],
+                 mobile_phone_number:     fields[17],
+                 email:                   fields[18],
+                 medicare_number:         fields[19],
+                 medical_info:            fields[20],
+                 medications:             fields[21],
                  years_attended:          years_attended,
-                 spectator:               fields[19],
-                 onsite:                  fields[20],
-                 helper:                  fields[21],
-                 group_coord:             fields[22],
-                 sport_coord:             fields[23],
-                 guest:                   fields[24],
-                 driver:                  fields[25],
-                 number_plate:            fields[26],
-                 early_bird:              fields[27],
-                 dietary_requirements:    fields[28],
-                 emergency_contact:       fields[29],
-                 emergency_relationship:  fields[30],
-                 emergency_phone_number:  fields[31],
-                 wwcc_number:             fields[32],
+                 spectator:               fields[23],
+                 onsite:                  fields[24],
+                 helper:                  fields[25],
+                 group_coord:             fields[26],
+                 sport_coord:             fields[27],
+                 guest:                   fields[28],
+                 driver:                  fields[29],
+                 number_plate:            fields[30],
+                 early_bird:              fields[31],
+                 dietary_requirements:    fields[32],
+                 emergency_contact:       fields[33],
+                 emergency_relationship:  fields[34],
+                 emergency_phone_number:  fields[35],
+                 wwcc_number:             fields[36],
                  updated_by:              user.id)
 
               if participant.errors.empty?
@@ -595,38 +603,42 @@ class Participant < ApplicationRecord
 
     CSV.foreach(file.path, headers: true) do |fields|
         participant = Participant.where(first_name: fields[0], surname: fields[1], group_id: group.id).first
-        if fields[15].nil? || fields[15] == '0'
+        if fields[19].nil? || fields[19] == '0'
           years_attended = nil
         else
-          years_attended = fields[15].to_i
+          years_attended = fields[19].to_i
         end
       
         if participant
             participant.coming                  = fields[2]
             participant.age                     = fields[3].to_i
             participant.gender                  = fields[4]
-            participant.days                    = fields[5].to_i
-            participant.address                 = fields[6]
-            participant.suburb                  = fields[7]
-            participant.postcode                = fields[8].to_i
-            participant.phone_number            = fields[9]
-            participant.mobile_phone_number     = fields[10]
-            participant.email                   = fields[11]
-            participant.medicare_number         = fields[12]
-            participant.medical_info            = fields[13]
-            participant.medications             = fields[14]
+            participant.rego_type               = fields[5]
+            participant.coming_friday           = fields[6]
+            participant.coming_saturday         = fields[7]
+            participant.coming_sunday           = fields[8]
+            participant.coming_monday           = fields[9]
+            participant.address                 = fields[10]
+            participant.suburb                  = fields[11]
+            participant.postcode                = fields[12].to_i
+            participant.phone_number            = fields[13]
+            participant.mobile_phone_number     = fields[14]
+            participant.email                   = fields[15]
+            participant.medicare_number         = fields[16]
+            participant.medical_info            = fields[17]
+            participant.medications             = fields[18]
             participant.years_attended          = years_attended
-            participant.spectator               = fields[16]
-            participant.onsite                  = fields[17]
-            participant.helper                  = fields[18]
-            participant.group_coord             = fields[19]
-            participant.driver                  = fields[20]
-            participant.number_plate            = fields[21]
-            participant.dietary_requirements    = fields[22]
-            participant.emergency_contact       = fields[23]
-            participant.emergency_relationship  = fields[24]
-            participant.emergency_phone_number  = fields[25]
-            participant.wwcc_number             = fields[26]
+            participant.spectator               = fields[20]
+            participant.onsite                  = fields[21]
+            participant.helper                  = fields[22]
+            participant.group_coord             = fields[23]
+            participant.driver                  = fields[24]
+            participant.number_plate            = fields[25]
+            participant.dietary_requirements    = fields[26]
+            participant.emergency_contact       = fields[27]
+            participant.emergency_relationship  = fields[28]
+            participant.emergency_phone_number  = fields[29]
+            participant.wwcc_number             = fields[30]
             participant.updated_by = user.id
 
             if participant.save
@@ -643,28 +655,32 @@ class Participant < ApplicationRecord
                coming:                  fields[2],
                age:                     fields[3].to_i,
                gender:                  fields[4],
-               days:                    fields[5].to_i,
-               address:                 fields[6],
-               suburb:                  fields[7],
-               postcode:                fields[8].to_i,
-               phone_number:            fields[9],
-               mobile_phone_number:     fields[10],
-               email:                   fields[11],
-               medicare_number:         fields[12],
-               medical_info:            fields[13],
-               medications:             fields[14],
+               rego_type:               fields[5],
+               coming_friday:           fields[6],
+               coming_saturday:         fields[7],
+               coming_sunday:           fields[8],
+               coming_monday:           fields[9],
+               address:                 fields[10],
+               suburb:                  fields[11],
+               postcode:                fields[12].to_i,
+               phone_number:            fields[13],
+               mobile_phone_number:     fields[14],
+               email:                   fields[15],
+               medicare_number:         fields[16],
+               medical_info:            fields[17],
+               medications:             fields[18],
                years_attended:          years_attended,
-               spectator:               fields[16],
-               onsite:                  fields[17],
-               helper:                  fields[18],
-               group_coord:             fields[19],
-               driver:                  fields[20],
-               number_plate:            fields[21],
-               dietary_requirements:    fields[22],
-               emergency_contact:       fields[23],
-               emergency_relationship:  fields[24],
-               emergency_phone_number:  fields[25],
-               wwcc_number:             fields[26],
+               spectator:               fields[20],
+               onsite:                  fields[21],
+               helper:                  fields[22],
+               group_coord:             fields[23],
+               driver:                  fields[24],
+               number_plate:            fields[25],
+               dietary_requirements:    fields[26],
+               emergency_contact:       fields[27],
+               emergency_relationship:  fields[28],
+               emergency_phone_number:  fields[29],
+               wwcc_number:             fields[30],
                updated_by:              user.id)
 
             if participant.errors.empty?

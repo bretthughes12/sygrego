@@ -1,5 +1,6 @@
 <%- headings = %w{FirstName Surname Coming Age   
-	              Gender Days Address Suburb Postcode Phone Mobile 
+	              Gender Type Friday Saturday Sunday Monday Address 
+				  Suburb Postcode Phone Mobile 
 	              Email Medicare MedicalInfo Medications YearsAttended
 				  Spectator Onsite Helper GC Driver NumberPlate
 				  DietaryRqmts EmergContact EmergRel EmergPhone 
@@ -12,7 +13,11 @@
   		     participant.coming,
   		     participant.age,
   		     participant.gender,
-  		     participant.days,
+  		     participant.rego_type,
+			 participant.coming_friday,
+			 participant.coming_saturday,
+			 participant.coming_sunday,
+			 participant.coming_monday,
   		     participant.address,
   		     participant.suburb,
   		     participant.postcode,
