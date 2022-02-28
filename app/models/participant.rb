@@ -242,8 +242,8 @@ class Participant < ApplicationRecord
       return 0 if !onsite && helper
   
       # other set-price conditions
-      return 15 if !onsite && spectator && days == 1 && age && age >= 14
-      return 30 if !onsite && spectator && age && age >= 14
+      return 30 if !onsite && spectator && days == 1 && age && age >= 14
+      return 60 if !onsite && spectator && age && age >= 14
   
       # subtract the early bird discount if appropriate
       base_fee -= settings.early_bird_discount if early_bird_applies?
