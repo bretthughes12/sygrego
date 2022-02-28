@@ -123,8 +123,8 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 0, pre_schooler.fee
     assert_equal 25, day_visitor_playing_sport.fee
     assert_equal 25, early_day_visitor_playing_sport.fee
-    assert_equal 30, day_visitor_not_playing_sport.fee
-    assert_equal 30, early_day_visitor_not_playing_sport.fee
+    assert_equal 60, day_visitor_not_playing_sport.fee
+    assert_equal 60, early_day_visitor_not_playing_sport.fee
     assert_equal 60, group_coordinator_playing_sport.fee
     assert_equal 40, group_coordinator_not_playing_sport.fee
     assert_equal 80, sport_coordinator_playing_sport.fee

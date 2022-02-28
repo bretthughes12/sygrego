@@ -270,7 +270,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should determine helpers allowed" do
     # basic number
     group = FactoryBot.create(:group)
-    assert_equal 4, group.helpers_allowed
+    assert_equal 0, group.helpers_allowed
 
     # larger groups
     40.times do
@@ -281,7 +281,7 @@ class GroupTest < ActiveSupport::TestCase
         coming: true)
     end
     group.reload
-    assert_equal 6, group.helpers_allowed
+    assert_equal 8, group.helpers_allowed
   end
 
   test "should calculate the helper rebate" do

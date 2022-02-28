@@ -595,8 +595,7 @@ class Group < ApplicationRecord
 #    end
   
     def helpers_allowed
-      4 + (participants.coming.accepted.playing_sport.size >= 40 ?
-         (participants.coming.accepted.playing_sport.size / 20).to_i : 0)
+      (participants.coming.accepted.size / 5).to_i
     end
   
     def helpers
