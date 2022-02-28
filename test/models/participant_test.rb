@@ -12,7 +12,6 @@
 #  coming_saturday        :boolean          default(TRUE)
 #  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
-#  days                   :integer          default(3), not null
 #  dietary_requirements   :string(255)
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)

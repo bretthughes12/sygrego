@@ -40,6 +40,14 @@ module Admin::ParticipantsHelper
         end
     end
 
+    def participant_type_class(participant)
+        if participant.rego_type == "Full Time"
+            "badge bg-success"
+        else
+            "badge bg-primary"
+        end
+    end
+
     def participant_status_class(participant)
         if participant.status == "Accepted"
             "badge bg-success"

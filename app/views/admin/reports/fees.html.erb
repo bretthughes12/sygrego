@@ -14,7 +14,7 @@
 	<% for participant in @participants %>
 	  	<tr valign="top">
 	        <td> 
-		        <%= participant.dayss == 1 ? participant.category + " (per day)" : participant.category %>
+		        <%= participant.days == 1 ? participant.category + " (per day)" : participant.category %>
 	    	</td>
 	        <td align="right"> 
 		        <%= number_to_currency(participant.fee) %>

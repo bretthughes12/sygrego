@@ -125,7 +125,6 @@ class Gc::ParticipantsController < ApplicationController
         :lock_version,
         :age,
         :gender,
-        :rego_type,
         :coming_friday,
         :coming_saturday,
         :coming_sunday,

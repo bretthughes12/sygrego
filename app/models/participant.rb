@@ -12,7 +12,6 @@
 #  coming_saturday        :boolean          default(TRUE)
 #  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
-#  days                   :integer          default(3), not null
 #  dietary_requirements   :string(255)
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)
@@ -109,7 +108,6 @@ class Participant < ApplicationRecord
 
     SEX = %w[M F].freeze
     DAYS = [3, 2, 1].freeze
-    REGO_TYPES = ["Full Time", "Part Time"].freeze
   
     validates :first_name,             
         presence: true,
@@ -128,13 +126,6 @@ class Participant < ApplicationRecord
         presence: true,
         length: { maximum: 1 },
         inclusion: { in: %w[m f M F], message: "should be 'm' or 'f'" }
-    validates :days,                   
-        presence: true,
-        numericality: { only_integer: true },
-        inclusion: { in: 1..3, message: 'should be between 1 and 3' }
-    validates :rego_type,                   
-        presence: true,
-        inclusion: { in: REGO_TYPES }
     validates :number_plate,           
         length: { maximum: 10 }
     validates :amount_paid,            
@@ -192,6 +183,7 @@ class Participant < ApplicationRecord
     before_save :normalize_medications!
     before_save :normalize_address!
     before_save :normalize_suburb!
+    before_save :set_rego_type!
 
     searchable_by :first_name, :surname, :email, :number_plate
 
@@ -223,7 +215,7 @@ class Participant < ApplicationRecord
       end
     end
 
-    def dayss
+    def days
       return 3 if self.rego_type == "Full Time"
       d = 0
       [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
@@ -240,7 +232,7 @@ class Participant < ApplicationRecord
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       base_fee -= 30 if spectator
-      base_fee = 50 if spectator && dayss == 1
+      base_fee = 60 if spectator && days == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
@@ -250,7 +242,7 @@ class Participant < ApplicationRecord
       return 0 if !onsite && helper
   
       # other set-price conditions
-      return 15 if !onsite && spectator && dayss == 1 && age && age >= 14
+      return 15 if !onsite && spectator && days == 1 && age && age >= 14
       return 30 if !onsite && spectator && age && age >= 14
   
       # subtract the early bird discount if appropriate
@@ -277,13 +269,13 @@ class Participant < ApplicationRecord
       else
         daily_fee = Participant.round_up_to_5(fee * settings.daily_adjustment)
       end
-      total_fee = [Participant.round_up_to_5(fee), daily_fee * dayss, base_fee].min
+      total_fee = [Participant.round_up_to_5(fee), daily_fee * days, base_fee].min
   
       total_fee
     end
 
     def early_bird_applies?
-      !group_coord && early_bird && (dayss >= 2)
+      !group_coord && early_bird && (days >= 2)
     end
 
 #    def group_fee
@@ -334,7 +326,7 @@ class Participant < ApplicationRecord
         'Team Helper'
       elsif !onsite && spectator
         'Day Visitor'
-      elsif !onsite && !spectator && early_bird && dayss >= 2
+      elsif !onsite && !spectator && early_bird && days >= 2
         'Sport Participant (early bird)'
       elsif !onsite && !spectator
         'Sport Participant'
@@ -342,11 +334,11 @@ class Participant < ApplicationRecord
         'Ages 0-5'
       elsif age && age < 14 && spectator
         'Child'
-      elsif spectator && early_bird && dayss >= 2
+      elsif spectator && early_bird && days >= 2
         'Spectator (early bird)'
       elsif spectator
         'Spectator'
-      elsif early_bird && dayss >= 2
+      elsif early_bird && days >= 2
         'Sport Participant (early bird)'
       else
         'Sport Participant'
@@ -718,7 +710,15 @@ private
         errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended >= 1 && years_attended <= max_year
       end
     end
-  
+
+    def set_rego_type!
+      d = 0
+      [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
+        d += 1 if self.send(b) == true
+      end
+      self.rego_type = d == 4 ? "Full Time" : "Part Time"
+    end
+
     def normalize_first_name!
       self.first_name = first_name.titleize if first_name
     end

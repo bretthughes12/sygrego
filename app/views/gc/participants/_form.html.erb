@@ -12,7 +12,7 @@
 	<%= f.input :group_coord, label: "Group Coordinator" if can_display_group_coord_flag %>
 	<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
 	<br/><br/>
-	<%= f.input :rego_type, label: "Participation (days are only relevant if part time)", as: :select, collection: Participant::REGO_TYPES, include_blank: false %>
+	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
 	<%= f.input :coming_friday, label: "Friday" %>
 	<%= f.input :coming_saturday, label: "Saturday" %>
 	<%= f.input :coming_sunday, label: "Sunday" %>

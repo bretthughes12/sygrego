@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_24_102844) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_28_085405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -202,7 +202,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_24_102844) do
     t.boolean "coming", default: true
     t.integer "age", default: 30, null: false
     t.string "gender", limit: 1, default: "M", null: false
-    t.integer "days", default: 3, null: false
     t.string "address", limit: 200
     t.string "suburb", limit: 40
     t.integer "postcode"
