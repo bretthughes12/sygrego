@@ -45,7 +45,7 @@ class Group < ApplicationRecord
     require 'csv'
 
     has_many :participants
-#    has_many :payments
+    has_many :payments
     has_many :sport_entries
 #    has_many :downloads
 #    has_many :group_extras
@@ -440,13 +440,13 @@ class Group < ApplicationRecord
       participants.to_be_charged.to_a.sum(&:fee)
     end
 
-#    def amount_paid
-#      @amount_paid ||= calculated_amount_paid
-#    end
+    def amount_paid
+      @amount_paid ||= calculated_amount_paid
+    end
   
-#    def calculated_amount_paid
-#      payments.credits.to_a.sum(&:amount)
-#    end
+    def calculated_amount_paid
+      payments.to_a.sum(&:amount)
+    end
   
 #    def other_charges
 #      @other_charges ||= calculated_other_charges
@@ -456,24 +456,13 @@ class Group < ApplicationRecord
 #      payments.debits.to_a.sum(&:amount)
 #    end
   
-#    def outstanding_amount
-#      fees + deposit + nz(late_fees) + other_charges - helper_rebate - amount_paid
-#    end
+    def total_amount_payable
+      fees + deposit + nz(late_fees)
+    end
   
-#    def total_amount_payable
-#      fees + deposit + nz(late_fees) + other_charges - helper_rebate
-#    end
-  
-#    def amount_outstanding
-#      fees +
-#        deposit +
-#        nz(late_fees) +
-#        other_charges -
-#        helper_rebate -
-#        amount_paid -
-#        nz(cash_paid_at_syg) -
-#        nz(cheques_paid_at_syg)
-#    end
+    def amount_outstanding
+      total_amount_payable - amount_paid
+    end
   
 #    def sections
 #      sections = []
@@ -711,6 +700,10 @@ class Group < ApplicationRecord
     end
     
     private
+  
+    def nz(amount)
+      amount.nil? ? 0 : amount
+    end
   
     def uppercase_abbr!
       abbr.upcase!

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_28_085405) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_01_090827) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -256,6 +256,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_28_085405) do
     t.bigint "sport_entry_id", null: false
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.decimal "amount", precision: 8, scale: 2, default: "0.0", null: false
+    t.string "payment_type", limit: 20, null: false
+    t.string "name", limit: 50
+    t.string "reference", limit: 50
+    t.boolean "reconciled", default: false
+    t.datetime "paid_at"
+    t.bigint "updated_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_payments_on_group_id"
+  end
+
   create_table "rego_checklists", force: :cascade do |t|
     t.boolean "registered", default: false
     t.string "rego_rep", limit: 40
@@ -495,6 +509,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_28_085405) do
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"
   add_foreign_key "participants", "groups"
+  add_foreign_key "payments", "groups"
   add_foreign_key "rego_checklists", "groups"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"

@@ -29,6 +29,14 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     assert_equal "badge bg-danger", participant_status_class(@participant)
   end
 
+  test "participant type display classes" do
+    assert_equal "badge bg-success", participant_type_class(@participant)
+
+    @participant.coming_friday = false
+    @participant.save
+    assert_equal "badge bg-primary", participant_type_class(@participant)
+  end
+
   test "should include group name with name" do
     name = @participant.name + ' (' + @participant.group.short_name + ')'
     assert_equal name, name_with_group_name(@participant)

@@ -138,7 +138,7 @@ class GroupTest < ActiveSupport::TestCase
 
     assert_equal 0, group_with_noone_coming.fees
     
-    #group has one normal camper
+    #group has one normal camper - fees is not greater than deposit
     group_with_one_coming = FactoryBot.create(:group)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
@@ -157,6 +157,47 @@ class GroupTest < ActiveSupport::TestCase
       group: group_with_no_participants)
 
     assert_equal 0, group_with_no_participants.fees
+  end
+
+  test "should calculate the amount paid" do
+    3.times do
+      FactoryBot.create(:payment, group: @group, amount: 10.0)
+    end
+
+    assert_equal 30.0, @group.amount_paid
+  end
+
+  test "should calculate the amount payable" do
+    group = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group)
+    5.times do
+      FactoryBot.create(:participant, 
+                     group: group, 
+                     coming: true)
+    end
+    group.reload
+
+    assert_equal 400.0, group.total_amount_payable
+  end
+
+  test "should calculate the amount outstanding" do
+    group = FactoryBot.create(:group)
+    event_detail = FactoryBot.create(:event_detail, 
+      estimated_numbers: 20, 
+      group: group)
+    5.times do
+      FactoryBot.create(:participant, 
+                     group: group, 
+                     coming: true)
+    end
+    3.times do
+      FactoryBot.create(:payment, group: group, amount: 10.0)
+    end
+    group.reload
+
+    assert_equal 370.0, group.amount_outstanding
   end
 
   test "should allow 2 group coordinators" do
