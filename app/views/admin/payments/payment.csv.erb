@@ -1,0 +1,16 @@
+<%- headings = %w{ID Date Group Amount Reconciled Type Name Reference } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @payments.each do |payment|
+  	line = [ payment.id,
+		  	 payment.date_paid,
+  		     payment.group.short_name,
+  		     payment.amount,
+			 payment.reconciled,
+  		     payment.payment_type,
+  		     payment.name,
+  		     payment.reference
+		   ]
+    csv << line
+  end
+end.html_safe %>
