@@ -1,10 +1,8 @@
 <%= simple_form_for(@payment, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
-	<%= f.input :group_id, as: :select, collection: Group.all.order(:short_name).map { |g| [g.short_name_with_status, g.id] } %>
 	<%= f.input :paid_at, as: :date %>
 	<%= f.input :amount %>
-	<%= f.input :reconciled %>
 	<%= f.input :payment_type, as: :select, collection: Payment::PAYMENT_TYPES, selected: "Direct Deposit", include_blank: false %>
 	<%= f.input :name, label: "Sender / Cheque Drawee" %>
 	<%= f.input :reference, label: "Payment Reference" %>

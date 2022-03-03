@@ -1,0 +1,20 @@
+<% title "Editing #{@payment.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: gc_payment_path(@payment), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", gc_payments_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<% unless @payment.reconciled %>
+    <%= link_to "Destroy", gc_payment_path(@payment),
+                    method: :delete,
+                    data: { confirm: "Are you sure?" },
+                    class: danger_button_class,
+                    role: "button" %>
+<% end %>

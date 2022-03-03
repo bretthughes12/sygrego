@@ -1,0 +1,26 @@
+<table class="table table-dark table-striped">
+    <tr>
+        <td>Deposit required:</td>
+        <td class="list-amount"><%= number_to_currency(@group.deposit)  %></td>
+    </tr>
+
+	<tr>
+		<td>Total remaining fees:</td>
+		<td class="list-amount"><%= number_to_currency(@group.fees)  %></td>
+	</tr>
+	
+    <tr>
+        <td>Late fees:</td>
+        <td class="list-amount"><%= number_to_currency(@group.late_fees)  %></td>
+    </tr>
+
+	<tr>
+		<td>Total payments recorded:</td>
+		<td class="list-amount"><%= number_to_currency(@group.amount_paid * -1)  %></td>
+	</tr>
+
+	<tr>
+		<td><b>Total owing:</b></td>
+		<td class="list-amount"><b><%= number_to_currency(@group.amount_outstanding)  %></b></td>
+	</tr>
+</table>

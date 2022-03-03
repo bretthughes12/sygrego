@@ -1,0 +1,12 @@
+<% title "Payment details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @payment %>
+
+<%= link_to "Back", gc_payments_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_gc_payment_path(@payment),
+                  class: primary_button_class,
+                  role: "button" %>

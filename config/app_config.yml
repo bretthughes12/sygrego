@@ -19,6 +19,9 @@ site_settings: &site_settings
 #    allow_mysyg_to_be_closed: true 
 #    allow_mysyg_approve_option: true
 
+# Finance options
+    cheque_payable: Churches of Christ Vic/Tas Inc.
+
 # Email
     email_subject: "[SYG Registrations]"
 

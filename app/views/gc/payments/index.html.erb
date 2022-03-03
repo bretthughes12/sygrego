@@ -1,0 +1,62 @@
+<% title "Listing payments" %>
+
+<h1><%= yield(:title) %></h1>
+
+<h2>Financial summary</h2>
+
+<%= render :partial => 'finance_summary' %>
+
+<h2>Payments recorded</h2>
+
+<% if @payments.empty? %>
+		<p>There are no payments recorded yet.</p>
+
+<% else %>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <%= render @payments %>
+
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>Total</th>
+        <th><%= number_to_currency(@group.amount_paid) %></th>
+        <th></th>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>
+
+<% if @group.amount_outstanding > 0 %>
+  <h2>Payment options</h2>
+
+  <h3>Direct Deposit</h3>
+  <p>To pay by direct deposit, please:</p>
+  <ol>
+    <li>Transfer funds to the account details listed below</li>
+    <li>Record on this page the details of the deposit(s) made</li>
+  </ol>
+  
+  <table>
+    <tr><td><b>Account Name:</b></td><td><%= @settings.cheque_payable %></td></tr>
+    <tr><td><b>BSB:</b></td><td><%= Rails.application.credentials.account_bsb %></td></tr>
+    <tr><td><b>Account:</b></td><td><%= Rails.application.credentials.account_number %></td></tr>
+    <tr><td><b>Reference:</b></td><td>SYG<%= @settings.this_year.to_s + @group.abbr %></td></tr>
+  </table>
+  
+  <%= link_to "New payment", new_gc_payment_path,
+                    class: primary_button_class,
+                    role: "button" %>
+
+<% end %>
+
+<%= legend_box [{:name => "Reconciled", :class => "table-primary"},
+					{:name => "Unreconciled", :class => "table-warning"}] %>

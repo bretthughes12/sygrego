@@ -17,6 +17,10 @@ class Ability
         can :update, MysygSetting do |ms|
           user.groups.include?(ms.group) || user.role?(:admin)
         end
+        can [:index, :create], Payment
+        can [:show, :update, :destroy], Payment do |payment|
+          user.groups.include?(payment.group) || user.role?(:admin)
+        end
         can [:index, :search, :create, :new_import, :import], Participant
         can [:show, :update, :destroy], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
@@ -49,6 +53,10 @@ class Ability
       if user.status == "Verified"
         can :update, MysygSetting do |ms|
           user.groups.include?(ms.group) || user.role?(:admin)
+        end
+        can [:index, :create], Payment
+        can [:show, :update, :destroy], Payment do |payment|
+          user.groups.include?(payment.group) || user.role?(:admin)
         end
         can [:index, :search, :create, :new_import, :import], Participant
         can [:show, :update, :destroy], Participant do |participant|

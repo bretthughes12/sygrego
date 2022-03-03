@@ -79,6 +79,7 @@ class Admin::PaymentsController < ApplicationController
   
     # DELETE /admin/payments/1
     def destroy
+      flash[:notice] = 'Payment deleted.'
       @payment.destroy
   
       respond_to do |format|

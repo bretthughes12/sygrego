@@ -1,0 +1,27 @@
+<tr valign="top" class="<%= payment_display_class(payment) %>">
+	<td> 
+		<%= payment.date_paid %>
+	</td>
+
+	<td> 
+		<%= payment.payment_type %>
+	</td>
+
+	<td> 
+		<% if payment.reconciled %>
+	        <%= number_to_currency(payment.amount) %>
+		<% else %>
+    	    <%= link_to number_to_currency(payment.amount), edit_gc_payment_path(payment) %>
+		<% end %>
+	</td>
+
+	<td> 
+		<% unless payment.reconciled %>
+			<%= link_to "X", gc_payment_path(payment),
+					method: :delete,
+					data: { confirm: "Are you sure?" },
+					class: danger_button_class,
+					role: "button" %>
+		<% end %>
+	</td>
+</tr>
