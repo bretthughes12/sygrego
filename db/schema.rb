@@ -508,7 +508,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_222916) do
     t.string "name", limit: 20, null: false
     t.integer "limit", default: 1
     t.datetime "expiry"
-    t.string "type", limit: 15, default: "Multiply", null: false
+    t.string "voucher_type", limit: 15, default: "Multiply", null: false
     t.decimal "adjustment", precision: 8, default: "0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
