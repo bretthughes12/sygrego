@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_01_090827) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_222916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -246,9 +246,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_01_090827) do
     t.boolean "coming_saturday", default: true
     t.boolean "coming_sunday", default: true
     t.boolean "coming_monday", default: true
+    t.bigint "voucher_id"
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
+    t.index ["voucher_id"], name: "index_participants_on_voucher_id"
   end
 
   create_table "participants_sport_entries", id: false, force: :cascade do |t|
@@ -499,6 +501,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_01_090827) do
     t.datetime "updated_at", null: false
     t.index ["participant_id"], name: "index_volunteers_on_participant_id"
     t.index ["volunteer_type_id"], name: "index_volunteers_on_volunteer_type_id"
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.bigint "group_id"
+    t.string "name", limit: 20, null: false
+    t.integer "limit", default: 1
+    t.datetime "expiry"
+    t.string "type", limit: 15, default: "Multiply", null: false
+    t.decimal "adjustment", precision: 8, default: "0", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_vouchers_on_group_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

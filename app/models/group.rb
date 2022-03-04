@@ -47,6 +47,7 @@ class Group < ApplicationRecord
     has_many :participants
     has_many :payments
     has_many :sport_entries
+    has_many :vouchers
 #    has_many :downloads
 #    has_many :group_extras
 #    has_many :groups_sport_grades_filters

@@ -36,7 +36,7 @@ class Payment < ApplicationRecord
     presence: true,
     numericality: true,
     inclusion: { in: 0..999_999.99 }
-  validates :payment_type,           
+  validates :payment_type,
     presence: true,
     length: { maximum: 20 }
   validates :name, 
