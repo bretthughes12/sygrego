@@ -151,6 +151,7 @@ Rails.application.routes.draw do
         patch :reconcile
       end
     end
+    resources :vouchers
     resources :participants do
       collection do
         get :new_import

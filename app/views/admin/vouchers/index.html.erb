@@ -1,0 +1,23 @@
+<% title "Listing vouchers" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Group</th>
+      <th>Limit</th>
+      <th>Expiry</th>
+    </tr>
+  </thead>
+
+	<%= render @vouchers %>
+</table>
+
+<%= link_to "New voucher", new_admin_voucher_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_vouchers_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>

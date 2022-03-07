@@ -1,0 +1,12 @@
+<% title "Voucher details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @voucher %>
+
+<%= link_to "Back", admin_vouchers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_voucher_path(@voucher),
+                  class: primary_button_class,
+                  role: "button" %>

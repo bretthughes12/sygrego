@@ -45,6 +45,8 @@ class Voucher < ApplicationRecord
     length: { maximum: 15 },
     inclusion: TYPES
   
+  before_save :uppercase_name!
+
   def valid_for?(participant)
     return false if participant.nil?
     unless limit.nil?
@@ -57,5 +59,11 @@ class Voucher < ApplicationRecord
       return false if Date.today.in_time_zone > expiry
     end
     return true
+  end
+
+  private
+
+  def uppercase_name!
+    name.upcase!
   end
 end
