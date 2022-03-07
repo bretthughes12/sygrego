@@ -3,7 +3,7 @@
 # Table name: vouchers
 #
 #  id           :bigint           not null, primary key
-#  adjustment   :decimal(8, )     default(0), not null
+#  adjustment   :decimal(8, 2)    default(1.0), not null
 #  expiry       :datetime
 #  limit        :integer          default(1)
 #  name         :string(20)       not null

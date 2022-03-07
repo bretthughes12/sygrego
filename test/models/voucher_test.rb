@@ -3,7 +3,7 @@
 # Table name: vouchers
 #
 #  id           :bigint           not null, primary key
-#  adjustment   :decimal(8, )     default(0), not null
+#  adjustment   :decimal(8, 2)    default(1.0), not null
 #  expiry       :datetime
 #  limit        :integer          default(1)
 #  name         :string(20)       not null
@@ -67,5 +67,42 @@ class VoucherTest < ActiveSupport::TestCase
     voucher = FactoryBot.create(:voucher, expiry: 1.day.ago)
 
     assert_equal false, voucher.valid_for?(participant)
+  end
+
+  test "should apply a multiple voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Multiply", adjustment: 0.5)
+
+    assert_equal 10, voucher.apply(20)
+  end
+
+  test "should apply a divide voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Divide", adjustment: 3)
+
+    assert_equal 3, voucher.apply(9)
+  end
+
+  test "should apply a subtract voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Subtract", adjustment: 5.0)
+
+    assert_equal 15, voucher.apply(20)
+  end
+
+  test "should apply a addition voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Add", adjustment: 5)
+
+    assert_equal 25, voucher.apply(20)
+  end
+
+  test "should apply a set voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 10)
+
+    assert_equal 10, voucher.apply(50)
+  end
+
+  test "should not apply an invalid voucher" do
+    voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 10)
+    voucher.voucher_type = "Invalid"
+
+    assert_equal 50, voucher.apply(50)
   end
 end

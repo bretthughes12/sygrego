@@ -5,7 +5,7 @@
 	<%= f.input :paid_at, as: :date %>
 	<%= f.input :amount %>
 	<%= f.input :reconciled %>
-	<%= f.input :payment_type, as: :select, collection: Payment::PAYMENT_TYPES, selected: "Direct Deposit", include_blank: false %>
+	<%= f.input :payment_type, as: :select, collection: Payment::PAYMENT_TYPES, include_blank: false %>
 	<%= f.input :name, label: "Sender / Cheque Drawee" %>
 	<%= f.input :reference, label: "Payment Reference" %>
 

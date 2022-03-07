@@ -116,6 +116,8 @@ class ParticipantTest < ActiveSupport::TestCase
     sport_coordinator_not_playing_sport = FactoryBot.create(:participant, sport_coord: true, spectator: true)
     guest_playing_sport = FactoryBot.create(:participant, guest: true)
     guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
+    free_voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 0)
+    band_member = FactoryBot.create(:participant, voucher: free_voucher)
 
     assert_equal @setting.full_fee, full_participant.fee
     assert_equal @setting.full_fee, eleven_year_old_playing_sport.fee
@@ -133,6 +135,7 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 50, sport_coordinator_not_playing_sport.fee
     assert_equal 0, guest_playing_sport.fee
     assert_equal 0, guest_not_playing_sport.fee
+    assert_equal 0, band_member.fee
   end
 
   def test_participant_category_values

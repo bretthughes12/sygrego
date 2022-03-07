@@ -252,6 +252,7 @@ class Participant < ApplicationRecord
       # check for other fee modifiers
       fee = base_fee
       fee *= settings.day_visitor_adjustment unless onsite
+      fee = voucher.apply(fee) if voucher
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       # fee *= settings.spectator_adjustment if spectator
@@ -276,7 +277,7 @@ class Participant < ApplicationRecord
     end
 
     def early_bird_applies?
-      !group_coord && early_bird && (days >= 2)
+      !group_coord && early_bird && (days >= 2) && voucher.nil?
     end
 
 #    def group_fee

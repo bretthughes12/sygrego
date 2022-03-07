@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_04_222916) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_07_094553) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -509,7 +509,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_04_222916) do
     t.integer "limit", default: 1
     t.datetime "expiry"
     t.string "voucher_type", limit: 15, default: "Multiply", null: false
-    t.decimal "adjustment", precision: 8, default: "0", null: false
+    t.decimal "adjustment", precision: 8, scale: 2, default: "1.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_vouchers_on_group_id"

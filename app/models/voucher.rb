@@ -3,7 +3,7 @@
 # Table name: vouchers
 #
 #  id           :bigint           not null, primary key
-#  adjustment   :decimal(8, )     default(0), not null
+#  adjustment   :decimal(8, 2)    default(1.0), not null
 #  expiry       :datetime
 #  limit        :integer          default(1)
 #  name         :string(20)       not null
@@ -59,6 +59,23 @@ class Voucher < ApplicationRecord
       return false if Date.today.in_time_zone > expiry
     end
     return true
+  end
+
+  def apply(fee)
+    case voucher_type
+    when 'Multiply'
+      fee * adjustment
+    when 'Divide'
+      fee / adjustment
+    when 'Add'
+      fee + adjustment
+    when 'Subtract'
+      fee - adjustment
+    when 'Set'
+      adjustment
+    else
+      fee
+    end
   end
 
   private
