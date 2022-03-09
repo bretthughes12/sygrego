@@ -3,6 +3,7 @@
 
 	<%= f.input :name %>
 	<%= f.input :group_id, as: :select, collection: Group.all.order(:short_name).map { |g| [g.short_name_with_status, g.id] } %>
+	<%= f.input :restricted_to, as: :select, collection: Voucher::RESTRICTIONS, include_blank: true %>
 	<%= f.input :expiry, as: :date, include_blank: true %>
 	<%= f.input :limit %>
 	<%= f.input :voucher_type, as: :select, collection: Voucher::TYPES, include_blank: false %>

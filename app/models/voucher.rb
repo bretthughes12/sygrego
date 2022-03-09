@@ -55,6 +55,7 @@ class Voucher < ApplicationRecord
     inclusion: { in: TYPES }
   
   before_save :uppercase_name!
+  before_validation :check_for_divide_by_zero
 
   def valid_for?(participant)
     return false if participant.nil?
@@ -90,7 +91,32 @@ class Voucher < ApplicationRecord
     end
   end
 
+  def effect
+    case
+    when voucher_type == "Multiply" && adjustment == 0
+      'Free'
+    when voucher_type == "Multiply" && adjustment < 1
+      "#{((1 - adjustment) * 100).to_i}% off"
+    when voucher_type == "Multiply"
+      "Multiply by #{adjustment}"
+    when voucher_type == "Set" && adjustment == 0
+      'Free'
+    when voucher_type == "Set"
+      "$#{adjustment}"
+    when voucher_type == "Subtract"
+      "$#{adjustment} off"
+    when voucher_type == "Divide"
+      "Divide by #{adjustment}"
+    when voucher_type == "Add"
+      "Add $#{adjustment}"
+    end
+  end
+
   private
+
+  def check_for_divide_by_zero
+    errors.add(:voucher_type, 'Divide by zero is not allowed') if voucher_type == "Divide" && adjustment == 0.0
+  end
 
   def uppercase_name!
     name.upcase!

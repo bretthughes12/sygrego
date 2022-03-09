@@ -12,6 +12,10 @@
 	</td>
 	
 	<td> 
-		<%= voucher.expiry.in_time_zone.strftime('%d/%m/%Y') unless voucher.expiry.nil? %>
+		<%= voucher.participants.count %>
+	</td>
+	
+	<td> 
+		<%= voucher.effect %>
 	</td>
 </tr>

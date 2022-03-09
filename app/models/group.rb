@@ -595,7 +595,7 @@ class Group < ApplicationRecord
 #    def can_have_more_helpers?
 #      participants.coming.accepted.helpers.size < helpers_allowed
 #    end
-    
+  
     def free_helpers
       if division == 'Small Churches'
         2

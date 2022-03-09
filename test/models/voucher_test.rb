@@ -127,4 +127,38 @@ class VoucherTest < ActiveSupport::TestCase
 
     assert_equal 50, voucher.apply(50)
   end
+
+  test "should describe the effects of vouchers" do
+    @voucher.voucher_type = "Multiply"
+    @voucher.adjustment = 0
+    assert_equal 'Free', @voucher.effect
+
+    @voucher.voucher_type = "Multiply"
+    @voucher.adjustment = 0.4
+    assert_equal '60% off', @voucher.effect
+
+    @voucher.voucher_type = "Multiply"
+    @voucher.adjustment = 1
+    assert_equal 'Multiply by 1.0', @voucher.effect
+
+    @voucher.voucher_type = "Set"
+    @voucher.adjustment = 0
+    assert_equal 'Free', @voucher.effect
+
+    @voucher.voucher_type = "Set"
+    @voucher.adjustment = 20
+    assert_equal '$20.0', @voucher.effect
+
+    @voucher.voucher_type = "Subtract"
+    @voucher.adjustment = 15
+    assert_equal '$15.0 off', @voucher.effect
+
+    @voucher.voucher_type = "Divide"
+    @voucher.adjustment = 2
+    assert_equal 'Divide by 2.0', @voucher.effect
+
+    @voucher.voucher_type = "Add"
+    @voucher.adjustment = 5
+    assert_equal 'Add $5.0', @voucher.effect
+  end
 end

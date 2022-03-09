@@ -696,13 +696,13 @@ class Participant < ApplicationRecord
 private
 
     def validate_eligibility_for_team_helper
-      errors[:base] << 'Team helpers must also be spectators' if coming && helper && !spectator
-      errors[:base] << 'Team helpers must not be under 12' if coming && helper && age && age < 12
-      errors[:base] << 'Maximum number of Team Helpers has been reached' if coming && helper && group.participants.coming.accepted.helpers.where(['id != ?', id]).size >= group.helpers_allowed
+      errors.add(:helper, 'must also be a spectator') if coming && helper && !spectator
+      errors.add(:helper, 'must not be under 12') if coming && helper && age && age < 12
+      errors.add(:helper, 'maximum number of Team Helpers has been reached') if coming && helper && group.participants.coming.accepted.helpers.where(['id != ?', id]).size >= group.helpers_allowed
     end
   
     def validate_eligibility_for_group_coordinator
-      errors[:base] << 'Maximum of two Group Coordinators allowed per group' if coming && group_coord && group.participants.coming.accepted.group_coords.where(['id != ?', id]).size >= group.coordinators_allowed
+      errors.add(:group_coord, 'Maximum of two Group Coordinators allowed per group') if coming && group_coord && group.participants.coming.accepted.group_coords.where(['id != ?', id]).size >= group.coordinators_allowed
     end
   
     def validate_years_attended
