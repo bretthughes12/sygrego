@@ -2,15 +2,16 @@
 #
 # Table name: vouchers
 #
-#  id           :bigint           not null, primary key
-#  adjustment   :decimal(8, 2)    default(1.0), not null
-#  expiry       :datetime
-#  limit        :integer          default(1)
-#  name         :string(20)       not null
-#  voucher_type :string(15)       default("Multiply"), not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  group_id     :bigint
+#  id            :bigint           not null, primary key
+#  adjustment    :decimal(8, 2)    default(1.0), not null
+#  expiry        :datetime
+#  limit         :integer          default(1)
+#  name          :string(20)       not null
+#  restricted_to :string(20)
+#  voucher_type  :string(15)       default("Multiply"), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  group_id      :bigint
 #
 # Indexes
 #
@@ -30,12 +31,20 @@ class Voucher < ApplicationRecord
     Subtract
   ].freeze
 
+  RESTRICTIONS = %w[
+    Helpers
+  ].freeze
+
   validates :name,
     presence: true,
     uniqueness: true,
     length: { maximum: 20 }
   validates :limit,                 
     numericality: { only_integer: true }
+  validates :restricted_to,
+    length: { maximum: 20 },
+    inclusion: { in: RESTRICTIONS },
+    allow_blank: true
   validates :adjustment,                 
     presence: true,
     numericality: true,
@@ -43,7 +52,7 @@ class Voucher < ApplicationRecord
   validates :voucher_type,
     presence: true,
     length: { maximum: 15 },
-    inclusion: TYPES
+    inclusion: { in: TYPES }
   
   before_save :uppercase_name!
 
@@ -57,6 +66,9 @@ class Voucher < ApplicationRecord
     end
     unless expiry.nil?
       return false if Date.today.in_time_zone > expiry
+    end
+    unless restricted_to.nil?
+      return false if restricted_to == "Helpers" && !participant.helper
     end
     return true
   end

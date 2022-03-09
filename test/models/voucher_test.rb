@@ -2,15 +2,16 @@
 #
 # Table name: vouchers
 #
-#  id           :bigint           not null, primary key
-#  adjustment   :decimal(8, 2)    default(1.0), not null
-#  expiry       :datetime
-#  limit        :integer          default(1)
-#  name         :string(20)       not null
-#  voucher_type :string(15)       default("Multiply"), not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  group_id     :bigint
+#  id            :bigint           not null, primary key
+#  adjustment    :decimal(8, 2)    default(1.0), not null
+#  expiry        :datetime
+#  limit         :integer          default(1)
+#  name          :string(20)       not null
+#  restricted_to :string(20)
+#  voucher_type  :string(15)       default("Multiply"), not null
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  group_id      :bigint
 #
 # Indexes
 #
@@ -62,9 +63,30 @@ class VoucherTest < ActiveSupport::TestCase
     assert_equal true, voucher.valid_for?(participant)
   end
 
-  test "should not allow expired voucher for a participant" do
+  test "should not allow expired voucher for a new participant" do
+    participant = FactoryBot.build(:participant)
+    voucher = FactoryBot.create(:voucher, expiry: 1.day.ago)
+
+    assert_equal false, voucher.valid_for?(participant)
+  end
+
+  test "should not allow expired voucher for an old participant" do
     participant = FactoryBot.create(:participant)
     voucher = FactoryBot.create(:voucher, expiry: 1.day.ago)
+
+    assert_equal false, voucher.valid_for?(participant)
+  end
+
+  test "should allow helpers voucher for a helper participant" do
+    participant = FactoryBot.build(:participant, spectator: true, helper: true)
+    voucher = FactoryBot.create(:voucher, restricted_to: "Helpers")
+
+    assert_equal true, voucher.valid_for?(participant)
+  end
+
+  test "should not allow helpers voucher for a normal participant" do
+    participant = FactoryBot.create(:participant)
+    voucher = FactoryBot.create(:voucher, restricted_to: "Helpers")
 
     assert_equal false, voucher.valid_for?(participant)
   end
