@@ -128,6 +128,67 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_match /must be in '\.csv' format/, flash[:notice]
   end
 
+  test "should get new voucher" do
+    get new_voucher_admin_participant_url(@participant)
+
+    assert_response :success
+  end
+
+  test "should add a valid voucher" do
+    voucher = FactoryBot.create(:voucher, name: "MYVOUCHER")
+
+    post add_voucher_admin_participant_url(@participant), params: { participant: { voucher_name: "MYVOUCHER" }}
+
+    assert_redirected_to edit_admin_participant_path(@participant)
+    assert_match /Voucher added/, flash[:notice]
+
+    @participant.reload
+    assert_equal voucher, @participant.voucher
+  end
+
+  test "should not add an invalid voucher" do
+    post add_voucher_admin_participant_url(@participant), params: { participant: { voucher_name: "NOTFOUND" }}
+
+    assert_response :success
+    assert_match /is not valid/, flash[:notice]
+
+    @participant.reload
+    assert_nil @participant.voucher
+  end
+
+  test "should not add a voucher when not sent" do
+    post add_voucher_admin_participant_url(@participant), params: { participant: { voucher: "NOTFOUND" }}
+
+    assert_response :success
+    assert_match /is not valid/, flash[:notice]
+
+    @participant.reload
+    assert_nil @participant.voucher
+  end
+
+  test "should delete a voucher" do
+    voucher = FactoryBot.create(:voucher, name: "MYVOUCHER")
+    @participant.voucher = voucher
+    @participant.save
+
+    patch delete_voucher_admin_participant_url(@participant)
+
+    assert_redirected_to edit_admin_participant_path(@participant)
+    assert_match /Voucher deleted/, flash[:notice]
+
+    @participant.reload
+    assert_nil @participant.voucher
+  end
+
+  test "should not delete a non-existent voucher" do
+    patch delete_voucher_admin_participant_url(@participant)
+
+    assert_redirected_to edit_admin_participant_path(@participant)
+
+    @participant.reload
+    assert_nil @participant.voucher
+  end
+
   test "should destroy participant" do
     assert_difference("Participant.count", -1) do
       delete admin_participant_url(@participant)

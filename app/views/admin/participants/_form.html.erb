@@ -14,6 +14,25 @@
 	<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
 	<%= f.input :sport_coord, label: "Sport Coordinator" %>
 	<%= f.input :guest %>
+	<% unless @participant.new_record? %>
+		<% if @participant.voucher %>
+			<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
+				<%= link_to "X", delete_voucher_admin_participant_path(@participant),
+					method: :patch,
+					data: { confirm: "Are you sure?" },
+					class: danger_button_class,
+					role: "button" %>
+			</div>
+		<% else %>
+			<div><label class="string">Voucher</label> 
+				<%= link_to "Add", new_voucher_admin_participant_path(@participant),
+					method: :get,
+					class: primary_button_class,
+					role: "button" %>
+			</div>
+		<% end %>
+	<% end %>
+
 	<br/>
 	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
 	<%= f.input :coming_friday, label: "Friday" %>

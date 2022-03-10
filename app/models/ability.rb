@@ -22,7 +22,7 @@ class Ability
           user.groups.include?(payment.group) || user.role?(:admin)
         end
         can [:index, :search, :create, :new_import, :import], Participant
-        can [:show, :update, :destroy], Participant do |participant|
+        can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
         can [:index, :create], SportEntry
@@ -59,7 +59,7 @@ class Ability
           user.groups.include?(payment.group) || user.role?(:admin)
         end
         can [:index, :search, :create, :new_import, :import], Participant
-        can [:show, :update, :destroy], Participant do |participant|
+        can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
         can [:index, :create], SportEntry

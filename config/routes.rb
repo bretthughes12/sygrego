@@ -158,6 +158,11 @@ Rails.application.routes.draw do
         post :import
         get :search
       end
+      member do
+        get :new_voucher
+        post :add_voucher
+        patch :delete_voucher
+      end
     end
 
     resources :sport_entries do
@@ -261,6 +266,11 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+      end
+      member do
+        get :new_voucher
+        post :add_voucher
+        patch :delete_voucher
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

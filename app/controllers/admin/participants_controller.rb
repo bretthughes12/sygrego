@@ -118,6 +118,58 @@ class Admin::ParticipantsController < ApplicationController
       end
     end
 
+    # GET /admin/participants/1/new_voucher
+    def new_voucher
+    end
+  
+    # POST /admin/participants/1/add_voucher
+    def add_voucher
+      if params[:participant] && !params[:participant][:voucher_name].blank?
+        voucher = Voucher.find_by_name(params[:participant][:voucher_name])
+
+        if voucher && voucher.valid_for?(@participant)
+          @participant.voucher = voucher
+          @participant.save
+
+          flash[:notice] = "Voucher added to participant"
+
+          respond_to do |format|
+            format.html { redirect_to edit_admin_participant_url(@participant) }
+          end
+        else
+          flash[:notice] = "Voucher is not valid for this participant"
+
+          respond_to do |format|
+            format.html { render action: "new_voucher" }
+          end
+        end
+      else
+        flash[:notice] = "Voucher is not valid for this participant"
+
+        respond_to do |format|
+          format.html { render action: "new_voucher" }
+        end
+      end
+    end
+  
+    # PATCH /admin/participants/1/delete_voucher
+    def delete_voucher
+      if @participant.voucher
+        @participant.voucher_id = nil
+        @participant.save
+      
+        flash[:notice] = "Voucher deleted"
+
+        respond_to do |format|
+          format.html { redirect_to edit_admin_participant_url(@participant) }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to edit_admin_participant_url(@participant) }
+        end
+      end
+    end
+
 private
   
     def participant_params

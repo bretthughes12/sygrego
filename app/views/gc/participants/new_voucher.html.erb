@@ -1,0 +1,19 @@
+<% title "Add a voucher" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= simple_form_for(@participant, url: add_voucher_gc_participant_path(@participant), method: :post) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :voucher_name, label: "Voucher" %>
+
+    <br/>
+
+	<%= f.button :submit, "Add" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", edit_gc_participant_path(@participant),
+                  class: primary_button_class,
+                  role: "button" %>

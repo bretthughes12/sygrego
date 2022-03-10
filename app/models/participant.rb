@@ -74,6 +74,8 @@ class Participant < ApplicationRecord
     require 'csv'
     require 'pp'
 
+    attr_reader :voucher_name
+
     belongs_to :group
     belongs_to :voucher, optional: true
     has_many   :volunteers
