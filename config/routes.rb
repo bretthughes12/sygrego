@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   } 
 
+  # Public and general routes
   resources :pages, only: [:show]
 
   resources :roles do
@@ -46,6 +47,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # Admin routes
   namespace :admin do
     resource :info, :controller => "info" do
       collection do
@@ -225,6 +227,7 @@ Rails.application.routes.draw do
     end
   end
 
+  # API routes
   namespace :api do
     resources :audit_trail, only: [:index]
     resources :groups, only: [:show]
@@ -240,6 +243,7 @@ Rails.application.routes.draw do
     resources :volunteers, only: [:show]
   end
 
+  # Group Coordinator routes
   namespace :gc do
     resource :info, :controller => "info" do
       collection do
@@ -285,6 +289,39 @@ Rails.application.routes.draw do
       resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do
         member do
           patch :make_captain
+        end
+      end
+    end
+  end
+
+  # Participant User routes 
+  scope 'mysyg', as: 'mysyg' do
+    get '/signup' => 'mysyg/participant_users#new', :as => :generic_signup
+    
+    scope '/:group' do
+      get '/signup' => 'mysyg/participant_users#new', :as => :signup
+      get '/home' => 'mysyg/info#home', :as => :home
+      get '/details' => 'mysyg/participant_users#edit', :as => :details
+      get '/extras' => 'mysyg/participant_extras#index', :as => :extras
+      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
+      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
+      get '/finance' => 'mysyg/info#finance', :as => :finance
+      get '/drivers' => 'mysyg/participant_users#drivers', as: :drivers
+ 
+      resources :participant_users, :controller => "mysyg/participant_users", :only => [:create, :update] do
+        member do
+          put  :update_drivers
+        end
+      end
+      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
+      resources :sport_preferences, :controller => "mysyg/sport_preferences" do
+        collection do
+          put :update_multiple
+        end
+      end
+      resources :participant_extras, :controller => "mysyg/participant_extras" do
+        collection do
+          put :update_multiple
         end
       end
     end
