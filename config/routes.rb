@@ -296,19 +296,19 @@ Rails.application.routes.draw do
 
   # Participant User routes 
   scope 'mysyg', as: 'mysyg' do
-    get '/signup' => 'mysyg/participant_users#new', :as => :generic_signup
+    get '/signup' => 'participant_signups#new', :as => :generic_signup
     
     scope '/:group' do
-      get '/signup' => 'mysyg/participant_users#new', :as => :signup
+      get '/signup' => 'participant_signups#new', :as => :signup
       get '/home' => 'mysyg/info#home', :as => :home
-      get '/details' => 'mysyg/participant_users#edit', :as => :details
+      get '/details' => 'mysyg/participants#edit', :as => :details
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
       get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
       get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
       get '/finance' => 'mysyg/info#finance', :as => :finance
-      get '/drivers' => 'mysyg/participant_users#drivers', as: :drivers
+      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
  
-      resources :participant_users, :controller => "mysyg/participant_users", :only => [:create, :update] do
+      resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
         member do
           put  :update_drivers
         end
@@ -327,4 +327,3 @@ Rails.application.routes.draw do
     end
   end
 end
-
