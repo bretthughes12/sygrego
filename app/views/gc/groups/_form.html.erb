@@ -4,7 +4,7 @@
 	<%= f.input :lock_version, :as => :hidden %>
 	<%= f.input :coming %>
 	<%= f.input :abbr %>
-	<%= f.input :name %>
+	<%= f.input :name, label: "Group Name" %>
 	<%= f.input :short_name, :hint => group_short_name_hint(@group) %>
    	<%= f.input :trading_name, :label => "Church Trading Name" %>
 	<%= f.input :address, :label => "Church Postal Address" %>
