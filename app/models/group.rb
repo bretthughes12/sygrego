@@ -258,17 +258,17 @@ class Group < ApplicationRecord
       end
     end
 
-#    def mysyg_selection_name
-#      "#{abbr} - #{name}"
-#    end
+    def mysyg_selection_name
+      "#{abbr} - #{name}"
+    end
   
-#    def self.mysyg_actives
-#      active_groups = []
-#      Group.order(:name).each do |group|
-#        active_groups << group if group.active && group.mysyg_open
-#      end
-#      active_groups
-#    end
+    def self.mysyg_actives
+      active_groups = []
+      Group.order(:name).each do |group|
+        active_groups << group if group.active && group.mysyg_setting.mysyg_open
+      end
+      active_groups
+    end
   
 #    def self.actives
 #      active_groups = []

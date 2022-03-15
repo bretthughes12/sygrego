@@ -87,12 +87,19 @@ class Ability
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
    
     elsif session["current_role"] == "participant"
-      can :update, Group do |group|
-        user.groups.include?(group) || user.role?(:admin)
+      can [:update, :edit_password, :update_password], User do |u|
+        user == u
+      end
+      can [:update, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
+        user.participants.include?(participant) || user.role?(:admin)
+      end
+      can [:index], Volunteer
+      can [:update, :release], Volunteer do |volunteer|
+        volunteer.participant.nil? || user.participants.include?(volunteer.try(:participant)) || user.role?(:admin)
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
-      can [:available_groups, :switch], Group if user.roles.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1
 
     end
     

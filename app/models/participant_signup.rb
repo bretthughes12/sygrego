@@ -155,35 +155,35 @@ class ParticipantSignup
       @group = find_group
     end
   
-    def update_attributes(attributes = {})
-      send_attributes(attributes)
-      save
-    end
+#    def update_attributes(attributes = {})
+#      send_attributes(attributes)
+#      save
+#    end
   
-    def self.find(id)
-      pu = ParticipantSignup.new
+#    def self.find(id)
+#      pu = ParticipantSignup.new
   
-      pu.participant = Participant.where(id: id).first || Participant.new
-      pu.group = pu.participant.group
+#      pu.participant = Participant.where(id: id).first || Participant.new
+#      pu.group = pu.participant.group
   
-      pu.load_participant
-      pu.user = User.unscoped.find_by_participant_id(pu.participant.id) || User.new
-      pu.load_user
+#      pu.load_participant
+#      pu.user = User.unscoped.find_by_participant_id(pu.participant.id) || User.new
+#      pu.load_user
   
-      pu
-    end
+#      pu
+#    end
   
-    def self.locate(user)
-      pu = ParticipantSignup.new
+#    def self.locate(user)
+#      pu = ParticipantSignup.new
   
-      pu.user = user
-      pu.participant = Participant.where(id: user.participant_id).first || Participant.new
-      pu.group = pu.participant.group
+#      pu.user = user
+#      pu.participant = Participant.where(id: user.participant_id).first || Participant.new
+#      pu.group = pu.participant.group
   
-      pu.load_participant
-      pu.load_user
-      pu
-    end
+#      pu.load_participant
+#      pu.load_user
+#      pu
+#    end
   
     def save
       if valid?
@@ -213,13 +213,13 @@ class ParticipantSignup
       end
     end
   
-    def save!
-      update_participant
-      @participant.save!
+#    def save!
+#      update_participant
+#      @participant.save!
   
-      update_user
-      @user.save!
-    end
+#      update_user
+#      @user.save!
+#    end
   
 #    def record_consent(params)
 #      @params = params
@@ -242,17 +242,17 @@ class ParticipantSignup
 #      end
 #    end
   
-    def load_participant
-      PARTICIPANT_ATTRIBUTES.each do |name|
-        send("#{name}=", @participant.send(name))
-      end
-    end
+#    def load_participant
+#      PARTICIPANT_ATTRIBUTES.each do |name|
+#        send("#{name}=", @participant.send(name))
+#      end
+#    end
   
-    def load_user
-      USER_ATTRIBUTES.each do |name|
-        send("#{name}=", @user.send(name))
-      end
-    end
+#    def load_user
+#      USER_ATTRIBUTES.each do |name|
+#        send("#{name}=", @user.send(name))
+#      end
+#    end
   
     def persisted?
       false
@@ -338,8 +338,6 @@ class ParticipantSignup
   
       if @user.new_record?
         @user.password = @user.password_confirmation = User.random_password
-        @user.login = User.assign_login_name(@user.first_name, @user.surname)
-        @user.group_name = @group.short_name if @group
       end
   
       @user.participant_id = @participant.id
