@@ -42,12 +42,21 @@ class ApplicationController < ActionController::Base
 
           else 
             role = session["current_role"]
+            group_abbr = session["current_group"]
+            group = Group.find_by_abbr(group_abbr)
+            participant_id = session["current_participant"]
+            participant = Participant.where(id: participant_id).first
+
             if role == "admin"
                 home_admin_info_url
             elsif role == "gc" || role == "church_rep"
                 home_gc_info_url
+            elsif participant
+                home_mysyg_info_url(group: participant.group.mysyg_setting.mysyg_name)
+            elsif group
+                home_mysyg_info_url(group: group.mysyg_setting.mysyg_name)
             else
-                home_gc_info_url
+                new_user_session_url
             end
         end
     end

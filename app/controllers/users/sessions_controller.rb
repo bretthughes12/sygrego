@@ -16,6 +16,7 @@ class Users::SessionsController < Devise::SessionsController
     super
     session["current_role"] = current_user.default_role
     session["current_group"] = current_user.default_group
+    session["current_participant"] = current_user.default_participant
   end
 
   # DELETE /resource/sign_out

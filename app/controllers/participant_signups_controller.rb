@@ -37,15 +37,18 @@ class ParticipantSignupsController < ApplicationController
       respond_to do |format|
         if @participant_signup.save
           @user = @participant_signup.user 
+          @participant = @participant_signup.participant
 
           unless @user.active
-            if @participant_signup.participant.status == "Requiring Approval"
+            if @participant.status == "Requiring Approval"
 #              UserMailer.welcome_participant(@user).deliver_now
             else
               flash[:notice] = "Thank you for registering for State Youth Games"
               bypass_sign_in @user
               session["current_role"] = "participant"
-              format.html { redirect_to edit_password_gc_user_path(@church_rep) }
+              session["current_group"] = @group.abbr
+              session["current_participant"] = @participant.id
+              format.html { redirect_to root_url }
             end
             
 #            UserMailer.new_participant(@user).deliver_now if @participant_signup.participant.group.active

@@ -40,6 +40,7 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :groups
+  has_and_belongs_to_many :participants
 
   scope :primary, -> { where(primary_gc: true) }
   scope :stale, -> { where(status: "Stale") }
@@ -90,7 +91,11 @@ class User < ApplicationRecord
   end
 
   def default_group
-    self.groups.first ? self.groups.first.abbr : ""
+    if self.participants.empty?
+      self.groups.first ? self.groups.first.abbr : ""
+    else
+      self.participants.first.group.abbr
+    end
   end
 
   def available_groups
@@ -100,6 +105,10 @@ class User < ApplicationRecord
 
   def other_groups
     Group.all.order(:short_name).load - self.groups
+  end
+
+  def default_participant
+    self.participants.first ? self.participants.first.id : nil
   end
 
   def get_reset_password_token

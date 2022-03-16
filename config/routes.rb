@@ -302,28 +302,33 @@ Rails.application.routes.draw do
       get '/signup' => 'participant_signups#new', :as => :signup
       get '/home' => 'mysyg/info#home', :as => :home
       get '/details' => 'mysyg/participants#edit', :as => :details
-      get '/extras' => 'mysyg/participant_extras#index', :as => :extras
-      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
-      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
-      get '/finance' => 'mysyg/info#finance', :as => :finance
-      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
+#      get '/extras' => 'mysyg/participant_extras#index', :as => :extras
+#      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
+#      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
+#      get '/finance' => 'mysyg/info#finance', :as => :finance
+#      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
  
+      resource :info, :controller => "info" do
+        collection do
+          get :home
+        end
+      end
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
-        member do
-          put  :update_drivers
-        end
+#        member do
+#          put  :update_drivers
+#        end
       end
-      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
-      resources :sport_preferences, :controller => "mysyg/sport_preferences" do
-        collection do
-          put :update_multiple
-        end
-      end
-      resources :participant_extras, :controller => "mysyg/participant_extras" do
-        collection do
-          put :update_multiple
-        end
-      end
+#      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
+#      resources :sport_preferences, :controller => "mysyg/sport_preferences" do
+#        collection do
+#          put :update_multiple
+#        end
+#      end
+#      resources :participant_extras, :controller => "mysyg/participant_extras" do
+#        collection do
+#          put :update_multiple
+#        end
+#      end
     end
   end
 end

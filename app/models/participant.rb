@@ -85,6 +85,7 @@ class Participant < ApplicationRecord
 #    has_many   :sport_preferences, dependent: :destroy
 #    has_many   :participant_extras, dependent: :destroy
     has_many   :captaincies, class_name: 'SportEntry'
+    has_and_belongs_to_many :users
 
     scope :coming, -> { where(coming: true) }
     scope :not_coming, -> { where(coming: false) }

@@ -35,12 +35,18 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to home_gc_info_url
   end
 
-  test "participant user should land on group info page" do
+  test "participant user should land on mysyg info page" do
+    group = FactoryBot.create(:group)
+    ms = FactoryBot.create(:mysyg_setting, group: group)
+    participant = FactoryBot.create(:participant, group: group)
     participant_user = FactoryBot.create(:user, :participant)
+    participant_user.participants << participant
+    group.reload
+
     sign_in participant_user
 
     assert_redirected_to root_url
     follow_redirect!
-    assert_redirected_to home_gc_info_url
+    assert_redirected_to home_mysyg_info_url(participant.group.mysyg_setting.mysyg_name)
   end
 end
