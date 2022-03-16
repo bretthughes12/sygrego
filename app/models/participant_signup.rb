@@ -53,7 +53,6 @@ class ParticipantSignup
       :surname,
       :group_id,
       :coming,
-      :voucher_name,
       :status,
       :age,
       :onsite,
@@ -86,6 +85,7 @@ class ParticipantSignup
     ].compact
   
     USER_ATTRIBUTES = %i[
+      name
       address
       suburb
       postcode
@@ -116,9 +116,6 @@ class ParticipantSignup
     validates :gender,                 presence: true,
                                        length: { maximum: 1 },
                                        inclusion: { in: %w[m f M F], message: "should be 'm' or 'f'" }
-    validates :days,                   presence: true,
-                                       numericality: { only_integer: true },
-                                       inclusion: { in: 1..3, message: 'should be between 1 and 3' }
     validates :number_plate,           length: { maximum: 10 }
     validates :address,                presence: true,
                                        length: { maximum: 200 }
@@ -257,6 +254,10 @@ class ParticipantSignup
     def persisted?
       false
     end
+
+    def name
+      first_name + ' ' + surname
+    end
   
     def send_attributes(attributes = {})
       attributes.each do |name, value|
@@ -321,13 +322,15 @@ class ParticipantSignup
     end
   
     def find_or_create_user
-      user = User.unscoped.participants.find_by_first_name_and_surname_and_email(@first_name, @surname, @email)
+      user = User.find_by_email(@email)
   
       if user.nil?
         user = User.new
-        user.roles = ['participant']
       end
   
+      role = Role.find_by_name("participant")
+      user.roles << role unless user.role?(:participant)
+
       user
     end
   
@@ -337,10 +340,11 @@ class ParticipantSignup
       end
   
       if @user.new_record?
+        @user.status = 'Approved'
         @user.password = @user.password_confirmation = User.random_password
       end
   
-      @user.participant_id = @participant.id
+      @user.participants << @participant unless @user.participants.include?(@participant)
     end
   
     def find_group

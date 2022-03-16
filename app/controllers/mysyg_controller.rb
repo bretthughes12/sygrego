@@ -1,7 +1,7 @@
 class MysygController < ApplicationController
 
-    before_filter :find_group
-    before_filter :find_participant
+    before_action :find_group
+    before_action :find_participant
   
   private
     

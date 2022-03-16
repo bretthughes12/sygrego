@@ -1,5 +1,7 @@
 class ParticipantSignupsController < ApplicationController
 
+    before_action :find_group
+
     layout 'users'
   
     # GET /participant_signups/new
@@ -11,15 +13,17 @@ class ParticipantSignupsController < ApplicationController
       @participant_signup.coming_sunday = true
       @participant_signup.coming_monday = true
       @participant_signup.coming = true
-      @participant_signup.onsite = @group.onsite
+      @participant_signup.onsite = @group.event_detail.onsite
       
       @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
     end
     
     # POST /participant_signups
     def create
+      group_name = params[:group]
       @participant_signup = ParticipantSignup.new(params[:participant_signup])
       @group = @participant_signup.group || Group.find_by_abbr("DFLT")
+      @participant = @participant_signup.participant
 
       case
       when !@group.active
@@ -37,22 +41,27 @@ class ParticipantSignupsController < ApplicationController
       respond_to do |format|
         if @participant_signup.save
           @user = @participant_signup.user 
-          @participant = @participant_signup.participant
 
-          unless @user.active
-            if @participant.status == "Requiring Approval"
-#              UserMailer.welcome_participant(@user).deliver_now
-            else
-              flash[:notice] = "Thank you for registering for State Youth Games"
-              bypass_sign_in @user
-              session["current_role"] = "participant"
-              session["current_group"] = @group.abbr
-              session["current_participant"] = @participant.id
-              format.html { redirect_to root_url }
+          if @participant.status == "Requiring Approval"
+#            UserMailer.welcome_participant(@user).deliver_now
+            flash[:notice] = "Thank you for registering for State Youth Games. Check your email for instructions for what comes next."
+            format.html do 
+              if group_name.nil? || group_name == ""
+                redirect_to mysyg_generic_signup 
+              else
+                redirect_to mysyg_signup(group: group_name)
+              end
             end
-            
-#            UserMailer.new_participant(@user).deliver_now if @participant_signup.participant.group.active
+          else
+            flash[:notice] = "Thank you for registering for State Youth Games"
+            bypass_sign_in @user
+            session["current_role"] = "participant"
+            session["current_group"] = @group.abbr
+            session["current_participant"] = @participant.id
+            format.html { redirect_to root_url }
           end
+          
+#          UserMailer.new_participant(@user).deliver_now if @participant_signup.participant.group.active
   
         else
           format.html do
@@ -61,6 +70,23 @@ class ParticipantSignupsController < ApplicationController
             render "new"
           end
         end
+      end
+    end
+
+    private
+
+    def find_group
+      if params[:group]
+        ms = MysygSetting.find_by_mysyg_name(params[:group])
+        @group = ms.group unless ms.nil?
+      elsif session["current_group"]
+        @group = Group.find_by_abbr(session["current_group"])
+      else
+        @group = Group.find_by_abbr("DFLT")
+      end
+      
+      unless @group
+        raise ActiveRecord::RecordNotFound.new('Could not find your group. Please check the link with your group coordinator.')
       end
     end
   end

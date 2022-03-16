@@ -5,7 +5,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Dashboard', home_mysyg_info_url(group: @group.mysyg_setting.mysyg_name), class: 'nav-link' %></li>
-                <li class='nav-item'><%= link_to 'Details', edit_mysyg_participant_path(@participant), class: 'nav-link' %></li>
+                <li class='nav-item'><%= link_to 'Details', edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' %></li>
             </ul>
         </div>
     </div>

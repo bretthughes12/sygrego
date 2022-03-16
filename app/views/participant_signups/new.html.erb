@@ -1,0 +1,20 @@
+<% name = @group.abbr == "DFLT" ? "State Youth Games" : @group.short_name %>
+
+<% title "Signup for #{name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<% if @group.mysyg_setting.mysyg_enabled %>
+	<% if @group.mysyg_setting.mysyg_open %>
+		<p>
+			Please complete the form below to register as a participant for <%= name %> for <%= @settings.this_year %>. 
+		</p> 
+		
+		<%= render :partial => 'form_signup' %>
+	
+	<% else %>
+		<p>Registrations are not open for your group for <%= @settings.this_year %>.</p>
+	<% end %>
+<% else %>
+	<p>Your group is not allowing online registrations for <%= @settings.this_year %>. Please speak to your group coordinator for more information.</p>
+<% end %>

@@ -308,7 +308,8 @@ Rails.application.routes.draw do
 #      get '/finance' => 'mysyg/info#finance', :as => :finance
 #      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
  
-      resource :info, :controller => "info" do
+      resources :participant_signups, controller: "participant_signups", only: [:new, :create]
+      resource :info, :controller => "mysyg/info" do
         collection do
           get :home
         end
