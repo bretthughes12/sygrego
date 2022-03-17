@@ -26,6 +26,32 @@ class UserMailer < ActionMailer::Base
              subject: "#{APP_CONFIG[:email_subject]} Welcome Group Coordinator")
     end
     
+    def welcome_participant(user, participant)
+        @user = user
+        @participant = participant
+        @group = @participant.group
+    
+        mail(to:      user.email, 
+             subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+    end
+    
+#    def reject_participant(user, group)
+#        @user = user
+#        @group = group
+#        
+#        mail(to:      APP_CONFIG[:admin_email], 
+#             subject: "#{APP_CONFIG[:email_subject]} Participant rejected by #{group.short_name}")
+#    end
+    
+    def new_participant(user, participant)
+        @user = user
+        @participant = participant
+        notifies = @participant.group.email_recipients
+    
+        mail(to:      notifies,
+             subject: "#{APP_CONFIG[:email_subject]} New participant details: #{participant.first_name} #{participant.surname}") 
+    end
+    
     private
 
     def get_settings

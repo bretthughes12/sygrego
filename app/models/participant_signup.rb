@@ -190,18 +190,22 @@ class ParticipantSignup
           @participant.save
         else
           @participant.errors.each do |key, value|
-            errors.add key, value
+            errors.add key.to_s, value
           end
           return false
         end
   
         update_user
+
+        if @user.new_record?
+          @user.status = "Verified"
+        end
   
         if @user.valid?
           @user.save
         else
           @user.errors.each do |key, value|
-            errors.add key, value
+            errors.add key.to_s, value
           end
           false
         end

@@ -43,7 +43,7 @@ class ParticipantSignupsController < ApplicationController
           @user = @participant_signup.user 
 
           if @participant.status == "Requiring Approval"
-#            UserMailer.welcome_participant(@user).deliver_now
+            UserMailer.welcome_participant(@user, @participant).deliver_now
             flash[:notice] = "Thank you for registering for State Youth Games. Check your email for instructions for what comes next."
             format.html do 
               if group_name.nil? || group_name == ""
@@ -61,7 +61,7 @@ class ParticipantSignupsController < ApplicationController
             format.html { redirect_to root_url }
           end
           
-#          UserMailer.new_participant(@user).deliver_now if @participant_signup.participant.group.active
+          UserMailer.new_participant(@user, @participant).deliver_now if @participant_signup.participant.group.active
   
         else
           format.html do

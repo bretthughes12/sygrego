@@ -1,0 +1,18 @@
+<% content_for(:title) { "New participant details" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>A new participant has signed up for your team on the SYG Registrations website:</p>
+
+<table>
+	<tr><td>Name:</td><td><%= @participant.name %></td></tr>
+	<tr><td>Phone:</td><td><%= @participant.phone_number %></td></tr>
+	<tr><td>Email:</td><td><%= @participant.email %></td></tr>
+	<tr><td>Postal address:</td><td><%= @participant.address %></td></tr>
+	<tr><td>Suburb:</td><td><%= @participant.suburb %></td></tr>
+	<tr><td>Postcode:</td><td><%= @participant.postcode %></td></tr>
+</table>
+
+<p>Thanks,</p>
+
+<p>SYG Registrations Web Support</p>
