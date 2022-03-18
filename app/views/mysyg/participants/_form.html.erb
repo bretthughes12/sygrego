@@ -1,0 +1,45 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :first_name %>
+	<%= f.input :surname %>
+	<%= f.input :coming %>
+	<%= f.input :onsite if can_display_onsite_flag %>
+	<%= f.input :spectator %>
+	<br/>
+	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
+	<%= f.input :coming_friday, label: "Friday" %>
+	<%= f.input :coming_saturday, label: "Saturday" %>
+	<%= f.input :coming_sunday, label: "Sunday" %>
+	<%= f.input :coming_monday, label: "Monday" %>
+	<br/>
+
+	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
+	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
+	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
+	<%= f.input :wwcc_number, label: "WWCC Number" %>
+
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number, label: "Home phone number"  %>
+	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
+	<%= f.input :email, hint: "enter an email address if you would like to receive automatic updates and exciting news from the SYG team, like the launch of new sports, entertainment personalities confirmed, prize giveaways throughout the year and much more!" %>
+
+	<br/>
+
+	<h2>Medical</h2>
+
+	<%= f.input :medicare_number %>
+	<%= f.input :medical_info, label: "Medical information" %>
+	<%= f.input :medications %>
+	<%= f.input :dietary_requirements %>
+	<%= f.input :emergency_contact %>
+	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
+	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

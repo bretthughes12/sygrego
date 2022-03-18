@@ -298,6 +298,13 @@ Rails.application.routes.draw do
   scope 'mysyg', as: 'mysyg' do
     get '/signup' => 'participant_signups#new', :as => :generic_signup
     
+    resources :users, controller: 'mysyg/users', only: [:edit, :update] do
+      member do
+        get :edit_password
+        patch :update_password
+      end
+    end
+
     scope '/:group' do
       get '/signup' => 'participant_signups#new', :as => :signup
       get '/home' => 'mysyg/info#home', :as => :home

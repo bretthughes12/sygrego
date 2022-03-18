@@ -6,6 +6,19 @@
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Dashboard', home_mysyg_info_url(group: @group.mysyg_setting.mysyg_name), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Details', edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' %></li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Profile', edit_mysyg_user_path(current_user) %></li>
+                        <li class='dropdown-item'><%= link_to 'Change Password', edit_password_mysyg_user_path(current_user) %></li>
+                        <% if current_user && current_user.roles.count > 1 %>
+                            <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
+                        <% end %>
+                        <% if current_user && (current_user.groups.count > 1 || current_user.role?(:admin))  %>
+                            <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
+                        <% end %>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

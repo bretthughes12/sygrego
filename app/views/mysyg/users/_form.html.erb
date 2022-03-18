@@ -1,0 +1,13 @@
+<%= simple_form_for(@user, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :email %>
+	<%= f.input :name %>
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number %>
+	<%= f.input :wwcc_number %>
+
+	<%= f.button :submit %>
+<% end %>	

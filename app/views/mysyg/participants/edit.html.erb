@@ -1,0 +1,13 @@
+<% title "Details for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: mysyg_participant_path(group: @group.mysyg_setting.mysyg_name), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>
