@@ -322,9 +322,12 @@ Rails.application.routes.draw do
         end
       end
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
-#        member do
-#          put  :update_drivers
-#        end
+        member do
+          get :new_voucher
+          post :add_voucher
+          patch :delete_voucher
+#          patch :update_drivers
+        end
       end
 #      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
 #      resources :sport_preferences, :controller => "mysyg/sport_preferences" do

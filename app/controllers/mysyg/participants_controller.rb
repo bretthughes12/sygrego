@@ -21,6 +21,56 @@ class Mysyg::ParticipantsController < MysygController
       end
     end
   
+    # POST /mysyg/:group/participants/1/add_voucher
+    def add_voucher
+      if params[:participant] && !params[:participant][:voucher_name].blank?
+        name = (params[:participant][:voucher_name])
+        name.upcase!
+        voucher = Voucher.find_by_name(name)
+
+        if voucher && voucher.valid_for?(@participant)
+          @participant.voucher = voucher
+          @participant.save
+
+          flash[:notice] = "Voucher added"
+
+          respond_to do |format|
+            format.html { redirect_to edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id) }
+          end
+        else
+          flash[:notice] = "Invalid voucher"
+
+          respond_to do |format|
+            format.html { render action: "new_voucher" }
+          end
+        end
+      else
+        flash[:notice] = "Invalid voucher"
+
+        respond_to do |format|
+          format.html { render action: "new_voucher" }
+        end
+      end
+    end
+  
+    # PATCH /mysyg/:group/participants/1/delete_voucher
+    def delete_voucher
+      if @participant.voucher
+        @participant.voucher_id = nil
+        @participant.save
+      
+        flash[:notice] = "Voucher deleted"
+
+        respond_to do |format|
+          format.html { redirect_to edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id) }
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id) }
+        end
+      end
+    end
+    
     private
     
     def participant_params
