@@ -29,7 +29,13 @@
 	<%= f.input :postcode %>
 	<%= f.input :phone_number, label: "Home phone number"  %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
-	<%= f.input :email %>
+	<%= f.input :email, hint: "enter an email address if you would like to receive updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
+
+	<h2>Medical</h2>
+
+	<%= f.input :emergency_contact %>
+	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
+	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
 
 	<br/>
     <%= f.button :submit, "Sign up" %>

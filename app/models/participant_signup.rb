@@ -139,8 +139,8 @@ class ParticipantSignup
     validates :emergency_phone_number, length: { maximum: 20 }
   
     before_validation :validate_emergency_contact_details_if_under_18
+    before_validation :validate_voucher_name
 #    before_validation :validate_consent_provided
-    before_validation :validate_years_attended
   
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -267,14 +267,8 @@ class ParticipantSignup
     def voucher_id
       return nil if voucher_name.blank?
 
-      name = voucher_name
-      name.upcase!
-      voucher = Voucher.find_by_name(name)
-
-      if voucher && voucher.valid_for?(@participant)
-        return voucher.id 
-      else
-        errors.add(:voucher_name, "invalid")
+      if @voucher && @voucher.valid_for?(@participant)
+        return @voucher.id 
       end
 
       return nil
@@ -319,14 +313,17 @@ class ParticipantSignup
         errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
       end
     end
-  
-    def validate_years_attended
-      unless years_attended.nil? || (years_attended == '')
-        max_year = APP_CONFIG[:this_year] - APP_CONFIG[:first_year] + 1
-        errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended.to_i >= 1 && years_attended.to_i <= max_year
+
+    def validate_voucher_name
+      name = voucher_name
+      name.upcase!
+      @voucher = Voucher.find_by_name(name)
+
+      unless @voucher && @voucher.valid_for?(@participant)
+        errors.add(:voucher_name, "is either invalid or not valid for you")
       end
     end
-  
+
     def find_or_create_participant
       normalize_first_name!
       normalize_surname!
