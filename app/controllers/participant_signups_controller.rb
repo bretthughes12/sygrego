@@ -47,9 +47,9 @@ class ParticipantSignupsController < ApplicationController
             flash[:notice] = "Thank you for registering for State Youth Games. Check your email for instructions for what comes next."
             format.html do 
               if group_name.nil? || group_name == ""
-                redirect_to mysyg_generic_signup 
+                redirect_to mysyg_generic_signup_url
               else
-                redirect_to mysyg_signup(group: group_name)
+                redirect_to mysyg_signup_url(group: group_name)
               end
             end
           else

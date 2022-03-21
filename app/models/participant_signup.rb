@@ -54,6 +54,7 @@ class ParticipantSignup
       :group_id,
       :coming,
       :status,
+      :voucher_id,
       :age,
       :onsite,
       :gender,
@@ -263,6 +264,22 @@ class ParticipantSignup
       first_name + ' ' + surname
     end
   
+    def voucher_id
+      return nil if voucher_name.blank?
+
+      name = voucher_name
+      name.upcase!
+      voucher = Voucher.find_by_name(name)
+
+      if voucher && voucher.valid_for?(@participant)
+        return voucher.id 
+      else
+        errors.add(:voucher_name, "invalid")
+      end
+
+      return nil
+    end
+
     def send_attributes(attributes = {})
       attributes.each do |name, value|
         if INTEGER_FIELDS.include?(name)
