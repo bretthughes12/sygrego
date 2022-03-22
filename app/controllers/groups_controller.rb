@@ -2,6 +2,7 @@ class GroupsController < ApplicationController
     load_and_authorize_resource
     before_action :authenticate_user!
     before_action :find_group
+    before_action :find_participant
     
     # GET /gc/groups/available_groups
     def available_groups
@@ -24,6 +25,16 @@ class GroupsController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }
+      end
+    end
+
+    private
+
+    def find_participant
+      if session["current_participant"]
+        @participant = Participant.where(id: session["current_participant"]).first
+      elsif current_user && !current_user.participants.empty?
+        @participant = Participant.where(id: current_user.participants.first.id).first
       end
     end
 end
