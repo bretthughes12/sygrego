@@ -66,7 +66,7 @@ class Voucher < ApplicationRecord
       return false if group != participant.group
     end
     unless expiry.nil?
-      return false if Date.today.in_time_zone > expiry
+      return false if Date.today.in_time_zone > expiry.in_time_zone
     end
     unless restricted_to.nil?
       return false if restricted_to == "Helpers" && !participant.helper
