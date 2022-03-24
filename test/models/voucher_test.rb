@@ -65,14 +65,14 @@ class VoucherTest < ActiveSupport::TestCase
 
   test "should not allow expired voucher for a new participant" do
     participant = FactoryBot.build(:participant)
-    voucher = FactoryBot.create(:voucher, expiry: 1.day.ago)
+    voucher = FactoryBot.create(:voucher, expiry: 2.days.ago)
 
     assert_equal false, voucher.valid_for?(participant)
   end
 
   test "should not allow expired voucher for an old participant" do
     participant = FactoryBot.create(:participant)
-    voucher = FactoryBot.create(:voucher, expiry: 1.day.ago)
+    voucher = FactoryBot.create(:voucher, expiry: 2.days.ago)
 
     assert_equal false, voucher.valid_for?(participant)
   end
