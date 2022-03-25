@@ -51,6 +51,7 @@ class Gc::ParticipantsController < ApplicationController
     # POST /admin/participants
     def create
       @participant = Participant.new(participant_params)
+      @participant.early_bird = @settings.early_bird
       @participant.group_id = @group.id
       @participant.updated_by = current_user.id
 

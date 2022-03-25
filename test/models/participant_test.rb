@@ -101,13 +101,11 @@ class ParticipantTest < ActiveSupport::TestCase
 
   def test_participant_fee_values
     full_participant = FactoryBot.create(:participant)
-    early_participant = FactoryBot.create(:participant, early_bird: true)
     eleven_year_old_playing_sport = FactoryBot.create(:participant, age: 11)
     spectator = FactoryBot.create(:participant, spectator: true)
     primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
     pre_schooler = FactoryBot.create(:participant, age: 5)
     day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false)
-    early_day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false, early_bird: true)
     day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
     early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false, early_bird: true)
     group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
@@ -118,6 +116,10 @@ class ParticipantTest < ActiveSupport::TestCase
     guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
     free_voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 0)
     band_member = FactoryBot.create(:participant, voucher: free_voucher)
+    @setting.early_bird = true
+    @setting.save
+    early_participant = FactoryBot.create(:participant, early_bird: true)
+    early_day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false, early_bird: true)
 
     assert_equal @setting.full_fee, full_participant.fee
     assert_equal @setting.full_fee, eleven_year_old_playing_sport.fee
@@ -140,14 +142,11 @@ class ParticipantTest < ActiveSupport::TestCase
 
   def test_participant_category_values
     full_participant = FactoryBot.create(:participant)
-    early_participant = FactoryBot.create(:participant, early_bird: true)
     spectator = FactoryBot.create(:participant, spectator: true)
-    early_spectator = FactoryBot.create(:participant, spectator: true, early_bird: true)
     primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
     pre_schooler = FactoryBot.create(:participant, age: 5)
     day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false)
     day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false)
-    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, early_bird: true)
     group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
     group_coordinator_not_playing_sport = FactoryBot.create(:participant, group_coord: true, spectator: true)
     sport_coordinator_playing_sport = FactoryBot.create(:participant, sport_coord: true)
@@ -160,6 +159,11 @@ class ParticipantTest < ActiveSupport::TestCase
     full_participant.group.reload
     team_helper = FactoryBot.create(:participant, spectator: true, helper: true, group: full_participant.group)
     offsite_team_helper = FactoryBot.create(:participant, spectator: true, helper: true, onsite: false, group: full_participant.group)
+    @setting.early_bird = true
+    @setting.save
+    early_participant = FactoryBot.create(:participant, early_bird: true)
+    early_spectator = FactoryBot.create(:participant, spectator: true, early_bird: true)
+    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, early_bird: true)
 
     assert_equal "Child", primary_aged.category
     assert_equal "Sport Participant", full_participant.category

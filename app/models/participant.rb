@@ -174,14 +174,13 @@ class Participant < ApplicationRecord
     before_validation :validate_eligibility_for_team_helper
     before_validation :validate_eligibility_for_group_coordinator
     before_validation :validate_years_attended
-#    before_validation :validate_participant_limits_on_create, on: :create
-#    before_validation :validate_participant_limits_on_update, on: :update
-
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
     before_validation :normalize_gender!
 
-#    before_save :set_database_rowid!
+    before_create :set_early_bird_flag!
+    before_update :check_early_bird_flag
+
     before_save :normalize_phone_numbers!
     before_save :normalize_medical_info!
     before_save :normalize_medications!
@@ -722,6 +721,17 @@ private
         d += 1 if self.send(b) == true
       end
       self.rego_type = d == 4 ? "Full Time" : "Part Time"
+    end
+
+    def set_early_bird_flag!
+      settings = Setting.first
+      self.early_bird = settings.early_bird
+    end
+
+    def check_early_bird_flag
+      if coming_changed? && coming
+        set_early_bird_flag!
+      end
     end
 
     def normalize_first_name!

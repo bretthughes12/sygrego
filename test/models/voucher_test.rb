@@ -25,6 +25,7 @@ class VoucherTest < ActiveSupport::TestCase
   def setup
       FactoryBot.create(:role, name: 'admin')
       @user = FactoryBot.create(:user)
+      @setting = FactoryBot.create(:setting)
       @voucher = FactoryBot.create(:voucher, limit: 1)
   end
 

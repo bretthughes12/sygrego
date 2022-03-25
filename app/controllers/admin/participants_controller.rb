@@ -35,6 +35,8 @@ class Admin::ParticipantsController < ApplicationController
   
     # GET /admin/participants/new
     def new
+      @participant.early_bird = @settings.early_bird
+
       respond_to do |format|
         format.html # new.html.erb
       end

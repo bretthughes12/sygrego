@@ -29,6 +29,7 @@ class SportTest < ActiveSupport::TestCase
   def setup
     FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
+    @setting = FactoryBot.create(:setting)
     @sport = FactoryBot.create(:sport)
   end
 
