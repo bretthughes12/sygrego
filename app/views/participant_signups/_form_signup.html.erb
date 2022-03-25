@@ -33,10 +33,71 @@
 
 	<h2>Medical</h2>
 
-	<%= f.input :emergency_contact %>
+	<%= f.input :emergency_contact, label: "Emergency contact (required for participants under 18)" %>
 	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
 	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
 
 	<br/>
+
+	<div class="accordion" id="accordionExample">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingOne">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+					Code of Conduct
+				</button>
+			</h2>
+			<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					SYG is a space for young to people spend time playing sport, camping, experiencing community, growing friendships, and meeting or reconnecting with Jesus. We hope to send you home from SYG having made some amazing and positive life-impacting memories, in one piece, and with a few dirty clothes from all that mud. So, to make sure that happens, here’s what we need you to commit to:
+					<ul>
+						<li>SYG is a Christian event, and people come to worship and engage with God. People will do that in different ways, and everyone needs to be respectful of that, even if it’s not your thing.</li>
+						<li>Everyone must also be respectful that not everyone is at SYG to worship God, and nobody will be forced to participate in anything that they are not comfortable doing.</li>
+						<li>SYG is an alcohol, drug, and smoke free event.</li>
+						<li>Medications must be given to your group’s First Aider; they’ll know what to do and give you instructions.</li>
+						<li>All participants must be under the supervision of a group leader at all times, and must not be left at venues alone.</li>
+						<li>Abide to all safety instructions and emergency evacuation plans and seek to practice sport, camping, and all activities in the safest manner possible.</li>
+						<li>Participate in sport in a manner which is respectful and encouraging of others.</li>
+						<li>No swearing or slander on the sporting fields… or anywhere.</li>
+						<li>Show respect to all the venues we are a part of throughout the weekend, leaving them in condition than when you first arrived (or even better).</li>
+						<li>Adhere to curfew; all participants must be back at their group campsite by 11:45pm each night of the event. Lights out at midnight.</li>
+						<li>No mixed gendered camping.</li>
+						<li>Listen to the instruction of SYG leaders when asked.</li>
+						<li>All drivers must be registered with the SYG Admin office and adhere to the requirements of the SYG Driving Policy.</li>
+						<li>SYG involves participants of all ages. Participants who are 18 or older are expected to act in ways that are respectful and inclusive towards younger participants, particularly on the sporting field.</li>
+						<li>All persons at SYG who are 18 years old or older are required to hold a current Victorian Working With Children Check.</li>
+					</ul>
+					Failure to adhere to this Code of Conduct may result in you being removed from the event.
+					<br/>
+					<br/>
+					<h3>In summary</h3>
+					Be respectful...
+					<ul>
+						<li>Towards your team: You may be best friends, or getting to know one another—either way, be kind. Cheer one another on, thank your team helpers and leaders for making this weekend happen, and seek to make others feel welcomed.</li>
+						<li>Towards your opponents: They are just like you, here to play sport and enjoy an awesome day. Some will be sporting champions, and others are learning as they go. So play fair and play kind.</li>
+						<li>Towards the referees: Some are professionals, others are volunteers lending a hand, some may even be you! Play the whistle and have fun. If they slip up, chat to them after the game or during a break, and have a kind conversation that helps them understand, and then let it go. They might not be able to change a call they made fifteen minutes ago, and that’s okay, but you can help the sport session run smoothly in the future.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br/>
+
+	<h2>Disclaimer</h2>
+
+	<ul>
+		<li>I agree that the Churches of Christ and its Youth Vision Executive are free and clear of all responsibility whatsoever for any incident, accident or illness during the participation in any activity associated with State Youth Games Victoria.</li>
+		<li>I authorise that in any event of incident, accident or illness, the organisers have permission to obtain such medical assistance as may be required and I agree to meet the expenses attached thereto.</li>
+		<li>I understand that insurances relating to State Youth Games Victoria only cover the event and it’s organisers in relation to public liability and professional indemnity. Cover is NOT provided for personal injury of participants*.</li>
+		<li>I confirm that these details given are true and correct at time of submission.</li>
+	</ul>
+
+	<p style="font-size: 8pt">* To ensure State Youth Games Victoria participants are adequately covered in the event of a personal or sporting related accident, it is strongly recommended that participating groups or individual participants arrange personal accident insurance, It is the responsibility of the group co-ordinator to ensure this is communicated to all State Youth Games Victoria participants associate with their group.</p>
+
+	By signing up, you confirm that you have read and accepted the above Code of Conduct and Disclaimer, and that either you are over the age of 18 and will be an attendee of State Youth Games, or that you are the parent or guardian of the participant who will be an attendee of State Youth Games.
+
+	<br/>
+	<br/>
+
     <%= f.button :submit, "Sign up" %>
 <% end %>	
