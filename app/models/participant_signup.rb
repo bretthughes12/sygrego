@@ -44,7 +44,8 @@ class ParticipantSignup
                   :driver_signature,
                   :participant,
                   :user,
-                  :group
+                  :group,
+                  :new_user
   
     INTEGER_FIELDS = %w[age].freeze
   
@@ -153,36 +154,6 @@ class ParticipantSignup
       @group = find_group
     end
   
-#    def update_attributes(attributes = {})
-#      send_attributes(attributes)
-#      save
-#    end
-  
-#    def self.find(id)
-#      pu = ParticipantSignup.new
-  
-#      pu.participant = Participant.where(id: id).first || Participant.new
-#      pu.group = pu.participant.group
-  
-#      pu.load_participant
-#      pu.user = User.unscoped.find_by_participant_id(pu.participant.id) || User.new
-#      pu.load_user
-  
-#      pu
-#    end
-  
-#    def self.locate(user)
-#      pu = ParticipantSignup.new
-  
-#      pu.user = user
-#      pu.participant = Participant.where(id: user.participant_id).first || Participant.new
-#      pu.group = pu.participant.group
-  
-#      pu.load_participant
-#      pu.load_user
-#      pu
-#    end
-  
     def save
       if valid?
         update_participant
@@ -215,47 +186,6 @@ class ParticipantSignup
       end
     end
   
-#    def save!
-#      update_participant
-#      @participant.save!
-  
-#      update_user
-#      @user.save!
-#    end
-  
-#    def record_consent(params)
-#      @params = params
-  
-#      if @participant.consent
-#        @participant.consent.update_attributes(consent_params)
-#        if @participant.consent.valid?
-#          @participant.consent.save
-#        else
-#          return false
-#        end
-#      else
-#        @participant.consent = Consent.new(consent_params)
-#        if @participant.consent.valid?
-#          @participant.save
-#          @participant.consent.save
-#        else
-#          return false
-#        end
-#      end
-#    end
-  
-#    def load_participant
-#      PARTICIPANT_ATTRIBUTES.each do |name|
-#        send("#{name}=", @participant.send(name))
-#      end
-#    end
-  
-#    def load_user
-#      USER_ATTRIBUTES.each do |name|
-#        send("#{name}=", @user.send(name))
-#      end
-#    end
-  
     def persisted?
       false
     end
@@ -286,25 +216,7 @@ class ParticipantSignup
       end
     end
   
- #   def validate_consent_provided
- #     unless agreement.nil?
- #       errors.add(:age_confirmation, 'must be provided') unless age_confirmation
- #       errors.add(:responsibility_confirmation, 'must be provided') unless responsibility_confirmation
- #       errors.add(:medical_permission, 'must be provided') unless medical_permission
- #       errors.add(:insurance_confirmation, 'must be provided') unless insurance_confirmation
- #       errors.add(:agreement, 'must be provided') unless agreement
- #     end
- #   end
-  
     private
-  
-#    def consent_params
-#      @params.permit(:age_confirmation,
-#                     :responsibility_confirmation,
-#                     :medical_permission,
-#                     :insurance_confirmation,
-#                     :agreement)
-#    end
   
     def validate_emergency_contact_details_if_under_18
       if age && age.to_i < 18
@@ -315,12 +227,14 @@ class ParticipantSignup
     end
 
     def validate_voucher_name
-      name = voucher_name
-      name.upcase!
-      @voucher = Voucher.find_by_name(name)
+      unless voucher_name.blank?
+        name = voucher_name
+        name.upcase!
+        @voucher = Voucher.find_by_name(name)
 
-      unless @voucher && @voucher.valid_for?(@participant)
-        errors.add(:voucher_name, "is either invalid or not valid for you")
+        unless @voucher && @voucher.valid_for?(@participant)
+          errors.add(:voucher_name, "is either invalid or not valid for you")
+        end
       end
     end
 
@@ -353,11 +267,13 @@ class ParticipantSignup
     end
   
     def update_user
-      USER_ATTRIBUTES.each do |name|
-        @user.send("#{name}=", send(name))
-      end
-  
+      @new_user = @user.new_record?
+
       if @user.new_record?
+        USER_ATTRIBUTES.each do |name|
+          @user.send("#{name}=", send(name))
+        end
+    
         @user.status = 'Approved'
         @user.password = @user.password_confirmation = User.random_password
       end

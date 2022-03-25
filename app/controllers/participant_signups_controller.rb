@@ -14,6 +14,7 @@ class ParticipantSignupsController < ApplicationController
       @participant_signup.coming_monday = true
       @participant_signup.coming = true
       @participant_signup.onsite = @group.event_detail.onsite
+      @participant_signup.group_id = @group.id
       
       @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
     end
@@ -58,7 +59,13 @@ class ParticipantSignupsController < ApplicationController
             session["current_role"] = "participant"
             session["current_group"] = @group.abbr
             session["current_participant"] = @participant.id
-            format.html { redirect_to root_url }
+            format.html do
+              if @participant_signup.new_user
+                redirect_to edit_password_mysyg_user_path(@user)
+              else
+                redirect_to root_url(current_user)
+              end
+            end
           end
           
           UserMailer.new_participant(@user, @participant).deliver_now if @participant_signup.participant.group.active
