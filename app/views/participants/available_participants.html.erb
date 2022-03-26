@@ -1,0 +1,11 @@
+<% title "Switch participants" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+	<%= render partial: 'available_participant', collection: @participants %>
+</table>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  role: "button" %>

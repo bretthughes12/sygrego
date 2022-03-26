@@ -48,6 +48,7 @@ class Ability
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
+      can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
     
     elsif session["current_role"] == "gc"
       if user.status == "Verified"
@@ -85,6 +86,7 @@ class Ability
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
+      can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
    
     elsif session["current_role"] == "participant"
       can [:update, :edit_password, :update_password], User do |u|
@@ -99,7 +101,8 @@ class Ability
       end
       can :read, Page
       can [:available_roles, :switch], Role if user.roles.count > 1
-      can [:available_groups, :switch], Group if user.groups.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
+      can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
 
     end
     

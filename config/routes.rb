@@ -30,6 +30,14 @@ Rails.application.routes.draw do
       patch :switch
     end
   end
+  resources :participants do
+    collection do
+      get :available_participants
+    end
+    member do
+      patch :switch
+    end
+  end
 
   resources :group_signups, :only => [:new, :create]
 

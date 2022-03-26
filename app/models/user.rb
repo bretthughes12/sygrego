@@ -111,6 +111,11 @@ class User < ApplicationRecord
     self.participants.first ? self.participants.first.id : nil
   end
 
+  def available_participants
+    return Participant.all.order(:surname, :first_name).load if role?(:admin)
+    self.participants.order(:surname, :first_name)
+  end
+
   def get_reset_password_token
     set_reset_password_token
   end

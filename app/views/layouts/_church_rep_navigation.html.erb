@@ -31,6 +31,9 @@
                         <% if current_user && (current_user.groups.count > 1 || current_user.role?(:admin))  %>
                             <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
                         <% end %>
+                        <% if current_user && (current_user.participants.count > 1 || current_user.role?(:admin))  %>
+                            <li class='dropdown-item'><%= link_to 'Switch Participant', available_participants_participants_path %></li>
+                        <% end %>
                     </ul>
                 </li>
             </ul>
