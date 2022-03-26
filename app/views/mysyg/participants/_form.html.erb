@@ -5,7 +5,7 @@
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
 	<%= f.input :coming %>
-	<%= f.input :onsite if can_display_onsite_flag %>
+	<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator %>
 	<% if @participant.voucher %>
 		<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>

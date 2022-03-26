@@ -5,7 +5,7 @@
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
 	<%= f.input :coming %>
-	<%= f.input :onsite if can_display_onsite_flag %>
+	<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator %>
 	<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
 	<%= f.hint "must also be a spectator" if can_display_helper_flag %>

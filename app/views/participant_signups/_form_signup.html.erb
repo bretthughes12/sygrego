@@ -10,7 +10,7 @@
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
 	<%= f.input :coming, as: :boolean %>
-	<%= f.input :onsite, as: :boolean if can_display_onsite_flag %>
+	<%= f.input :onsite, as: :boolean, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator, as: :boolean %>
 	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
