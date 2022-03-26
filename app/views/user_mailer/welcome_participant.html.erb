@@ -21,8 +21,6 @@
 		<tr><td>Name:</td><td><%= @user.name %></td></tr>
 	</table>
 	
-	<p>Your password will be delivered in a separate email.</p>
-	
 	<p>Use this login ID with your password to select and update your sport and camping preferences, and to check other details about State Youth Games.</p>
 	
 	<p>You can log in here: <%= link_to new_user_session_url(protocol: "https", host: @settings.website_host), new_user_session_url(protocol: "https", host: @settings.website_host) %></p>

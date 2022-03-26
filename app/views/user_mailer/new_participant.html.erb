@@ -11,6 +11,11 @@
 	<tr><td>Postal address:</td><td><%= @participant.address %></td></tr>
 	<tr><td>Suburb:</td><td><%= @participant.suburb %></td></tr>
 	<tr><td>Postcode:</td><td><%= @participant.postcode %></td></tr>
+    <% if @participant.name != @user.name %>
+		<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+		<tr><td>Signed up by:</td><td><%= @user.name %></td></tr>
+		<tr><td>Email:</td><td><%= @user.email %></td></tr>
+    <% end %>
 </table>
 
 <p>Thanks,</p>

@@ -15,8 +15,6 @@ Your login details are:
 - Login ID:  <%= @user.email %>
 - Name:      <%= @user.name %>
 
-Your password will be delivered in a separate email.
-
 Use this login ID with your password to select and update your sport and camping preferences, and to check other details about State Youth Games.
 
 You can log in here: <%= new_user_session_url(protocol: "https", host: @settings.website_host) %>

@@ -45,7 +45,9 @@ class ParticipantSignup
                   :participant,
                   :user,
                   :group,
-                  :new_user
+                  :new_user,
+                  :login_name,
+                  :login_email
   
     INTEGER_FIELDS = %w[age].freeze
   
@@ -86,14 +88,14 @@ class ParticipantSignup
       :driver_signature
     ].compact
   
-    USER_ATTRIBUTES = %i[
-      name
-      address
-      suburb
-      postcode
-      phone_number
-      email
-    ].freeze
+    USER_ATTRIBUTES = {
+      user_name: :name,
+      address: :address,
+      suburb: :suburb,
+      postcode: :postcode,
+      phone_number: :phone_number,
+      user_email: :email
+    }.freeze
   
     STATUSES = ['Requiring Approval',
                 'Accepted'].freeze
@@ -101,15 +103,22 @@ class ParticipantSignup
     validates :password,               confirmation: true,
                                        length: { within: 5..40 },
                                        allow_nil: true
-    validates :email,                  presence: true,
-                                       length: { maximum: 100 },
+    validates :email,                  length: { maximum: 100 },
                                        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-                                                 message: 'invalid format' }
+                                       allow_blank: true,
+                                       unless: proc { |o| o.email.blank? },
+                                       message: 'invalid format' }
+    validates :login_email,            length: { maximum: 100 },
+                                       format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                                       allow_blank: true,
+                                       unless: proc { |o| o.login_email.blank? },
+                                       message: 'invalid format' }
     validates :group_id,               presence: true
     validates :first_name,             presence: true,
                                        length: { maximum: 20 }
     validates :surname,                presence: true,
                                        length: { maximum: 20 }
+    validates :login_name,             length: { maximum: 40 }
     validates :status,                 presence: true,
                                        inclusion: { in: STATUSES, message: 'status is invalid value' }
     validates :age,                    presence: true,
@@ -141,7 +150,7 @@ class ParticipantSignup
   
     before_validation :validate_emergency_contact_details_if_under_18
     before_validation :validate_voucher_name
-#    before_validation :validate_consent_provided
+    before_validation :validate_email_provided
   
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -204,6 +213,14 @@ class ParticipantSignup
       return nil
     end
 
+    def user_name
+      login_name.blank? ? name : login_name
+    end
+
+    def user_email
+      login_email.blank? ? email : login_email
+    end
+
     def send_attributes(attributes = {})
       attributes.each do |name, value|
         if INTEGER_FIELDS.include?(name)
@@ -224,6 +241,10 @@ class ParticipantSignup
         errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
         errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
       end
+    end
+  
+    def validate_email_provided
+      errors.add(:login_email, "must be provided for your user login") if email.blank? && login_email.blank?
     end
 
     def validate_voucher_name
@@ -254,7 +275,7 @@ class ParticipantSignup
     end
   
     def find_or_create_user
-      user = User.find_by_email(@email)
+      user = User.find_by_email(user_email)
   
       if user.nil?
         user = User.new
@@ -270,8 +291,8 @@ class ParticipantSignup
       @new_user = @user.new_record?
 
       if @user.new_record?
-        USER_ATTRIBUTES.each do |name|
-          @user.send("#{name}=", send(name))
+        USER_ATTRIBUTES.each do |name, model_name|
+          @user.send("#{model_name}=", send(name))
         end
     
         @user.status = 'Approved'

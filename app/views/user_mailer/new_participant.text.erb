@@ -6,6 +6,11 @@ Email:            <%= @participant.email %>
 Postal address:   <%= @participant.address %>
 Suburb:           <%= @participant.suburb %>
 Postcode:         <%= @participant.postcode %>
+<% if @participant.name != @user.name %>
+
+Signed up by:     <%= @user.name %>
+Email:            <%= @user.email %>
+<% end %>
 
 Thanks,
 
