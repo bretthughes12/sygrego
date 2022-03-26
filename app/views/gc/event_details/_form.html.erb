@@ -1,7 +1,7 @@
 <%= simple_form_for(@event_detail, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
-	<%= f.input :onsite %>
+	<%= f.input :onsite, label: "Staying onsite at Lardner Park" %>
 	<%= f.input :estimated_numbers %>
 	<%= f.input :number_of_vehicles %>
 	<%= f.input :fire_pit %>
