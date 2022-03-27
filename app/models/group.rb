@@ -120,12 +120,13 @@ class Group < ApplicationRecord
     searchable_by :abbr, :name, :short_name, :trading_name
 
     before_save :uppercase_abbr!
+    before_save :check_mysyg_name
     after_save :create_event_details!
     after_save :create_mysyg_setting!
     after_save :create_rego_checklist!
 
     def <=>(other)
-        name <=> other.name
+      name <=> other.name
     end
 
     def short_name_with_status
@@ -724,7 +725,7 @@ class Group < ApplicationRecord
       unless self.mysyg_setting
         MysygSetting.create(
           group_id:            self.id,
-          mysyg_name:          self.short_name.downcase
+          mysyg_name:          self.short_name.downcase.gsub(/[\[\] ,\.\/\']/,'')
         )
       end
     end
@@ -734,6 +735,15 @@ class Group < ApplicationRecord
         RegoChecklist.create(
           group_id:            self.id
         )
+      end
+    end
+
+    def check_mysyg_name
+      if self.short_name_changed?
+        if self.mysyg_setting
+          ms = self.mysyg_setting
+          ms.update_name!(self.short_name)
+        end
       end
     end
 

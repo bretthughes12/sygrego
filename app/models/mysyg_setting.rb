@@ -58,6 +58,11 @@ class MysygSetting < ApplicationRecord
         length: { maximum: 25 },
         inclusion: { in: VIEW_STRATEGIES }
 
+    def update_name!(name)
+        self.mysyg_name = name.downcase.gsub(/[\[\] ,\.\/\']/,'')
+        self.save
+    end
+
     def self.import(file, user)
         creates = 0
         updates = 0
