@@ -1,6 +1,10 @@
 namespace :syg do
     desc 'Create / update helper vouchers'
     task make_helper_vouchers: ['environment'] do |_t|
+      inserts = 0
+      updates = 0
+      puts 'Updating group helper vouchers...'
+
       groups = Group.not_admin.coming.load
 
       groups.each do |group|
@@ -8,8 +12,11 @@ namespace :syg do
         voucher = Voucher.find_by_name(name)
 
         if voucher
+          if voucher.limit != group.free_helpers
             voucher.limit = group.free_helpers
             voucher.save
+            updates += 1
+          end
         else
             Voucher.create(
                 name: name,
@@ -19,8 +26,11 @@ namespace :syg do
                 voucher_type: "Set",
                 adjustment: 0.0
             )
+            inserts += 1
         end
       end
+      puts "Vouchers created: #{inserts}"
+      puts "Vouchers updated: #{updates}"
     end
 
     desc 'Update MySYG names'
