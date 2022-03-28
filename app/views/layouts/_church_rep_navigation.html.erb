@@ -8,7 +8,15 @@
                 <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Event Details', edit_gc_event_detail_path(@group.event_detail), class: 'nav-link' if can? :update, @group.event_detail %></li>
                 <li class='nav-item'><%= link_to 'Finance', gc_payments_path, class: 'nav-link' if can? :update, Payment %></li>
-                <li class='nav-item'><%= link_to 'Participants', gc_participants_path, class: 'nav-link' if can? :update, Participant %></li>
+                <%- if can? :index, Participant %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Participants</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Our Participants', gc_participants_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Nominated Drivers', drivers_gc_participants_path %></li>
+                        </ul>
+                    </li>
+                <%- end %>
                 <li class='nav-item'><%= link_to 'Sports', gc_sport_entries_path, class: 'nav-link' if can? :update, SportEntry %></li>
                 <%- if can? :index, Volunteer %>
                     <li class='nav-item dropdown'>

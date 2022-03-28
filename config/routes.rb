@@ -278,6 +278,7 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+        get :drivers
       end
       member do
         get :new_voucher

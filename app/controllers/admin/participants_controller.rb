@@ -21,7 +21,7 @@ class Admin::ParticipantsController < ApplicationController
     def search
       @participants = Participant.
         search(params[:search]).
-        order(:surname, :first_name).
+        order('coming desc, surname, first_name').
         paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|

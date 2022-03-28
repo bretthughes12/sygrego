@@ -21,7 +21,7 @@ class Ability
         can [:show, :update, :destroy], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
         end
-        can [:index, :search, :create, :new_import, :import], Participant
+        can [:index, :search, :create, :new_import, :import, :drivers], Participant
         can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
@@ -59,7 +59,7 @@ class Ability
         can [:show, :update, :destroy], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
         end
-        can [:index, :search, :create, :new_import, :import], Participant
+        can [:index, :search, :create, :new_import, :import, :drivers], Participant
         can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end

@@ -8,7 +8,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants
     def index
       @participants = @group.participants.
-        order(:surname, :first_name).load
+        order('coming desc, surname, first_name').load
   
       respond_to do |format|
         format.html do
@@ -23,11 +23,23 @@ class Gc::ParticipantsController < ApplicationController
     def search
       @participants = @group.participants.
         search(params[:search]).
-        order(:surname, :first_name).
+        order('coming desc, surname, first_name').
         paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|
         format.html { render action: 'index', layout: @current_role.name }
+      end
+    end
+    
+    # GET /gc/participants/drivers
+    def drivers
+      @participants = @group.participants.where('age > 17').
+        order("coming desc, driver desc, surname, first_name").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
       end
     end
     

@@ -1,0 +1,25 @@
+<% title "Nominated Drivers" %>
+
+<h1><%= yield(:title) %></h1>
+    
+<% if !@participants.empty? %>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Driver</th>
+                <th>Surname</th>
+                <th>First Name</th>
+                <th>Number Plate</th>
+                <th>Signed?</th>
+            </tr>
+        </thead>
+        
+        <%= render :partial => 'participant_driver', :collection => @participants, :as => :participant %>
+    </table>
+<% end %>
+
+<br />
+
+<%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
+					{:name => "Spectator", :class => "table-warning"},
+					{:name => "Not Coming", :class => "table-dark"}] %>
