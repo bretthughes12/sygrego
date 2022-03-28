@@ -40,7 +40,6 @@
 	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
 	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
-	<%= f.input :wwcc_number, label: "WWCC Number" %>
 
   	<%= f.input :amount_paid %>
 
@@ -50,15 +49,6 @@
 	<%= f.input :phone_number, label: "Home phone number"  %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want this participant to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
 	<%= f.input :email, hint: "enter an email address if you would like this participant to receive automatic updates and exciting news from the SYG team, like the launch of new sports, entertainment personalities confirmed, prize giveaways throughout the year and much more!" %>
-
-	<br/>
-
-	<h2>Driver Info</h2>
-
-   	<%= f.input :driver, label: "Nominated Driver"  %>
-   	<%= f.input :number_plate, label: "Number Plate", hint: "drivers only"%>
-   	<%= f.input :driver_signature, label: "Driver Electronic Signature" %>
-   	<%= f.input :driver_signature_date, as: :date, label: "Date Signed", include_blank: true %>
 
 	<br/>
 

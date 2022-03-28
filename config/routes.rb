@@ -285,10 +285,16 @@ Rails.application.routes.draw do
       end
       member do
         get :new_voucher
+        get :edit_driver
+        get :edit_wwcc
+        get :edit_vaccination
         post :add_voucher
         patch :delete_voucher
         patch :accept
         patch :reject
+        patch :update_driver
+        patch :update_wwcc
+        patch :update_vaccination
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

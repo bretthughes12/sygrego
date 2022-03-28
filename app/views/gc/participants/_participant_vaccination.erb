@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+		<%= link_to participant.surname, edit_vaccination_gc_participant_path(participant) %>
+	</td>
+
+	<td> 
+        <%= link_to participant.first_name, edit_vaccination_gc_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.vaccinated ? "Yes" : "No" %>
+	</td>
+	
+	<td> 
+		<%= participant.vaccination_document %>
+	</td>
+</tr>

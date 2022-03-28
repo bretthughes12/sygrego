@@ -96,6 +96,21 @@ class Gc::ParticipantsController < ApplicationController
       render layout: @current_role.name
     end
   
+    # GET /gc/participants/1/edit_driver
+    def edit_driver
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/participants/1/edit_wwcc
+    def edit_wwcc
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/participants/1/edit_vaccination
+    def edit_vaccination
+      render layout: @current_role.name
+    end
+  
     # POST /admin/participants
     def create
       @participant = Participant.new(participant_params)
@@ -123,6 +138,48 @@ class Gc::ParticipantsController < ApplicationController
           format.html { redirect_to gc_participants_url }
         else
           format.html { render action: "edit", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_driver
+    def update_driver
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_driver_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to drivers_gc_participants_url }
+        else
+          format.html { render action: "edit_driver", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_wwcc
+    def update_wwcc
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_wwcc_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to wwccs_gc_participants_url }
+        else
+          format.html { render action: "edit_wwcc", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_vaccination
+    def update_vaccination
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_vaccination_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to vaccinations_gc_participants_url }
+        else
+          format.html { render action: "edit_vaccination", layout: @current_role.name }
         end
       end
     end
@@ -272,18 +329,37 @@ class Gc::ParticipantsController < ApplicationController
         :onsite,
         :helper,
         :group_coord,
-        :driver,
-        :number_plate,
         :email,
         :mobile_phone_number,
         :dietary_requirements,
         :emergency_contact,
         :emergency_relationship,
         :emergency_phone_number,
-        :amount_paid,
-        :wwcc_number,
-        :driver_signature,
-        :driver_signature_date
+        :amount_paid
       )
     end
-end
+
+    def participant_driver_params
+      params.require(:participant).permit(
+        :lock_version,
+        :driver,
+        :number_plate
+      )
+    end
+  
+    def participant_wwcc_params
+      params.require(:participant).permit(
+        :lock_version,
+        :wwcc_number
+      )
+    end
+  
+    def participant_vaccination_params
+      params.require(:participant).permit(
+        :lock_version,
+        :vaccinated,
+        :vaccination_document,
+        :vaccination_sighted_by
+      )
+    end
+  end

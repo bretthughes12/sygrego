@@ -45,7 +45,7 @@
 #  surname                :string(20)       not null
 #  updated_by             :bigint
 #  vaccinated             :boolean          default(FALSE)
-#  vaccination_document   :string(20)
+#  vaccination_document   :string(40)
 #  vaccination_sighted_by :string(20)
 #  withdrawn              :boolean          default(FALSE)
 #  wwcc_number            :string

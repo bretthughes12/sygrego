@@ -1,0 +1,9 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+   	<%= f.input :driver, label: "Nominated Driver"  %>
+   	<%= f.input :number_plate, label: "Number Plate" %>
+
+	<%= f.button :submit %>
+<% end %>	

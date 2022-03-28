@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_15_234706) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_28_092022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -240,7 +240,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_15_234706) do
     t.string "medicare_number"
     t.string "rego_type", limit: 10, default: "Full Time"
     t.boolean "vaccinated", default: false
-    t.string "vaccination_document", limit: 20
+    t.string "vaccination_document", limit: 40
     t.string "vaccination_sighted_by", limit: 20
     t.boolean "coming_friday", default: true
     t.boolean "coming_saturday", default: true

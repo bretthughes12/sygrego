@@ -45,7 +45,7 @@
 #  surname                :string(20)       not null
 #  updated_by             :bigint
 #  vaccinated             :boolean          default(FALSE)
-#  vaccination_document   :string(20)
+#  vaccination_document   :string(40)
 #  vaccination_sighted_by :string(20)
 #  withdrawn              :boolean          default(FALSE)
 #  wwcc_number            :string
@@ -169,6 +169,10 @@ class Participant < ApplicationRecord
     validates :emergency_relationship, 
         length: { maximum: 20 }
     validates :emergency_phone_number, 
+        length: { maximum: 20 }
+    validates :vaccination_document, 
+        length: { maximum: 40 }
+    validates :vaccination_sighted_by, 
         length: { maximum: 20 }
 
     before_validation :validate_eligibility_for_team_helper

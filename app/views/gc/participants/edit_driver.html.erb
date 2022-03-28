@@ -1,0 +1,13 @@
+<% title "Driver details for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_driver", locals: { 
+                              url: update_driver_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", drivers_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

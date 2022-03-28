@@ -1,0 +1,13 @@
+<% title "Vaccination status for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_vaccination", locals: { 
+                              url: update_vaccination_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", vaccinations_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

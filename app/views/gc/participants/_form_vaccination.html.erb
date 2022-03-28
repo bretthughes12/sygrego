@@ -1,0 +1,12 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :vaccinated %>
+	<%= f.input :vaccination_document, label: "Vaccination document sighted" %>
+	<%= f.input :vaccination_sighted_by, label: "Sighted by" %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	
