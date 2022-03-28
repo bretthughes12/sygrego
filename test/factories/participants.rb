@@ -86,5 +86,12 @@ FactoryBot.define do
     postcode              {"3333"}
     email                 {"blah@blah.com"}
     phone_number          {"9555-5555"}
+
+    trait :under18 do
+      age                 {"17"}
+      emergency_contact   {"Mother Theresa"}
+      emergency_relationship {"Mother"}
+      emergency_phone_number {"9777-7777"}
+    end
   end
 end

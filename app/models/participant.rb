@@ -174,6 +174,7 @@ class Participant < ApplicationRecord
     before_validation :validate_eligibility_for_team_helper
     before_validation :validate_eligibility_for_group_coordinator
     before_validation :validate_years_attended
+    before_validation :validate_emergency_contact_details_if_under_18
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
     before_validation :normalize_gender!
@@ -697,204 +698,212 @@ class Participant < ApplicationRecord
 
 private
 
-    def validate_eligibility_for_team_helper
-      errors.add(:helper, 'must also be a spectator') if coming && helper && !spectator
-      errors.add(:helper, 'must not be under 12') if coming && helper && age && age < 12
-      errors.add(:helper, 'maximum number of Team Helpers has been reached') if coming && helper && group.participants.coming.accepted.helpers.where(['id != ?', id]).size >= group.helpers_allowed
+  def validate_emergency_contact_details_if_under_18
+    if age && age.to_i < 18
+      errors.add(:emergency_contact, "can't be blank for under 18's") if emergency_contact.blank?
+      errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
+      errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
     end
-  
-    def validate_eligibility_for_group_coordinator
-      errors.add(:group_coord, 'Maximum of two Group Coordinators allowed per group') if coming && group_coord && group.participants.coming.accepted.group_coords.where(['id != ?', id]).size >= group.coordinators_allowed
-    end
-  
-    def validate_years_attended
-      setting = Setting.first
-      unless years_attended.nil?
-        max_year = setting.this_year - APP_CONFIG[:first_year] + 1
-        errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended >= 1 && years_attended <= max_year
-      end
-    end
+  end
 
-    def set_rego_type!
-      d = 0
-      [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
-        d += 1 if self.send(b) == true
-      end
-      self.rego_type = d == 4 ? "Full Time" : "Part Time"
-    end
+  def validate_eligibility_for_team_helper
+    errors.add(:helper, 'must also be a spectator') if coming && helper && !spectator
+    errors.add(:helper, 'must not be under 12') if coming && helper && age && age < 12
+    errors.add(:helper, 'maximum number of Team Helpers has been reached') if coming && helper && group.participants.coming.accepted.helpers.where(['id != ?', id]).size >= group.helpers_allowed
+  end
 
-    def set_early_bird_flag!
-      settings = Setting.first
-      self.early_bird = settings.early_bird
-    end
+  def validate_eligibility_for_group_coordinator
+    errors.add(:group_coord, 'Maximum of two Group Coordinators allowed per group') if coming && group_coord && group.participants.coming.accepted.group_coords.where(['id != ?', id]).size >= group.coordinators_allowed
+  end
 
-    def check_early_bird_flag
-      if coming_changed? && coming
-        set_early_bird_flag!
-      end
+  def validate_years_attended
+    setting = Setting.first
+    unless years_attended.nil?
+      max_year = setting.this_year - APP_CONFIG[:first_year] + 1
+      errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended >= 1 && years_attended <= max_year
     end
+  end
 
-    def normalize_first_name!
-      self.first_name = first_name.titleize if first_name
+  def set_rego_type!
+    d = 0
+    [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
+      d += 1 if self.send(b) == true
     end
-  
-    def normalize_surname!
-      self.surname = Participant.normalize_surname(surname) if surname
+    self.rego_type = d == 4 ? "Full Time" : "Part Time"
+  end
+
+  def set_early_bird_flag!
+    settings = Setting.first
+    self.early_bird = settings.early_bird
+  end
+
+  def check_early_bird_flag
+    if coming_changed? && coming
+      set_early_bird_flag!
     end
-  
-    def normalize_gender!
-      self.gender = gender.upcase if gender
-    end
-  
-    def normalize_phone_numbers!
-      self.phone_number = Participant.normalize_phone_number(phone_number) if phone_number
-      self.mobile_phone_number = Participant.normalize_phone_number(mobile_phone_number) if mobile_phone_number
-    end
-  
-    def normalize_medical_info!
-      self.medical_info = Participant.normalize_medical_info(medical_info) if medical_info
-    end
-  
-    def normalize_medications!
-      self.medications = Participant.normalize_medical_info(medications) if medications
-    end
-  
-    def normalize_address!
-      self.address = Participant.normalize_address(address) if address
-    end
-  
-    def normalize_suburb!
-      self.suburb = Participant.normalize_suburb(suburb) if suburb
-    end
-  
-    def self.normalize_phone_number(number)
-      numbers = number.gsub(/\D/, '')
-      if numbers.size == 10
-        if numbers[0..1] == '04'
-          "(#{numbers[0..3]}) #{numbers[4..6]}-#{numbers[7..9]}"
-        else
-          "(#{numbers[0..1]}) #{numbers[2..5]}-#{numbers[6..9]}"
-        end
-      elsif numbers.size == 8
-        "(0#{APP_CONFIG[:state_area_code]}) #{numbers[0..3]}-#{numbers[4..7]}"
+  end
+
+  def normalize_first_name!
+    self.first_name = first_name.titleize if first_name
+  end
+
+  def normalize_surname!
+    self.surname = Participant.normalize_surname(surname) if surname
+  end
+
+  def normalize_gender!
+    self.gender = gender.upcase if gender
+  end
+
+  def normalize_phone_numbers!
+    self.phone_number = Participant.normalize_phone_number(phone_number) if phone_number
+    self.mobile_phone_number = Participant.normalize_phone_number(mobile_phone_number) if mobile_phone_number
+  end
+
+  def normalize_medical_info!
+    self.medical_info = Participant.normalize_medical_info(medical_info) if medical_info
+  end
+
+  def normalize_medications!
+    self.medications = Participant.normalize_medical_info(medications) if medications
+  end
+
+  def normalize_address!
+    self.address = Participant.normalize_address(address) if address
+  end
+
+  def normalize_suburb!
+    self.suburb = Participant.normalize_suburb(suburb) if suburb
+  end
+
+  def self.normalize_phone_number(number)
+    numbers = number.gsub(/\D/, '')
+    if numbers.size == 10
+      if numbers[0..1] == '04'
+        "(#{numbers[0..3]}) #{numbers[4..6]}-#{numbers[7..9]}"
       else
-        number
+        "(#{numbers[0..1]}) #{numbers[2..5]}-#{numbers[6..9]}"
       end
+    elsif numbers.size == 8
+      "(0#{APP_CONFIG[:state_area_code]}) #{numbers[0..3]}-#{numbers[4..7]}"
+    else
+      number
     end
-  
-    def self.normalize_medical_info(info)
-      if ['none', 'n/a', 'nil', '-', ''].include?(info.downcase)
-        nil
+  end
+
+  def self.normalize_medical_info(info)
+    if ['none', 'n/a', 'nil', '-', ''].include?(info.downcase)
+      nil
+    else
+      info
+    end
+  end
+
+  def self.normalize_suburb(suburb)
+    words = suburb.split.collect do |word|
+      if ['nth', 'nth.', 'n', 'n.'].include?(word.downcase)
+        'North'
+      elsif ['sth', 'sth.', 's', 's.'].include?(word.downcase)
+        'South'
+      elsif ['e', 'e.'].include?(word.downcase)
+        'East'
+      elsif ['w', 'w.'].include?(word.downcase)
+        'West'
       else
-        info
+        word.capitalize
       end
     end
-  
-    def self.normalize_suburb(suburb)
-      words = suburb.split.collect do |word|
-        if ['nth', 'nth.', 'n', 'n.'].include?(word.downcase)
-          'North'
-        elsif ['sth', 'sth.', 's', 's.'].include?(word.downcase)
-          'South'
-        elsif ['e', 'e.'].include?(word.downcase)
-          'East'
-        elsif ['w', 'w.'].include?(word.downcase)
-          'West'
-        else
-          word.capitalize
+    words.join(' ')
+  end
+
+  def self.normalize_surname(surname)
+    words = surname.split.collect do |word|
+      parts = word.split("'").collect do |part|
+        subparts = part.split('-').collect do |subpart|
+          subpart[0..1].casecmp('mc').zero? ? "Mc#{subpart[2..99].capitalize}" : subpart.capitalize
         end
+        subparts.join('-')
       end
-      words.join(' ')
+      parts.join("'")
     end
-  
-    def self.normalize_surname(surname)
-      words = surname.split.collect do |word|
-        parts = word.split("'").collect do |part|
-          subparts = part.split('-').collect do |subpart|
-            subpart[0..1].casecmp('mc').zero? ? "Mc#{subpart[2..99].capitalize}" : subpart.capitalize
-          end
-          subparts.join('-')
-        end
-        parts.join("'")
-      end
-      words.join(' ')
-    end
-  
-    def self.normalize_address(address)
-      words = address.split.collect do |word|
-        parts = word.split("'").collect do |part|
-          subparts = part.split('-').collect do |subpart|
-            bits = subpart.split('/').collect do |bit|
-              if ['po', 'p.o', 'p.o.'].include?(bit.downcase)
-                'P.O.'
-              elsif ['rmb', 'r.m.b', 'r.m.b.'].include?(bit.downcase)
-                'R.M.B.'
-              elsif ['rsd', 'r.s.d', 'r.s.d.'].include?(bit.downcase)
-                'R.S.D.'
-              elsif ['street', 'st.'].include?(bit.downcase)
-                'St'
-              elsif ['road', 'rd.'].include?(bit.downcase)
-                'Rd'
-              elsif %w[avenue av].include?(bit.downcase)
-                'Ave'
-              elsif ['close', 'cl.'].include?(bit.downcase)
-                'Cl'
-              elsif ['boulevard', 'blvd.'].include?(bit.downcase)
-                'Blvd'
-              elsif ['lane', 'ln.'].include?(bit.downcase)
-                'Ln'
-              elsif ['court', 'crt.'].include?(bit.downcase)
-                'Crt'
-              elsif ['grove', 'gr', 'gr.', 'gv', 'gv.'].include?(bit.downcase)
-                'Gve'
-              elsif ['crescent', 'cresent', 'cres.', 'crs', 'crs.'].include?(bit.downcase)
-                'Cres'
-              elsif ['place', 'pl.', 'plc', 'plc.'].include?(bit.downcase)
-                'Pl'
-              elsif ['parade', 'pde.'].include?(bit.downcase)
-                'Pde'
-              elsif ['drive', 'dr', 'drv', 'dr.', 'dve.'].include?(bit.downcase)
-                'Dve'
-              elsif ['terrace', 'tce.'].include?(bit.downcase)
-                'Tce'
-              elsif ['highway', 'hwy.'].include?(bit.downcase)
-                'Hwy'
-              elsif ['square', 'sq.'].include?(bit.downcase)
-                'Sq'
-              elsif ['track', 'tk.'].include?(bit.downcase)
-                'Tk'
-              else
-                bit.capitalize
-              end
+    words.join(' ')
+  end
+
+  def self.normalize_address(address)
+    words = address.split.collect do |word|
+      parts = word.split("'").collect do |part|
+        subparts = part.split('-').collect do |subpart|
+          bits = subpart.split('/').collect do |bit|
+            if ['po', 'p.o', 'p.o.'].include?(bit.downcase)
+              'P.O.'
+            elsif ['rmb', 'r.m.b', 'r.m.b.'].include?(bit.downcase)
+              'R.M.B.'
+            elsif ['rsd', 'r.s.d', 'r.s.d.'].include?(bit.downcase)
+              'R.S.D.'
+            elsif ['street', 'st.'].include?(bit.downcase)
+              'St'
+            elsif ['road', 'rd.'].include?(bit.downcase)
+              'Rd'
+            elsif %w[avenue av].include?(bit.downcase)
+              'Ave'
+            elsif ['close', 'cl.'].include?(bit.downcase)
+              'Cl'
+            elsif ['boulevard', 'blvd.'].include?(bit.downcase)
+              'Blvd'
+            elsif ['lane', 'ln.'].include?(bit.downcase)
+              'Ln'
+            elsif ['court', 'crt.'].include?(bit.downcase)
+              'Crt'
+            elsif ['grove', 'gr', 'gr.', 'gv', 'gv.'].include?(bit.downcase)
+              'Gve'
+            elsif ['crescent', 'cresent', 'cres.', 'crs', 'crs.'].include?(bit.downcase)
+              'Cres'
+            elsif ['place', 'pl.', 'plc', 'plc.'].include?(bit.downcase)
+              'Pl'
+            elsif ['parade', 'pde.'].include?(bit.downcase)
+              'Pde'
+            elsif ['drive', 'dr', 'drv', 'dr.', 'dve.'].include?(bit.downcase)
+              'Dve'
+            elsif ['terrace', 'tce.'].include?(bit.downcase)
+              'Tce'
+            elsif ['highway', 'hwy.'].include?(bit.downcase)
+              'Hwy'
+            elsif ['square', 'sq.'].include?(bit.downcase)
+              'Sq'
+            elsif ['track', 'tk.'].include?(bit.downcase)
+              'Tk'
+            else
+              bit.capitalize
             end
-            bits.join('/')
           end
-          subparts.join('-')
+          bits.join('/')
         end
-        parts.join("'")
+        subparts.join('-')
       end
-      words.join(' ')
+      parts.join("'")
     end
+    words.join(' ')
+  end
 
-    def self.sync_fields
-      ['first_name',
-       'surname', 
-       'group_id',
-       'coming',
-       'database_rowid',
-       'age',
-       'gender',
-       'onsite',
-       'address',
-       'suburb',
-       'postcode',
-       'phone_number',
-       'mobile_phone_number',
-       'spectator',
-       'helper',
-       'group_coord',
-       'sport_coord',
-       'guest'
-      ]
+  def self.sync_fields
+    ['first_name',
+      'surname', 
+      'group_id',
+      'coming',
+      'database_rowid',
+      'age',
+      'gender',
+      'onsite',
+      'address',
+      'suburb',
+      'postcode',
+      'phone_number',
+      'mobile_phone_number',
+      'spectator',
+      'helper',
+      'group_coord',
+      'sport_coord',
+      'guest'
+    ]
   end
 end

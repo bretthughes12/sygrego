@@ -23,7 +23,11 @@ module Admin::ParticipantsHelper
         group = @participant.group || @group
         @current_user.role?(:admin) || @participant.group_coord || group && (group.participants.coming.accepted.group_coords.size < group.coordinators_allowed)
     end
-    
+
+    def can_display_driver_fields
+        @participant && (@participant.driver || @participant.age && @participant.age >= 18)
+    end
+
     def name_with_group_name(participant)
         if participant.group.nil?
           participant.name

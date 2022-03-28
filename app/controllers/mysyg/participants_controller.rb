@@ -9,6 +9,10 @@ class Mysyg::ParticipantsController < MysygController
     def edit
     end
   
+    # GET /mysyg/:group/drivers
+    def drivers
+    end
+  
     # PATCH /mysyg/:group/participants/1
     def update
       respond_to do |format|
@@ -17,6 +21,25 @@ class Mysyg::ParticipantsController < MysygController
           format.html { redirect_to home_url(current_user) }
         else
           format.html { render action: "edit" }
+        end
+      end
+    end
+  
+    # PATCH /mysyg/:group/participants/1/update_drivers
+    def update_drivers
+      respond_to do |format|
+        if @participant.update(participant_driving_params)
+          if @participant.driver_signature 
+            @participant.driver_signature_date = Time.now
+            @participant.save
+          end
+          flash[:notice] = 'Details successfully updated.'
+          format.html { redirect_to root_url(current_user) }
+        else
+          format.html do
+            flash[:notice] = 'Update failed. See below for the reasons.'
+            render action: "drivers"
+          end
         end
       end
     end
@@ -105,6 +128,15 @@ class Mysyg::ParticipantsController < MysygController
         :wwcc_number,
         :driver_signature,
         :driver_signature_date
+      )
+    end
+    
+    def participant_driving_params
+      params.require(:participant).permit( 
+        :lock_version,
+        :driver,
+        :number_plate,
+        :driver_signature
       )
     end
 end

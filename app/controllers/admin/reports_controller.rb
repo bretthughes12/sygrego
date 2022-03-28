@@ -49,8 +49,8 @@ class Admin::ReportsController < ApplicationController
         p.guest = true
         @participants << p
 
-        @participants << Participant.new(age: 11, spectator: true)
-        @participants << Participant.new(age: 5)
+        @participants << Participant.new(age: 11, spectator: true, emergency_contact: "Elvis", emergency_relationship: "Idol", emergency_phone_number: "9555-5555")
+        @participants << Participant.new(age: 5, emergency_contact: "Elvis", emergency_relationship: "Idol", emergency_phone_number: "9555-5555")
 
         respond_to do |format|
             format.html 

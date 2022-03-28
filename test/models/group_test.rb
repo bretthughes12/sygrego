@@ -647,7 +647,7 @@ class GroupTest < ActiveSupport::TestCase
     male = FactoryBot.create(:participant, gender: "M", group: @group)
     female = FactoryBot.create(:participant, gender: "F", group: @group)
     too_old = FactoryBot.create(:participant, age: 55, group: @group)
-    too_young = FactoryBot.create(:participant, age: 5, group: @group)
+    too_young = FactoryBot.create(:participant, :under18, age: 5, group: @group)
     spectator = FactoryBot.create(:participant, spectator: true, group: @group)
     not_coming = FactoryBot.create(:participant, coming: false, group: @group)
     player = FactoryBot.create(:participant, group: @group)

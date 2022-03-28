@@ -92,7 +92,7 @@ class Ability
       can [:update, :edit_password, :update_password], User do |u|
         user == u
       end
-      can [:update, :new_voucher, :add_voucher, :delete_voucher], Participant do |participant|
+      can [:update, :new_voucher, :add_voucher, :delete_voucher, :drivers, :update_drivers], Participant do |participant|
         user.participants.include?(participant) || user.role?(:admin)
       end
       can [:index], Volunteer

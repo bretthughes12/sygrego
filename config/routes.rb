@@ -317,11 +317,11 @@ Rails.application.routes.draw do
       get '/signup' => 'participant_signups#new', :as => :signup
       get '/home' => 'mysyg/info#home', :as => :home
       get '/details' => 'mysyg/participants#edit', :as => :details
+      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
 #      get '/extras' => 'mysyg/participant_extras#index', :as => :extras
 #      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
 #      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
 #      get '/finance' => 'mysyg/info#finance', :as => :finance
-#      get '/drivers' => 'mysyg/participants#drivers', as: :drivers
  
       resources :participant_signups, controller: "participant_signups", only: [:new, :create]
       resource :info, :controller => "mysyg/info" do
@@ -334,7 +334,7 @@ Rails.application.routes.draw do
           get :new_voucher
           post :add_voucher
           patch :delete_voucher
-#          patch :update_drivers
+          patch :update_drivers
         end
       end
 #      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]

@@ -295,7 +295,7 @@ class GradeTest < ActiveSupport::TestCase
   
   test "participant should not be eligible to participate if they are too young" do
     grade = FactoryBot.create(:grade, min_age: 18)
-    participant = FactoryBot.create(:participant, age: 17)
+    participant = FactoryBot.create(:participant, :under18)
     
     assert !grade.eligible_to_participate?(participant)
   end
@@ -316,7 +316,7 @@ class GradeTest < ActiveSupport::TestCase
   
   test "participant should be eligible to participate if they are young enough" do
     grade = FactoryBot.create(:grade, max_age: 17)
-    participant = FactoryBot.create(:participant, age: 17)
+    participant = FactoryBot.create(:participant, :under18)
     
     assert grade.eligible_to_participate?(participant)
   end

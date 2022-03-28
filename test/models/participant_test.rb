@@ -101,10 +101,10 @@ class ParticipantTest < ActiveSupport::TestCase
 
   def test_participant_fee_values
     full_participant = FactoryBot.create(:participant)
-    eleven_year_old_playing_sport = FactoryBot.create(:participant, age: 11)
+    eleven_year_old_playing_sport = FactoryBot.create(:participant, :under18, age: 11)
     spectator = FactoryBot.create(:participant, spectator: true)
-    primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
-    pre_schooler = FactoryBot.create(:participant, age: 5)
+    primary_aged = FactoryBot.create(:participant, :under18, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, :under18, age: 5)
     day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false)
     day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
     early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false, early_bird: true)
@@ -143,8 +143,8 @@ class ParticipantTest < ActiveSupport::TestCase
   def test_participant_category_values
     full_participant = FactoryBot.create(:participant)
     spectator = FactoryBot.create(:participant, spectator: true)
-    primary_aged = FactoryBot.create(:participant, age: 11, spectator: true)
-    pre_schooler = FactoryBot.create(:participant, age: 5)
+    primary_aged = FactoryBot.create(:participant, :under18, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, :under18, age: 5)
     day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false)
     day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false)
     group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
