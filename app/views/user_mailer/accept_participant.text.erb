@@ -2,14 +2,11 @@ Hi <%= @participant.first_name %>
 
 Thank you for registering for State Youth Games <%= APP_CONFIG[:this_year] %>! We are so excited to have you on board!
 
-You have just signed up as a participant with <%= @group.short_name %> on the SYG Registrations website. 
+You have signed up as a participant with <%= @group.short_name %> on the SYG Registrations website, and your group coordinator has now accepted your registration. 
 
-<% if @participant.status == "Requiring Approval" %>
+Your registration is now almost complete. To complete your registration and set your password please follow this <%= link_to "link.", edit_password_url(@user, reset_password_token: @token) %>
 
-Your Group Coordinator must now confirm your inclusion in the team. When this occurs, you will receive further emails containing your login details and instructions for setting your password. If you have heard nothing within the next couple of days, please contact your Group Coordinator.
-<% else %>
-
-Your registration is now almost complete. Please see your Group Coordinator to finalise payment and ensure you have entered in all your sporting preferences. If you have any further questions please contact your group coordinator going forward.
+Please see your Group Coordinator to finalise payment and ensure you have entered in all your sporting preferences. If you have any further questions please contact your group coordinator going forward.
 
 Your login details are:
 - Login ID:  <%= @user.email %>
@@ -20,7 +17,6 @@ Use this login ID with your password to select and update your sport and camping
 You can log in here: <%= new_user_session_url(protocol: "https", host: @settings.website_host) %>
 
 We hope you have a fantastic lead up to games. See you in June!
-<% end %>
 
 Thanks,
 

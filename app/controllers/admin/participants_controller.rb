@@ -9,7 +9,7 @@ class Admin::ParticipantsController < ApplicationController
     # GET /admin/participants
     def index
       @participants = Participant.
-        order(:surname, :first_name).load
+        order('coming desc, surname, first_name').load
   
       respond_to do |format|
         format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }

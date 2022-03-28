@@ -350,16 +350,16 @@ class Participant < ApplicationRecord
       end
     end
   
-#    def accept!
-#      self.status = 'Accepted'
-#      save(validate: false)
-#    end
+    def accept!
+      self.status = 'Accepted'
+      save(validate: false)
+    end
   
-#    def reject!
-#      self.group = Group.default_group
-#      self.coming = false
-#      save(validate: false)
-#    end
+    def reject!
+      self.group = Group.default_group
+      self.coming = false
+      save(validate: false)
+    end
   
     # Mark this participant as having had a late fee charged,
     # so that we know not to charge it again

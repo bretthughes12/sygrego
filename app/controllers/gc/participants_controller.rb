@@ -7,7 +7,7 @@ class Gc::ParticipantsController < ApplicationController
   
     # GET /gc/participants
     def index
-      @participants = @group.participants.
+      @participants = @group.participants.accepted.
         order('coming desc, surname, first_name').load
   
       respond_to do |format|
@@ -21,7 +21,7 @@ class Gc::ParticipantsController < ApplicationController
 
     # GET /gc/participants/search
     def search
-      @participants = @group.participants.
+      @participants = @group.participants.accepted.
         search(params[:search]).
         order('coming desc, surname, first_name').
         paginate(page: params[:page], per_page: 100)
@@ -30,11 +30,47 @@ class Gc::ParticipantsController < ApplicationController
         format.html { render action: 'index', layout: @current_role.name }
       end
     end
+
+    # GET /gc/participants/approvals
+    def approvals
+      @participants = @group.participants.requiring_approval.
+        order("surname, first_name").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+      end
+    end
     
     # GET /gc/participants/drivers
     def drivers
-      @participants = @group.participants.where('age > 17').
+      @participants = @group.participants.accepted.open_age.
         order("coming desc, driver desc, surname, first_name").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+      end
+    end
+    
+    # GET /gc/participants/wwccs
+    def wwccs
+      @participants = @group.participants.accepted.open_age.
+        order("coming desc, surname, first_name").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+      end
+    end
+    
+    # GET /gc/participants/vaccinations
+    def vaccinations
+      @participants = @group.participants.open_age.
+        order("coming desc, surname, first_name").load
   
       respond_to do |format|
         format.html do
@@ -88,6 +124,32 @@ class Gc::ParticipantsController < ApplicationController
         else
           format.html { render action: "edit", layout: @current_role.name }
         end
+      end
+    end
+
+    # PATCH /gc/participants/1/accept
+    def accept
+      @participant.updated_by = current_user.id
+      @participant.accept!
+      user = @participant.users.first
+      token = user.get_reset_password_token
+
+      respond_to do |format|
+        flash[:notice] = 'Participant was accepted into your group.'
+        UserMailer.accept_participant(@participant, @group, token).deliver_now
+        format.html { redirect_to approvals_gc_participants_url }
+      end
+    end
+
+    # PATCH /gc/participants/1/reject
+    def reject
+      @participant.updated_by = current_user.id
+      @participant.reject!
+
+      respond_to do |format|
+        flash[:notice] = 'Participant was rejected from your group.'
+        UserMailer.reject_participant(@participant, @group).deliver_now
+        format.html { redirect_to approvals_gc_participants_url }
       end
     end
   

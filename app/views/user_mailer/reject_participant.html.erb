@@ -1,0 +1,23 @@
+<% content_for(:title) { "Rejection Notice" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>The following participant has just been rejected from team <%= @group.short_name %></p>
+
+<table>
+	<tr><td>Name:</td><td><%= @participant.name %></td></tr>
+	<tr><td>Phone:</td><td><%= @participant.phone_number %></td></tr>
+	<tr><td>Email:</td><td><%= @participant.email %></td></tr>
+	<tr><td>Postal address:</td><td><%= @participant.address %></td></tr>
+	<tr><td>Suburb:</td><td><%= @participant.suburb %></td></tr>
+	<tr><td>Postcode:</td><td><%= @participant.postcode %></td></tr>
+    <% if @participant.name != @user.name %>
+		<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+		<tr><td>Signed up by:</td><td><%= @user.name %></td></tr>
+		<tr><td>Email:</td><td><%= @user.email %></td></tr>
+    <% end %>
+</table>
+
+<p>Thanks,</p>
+
+<p>SYG Registrations Web Support</p>

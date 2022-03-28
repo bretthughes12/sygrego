@@ -278,12 +278,17 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+        get :approvals
         get :drivers
+        get :wwccs
+        get :vaccinations
       end
       member do
         get :new_voucher
         post :add_voucher
         patch :delete_voucher
+        patch :accept
+        patch :reject
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

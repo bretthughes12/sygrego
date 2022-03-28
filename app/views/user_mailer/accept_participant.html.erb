@@ -1,0 +1,31 @@
+<% content_for(:title) { "Welcome" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>Hi <%= @participant.first_name %></p>
+
+<p>Thank you again for registering for State Youth Games <%= APP_CONFIG[:this_year] %>! We are so excited to have you on board!</p>
+
+<p>You have signed up as a participant with <%= @group.short_name %> on the SYG Registrations website, and your group coordinator has now accepted your registration.</p> 
+
+<p>Your registration is now almost complete. To complete your registration and set your password please follow this <%= link_to "link.", edit_password_url(@user, reset_password_token: @token) %></p>
+
+<p>Please see your Group Coordinator to finalise payment and ensure you have entered in all your sporting preferences. If you have any further questions please contact your group coordinator going forward.</p>
+	
+<strong>Your login details are:</strong>
+<table>
+	<tr><td>Login ID:</td><td><%= @user.email %></td></tr>
+	<tr><td>Name:</td><td><%= @user.name %></td></tr>
+</table>
+	
+<p>Use this login ID with your password to select and update your sport and camping preferences, and to check other details about State Youth Games.</p>
+	
+<p>You can log in here: <%= link_to new_user_session_url(protocol: "https", host: @settings.website_host), new_user_session_url(protocol: "https", host: @settings.website_host) %></p>
+	
+<p>We hope you have a fantastic lead up to games. See you in June!</p>
+
+<p>Thanks,</p>
+
+<p>SYG Team</p>
+
+<p style="font-size: smaller">You have received this email because you have agreed to the terms and conditions listed during the online registration process. If you should have not received this email please contact <%= APP_CONFIG[:admin_email] %></p>
