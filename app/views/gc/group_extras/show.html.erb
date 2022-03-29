@@ -1,0 +1,12 @@
+<% title "Custom / extra cost details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @group_extra %>
+
+<%= link_to "Back", gc_group_extras_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_gc_group_extra_path(@group_extra),
+                  class: primary_button_class,
+                  role: "button" %>

@@ -48,10 +48,9 @@ class Group < ApplicationRecord
     has_many :payments
     has_many :sport_entries
     has_many :vouchers
+    has_many :group_extras
 #    has_many :downloads
-#    has_many :group_extras
 #    has_many :groups_sport_grades_filters
-#    has_many :fee_audit_trails
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
     has_one :mysyg_setting, dependent: :destroy

@@ -1,0 +1,25 @@
+<tr valign="top">
+	<td>
+        <%= link_to (group_extra.name), edit_gc_group_extra_path(group_extra) %>
+	</td>
+	
+	<td>
+	    <%= group_extra.optional? ? "Yes" : "No" %>
+	</td>
+	
+	<td>
+	    <%= group_extra.needs_size? ? "Yes" : "No" %>
+	</td>
+
+	<td align="right">
+	    <%= number_to_currency(group_extra.cost) %>
+	</td>
+	
+	<td>
+        <%= link_to "X", gc_group_extra_path(group_extra),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: danger_button_class,
+                role: "button" %>
+	</td>
+</tr>

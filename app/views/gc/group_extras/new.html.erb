@@ -1,0 +1,11 @@
+<% title "New custom extra costs" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:url => gc_group_extras_path, :method => 'post'} %>
+
+<br/>
+
+<%= link_to "Back", gc_group_extras_path,
+                  class: primary_button_class,
+                  role: "button" %>

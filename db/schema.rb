@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_28_092022) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_29_091815) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -122,6 +122,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_092022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_grades_on_name", unique: true
+  end
+
+  create_table "group_extras", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "name", limit: 20, null: false
+    t.boolean "needs_size", default: false
+    t.decimal "cost", precision: 8, scale: 2
+    t.boolean "optional", default: true
+    t.boolean "show_comment", default: false
+    t.string "comment_prompt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_extras_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -527,6 +540,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_28_092022) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "event_details", "groups"
   add_foreign_key "grades", "sports"
+  add_foreign_key "group_extras", "groups"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"

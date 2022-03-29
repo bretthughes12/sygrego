@@ -1,0 +1,25 @@
+<% title "Listing custom / extra costs" %>
+
+<h1><%= yield(:title) %></h1>
+
+<% unless @group_extras.empty? %>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Optional</th>
+                <th>Needs Size</th>
+                <th align="right">Cost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    
+        <%= render @group_extras %>
+    </table>
+<% else %>
+    <p>There are no extras recorded yet for your group.</p>
+<% end %>
+
+<%= link_to "New custom extra", new_gc_group_extra_path,
+                  class: primary_button_class,
+                  role: "button" %>

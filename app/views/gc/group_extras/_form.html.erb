@@ -1,0 +1,17 @@
+<%= simple_form_for(@group_extra, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+    <%= f.input :name, hint: "eg. T-Shirt" %>
+    <%= f.input :optional %>
+    <%= f.hint "Optional items can be added by your participants" %>
+    <%= f.input :needs_size %>
+    <%= f.hint "Participants will be able to choose from sizes XS up to XXXL" %>
+    <%= f.input :cost %>
+    <%= f.input :show_comment %>
+    <%= f.hint "Use this option if you want to prompt your participants for something like a name to be printed on the T-Shirt" %>
+    <%= f.input :comment_prompt, hint: "This is what the participant will see for the above option" %>
+
+    <br/>
+
+	<%= f.button :submit %>
+<% end %>	

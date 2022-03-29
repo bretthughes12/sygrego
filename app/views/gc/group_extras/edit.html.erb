@@ -1,0 +1,11 @@
+<% title "Editing custom / extra cost" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:url => gc_group_extra_path(@group_extra), :method => 'patch'} %>
+
+<br/>
+
+<%= link_to "Back", gc_group_extras_path,
+                  class: primary_button_class,
+                  role: "button" %>

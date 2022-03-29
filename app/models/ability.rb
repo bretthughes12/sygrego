@@ -21,6 +21,10 @@ class Ability
         can [:show, :update, :destroy], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
         end
+        can :create, GroupExtra
+        can [:show, :index, :update, :destroy], GroupExtra do |group_extra|
+          user.groups.include?(group_extra.try(:group)) || user.role?(:admin)
+        end
         can [:index, :search, :create, :new_import, :import, :drivers, :approvals, :wwccs, :vaccinations], Participant
         can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher, :accept, :reject, :edit_driver, :update_driver, :edit_wwcc, :update_wwcc, :edit_vaccination, :update_vaccination], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
@@ -58,6 +62,10 @@ class Ability
         can [:index, :create], Payment
         can [:show, :update, :destroy], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
+        end
+        can :create, GroupExtra
+        can [:show, :index, :update, :destroy], GroupExtra do |group_extra|
+          user.groups.include?(group_extra.try(:group)) || user.role?(:admin)
         end
         can [:index, :search, :create, :new_import, :import, :drivers, :approvals, :wwccs, :vaccinations], Participant
         can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher, :accept, :reject, :edit_driver, :update_driver, :edit_wwcc, :update_wwcc, :edit_vaccination, :update_vaccination], Participant do |participant|

@@ -273,6 +273,7 @@ Rails.application.routes.draw do
     end
     resources :mysyg_settings, only: [:edit, :update]
     resources :payments
+    resources :group_extras
     resources :participants do
       collection do
         get :new_import

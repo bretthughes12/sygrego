@@ -32,7 +32,15 @@
                         </ul>
                     </li>
                 <%- end %>
-                <li class='nav-item'><%= link_to 'MySYG', edit_gc_mysyg_setting_path(@group.mysyg_setting), class: 'nav-link'  if can? :update, @group.mysyg_setting %></li>
+                <%- if can? :update, @group.mysyg_setting %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">MySYG</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Settings', edit_gc_mysyg_setting_path(@group.mysyg_setting) %></li>
+                            <li class='dropdown-item'><%= link_to 'Custom / extra costs', gc_group_extras_path %></li>
+                        </ul>
+                    </li>
+                <%- end %>
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
