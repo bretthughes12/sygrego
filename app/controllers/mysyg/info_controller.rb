@@ -1,6 +1,5 @@
 class Mysyg::InfoController < MysygController
 
-#    before_filter :authorize_participant_access
     layout 'participant'
   
     # GET /mysyg/:group/home

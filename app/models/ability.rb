@@ -103,6 +103,7 @@ class Ability
       can [:update, :new_voucher, :add_voucher, :delete_voucher, :drivers, :update_drivers], Participant do |participant|
         user.participants.include?(participant) || user.role?(:admin)
       end
+      can [:index, :update_multiple], ParticipantExtra
       can [:index], Volunteer
       can [:update, :release], Volunteer do |volunteer|
         volunteer.participant.nil? || user.participants.include?(volunteer.try(:participant)) || user.role?(:admin)

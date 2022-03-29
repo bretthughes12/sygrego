@@ -23,7 +23,7 @@
 #
 class GroupExtra < ApplicationRecord
   belongs_to :group
-#  has_many :participant_extras, dependent: :destroy
+  has_many :participant_extras, dependent: :destroy
 
   validates :name,       presence: true,
                          length: { maximum: 20 }

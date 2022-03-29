@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_29_091815) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_29_101949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -206,6 +206,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_29_091815) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_pages_on_name", unique: true
     t.index ["permalink"], name: "index_pages_on_permalink", unique: true
+  end
+
+  create_table "participant_extras", force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "group_extra_id", null: false
+    t.boolean "wanted", default: false
+    t.string "size", limit: 10
+    t.string "comment", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_extra_id"], name: "index_participant_extras_on_group_extra_id"
+    t.index ["participant_id"], name: "index_participant_extras_on_participant_id"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -544,6 +556,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_29_091815) do
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"
+  add_foreign_key "participant_extras", "group_extras"
+  add_foreign_key "participant_extras", "participants"
   add_foreign_key "participants", "groups"
   add_foreign_key "participants_users", "participants"
   add_foreign_key "participants_users", "users"
