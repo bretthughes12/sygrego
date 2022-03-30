@@ -210,6 +210,17 @@ class Gc::ParticipantsController < ApplicationController
       end
     end
   
+    # PATCH /gc/participants/1/coming
+    def coming
+      @participant.updated_by = current_user.id
+      @participant.coming = true
+      @participant.save
+
+      respond_to do |format|
+        format.html { redirect_to gc_participants_url }
+      end
+    end
+
     # DELETE /admin/participants/1
     def destroy
       @participant.updated_by = current_user.id

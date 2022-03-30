@@ -20,15 +20,23 @@ class Mysyg::InfoController < MysygController
 #    end
   
     # GET /mysyg/:group/finance
-#    def finance
-#      @fee = @participant.group_fee
-#      @total_owing = @participant.total_owing
-#      ParticipantExtra.initialise_for_participant(@participant)
-#      @extras = @participant.participant_extras.wanted.load
-#      
-#      respond_to do |format|
-#        format.html 
-#      end
-#    end
+    def finance
+      @fee = @participant.group_fee
+      @total_owing = @participant.total_owing
+      ParticipantExtra.initialise_for_participant(@participant)
+      @extras = @participant.participant_extras.wanted.load
+      
+      respond_to do |format|
+        format.html 
+      end
+    end
+  
+    # GET /mysyg/:group/sports
+    def sports
+    end
+  
+    # GET /mysyg/:group/volunteers
+    def volunteers
+    end
   end
   

@@ -74,6 +74,10 @@ class Group < ApplicationRecord
     scope :sun_no_pref_service, -> { where('event_details.service_pref_sun': 'No preference').includes(:event_detail) }
 
     delegate :estimated_numbers, to: :event_detail
+    delegate :show_group_extras_in_mysyg,
+      :show_finance_in_mysyg,
+      :show_sports_in_mysyg,
+      :show_volunteers_in_mysyg, to: :mysyg_setting
 
     AGE_DEMOGRAPHIC = ['Early high school, Years 7-9',
                        'Senior high school, Years 10-12',

@@ -1,0 +1,14 @@
+<% title "My Sports Preferences" %>
+
+<h1><%= yield(:title) %></h1>
+ 
+<% if @settings.sports_loaded %>
+
+    <p>Please be patient. This feature is on its way</p>
+
+<% else %>
+
+	<p>The sports program has not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
+	<p>Keep an eye on advice from your Group Coordinator for when this is available.</p>
+
+<% end %>

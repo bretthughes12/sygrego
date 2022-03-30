@@ -274,6 +274,7 @@ Rails.application.routes.draw do
     resources :mysyg_settings, only: [:edit, :update]
     resources :payments
     resources :group_extras
+    resources :participant_extras
     resources :participants do
       collection do
         get :new_import
@@ -293,6 +294,7 @@ Rails.application.routes.draw do
         patch :delete_voucher
         patch :accept
         patch :reject
+        patch :coming
         patch :update_driver
         patch :update_wwcc
         patch :update_vaccination
@@ -333,13 +335,18 @@ Rails.application.routes.draw do
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
 #      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
+      get '/sports' => 'mysyg/info#sports', :as => :sports
 #      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
-#      get '/finance' => 'mysyg/info#finance', :as => :finance
+      get '/volunteering' => 'mysyg/info#volunteers', :as => :volunteering
+      get '/finance' => 'mysyg/info#finance', :as => :finance
  
       resources :participant_signups, controller: "participant_signups", only: [:new, :create]
       resource :info, :controller => "mysyg/info" do
         collection do
           get :home
+          get :finance
+          get :sports
+          get :volunteers
         end
       end
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do

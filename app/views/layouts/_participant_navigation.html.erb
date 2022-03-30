@@ -7,7 +7,10 @@
                 <li class='nav-item'><%= link_to 'Dashboard', home_mysyg_info_url(group: @group.mysyg_setting.mysyg_name), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Details', edit_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Drivers', mysyg_drivers_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' if can_display_driver_fields %></li>
-                <li class='nav-item'><%= link_to 'Extra Costs', mysyg_extras_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' %></li>
+                <li class='nav-item'><%= link_to 'Finance', mysyg_finance_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' if @group.show_finance_in_mysyg %></li>
+                <li class='nav-item'><%= link_to 'Extra Costs', mysyg_extras_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' if @group.show_group_extras_in_mysyg %></li>
+                <li class='nav-item'><%= link_to 'Sports', mysyg_sports_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' if @group.show_sports_in_mysyg %></li>
+                <li class='nav-item'><%= link_to 'Volunteering', mysyg_volunteering_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), class: 'nav-link' if @group.show_volunteers_in_mysyg %></li>
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

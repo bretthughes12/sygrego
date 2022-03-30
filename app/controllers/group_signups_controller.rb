@@ -29,9 +29,11 @@ class GroupSignupsController < ApplicationController
           UserMailer.gc_nomination(@gc, @group, @church_rep, @token).deliver_now
   
           @group.reload
+          @group.coming = true
+          @group.save
           @group.mysyg_setting.mysyg_enabled = @settings.mysyg_default_enabled
           @group.mysyg_setting.mysyg_open = @settings.mysyg_default_open
-          @group.save
+          @group.mysyg_setting.save
   
           flash[:notice] = "Thank you for registering your group. You are signed in as #{@church_rep.name}. Please set your password."
           bypass_sign_in @church_rep
