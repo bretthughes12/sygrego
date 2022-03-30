@@ -2,8 +2,8 @@
   <%= link_to "Log in", new_session_path(resource_name) %><br />
 <% end %>
 
-<%- if false && devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%= link_to "Sign up", mysyg_generic_signup_url %><br />
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
