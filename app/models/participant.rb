@@ -287,25 +287,25 @@ class Participant < ApplicationRecord
       !group_coord && early_bird && (days >= 2) && voucher.nil?
     end
 
-#    def group_fee
-#      fee + extra_fee
-#    end
+    def group_fee
+      fee + extra_fee
+    end
+ 
+    def extra_fee
+      if days > 2
+        group.extra_fee_total
+      else
+        [group.extra_fee_total, days * group.extra_fee_per_day].min
+      end
+    end
   
-#    def extra_fee
-#      if days.nil? || days == 3
-#        group.extra_fee_total
-#      else
-#        [group.extra_fee_total, days * group.extra_fee_per_day].min
-#      end
-#    end
+    def total_owing
+      group_fee + total_extras_costs
+    end
   
-#    def total_owing
-#      group_fee + total_extras_costs
-#    end
-  
-#    def total_extras_costs
-#      participant_extras.wanted.to_a.sum(&:cost)
-#    end
+    def total_extras_costs
+      participant_extras.wanted.to_a.sum(&:cost)
+    end
   
 #    def sport_coord_discount
 #      sessions_coordinating = officials

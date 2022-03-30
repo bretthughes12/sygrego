@@ -77,7 +77,10 @@ class Group < ApplicationRecord
     delegate :show_group_extras_in_mysyg,
       :show_finance_in_mysyg,
       :show_sports_in_mysyg,
-      :show_volunteers_in_mysyg, to: :mysyg_setting
+      :show_volunteers_in_mysyg,
+      :extra_fee_total,
+      :extra_fee_per_day,
+      :participant_instructions, to: :mysyg_setting
 
     AGE_DEMOGRAPHIC = ['Early high school, Years 7-9',
                        'Senior high school, Years 10-12',

@@ -1,0 +1,32 @@
+<% title "Finance Details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<h2>Your costs</h2>
+<table class="table table-dark table-striped">
+	<tr>
+		<td>SYG fees</td>
+		<td class="list-amount"><%= number_to_currency(@fee)  %></td>
+	</tr>
+	
+	<% unless @extras.empty? %>
+		<% @extras.each do |extra| %>
+			<tr>
+				<td><%= extra.name %></td>
+				<td class="list-amount"><%= number_to_currency(extra.cost)  %></td>
+			</tr>
+		<% end %>
+	<% end %>
+	
+	<tfoot>
+        <tr>
+            <td><b>Total owing:</b></td>
+            <td class="list-amount"><b><%= number_to_currency(@total_owing)  %></b></td>
+        </tr>
+	</tfoot>
+</table>
+
+<br/>
+
+<h2>Payment Instructions</h2>
+<p><%= @group.participant_instructions.html_safe %></p>
