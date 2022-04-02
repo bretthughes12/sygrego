@@ -22,8 +22,8 @@ class Users::PasswordsController < Devise::PasswordsController
   # PATCH /resource/password
   def update
     super
-    session["current_role"] = current_user.default_role
-    session["current_group"] = current_user.default_group
+    session["current_role"] = current_user.default_role if current_user
+    session["current_group"] = current_user.default_group if current_user
   end
 
   # protected
