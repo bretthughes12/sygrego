@@ -52,6 +52,21 @@ namespace :syg do
     puts "MySYG names corrected: #{updates}"
   end
 
+  desc 'Check orphaned ParticipantsUser records'
+  task check_participants_users: ['environment'] do |_t|
+    updates = 0
+    puts "Checking for orphaned ParticipantsUser records..."
+
+    ParticipantsUser.all.each do |pu|
+      if pu.user.nil? || pu.participant.nil?
+        puts "Orphan found"
+        updates += 1
+      end
+    end
+
+    puts "Orphans found: #{updates}"
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',

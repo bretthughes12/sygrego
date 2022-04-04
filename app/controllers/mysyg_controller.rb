@@ -25,4 +25,4 @@ class MysygController < ApplicationController
         @participant = Participant.where(id: current_user.participants.first.id).first
       end
     end
-  end
+end
