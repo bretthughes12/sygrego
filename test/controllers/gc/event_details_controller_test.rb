@@ -62,7 +62,7 @@ class Gc::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     file = fixture_file_upload('test.pdf','application/pdf')
     @event_detail.food_cert.attach(file)
 
-    patch purge_file_gc_event_detail_url(@event_detail)
+    patch purge_food_certificate_gc_event_detail_url(@event_detail)
 
     assert_response :success
 

@@ -1,0 +1,28 @@
+<% title "Food Certificate" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= simple_form_for(@event_detail, url: update_food_certificate_gc_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
+	<%= f.error_notification %>
+	
+	<% if @event_detail.food_cert.attached? %>
+		<% if @event_detail.food_cert.previewable? %>
+		    <%= link_to(image_tag(@event_detail.food_cert.preview(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.food_cert, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.food_cert, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_food_certificate_gc_event_detail_path(@event_detail),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :food_cert, as: :file, label: 'Certificate: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+<% end %>

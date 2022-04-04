@@ -6,7 +6,15 @@
             <ul class="nav navbar-nav mr-auto">
                 <li class='nav-item'><%= link_to 'Dashboard', home_gc_info_path, class: 'nav-link' %></li>
                 <li class='nav-item'><%= link_to 'Group Details', edit_gc_group_path(@group), class: 'nav-link' %></li>
-                <li class='nav-item'><%= link_to 'Event Details', edit_gc_event_detail_path(@group.event_detail), class: 'nav-link' if can? :update, @group.event_detail %></li>
+                <%- if can? :update, @group.event_detail %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Event Details</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'General Details', edit_gc_event_detail_path(@group.event_detail) %></li>
+                            <li class='dropdown-item'><%= link_to 'Food Certificate', new_food_certificate_gc_event_detail_path(@group.event_detail) %></li>
+                        </ul>
+                    </li>
+                <%- end %>
                 <li class='nav-item'><%= link_to 'Finance', gc_payments_path, class: 'nav-link' if can? :update, Payment %></li>
                 <%- if can? :index, Participant %>
                     <li class='nav-item dropdown'>

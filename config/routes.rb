@@ -268,7 +268,9 @@ Rails.application.routes.draw do
     resources :groups, only: [:edit, :update]
     resources :event_details, only: [:edit, :update] do
       member do
-        patch :purge_file
+        get :new_food_certificate
+        patch :update_food_certificate
+        patch :purge_food_certificate
       end
     end
     resources :mysyg_settings, only: [:edit, :update]

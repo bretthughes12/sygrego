@@ -49,7 +49,7 @@ class Ability
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end
-      can [:update, :purge_file], EventDetail do |ev|
+      can [:update, :new_food_certificate, :update_food_certificate, :purge_food_certificate], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
@@ -94,7 +94,7 @@ class Ability
       can :update, Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end
-      can [:update, :purge_file], EventDetail do |ev|
+      can [:update, :new_food_certificate, :update_food_certificate, :purge_food_certificate], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
