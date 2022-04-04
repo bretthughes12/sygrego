@@ -391,14 +391,14 @@ class Group < ApplicationRecord
 #    end
 #  end
 
-#  def participant_extras
-#    participants.coming.accepted.collect do |p|
-#      p.participant_extras
-#      .wanted
-#      .includes(:group_extra)
-#      .order('group_extras.name')
-#    end.flatten
-#  end
+  def participant_extras
+    participants.coming.accepted.order(:surname, :first_name).collect do |p|
+      p.participant_extras
+      .wanted
+      .includes(:group_extra)
+      .order('group_extras.name')
+    end.flatten
+  end
 
 #  def initialise_new_participant_extras
 #    participants.each do |p|

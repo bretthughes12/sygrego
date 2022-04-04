@@ -1,6 +1,8 @@
 module Admin::ParticipantsHelper
     def participant_display_class(participant)
         case
+        when participant.status == "Requiring Approval"
+            "table-secondary"
         when participant.coming && participant.spectator
             "table-warning"
         when participant.coming

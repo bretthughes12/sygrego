@@ -1,0 +1,24 @@
+<% unless participant_extra.nil? %>
+	<tr valign="top">
+		<td> 
+			<%= h(participant_extra.participant.name) %>
+		</td>
+		<td> 
+			<%= h(participant_extra.name) %>
+		</td>
+		<td> 
+			<% if participant_extra.needs_size %>
+				<%= participant_extra.size  %>
+			<% else %>
+				&nbsp;
+			<% end %>
+		</td>
+		<td> 
+			<% if participant_extra.show_comment %>
+				<%= participant_extra.comment  %>
+			<% else %>
+				&nbsp;
+			<% end %>
+		</td>
+	</tr>
+<% end %>
