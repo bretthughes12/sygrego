@@ -1,0 +1,28 @@
+<% title "Insurance" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= simple_form_for(@event_detail, url: update_insurance_gc_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
+	<%= f.error_notification %>
+	
+	<% if @event_detail.insurance.attached? %>
+		<% if @event_detail.insurance.representable? %>
+		    <%= link_to(image_tag(@event_detail.insurance.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.insurance, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.insurance, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_insurance_gc_event_detail_path(@event_detail),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :insurance, as: :file, label: 'Policy: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+<% end %>

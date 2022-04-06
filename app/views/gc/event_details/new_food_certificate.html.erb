@@ -2,12 +2,15 @@
 
 <h1><%= yield(:title) %></h1>
 
+<p>Each group is expected to appoint a Head Cook who will hold responsibility for all food handling, storage, and preparation. The Head Cook should be assisted by volunteers, helpers, and leaders as required by the needs of your group.</p>
+<p>The Head Cook for each group must hold a Food Handling Certificate. A digital copy or scan of this certificate must be uploaded here.</p>
+
 <%= simple_form_for(@event_detail, url: update_food_certificate_gc_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
 	<%= f.error_notification %>
 	
 	<% if @event_detail.food_cert.attached? %>
-		<% if @event_detail.food_cert.previewable? %>
-		    <%= link_to(image_tag(@event_detail.food_cert.preview(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.food_cert, disposition: "attachment")) %>
+		<% if @event_detail.food_cert.representable? %>
+		    <%= link_to(image_tag(@event_detail.food_cert.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.food_cert, disposition: "attachment")) %>
 		<% else %>
 		    <%= link_to "File", rails_blob_path(@event_detail.food_cert, disposition: "attachment") %>
 		<% end %>

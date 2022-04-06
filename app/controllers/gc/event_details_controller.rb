@@ -15,6 +15,16 @@ class Gc::EventDetailsController < ApplicationController
       render layout: @current_role.name
     end
   
+    # GET /gc/event_details/1/new_covid_plan
+    def new_covid_plan
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/event_details/1/new_insurance
+    def new_insurance
+      render layout: @current_role.name
+    end
+  
     # PATCH /gc/event_details/1
     def update
       @event_detail.updated_by = current_user.id
@@ -29,7 +39,7 @@ class Gc::EventDetailsController < ApplicationController
       end
     end
   
-    # PATCH /gc/event_details/1
+    # PATCH /gc/event_details/1/update_food_certificate
     def update_food_certificate
       @event_detail.updated_by = current_user.id
 
@@ -43,6 +53,34 @@ class Gc::EventDetailsController < ApplicationController
       end
     end
   
+    # PATCH /gc/event_details/1/update_covid_plan
+    def update_covid_plan
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_covid_plan_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to home_gc_info_path }
+        else
+          format.html { render action: "new_covid_plan", layout: @current_role.name }
+        end
+      end
+    end
+  
+    # PATCH /gc/event_details/1/update_insurance
+    def update_insurance
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_insurance_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to home_gc_info_path }
+        else
+          format.html { render action: "new_insurance", layout: @current_role.name }
+        end
+      end
+    end
+  
     # PATCH /gc/event_details/1/purge_food_certificate
     def purge_food_certificate
       @event_detail.updated_by = current_user.id
@@ -51,6 +89,28 @@ class Gc::EventDetailsController < ApplicationController
 
       respond_to do |format|
           format.html { render action: "new_food_certificate", layout: @current_role.name }
+      end
+    end
+  
+    # PATCH /gc/event_details/1/purge_covid_plan
+    def purge_covid_plan
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.covid_plan.purge
+
+      respond_to do |format|
+          format.html { render action: "new_covid_plan", layout: @current_role.name }
+      end
+    end
+  
+    # PATCH /gc/event_details/1/purge_insurance
+    def purge_insurance
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.insurance.purge
+
+      respond_to do |format|
+          format.html { render action: "new_insurance", layout: @current_role.name }
       end
     end
 
@@ -77,6 +137,18 @@ class Gc::EventDetailsController < ApplicationController
     def event_detail_food_cert_params
       params.require(:event_detail).permit( 
                                     :food_cert
+                                )
+    end
+  
+    def event_detail_covid_plan_params
+      params.require(:event_detail).permit( 
+                                    :covid_plan
+                                )
+    end
+  
+    def event_detail_insurance_params
+      params.require(:event_detail).permit( 
+                                    :insurance
                                 )
     end
 end

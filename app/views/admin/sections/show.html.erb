@@ -6,9 +6,9 @@
 
 <br/>
 
-<% if @section.draw_file.attached? && @section.draw_file.previewable? %>
+<% if @section.draw_file.attached? && @section.draw_file.representable? %>
 
-    <%= image_tag @section.draw_file.preview(resize_to_limit: [800, 1000]) %>
+    <%= image_tag @section.draw_file.representation(resize_to_limit: [800, 1000]) %>
 
 <% end %>
 

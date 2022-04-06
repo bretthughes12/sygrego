@@ -269,8 +269,14 @@ Rails.application.routes.draw do
     resources :event_details, only: [:edit, :update] do
       member do
         get :new_food_certificate
+        get :new_covid_plan
+        get :new_insurance
         patch :update_food_certificate
+        patch :update_covid_plan
+        patch :update_insurance
         patch :purge_food_certificate
+        patch :purge_covid_plan
+        patch :purge_insurance
       end
     end
     resources :mysyg_settings, only: [:edit, :update]

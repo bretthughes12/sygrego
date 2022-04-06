@@ -12,6 +12,8 @@
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class='dropdown-item'><%= link_to 'General Details', edit_gc_event_detail_path(@group.event_detail) %></li>
                             <li class='dropdown-item'><%= link_to 'Food Certificate', new_food_certificate_gc_event_detail_path(@group.event_detail) %></li>
+                            <li class='dropdown-item'><%= link_to 'Covid Safety Plan', new_covid_plan_gc_event_detail_path(@group.event_detail) %></li>
+                            <li class='dropdown-item'><%= link_to 'Insurance', new_insurance_gc_event_detail_path(@group.event_detail) %></li>
                         </ul>
                     </li>
                 <%- end %>

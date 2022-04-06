@@ -11,8 +11,8 @@
 	<%= f.input :number_in_draw %>
 	
 	<% if @section.draw_file.attached? %>
-		<% if @section.draw_file.previewable? %>
-		    <%= link_to(image_tag(@section.draw_file.preview(resize_to_limit: [80, 100])), rails_blob_path(@section.draw_file, disposition: "attachment")) %>
+		<% if @section.draw_file.representable? %>
+		    <%= link_to(image_tag(@section.draw_file.representation(resize_to_limit: [80, 100])), rails_blob_path(@section.draw_file, disposition: "attachment")) %>
 		<% else %>
 		    <%= link_to "File", rails_blob_path(@section.draw_file, disposition: "attachment") %>
 		<% end %>

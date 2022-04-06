@@ -41,6 +41,8 @@ class EventDetail < ApplicationRecord
     belongs_to :group
 
     has_one_attached :food_cert
+    has_one_attached :covid_plan
+    has_one_attached :insurance
 
     scope :coming, -> { where(coming: true) }
     scope :not_coming, -> { where(coming: false) }
