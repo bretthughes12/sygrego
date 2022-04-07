@@ -266,6 +266,14 @@ Rails.application.routes.draw do
     end
 
     resources :groups, only: [:edit, :update]
+    resources :groups_grades_filters, only: [:show] do
+      member do
+        post :hide_team
+        post :hide_indiv
+        delete :show_team
+        delete :show_indiv
+      end
+    end
     resources :event_details, only: [:edit, :update] do
       member do
         get :new_food_certificate
@@ -279,7 +287,14 @@ Rails.application.routes.draw do
         patch :purge_insurance
       end
     end
-    resources :mysyg_settings, only: [:edit, :update]
+    resources :mysyg_settings, only: [:edit, :update] do
+      member do
+        get :edit_team_sports
+        get :edit_indiv_sports
+        patch :update_team_sports
+        patch :update_indiv_sports
+      end
+    end
     resources :payments
     resources :group_extras
     resources :participant_extras

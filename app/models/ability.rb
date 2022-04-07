@@ -14,7 +14,11 @@ class Ability
 
     elsif session["current_role"] == "church_rep"
       if user.status == "Verified"
-        can :update, MysygSetting do |ms|
+        can [:update, 
+             :edit_team_sports, 
+             :edit_indiv_sports,
+             :update_team_sports,
+             :update_indiv_sports], MysygSetting do |ms|
           user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment
@@ -68,7 +72,11 @@ class Ability
     
     elsif session["current_role"] == "gc"
       if user.status == "Verified"
-        can :update, MysygSetting do |ms|
+        can [:update, 
+             :edit_team_sports, 
+             :edit_indiv_sports,
+             :update_team_sports,
+             :update_indiv_sports], MysygSetting do |ms|
           user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment

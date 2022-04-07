@@ -1,0 +1,8 @@
+<% title "MySYG Individual Sports Customisation" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form_indiv_sports' %>
+
+<%= legend_box [{:name => "To be shown", :class => "table-primary"},
+				{:name => "To be hidden", :class => "table-dark"}] %>

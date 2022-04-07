@@ -1,0 +1,32 @@
+<%= simple_form_for(@mysyg_setting, :url => update_indiv_sports_gc_mysyg_setting_path(@mysyg_setting), :html => { :method => :patch} ) do |f| %> 
+	<%= f.error_notification %>
+
+    <% if @group.mysyg_setting.mysyg_enabled %>	    
+        <h3>Individual Sports</h3>
+    
+        <%= f.input :indiv_sport_view_strategy, 
+                    as: :select,
+                    collection: MysygSetting::VIEW_STRATEGIES, 
+                    label: "Which Individual Sports to show",
+                    hint: "'Show all' and 'Show none' are self-explanatory, 'Show sport entries only' will just allow your participants to give preferences for the sports you have entered entries for, 'Show listed' shows only the specific sports you choose from the list below" %>			
+
+        <br/>
+
+        <%= f.button :submit, "Update" %>
+
+        <br/>
+        <br/>
+
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th align="left">Session</th>
+                    <th align="left">Sport Grade</th>
+                    <th align="right">Actions</th>
+                </tr>
+            </thead>
+    
+            <%= render :partial => 'group_indiv_grades_filter', :collection => @indiv_grades, :as => :grade %>
+        </table>
+    <% end %>
+<% end %>
