@@ -378,9 +378,9 @@ class Group < ApplicationRecord
 #    cached_sport_entries.to_be_confirmed.collect
 #  end
 
-#  def first_entry_in_sport_grade(grade)
-#    cached_sport_entries.select { |entry| entry.sport_grade == grade }.first
-#  end
+  def first_entry_in_grade(grade)
+    cached_sport_entries.select { |entry| entry.grade == grade }.first
+  end
 
 #  def sport_preferences
 #    participants.collect do |p|

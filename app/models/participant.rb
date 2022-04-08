@@ -388,21 +388,21 @@ class Participant < ApplicationRecord
 #      save(validate: false)
 #    end
 
-#    def first_entry_in_sport_grade(grade)
-#      sport_entries.select { |entry| entry.sport_grade == grade }.first
-#    end
+    def first_entry_in_grade(grade)
+      sport_entries.select { |entry| entry.grade == grade }.first
+    end
 
-#    def is_entered_in?(grade)
-#      sport_entries.collect(&:grade).include?(grade)
-#    end
+    def is_entered_in?(grade)
+      sport_entries.collect(&:grade).include?(grade)
+    end
 
 #    def is_entered_in_session?(session)
 #      sport_entries.collect(&:session).include?(session)
 #    end
 
-#    def is_entered_in_sport?(sport)
-#      sport_entries.collect(&:sport).include?(sport)
-#    end
+    def is_entered_in_sport?(sport)
+      sport_entries.collect(&:sport).include?(sport)
+    end
 
     def can_play_sport(sport)
       sport.indiv_entries(self) < sport.max_entries_indiv

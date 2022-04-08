@@ -1,0 +1,28 @@
+<tr valign="top" class="<%= sport_pref_class(sport_preference) %>">
+	<td>
+	    <%= h(sport_preference.cached_grade.session_name) %>
+	</td>
+	
+	<td>
+		<% case %>
+			<% when sport_preference.is_entered?  %>
+			    <%= link_to sport_preference.cached_grade.name, edit_gc_sport_entry_path(sport_preference.sport_entry) %>
+			<% when sport_preference.is_sport_entry_available? %>
+			    <%= link_to sport_preference.cached_grade.name, edit_gc_sport_entry_path(sport_preference.available_sport_entry) %>
+			<% else %>
+			    <%= h(sport_preference.cached_grade.name) %>
+		<% end %>
+	</td>
+	
+	<td>
+	    <%= sport_preference.cached_participant.name %>
+	</td>
+	
+	<td align="center">
+	    <%= h(sport_preference.preference) %>
+	</td>
+	
+	<td class="list-actions">
+	    &nbsp; 
+	</td>
+</tr>

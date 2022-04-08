@@ -32,13 +32,25 @@
                         </ul>
                     </li>
                 <%- end %>
-                <li class='nav-item'><%= link_to 'Sports', gc_sport_entries_path, class: 'nav-link' if can? :update, SportEntry %></li>
+                <%- if can? :update, SportEntry %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sports</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Our Sports', gc_sport_entries_path %></li>
+                            <%- if @settings.sports_loaded %>
+                                <li class='dropdown-item'><%= link_to 'Sport Preferences', gc_sport_preferences_path %></li>
+                            <%- end %>
+                        </ul>
+                    </li>
+                <%- end %>
                 <%- if can? :index, Volunteer %>
                     <li class='nav-item dropdown'>
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Volunteers</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class='dropdown-item'><%= link_to 'Our Volunteers', gc_volunteers_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Vacancies', available_gc_volunteers_path %></li>
+                            <%- if @settings.volunteers_loaded %>
+                                <li class='dropdown-item'><%= link_to 'Vacancies', available_gc_volunteers_path %></li>
+                            <%- end %>
                         </ul>
                     </li>
                 <%- end %>

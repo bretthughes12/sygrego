@@ -32,11 +32,7 @@ class SportPreference < ApplicationRecord
     allow_blank: true
 
   def <=>(other)
-    if cached_session.id == other.cached_session.id
-      cached_grade.name <=> other.cached_grade.name
-    else
-      cached_session.id <=> other.cached_session.id
-    end
+    cached_grade.name <=> other.cached_grade.name
   end
 
   def self.locate_for_participant(participant)
@@ -82,13 +78,12 @@ class SportPreference < ApplicationRecord
             .entered
             .where(participants: { group_id: group.id })
             .where(participants: { coming: true })
-            .includes({ participant: %i[group sport_entries] }, grade: %i[session sport sport_entries]).
-            #              order('sport_sessions.id, sport_grades.name')
-            sort
+            .includes({ participant: %i[group sport_entries] }, grade: %i[sport sport_entries])
+            .order('grades.name')
+            .sort
 
     prefs = prefs.reject { |p| (options[:entered].nil? || !options[:entered]) && p.is_entered? }
     prefs = prefs.reject { |p| (options[:in_sport].nil? || !options[:in_sport]) && !p.is_entered? && p.is_entered_this_sport? }
-    prefs = prefs.reject { |p| (options[:in_session].nil? || !options[:in_session]) && !p.is_entered? && !p.is_entered_this_sport? && p.is_entered_this_session? }
   end
 
   def cached_participant

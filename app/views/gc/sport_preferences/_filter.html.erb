@@ -1,0 +1,10 @@
+<fieldset class="filter">
+	<%= form_tag(gc_sport_preferences_path(group_id: @group.id), method: :get) do %>
+		<%= label_tag :entered, 'Allocated' %>
+		<%= check_box_tag :entered, params[:entered], @entered %>
+		<%= label_tag :in_sport, 'Already in the sport' %>
+		<%= check_box_tag :in_sport, params[:in_sport], @in_sport %>
+		
+		<%= submit_tag "Filter", class: primary_button_class, role: "button" %>
+	<% end %>
+</fieldset>

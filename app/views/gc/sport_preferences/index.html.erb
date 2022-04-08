@@ -1,0 +1,32 @@
+<% title "Sports preferences" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'filter' %>
+
+<br/>
+
+<% unless @sport_preferences.empty? %>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Sport / Gracde</th>
+                <th>Name</th>
+                <th>Preference</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    
+        <%= render @sport_preferences %>
+    </table>
+<% end %>
+
+<%= link_to "Download", gc_sport_preferences_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Allocated to this grade", :class => "table-primary"},
+				{:name => "Unallocated preferences", :class => "table-secondary"}, 
+				{:name => "Already playing this sport", :class => "table-warning"}] %>

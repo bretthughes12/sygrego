@@ -338,6 +338,13 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :sport_preferences, :controller => "sport_preferences", :only => [:index] do
+      member do
+        post :add_to_sport_entry
+        post :create_sport_entry
+        delete :remove_from_sport_entry
+      end
+    end
   end
 
   # Participant User routes 
@@ -358,7 +365,6 @@ Rails.application.routes.draw do
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
       get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
-#      get '/sports' => 'mysyg/info#sports', :as => :sports
 #      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
       get '/volunteering' => 'mysyg/info#volunteers', :as => :volunteering
       get '/finance' => 'mysyg/info#finance', :as => :finance

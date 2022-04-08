@@ -40,6 +40,10 @@ class Ability
         can [:show, :update, :destroy], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
         end
+        can :index, SportPreference
+        can [:add_to_sport_entry, :create_sport_entry, :remove_from_sport_entry], SportPreference do |pref|
+          user.groups.include?(pref.group)
+        end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
         can [:index, :available], Volunteer
         can [:edit, :update, :release, :show], Volunteer do |volunteer|
@@ -97,6 +101,10 @@ class Ability
         can [:index, :create], SportEntry
         can [:show, :update, :destroy], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
+        end
+        can :index, SportPreference
+        can [:add_to_sport_entry, :create_sport_entry, :remove_from_sport_entry], SportPreference do |pref|
+          user.groups.include?(pref.group)
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
         can [:index, :available], Volunteer
