@@ -47,31 +47,27 @@ class SportPreference < ApplicationRecord
       .sort
   end
 
-#  def self.prepare_for_participant_and_session(participant, session_id = 2)
-#    session = SportSession.where(id: session_id).first
+  def self.prepare_for_participant(participant)
+    grades = if participant
+               (participant.available_grades +
+                participant.group_grades_i_can_join +
+                participant.grades)
+                 .uniq
+                 .sort &
+                 participant.group.filtered_grades
+             else
+               []
+             end
 
-#    grades = if participant && session
-#               (participant.available_sport_grades +
-#                         participant.group_sport_grades_i_can_join +
-#                         participant.sport_grades)
-#                 .uniq
-#                 .sort &
-#                 session.sport_grades.to_a &
-#                 participant.group.filtered_sport_grades
-#             else
-#               []
-#             end
-
-#    prefs = []
-#    prefs = grades.collect do |g|
-#      SportPreference.find_or_create_by(participant_id: participant.id, sport_grade_id: g.id) do |sp|
-        # SportPreference.find_or_create_by_participant_id_and_sport_grade_id(participant.id, g.id) do |sp|
-#        sp.participant_id = participant.id
-#        sp.sport_grade_id = g.id
-#      end
-#    end
-#    prefs
-#  end
+    prefs = []
+    prefs = grades.collect do |g|
+      SportPreference.find_or_create_by(participant_id: participant.id, grade_id: g.id) do |sp|
+        sp.participant_id = participant.id
+        sp.grade_id = g.id
+      end
+    end
+    prefs
+  end
 
   def self.store(participant_id, grade_id, preference)
     pref = SportPreference.find_by_participant_id_and_grade_id(participant_id, grade_id) || SportPreference.new(participant_id: participant_id, grade_id: grade_id)

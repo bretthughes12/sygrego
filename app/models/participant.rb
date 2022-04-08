@@ -82,7 +82,7 @@ class Participant < ApplicationRecord
     has_many   :participants_sport_entries, dependent: :destroy
 #    has_many   :fee_audit_trails
     has_many   :sport_entries, through: :participants_sport_entries
-#    has_many   :sport_preferences, dependent: :destroy
+    has_many   :sport_preferences, dependent: :destroy
     has_many   :participant_extras, dependent: :destroy
     has_many   :captaincies, class_name: 'SportEntry'
     has_and_belongs_to_many :users
@@ -433,7 +433,6 @@ class Participant < ApplicationRecord
     (group.sport_entries - sport_entries).sort.each do |entry|
       next unless can_play_sport(entry.sport) &&
                   can_play_grade(entry.grade) &&
-#                  can_play_in_session(entry.session) &&
                   entry.can_take_participants? &&
                   entry.eligible_to_participate?(self)
       entries << entry
@@ -446,28 +445,26 @@ class Participant < ApplicationRecord
     group.grades_available(false).each do |grade|
       next unless can_play_sport(grade.sport) &&
                   can_play_grade(grade) &&
-#                  can_play_in_session(grade.session) &&
                   grade.eligible_to_participate?(self)
       grades << grade
     end
     grades
   end
 
-#  def grades
-#    sport_entries.each.collect(&:grade)
-#  end
+  def grades
+    sport_entries.each.collect(&:grade)
+  end
 
-#  def group_sport_grades_i_can_join
-#    grades = []
-#    group.grades.each do |grade|
-#      next unless can_play_sport(grade.sport) &&
-#                  can_play_grade(grade) &&
-#                  can_play_in_session(grade.session) &&
-#                  grade.eligible_to_participate?(self)
-#      grades << grade
-#    end
-#    grades
-#  end
+  def group_grades_i_can_join
+    grades = []
+    group.grades.each do |grade|
+      next unless can_play_sport(grade.sport) &&
+                  can_play_grade(grade) &&
+                  grade.eligible_to_participate?(self)
+      grades << grade
+    end
+    grades
+  end
 
 #  def sport_entry_ids
 #    sport_entries.collect(&:id)

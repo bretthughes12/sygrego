@@ -50,7 +50,7 @@ class Group < ApplicationRecord
     has_many :vouchers
     has_many :group_extras
 #    has_many :downloads
-#    has_many :groups_sport_grades_filters
+    has_many :groups_grades_filters
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
     has_one :mysyg_setting, dependent: :destroy
@@ -517,9 +517,9 @@ class Group < ApplicationRecord
       [estimated_numbers, participants.size].max * 1.5    
     end
   
-#    def grades
-#      cached_sport_entries.each.collect(&:grade).uniq
-#    end
+    def grades
+      cached_sport_entries.each.collect(&:grade).uniq
+    end
   
 #    def can_enter_grade(grade)
 #      grades_available.include?(grade)
@@ -529,37 +529,37 @@ class Group < ApplicationRecord
       grades_available(include_all).collect(&:sport).uniq
     end
   
-#    def filtered_sport_grades
-#      filtered_team_sport_grades + filtered_indiv_sport_grades
-#    end
+    def filtered_grades
+      filtered_team_grades + filtered_indiv_grades
+    end
   
-#    def filtered_team_sport_grades
-#      if team_sport_view_strategy == 'Show none'
-#        []
-#      elsif team_sport_view_strategy == 'Show sport entries only'
-#        sport_grades & SportGrade.team.load
-#      elsif team_sport_view_strategy == 'Show listed'
-#        SportGrade.team.load - sport_grade_filters
-#      else
-#        SportGrade.team.load
-#      end
-#    end
+    def filtered_team_grades
+      if mysyg_setting.team_sport_view_strategy == 'Show none'
+        []
+      elsif mysyg_setting.team_sport_view_strategy == 'Show sport entries only'
+        grades & Grade.team.load
+      elsif mysyg_setting.team_sport_view_strategy == 'Show listed'
+        Grade.team.load - grade_filters
+      else
+        Grade.team.load
+      end
+    end
   
-#    def filtered_indiv_sport_grades
-#      if indiv_sport_view_strategy == 'Show none'
-#        []
-#      elsif indiv_sport_view_strategy == 'Show sport entries only'
-#        sport_grades & SportGrade.individual.load
-#      elsif indiv_sport_view_strategy == 'Show listed'
-#        SportGrade.individual.load - sport_grade_filters
-#      else
-#        SportGrade.individual.load
-#      end
-#    end
+    def filtered_indiv_grades
+      if mysyg_setting.indiv_sport_view_strategy == 'Show none'
+        []
+      elsif mysyg_setting.indiv_sport_view_strategy == 'Show sport entries only'
+        grades & Grade.individual.load
+      elsif mysyg_setting.indiv_sport_view_strategy == 'Show listed'
+        Grade.individual.load - grade_filters
+      else
+        Grade.individual.load
+      end
+    end
   
-#    def sport_grade_filters
-#      groups_sport_grades_filters.each.collect(&:sport_grade)
-#    end
+    def grade_filters
+      groups_grades_filters.each.collect(&:grade)
+    end
   
     def number_playing_sport
       @number_playing_sport ||= participants.playing_sport.coming.accepted.size

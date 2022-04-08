@@ -357,8 +357,8 @@ Rails.application.routes.draw do
       get '/details' => 'mysyg/participants#edit', :as => :details
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
-#      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
-      get '/sports' => 'mysyg/info#sports', :as => :sports
+      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
+#      get '/sports' => 'mysyg/info#sports', :as => :sports
 #      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
       get '/volunteering' => 'mysyg/info#volunteers', :as => :volunteering
       get '/finance' => 'mysyg/info#finance', :as => :finance
@@ -381,11 +381,11 @@ Rails.application.routes.draw do
         end
       end
 #      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
-#      resources :sport_preferences, :controller => "mysyg/sport_preferences" do
-#        collection do
-#          put :update_multiple
-#        end
-#      end
+      resources :sport_preferences, :controller => "mysyg/sport_preferences", only: [:index] do
+        collection do
+          patch :update_multiple
+        end
+      end
       resources :participant_extras, :controller => "mysyg/participant_extras", only: [:index] do
         collection do
           patch :update_multiple

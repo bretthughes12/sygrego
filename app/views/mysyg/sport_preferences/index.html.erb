@@ -1,0 +1,37 @@
+<% title "My Sports Preferences" %>
+
+<h1><%= yield(:title) %></h1>
+ 
+<% if @settings.sports_loaded %>
+
+	<% if @sport_preferences.empty? %>
+		<p>There are no eligible sport grades available for you </p>
+	
+	<% else %>
+	
+		<strong>Click update to save your changes</strong>
+		
+		<br/>
+		<p>Select your top ten preferences, with (1) being the most wanted</p>
+		<br/>
+	
+		<%= form_tag update_multiple_mysyg_sport_preferences_path, method: :patch do  %>
+			<%= submit_tag "Update", class: primary_button_class, role: "button" %>	
+
+            <br/>
+            <br/>
+
+            <table class="table table-dark table-striped">
+                <%= render @sport_preferences %>
+            </table>
+		
+			<%= submit_tag "Update", class: primary_button_class, role: "button" %>	
+		<% end %>
+	<% end %>
+
+<% else %>
+
+	<p>The sports program has not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
+	<p>Keep an eye on advice from your Group Coordinator for when this is available.</p>
+
+<% end %>

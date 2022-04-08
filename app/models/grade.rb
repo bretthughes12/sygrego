@@ -46,8 +46,8 @@ class Grade < ApplicationRecord
 
 #    has_many :officials, as: :coord_rqmt
     has_many :sport_entries
-#    has_many :sport_preferences
-#    has_many :groups_sport_grades_filters
+    has_many :sport_preferences
+    has_many :groups_grades_filters
     has_many :sections
     belongs_to :sport
 
