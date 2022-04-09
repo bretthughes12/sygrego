@@ -1,0 +1,9 @@
+<% title "Volunteering details for #{h(@volunteer.description)}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:method => 'patch'} %>
+
+<table><tr>
+	<td><div class="page-actions"><%= link_to 'Back', :back %></div></td>
+</tr></table>

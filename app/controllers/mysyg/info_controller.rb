@@ -30,13 +30,5 @@ class Mysyg::InfoController < MysygController
         format.html 
       end
     end
-  
-    # GET /mysyg/:group/sports
-    def sports
-    end
-  
-    # GET /mysyg/:group/volunteers
-    def volunteers
-    end
   end
   

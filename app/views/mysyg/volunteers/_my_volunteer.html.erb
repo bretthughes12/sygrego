@@ -1,0 +1,22 @@
+<tr valign="top">
+	<td title="<%= volunteer.volunteer_type.description %>" class="tool-tip"> 
+    	<%= h(volunteer.volunteer_type.name) %></br>
+	</td>
+	<td> 
+    	<%= volunteer.description %></br>
+	</td>
+
+    <td class="list-actions">
+	    <%= link_to 'Release', mysyg_volunteer_path(:group => @group.mysyg_setting.mysyg_name, 
+									   			   :id => volunteer.id,
+												   :volunteer => {:participant_id => nil,
+																 :mobile_number => nil,
+																 :email => nil,
+																 :t_shirt_size => nil,
+	                                                             :helper_id => nil}), 
+	                          data: {confirm: "Really release this volunteer?"},
+							  method: :patch,
+                              class: danger_button_class,
+                              role: "button" %>
+	</td>
+</tr>

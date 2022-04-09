@@ -1,0 +1,18 @@
+<%= simple_form_for(@volunteer, :url => mysyg_volunteer_path(group: @group.mysyg_setting.mysyg_name, id: @volunteer.id), 
+								 :html => { :method => method } ) do |f| %> 
+	<%= f.error_notification %>
+
+    <%= f.input :lock_version, :as => :hidden %>
+    
+    <h2><%= h(@volunteer.volunteer_type.name) %></h2>
+    <p><%= h(@volunteer.volunteer_type.description) %></p>
+    <p>&nbsp;</p>
+
+    <%= f.input :participant_id, :as => :hidden %>
+
+    <%= f.input :email %>
+    <%= f.input :mobile_number %>
+    <%= f.input :t_shirt_size, :as => :select, :collection => Volunteer::T_SHIRT_SIZES, :include_blank => true if should_display_t_shirt_flag %>
+
+    <%= f.button :submit %>
+<% end %>

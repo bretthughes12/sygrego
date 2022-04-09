@@ -1,0 +1,16 @@
+<tr valign="top">
+	<td title="<%= volunteer.volunteer_type.description %>" class="tool-tip"> 
+    	<%= h(volunteer.volunteer_type.name) %></br>
+	</td>
+	<td> 
+    	<%= volunteer.description %></br>
+	</td>
+
+    <td class="list-actions">
+        <%= link_to 'Volunteer', 
+      	    edit_mysyg_volunteer_path(:group => @group.mysyg_setting.mysyg_name, 
+			    		             :id => volunteer.id),
+                  class: primary_button_class,
+                  role: "button" %>
+    </td>
+</tr>

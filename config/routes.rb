@@ -365,8 +365,7 @@ Rails.application.routes.draw do
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
       get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
-#      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
-      get '/volunteering' => 'mysyg/info#volunteers', :as => :volunteering
+      get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
       get '/finance' => 'mysyg/info#finance', :as => :finance
  
       resources :participant_signups, controller: "participant_signups", only: [:new, :create]
@@ -374,8 +373,6 @@ Rails.application.routes.draw do
         collection do
           get :home
           get :finance
-          get :sports
-          get :volunteers
         end
       end
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
@@ -386,7 +383,7 @@ Rails.application.routes.draw do
           patch :update_drivers
         end
       end
-#      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
+      resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]
       resources :sport_preferences, :controller => "mysyg/sport_preferences", only: [:index] do
         collection do
           patch :update_multiple

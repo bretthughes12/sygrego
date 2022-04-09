@@ -1,0 +1,42 @@
+<% title "My Volunteering" %>
+
+<% if @settings.volunteers_loaded %>
+
+	<% unless @my_volunteers.empty? %>
+		<h1>My Volunteering Commitments</h1>
+		
+        <table class="table table-dark table-striped">
+            <thead>
+			    <tr>
+			       <th align="left">Type</th>
+			       <th align="left">Sport / Grade / Section</th>
+			       <th align="left">Actions</th>
+			    </tr>
+            </thead>
+			    
+            <%= render partial: 'my_volunteer', collection: @my_volunteers, as: :volunteer %>
+        </table>
+	<% end %>
+	
+	<h1>My Volunteering Opportunities</h1>
+	
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th align="left">Type</th>
+                <th align="left">Sport / Grade / Section</th>
+                <th align="left">Actions</th>
+            </tr>
+        </thead>
+        
+        <%= render  @volunteers %>
+    </table>
+	
+<% else %>
+
+	<h1>My Volunteering Opportunities</h1>
+
+	<p>Required volunteer positions have not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
+	<p>Keep an eye on advice from your Group Coordinator for when this is available.</p>
+
+<% end %>
