@@ -1,0 +1,19 @@
+<% title "Users" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+
+    <%= render @users %>
+</table>
+
+<%= link_to "New user", new_gc_user_path,
+                  class: primary_button_class,
+                  user: "button" %>

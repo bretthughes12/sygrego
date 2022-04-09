@@ -1,0 +1,11 @@
+Session,Grade,Venue,Name,Preference
+<%= CSV.generate do |csv|
+  @sport_preferences.each do |e|
+	csv << [ e.grade.session_name, 
+			 e.grade.name,  
+			 e.grade.venue_name,
+			 e.participant.name,
+			 e.preference ]
+  end
+end.html_safe %>
+

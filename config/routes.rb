@@ -258,7 +258,7 @@ Rails.application.routes.draw do
         get :home
       end
     end
-    resources :users, only: [:edit, :update] do
+    resources :users do
       member do
         get :edit_password
         patch :update_password

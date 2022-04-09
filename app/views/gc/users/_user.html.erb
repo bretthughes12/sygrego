@@ -1,0 +1,15 @@
+<tr valign="top">
+	<td> 
+		<%= user.name %>
+	</td>
+
+	<td> 
+		<%= link_to h(user.email), edit_gc_user_url(user)  %>
+	</td>
+
+	<td> 
+		<% user.roles.each do |r| %>
+			<span class="<%= role_badge_class(r) %>"> <%= r.name %> </span>
+		<% end %>
+	</td>
+</tr>

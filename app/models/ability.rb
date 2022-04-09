@@ -45,6 +45,10 @@ class Ability
           user.groups.include?(pref.group)
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
+        can [:update, :index, :show, :destroy], User do |u|
+          !(u.groups & user.groups).empty?
+        end
+        can :create, User
         can [:index, :available], Volunteer
         can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
