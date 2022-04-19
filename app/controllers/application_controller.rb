@@ -26,7 +26,15 @@ class ApplicationController < ActionController::Base
       
         render layout: false, action: action
     end
-   
+
+    def render_pdf(data, filename = nil)
+        filename ||= params[:action]
+        filename += '.pdf'
+      
+        send_data data, filename: "#{filename}", 
+                        type: "application/pdf"
+    end
+    
     def current_ability
         @current_ability ||= Ability.new(current_user, session)
     end

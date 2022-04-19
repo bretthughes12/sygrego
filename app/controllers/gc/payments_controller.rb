@@ -14,6 +14,11 @@ class Gc::PaymentsController < ApplicationController
         format.html do
           render layout: @current_role.name
         end
+        format.pdf  do
+          output = FinanceReport.new.add_data(@group, @payments).to_pdf
+          
+          render_pdf output, 'account-summary'
+        end
       end
     end
 
@@ -45,7 +50,7 @@ class Gc::PaymentsController < ApplicationController
       respond_to do |format|
           if @payment.save
               flash[:notice] = 'Payment was successfully created.'
-              format.html { render action: "edit", layout: @current_role.name }
+              format.html { redirect_to gc_payments_url }
           else
               format.html { render action: "new", layout: @current_role.name }
           end

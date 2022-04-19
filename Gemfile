@@ -42,6 +42,7 @@ gem 'will_paginate-bootstrap-style'
 gem 'chartkick'
 # gem 'coffee-rails'
 # gem 'jquery-rails'
+gem 'prawn-rails'
 
 group :production do
   gem 'newrelic_rpm'

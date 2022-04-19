@@ -55,7 +55,7 @@ class Gc::PaymentsControllerTest < ActionDispatch::IntegrationTest
       post gc_payments_path, params: { payment: FactoryBot.attributes_for(:payment) }
     end
 
-    assert_response :success
+    assert_redirected_to gc_payments_path
     assert_match /successfully created/, flash[:notice]
   end
 

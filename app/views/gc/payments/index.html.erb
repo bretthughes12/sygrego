@@ -6,6 +6,13 @@
 
 <%= render :partial => 'finance_summary' %>
 
+<%= link_to "Printable Account Summary (PDF)", gc_payments_path(format: :pdf),
+  class: primary_button_class,
+  role: "button" %>
+
+<br/>
+<br/>
+
 <h2>Payments recorded</h2>
 
 <% if @payments.empty? %>
