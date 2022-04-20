@@ -1,113 +1,113 @@
 RowID,Sport,Name,Active,Type,Status,MaxAge,MinAge,GenderType,MaxPart,MinPart,MinMales,MinFemales,TeamSize,Limit,StartLimit
--2004596727,AFL,AFL Mixed B,TRUE,Team,Open,130,11,Mixed,999,0,0,3,8,16,16
--1499827873,Air Hockey,Air Hockey Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
--943634508,Air Hockey,Air Hockey Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,32,32
--1870412949,Arts Program,Arts Workshop 1,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-1334890363,Arts Program,Arts Workshop 2,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-1355115523,Arts Program,Arts Workshop 3,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-,Arts Program,Arts Workshop 4,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
--2068053737,Badminton,Badminton Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,12,12
-1656834333,Badminton,Badminton Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,12,12
-2045372442,Badminton,Badminton Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,12,12
--742640680,Badminton,Badminton Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,12,12
-212413689,Badminton,Badminton Open Mixed Doubles,TRUE,Doubles,Open,29,11,Mixed,2,2,1,1,2,8,8
-1499766214,Badminton,Badminton Under 18 Mixed Doubles,TRUE,Doubles,Open,17,11,Mixed,2,2,1,1,2,8,8
--208415345,Basketball,Basketball A,TRUE,Team,Open,130,11,Open,12,0,0,0,5,16,16
-232384149,Basketball,Basketball B,TRUE,Team,Open,130,11,Open,12,0,0,0,5,48,48
--1330158030,Basketball,Basketball C,TRUE,Team,Open,130,11,Open,12,0,0,0,5,48,48
--393354549,Basketball,Basketball Ladies',TRUE,Team,Open,130,11,Ladies,12,0,0,0,5,16,16
-1868713433,Beep Test,Beep Test Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,80,80
--2098687065,Beep Test,Beep Test Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,60,60
--1473270357,Beep Test,Beep Test Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,80,80
--1924449133,Beep Test,Beep Test Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,60,60
--2064696624,Bocce,Bocce Open B,TRUE,Team,Open,130,11,Open,6,0,0,0,4,24,24
-541009346,Bocce,Bocce Open C,TRUE,Team,Open,130,11,Open,6,0,0,0,4,24,24
--2023821986,Chess,Chess Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-376581511,Chess,Chess Under 15,TRUE,Singles,Open,14,11,Open,1,1,0,0,1,16,16
--2051454276,Chess,Chess Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,16,16
--38335731,Cross Country,Cross Country Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,,
-1331339082,Cross Country,Cross Country Ladies' Under 15,TRUE,Singles,Open,14,11,Ladies,1,1,0,0,1,,
-1049263107,Cross Country,Cross Country Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,,
--1685946744,Cross Country,Cross Country Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,,
--1918997015,Cross Country,Cross Country Men's Under 15,TRUE,Singles,Open,14,11,Mens,1,1,0,0,1,,
--388454410,Cross Country,Cross Country Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,,
--1397910495,Arts Program,Dance - Musical Theatre,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
--1379769852,Arts Program,Dance - Contemporary Workshop,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
--1006094899,Arts Program,Dance - Workshop 3,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-1126045153,Arts Program,Dance - Workshop 4,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-1149012543,Darts,Darts Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,64,64
--2099714284,Darts,Darts Under 15,TRUE,Singles,Open,14,11,Open,1,1,0,0,1,32,32
-1086101125,Darts,Darts Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,32,32
--1304609058,Dodgeball,Dodgeball A,TRUE,Team,Open,130,11,Open,12,0,0,0,6,16,16
-127257306,Dodgeball,Dodgeball B,TRUE,Team,Open,130,11,Open,14,0,0,0,6,48,48
--2007922082,Dodgeball,Dodgeball C,TRUE,Team,Open,130,11,Open,99,0,0,0,6,48,48
--1656345202,Dodgeball,Dodgeball Under 18,TRUE,Team,Open,17,11,Open,12,0,0,0,6,16,16
--1074157769,E-Sports,E-Sports Open B,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-425064740,E-Sports,E-Sports Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,32,32
--672992562,European Handball,European Handball B,TRUE,Team,Open,130,11,Open,12,0,0,0,6,20,20
-1916919890,European Handball,European Handball C,TRUE,Team,Open,130,11,Open,12,0,0,0,6,32,32
-,European Handball,European Handball Mixed B,TRUE,Team,Open,130,11,Mixed,12,0,0,2,6,16,16
-,European Handball,European Handball Mixed C,TRUE,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
-1254303554,Four Square,Four Square Open B,TRUE,Doubles,Open,130,11,Open,2,2,0,0,2,8,8
--1404906385,Four Square,Four Square Open C,TRUE,Doubles,Open,130,11,Open,2,2,0,0,2,8,8
--128792215,Four Square,Four Square Under 18,TRUE,Doubles,Open,17,11,Open,2,2,0,0,2,16,16
-,Human Foosball,Human Foosball,TRUE,Team,Open,130,11,Open,12,0,0,0,6,32,32
-429312883,Indoor Soccer,Indoor Soccer B,TRUE,Team,Open,130,11,Open,12,0,0,0,6,8,8
--1231788251,Indoor Soccer,Indoor Soccer C,TRUE,Team,Open,130,11,Open,12,0,0,0,6,24,24
--1249716389,Indoor Soccer,Indoor Soccer Mixed B,TRUE,Team,Open,130,11,Mixed,12,0,0,3,6,16,16
-1988615718,Indoor Soccer,Indoor Soccer Under 18,TRUE,Team,Open,17,11,Open,12,0,0,0,6,16,16
--974144376,Lawn Bowls,Lawn Bowls,TRUE,Team,Open,130,11,Open,6,0,0,0,4,32,32
-855126191,Mountain Bike Riding,Mountain Bike Riding Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,,
--1365482891,Mountain Bike Riding,Mountain Bike Riding Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,,
-1177709714,Mountain Bike Riding,Mountain Bike Riding Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,,
-2106797328,Mountain Bike Riding,Mountain Bike Riding Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,,
-1096502225,Netball,Netball Ladies' A,TRUE,Team,Open,130,11,Ladies,12,0,0,0,7,24,24
-577378750,Netball,Netball Mixed A,TRUE,Team,Open,130,11,Mixed,12,0,0,4,7,24,24
--1723385241,Netball,Netball Mixed B,TRUE,Team,Open,130,11,Mixed,14,0,0,4,7,96,96
--960639460,Netball,Netball Mixed Under 18,TRUE,Team,Open,17,11,Mixed,14,0,0,4,7,36,36
--2108614941,Pool,Pool Open,TRUE,Singles,Open,29,18,Open,1,1,0,0,1,32,32
-641074121,Pool,Pool Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,32,32
--1260652115,Pool Volleyball,Pool Volleyball A,TRUE,Team,Open,130,11,Open,12,0,0,0,6,8,8
-611881142,Pool Volleyball,Pool Volleyball B,TRUE,Team,Open,130,11,Open,12,0,0,0,6,16,16
--1733663795,Pool Volleyball,Pool Volleyball C,TRUE,Team,Open,130,11,Open,12,0,0,0,6,8,8
-1030080449,Scrabble,Scrabble Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,32,32
-376524891,Scrabble,Scrabble Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,32,32
--1773655269,Soccer,Soccer Mixed B,TRUE,Team,Open,130,11,Mixed,99,0,0,4,11,16,16
--733228606,Soccer,Soccer Open A,TRUE,Team,Open,130,11,Open,99,0,0,0,11,8,8
-,Soccer,Soccer Open B,TRUE,Team,Open,130,11,Open,99,0,0,0,11,8,8
--1054222912,Squash,Squash Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,16,16
--1109544466,Squash,Squash Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
--481027369,Squash,Squash Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
-1158019293,Squash,Squash Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,16,16
--267078188,Table Tennis,Table Tennis Ladies Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,32,32
--77242334,Table Tennis,Table Tennis Ladies Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
-598766075,Table Tennis,Table Tennis Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
-581317793,Table Tennis,Table Tennis Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,32,32
-767959663,Tennis,Tennis Ladies' Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,16,16
-1550494261,Tennis,Tennis Ladies' Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
-1475053906,Tennis,Tennis Men's Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
-176986064,Tennis,Tennis Men's Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,16,16
-253464465,Tennis,Tennis Open Mixed Doubles,TRUE,Doubles,Open,29,11,Mixed,2,2,1,1,2,16,16
-974422654,Tennis,Tennis Under 18 Mixed Doubles,TRUE,Doubles,Open,17,11,Mixed,2,2,1,1,2,16,16
-19238839,Ten Pin Bowling,Ten Pin Bowling Ladies Open,TRUE,Singles,Open,29,11,Ladies,1,1,0,0,1,18,18
--1194592067,Ten Pin Bowling,Ten Pin Bowling Ladies Under 18,TRUE,Singles,Open,17,11,Ladies,1,1,0,0,1,18,18
--74152134,Ten Pin Bowling,Ten Pin Bowling Mens Open,TRUE,Singles,Open,29,11,Mens,1,1,0,0,1,18,18
--1650432008,Ten Pin Bowling,Ten Pin Bowling Mens Under 18,TRUE,Singles,Open,17,11,Mens,1,1,0,0,1,18,18
--124053863,Ten Pin Bowling,Ten Pin Bowling Open Team,TRUE,Team,Open,130,11,Open,3,3,0,0,3,12,12
-1926262502,Ten Pin Bowling,Ten Pin Bowling Under 18 Team,TRUE,Team,Open,17,11,Open,3,3,0,0,3,12,12
--700703465,Thunder Hockey,Thunder Hockey A,TRUE,Team,Open,130,11,Open,999,0,0,0,6,12,12
--1500921953,Thunder Hockey,Thunder Hockey B,TRUE,Team,Open,130,11,Open,999,0,0,0,6,24,24
--1901900465,Thunder Hockey,Thunder Hockey C,TRUE,Team,Open,130,11,Open,999,0,0,0,6,60,60
--249993240,Touch Football,Touch Football C,TRUE,Team,Open,130,11,Open,12,0,0,0,6,36,36
--24057626,Touch Football,Touch Football Mixed A,TRUE,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
-582575324,Touch Football,Touch Football Mixed B,TRUE,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
--1937764902,Ultimate Frisbee,Ultimate Frisbee Mixed A,TRUE,Team,Open,130,11,Mixed,99,0,0,2,7,12,12
--2112043414,Ultimate Frisbee,Ultimate Frisbee Mixed B,TRUE,Team,Open,130,11,Mixed,12,0,0,2,7,60,60
--1043194717,Ultimate Frisbee,Ultimate Frisbee Mixed C,TRUE,Team,Open,130,11,Mixed,14,0,0,2,7,48,48
-1984420942,Ultimate Frisbee,Ultimate Frisbee Mixed Under 18,TRUE,Team,Open,17,11,Mixed,14,0,0,2,7,24,24
-901611401,Uno,Uno Open,TRUE,Singles,Open,29,11,Open,1,1,0,0,1,64,64
--1474002666,Uno,Uno Under 18,TRUE,Singles,Open,17,11,Open,1,1,0,0,1,64,64
--1310427937,Volleyball,Volleyball A,TRUE,Team,Open,130,11,Open,12,0,0,0,6,6,6
--1561795276,Volleyball,Volleyball B,TRUE,Team,Open,130,11,Open,14,0,0,0,6,30,30
--226587657,Volleyball,Volleyball Mixed C,TRUE,Team,Open,130,11,Mixed,14,0,0,3,8,72,72
-2080808578,Volleyball,Volleyball Mixed Under 18,TRUE,Team,Open,17,11,Mixed,14,0,0,3,8,12,12
+-2004596727,AFL,AFL Mixed B,true,Team,Open,130,11,Mixed,999,0,0,3,8,16,16
+-1499827873,Air Hockey,Air Hockey Open,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+-943634508,Air Hockey,Air Hockey Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,32,32
+-1870412949,Arts Program,Arts Workshop 1,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+1334890363,Arts Program,Arts Workshop 2,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+1355115523,Arts Program,Arts Workshop 3,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+,Arts Program,Arts Workshop 4,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+-2068053737,Badminton,Badminton Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,12,12
+1656834333,Badminton,Badminton Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,12,12
+2045372442,Badminton,Badminton Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,12,12
+-742640680,Badminton,Badminton Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,12,12
+212413689,Badminton,Badminton Open Mixed Doubles,true,Doubles,Open,29,11,Mixed,2,2,1,1,2,8,8
+1499766214,Badminton,Badminton Under 18 Mixed Doubles,true,Doubles,Open,17,11,Mixed,2,2,1,1,2,8,8
+-208415345,Basketball,Basketball A,true,Team,Open,130,11,Open,12,0,0,0,5,16,16
+232384149,Basketball,Basketball B,true,Team,Open,130,11,Open,12,0,0,0,5,48,48
+-1330158030,Basketball,Basketball C,true,Team,Open,130,11,Open,12,0,0,0,5,48,48
+-393354549,Basketball,Basketball Ladies',true,Team,Open,130,11,Ladies,12,0,0,0,5,16,16
+1868713433,Beep Test,Beep Test Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,80,80
+-2098687065,Beep Test,Beep Test Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,60,60
+-1473270357,Beep Test,Beep Test Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,80,80
+-1924449133,Beep Test,Beep Test Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,60,60
+-2064696624,Bocce,Bocce Open B,true,Team,Open,130,11,Open,6,0,0,0,4,24,24
+541009346,Bocce,Bocce Open C,true,Team,Open,130,11,Open,6,0,0,0,4,24,24
+-2023821986,Chess,Chess Open,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+376581511,Chess,Chess Under 15,true,Singles,Open,14,11,Open,1,1,0,0,1,16,16
+-2051454276,Chess,Chess Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,16,16
+-38335731,Cross Country,Cross Country Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,,
+1331339082,Cross Country,Cross Country Ladies' Under 15,true,Singles,Open,14,11,Ladies,1,1,0,0,1,,
+1049263107,Cross Country,Cross Country Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,,
+-1685946744,Cross Country,Cross Country Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,,
+-1918997015,Cross Country,Cross Country Men's Under 15,true,Singles,Open,14,11,Mens,1,1,0,0,1,,
+-388454410,Cross Country,Cross Country Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,,
+-1379769852,Arts Program,Dance - Contemporary Workshop,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+-1397910495,Arts Program,Dance - Musical Theatre,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+-1006094899,Arts Program,Dance - Workshop 3,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+1126045153,Arts Program,Dance - Workshop 4,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+1149012543,Darts,Darts Open,true,Singles,Open,29,11,Open,1,1,0,0,1,64,64
+-2099714284,Darts,Darts Under 15,true,Singles,Open,14,11,Open,1,1,0,0,1,32,32
+1086101125,Darts,Darts Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,32,32
+-1304609058,Dodgeball,Dodgeball A,true,Team,Open,130,11,Open,12,0,0,0,6,16,16
+127257306,Dodgeball,Dodgeball B,true,Team,Open,130,11,Open,14,0,0,0,6,48,48
+-2007922082,Dodgeball,Dodgeball C,true,Team,Open,130,11,Open,99,0,0,0,6,48,48
+-1656345202,Dodgeball,Dodgeball Under 18,true,Team,Open,17,11,Open,12,0,0,0,6,16,16
+-1074157769,E-Sports,E-Sports Open B,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+425064740,E-Sports,E-Sports Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,32,32
+-672992562,European Handball,European Handball B,true,Team,Open,130,11,Open,12,0,0,0,6,20,20
+1916919890,European Handball,European Handball C,true,Team,Open,130,11,Open,12,0,0,0,6,32,32
+,European Handball,European Handball Mixed B,true,Team,Open,130,11,Mixed,12,0,0,2,6,16,16
+,European Handball,European Handball Mixed C,true,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
+1254303554,Four Square,Four Square Open B,true,Doubles,Open,130,11,Open,2,2,0,0,2,8,8
+-1404906385,Four Square,Four Square Open C,true,Doubles,Open,130,11,Open,2,2,0,0,2,8,8
+-128792215,Four Square,Four Square Under 18,true,Doubles,Open,17,11,Open,2,2,0,0,2,16,16
+,Human Foosball,Human Foosball,true,Team,Open,130,11,Open,12,0,0,0,6,32,32
+429312883,Indoor Soccer,Indoor Soccer B,true,Team,Open,130,11,Open,12,0,0,0,6,8,8
+-1231788251,Indoor Soccer,Indoor Soccer C,true,Team,Open,130,11,Open,12,0,0,0,6,24,24
+-1249716389,Indoor Soccer,Indoor Soccer Mixed B,true,Team,Open,130,11,Mixed,12,0,0,3,6,16,16
+1988615718,Indoor Soccer,Indoor Soccer Under 18,true,Team,Open,17,11,Open,12,0,0,0,6,16,16
+-974144376,Lawn Bowls,Lawn Bowls,true,Team,Open,130,11,Open,6,0,0,0,4,32,32
+855126191,Mountain Bike Riding,Mountain Bike Riding Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,,
+-1365482891,Mountain Bike Riding,Mountain Bike Riding Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,,
+1177709714,Mountain Bike Riding,Mountain Bike Riding Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,,
+2106797328,Mountain Bike Riding,Mountain Bike Riding Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,,
+1096502225,Netball,Netball Ladies' A,true,Team,Open,130,11,Ladies,12,0,0,0,7,24,24
+577378750,Netball,Netball Mixed A,true,Team,Open,130,11,Mixed,12,0,0,4,7,24,24
+-1723385241,Netball,Netball Mixed B,true,Team,Open,130,11,Mixed,14,0,0,4,7,96,96
+-960639460,Netball,Netball Mixed Under 18,true,Team,Open,17,11,Mixed,14,0,0,4,7,36,36
+-2108614941,Pool,Pool Open,true,Singles,Open,29,18,Open,1,1,0,0,1,32,32
+641074121,Pool,Pool Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,32,32
+-1260652115,Pool Volleyball,Pool Volleyball A,true,Team,Open,130,11,Open,12,0,0,0,6,8,8
+611881142,Pool Volleyball,Pool Volleyball B,true,Team,Open,130,11,Open,12,0,0,0,6,16,16
+-1733663795,Pool Volleyball,Pool Volleyball C,true,Team,Open,130,11,Open,12,0,0,0,6,8,8
+1030080449,Scrabble,Scrabble Open,true,Singles,Open,29,11,Open,1,1,0,0,1,32,32
+376524891,Scrabble,Scrabble Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,32,32
+-1773655269,Soccer,Soccer Mixed B,true,Team,Open,130,11,Mixed,99,0,0,4,11,16,16
+-733228606,Soccer,Soccer Open A,true,Team,Open,130,11,Open,99,0,0,0,11,8,8
+,Soccer,Soccer Open B,true,Team,Open,130,11,Open,99,0,0,0,11,8,8
+-1054222912,Squash,Squash Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,16,16
+-1109544466,Squash,Squash Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
+-481027369,Squash,Squash Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
+1158019293,Squash,Squash Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,16,16
+-267078188,Table Tennis,Table Tennis Ladies Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,32,32
+-77242334,Table Tennis,Table Tennis Ladies Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
+598766075,Table Tennis,Table Tennis Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
+581317793,Table Tennis,Table Tennis Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,32,32
+767959663,Tennis,Tennis Ladies' Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,16,16
+1550494261,Tennis,Tennis Ladies' Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,16,16
+1475053906,Tennis,Tennis Men's Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,16,16
+176986064,Tennis,Tennis Men's Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,16,16
+253464465,Tennis,Tennis Open Mixed Doubles,true,Doubles,Open,29,11,Mixed,2,2,1,1,2,16,16
+974422654,Tennis,Tennis Under 18 Mixed Doubles,true,Doubles,Open,17,11,Mixed,2,2,1,1,2,16,16
+19238839,Ten Pin Bowling,Ten Pin Bowling Ladies Open,true,Singles,Open,29,11,Ladies,1,1,0,0,1,18,18
+-1194592067,Ten Pin Bowling,Ten Pin Bowling Ladies Under 18,true,Singles,Open,17,11,Ladies,1,1,0,0,1,18,18
+-74152134,Ten Pin Bowling,Ten Pin Bowling Mens Open,true,Singles,Open,29,11,Mens,1,1,0,0,1,18,18
+-1650432008,Ten Pin Bowling,Ten Pin Bowling Mens Under 18,true,Singles,Open,17,11,Mens,1,1,0,0,1,18,18
+-124053863,Ten Pin Bowling,Ten Pin Bowling Open Team,true,Team,Open,130,11,Open,3,3,0,0,3,12,12
+1926262502,Ten Pin Bowling,Ten Pin Bowling Under 18 Team,true,Team,Open,17,11,Open,3,3,0,0,3,12,12
+-700703465,Thunder Hockey,Thunder Hockey A,true,Team,Open,130,11,Open,999,0,0,0,6,12,12
+-1500921953,Thunder Hockey,Thunder Hockey B,true,Team,Open,130,11,Open,999,0,0,0,6,24,24
+-1901900465,Thunder Hockey,Thunder Hockey C,true,Team,Open,130,11,Open,999,0,0,0,6,60,60
+-249993240,Touch Football,Touch Football C,true,Team,Open,130,11,Open,12,0,0,0,6,36,36
+-24057626,Touch Football,Touch Football Mixed A,true,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
+582575324,Touch Football,Touch Football Mixed B,true,Team,Open,130,11,Mixed,12,0,0,2,6,12,12
+-1937764902,Ultimate Frisbee,Ultimate Frisbee Mixed A,true,Team,Open,130,11,Mixed,99,0,0,2,7,12,12
+-2112043414,Ultimate Frisbee,Ultimate Frisbee Mixed B,true,Team,Open,130,11,Mixed,12,0,0,2,7,60,60
+-1043194717,Ultimate Frisbee,Ultimate Frisbee Mixed C,true,Team,Open,130,11,Mixed,14,0,0,2,7,48,48
+1984420942,Ultimate Frisbee,Ultimate Frisbee Mixed Under 18,true,Team,Open,17,11,Mixed,14,0,0,2,7,24,24
+901611401,Uno,Uno Open,true,Singles,Open,29,11,Open,1,1,0,0,1,64,64
+-1474002666,Uno,Uno Under 18,true,Singles,Open,17,11,Open,1,1,0,0,1,64,64
+-1310427937,Volleyball,Volleyball A,true,Team,Open,130,11,Open,12,0,0,0,6,6,6
+-1561795276,Volleyball,Volleyball B,true,Team,Open,130,11,Open,14,0,0,0,6,30,30
+-226587657,Volleyball,Volleyball Mixed C,true,Team,Open,130,11,Mixed,14,0,0,3,8,72,72
+2080808578,Volleyball,Volleyball Mixed Under 18,true,Team,Open,17,11,Mixed,14,0,0,3,8,12,12
