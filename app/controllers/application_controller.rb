@@ -40,7 +40,11 @@ class ApplicationController < ActionController::Base
     end
 
     def current_role 
-        @current_role ||= Role.find_by_name(session["current_role"].to_s)
+        if session["current_role"]
+            @current_role ||= Role.find_by_name(session["current_role"].to_s)
+        elsif current_user
+            @current_role ||= current_user.default_role
+        end
     end
 
     def home_url(user)
