@@ -1,4 +1,4 @@
-Group Name,Abbr.,Short Name,Church or Org Name,Expected Numbers,Years Attended,Address,Suburb,Postcode,Church Rep,Church Rep Phone,Church Rep WWCC,GC,GC Phone,GC WWCC
+Group Name,Abbr.,Short Name,Church or Org Name,Expected Numbers,Years Attended,Address,Suburb,Postcode,Church Rep,Church Rep Email,Church Rep Phone,Church Rep WWCC,GC,GC Email,GC Phone,GC WWCC
 <%= CSV.generate do |csv|
   @groups.each do |g|
     csv << 	[ 
@@ -12,9 +12,11 @@ Group Name,Abbr.,Short Name,Church or Org Name,Expected Numbers,Years Attended,A
 				g.suburb,
 				g.postcode,
 				g.church_rep_name,
+				g.church_rep_email,
 				g.church_rep_phone_number,
 				g.church_rep_wwcc,
 				g.gc_name,
+				g.gc_email,
 				g.gc_phone_number,
 				g.gc_wwcc
 	 		]

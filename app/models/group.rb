@@ -212,6 +212,10 @@ class Group < ApplicationRecord
       church_rep.nil? ? '' : church_rep.name
     end
 
+    def church_rep_email
+      church_rep.nil? ? '' : church_rep.email
+    end
+
     def church_rep_phone_number
       church_rep.nil? ? '' : church_rep.phone_number
     end
@@ -234,6 +238,10 @@ class Group < ApplicationRecord
 
     def gc_name
       gc.nil? ? '' : gc.name
+    end
+
+    def gc_email
+      gc.nil? ? '' : gc.email
     end
 
     def gc_phone_number
