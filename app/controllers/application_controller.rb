@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
         if session["current_role"]
             @current_role ||= Role.find_by_name(session["current_role"].to_s)
         elsif current_user
-            @current_role ||= current_user.default_role
+            @current_role ||= Role.find_by_name(current_user.default_role.to_s)
         end
     end
 
