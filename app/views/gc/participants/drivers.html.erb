@@ -16,6 +16,11 @@
         
         <%= render :partial => 'participant_driver', :collection => @participants, :as => :participant %>
     </table>
+
+    <%= link_to "Drivers Nomination Form (PDF)", drivers_gc_participants_path(format: :pdf),
+        class: primary_button_class,
+        role: "button" %>
+
 <% end %>
 
 <br />

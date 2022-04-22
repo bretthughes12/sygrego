@@ -45,12 +45,20 @@ class Gc::ParticipantsController < ApplicationController
     
     # GET /gc/participants/drivers
     def drivers
-      @participants = @group.participants.accepted.open_age.
-        order("coming desc, driver desc, surname, first_name").load
-  
       respond_to do |format|
         format.html do
+          @participants = @group.participants.accepted.open_age.
+            order("coming desc, driver desc, surname, first_name").load
+    
           render layout: @current_role.name
+        end
+        format.pdf do
+          @participants = @group.participants.accepted.coming.drivers.
+            order("surname, first_name").load
+
+          output = DriverReport.new.add_data(@group, @participants).to_pdf
+          
+          render_pdf output, 'drivers'
         end
       end
     end
