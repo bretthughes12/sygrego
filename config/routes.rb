@@ -232,6 +232,7 @@ Rails.application.routes.draw do
     end
     resources :volunteers do
       collection do
+        get :search
         get :new_import
         post :import
       end
@@ -328,6 +329,7 @@ Rails.application.routes.draw do
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do
       collection do
+        get :search
         get :available
       end
       member do

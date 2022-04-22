@@ -15,6 +15,17 @@ class Admin::VolunteersController < ApplicationController
         format.csv  { render_csv "volunteer" }
       end
     end
+
+    # GET /admin/volunteers/search
+    def search
+      @volunteers = Volunteer.
+        search(params[:search]).
+        order(:description, :volunteer_type_id).load
+  
+      respond_to do |format|
+        format.html { render action: 'index' }
+      end
+    end
   
     # GET /admin/volunteers/1
     def show

@@ -49,7 +49,7 @@ class Ability
           !(u.groups & user.groups).empty?
         end
         can :create, User
-        can [:index, :available], Volunteer
+        can [:index, :available, :search], Volunteer
         can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
         end
@@ -111,7 +111,7 @@ class Ability
           user.groups.include?(pref.group)
         end
         can [:create, :destroy, :make_captain], ParticipantsSportEntry
-        can [:index, :available], Volunteer
+        can [:index, :available, :search], Volunteer
         can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
         end

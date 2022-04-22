@@ -87,7 +87,7 @@ class Volunteer < ApplicationRecord
                                        inclusion: { in: EQUIPMENT_IN_OPTIONS },
                                        allow_blank: true
   
-    searchable_by 'officials.description'
+    searchable_by 'volunteers.description'
   
     def venue_name
         if section.nil?

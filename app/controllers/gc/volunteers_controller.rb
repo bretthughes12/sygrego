@@ -28,6 +28,17 @@ class Gc::VolunteersController < ApplicationController
       end
     end
 
+    # GET /gc/volunteers/search
+    def search
+      @volunteers = Volunteer.unfilled.
+        search(params[:search]).
+        order(:description, :volunteer_type_id).load
+  
+      respond_to do |format|
+        format.html { render action: 'available', layout: @current_role.name }
+      end
+    end
+
     # GET /gc/volunteers/1
     def show
       render layout: @current_role.name
