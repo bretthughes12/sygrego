@@ -45,11 +45,14 @@ Rails.application.routes.draw do
     collection do
       get :admin_groups
       get :admin_participants
+      get :admin_sport_entries
+      get :admin_volunteers
       get :admin_group_stats
       get :admin_participant_stats
       get :admin_sport_entry_stats
       get :admin_volunteer_stats
       get :gc_participants
+      get :gc_sport_entries
       get :evening_saturday_preferences
       get :evening_sunday_preferences
     end

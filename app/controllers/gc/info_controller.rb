@@ -9,6 +9,7 @@ class Gc::InfoController < ApplicationController
         @total_groups = Group.coming.count
         @total_participants = Participant.coming.count
         @participants_registered = @group.participants.coming.accepted.count
+        @total_entries = @group.sport_entries.count
 
         render layout: @current_role.name
     end

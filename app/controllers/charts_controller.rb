@@ -25,6 +25,28 @@ class ChartsController < ApplicationController
         render json: participants_data
     end
 
+    def admin_sport_entries
+        @total_entries = SportEntry.count
+
+        entries_data = []
+        entries_data << ["Entered", SportEntry.entered.count]
+        entries_data << ["To Be Confirmed", SportEntry.to_be_confirmed.count]
+        entries_data << ["Requested", SportEntry.requested.count]
+        entries_data << ["Waiting List", SportEntry.waiting_list.count]
+    
+        render json: entries_data
+    end
+
+    def admin_volunteers
+        @total_volunteers = Volunteer.count
+
+        volunteers_data = []
+        volunteers_data << ["Filled", Volunteer.filled.count]
+        volunteers_data << ["Vacant", Volunteer.unfilled.count]
+
+        render json: volunteers_data
+    end
+
     def admin_group_stats
         group_data = Statistic.group(:year).group('20 - weeks_to_syg').sum(:number_of_groups).chart_json
 
@@ -57,6 +79,20 @@ class ChartsController < ApplicationController
         participants_data << ["Not approved", @group.participants.coming.requiring_approval.count]
 
         render json: participants_data
+    end
+
+    def gc_sport_entries
+        find_group
+
+        @total_entries = @group.sport_entries.count
+
+        entries_data = []
+        entries_data << ["Entered", @group.sport_entries.entered.count]
+        entries_data << ["To Be Confirmed", @group.sport_entries.to_be_confirmed.count]
+        entries_data << ["Requested", @group.sport_entries.requested.count]
+        entries_data << ["Waiting List", @group.sport_entries.waiting_list.count]
+    
+        render json: entries_data
     end
 
     def evening_saturday_preferences

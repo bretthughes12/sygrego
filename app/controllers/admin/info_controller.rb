@@ -6,10 +6,12 @@ class Admin::InfoController < ApplicationController
     # GET /admin/info/home
     def home
         @total_groups = Group.coming.count
-        new_groups = Group.coming.not_admin.new_group.count
-        last_year_groups = Group.coming.not_admin.last_year.count
-        admin_groups = Group.coming.is_admin.count
+#        new_groups = Group.coming.not_admin.new_group.count
+#        last_year_groups = Group.coming.not_admin.last_year.count
+#        admin_groups = Group.coming.is_admin.count
         @total_participants = Participant.accepted.coming.count
+        @total_entries = SportEntry.count
+        @total_volunteers = Volunteer.count
     end
 
     # GET /admin/info/tech_stats
