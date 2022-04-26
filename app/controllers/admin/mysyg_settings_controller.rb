@@ -8,7 +8,7 @@ class Admin::MysygSettingsController < ApplicationController
   
     # GET /admin/mysyg_settings
     def index
-      @mysyg_settings = MysygSetting.includes(:group).all.order("groups.abbr").load
+      @mysyg_settings = MysygSetting.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
   
       respond_to do |format|
         format.html # index.html.erb

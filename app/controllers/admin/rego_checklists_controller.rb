@@ -8,7 +8,7 @@ class Admin::RegoChecklistsController < ApplicationController
   
     # GET /admin/rego_checklists
     def index
-      @rego_checklists = RegoChecklist.includes(:group).all.order("groups.abbr").load
+      @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
   
       respond_to do |format|
         format.html # index.html.erb

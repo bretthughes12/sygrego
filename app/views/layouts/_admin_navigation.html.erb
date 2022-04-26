@@ -11,7 +11,9 @@
                         <li class='dropdown-item'><%= link_to 'Group Submissions', approvals_admin_groups_path %></li>
                         <li class='dropdown-item'><%= link_to 'Event Details', admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'MySYG Settings', admin_mysyg_settings_path %></li>
-                        <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
+                        <% if @settings.syg_is_happening %>
+                            <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
+                        <% end %>
                         <li class='dropdown-item'><%= link_to 'Participants', admin_participants_path %></li>
                     </ul>
                 </li>

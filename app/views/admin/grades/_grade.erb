@@ -6,7 +6,26 @@
 	<td align="center"> 
 		<%= h(grade.sections.count) %>
 	</td>
-	
+
+	<td align="center"> 
+		<%= grade.entries_entered.size if grade.entries_entered.size > 0 %>
+	</td>
+
+	<% if @settings.restricted_sports_allocated %>
+		<td align="center"> 
+			<%= grade.entries_to_be_confirmed.size if grade.entries_to_be_confirmed.size > 0 %>
+		</td>
+
+		<td align="center"> 
+			<%= grade.entries_waiting.size if grade.entries_waiting.size > 0 %>
+		</td>
+
+	<% else %>
+		<td align="center"> 
+			<%= grade.entries_requested.size if grade.entries_requested.size > 0 %>
+		</td>
+	<% end %>
+
 	<td align="center"> 
 		<%= h(grade.entry_limit) %>
 	</td>

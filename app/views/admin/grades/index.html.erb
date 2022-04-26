@@ -8,7 +8,14 @@
     <tr>
       <th>Grade</th>
       <th>#Sections</th>
-      <th>Entry Limit</th>
+      <th>Entered</th>
+      <% if @settings.restricted_sports_allocated %>
+        <th>Unconfirmed</th>
+        <th>Waiting List</th>
+      <% else %>
+        <th>Requested</th>
+      <% end %>
+      <th align="center">Entry Limit</th>
     </tr>
   </thead>
 
