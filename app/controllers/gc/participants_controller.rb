@@ -8,7 +8,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants
     def index
       @participants = @group.participants.accepted.
-        order('coming desc, surname, first_name').load
+        order('coming desc, first_name, surname').load
   
       respond_to do |format|
         format.html do
@@ -23,7 +23,7 @@ class Gc::ParticipantsController < ApplicationController
     def search
       @participants = @group.participants.accepted.
         search(params[:search]).
-        order('coming desc, surname, first_name').
+        order('coming desc, first_name, surname').
         paginate(page: params[:page], per_page: 100)
   
       respond_to do |format|
@@ -34,7 +34,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants/approvals
     def approvals
       @participants = @group.participants.requiring_approval.
-        order("surname, first_name").load
+        order("first_name, surname").load
   
       respond_to do |format|
         format.html do
@@ -48,13 +48,13 @@ class Gc::ParticipantsController < ApplicationController
       respond_to do |format|
         format.html do
           @participants = @group.participants.accepted.open_age.
-            order("coming desc, driver desc, surname, first_name").load
+            order("coming desc, driver desc, first_name, surname").load
     
           render layout: @current_role.name
         end
         format.pdf do
           @participants = @group.participants.accepted.coming.drivers.
-            order("surname, first_name").load
+            order("first_name, surname").load
 
           output = DriverReport.new.add_data(@group, @participants).to_pdf
           
@@ -66,7 +66,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants/wwccs
     def wwccs
       @participants = @group.participants.accepted.open_age.
-        order("coming desc, surname, first_name").load
+        order("coming desc, first_name, surname").load
   
       respond_to do |format|
         format.html do
@@ -78,7 +78,7 @@ class Gc::ParticipantsController < ApplicationController
     # GET /gc/participants/vaccinations
     def vaccinations
       @participants = @group.participants.open_age.
-        order("coming desc, surname, first_name").load
+        order("coming desc, first_name, surname").load
   
       respond_to do |format|
         format.html do
