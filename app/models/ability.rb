@@ -41,7 +41,8 @@ class Ability
             :approvals, 
             :wwccs, 
             :vaccinations, 
-            :group_fees], Participant
+            :group_fees,
+            :sports_plan], Participant
         can [:show, 
             :update, 
             :destroy, 
@@ -132,7 +133,8 @@ class Ability
           :approvals, 
           :wwccs, 
           :vaccinations, 
-          :group_fees], Participant
+          :group_fees,
+          :sports_plan], Participant
         can [:show, 
           :update, 
           :destroy, 

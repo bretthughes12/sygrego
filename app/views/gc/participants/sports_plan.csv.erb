@@ -1,0 +1,9 @@
+Name,<%= Session.session_names.join(',') %>
+<%= CSV.generate do |csv|
+  @participants.each do |participant|
+    line = [participant.name] + Session.session_names.collect do |session| 
+	  participant.sports_in_session(session).uniq.join("\n")
+	end
+	csv << line
+  end
+end.html_safe %>

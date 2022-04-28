@@ -48,7 +48,7 @@ class SportEntry < ApplicationRecord
   delegate :draw, to: :section
   delegate :grade_type,
            :sport,
-           :session,
+           :session_name,
 #           :eligible_to_participate?,
 #           :sport_preferences,
            :team_size, to: :grade

@@ -99,6 +99,19 @@ class Gc::ParticipantsController < ApplicationController
       end
     end
     
+    # GET /gc/participants/sports_plan
+    def sports_plan
+      @participants = @group.participants.accepted.coming.playing_sport.
+        order("first_name, surname").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+        format.csv  { render_csv "sports_plan", "sports_plan" }
+      end
+    end
+    
     # GET /gc/participants/1
     def show
       render layout: @current_role.name

@@ -312,6 +312,7 @@ Rails.application.routes.draw do
         get :wwccs
         get :vaccinations
         get :group_fees
+        get :sports_plan
       end
       member do
         get :new_voucher

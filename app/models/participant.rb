@@ -412,21 +412,21 @@ class Participant < ApplicationRecord
       grade.sport.indiv_entries(self) < grade.sport.max_entries_indiv
     end
     
-#  def sports_in_session(session)
-#    sports = []
+  def sports_in_session(session)
+    sports = []
 
-#    sport_entries.each do |entry|
-#      sports << entry.sport.name if entry.sport_session.name == session
-#    end
+    sport_entries.each do |entry|
+      sports << entry.sport.name if entry.session_name == session
+    end
 
-#    officials.each do |official|
-#      if official.session && official.session.name == session
-#        sports << official.sport_name
-#      end
-#    end
+    volunteers.each do |volunteer|
+      if volunteer.session && volunteer.session.name == session
+        sports << volunteer.sport_name
+      end
+    end
 
-#    sports
-#  end
+    sports
+  end
 
   def available_sport_entries
     entries = []
