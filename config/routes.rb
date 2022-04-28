@@ -311,12 +311,14 @@ Rails.application.routes.draw do
         get :drivers
         get :wwccs
         get :vaccinations
+        get :group_fees
       end
       member do
         get :new_voucher
         get :edit_driver
         get :edit_wwcc
         get :edit_vaccination
+        get :edit_fees
         post :add_voucher
         patch :delete_voucher
         patch :accept
@@ -325,6 +327,7 @@ Rails.application.routes.draw do
         patch :update_driver
         patch :update_wwcc
         patch :update_vaccination
+        patch :update_fees
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

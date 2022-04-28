@@ -77,8 +77,20 @@ class Gc::ParticipantsController < ApplicationController
     
     # GET /gc/participants/vaccinations
     def vaccinations
-      @participants = @group.participants.open_age.
+      @participants = @group.participants.accepted.open_age.
         order("coming desc, first_name, surname").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+      end
+    end
+    
+    # GET /gc/participants/group_fees
+    def group_fees
+      @participants = @group.participants.accepted.coming.
+        order("first_name, surname").load
   
       respond_to do |format|
         format.html do
@@ -116,6 +128,11 @@ class Gc::ParticipantsController < ApplicationController
   
     # GET /gc/participants/1/edit_vaccination
     def edit_vaccination
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/participants/1/edit_fees
+    def edit_fees
       render layout: @current_role.name
     end
   
@@ -188,6 +205,20 @@ class Gc::ParticipantsController < ApplicationController
           format.html { redirect_to vaccinations_gc_participants_url }
         else
           format.html { render action: "edit_vaccination", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_fees
+    def update_fees
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_fees_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to group_fees_gc_participants_url }
+        else
+          format.html { render action: "edit_fees", layout: @current_role.name }
         end
       end
     end
@@ -379,6 +410,13 @@ class Gc::ParticipantsController < ApplicationController
         :vaccinated,
         :vaccination_document,
         :vaccination_sighted_by
+      )
+    end
+  
+    def participant_fees_params
+      params.require(:participant).permit(
+        :lock_version,
+        :amount_paid
       )
     end
   end

@@ -1,0 +1,20 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+        <%= link_to participant.name, edit_fees_gc_participant_path(participant) %>
+	</td>
+	
+	<td align="right"> 
+		<%= number_to_currency(participant.total_owing) %>
+	</td>
+	
+	<td align="right"> 
+		<%= number_to_currency(participant.amount_paid) %>
+	</td>
+	
+	<td align="right"> 
+		<%= number_to_currency(participant.total_owing - participant.amount_paid) %>
+	</td>
+
+	<% @total_fees += participant.total_owing %>
+	<% @total_paid += participant.amount_paid %>
+</tr>

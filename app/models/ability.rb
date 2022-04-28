@@ -32,8 +32,33 @@ class Ability
         can [:index], ParticipantExtra do |participant_extra|
           user.groups.include?(participant_extra.participant.group) || user.role?(:admin)
         end
-        can [:index, :search, :create, :new_import, :import, :drivers, :approvals, :wwccs, :vaccinations], Participant
-        can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher, :accept, :reject, :coming, :edit_driver, :update_driver, :edit_wwcc, :update_wwcc, :edit_vaccination, :update_vaccination], Participant do |participant|
+        can [:index, 
+            :search, 
+            :create, 
+            :new_import, 
+            :import, 
+            :drivers, 
+            :approvals, 
+            :wwccs, 
+            :vaccinations, 
+            :group_fees], Participant
+        can [:show, 
+            :update, 
+            :destroy, 
+            :new_voucher, 
+            :add_voucher, 
+            :delete_voucher, 
+            :accept, 
+            :reject, 
+            :coming, 
+            :edit_driver, 
+            :update_driver, 
+            :edit_wwcc, 
+            :update_wwcc, 
+            :edit_vaccination, 
+            :update_vaccination,
+            :edit_fees,
+            :update_fees], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
         can [:index, :create], SportEntry
@@ -98,11 +123,36 @@ class Ability
         can [:index], ParticipantExtra do |participant_extra|
           user.groups.include?(participant_extra.participant.group) || user.role?(:admin)
         end
-        can [:index, :search, :create, :new_import, :import, :drivers, :approvals, :wwccs, :vaccinations], Participant
-        can [:show, :update, :destroy, :new_voucher, :add_voucher, :delete_voucher, :accept, :reject, :coming, :edit_driver, :update_driver, :edit_wwcc, :update_wwcc, :edit_vaccination, :update_vaccination], Participant do |participant|
-          user.groups.include?(participant.group) || user.role?(:admin)
-        end
-        can [:index, :create], SportEntry
+        can [:index, 
+          :search, 
+          :create, 
+          :new_import, 
+          :import, 
+          :drivers, 
+          :approvals, 
+          :wwccs, 
+          :vaccinations, 
+          :group_fees], Participant
+        can [:show, 
+          :update, 
+          :destroy, 
+          :new_voucher, 
+          :add_voucher, 
+          :delete_voucher, 
+          :accept, 
+          :reject, 
+          :coming, 
+          :edit_driver, 
+          :update_driver, 
+          :edit_wwcc, 
+          :update_wwcc, 
+          :edit_vaccination, 
+          :update_vaccination,
+          :edit_fees,
+          :update_fees], Participant do |participant|
+        user.groups.include?(participant.group) || user.role?(:admin)
+      end
+      can [:index, :create], SportEntry
         can [:show, :update, :destroy], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
         end

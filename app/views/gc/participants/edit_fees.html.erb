@@ -1,0 +1,13 @@
+<% title "Fees for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_fees", locals: { 
+                              url: update_fees_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", group_fees_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

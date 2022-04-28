@@ -1,0 +1,40 @@
+<% title "Participant Fees" %>
+
+<h1><%= yield(:title) %></h1>
+    
+<% if !@participants.empty? %>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th align="right">Total Fees</th>
+                <th align="right">Amount Paid</th>
+                <th align="right">Amount Owing</th>
+            </tr>
+        </thead>
+
+        <% @total_fees = @total_paid = 0 %>
+
+        <%= render partial: 'participant_fee', collection: @participants, as: :participant %>
+
+		<tfoot>
+            <tr>
+                <td class="list-title">Totals</td>
+                <td class="list-title" align="right">
+                    <%= number_to_currency(@total_fees) %>
+                </td>
+
+                <td class="list-title" align="right">
+                    <%= number_to_currency(@total_paid) %>
+                </td>
+
+                <td class="list-title" align="right">
+                    <%= number_to_currency(@total_fees - @total_paid) %>
+                </td>
+            </tr>
+		</tfoot>
+    </table>
+<% end %>
+
+<%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
+					{:name => "Spectator", :class => "table-warning"}] %>
