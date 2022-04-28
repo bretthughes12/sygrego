@@ -47,6 +47,7 @@
                             <li class='dropdown-item'><%= link_to 'Our Sports', gc_sport_entries_path %></li>
                             <%- if @settings.sports_loaded %>
                                 <li class='dropdown-item'><%= link_to 'Sport Preferences', gc_sport_preferences_path %></li>
+                                <li class='dropdown-item'><%= link_to 'Sports Planner', sports_plan_gc_participants_path %></li>
                             <%- end %>
                         </ul>
                     </li>
