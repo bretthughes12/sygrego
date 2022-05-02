@@ -1,0 +1,47 @@
+<h2>Sport Entries</h2>
+
+<% unless @participant.sport_entries.empty? %>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Sport / Grade</th>
+                <th>&nbsp;</th>
+	        </tr>
+        </thead>
+
+	<% for entry in @participant.sport_entries %>
+	  	<tr valign="top">
+	        <td> 
+		        <%= entry.session_name %>
+	    	</td>
+	        <td> 
+		        <%= entry.section_name %>
+	    	</td>
+			
+            <td class="list-actions">
+                <%= link_to 'X', gc_sport_entry_participant_path(
+                        id: @participant.id, 
+                        sport_entry_id: entry.id,
+                        return: 'edit_sports'),
+                        class: danger_button_class,
+                        role: :button,
+                        data: { confirm: "Are you sure?" },
+					    method: :delete %>
+            </td>
+	    </tr>
+	<% end %>
+	</table>
+	
+<% else %>
+	<p>This participant is not entered in any sports</p>
+<% end %>
+
+<% unless @participant.available_sport_entries.empty? %>
+	<h3>Add to existing Sport Entry</h3>
+
+    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+        <td><%= f.collection_select :id, @participant.available_sport_entries, :id, :section_name %></td>
+        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+    <% end %>	
+<% end %>

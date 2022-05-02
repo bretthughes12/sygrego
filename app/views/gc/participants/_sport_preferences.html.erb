@@ -1,0 +1,30 @@
+<h2>Sport Preferences</h2>
+
+<% unless @participant.sport_preferences.entered.empty? %>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Sport / Grade</th>
+                <th>Preference</th>
+            </tr>
+        </thead>
+
+	<% for pref in @participant.sport_preferences.entered %>
+	  	<tr valign="top">
+	        <td> 
+		        <%= pref.grade.session_name %>
+	    	</td>
+	        <td> 
+		        <%= pref.grade.name %>
+	    	</td>
+	        <td> 
+		        <%= pref.preference %>
+	    	</td>
+	    </tr>
+	<% end %>
+	</table>
+	
+<% else %>
+	<p>This participant has not nominated any preferences</p>
+<% end %>

@@ -1,0 +1,15 @@
+<% title "Sports for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'sport_entries' %>
+
+<br/>
+
+<%= render 'sport_preferences' %>
+
+<br/>
+
+<%= link_to "Back", sports_plan_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

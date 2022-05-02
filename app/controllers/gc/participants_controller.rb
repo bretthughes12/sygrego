@@ -149,6 +149,11 @@ class Gc::ParticipantsController < ApplicationController
       render layout: @current_role.name
     end
   
+    # GET /gc/participants/1/edit_sports
+    def edit_sports
+      render layout: @current_role.name
+    end
+  
     # POST /admin/participants
     def create
       @participant = Participant.new(participant_params)

@@ -303,6 +303,7 @@ Rails.application.routes.draw do
     resources :group_extras
     resources :participant_extras
     resources :participants do
+      resources :sport_entries, controller: "participants_sport_entries", only: [:create, :destroy]
       collection do
         get :new_import
         post :import
@@ -320,6 +321,7 @@ Rails.application.routes.draw do
         get :edit_wwcc
         get :edit_vaccination
         get :edit_fees
+        get :edit_sports
         post :add_voucher
         patch :delete_voucher
         patch :accept
