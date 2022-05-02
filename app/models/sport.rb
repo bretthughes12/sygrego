@@ -78,6 +78,16 @@ class Sport < ApplicationRecord
           grade.sport_entries.where(['group_id = ?', group.id]).count
         end
     end
+
+    def sport_preferences(group)
+        prefs = []
+        group.participants.coming.accepted.playing_sport.each do |participant|
+            participant.sport_preferences.entered.each do |pref|
+                prefs << pref if pref.sport == self
+            end
+        end
+        prefs
+    end
     
     def indiv_entries(participant)
         #    entry_count = 0

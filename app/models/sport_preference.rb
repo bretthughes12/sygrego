@@ -25,7 +25,7 @@ class SportPreference < ApplicationRecord
 
   scope :entered, -> { where('preference is not null') }
 
-  delegate :session, to: :grade
+  delegate :sport, to: :grade
 
   validates :preference, 
     numericality: { only_integer: true },
@@ -94,9 +94,9 @@ class SportPreference < ApplicationRecord
     @grade ||= grade
   end
 
-  def cached_session
-    @session ||= session
-  end
+#  def cached_session
+#    @session ||= session
+#  end
 
   def group
     @group ||= cached_participant.group
@@ -114,9 +114,9 @@ class SportPreference < ApplicationRecord
     @is_entered ||= cached_participant.is_entered_in?(cached_grade)
   end
 
-  def is_entered_this_session?
-    @is_entered_this_session ||= cached_participant.is_entered_in_session?(cached_grade.session)
-  end
+#  def is_entered_this_session?
+#    @is_entered_this_session ||= cached_participant.is_entered_in_session?(cached_grade.session)
+#  end
 
   def is_entered_this_sport?
     @is_entered_this_sport ||= cached_participant.is_entered_in_sport?(cached_grade.sport)
@@ -131,11 +131,11 @@ class SportPreference < ApplicationRecord
                                 group.can_enter_grade(cached_grade)
   end
 
-  def entry_comment
+  def entry_comment(entry)
     if is_entered_this_sport?
       'Sport clash (not allowed)'
-    elsif is_entered_this_session?
-      'Session clash'
+    elsif self.grade != entry.grade
+      'Different grade'
     else
       ''
     end

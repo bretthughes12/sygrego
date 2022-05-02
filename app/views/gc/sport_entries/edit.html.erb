@@ -39,6 +39,12 @@
 
 <br/>
 
+<div>
+  <%= render :partial => 'error_box' %>
+</div>
+
+<br/>
+
 <h2>Participants</h2>
 
 <table class="table table-dark">
@@ -68,9 +74,42 @@
     <% end %>
 </table>
 
-<div>
-  <%= render :partial => 'error_box' %>
-</div>
+<br/>
+
+<% unless @sport_entry.available_sport_preferences.empty? %>
+    <h2>Additional Preferences</h2>
+
+    <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Comment</th>
+                    <th>Preference</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+
+        <% for pref in @sport_entry.available_sport_preferences %>
+            <tr valign="top">
+                <td> 
+                    <%= pref.participant.name %>
+                </td>
+                <td> 
+                    <%= pref.entry_comment(@sport_entry) %>
+                </td>
+                <td> 
+                    <%= pref.preference %>
+                </td>
+                <td> 
+                    <%= link_to 'Add', gc_sport_entry_participants_path(sport_entry_id: @sport_entry.id, id: pref.participant.id),
+                        class: primary_button_class,
+                        role: :button,
+					    method: :post %>
+                </td>
+            </tr>
+        <% end %>
+    </table>
+<% end %>
 
 <br/>
 

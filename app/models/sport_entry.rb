@@ -50,7 +50,7 @@ class SportEntry < ApplicationRecord
            :sport,
            :session_name,
 #           :eligible_to_participate?,
-#           :sport_preferences,
+           :sport_preferences,
            :team_size, to: :grade
 
   before_validation :validate_number_of_entries_in_sport, on: :create
@@ -212,16 +212,16 @@ end
       status == 'Waiting List'
   end
 
-#  def available_sport_preferences
-#    sport_preferences.reject do |p|
-#      p.preference.nil? ||
-#        participants.include?(p.participant) ||
-#        p.group != group ||
-#        !p.participant.coming ||
-#        p.participant.spectator ||
-#        !p.participant.can_play_grade(cached_grade)
-#    end
-#  end
+  def available_sport_preferences
+    sport.sport_preferences(group).reject do |p|
+      p.preference.nil? ||
+        participants.include?(p.participant) ||
+        p.group != group ||
+        !p.participant.coming ||
+        p.participant.spectator ||
+        !p.participant.can_play_grade(cached_grade)
+    end
+  end
 
   def reset!
     self.status = 'Requested'
