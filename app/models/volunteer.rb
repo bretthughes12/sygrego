@@ -87,6 +87,10 @@ class Volunteer < ApplicationRecord
                                        inclusion: { in: EQUIPMENT_IN_OPTIONS },
                                        allow_blank: true
   
+    after_create :check_participant_on_create
+    before_update :check_participants_on_update
+    after_destroy :check_participant_on_destroy
+
     searchable_by 'volunteers.description'
   
     def venue_name
@@ -188,68 +192,110 @@ class Volunteer < ApplicationRecord
     end
 
     def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-  
-        CSV.foreach(file.path, headers: true) do |fields|
-          volunteer = fields[0].nil? ? nil : Volunteer.find_by_id(fields[0].to_i)
-          type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
-          section = fields[3].nil? ? nil : Section.find_by_name(fields[3])
-          session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
-          participant = fields[5].nil? ? nil : Participant.find_by_id(fields[5].to_i)
+      creates = 0
+      updates = 0
+      errors = 0
+      error_list = []
 
-          if volunteer
+      CSV.foreach(file.path, headers: true) do |fields|
+        volunteer = fields[0].nil? ? nil : Volunteer.find_by_id(fields[0].to_i)
+        type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
+        section = fields[3].nil? ? nil : Section.find_by_name(fields[3])
+        session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
+        participant = fields[5].nil? ? nil : Participant.find_by_id(fields[5].to_i)
 
-            volunteer.volunteer_type = type
-            volunteer.section = section
-            volunteer.session = session
-            volunteer.participant = participant
-            volunteer.description = fields[2]
-            volunteer.email = fields[8]
-            volunteer.mobile_number = fields[9]
-            volunteer.t_shirt_size = fields[10]
-            volunteer.updated_by = user.id
-            
-            if volunteer.save
-              updates += 1
-            else
-              errors += 1
-              error_list << volunteer
-            end
+        if volunteer
+
+          volunteer.volunteer_type = type
+          volunteer.section = section
+          volunteer.session = session
+          volunteer.participant = participant
+          volunteer.description = fields[2]
+          volunteer.email = fields[8]
+          volunteer.mobile_number = fields[9]
+          volunteer.t_shirt_size = fields[10]
+          volunteer.updated_by = user.id
+          
+          if volunteer.save
+            updates += 1
           else
-            volunteer = Volunteer.create(
-                volunteer_type: type,
-                section:        section,
-                session:        session,
-                participant:    participant,
-                description:    fields[2],
-                email:          fields[8],
-                mobile_number:  fields[9],
-                t_shirt_size:   fields[10],
-                updated_by:     user.id
-            )
-  
-            if volunteer.errors.empty?
-              creates += 1
-            else
-              errors += 1
-              error_list << session
-            end
+            errors += 1
+            error_list << volunteer
+          end
+        else
+          volunteer = Volunteer.create(
+              volunteer_type: type,
+              section:        section,
+              session:        session,
+              participant:    participant,
+              description:    fields[2],
+              email:          fields[8],
+              mobile_number:  fields[9],
+              t_shirt_size:   fields[10],
+              updated_by:     user.id
+          )
+
+          if volunteer.errors.empty?
+            creates += 1
+          else
+            errors += 1
+            error_list << session
           end
         end
-  
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
       end
   
-      private
+      { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
   
-      def self.sync_fields
-          ['description',
-           'session_id',
-           'section_id',
-           'participant_id',
-           'volunteer_type_id']
+    private
+
+    def self.sync_fields
+      ['description',
+        'session_id',
+        'section_id',
+        'participant_id',
+        'volunteer_type_id']
+    end
+
+    def check_participant_on_create
+      if self.participant
+        update_participant_category!(self.volunteer_type, self.participant)
       end
-  end
+    end
+
+    def check_participants_on_update
+      if self.participant_id_changed?
+        if self.participant_id_was
+          old_participant = Participant.find(self.participant_id_was)
+          revert_participant_category!(old_participant) unless old_participant.nil?
+        end
+  
+        if self.participant
+          update_participant_category!(self.volunteer_type, self.participant)
+        end
+      end
+    end
+
+    def check_participant_on_destroy
+      if self.participant
+        revert_participant_category!(self.participant)
+      end
+    end
+
+    def update_participant_category!(volunteer_type, participant)
+      case
+      when volunteer_type.name == "Sport Coordinator"
+        participant.sport_coord = true
+        participant.save(validate: false)
+      end
+    end
+  
+    def revert_participant_category!(participant)
+      case
+      when participant.volunteers.sport_coords.empty?
+        participant.sport_coord = false
+        participant.save(validate: false)
+      end
+    end
+  
+end

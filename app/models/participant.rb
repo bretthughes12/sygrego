@@ -266,8 +266,7 @@ class Participant < ApplicationRecord
       fee *= settings.primary_age_adjustment if age && (age < 14) && spectator
   
       gc_fee = group_coord ? fee * settings.coordinator_adjustment : fee
-#      sc_fee = sport_coord ? fee - sport_coord_discount : fee
-      sc_fee = base_fee
+      sc_fee = sport_coord ? fee - sport_coord_discount : fee
       helper_fee = helper ? fee * settings.helper_adjustment : fee
   
       fee = [gc_fee, sc_fee, helper_fee].min
@@ -307,14 +306,14 @@ class Participant < ApplicationRecord
       participant_extras.wanted.to_a.sum(&:cost)
     end
   
-#    def sport_coord_discount
-#      sessions_coordinating = officials
-#                              .sport_coords
-#                              .where('participant_id is not null')
-#                              .count
+    def sport_coord_discount
+      sessions_coordinating = volunteers
+                              .sport_coords
+                              .where('participant_id is not null')
+                              .count
   
-#      sessions_coordinating == 0 ? 0 : sessions_coordinating * 5 + 10
-#    end
+      sessions_coordinating == 0 ? 0 : sessions_coordinating * 5 + 10
+    end
       
     def category
       if guest && spectator
