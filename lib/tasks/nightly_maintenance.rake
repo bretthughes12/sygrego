@@ -67,6 +67,32 @@ namespace :syg do
     puts "Orphans found: #{updates}"
   end
 
+  desc 'Check Sport Coordinators'
+  task check_sport_coordinators: ['environment'] do |_t|
+    updates = 0
+    puts "Checking for incorrectly defined sport coordinators..."
+
+    Volunteer.sport_coords.filled.each do |v|
+      if !v.participant.sport_coord
+        puts "#{v.participant.name} changed to sport coord"
+        v.participant.sport_coord = true
+        v.participant.save(validate: false)
+        updates += 1
+      end
+    end
+
+    Participant.sport_coords.coming.accepted.each do |p|
+      if p.volunteers.sport_coords.empty?
+        puts "#{p.participant.name} changed to not sport coord"
+        p.participant.sport_coord = false
+        p.participant.save(validate: false)
+        updates += 1
+      end
+    end
+
+    puts "Sport coordinators corrected: #{updates}"
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',
