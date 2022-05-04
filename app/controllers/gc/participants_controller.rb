@@ -151,6 +151,9 @@ class Gc::ParticipantsController < ApplicationController
   
     # GET /gc/participants/1/edit_sports
     def edit_sports
+      @grades = @participant.available_grades
+      @sport_entry = SportEntry.new
+
       render layout: @current_role.name
     end
   

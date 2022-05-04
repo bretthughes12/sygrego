@@ -45,3 +45,14 @@
         <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
     <% end %>	
 <% end %>
+
+<br/>
+
+<% unless @grades.empty? %>
+	<h3>Create new Sport Entry</h3>
+	
+    <%= form_for(@sport_entry, url: gc_sport_entries_path(participant_id: @participant.id, return: 'edit_sports'), method: :post) do |f| %> 
+        <td><%= f.collection_select :grade_id, @grades, :id, :name %></td>
+        <td><%= f.submit "Create", role: :button, class: primary_button_class %></td>
+    <% end %>	
+<% end %>

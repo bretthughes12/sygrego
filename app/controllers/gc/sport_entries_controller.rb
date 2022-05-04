@@ -26,7 +26,6 @@ class Gc::SportEntriesController < ApplicationController
   
     # GET /gc/sport_entries/new
     def new
-#      @sports = @group.sports_available(false).sort
       @grades = @group.grades_available(false)
 
       respond_to do |format|
@@ -51,6 +50,11 @@ class Gc::SportEntriesController < ApplicationController
         @sport_entry.section = @grade.starting_section
       end
   
+      if params[:participant_id]
+        participant = Participant.find(params[:participant_id])
+        @sport_entry.participants << participant
+      end
+  
       respond_to do |format|
         if @sport_entry.save
           flash[:notice] = 'Sport entry was successfully created.'
@@ -59,9 +63,17 @@ class Gc::SportEntriesController < ApplicationController
 #            Reg::SportEntriesController.delay.refresh_sport_entry_chances!(@group, @grade)
 #          end
   
-          format.html { redirect_to edit_gc_sport_entry_url(@sport_entry) }
+          if params[:return] && params[:return] == 'edit_sports'
+            format.html { redirect_to(edit_sports_gc_participant_path(participant)) }
+          else
+            format.html { redirect_to(edit_gc_sport_entry_url(@sport_entry)) }
+          end
         else
-          format.html { redirect_to action: "new" }
+          if params[:return] && params[:return] == 'edit_sports'
+            format.html { redirect_to(edit_sports_gc_participant_path(participant)) }
+          else
+            format.html { redirect_to action: "new" }
+          end
         end
       end
     end
