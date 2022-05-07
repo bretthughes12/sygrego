@@ -269,22 +269,20 @@ class Grade < ApplicationRecord
         save(validate: false)
     end
 
-#    def coordinators
-#        coords = []
-#        coords += officials.sport_coords unless officials.sport_coords.empty?
-#        coords += sport.officials.sport_coords unless sport.officials.sport_coords.empty?
-#        sport_sections.each do |s|
-#          coords += s.officials.sport_coords unless s.officials.empty?
-#        end
-#        coords
-#    end
+    def coordinators
+        coords = []
+        sections.each do |s|
+          coords += s.volunteers.sport_coords unless s.volunteers.empty?
+        end
+        coords
+    end
     
-#    def coordinators_groups
-#        groups = coordinators.collect do |c|
-#          c.participant&.group
-#        end
-#        groups.uniq
-#    end
+    def coordinators_groups
+        groups = coordinators.collect do |c|
+          c.participant&.group
+        end
+        groups.uniq
+    end
     
 #    def update_for_change_in_entries(save_record = true)
 #        self.entries_to_be_allocated = entry_limit.nil? ? 999 : entry_limit - entries_entered.size

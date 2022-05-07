@@ -57,6 +57,12 @@ class MysygSetting < ApplicationRecord
     validates :indiv_sport_view_strategy, 
         length: { maximum: 25 },
         inclusion: { in: VIEW_STRATEGIES }
+    validates :extra_fee_total,
+        presence: true,
+        numericality: true
+    validates :extra_fee_per_day,
+        presence: true,
+        numericality: true
 
     def update_name!(name)
         self.mysyg_name = name.downcase.gsub(/[\[\] ,\.\/\']/,'')
