@@ -8,10 +8,14 @@
 	</td>
 	
 	<td> 
-		<%= event_detail.onsite ? "Yes" : "No" %>
+		<%= h(event_detail.estimated_numbers) %>
 	</td>
 	
 	<td> 
-		<%= h(event_detail.estimated_numbers) %>
+		<%= event_detail.group.participants.coming.accepted.count %>
+	</td>
+	
+	<td> 
+		<%= event_detail.group.sport_entries.count %>
 	</td>
 </tr>
