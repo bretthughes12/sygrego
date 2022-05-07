@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_07_100931) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_07_124407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_07_100931) do
     t.string "event", limit: 20
     t.bigint "user_id"
     t.datetime "created_at", precision: nil
+  end
+
+  create_table "ballot_results", force: :cascade do |t|
+    t.string "sport_name", limit: 20, null: false
+    t.string "grade_name", limit: 50, null: false
+    t.string "section_name", limit: 50
+    t.string "preferred_section_name", limit: 50
+    t.integer "entry_limit"
+    t.boolean "over_limit"
+    t.boolean "one_entry_per_group"
+    t.string "group_name", limit: 50, null: false
+    t.boolean "new_group"
+    t.string "sport_entry_name"
+    t.string "sport_entry_status", limit: 20, null: false
+    t.integer "factor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "delayed_jobs", force: :cascade do |t|

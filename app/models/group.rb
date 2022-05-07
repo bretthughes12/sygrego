@@ -127,9 +127,9 @@ class Group < ApplicationRecord
 
     before_save :uppercase_abbr!
     before_save :check_mysyg_name
-    after_save :create_event_details!
-    after_save :create_mysyg_setting!
-    after_save :create_rego_checklist!
+    after_commit :create_event_details!
+    after_commit :create_mysyg_setting!
+    after_commit :create_rego_checklist!
 
     def <=>(other)
       name <=> other.name

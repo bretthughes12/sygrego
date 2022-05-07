@@ -1,5 +1,5 @@
 class AllocationCalculation
-#    attr_accessor :high_priority
+    attr_accessor :high_priority
   
     def initialize(entry)
       @entry = entry
@@ -8,9 +8,7 @@ class AllocationCalculation
       @entries_in_grade = SportEntry.requested
                                     .where(['grade_id = ?', @entry.grade_id])
                                     .load
-#      @high_priority_entries_in_grade = @grade.sport_entries
-#                                              .where(high_priority: true)
-#                                              .load
+      @high_priority_entries_in_grade = @grade.high_priority_entries
       @settings = Setting.first
     end
   
@@ -23,8 +21,12 @@ class AllocationCalculation
     def allocation_chance
       # collect all allocation factors of other entries in the grade into an array
       # (sorted in descending order)
-      entries = @entries_in_grade - [@entry]
-  
+      entries = if @high_priority
+                  @high_priority_entries_in_grade - [@entry]
+                else
+                  @entries_in_grade - @high_priority_entries_in_grade - [@entry]
+                end
+
       factors = []
       factors = entries.collect(&:allocation_factor).sort { |x, y| y <=> x }
   
@@ -32,7 +34,7 @@ class AllocationCalculation
       ((1.0 - chance_of_not_being_allocated(factors)) * 100).floor
     end
   
-    def number_of_groups_in_sport_grade
+    def number_of_groups_in_grade
       groups_in_grade.size
     end
   
@@ -44,19 +46,10 @@ class AllocationCalculation
   
     def group_base_allocation_factor
       @number_of_grades ||= grades_to_be_allocated_for_group.size
-      factor = @number_of_grades == 0 ? 0 : (number_of_participants_for_grade / @number_of_grades).to_i
+      factor = @number_of_grades == 0 ? 0 : (@group.participants.coming.accepted.playing_sport.size / @number_of_grades).to_i
       factor += @settings.new_group_sports_allocation_factor if @group.new_group
       [factor, 1].max
     end
-  
-#    def number_of_participants_for_grade
-#      available = [@group.participants.coming.accepted.playing_sport.size -
-#        @group.participants_needed_for_session(@grade.sport_session.id),
-#                   @group.sports_participants_for_grade(@grade).size +
-#                     @entry.participants.size].min
-#  
-#      available > 0 ? available : 0
-#    end
   
     def group_priority_factor
       @entries_for_allocation ||= sport_entries_to_be_allocated_for_group

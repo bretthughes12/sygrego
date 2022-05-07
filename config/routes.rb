@@ -76,6 +76,14 @@ Rails.application.routes.draw do
       end
     end
 
+    resource :tasks, :controller => "tasks" do
+      collection do
+        post :allocate_restricted
+        post :allocate_team_grades_to_sections
+        post :allocate_indiv_grades_to_sections
+      end
+    end
+
     resources :settings, only: [:show, :edit, :update] do
       member do
         get :edit_event
@@ -235,6 +243,12 @@ Rails.application.routes.draw do
         get :search
         get :new_import
         post :import
+      end
+    end
+
+    resources :ballot_results, :only => [:index] do
+      collection do
+        get :summary
       end
     end
   end
