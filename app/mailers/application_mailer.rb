@@ -3,8 +3,9 @@ class ApplicationMailer < ActionMailer::Base
   layout 'mailer'
   before_action :get_settings
 
+  private
+
   def get_settings
       @settings ||= Setting.first
   end
-
 end

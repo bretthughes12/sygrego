@@ -1,4 +1,4 @@
-class Admin::InfoController < ApplicationController
+class Admin::BallotResultsController < ApplicationController
     before_action :authenticate_user!
 
     layout 'admin'

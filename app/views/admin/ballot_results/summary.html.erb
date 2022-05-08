@@ -1,0 +1,26 @@
+<% title "Restricted Sports Allocation" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th>Group Name</th>
+            <th>To Confirm</th>
+            <th>Waiting List</th>
+        </tr>
+    </thead>
+	    
+    <%= render :partial => "group_result", :collection => @group_results %>
+</table>
+
+<%= link_to "Allocate", allocate_restricted_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download Details", admin_ballot_results_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "New group", :class => "table-warning"},
+				{:name => "Old group", :class => "table-primary"}] %>

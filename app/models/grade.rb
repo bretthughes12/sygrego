@@ -258,11 +258,11 @@ class Grade < ApplicationRecord
 #        cached_sport_entries.collect(&:id)
 #    end
 
-#    def self.reset_all_restricted_entries_to_requested!
-#        Grade.restricted.each do |g|
-#            g.sport_entries.each(&:reset!)
-#        end
-#    end
+    def self.reset_all_restricted_entries_to_requested!
+        Grade.restricted.each do |g|
+            g.sport_entries.each(&:reset!)
+        end
+    end
     
     def close!
         self.status = 'Closed'
