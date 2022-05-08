@@ -93,6 +93,13 @@ namespace :syg do
     puts "Sport coordinators corrected: #{updates}"
   end
 
+  desc 'Fix grade flags'
+  task fix_grade_flags: ['environment'] do |_t|
+    puts "Fixing grade flags for over limit..."
+
+    Grade.active.each { |g| g.update_for_change_in_entries }
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',

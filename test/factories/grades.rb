@@ -16,8 +16,8 @@
 #  min_males               :integer          default(0), not null
 #  min_participants        :integer          default(0), not null
 #  name                    :string(50)       not null
-#  one_entry_per_group     :boolean
-#  over_limit              :boolean
+#  one_entry_per_group     :boolean          default(FALSE)
+#  over_limit              :boolean          default(FALSE)
 #  starting_entry_limit    :integer
 #  status                  :string(20)       default("Open"), not null
 #  team_size               :integer          default(1)

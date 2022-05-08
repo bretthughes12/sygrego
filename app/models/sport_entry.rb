@@ -55,7 +55,10 @@ class SportEntry < ApplicationRecord
 
   before_validation :validate_number_of_entries_in_sport, on: :create
   after_create :update_team_numbers
+  after_create :update_grade_flags
+  after_update :update_grade_flags_on_status_change
   after_destroy :update_team_numbers
+  after_destroy :update_grade_flags
 
   STATUSES = ['Requested',
     'To Be Confirmed',
@@ -387,5 +390,15 @@ private
 
   def update_team_numbers
     self.group.update_team_numbers(grade)
+  end
+
+  def update_grade_flags
+    self.grade.update_for_change_in_entries
+  end
+
+  def update_grade_flags_on_status_change
+    if status_changed?
+      self.grade.update_for_change_in_entries
+    end
   end
 end

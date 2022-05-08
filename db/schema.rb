@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_07_124407) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_08_051806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -133,8 +133,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_07_124407) do
     t.integer "team_size", default: 1
     t.datetime "waitlist_expires_at", precision: nil
     t.integer "entries_to_be_allocated", default: 999
-    t.boolean "over_limit"
-    t.boolean "one_entry_per_group"
+    t.boolean "over_limit", default: false
+    t.boolean "one_entry_per_group", default: false
     t.bigint "updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
