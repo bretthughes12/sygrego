@@ -37,7 +37,7 @@
 
 <% else %>
 
-    <table class="table table-dark table-striped">
+    <table class="table table-dark">
         <thead>
             <tr>
                 <th>Group</th>
@@ -47,7 +47,7 @@
             </tr>
         </thead>
 
-        <%= render partial: 'grade_sport_entry', collection: @grade.sport_entries, as: :sport_entry %>
+        <%= render partial: 'grade_sport_entry', collection: @grade.sport_entries.includes(:group).order("groups.abbr, team_number"), as: :sport_entry %>
     </table>
 
 <% end %>
@@ -63,3 +63,8 @@
                   data: { confirm: "Are you sure?" },
                   class: danger_button_class,
                   role: "button" %>
+
+<%= legend_box [{:name => "Entered", :class => "table-primary"},
+					{:name => "Requested", :class => "table-warning"},
+					{:name => "Requiring Confirmation", :class => "table-danger"},
+					{:name => "Waiting List", :class => "table-dark"}] %>

@@ -140,7 +140,6 @@ class Admin::TasksController < ApplicationController
                                         :new_group => entry.group.new_group,
                                         :sport_entry_name => entry.name, 
                                         :sport_entry_status => entry.status, 
-                                        :priority => entry.priority, 
                                         :factor => e[1])
                 result.save(:validate => false)
             end
@@ -157,7 +156,6 @@ class Admin::TasksController < ApplicationController
                                         :new_group => entry.group.new_group,
                                         :sport_entry_name => entry.name, 
                                         :sport_entry_status => entry.status, 
-                                        :priority => entry.priority, 
                                         :factor => e[1])
                 result.save(:validate => false)
             end

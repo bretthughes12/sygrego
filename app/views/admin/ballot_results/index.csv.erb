@@ -1,4 +1,4 @@
-Sport,Grade,Section,Pref Section,Limit,Over Limit?,One Per Group?,Group,New Group?,Entry,Status,Priority,Factor
+Sport,Grade,Section,Pref Section,Limit,Over Limit?,One Per Group?,Group,New Group?,Entry,Status,Factor
 <%= CSV.generate do |csv|
   @ballot_results.each do |r|
     csv << 	[ 
@@ -13,7 +13,6 @@ Sport,Grade,Section,Pref Section,Limit,Over Limit?,One Per Group?,Group,New Grou
 				r.new_group,
 				r.sport_entry_name,
 				r.sport_entry_status,
-				r.priority,
 				r.factor
 	 		]
   end

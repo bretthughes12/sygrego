@@ -77,7 +77,11 @@ class ApplicationController < ActionController::Base
         if @group.nil?
             if session["current_group"] && !session["current_group"].blank?
               @group = Group.find_by_abbr(session["current_group"])
-            elsif current_user && current_user.groups.count > 0
+            end
+        end
+
+        if @group.nil?
+            if current_user && current_user.groups.count > 0
               @group = current_user.groups.first
             else
               @group = Group.first

@@ -15,7 +15,7 @@ class AllocationCalculation
     def allocation_factor
       factor = entry_base_allocation_factor
       factor += @settings.sport_coord_sports_allocation_factor if @grade.coordinators_groups.include?(@group)
-      (factor * group_priority_factor.to_f).ceil
+      factor
     end
   
     def allocation_chance
@@ -49,12 +49,6 @@ class AllocationCalculation
       factor = @number_of_grades == 0 ? 0 : (@group.participants.coming.accepted.playing_sport.size / @number_of_grades).to_i
       factor += @settings.new_group_sports_allocation_factor if @group.new_group
       [factor, 1].max
-    end
-  
-    def group_priority_factor
-      @entries_for_allocation ||= sport_entries_to_be_allocated_for_group
-      @total_priority ||= @entries_for_allocation.sum(&:priority)
-      @total_priority == 0 ? 1 : (@entries_for_allocation.size.to_f / @total_priority)
     end
   
     # calculate the chance that the entry will NOT be allocated

@@ -63,10 +63,10 @@ class BallotResult < ApplicationRecord
     end
 
     def self.count_of_entered(group_name)
-        BallotResult.where(group_name: group_name, sport_entry_status: 'Entered').count
+        BallotResult.where(group_name: group_name, sport_entry_status: 'To Be Confirmed').count
     end
 
     def self.count_of_missed_out(group_name)
-        BallotResult.where(group_name: group_name, sport_entry_status: 'Missed Out').count
+        BallotResult.where(group_name: group_name, sport_entry_status: 'Waiting List').count
     end
 end

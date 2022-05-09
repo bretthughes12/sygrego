@@ -295,7 +295,7 @@ class Grade < ApplicationRecord
     def high_priority_entries
         entries = []
         sport_entries.each do |e|
-          entries += e if e.high_priority
+          entries << e if e.high_priority
         end
         entries
     end
