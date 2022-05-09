@@ -44,10 +44,10 @@ class Grade < ApplicationRecord
   
     attr_reader :file
 
-    has_many :sport_entries
-    has_many :sport_preferences
-    has_many :groups_grades_filters
-    has_many :sections
+    has_many :sport_entries, dependent: :destroy
+    has_many :sport_preferences, dependent: :destroy
+    has_many :groups_grades_filters, dependent: :destroy
+    has_many :sections, dependent: :destroy
     belongs_to :sport
 
     default_scope { order(:name) }

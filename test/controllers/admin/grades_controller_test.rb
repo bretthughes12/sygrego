@@ -136,15 +136,4 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
       delete admin_grade_url(12345678)
     }
   end
-
-  test "should not destroy grade with sections" do
-    FactoryBot.create(:section, grade: @grade)
-
-    assert_no_difference("Grade.count") do
-      delete admin_grade_url(@grade)
-    end
-
-    assert_redirected_to admin_grades_path
-    assert_match /Can't delete/, flash[:notice]
-  end
 end

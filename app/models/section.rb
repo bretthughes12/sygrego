@@ -37,7 +37,7 @@ class Section < ApplicationRecord
     attr_reader :file
 
     has_many :volunteers
-    has_many :sport_entries
+    has_many :sport_entries, dependent: :destroy
     belongs_to :grade
     belongs_to :venue
     belongs_to :session
