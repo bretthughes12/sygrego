@@ -301,7 +301,7 @@ class Grade < ApplicationRecord
     end
 
     def update_for_change_in_entries(save_record = true)
-        self.entries_to_be_allocated = entry_limit.nil? ? 999 : entry_limit - entries_entered.size
+        self.entries_to_be_allocated = entry_limit.nil? ? 999 : entry_limit - entries_to_be_confirmed.size - entries_entered.size
         self.over_limit = entries_to_be_allocated < entries_requested.size
         self.one_entry_per_group = groups_requested.size >= entries_to_be_allocated
    

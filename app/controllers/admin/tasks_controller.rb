@@ -97,8 +97,8 @@ class Admin::TasksController < ApplicationController
     def self.allocate_1st_entries_in_grades_over_limits(current_user)
         logger.info("Allocating high priority entries for groups where #groups not over limits...")
         Grade.over_limit.ballot_for_low_priority.each do |g|
-          g.sport_entries.requested.high_priority.each do |e| 
-            e.require_confirmation!
+          g.sport_entries.requested.each do |e| 
+            e.require_confirmation! if e.high_priority
           end
         end
     end

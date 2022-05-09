@@ -214,7 +214,9 @@ end
 #  end
 
   def high_priority
-    self.id == self.group.sport_entries.where(grade: self.grade).order(:id).first.id
+    total_entries = self.group.sport_entries.where(grade: self.grade).order(:id)
+    false if total_entries.count == 1
+    self.id == total_entries.first.id
   end
 
   def entry_can_be_deleted(settings)
@@ -304,6 +306,7 @@ end
     self.status = 'To Be Confirmed'
     save
     group.reset_allocation_bonus!
+    grade.update_for_change_in_entries
   end
 
   def reject!
