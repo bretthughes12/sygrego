@@ -8,6 +8,50 @@
 
 <br/>
 
+<h2>Volunteers</h2>
+
+<% if @grade.volunteers.empty? %>
+    <p>There are no volunteers defined for this grade.</p>
+
+<% else %>
+
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Volunteer</th>
+                <th>Session</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        <%= render partial: 'grade_volunteer', collection: @grade.volunteers, as: :volunteer %>
+    </table>
+
+<% end %>
+
+<h2>Sport Entries</h2>
+
+<% if @grade.sport_entries.empty? %>
+    <p>There are no sport entries for this grade.</p>
+
+<% else %>
+
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Preferred</th>
+            </tr>
+        </thead>
+
+        <%= render partial: 'grade_sport_entry', collection: @grade.sport_entries, as: :sport_entry %>
+    </table>
+
+<% end %>
+
 <%= link_to "Back", admin_grades_path,
                   class: primary_button_class,
                   role: "button" %>

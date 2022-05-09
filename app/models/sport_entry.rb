@@ -127,6 +127,10 @@ class SportEntry < ApplicationRecord
     section.nil? ? cached_grade.name : section.name
   end
 
+  def allocated_section_name
+    section.nil? ? "" : section.name
+  end
+
   def preferred_section_name
     preferred_section_id.nil? ? "" : Section.find(preferred_section_id).name
   end

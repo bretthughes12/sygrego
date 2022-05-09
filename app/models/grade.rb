@@ -272,9 +272,17 @@ class Grade < ApplicationRecord
     def coordinators
         coords = []
         sections.each do |s|
-          coords += s.volunteers.sport_coords unless s.volunteers.empty?
+          coords += s.volunteers.sport_coords unless s.volunteers.sport_coords.empty?
         end
         coords
+    end
+
+    def volunteers
+        volunteers = []
+        sections.each do |s|
+          volunteers += s.volunteers unless s.volunteers.empty?
+        end
+        volunteers
     end
     
     def coordinators_groups
