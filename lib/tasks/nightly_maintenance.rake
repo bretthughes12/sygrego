@@ -67,6 +67,25 @@ namespace :syg do
     puts "Orphans found: #{updates}"
   end
 
+  desc 'Check orphaned ParticipantsSportEntry records'
+  task check_participants_sport_entries: ['environment'] do |_t|
+    updates = 0
+    puts "Checking for orphaned ParticipantsSportEntry records..."
+
+    ParticipantsSportEntry.all.each do |ps|
+      if ps.sport_entry.nil? || ps.participant.nil?
+        if ps.sport_entry.nil?
+          puts "Orphan found (sport entry)"
+        else
+          puts "Orphan found (participant)"
+        end
+        updates += 1
+      end
+    end
+
+    puts "Orphans found: #{updates}"
+  end
+
   desc 'Check Sport Coordinators'
   task check_sport_coordinators: ['environment'] do |_t|
     updates = 0

@@ -36,7 +36,7 @@ class SportEntry < ApplicationRecord
   belongs_to :grade
   belongs_to :section, optional: true
   belongs_to :captaincy, class_name: 'Participant', optional: true
-  has_many   :participants_sport_entries, dependent: :destroy
+  has_many   :participants_sport_entries
   has_many   :participants, through: :participants_sport_entries
 
   scope :entered, -> { where(status: 'Entered') }
