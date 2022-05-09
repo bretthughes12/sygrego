@@ -61,7 +61,7 @@ class GradeTest < ActiveSupport::TestCase
     FactoryBot.create(:section, grade: @grade)
     FactoryBot.create(:section, grade: @grade)
     
-    assert_equal '(not final)', @grade.venue_name
+    assert_equal 'Multiple venues available', @grade.venue_name
   end
 
   test "should show venue name and id for single venues" do
@@ -79,7 +79,7 @@ class GradeTest < ActiveSupport::TestCase
     #grade has no sections
     grade_with_no_sections = FactoryBot.create(:grade)
 
-    assert_equal '(not final)', grade_with_no_sections.venue_name
+    assert_equal 'Multiple venues available', grade_with_no_sections.venue_name
   end
   
   test "should have multiple possible venues" do
@@ -113,7 +113,7 @@ class GradeTest < ActiveSupport::TestCase
     FactoryBot.create(:section, grade: @grade)
     
     assert @grade.possible_sessions.size > 1
-    assert_equal '(not final)', @grade.session_name
+    assert_equal 'Multiple sessions available', @grade.session_name
   end
   
   test "should have one possible session for same session" do
@@ -132,7 +132,7 @@ class GradeTest < ActiveSupport::TestCase
     grade_with_no_sections = FactoryBot.create(:grade)
 
     assert_equal 0, grade_with_no_sections.possible_sessions.size
-    assert_equal '(not final)', grade_with_no_sections.session_name
+    assert_equal 'Multiple sessions available', grade_with_no_sections.session_name
   end
 
   test "should inherit sport name from sport" do

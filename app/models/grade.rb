@@ -127,7 +127,7 @@ class Grade < ApplicationRecord
         if venues.size == 1
           venues[0].name
         else
-          '(not final)'
+          'Multiple venues available'
         end
     end
     
@@ -146,7 +146,7 @@ class Grade < ApplicationRecord
         if sessions.size == 1
           sessions[0].name
         else
-          '(not final)'
+          'Multiple sessions available'
         end
     end
     

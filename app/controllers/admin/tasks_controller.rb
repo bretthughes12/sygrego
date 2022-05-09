@@ -131,32 +131,34 @@ class Admin::TasksController < ApplicationController
             # Report all allocated entries
             allocated.each do |e|
                 entry = SportEntry.find(e[0])
-                result = BallotResult.new(:sport_name => g.sport.name,
-                                        :grade_name => g.name,
-                                        :entry_limit => g.entry_limit,
-                                        :over_limit => g.over_limit, 
-                                        :one_entry_per_group => g.one_entry_per_group, 
-                                        :group_name => entry.group.short_name,
-                                        :new_group => entry.group.new_group,
-                                        :sport_entry_name => entry.name, 
-                                        :sport_entry_status => entry.status, 
-                                        :factor => e[1])
+                result = BallotResult.new(
+                  :sport_name => g.sport.name,
+                  :grade_name => g.name,
+                  :entry_limit => g.entry_limit,
+                  :over_limit => g.over_limit, 
+                  :one_entry_per_group => g.one_entry_per_group, 
+                  :group_name => entry.group.short_name,
+                  :new_group => entry.group.new_group,
+                  :sport_entry_name => entry.name, 
+                  :sport_entry_status => entry.status, 
+                  :factor => e[1])
                 result.save(:validate => false)
             end
         
             # Report all rejected entries
             missed_out.each do |e|
                 entry = SportEntry.find(e[0])
-                result = BallotResult.new(:sport_name => g.sport.name,
-                                        :grade_name => g.name,
-                                        :entry_limit => g.entry_limit,
-                                        :over_limit => g.over_limit, 
-                                        :one_entry_per_group => g.one_entry_per_group, 
-                                        :group_name => entry.group.short_name,
-                                        :new_group => entry.group.new_group,
-                                        :sport_entry_name => entry.name, 
-                                        :sport_entry_status => entry.status, 
-                                        :factor => e[1])
+                result = BallotResult.new(
+                  :sport_name => g.sport.name,
+                  :grade_name => g.name,
+                  :entry_limit => g.entry_limit,
+                  :over_limit => g.over_limit, 
+                  :one_entry_per_group => g.one_entry_per_group, 
+                  :group_name => entry.group.short_name,
+                  :new_group => entry.group.new_group,
+                  :sport_entry_name => entry.name, 
+                  :sport_entry_status => entry.status, 
+                  :factor => e[1])
                 result.save(:validate => false)
             end
         end

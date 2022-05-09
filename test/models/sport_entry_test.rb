@@ -321,8 +321,8 @@ class SportEntryTest < ActiveSupport::TestCase
     entry = FactoryBot.create(:sport_entry,
                     grade: section1.grade)
 
-    assert_equal "(not final)", entry.venue_name
-    assert_equal "(not final)", entry.session_name
+    assert_equal "Multiple venues available", entry.venue_name
+    assert_equal "Multiple sessions available", entry.session_name
   end
 
   test "should be able to be deleted" do
