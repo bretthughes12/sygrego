@@ -132,7 +132,16 @@ class SportEntry < ApplicationRecord
   end
 
   def preferred_section_name
-    preferred_section_id.nil? ? "" : Section.find(preferred_section_id).name
+    if preferred_section_id.nil? 
+      "" 
+    else
+      section = Section.where(id: preferred_section_id).first
+      if section.nil?
+        ""
+      else
+        section.name 
+      end
+    end
   end
 
   def requires_participants?

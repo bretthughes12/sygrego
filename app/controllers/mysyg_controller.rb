@@ -24,7 +24,9 @@ class MysygController < ApplicationController
       @group = ms.group unless ms.nil?
     elsif session["current_group"]
       @group = Group.find_by_abbr(session["current_group"])
-    elsif @participant
+    end
+
+    if @group.nil? && @participant
       @group = @participant.group
     end
     

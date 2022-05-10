@@ -56,6 +56,12 @@ class ApplicationController < ActionController::Base
             role = session["current_role"]
             group_abbr = session["current_group"]
             group = Group.find_by_abbr(group_abbr)
+
+            if group.nil?
+                group_abbr = current_user.default_group
+                group = Group.find_by_abbr(group_abbr)
+            end
+
             participant_id = session["current_participant"]
             participant = Participant.where(id: participant_id).first
 
