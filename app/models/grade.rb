@@ -65,6 +65,8 @@ class Grade < ApplicationRecord
     delegate :name, to: :sport, prefix: true
     delegate :classificaion, to: :sport
 
+    before_save :update_grade_flags_on_limit_change, if: :will_save_change_to_entry_limit?
+
     GRADE_TYPES = %w[Singles
         Doubles
         Team].freeze
@@ -176,19 +178,19 @@ class Grade < ApplicationRecord
 #    end
     
     def entries_entered
-        cached_sport_entries.entered
+        sport_entries.entered
     end
     
     def entries_requested
-        cached_sport_entries.requested
+        sport_entries.requested
     end
     
     def entries_waiting
-        cached_sport_entries.waiting_list
+        sport_entries.waiting_list
     end
     
     def entries_to_be_confirmed
-        cached_sport_entries.to_be_confirmed
+        sport_entries.to_be_confirmed
     end
 
 #    def number_of_teams
@@ -200,7 +202,7 @@ class Grade < ApplicationRecord
           'Requested'
         else
           if entry_limit &&
-             entries_entered.size + entries_requested.size >= entry_limit
+             entries_entered.size + entries_requested.size + entries_to_be_confirmed.size >= entry_limit
               'Waiting List'
           else
               'Entered'
@@ -458,6 +460,10 @@ class Grade < ApplicationRecord
     def groups_requested
         groups = entries_requested.collect(&:group)
         groups.uniq
+    end
+
+    def update_grade_flags_on_limit_change
+        update_for_change_in_entries(false)
     end
 
     def self.sync_fields
