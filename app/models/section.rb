@@ -78,6 +78,23 @@ class Section < ApplicationRecord
     def session_and_venue
         session.name + " - " + venue.name
     end
+    
+    def can_take_more_entries?
+        self.sport_entries.count < teams_allowed
+    end
+
+    def courts_available
+        return number_of_courts unless number_of_courts.blank?
+        return 1
+    end
+
+    def teams_allowed
+        if number_of_courts.blank?
+            grade.teams_per_court
+        else    
+            grade.teams_per_court * number_of_courts
+        end
+    end
 
     def self.import(file, user)
         creates = 0

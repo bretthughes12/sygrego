@@ -6,7 +6,7 @@ class Admin::BallotResultsController < ApplicationController
     # GET /admin/ballot_results
     # GET /admin/ballot_results?format=csv
     def index
-        @ballot_results = BallotResult.all
+        @ballot_results = BallotResult.order(:sport_name, :grade_name, :sport_entry_status, :section_name, :group_name).all
 
         respond_to do |format|
             format.html # index.html.erb

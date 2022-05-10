@@ -6,11 +6,13 @@ class AllocateRestrictedJob < ApplicationJob
         reset_all_restricted_entries_to_requested
         reset_grade_flags
         close_grades_with_entry_limits    
+        reset_sport_entry_sections
         reject_2nd_entries_in_grades_over_limits
         allocate_entries_in_grades_under_limits
         allocate_1st_entries_in_grades_over_limits
         initialise_allocation_bonuses
         allocate_grades_with_ballots
+        allocate_remaining_sections
         TasksMailer.allocations_done.deliver_now
     end
 
@@ -40,6 +42,15 @@ class AllocateRestrictedJob < ApplicationJob
         end
     end
     
+    def reset_sport_entry_sections
+        Grade.restricted.each do |grade|
+            grade.sport_entries.requested.each do |entry|
+                entry.section_id = nil
+                entry.save(validate: false)
+            end
+        end
+    end  
+
     def reject_2nd_entries_in_grades_over_limits
         logger.info("Rejecting low priority entries for groups where #groups greater or equal limits...")
         Grade.over_limit.ballot_for_high_priority.each do |g|
@@ -54,7 +65,7 @@ class AllocateRestrictedJob < ApplicationJob
         Grade.not_over_limit.each do |g|
           g.sport_entries.requested.each do |e| 
             e.enter!
-#            e.assign_section!
+            e.assign_section!
           end
         end
     end
@@ -65,7 +76,7 @@ class AllocateRestrictedJob < ApplicationJob
             g.sport_entries.requested.each do |e| 
                 if e.high_priority
                     e.require_confirmation!
-#                    e.assign_section!
+                    e.assign_section!
                 end
             end
         end
@@ -109,6 +120,8 @@ class AllocateRestrictedJob < ApplicationJob
                   :new_group => entry.group.new_group,
                   :sport_entry_name => entry.name, 
                   :sport_entry_status => entry.status, 
+                  :section_name => entry.allocated_section_name, 
+                  :preferred_section_name => entry.preferred_section_name, 
                   :factor => e[1])
                 result.save(:validate => false)
             end
@@ -128,6 +141,17 @@ class AllocateRestrictedJob < ApplicationJob
                   :sport_entry_status => entry.status, 
                   :factor => e[1])
                 result.save(:validate => false)
+            end
+        end
+    end
+
+    def allocate_remaining_sections
+        SportEntry.not_waiting.without_section.each do |entry|
+            entry.grade.sections.each do |section|
+                if section.can_take_more_entries? && entry.section.nil?
+                    entry.section = section
+                    entry.save
+                end
             end
         end
     end

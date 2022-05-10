@@ -41,9 +41,10 @@ class SportEntry < ApplicationRecord
 
   scope :entered, -> { where(status: 'Entered') }
   scope :requested, -> { where(status: 'Requested') }
-  scope :entered_or_requested, -> { where("status in ('Entered', 'Requested')") }
+  scope :not_waiting, -> { where.not(status: 'Waiting List') }
   scope :waiting_list, -> { where(status: 'Waiting List') }
   scope :to_be_confirmed, -> { where(status: 'To Be Confirmed') }
+  scope :without_section, -> { where("section_id is NULL") }
 
   delegate :draw, to: :section
   delegate :grade_type,
@@ -322,6 +323,41 @@ end
     self.status = 'Waiting List'
     save
     group.increment_allocation_bonus!
+  end
+
+  def assign_section!
+    check_for_only_section! if self.section.nil?
+    check_and_assign_preferred_section! if self.section.nil?
+    check_and_assign_sport_coord_section! if self.section.nil?
+  end
+
+  def check_for_only_section!
+    if self.grade.sections.count == 1
+      self.section = self.grade.sections.first
+      save
+    end
+  end
+
+  def check_and_assign_preferred_section!
+    unless self.preferred_section_id.nil?
+      s = Section.where(id: self.preferred_section_id).first
+    end
+    
+    if s && s.can_take_more_entries?
+      self.section = s
+      save
+    end
+  end
+
+  def check_and_assign_sport_coord_section!
+    grade.sections.active.each do |s|
+      s.sport_coords.each do |v|
+        if v.participant && v.participant.group == group
+          self.section = s
+          save
+        end
+      end
+    end
   end
 
   def self.import(file, user)

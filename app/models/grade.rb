@@ -349,6 +349,7 @@ class Grade < ApplicationRecord
           next unless total > alloc
           entry = SportEntry.find(e[0])
           entry.require_confirmation!
+          entry.assign_section!
           allocated[e[0]] = e[1]
           factors.reject! { |k, _v| k == e[0] }
           break
@@ -377,6 +378,24 @@ class Grade < ApplicationRecord
         end
     end
     
+    def total_courts_available
+        if self.sections.empty?
+            0
+        else
+            self.sections.sum(&:courts_available)
+        end
+    end
+
+    def teams_per_court
+        if entry_limit.nil?
+            999
+        elsif total_courts_available == 0
+            0
+        else
+            (entry_limit / total_courts_available).ceil
+        end
+    end
+
 #    def expire_wait_list!
 #        entries_waiting.each do |entry|
 #          entry.destroy
