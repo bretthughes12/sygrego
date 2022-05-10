@@ -28,6 +28,12 @@
 	</td>
 
 	<td>
+		<%- if should_show_confirm_button(sport_entry) -%>
+			<%= link_to "Confirm", confirm_gc_sport_entry_path(sport_entry),
+                  method: :patch,
+                  class: primary_button_class,
+                  role: "button" %>
+		<%- end -%>
 		<%- if should_show_delete_link(sport_entry) -%>
 			<%= link_to "X", gc_sport_entry_path(sport_entry),
                   method: :delete,

@@ -93,6 +93,18 @@ class Gc::SportEntriesController < ApplicationController
       end
     end
   
+    # PATCH /gc/sport_entries/1/confirm
+    def confirm
+      @sport_entry.updated_by = current_user.id
+      @sport_entry.enter!
+
+      respond_to do |format|
+        flash[:notice] = 'Sport entry confirmed.'
+
+        format.html { redirect_to gc_sport_entries_url }
+      end
+    end
+  
     # DELETE /gc/sport_entries/1
     def destroy
       @sport_entry.updated_by = current_user.id

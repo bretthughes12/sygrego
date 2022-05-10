@@ -362,6 +362,9 @@ Rails.application.routes.draw do
           patch :make_captain
         end
       end
+      member do
+        patch :confirm
+      end
     end
     resources :sport_preferences, :controller => "sport_preferences", :only => [:index] do
       member do

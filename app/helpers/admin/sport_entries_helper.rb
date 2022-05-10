@@ -22,6 +22,10 @@ module Admin::SportEntriesHelper
           entry.grade.status == "Open" ||
           entry.status == "Waiting List"
     end
+    
+    def should_show_confirm_button(entry)
+        entry.status == "To Be Confirmed"
+    end
 
 #    def clash_status(sports)
 #        if sports.uniq.size > 1
