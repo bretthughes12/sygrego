@@ -57,9 +57,12 @@ class SportEntry < ApplicationRecord
   before_validation :validate_number_of_entries_in_sport, on: :create
   after_create :update_team_numbers
   after_create :update_grade_flags
+  after_create :check_waiting_list
   after_update :update_grade_flags_on_status_change
+  before_destroy :check_sport_entry_emails
   after_destroy :update_team_numbers
   after_destroy :update_grade_flags
+  after_destroy :check_waiting_list
 
   STATUSES = ['Requested',
     'To Be Confirmed',
@@ -452,5 +455,24 @@ private
     if status_changed?
       self.grade.update_for_change_in_entries
     end
+  end
+
+  def check_sport_entry_emails
+    # Send an email if a team has withdrawn from a closed, full Restricted sport section
+    if (self.status == "To Be Confirmed" || self.status == "Entered") && 
+      self.grade.status != "Open" &&
+      self.grade.entry_limit && 
+      self.grade.sport_entries.count >= self.grade.entry_limit
+      SportEntryMailer.restricted_sport_withdrawal(self).deliver_now
+
+      if self.grade.sport_entries.count > self.grade.entry_limit
+        SportEntryMailer.restricted_sport_offer(self).deliver_now 
+        self.grade.set_waiting_list_expiry! 
+      end
+    end
+ end
+
+  def check_waiting_list
+    self.grade.check_waiting_list_status!
   end
 end

@@ -1,0 +1,21 @@
+<% content_for(:title) { "Entry withdrawn from restricted section" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>An entry has been withdrawn from a restricted sport section.</p>
+
+<table>
+	<tr><td>Section:</td><td><%= @entry.grade.name %></td></tr>
+	<tr><td>Group:</td><td><%= @entry.group.short_name %></td></tr>
+</table>
+
+<%- if @entry.grade.entries_waiting.size > 0 -%>
+<p>There are <%= @entry.grade.entries_waiting.size %> entries on the waiting list (in no particular order):</p>
+<ul>
+    <%- @entry.grade.entries_waiting.each do |waiter| -%>
+	<li><%= waiter.group.short_name %></li>
+    <%- end -%>
+</ul>
+<%- else -%>     
+<p>There are no entries currently on the waiting list for this section.</p>
+<%- end -%>

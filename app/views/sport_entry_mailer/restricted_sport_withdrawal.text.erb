@@ -1,0 +1,13 @@
+An entry has been withdrawn from a restricted sport section.
+
+Section:      <%= @entry.grade.name %>
+Group:        <%= @entry.group.short_name %>
+
+<%- if @entry.grade.entries_waiting.size > 0 -%>
+There are <%= @entry.grade.entries_waiting.size %> entries on the waiting list (in no particular order):
+    <%- @entry.grade.entries_waiting.each do |waiter| -%>
+- <%= waiter.group.short_name %>
+    <%- end -%>
+<%- else -%>     
+There are no entries currently on the waiting list for this section.
+<%- end -%>
