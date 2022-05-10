@@ -6,8 +6,7 @@ class Admin::TasksController < ApplicationController
     # POST /admin/tasks/allocate_restricted
     def allocate_restricted
         if !@settings.restricted_sports_allocated
-#          AllocateRestrictedJob.perform_later
-          AllocateRestrictedJob.perform_now
+          AllocateRestrictedJob.perform_later
           set_restricted_sports_allocated_setting
           flash[:notice] = 'Restricted sports allocation is under way. Look for an email when finished'
         else
