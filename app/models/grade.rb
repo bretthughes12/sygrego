@@ -159,7 +159,7 @@ class Grade < ApplicationRecord
 
     def name_with_session
         name + " (#{session_name})"
-      end
+    end
         
 #    def name_with_percentage_full
 #        if entry_limit && entry_limit > 0

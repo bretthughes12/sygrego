@@ -521,6 +521,28 @@ class Group < ApplicationRecord
       grades_available
     end
   
+    def sections_available
+      sections_available = []
+      grades = Grade.active.order('sport_id, name').includes(:sport).load
+  
+      grades.each do |grade|
+        next unless grade.can_accept_entries
+        next unless grade_type_entries(grade.sport, grade.grade_type) <
+                    grade.max_entries_group
+#        next unless grade.team_size +
+#                    participants_requested_for_session(grade.sport_session_id) <=
+#                    participants_allowed_per_session 
+
+        grade.sections.each do |section|
+          next unless section.can_take_more_entries?
+
+          sections_available << section
+        end
+      end
+  
+      sections_available
+    end
+  
     def participants_allowed_per_session 
       [estimated_numbers, participants.size].max * 1.5    
     end

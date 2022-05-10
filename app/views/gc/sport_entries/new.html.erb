@@ -7,7 +7,11 @@
 
 	<%= f.error_notification %>
 
-    <%= f.input :grade_id, as: :select, collection: @grades, label_method: :name_with_session, include_blank: true %>
+    <% if @settings.restricted_sports_allocated %>
+        <%= f.input :section_id, as: :select, collection: @sections, label_method: :name_with_session, include_blank: true %>
+    <% else %>
+        <%= f.input :grade_id, as: :select, collection: @grades, label_method: :name_with_session, include_blank: true %>
+    <% end %>
 
 	<%= f.button :submit %>
 <% end %>

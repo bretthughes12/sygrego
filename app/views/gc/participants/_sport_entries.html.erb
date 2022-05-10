@@ -52,7 +52,11 @@
 	<h3>Create new Sport Entry</h3>
 	
     <%= form_for(@sport_entry, url: gc_sport_entries_path(participant_id: @participant.id, return: 'edit_sports'), method: :post) do |f| %> 
-        <td><%= f.collection_select :grade_id, @grades, :id, :name %></td>
+        <% if @settings.restricted_sports_allocated %>
+            <td><%= f.collection_select :section_id, @sections, :id, :name %></td>
+        <% else %>
+            <td><%= f.collection_select :grade_id, @grades, :id, :name %></td>
+        <% end %>
         <td><%= f.submit "Create", role: :button, class: primary_button_class %></td>
     <% end %>	
 <% end %>

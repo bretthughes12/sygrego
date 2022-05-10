@@ -78,6 +78,10 @@ class Section < ApplicationRecord
     def session_and_venue
         session.name + " - " + venue.name
     end
+
+    def name_with_session
+        name + " (#{session_name})"
+    end
     
     def can_take_more_entries?
         self.sport_entries.count < teams_allowed

@@ -450,6 +450,22 @@ class Participant < ApplicationRecord
     grades
   end
 
+  def available_sections
+    sections = []
+    group.grades_available(false).each do |grade|
+      next unless can_play_sport(grade.sport) &&
+                  can_play_grade(grade) &&
+                  grade.eligible_to_participate?(self)
+
+      grade.sections.each do |section|
+        next unless section.can_take_more_entries?
+
+        sections << section
+      end
+    end
+    sections
+  end
+
   def grades
     sport_entries.each.collect(&:grade)
   end

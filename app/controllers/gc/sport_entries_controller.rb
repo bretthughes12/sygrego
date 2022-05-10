@@ -27,6 +27,7 @@ class Gc::SportEntriesController < ApplicationController
     # GET /gc/sport_entries/new
     def new
       @grades = @group.grades_available(false)
+      @sections = @group.sections_available
 
       respond_to do |format|
         format.html { render layout: @current_role.name }
@@ -44,10 +45,20 @@ class Gc::SportEntriesController < ApplicationController
       @sport_entry.group_id = @group.id
       @sport_entry.updated_by = current_user.id
 
-      @grade = @sport_entry.grade
-      if @grade
-        @sport_entry.status = @grade.starting_status
-        @sport_entry.section = @grade.starting_section
+      if params[:sport_entry][:section_id]
+        @section = @sport_entry.section
+        if @section
+          @sport_entry.grade = @section.grade
+          @sport_entry.status = @section.grade.starting_status
+        end
+      end
+
+      if params[:sport_entry][:grade_id]
+        @grade = @sport_entry.grade
+        if @grade
+          @sport_entry.status = @grade.starting_status
+          @sport_entry.section = @grade.starting_section
+        end
       end
   
       if params[:participant_id]
@@ -58,10 +69,6 @@ class Gc::SportEntriesController < ApplicationController
       respond_to do |format|
         if @sport_entry.save
           flash[:notice] = 'Sport entry was successfully created.'
-
-#          if !@settings.restricted_sports_allocated
-#            Reg::SportEntriesController.delay.refresh_sport_entry_chances!(@group, @grade)
-#          end
   
           if params[:return] && params[:return] == 'edit_sports'
             format.html { redirect_to(edit_sports_gc_participant_path(participant)) }
@@ -112,10 +119,6 @@ class Gc::SportEntriesController < ApplicationController
 
       @sport_entry.destroy
 
-#      if !@settings.restricted_sports_allocated
-#        Reg::SportEntriesController.delay.refresh_sport_entry_chances!(@group, @grade)
-#      end
-
       respond_to do |format|
         format.html { redirect_to gc_sport_entries_url }
       end
@@ -141,6 +144,7 @@ class Gc::SportEntriesController < ApplicationController
       params.require(:sport_entry).permit(
         :captaincy_id, 
         :grade_id,
+        :section_id,
         :preferred_section_id
       )
     end
