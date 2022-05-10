@@ -247,7 +247,7 @@ end
       100
 
       # already missed out
-    elsif status == 'Missed Out'
+    elsif status == 'Waiting List'
       0
 
       # all entries for this grade have been allocated

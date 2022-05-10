@@ -6,7 +6,7 @@ class Admin::TasksController < ApplicationController
     # POST /admin/tasks/allocate_restricted
     def allocate_restricted
         if !@settings.restricted_sports_allocated
-          Admin::TasksController.do_allocate(current_user)
+          AllocateRestrictedJob.perform_later
           set_restricted_sports_allocated_setting
           flash[:notice] = 'Restricted sports allocation is under way. Look for an email when finished'
         else
@@ -45,123 +45,6 @@ class Admin::TasksController < ApplicationController
     def set_restricted_sports_allocated_setting
         @settings.restricted_sports_allocated = true
         @settings.save(validate: false)
-    end
-    
-    def self.do_allocate(current_user)
-        empty_ballot_results
-        reset_all_restricted_entries_to_requested
-        close_grades_with_entry_limits(current_user)    
-        reject_2nd_entries_in_grades_over_limits(current_user)
-        allocate_entries_in_grades_under_limits(current_user)
-        allocate_1st_entries_in_grades_over_limits(current_user)
-        initialise_allocation_bonuses
-        allocate_grades_with_ballots(current_user)
-        TasksMailer.allocations_done.deliver_now
-    end
-      
-    def self.empty_ballot_results
-        logger.info("Emptying the ballot results report from last time...")
-        BallotResult.destroy_all
-    end
-    
-    def self.reset_all_restricted_entries_to_requested
-        logger.info("Resetting all entry statuses to 'Requested'...")
-        Grade.reset_all_restricted_entries_to_requested!
-    end
-    
-    def self.close_grades_with_entry_limits(current_user)
-        logger.info("Closing all restricted grades...")
-        Grade.accepting.restricted.each do |g| 
-          g.close!
-        end
-    end
-    
-    def self.reject_2nd_entries_in_grades_over_limits(current_user)
-        logger.info("Rejecting low priority entries for groups where #groups greater or equal limits...")
-        Grade.over_limit.ballot_for_high_priority.each do |g|
-          g.sport_entries.requested.each do |e| 
-            e.reject! if !e.high_priority
-          end
-        end
-    end
-    
-    def self.allocate_entries_in_grades_under_limits(current_user)
-        logger.info("Allocating entries for grades not over limits...")
-        Grade.not_over_limit.each do |g|
-          g.sport_entries.requested.each do |e| 
-            e.enter!
-          end
-        end
-    end
-    
-    def self.allocate_1st_entries_in_grades_over_limits(current_user)
-        logger.info("Allocating high priority entries for groups where #groups not over limits...")
-        Grade.over_limit.ballot_for_low_priority.each do |g|
-          g.sport_entries.requested.each do |e| 
-            e.require_confirmation! if e.high_priority
-          end
-        end
-    end
-      
-    def self.initialise_allocation_bonuses
-        logger.info("Initialising allocation bonuses...")
-        Group.with_bonus.each { |g| g.reset_allocation_bonus! }
-    end
-    
-    def self.allocate_grades_with_ballots(current_user)
-        logger.info("Allocating all remaining requested sport entries by ballot for each grade...")
-    
-        # Collect all of the allocation factors in the one place
-        factor_hash = {}
-        logger.info("... collecting allocation factors")
-    
-    #      Grade.where(sport_session_id: s.id).over_limit.each do |g| 
-    #        factor_hash[g.id] = g.requested_entry_factors
-    #      end
-          
-        # Do the allocations
-        Grade.over_limit.each do |g| 
-            logger.info("... Allocating #{g.name}...")
-            
-            # Perform the ballot
-            allocated = {}
-            missed_out = {}
-            g.allocate_requested_entries_by_ballot(allocated, missed_out)
-            
-            # Report all allocated entries
-            allocated.each do |e|
-                entry = SportEntry.find(e[0])
-                result = BallotResult.new(
-                  :sport_name => g.sport.name,
-                  :grade_name => g.name,
-                  :entry_limit => g.entry_limit,
-                  :over_limit => g.over_limit, 
-                  :one_entry_per_group => g.one_entry_per_group, 
-                  :group_name => entry.group.short_name,
-                  :new_group => entry.group.new_group,
-                  :sport_entry_name => entry.name, 
-                  :sport_entry_status => entry.status, 
-                  :factor => e[1])
-                result.save(:validate => false)
-            end
-        
-            # Report all rejected entries
-            missed_out.each do |e|
-                entry = SportEntry.find(e[0])
-                result = BallotResult.new(
-                  :sport_name => g.sport.name,
-                  :grade_name => g.name,
-                  :entry_limit => g.entry_limit,
-                  :over_limit => g.over_limit, 
-                  :one_entry_per_group => g.one_entry_per_group, 
-                  :group_name => entry.group.short_name,
-                  :new_group => entry.group.new_group,
-                  :sport_entry_name => entry.name, 
-                  :sport_entry_status => entry.status, 
-                  :factor => e[1])
-                result.save(:validate => false)
-            end
-        end
     end
     
     def self.do_team_grade_allocation(current_user)

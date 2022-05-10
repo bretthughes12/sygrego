@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # SYG Application gems, not included by default with Rails
 gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'simple_form'
 gem 'devise'
 gem 'exception_handler', '~> 0.8.0.0'
