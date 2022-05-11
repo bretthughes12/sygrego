@@ -8,7 +8,7 @@ class SportEntryMailer < ActionMailer::Base
     def restricted_sport_withdrawal(entry)
       @entry = entry
   
-      mail(subject: "#{APP_CONFIG[:email_subject]} Withdrawal from #{entry.grade.name}")
+      mail(subject: "#{APP_CONFIG[:email_subject]} Withdrawal from #{entry.section_name}")
     end
   
     def restricted_sport_offer(entry)
@@ -20,7 +20,7 @@ class SportEntryMailer < ActionMailer::Base
   
       mail(from:    @settings.sports_email,
            bcc:     notifies,
-           subject: "#{APP_CONFIG[:email_subject]} Restricted Sports Offer - #{entry.grade.name}") do |format|
+           subject: "#{APP_CONFIG[:email_subject]} Restricted Sports Offer - #{entry.section_name}") do |format|
         format.html { render layout: 'mailer' }
         format.text
       end
