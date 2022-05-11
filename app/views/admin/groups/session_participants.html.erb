@@ -6,8 +6,8 @@
     <thead>
 	    <tr>
             <th>Abbr</th>
-            <th>Total Sports Participants</th>
-            <th>Expected Numbers</th>
+            <th>Playing</th>
+            <th>Expected</th>
             <th>Sat AM</th>
             <th>Sat PM</th>
             <th>Sat Eve</th>
@@ -19,3 +19,7 @@
         <%= render :partial => 'group_session_participants', :collection => @groups, :as => :group %>
     </thead>
 </table>
+
+<%= link_to "Download", session_participants_admin_groups_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>

@@ -9,8 +9,8 @@ class Gc::InfoController < ApplicationController
         # authorise a detail that a GC or Church Rep role has access to
         authorize! :edit, @group.event_detail
 
-        @total_groups = Group.coming.count
-        @total_participants = Participant.coming.count
+        @total_groups = Group.not_admin.coming.count
+        @total_participants = Participant.coming.accepted.count
         @participants_registered = @group.participants.coming.accepted.count
         @total_entries = @group.sport_entries.count
 
