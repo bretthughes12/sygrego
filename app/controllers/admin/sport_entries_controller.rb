@@ -57,13 +57,20 @@ class Admin::SportEntriesController < ApplicationController
   
     # PATCH /admin/sport_entries/1
     def update
+      @return_path = params[:return]
       @sport_entry.updated_by = current_user.id
 
       respond_to do |format|
         if @sport_entry.update(sport_entry_params)
           flash[:notice] = 'Sport entry was successfully updated.'
 
-          format.html { redirect_to admin_sport_entries_url }
+          format.html do
+            if @return_path == 'edit_grade'
+              redirect_to edit_admin_grade_url(@sport_entry.grade)
+            else
+              redirect_to admin_sport_entries_url
+            end
+          end
         else
           format.html { render_for_edit }
         end
@@ -109,6 +116,7 @@ class Admin::SportEntriesController < ApplicationController
 private
 
     def render_for_edit
+      @return_path = params[:return]
       @participant = Participant.new
       @sections = @sport_entry.grade.sections
       @groups = Group.coming.order(:short_name).all

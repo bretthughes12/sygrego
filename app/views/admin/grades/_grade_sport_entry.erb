@@ -4,7 +4,7 @@
 	</td>
 
 	<td> 
-		<%= h(sport_entry.name) %>
+	    <%= link_to h(sport_entry.name), edit_admin_sport_entry_path(sport_entry, return: 'edit_grade') %>
 	</td>
 
 	<td> 

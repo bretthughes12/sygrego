@@ -24,7 +24,7 @@
     <% end %> 
 </table>
 
-<%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(:id => @sport_entry.id), 
+<%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(id: @sport_entry.id, return: @return_path), 
         :html => { :method => :patch, :multipart => true }) do |f| %>
 
     <%= f.error_notification %>
@@ -32,7 +32,11 @@
     <%= f.input :group_id, as: :select, collection: @groups, label_method: :short_name %>
     <%= f.input :status, as: :select, collection: SportEntry::STATUSES %>
     <%= f.input :section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
-    <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
+    <% unless @settings.restricted_sports_allocated %>
+        <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
+    <% end %>
+
+    <br/>
 
     <%= f.button :submit %>
 <% end %>
