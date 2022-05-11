@@ -78,9 +78,15 @@
 
 <br/>
 
-<%= link_to "Back", admin_sport_entries_path,
-                  class: primary_button_class,
-                  role: "button" %>
+<% if @return_path == 'edit_grade' %>
+    <%= link_to "Back", edit_admin_grade_url(@sport_entry.grade),
+                    class: primary_button_class,
+                    role: "button" %>
+<% else %>
+    <%= link_to "Back", admin_sport_entries_path,
+                    class: primary_button_class,
+                    role: "button" %>
+<% end %>
 <%= link_to "Destroy", admin_sport_entry_path(@sport_entry),
                   method: :delete,
                   data: { confirm: "Are you sure?" },
