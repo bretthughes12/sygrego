@@ -1,0 +1,37 @@
+<tr valign="top">
+    <td align="center" class="table-primary">
+        <%= h(group.abbr) %>
+    </td>
+
+    <td align="center" class="table-primary">
+        <%= group.number_playing_sport %>
+    </td>
+
+    <td align="center" class="table-primary">
+        <%= group.estimated_numbers %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 2) %>">
+        <%= group.participants_needed_for_session(2) %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 3) %>">
+        <%= group.participants_needed_for_session(3) %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 4) %>">
+        <%= group.participants_needed_for_session(4) %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 5) %>">
+        <%= group.participants_needed_for_session(5) %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 6) %>">
+        <%= group.participants_needed_for_session(6) %>
+    </td>
+
+    <td align="center" class="<%= sport_oversubscribed_class(group, 7) %>">
+        <%= group.participants_needed_for_session(7) %>
+    </td>
+</tr>

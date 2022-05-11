@@ -27,6 +27,9 @@
                         <li class='dropdown-item'><%= link_to 'Venues', admin_venues_path %></li>
                         <li class='dropdown-item'><%= link_to 'Sport Entries', admin_sport_entries_path %></li>
                         <li class='dropdown-item'><%= link_to 'Sports Allocation', summary_admin_ballot_results_path %></li>
+                        <% if @settings.restricted_sports_allocated %>
+                            <li class='dropdown-item'><%= link_to 'Sport / Participant Audit', session_participants_admin_groups_path %></li>
+                        <% end %>
                     </ul>
                 </li>
                 <li class='nav-item dropdown'>

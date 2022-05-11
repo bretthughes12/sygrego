@@ -139,6 +139,7 @@ Rails.application.routes.draw do
         post :import
         get :search
         get :approvals
+        get :session_participants
       end
       member do
         patch :approve

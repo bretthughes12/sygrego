@@ -595,13 +595,13 @@ class Group < ApplicationRecord
       @number_playing_sport ||= participants.playing_sport.coming.accepted.size
     end
   
-#    def participants_needed_for_session(session)
-#      number_of_participants = 0
-#      cached_sport_entries.entered.includes(:grade).each do |e|
-#        number_of_participants += e.team_size if e.session.id == session
-#      end
-#      number_of_participants
-#    end
+    def participants_needed_for_session(session)
+      number_of_participants = 0
+      cached_sport_entries.entered.includes(:section).each do |e|
+        number_of_participants += e.team_size if e.section && e.section.session.id == session
+      end
+      number_of_participants
+    end
   
 #    def participants_requested_for_session(session)
 #      number_of_participants = 0

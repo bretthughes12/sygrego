@@ -1,0 +1,21 @@
+<% title "Group Sports Participant Numbers Audit" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark">
+    <thead>
+	    <tr>
+            <th>Abbr</th>
+            <th>Total Sports Participants</th>
+            <th>Expected Numbers</th>
+            <th>Sat AM</th>
+            <th>Sat PM</th>
+            <th>Sat Eve</th>
+            <th>Sun AM</th>
+            <th>Sun PM</th>
+            <th>Sun Eve</th>
+	    </tr>
+
+        <%= render :partial => 'group_session_participants', :collection => @groups, :as => :group %>
+    </thead>
+</table>
