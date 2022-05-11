@@ -11,7 +11,9 @@
 		<%= h(sport_entry.allocated_section_name) %>
 	</td>
 
-	<td> 
-		<%= h(sport_entry.preferred_section_name) %>
-	</td>
+	<% unless @settings.restricted_sports_allocated %>
+		<td> 
+			<%= h(sport_entry.preferred_section_name) %>
+		</td>
+	<% end %>
 </tr>

@@ -43,7 +43,9 @@
                 <th>Group</th>
                 <th>Name</th>
                 <th>Section</th>
-                <th>Preferred</th>
+            	<% unless @settings.restricted_sports_allocated %>
+                    <th>Preferred</th>
+                <% end %>
             </tr>
         </thead>
 

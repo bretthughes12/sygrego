@@ -15,8 +15,10 @@
       <th>Sport</th>
       <th>Name</th>
       <th>Venue</th>
-      <th>Limit</th>
-      <th>Entries</th>
+    	<% unless @settings.restricted_sports_allocated %>
+        <th>Limit</th>
+        <th>Entries</th>
+      <% end %>
       <th>Actions</th>
     </tr>
   </thead>

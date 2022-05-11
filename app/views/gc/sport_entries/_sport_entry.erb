@@ -15,17 +15,19 @@
 		<%= h(sport_entry.venue_name) %>
 	</td>
 	 
-	<% if sport_entry.grade.entry_limit %> 
+	<% unless @settings.restricted_sports_allocated %>
+		<% if sport_entry.grade.entry_limit %> 
+			<td align="center">
+				<%= h(sport_entry.grade.entry_limit) %>
+			</td>
+		<% else %> 
+			<td align="center">-</td>
+		<% end %> 
+		
 		<td align="center">
-			<%= h(sport_entry.grade.entry_limit) %>
+			<%= h(sport_entry.grade.sport_entries.count) %>
 		</td>
-	<% else %> 
-		<td align="center">-</td>
-	<% end %> 
-	 
-	<td align="center">
-	    <%= h(sport_entry.grade.sport_entries.count) %>
-	</td>
+	<% end %>
 
 	<td>
 		<%- if should_show_confirm_button(sport_entry) -%>
