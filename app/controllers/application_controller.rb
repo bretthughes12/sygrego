@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
             resource = User.find_by_email(username)
             if resource && resource.valid_password?(password) && resource.role?(:admin)
                 sign_in :user, resource
+                session["current_role"] = resource.default_role
             end
         end
     end
