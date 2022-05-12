@@ -9,6 +9,11 @@ class Ability
     if user.nil?
       can :read, Page
 
+    # TODO: This is aweful - fix this!
+    #       Done this way entirely for the xml api for Access
+    elsif user.email == "registrations@stateyouthgames.com"
+      can :manage, :all
+
     elsif session["current_role"] == "admin"
       can :manage, :all
 
