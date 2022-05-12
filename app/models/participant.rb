@@ -192,6 +192,7 @@ class Participant < ApplicationRecord
     before_save :normalize_address!
     before_save :normalize_suburb!
     before_save :set_rego_type!
+    before_save :set_database_rowid!
 
     searchable_by :first_name, :surname, :email, :number_plate
 
@@ -740,6 +741,11 @@ private
     end
   end
 
+  def set_database_rowid!
+    self.database_rowid ||= unique_auto_number
+    nil
+  end
+
   def set_rego_type!
     d = 0
     [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
@@ -899,6 +905,20 @@ private
       parts.join("'")
     end
     words.join(' ')
+  end
+
+  def auto_number
+    rand(-2_147_483_648..2_147_483_647)
+  end
+
+  def unique_auto_number
+    num = 0
+    loop do
+      num = auto_number
+      participant = Participant.find_by_database_rowid(num)
+      break if participant.nil?
+    end
+    num
   end
 
   def self.sync_fields

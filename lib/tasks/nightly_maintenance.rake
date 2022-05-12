@@ -119,6 +119,13 @@ namespace :syg do
     Grade.active.each { |g| g.update_for_change_in_entries }
   end
 
+  desc 'Save all participants to generate callbacks'
+  task save_participants: ['environment'] do |_t|
+    puts "Saving all participants..."
+
+    Participant.all.each { |p| p.save }
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',
