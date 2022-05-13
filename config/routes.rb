@@ -261,7 +261,7 @@ Rails.application.routes.draw do
     resources :event_details, only: [:show]
     resources :participants, only: [:show]
     resources :sport_entries, only: [:show] do
-      resources :particpiants, only: [index]
+      resources :particpiants, only: [:index]
     end
     resources :sports, only: [:show]
     resources :grades, only: [:show]
