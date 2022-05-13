@@ -186,6 +186,10 @@ class Participant < ApplicationRecord
     before_create :set_early_bird_flag!
     before_update :check_early_bird_flag
 
+    after_update :check_participant_sport_entries
+    before_destroy :remove_sport_entries!
+    before_destroy :release_volunteers!
+
     before_save :normalize_phone_numbers!
     before_save :normalize_medical_info!
     before_save :normalize_medications!
@@ -762,6 +766,40 @@ private
   def check_early_bird_flag
     if coming_changed? && coming
       set_early_bird_flag!
+    end
+  end
+
+  def check_participant_sport_entries
+    case
+    when coming_changed? && !coming
+      remove_participant_from_entries!(self)
+    when spectator_changed? && spectator
+      remove_participant_from_entries!(self)
+    end
+  end
+
+  def remove_sport_entries!
+    remove_participant_from_entries!(self)
+  end
+
+  def remove_participant_from_entries!(participant)
+    participant.sport_entries.each do |entry|
+      sport_entry = SportEntry.find(entry.id)
+      sport_entry.participants.delete(participant)
+      if sport_entry.captaincy == participant
+        sport_entry.captaincy = nil
+      end
+      sport_entry.save
+    end
+  end
+
+  def release_volunteers!
+    volunteers.each do |o|
+      o.participant_id = nil
+      o.mobile_number = nil
+      o.email = nil
+      o.t_shirt_size = nil
+      o.save(validate: false)
     end
   end
 

@@ -73,13 +73,43 @@ namespace :syg do
     puts "Checking for orphaned ParticipantsSportEntry records..."
 
     ParticipantsSportEntry.all.each do |ps|
-      if ps.sport_entry.nil? || ps.participant.nil?
-        if ps.sport_entry.nil?
-          puts "Orphan found (sport entry)"
-        else
-          puts "Orphan found (participant)"
-        end
+      delete_me = false
+      e = SportEntry.where(id: ps.sport_entry_id).first
+      if e.nil?
+        puts "Orphan found (sport entry)"
         updates += 1
+        delete_me = true
+      end
+
+      p = Participant.where(id: ps.participant_id).first
+      if p.nil?
+        puts "Orphan found (participant)"
+        updates += 1
+        delete_me = true
+      end
+    end
+
+    puts "Orphans found: #{updates}"
+  end
+
+  desc 'Check orphaned Volunteer participants'
+  task check_volunteer_participants: ['environment'] do |_t|
+    updates = 0
+    puts "Checking for orphaned participants on volunteers records..."
+
+    Volunteer.all.each do |v|
+      unless v.participant_id.nil?
+        p = Participant.where(id: v.participant_id).first
+        if p.nil?
+          puts "Orphan found"
+          updates += 1
+
+          v.participant_id = nil
+          v.mobile_number = nil
+          v.email = nil
+          v.t_shirt_size = nil
+          v.save(validate: false)
+        end
       end
     end
 

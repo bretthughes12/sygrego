@@ -60,6 +60,7 @@ class SportEntry < ApplicationRecord
   after_create :check_waiting_list
   after_update :update_grade_flags_on_status_change
   before_destroy :check_sport_entry_emails
+  before_destroy :remove_participants_from_entry!
   after_destroy :update_team_numbers
   after_destroy :update_grade_flags
   after_destroy :check_waiting_list
@@ -470,7 +471,15 @@ private
         self.grade.set_waiting_list_expiry! 
       end
     end
- end
+  end
+
+  def remove_participants_from_entry!
+    participants.each do |participant|
+      participant = Participant.find(participant.id)
+      participant.sport_entries.delete(self)
+      participant.save
+    end
+  end
 
   def check_waiting_list
     self.grade.check_waiting_list_status!
