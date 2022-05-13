@@ -484,4 +484,13 @@ private
   def check_waiting_list
     self.grade.check_waiting_list_status!
   end
+
+  def self.sync_fields
+    ['section_id',
+      'team_number', 
+      'group_id',
+      'status',
+      'grade_id'
+    ]
+  end
 end
