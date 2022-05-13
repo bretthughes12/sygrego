@@ -2,7 +2,7 @@ class Api::ParticipantsSportEntriesController < ApplicationController
     before_action :authorize_xml
     before_action :authenticate_user!
     
-    # GET /api/sport_entrties/1/participants.xml
+    # GET /api/sport_entries/1/participants.xml
     def index
       @sport_entry = SportEntry.find(params[:sport_entry_id])
       @participants = @sport_entry.participants

@@ -266,8 +266,10 @@ class Volunteer < ApplicationRecord
     def check_participants_on_update
       if self.participant_id_changed?
         if self.participant_id_was
-          old_participant = Participant.find(self.participant_id_was)
-          revert_participant_category!(old_participant) unless old_participant.nil?
+          old_participant = Participant.where(id: self.participant_id_was).first
+          if old_participant
+            revert_participant_category!(old_participant) unless old_participant.nil?
+          end
         end
   
         if self.participant

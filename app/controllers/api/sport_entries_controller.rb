@@ -2,7 +2,7 @@ class Api::SportEntriesController < ApplicationController
     before_action :authorize_xml
     before_action :authenticate_user!
     
-    # GET /api/sport_entrties/1.xml
+    # GET /api/sport_entries/1.xml
     def show
       @sport_entry = SportEntry.find(params[:id])
       
