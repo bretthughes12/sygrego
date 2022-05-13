@@ -46,7 +46,7 @@
 <h2>Participants</h2>
 
 <table class="table table-dark">
-    <%= render partial: "participants", collection: @participants %>
+    <%= render partial: "participants", collection: @participants, as: :participant %>
 
     <% unless @eligible_participants.empty? %>
         <tr>
