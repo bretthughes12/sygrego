@@ -186,7 +186,7 @@ class Participant < ApplicationRecord
     before_create :set_early_bird_flag!
     before_update :check_early_bird_flag
 
-    after_update :check_participant_sport_entries
+    before_update :check_participant_sport_entries
     before_destroy :remove_sport_entries!
     before_destroy :release_volunteers!
 
