@@ -9,8 +9,19 @@ module Auditable
 
   private
 
+# TODO: remove hard-coding for ParticipantsSportEntry and 
+#       handle this using metadata from the model
+
   def log_create
-    ModelAuditJob.perform_now(self, 'CREATE', audit_user_id)
+    if self.class.name == 'ParticipantsSportEntry'
+      model = self.sport_entry
+      action = 'UPDATE'
+    else
+      model = self
+      action = 'CREATE'
+    end
+
+    ModelAuditJob.perform_now(model, action, audit_user_id)
   end
 
   def log_update
@@ -20,7 +31,15 @@ module Auditable
   end
 
   def log_destroy
-    ModelAuditJob.perform_now(self, 'DESTROY', audit_user_id)
+    if self.class.name == 'ParticipantsSportEntry'
+      model = self.sport_entry
+      action = 'UPDATE'
+    else
+      model = self
+      action = 'DESTROY'
+    end
+
+    ModelAuditJob.perform_now(model, action, audit_user_id)
   end
 
   def audit_user_id

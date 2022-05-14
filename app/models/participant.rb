@@ -785,7 +785,7 @@ private
   def remove_participant_from_entries!(participant)
     participant.sport_entries.each do |entry|
       sport_entry = SportEntry.find(entry.id)
-      sport_entry.participants.delete(participant)
+      sport_entry.participants.destroy(participant)
       if sport_entry.captaincy == participant
         sport_entry.captaincy = nil
       end

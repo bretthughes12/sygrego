@@ -7,6 +7,8 @@
 #
 
 class ParticipantsSportEntry < ActiveRecord::Base
+    include Auditable
+
     belongs_to :participant
     belongs_to :sport_entry
 end

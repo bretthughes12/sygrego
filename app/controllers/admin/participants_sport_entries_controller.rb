@@ -33,7 +33,7 @@ class Admin::ParticipantsSportEntriesController < ApplicationController
         @sport_entry = SportEntry.find(params[:sport_entry_id])
         @participant = Participant.find(params[:id])
   
-        @sport_entry.participants.delete(@participant)
+        @sport_entry.participants.destroy(@participant)
       
         if @sport_entry.captaincy == @participant
             @sport_entry.captaincy = nil

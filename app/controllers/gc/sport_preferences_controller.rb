@@ -83,7 +83,7 @@ class Gc::SportPreferencesController < ApplicationController
       @sport_preference = SportPreference.find(params[:id])
       sport_entry = @sport_preference.sport_entry
       
-      sport_entry.participants.delete(@sport_preference.participant)
+      sport_entry.participants.destroy(@sport_preference.participant)
       flash[:notice] = "Participant removed from sport entry"
   
       respond_to do |format|
