@@ -23,42 +23,45 @@ class VoucherTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess
 
   def setup
-      FactoryBot.create(:role, name: 'admin')
-      @user = FactoryBot.create(:user)
-      @setting = FactoryBot.create(:setting)
-      @voucher = FactoryBot.create(:voucher, limit: 1)
+    FactoryBot.create(:role, name: 'admin')
+    @user = FactoryBot.create(:user)
+    @setting = FactoryBot.create(:setting)
+    @voucher = FactoryBot.create(:voucher, limit: 1)
+    @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
   end
 
   test "should allow defaut voucher for a participant" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
 
     assert_equal true, @voucher.valid_for?(participant)
   end
 
   test "should allow voucher for a participant in same group" do
-    participant = FactoryBot.create(:participant)
-    voucher = FactoryBot.create(:voucher, group: participant.group)
+    participant = FactoryBot.create(:participant, group: @group)
+    voucher = FactoryBot.create(:voucher, group: @group)
 
     assert_equal true, voucher.valid_for?(participant)
   end
 
   test "should not allow voucher for a participant in wrong group" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     voucher = FactoryBot.create(:voucher, group: group)
 
     assert_equal false, voucher.valid_for?(participant)
   end
 
   test "should not allow voucher for a participant when vouchers are used up" do
-    FactoryBot.create(:participant, voucher: @voucher)
-    participant = FactoryBot.create(:participant)
+    FactoryBot.create(:participant, group: @group, voucher: @voucher)
+    participant = FactoryBot.create(:participant, group: @group)
 
     assert_equal false, @voucher.valid_for?(participant)
   end
 
   test "should allow unexpired voucher for a participant" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     voucher = FactoryBot.create(:voucher, expiry: Date.today)
 
     assert_equal true, voucher.valid_for?(participant)
@@ -72,7 +75,7 @@ class VoucherTest < ActiveSupport::TestCase
   end
 
   test "should not allow expired voucher for an old participant" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     voucher = FactoryBot.create(:voucher, expiry: 2.days.ago)
 
     assert_equal false, voucher.valid_for?(participant)
@@ -86,7 +89,7 @@ class VoucherTest < ActiveSupport::TestCase
   end
 
   test "should not allow helpers voucher for a normal participant" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     voucher = FactoryBot.create(:voucher, restricted_to: "Helpers")
 
     assert_equal false, voucher.valid_for?(participant)

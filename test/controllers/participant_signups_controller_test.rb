@@ -12,6 +12,7 @@ class ParticipantSignupsControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:user)
     @group = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group_id: @group.id)
+    FactoryBot.create(:event_detail, group_id: @group.id)
     @group.reload
   end
 

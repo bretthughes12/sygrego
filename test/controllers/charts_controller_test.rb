@@ -25,7 +25,9 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should prepare admin participants chart" do
-    FactoryBot.create(:participant, spectator: false)
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:participant, group: group, spectator: false)
 
     get admin_participants_charts_url
 
@@ -91,6 +93,7 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
 
   test "should prepare gc participants chart" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     FactoryBot.create(:participant, group: group, spectator: false)
     gc = FactoryBot.create(:user, :gc)
     group.users << gc
@@ -109,7 +112,7 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should prepare evening saturday preferences chart" do
-    group = FactoryBot.create(:group)
+    group = FactoryBot.create(:group) 
     FactoryBot.create(:event_detail, group: group, service_pref_sat: "7:00pm")
 
     get evening_saturday_preferences_charts_url

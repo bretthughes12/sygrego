@@ -18,8 +18,12 @@ class Admin::ReportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get finance summary" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
+    FactoryBot.create(:event_detail, group: group)
+
     20.times do
-      FactoryBot.create(:participant)
+      FactoryBot.create(:participant, group: group)
     end
 
     get finance_summary_admin_reports_url

@@ -75,7 +75,9 @@ class ParticipantTest < ActiveSupport::TestCase
   def setup
     @user = FactoryBot.create(:user, :admin)
     @setting = FactoryBot.create(:setting)
-    @participant = FactoryBot.create(:participant)
+    @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
+    @participant = FactoryBot.create(:participant, group: @group)
   end
 
   test "should display driver fields" do
@@ -100,26 +102,26 @@ class ParticipantTest < ActiveSupport::TestCase
   end
 
   def test_participant_fee_values
-    full_participant = FactoryBot.create(:participant)
-    eleven_year_old_playing_sport = FactoryBot.create(:participant, :under18, age: 11)
-    spectator = FactoryBot.create(:participant, spectator: true)
-    primary_aged = FactoryBot.create(:participant, :under18, age: 11, spectator: true)
-    pre_schooler = FactoryBot.create(:participant, :under18, age: 5)
-    day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false)
-    day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
-    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false, early_bird: true)
-    group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
-    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group_coord: true, spectator: true)
-    sport_coordinator_playing_sport = FactoryBot.create(:participant, sport_coord: true)
-    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, sport_coord: true, spectator: true)
-    guest_playing_sport = FactoryBot.create(:participant, guest: true)
-    guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
+    full_participant = FactoryBot.create(:participant, group: @group)
+    eleven_year_old_playing_sport = FactoryBot.create(:participant, :under18, group: @group, age: 11)
+    spectator = FactoryBot.create(:participant, group: @group, spectator: true)
+    primary_aged = FactoryBot.create(:participant, :under18, group: @group, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, :under18, group: @group, age: 5)
+    day_visitor_not_playing_sport = FactoryBot.create(:participant, group: @group, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false)
+    day_visitor_playing_sport = FactoryBot.create(:participant, group: @group, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false)
+    early_day_visitor_playing_sport = FactoryBot.create(:participant, group: @group, onsite: false, rego_type: "Part Time", coming_friday: false, coming_sunday: false, coming_monday: false, early_bird: true)
+    group_coordinator_playing_sport = FactoryBot.create(:participant, group: @group, group_coord: true)
+    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group: @group, group_coord: true, spectator: true)
+    sport_coordinator_playing_sport = FactoryBot.create(:participant, group: @group, sport_coord: true)
+    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, group: @group, sport_coord: true, spectator: true)
+    guest_playing_sport = FactoryBot.create(:participant, group: @group, guest: true)
+    guest_not_playing_sport = FactoryBot.create(:participant, group: @group, guest: true, spectator: true)
     free_voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 0)
-    band_member = FactoryBot.create(:participant, voucher: free_voucher)
+    band_member = FactoryBot.create(:participant, group: @group, voucher: free_voucher)
     @setting.early_bird = true
     @setting.save
-    early_participant = FactoryBot.create(:participant, early_bird: true)
-    early_day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false, early_bird: true)
+    early_participant = FactoryBot.create(:participant, group: @group, early_bird: true)
+    early_day_visitor_not_playing_sport = FactoryBot.create(:participant, group: @group, spectator: true, onsite: false, rego_type: "Part Time", coming_friday: false, coming_monday: false, early_bird: true)
 
     assert_equal @setting.full_fee, full_participant.fee
     assert_equal @setting.full_fee, eleven_year_old_playing_sport.fee
@@ -141,29 +143,29 @@ class ParticipantTest < ActiveSupport::TestCase
   end
 
   def test_participant_category_values
-    full_participant = FactoryBot.create(:participant)
-    spectator = FactoryBot.create(:participant, spectator: true)
-    primary_aged = FactoryBot.create(:participant, :under18, age: 11, spectator: true)
-    pre_schooler = FactoryBot.create(:participant, :under18, age: 5)
-    day_visitor_not_playing_sport = FactoryBot.create(:participant, spectator: true, onsite: false)
-    day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false)
-    group_coordinator_playing_sport = FactoryBot.create(:participant, group_coord: true)
-    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group_coord: true, spectator: true)
-    sport_coordinator_playing_sport = FactoryBot.create(:participant, sport_coord: true)
-    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, sport_coord: true, spectator: true)
-    guest_playing_sport = FactoryBot.create(:participant, guest: true)
-    guest_not_playing_sport = FactoryBot.create(:participant, guest: true, spectator: true)
+    full_participant = FactoryBot.create(:participant, group: @group)
+    spectator = FactoryBot.create(:participant, group: @group, spectator: true)
+    primary_aged = FactoryBot.create(:participant, :under18, group: @group, age: 11, spectator: true)
+    pre_schooler = FactoryBot.create(:participant, :under18, group: @group, age: 5)
+    day_visitor_not_playing_sport = FactoryBot.create(:participant, group: @group, spectator: true, onsite: false)
+    day_visitor_playing_sport = FactoryBot.create(:participant, group: @group, onsite: false)
+    group_coordinator_playing_sport = FactoryBot.create(:participant, group: @group, group_coord: true)
+    group_coordinator_not_playing_sport = FactoryBot.create(:participant, group: @group, group_coord: true, spectator: true)
+    sport_coordinator_playing_sport = FactoryBot.create(:participant, group: @group, sport_coord: true)
+    sport_coordinator_not_playing_sport = FactoryBot.create(:participant, group: @group, sport_coord: true, spectator: true)
+    guest_playing_sport = FactoryBot.create(:participant, group: @group, guest: true)
+    guest_not_playing_sport = FactoryBot.create(:participant, group: @group, guest: true, spectator: true)
     10.times do
       FactoryBot.create(:participant, group: full_participant.group)      
     end
     full_participant.group.reload
-    team_helper = FactoryBot.create(:participant, spectator: true, helper: true, group: full_participant.group)
-    offsite_team_helper = FactoryBot.create(:participant, spectator: true, helper: true, onsite: false, group: full_participant.group)
+    team_helper = FactoryBot.create(:participant, group: @group, spectator: true, helper: true, group: full_participant.group)
+    offsite_team_helper = FactoryBot.create(:participant, group: @group, spectator: true, helper: true, onsite: false, group: full_participant.group)
     @setting.early_bird = true
     @setting.save
-    early_participant = FactoryBot.create(:participant, early_bird: true)
-    early_spectator = FactoryBot.create(:participant, spectator: true, early_bird: true)
-    early_day_visitor_playing_sport = FactoryBot.create(:participant, onsite: false, early_bird: true)
+    early_participant = FactoryBot.create(:participant, group: @group, early_bird: true)
+    early_spectator = FactoryBot.create(:participant, group: @group, spectator: true, early_bird: true)
+    early_day_visitor_playing_sport = FactoryBot.create(:participant, group: @group, onsite: false, early_bird: true)
 
     assert_equal "Child", primary_aged.category
     assert_equal "Sport Participant", full_participant.category
@@ -185,7 +187,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
 
   def test_participant_can_play_sport
-    player = FactoryBot.create(:participant)
+    player = FactoryBot.create(:participant, group: @group)
 
     #OK
     sport = FactoryBot.create(:sport)
@@ -218,7 +220,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
 
   test "available sport entries should include entries participant can enter" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     entry = FactoryBot.create(:sport_entry, group: participant.group)
     participant.stubs(:can_play_sport).returns(true)
     SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
@@ -228,7 +230,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport entries should not include entries in sports that participants cannot play" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     entry = FactoryBot.create(:sport_entry, group: participant.group)
     participant.stubs(:can_play_sport).returns(false)
     SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
@@ -238,7 +240,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport entries should not include entries that cannot take participants" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     entry = FactoryBot.create(:sport_entry, group: participant.group)
     participant.stubs(:can_play_sport).returns(true)
     SportEntry.any_instance.stubs(:can_take_participants?).returns(false)
@@ -248,7 +250,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport entries should not include entries for which participant is ineligible" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     entry = FactoryBot.create(:sport_entry, group: participant.group)
     participant.stubs(:can_play_sport).returns(true)
     SportEntry.any_instance.stubs(:can_take_participants?).returns(true)
@@ -258,7 +260,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport grades should include grades participant can enter" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     grade = FactoryBot.create(:grade)
     participant.stubs(:can_play_sport).returns(true)
     Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
@@ -267,7 +269,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport grades should not include grades in sports that participants cannot play" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     grade = FactoryBot.create(:grade)
     participant.stubs(:can_play_sport).returns(false)
     Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
@@ -276,7 +278,7 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "available sport grades should not include grades for which participant is ineligible" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     grade = FactoryBot.create(:grade)
     participant.stubs(:can_play_sport).returns(true)
     Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(false)
@@ -328,6 +330,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update exiting participants from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
       first_name: "Amos",
@@ -361,6 +364,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not update participants with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
       first_name: "Amos",
@@ -407,6 +411,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update exiting GC participants from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
       first_name: "Amos",
@@ -440,6 +445,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not update GC participants with errors from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
       first_name: "Amos",

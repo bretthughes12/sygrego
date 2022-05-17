@@ -8,7 +8,9 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
-    @participant = FactoryBot.create(:participant)
+    @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
+    @participant = FactoryBot.create(:participant, group: @group)
   end
   
   test "participant display classes" do
@@ -49,7 +51,7 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     name = @participant.name + ' (c)'
     assert_equal name, name_with_captaincy_suffix(@participant, @participant)
 
-    not_captain = FactoryBot.create(:participant)
+    not_captain = FactoryBot.create(:participant, group: @group)
     assert_equal @participant.name, name_with_captaincy_suffix(@participant, not_captain)
   end
 end

@@ -8,6 +8,7 @@ class Gc::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     @user = FactoryBot.create(:user, :gc)
     @church_rep = FactoryBot.create(:user, :church_rep)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
     @user.groups << @group
     @church_rep.groups << @group
     @sport_entry = FactoryBot.create(:sport_entry, group: @group)

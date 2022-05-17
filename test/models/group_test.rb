@@ -48,6 +48,7 @@ class GroupTest < ActiveSupport::TestCase
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group, name: "Order1")
+    FactoryBot.create(:event_detail, group: @group)
   end
 
   test "should compare groups" do
@@ -208,6 +209,7 @@ class GroupTest < ActiveSupport::TestCase
   def test_division_boundaries
     #Small church
     small_church = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: small_church)
     @setting.small_division_ceiling.times do
       FactoryBot.create(:participant, 
                      group: small_church, 
@@ -221,6 +223,7 @@ class GroupTest < ActiveSupport::TestCase
 
     #Medium church
     medium_church_low = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: medium_church_low)
     (@setting.small_division_ceiling + 1).times do
       FactoryBot.create(:participant, 
                      group_id: medium_church_low.id, 
@@ -230,6 +233,7 @@ class GroupTest < ActiveSupport::TestCase
     medium_church_low.reload
 
     medium_church_high = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: medium_church_high)
     @setting.medium_division_ceiling.times do
       FactoryBot.create(:participant, 
                      group: medium_church_high, 
@@ -244,6 +248,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #Large church
     large_church = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: large_church)
     (@setting.medium_division_ceiling + 1).times do
       FactoryBot.create(:participant, 
                      group: large_church, 
@@ -297,6 +302,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the number playing sport" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     12.times do
       FactoryBot.create(:participant, 
         group: group,
@@ -311,6 +317,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should determine helpers allowed" do
     # basic number
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     assert_equal 0, group.helpers_allowed
 
     # larger groups
@@ -327,6 +334,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the helper rebate" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     80.times do
       FactoryBot.create(:participant, 
         group: group,

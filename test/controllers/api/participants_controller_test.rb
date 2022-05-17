@@ -4,7 +4,10 @@ class Api::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :admin)
-    @participant = FactoryBot.create(:participant)
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
+    FactoryBot.create(:event_detail, group: group)
+    @participant = FactoryBot.create(:participant, group: group)
   end
 
   test "should show participant via xhr" do

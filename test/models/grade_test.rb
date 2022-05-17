@@ -46,6 +46,8 @@ class GradeTest < ActiveSupport::TestCase
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @grade = FactoryBot.create(:grade, name: "Order1")
+    @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
   end
 
   test "should compare sport grades" do
@@ -295,36 +297,36 @@ class GradeTest < ActiveSupport::TestCase
   
   test "participant should not be eligible to participate if they are too young" do
     grade = FactoryBot.create(:grade, min_age: 18)
-    participant = FactoryBot.create(:participant, :under18)
+    participant = FactoryBot.create(:participant, :under18, group: @group)
     
     assert !grade.eligible_to_participate?(participant)
   end
   
   test "participant should be eligible to participate if they are old enough" do
     grade = FactoryBot.create(:grade, min_age: 18)
-    participant = FactoryBot.create(:participant, age: 18)
+    participant = FactoryBot.create(:participant, age: 18, group: @group)
     
     assert grade.eligible_to_participate?(participant)
   end
   
   test "participant should not be eligible to participate if they are too old" do
     grade = FactoryBot.create(:grade, max_age: 17)
-    participant = FactoryBot.create(:participant, age: 18)
+    participant = FactoryBot.create(:participant, age: 18, group: @group)
     
     assert !grade.eligible_to_participate?(participant)
   end
   
   test "participant should be eligible to participate if they are young enough" do
     grade = FactoryBot.create(:grade, max_age: 17)
-    participant = FactoryBot.create(:participant, :under18)
+    participant = FactoryBot.create(:participant, :under18, group: @group)
     
     assert grade.eligible_to_participate?(participant)
   end
   
   test "either sex should be eligible to participate in open grades" do
     grade = FactoryBot.create(:grade, gender_type: "Open")
-    male = FactoryBot.create(:participant, gender: "M")
-    female = FactoryBot.create(:participant, gender: "F")
+    male = FactoryBot.create(:participant, gender: "M", group: @group)
+    female = FactoryBot.create(:participant, gender: "F", group: @group)
     
     assert grade.eligible_to_participate?(male)
     assert grade.eligible_to_participate?(female)
@@ -332,8 +334,8 @@ class GradeTest < ActiveSupport::TestCase
   
   test "either sex should be eligible to participate in mixed grades" do
     grade = FactoryBot.create(:grade, gender_type: "Mixed")
-    male = FactoryBot.create(:participant, gender: "M")
-    female = FactoryBot.create(:participant, gender: "F")
+    male = FactoryBot.create(:participant, gender: "M", group: @group)
+    female = FactoryBot.create(:participant, gender: "F", group: @group)
     
     assert grade.eligible_to_participate?(male)
     assert grade.eligible_to_participate?(female)
@@ -341,28 +343,28 @@ class GradeTest < ActiveSupport::TestCase
   
   test "females should be eligible to participate in ladies grades" do
     grade = FactoryBot.create(:grade, gender_type: "Ladies")
-    female = FactoryBot.create(:participant, gender: "F")
+    female = FactoryBot.create(:participant, gender: "F", group: @group)
     
     assert grade.eligible_to_participate?(female)
   end
   
   test "males should not be eligible to participate in ladies grades" do
     grade = FactoryBot.create(:grade, gender_type: "Ladies")
-    male = FactoryBot.create(:participant, gender: "M")
+    male = FactoryBot.create(:participant, gender: "M", group: @group)
     
     assert !grade.eligible_to_participate?(male)
   end
   
   test "males should be eligible to participate in mens grades" do
     grade = FactoryBot.create(:grade, gender_type: "Mens")
-    male = FactoryBot.create(:participant, gender: "M")
+    male = FactoryBot.create(:participant, gender: "M", group: @group)
     
     assert grade.eligible_to_participate?(male)
   end
   
   test "females should not be eligible to participate in mens grades" do
     grade = FactoryBot.create(:grade, gender_type: "Mens")
-    female = FactoryBot.create(:participant, gender: "F")
+    female = FactoryBot.create(:participant, gender: "F", group: @group)
     
     assert !grade.eligible_to_participate?(female)
   end

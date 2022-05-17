@@ -93,7 +93,7 @@ class Section < ApplicationRecord
     end
 
     def teams_allowed
-        if number_of_courts.blank?
+        if number_of_courts.blank? || number_of_courts == 0
             grade.teams_per_court
         else    
             grade.teams_per_court * number_of_courts

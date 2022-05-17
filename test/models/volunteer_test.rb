@@ -46,6 +46,8 @@ class VolunteerTest < ActiveSupport::TestCase
       section: FactoryBot.create(:section))
     @volunteer_with_session = FactoryBot.create(:volunteer,
       session: FactoryBot.create(:session))
+    @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
   end
 
   def test_volunteer_venue_name
@@ -102,7 +104,7 @@ class VolunteerTest < ActiveSupport::TestCase
   test "participant name should come from participant" do
     assert_equal '', @volunteer.participant_name
 
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     volunteer = FactoryBot.create(:volunteer, participant: participant)
     
     assert_equal participant.name, volunteer.participant_name
@@ -116,6 +118,7 @@ class VolunteerTest < ActiveSupport::TestCase
   
   test "email recipients should include group email recipients when no volunteer email" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     user = FactoryBot.create(:user, :gc)
     group.users << user
     participant = FactoryBot.create(:participant, group: group)
@@ -128,35 +131,35 @@ class VolunteerTest < ActiveSupport::TestCase
     grade = FactoryBot.create(:grade)
     section = FactoryBot.create(:section, grade: grade)
     5.times { FactoryBot.create(:sport_entry, grade: grade, section: section) }
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     volunteer = FactoryBot.create(:volunteer, participant: participant, section: section)
     
     assert_equal 5, volunteer.number_of_teams
   end
   
   test "number of teams should be nil when nothing associated" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     volunteer = FactoryBot.create(:volunteer, participant: participant, section: nil)
     
     assert_nil volunteer.number_of_teams
   end
   
   test "mobile phone number should be the number of the volunteer if provided" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group: @group)
     volunteer = FactoryBot.create(:volunteer, participant: participant, mobile_number: "0444111222")
     
     assert_equal "(0444) 111-222", volunteer.mobile_phone_number
   end
   
   test "mobile phone number should be the number of the participant if provided" do
-    participant = FactoryBot.create(:participant, mobile_phone_number: "0444333444")
+    participant = FactoryBot.create(:participant, group: @group, mobile_phone_number: "0444333444")
     volunteer = FactoryBot.create(:volunteer, participant: participant, mobile_number: nil)
     
     assert_equal "(0444) 333-444", volunteer.mobile_phone_number
   end
   
   test "mobile phone number should be nil if not on volunteer or participant" do
-    participant = FactoryBot.create(:participant, mobile_phone_number: nil)
+    participant = FactoryBot.create(:participant, group: @group, mobile_phone_number: nil)
     volunteer = FactoryBot.create(:volunteer, participant: participant, mobile_number: nil)
     
     assert_nil volunteer.mobile_phone_number

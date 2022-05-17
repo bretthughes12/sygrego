@@ -64,6 +64,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_name
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     participant1 = FactoryBot.create(:participant, group: group)
     participant2 = FactoryBot.create(:participant, group: group)
     singles_grade = FactoryBot.create(:grade,
@@ -118,6 +119,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_participants
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     participant1 = FactoryBot.create(:participant, group: group)
     participant2 = FactoryBot.create(:participant, group: group)
     singles_grade = FactoryBot.create(:grade,
@@ -175,6 +177,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_males
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     male_participant = FactoryBot.create(:participant, 
       group: group,
       gender: "M")
@@ -201,6 +204,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_females
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     female_participant = FactoryBot.create(:participant, 
       group: group,
       gender: "F")
@@ -227,6 +231,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "sport entry should identify issues" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
     male_participant = FactoryBot.create(:participant, 
       group: group,
       gender: "M")
@@ -604,7 +609,9 @@ class SportEntryTest < ActiveSupport::TestCase
   test "entry can not take participants when at max participants" do
     grade = FactoryBot.create(:grade, max_participants: 1)
     entry = FactoryBot.create(:sport_entry, grade: grade)
-    participant = FactoryBot.create(:participant)
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, group: group)
     entry.participants << participant
     
     assert !entry.can_take_participants? 

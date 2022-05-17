@@ -65,7 +65,8 @@
 # Foreign Keys
 #
 #  fk_rails_...  (group_id => groups.id)
-#
+#            puts 'reverting'
+
 
 class Participant < ApplicationRecord
     include Auditable
@@ -197,6 +198,7 @@ class Participant < ApplicationRecord
     before_save :normalize_suburb!
     before_save :set_rego_type!
     before_save :set_database_rowid!
+    before_save :check_onsite_flag
 
     searchable_by :first_name, :surname, :email, :number_plate
 
@@ -766,6 +768,12 @@ private
   def check_early_bird_flag
     if coming_changed? && coming
       set_early_bird_flag!
+    end
+  end
+
+  def check_onsite_flag
+    if !group.onsite && onsite
+      onsite = false
     end
   end
 

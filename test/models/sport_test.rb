@@ -55,6 +55,8 @@ class SportTest < ActiveSupport::TestCase
   test "should count the number of entries for a participant in a sport" do
     grade = FactoryBot.create(:grade)
     entry = FactoryBot.create(:sport_entry, grade: grade)
+    group = entry.group
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: entry.group)
     entry.participants << participant
     

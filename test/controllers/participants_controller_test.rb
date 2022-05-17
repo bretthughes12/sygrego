@@ -8,6 +8,7 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
     @user = FactoryBot.create(:user, :participant)
     @group = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group_id: @group.id)
+    FactoryBot.create(:event_detail, group_id: @group.id)
     @group.reload
     @participant = FactoryBot.create(:participant, group_id: @group.id)
     @user.participants << @participant
@@ -16,7 +17,7 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show available participants" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group_id: @group.id)
     @user.participants << participant
 
     get available_participants_participants_url
@@ -36,7 +37,7 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show available participants when editing a participant" do
-    participant = FactoryBot.create(:participant)
+    participant = FactoryBot.create(:participant, group_id: @group.id)
     @user.participants << participant
 
     patch switch_participant_url(participant)

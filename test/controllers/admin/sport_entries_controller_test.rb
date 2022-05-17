@@ -7,6 +7,7 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :admin)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
     @sport_entry = FactoryBot.create(:sport_entry, group: @group)
     
     sign_in @user

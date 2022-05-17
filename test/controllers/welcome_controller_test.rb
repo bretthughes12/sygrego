@@ -37,7 +37,8 @@ class WelcomeControllerTest < ActionDispatch::IntegrationTest
 
   test "participant user should land on mysyg info page" do
     group = FactoryBot.create(:group)
-    ms = FactoryBot.create(:mysyg_setting, group: group)
+    FactoryBot.create(:mysyg_setting, group: group)
+    FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     participant_user = FactoryBot.create(:user, :participant)
     participant_user.participants << participant
