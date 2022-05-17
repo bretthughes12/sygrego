@@ -73,7 +73,8 @@ class Group < ApplicationRecord
     scope :sun_late_service, -> { where('event_details.service_pref_sun': '8:30pm').includes(:event_detail) }
     scope :sun_no_pref_service, -> { where('event_details.service_pref_sun': 'No preference').includes(:event_detail) }
 
-    delegate :estimated_numbers, to: :event_detail
+    delegate :estimated_numbers,
+      :onsite, to: :event_detail
     delegate :show_group_extras_in_mysyg,
       :show_finance_in_mysyg,
       :show_sports_in_mysyg,

@@ -88,7 +88,7 @@ class Volunteer < ApplicationRecord
                                        allow_blank: true
   
     after_create :check_participant_on_create
-    before_update :check_participants_on_update
+    after_update :check_participants_on_update
     after_destroy :check_participant_on_destroy
 
     searchable_by 'volunteers.description'
@@ -264,9 +264,9 @@ class Volunteer < ApplicationRecord
     end
 
     def check_participants_on_update
-      if self.participant_id_changed?
-        if self.participant_id_was
-          old_participant = Participant.where(id: self.participant_id_was).first
+      if self.participant_id_previously_changed?
+        if self.participant_id_previously_was
+          old_participant = Participant.where(id: self.participant_id_previously_was).first
           if old_participant
             revert_participant_category!(old_participant) unless old_participant.nil?
           end
@@ -293,8 +293,9 @@ class Volunteer < ApplicationRecord
     end
   
     def revert_participant_category!(participant)
+      coords = participant.volunteers.sport_coords.where.not(id: self.id).load
       case
-      when participant.volunteers.sport_coords.empty?
+      when coords.empty?
         participant.sport_coord = false
         participant.save(validate: false)
       end
