@@ -773,7 +773,7 @@ private
 
   def check_onsite_flag
     if !group.onsite && onsite
-      onsite = false
+      self.onsite = false
     end
   end
 
