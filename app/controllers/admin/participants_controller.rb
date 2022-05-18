@@ -77,22 +77,13 @@ class Admin::ParticipantsController < ApplicationController
   
     # DELETE /admin/participants/1
     def destroy
-        @participant.updated_by = current_user.id
+      @participant.updated_by = current_user.id
 
-#        if @participant.sections.empty?
-            @participant.destroy
-  
-            respond_to do |format|
-                format.html { redirect_to admin_participants_url }
-            end
-        
-#          else
-#            flash[:notice] = "Can't delete, as sections exist"
-#        
-#            respond_to do |format|
-#                format.html { redirect_to admin_participants_url }
-#            end
-#        end
+      @participant.destroy
+
+      respond_to do |format|
+        format.html { redirect_to admin_participants_url }
+      end
     end
   
     # GET /admin/participants/new_import

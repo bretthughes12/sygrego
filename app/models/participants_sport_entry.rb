@@ -6,7 +6,7 @@
 #  sport_entry_id :bigint           not null
 #
 
-class ParticipantsSportEntry < ActiveRecord::Base
+class ParticipantsSportEntry < ApplicationRecord
     include Auditable
 
     belongs_to :participant

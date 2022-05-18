@@ -289,7 +289,7 @@ class Gc::ParticipantsController < ApplicationController
       @participant.destroy
 
       respond_to do |format|
-          format.html { redirect_to gc_participants_url }
+        format.html { redirect_to gc_participants_url }
       end
     end
   

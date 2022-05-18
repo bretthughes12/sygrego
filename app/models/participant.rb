@@ -189,7 +189,7 @@ class Participant < ApplicationRecord
 
     before_update :check_participant_sport_entries
     before_destroy :remove_sport_entries!
-    before_destroy :release_volunteers!
+    after_destroy :release_volunteers!
 
     before_save :normalize_phone_numbers!
     before_save :normalize_medical_info!

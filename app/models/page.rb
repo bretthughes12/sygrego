@@ -15,7 +15,7 @@
 #  index_pages_on_permalink  (permalink) UNIQUE
 #
 
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   
     has_rich_text :content
 
