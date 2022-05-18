@@ -25,6 +25,15 @@ class Admin::EventDetailsController < ApplicationController
         format.html { render action: 'index' }
       end
     end
+  
+    # GET /admin/event_details/uploads
+    def uploads
+      @event_details = EventDetail.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+  
+      respond_to do |format|
+        format.html # index.html.erb
+      end
+    end
 
     # GET /admin/event_details/1
     def show

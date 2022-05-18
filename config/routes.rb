@@ -153,6 +153,7 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+        get :uploads
       end
     end
     resources :mysyg_settings, only: [:index, :show, :edit, :update] do
