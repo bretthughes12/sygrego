@@ -816,7 +816,7 @@ private
   end
 
   def normalize_first_name!
-    self.first_name = first_name.titleize if first_name
+    self.first_name = first_name.strip.titleize if first_name
   end
 
   def normalize_surname!
@@ -889,7 +889,7 @@ private
   end
 
   def self.normalize_surname(surname)
-    words = surname.split.collect do |word|
+    words = surname.strip.split.collect do |word|
       parts = word.split("'").collect do |part|
         subparts = part.split('-').collect do |subpart|
           subpart[0..1].casecmp('mc').zero? ? "Mc#{subpart[2..99].capitalize}" : subpart.capitalize

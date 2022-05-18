@@ -152,8 +152,18 @@ namespace :syg do
   desc 'Save all participants to generate callbacks'
   task save_participants: ['environment'] do |_t|
     puts "Saving all participants..."
+    worked = 0
+    failed = 0
 
-    Participant.all.each { |p| p.save }
+    Participant.all.each do |p| 
+      if p.save 
+        worked += 1
+      else
+        failed += 1
+        puts "--> save failed for #{p.name_with_group_name}"
+      end
+    end
+    puts "Worked: #{worked}; Failed: #{failed}"
   end
 
   desc 'Nightly maintenance tasks'
