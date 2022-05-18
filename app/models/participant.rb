@@ -360,6 +360,10 @@ class Participant < ApplicationRecord
       end
     end
   
+    def voucher_code
+      voucher.nil? ? '' : voucher.name
+    end
+
     def accept!
       self.status = 'Accepted'
       save(validate: false)
