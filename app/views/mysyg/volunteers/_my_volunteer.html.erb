@@ -3,7 +3,7 @@
     	<%= h(volunteer.volunteer_type.name) %></br>
 	</td>
 	<td> 
-    	<%= volunteer.description %></br>
+    	<%= link_to volunteer.description, edit_mysyg_volunteer_path(:group => @group.mysyg_setting.mysyg_name, :id => volunteer.id) %>
 	</td>
 
     <td class="list-actions">

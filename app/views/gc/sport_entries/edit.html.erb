@@ -23,6 +23,24 @@
     <% if @sport_entry.grade.min_males && @sport_entry.grade.min_males > 0 %>
         <tr><td>Minimum number of males</td><td><%= @sport_entry.grade.min_males %></td></tr>
     <% end %> 
+    <% if @sport_entry.sport.rules_file.attached? %>
+		<tr><td>Rules</td>
+        <% if @sport_entry.sport.rules_file.representable? %>
+		    <td><%= link_to(image_tag(@sport_entry.sport.rules_file.representation(resize_to_limit: [40, 50])), rails_blob_path(@sport_entry.sport.rules_file, disposition: "attachment")) %></td>
+		<% else %>
+		    <td><%= link_to "Rules", rails_blob_path(@sport_entry.sport.rules_file, disposition: "attachment") %></td>
+		<% end %>
+        </tr>
+    <% end %>
+    <% if @sport_entry.section && @sport_entry.section.draw_file.attached? %>
+		<tr><td>Draw</td>
+		<% if @sport_entry.section.draw_file.representable? %>
+		    <td><%= link_to(image_tag(@sport_entry.section.draw_file.representation(resize_to_limit: [40, 50])), rails_blob_path(@sport_entry.section.draw_file, disposition: "attachment")) %></td>
+		<% else %>
+		    <td><%= link_to "Rules", rails_blob_path(@sport_entry.section.draw_file, disposition: "attachment") %></td>
+		<% end %>
+        </tr>
+    <% end %>
 </table>
 
 <% unless @sport_entry.venue_known? && @sport_entry.session_known? %>

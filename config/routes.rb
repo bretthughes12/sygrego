@@ -201,6 +201,9 @@ Rails.application.routes.draw do
     end
 
     resources :sports do
+      member do
+        patch :purge_file
+      end
       collection do
         get :new_import
         post :import

@@ -9,6 +9,26 @@
 	<%= f.input :max_team_entries_group, label: "Max times each group may enter team-individual grades" %>
 	<%= f.input :max_entries_indiv, label: "Max times each open-age participant may enter" %>
 	<%= f.input :court_name, label: "What is a 'court' known as?" %>
+	
+	<br/>
+
+	<% if @sport.rules_file.attached? %>
+		<% if @sport.rules_file.representable? %>
+		    <%= link_to(image_tag(@sport.rules_file.representation(resize_to_limit: [80, 100])), rails_blob_path(@sport.rules_file, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@sport.rules_file, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_file_admin_sport_path(@sport),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+	<% else %>
+		<%= f.input :rules_file, as: :file %>
+	<% end %>
+
+	<br/>
 
 	<%= f.button :submit %>
 <% end %>	

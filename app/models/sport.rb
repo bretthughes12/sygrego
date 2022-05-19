@@ -27,15 +27,16 @@ class Sport < ApplicationRecord
 
     require 'csv'
 
-    has_many :grades
-#    has_many :officials, as: :coord_rqmt
-#    has_many :downloads
-
+    attr_reader :file
     attr_reader :grades_as_limited
+
+    has_many :grades
 
     scope :individual, -> { where(classification: 'Individual') }
     scope :team, -> { where(classification: 'Team') }
     scope :active, -> { where(active: true) }
+
+    has_one_attached :rules_file
 
     CLASSIFICATIONS = %w[Individual
                          Team]

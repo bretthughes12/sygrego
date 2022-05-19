@@ -4,6 +4,8 @@
 
 <%= render :partial => 'form', :locals => {:method => 'patch'} %>
 
-<table><tr>
-	<td><div class="page-actions"><%= link_to 'Back', :back %></div></td>
-</tr></table>
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>

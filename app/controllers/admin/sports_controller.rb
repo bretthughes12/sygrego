@@ -82,6 +82,17 @@ class Admin::SportsController < ApplicationController
             end
         end
     end
+  
+    # PATCH /admin/sports/1/purge_file
+    def purge_file
+        @sport.updated_by = current_user.id
+
+        @sport.rules_file.purge
+  
+        respond_to do |format|
+            format.html { render action: "edit" }
+        end
+    end
 
     # GET /admin/sports/new_import
     def new_import
@@ -119,6 +130,7 @@ class Admin::SportsController < ApplicationController
                                     :active,
                                     :bonus_for_officials,
                                     :court_name,
-                                    :draw_type)
+                                    :draw_type,
+                                    :rules_file)
     end
   end
