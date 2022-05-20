@@ -140,6 +140,7 @@ Rails.application.routes.draw do
         get :search
         get :approvals
         get :session_participants
+        get :summary
       end
       member do
         patch :approve

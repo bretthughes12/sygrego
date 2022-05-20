@@ -1,0 +1,56 @@
+<% title "Group Summary" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th align="left">Church</th>
+            <th>Abbr</th>
+            <th>Total Registered</th>
+            <th align="right">Fees</th>
+            <th align="right">Paid</th>
+            <th align="right">Difference</th>
+        </tr>
+    </thead>
+
+    <% @total_campers = 0 %>
+    <% @total_spectators = 0 %>
+    <% @total_sports_players = 0 %>
+    <% @total_participants = 0 %>
+    <% @total_fees = 0 %>
+    <% @total_paid = 0 %>
+
+    <%= render :partial => 'group_summary', :collection => @groups, :as => :group %>
+        
+    <tfoot>
+	    <tr>
+	        <td class="list-title">Totals</td>
+            <td>&nbsp</td>
+	
+            <td align="center">
+                <%= @total_participants %>
+            </td>
+
+	        <td align="right">
+	            <%= number_to_currency(@total_fees) %>
+	        </td>
+
+	        <td align="right">
+	            <%= number_to_currency(@total_paid) %>
+	        </td>
+
+	        <td align="right">
+	            <%= number_to_currency(@total_fees - @total_paid) %>
+	        </td>
+		</tr>
+    </tfoot>
+        
+</table>
+
+<%= link_to "Download", summary_admin_groups_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Onsite", :class => "table-primary"},
+					{:name => "Offsite", :class => "table-warning"}] %>

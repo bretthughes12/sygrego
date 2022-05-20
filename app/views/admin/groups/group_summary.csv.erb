@@ -1,0 +1,18 @@
+Church,Short Name,Abbr.,Campers,Spectators,Playing Sport,Total Registered,Fees,Paid,Owing
+<%= CSV.generate do |csv|
+  @groups.each do |g|
+    late_fees = g.late_fees.nil? ? 0 : g.late_fees
+    csv << 	[ 
+				g.name,
+				g.short_name,
+				g.abbr,
+                g.participants.coming.accepted.campers.size,
+				g.participants.coming.accepted.spectators.size,
+				g.participants.coming.accepted.playing_sport.size,
+				g.participants.coming.accepted.size,
+                number_to_currency(g.fees + g.deposit + late_fees),
+                number_to_currency(g.amount_paid),
+                number_to_currency(g.fees + g.deposit + late_fees - g.amount_paid)
+	 		]
+  end
+end.html_safe %>

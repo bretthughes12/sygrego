@@ -36,6 +36,16 @@ class Admin::GroupsController < ApplicationController
       end
     end
 
+    # GET /admin/groups/summary
+    def summary
+      @groups = Group.coming.order(:name).load
+
+      respond_to do |format|
+        format.html # approvals.html.erb
+        format.csv  { render_csv "group_summary", "group_summary" }
+      end
+    end
+
     # GET /admin/groups/search
     def search
       @groups = Group.search(params[:search]).order("abbr")
@@ -108,22 +118,13 @@ class Admin::GroupsController < ApplicationController
   
     # DELETE /admin/groups/1
     def destroy
-        @group.updated_by = current_user.id
+      @group.updated_by = current_user.id
 
-#        if @group.sections.empty?
-            @group.destroy
-  
-            respond_to do |format|
-                format.html { redirect_to admin_groups_url }
-            end
-        
-#          else
-#            flash[:notice] = "Can't delete, as sections exist"
-#        
-#            respond_to do |format|
-#                format.html { redirect_to admin_groups_url }
-#            end
-#        end
+      @group.destroy
+
+      respond_to do |format|
+          format.html { redirect_to admin_groups_url }
+      end
     end
   
     # GET /admin/groups/new_import

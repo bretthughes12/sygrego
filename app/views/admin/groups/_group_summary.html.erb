@@ -1,0 +1,39 @@
+<tr valign="top" class="<%= group_display_class(group) %>">
+
+    <% nbr_campers = group.participants.coming.accepted.campers.size %>
+    <% nbr_spectators = group.participants.coming.accepted.spectators.size %>
+    <% nbr_sports_players = group.participants.coming.accepted.playing_sport.size %>
+    <% late_fees = group.late_fees.nil? ? 0 : group.late_fees %>
+    <% amt_fees = group.fees + group.deposit + late_fees %>
+
+    <td width="30%">
+        <span class="list-title"><%= link_to h(group.name), edit_admin_group_path(group) -%></span><br />
+    </td>
+
+    <td align="center">
+        <%= h(group.abbr) %>
+    </td>
+
+    <td align="center">
+        <%= nbr_spectators + nbr_sports_players %>
+    </td>
+
+    <td align="right">
+        <%= number_to_currency(amt_fees) %>
+    </td>
+
+    <td align="right">
+        <%= number_to_currency(group.amount_paid) %>
+    </td>
+
+    <td align="right">
+        <%= number_to_currency(amt_fees - group.amount_paid) %>
+    </td>
+</tr>
+
+<% @total_campers += nbr_campers %>
+<% @total_spectators += nbr_spectators %>
+<% @total_sports_players += nbr_sports_players %>
+<% @total_participants += nbr_spectators + nbr_sports_players %>
+<% @total_fees += amt_fees %>
+<% @total_paid += group.amount_paid %>
