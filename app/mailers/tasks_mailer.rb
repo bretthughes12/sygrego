@@ -4,8 +4,8 @@ class TasksMailer < ApplicationMailer
              subject: "#{APP_CONFIG[:email_subject]} Restricted Sports Allocation completed")
     end
     
-    def grade_allocations_done
+    def grades_finalised
         mail(to:      @settings.rego_email,
-            subject: "#{APP_CONFIG[:email_subject]} Grade Allocation to Sections completed") 
+            subject: "#{APP_CONFIG[:email_subject]} Grades Finalised and ready for Sports Draws") 
     end
 end

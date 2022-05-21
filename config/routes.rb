@@ -78,9 +78,10 @@ Rails.application.routes.draw do
 
     resource :tasks, :controller => "tasks" do
       collection do
+        get :sports_draws
         post :allocate_restricted
-        post :allocate_team_grades_to_sections
-        post :allocate_indiv_grades_to_sections
+        post :finalise_team_sports
+        post :finalise_individual_sports
       end
     end
 
