@@ -65,7 +65,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (group_id => groups.id)
-#            puts 'reverting'
+#
 
 
 class Participant < ApplicationRecord
