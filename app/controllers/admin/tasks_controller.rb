@@ -23,7 +23,7 @@ class Admin::TasksController < ApplicationController
   # POST /admin/tasks/finalise_team_sports
   def finalise_team_sports
     if !@settings.team_draws_complete
-      FinaliseGradesJob.perform(:team)
+      FinaliseGradesJob.perform_now(:team)
       set_team_draws_complete_setting
       flash[:notice] = 'Finalisation of team grades is under way. Look for an email when finished'
     else
@@ -36,7 +36,7 @@ class Admin::TasksController < ApplicationController
   # POST /admin/tasks/finalise_individual_sports
   def finalise_individual_sports
     if !@settings.indiv_draws_complete
-      FinaliseGradesJob.perform(:individual)
+      FinaliseGradesJob.perform_now(:individual)
       set_indiv_draws_complete_setting
       flash[:notice] = 'Finalisation of individual grades is under way. Look for an email when finished'
     else

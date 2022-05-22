@@ -1,0 +1,8 @@
+<% title "Sports Draws" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= link_to "Finalise Team Sports", finalise_team_sports_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>

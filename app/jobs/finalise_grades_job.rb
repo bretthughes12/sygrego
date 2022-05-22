@@ -23,7 +23,16 @@ class FinaliseGradesJob < ApplicationJob
     private
 
     def balance_sections_in_grade(grade)
-        
+        grade.possible_sessions.each do |session|
+            sections = session.sections.where(grade_id: grade.id).load
+            total_courts = sections.active.sum(&:number_of_courts)
+            total_entries = sections.sum(&:number_of_teams)
+            teams_per_court = (total_entries / total_courts).ceil
+
+            sections.active.each do |section|
+                puts "#{section.name} - has #{section.number_of_teams}, should have #{section.number_of_courts * teams_per_court}"
+            end
+        end
     end
 
     def set_number_in_draw(grade)

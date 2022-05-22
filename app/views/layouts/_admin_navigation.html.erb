@@ -30,6 +30,7 @@
                         <li class='dropdown-item'><%= link_to 'Sports Allocation', summary_admin_ballot_results_path %></li>
                         <% if @settings.restricted_sports_allocated %>
                             <li class='dropdown-item'><%= link_to 'Sport / Participant Audit', session_participants_admin_groups_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Sport Draws', sports_draws_admin_tasks_path %></li>
                         <% end %>
                     </ul>
                 </li>
