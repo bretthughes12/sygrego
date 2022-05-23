@@ -26,7 +26,7 @@ site_settings: &site_settings
     email_subject: "[SYG Registrations]"
 
 # S3
-    s3_region: us-east-1
+    s3_region: ap-southeast-2
 
 development:  
     s3_bucket: sygrego-development
