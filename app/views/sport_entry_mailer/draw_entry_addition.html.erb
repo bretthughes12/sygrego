@@ -1,0 +1,12 @@
+<% content_for(:title) { "Draw affected by entry added" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>A new entry has been added to a sport section for which the draw is complete.</p>
+
+<table>
+	<tr><td>Section:</td><td><%= @entry.section_name %></td></tr>
+	<tr><td>Group:</td><td><%= @entry.group.short_name %></td></tr>
+</table>
+
+<p>Draw requires reprinting.</p>

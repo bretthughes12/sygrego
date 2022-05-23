@@ -26,23 +26,22 @@ class SportEntryMailer < ActionMailer::Base
       end
     end
   
-#    def draw_entry_withdrawal(entry)
-#      @entry = entry
+    def draw_entry_withdrawal(entry)
+      @entry = entry
   
-#      mail(subject: "#{APP_CONFIG[:email_subject]} Draw affected: Withdrawal from #{entry.sport_grade.name}")
-#    end
+      mail(subject: "#{APP_CONFIG[:email_subject]} Draw affected: Withdrawal from #{entry.section_name}")
+    end
   
-#    def draw_entry_addition(entry)
-#      @entry = entry
+    def draw_entry_addition(entry)
+      @entry = entry
   
-#      mail(subject: "#{APP_CONFIG[:email_subject]} Draw affected: New entry in #{entry.sport_grade.name}")
-#    end
+      mail(subject: "#{APP_CONFIG[:email_subject]} Draw affected: New entry in #{entry.section_name}")
+    end
 
     private
 
     def get_settings
         @settings ||= Setting.first
     end
-
 end
   

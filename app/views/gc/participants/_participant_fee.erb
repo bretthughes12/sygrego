@@ -8,13 +8,13 @@
 	</td>
 	
 	<td align="right"> 
-		<%= number_to_currency(participant.amount_paid) %>
+		<%= number_to_currency(participant.paid_amount) %>
 	</td>
 	
 	<td align="right"> 
-		<%= number_to_currency(participant.total_owing - participant.amount_paid) %>
+		<%= number_to_currency(participant.total_owing - participant.paid_amount) %>
 	</td>
 
 	<% @total_fees += participant.total_owing %>
-	<% @total_paid += participant.amount_paid %>
+	<% @total_paid += participant.paid_amount %>
 </tr>

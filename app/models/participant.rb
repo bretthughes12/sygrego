@@ -309,6 +309,10 @@ class Participant < ApplicationRecord
       group_fee + total_extras_costs
     end
   
+    def paid_amount
+      self.amount_paid.nil? ? 0 : self.amount_paid
+    end
+
     def total_extras_costs
       participant_extras.wanted.to_a.sum(&:cost)
     end

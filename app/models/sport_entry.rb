@@ -58,8 +58,10 @@ class SportEntry < ApplicationRecord
   after_create :update_team_numbers
   after_create :update_grade_flags
   after_create :check_waiting_list
+  after_create :check_sport_draw_addition_emails
   after_update :update_grade_flags_on_status_change
   before_destroy :check_sport_entry_emails
+  before_destroy :check_sport_draw_withdrawal_emails
   before_destroy :remove_participants_from_entry!
   after_destroy :update_team_numbers
   after_destroy :update_grade_flags
@@ -472,6 +474,28 @@ private
       end
     end
   end
+
+  def check_sport_draw_withdrawal_emails
+    # Send an email if a team has withdrawn from a sport section for which the draw is complete
+    if self.status == "Entered" && 
+      self.grade.status != "Open" &&
+      self.section &&
+      self.section.number_in_draw &&
+      self.section.number_in_draw > 0
+     SportEntryMailer.draw_entry_withdrawal(self).deliver_now
+    end
+  end
+
+  def check_sport_draw_addition_emails
+    # Send an email if a team has entered into a sport section for which the draw is complete
+    if self.status == "Entered" && 
+      self.grade.status != "Open" &&
+      self.section &&
+      self.section.number_in_draw &&
+      self.section.number_in_draw > 0
+     SportEntryMailer.draw_entry_addition(self).deliver_now
+   end
+ end
 
   def remove_participants_from_entry!
     participants.each do |participant|
