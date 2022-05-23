@@ -134,8 +134,10 @@
 <%= link_to "Back", gc_sport_entries_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Delete", gc_sport_entry_path(@sport_entry),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" },
-                  class: danger_button_class,
-                  role: "button" %>
+<%- if should_show_delete_link(@sport_entry) -%>
+    <%= link_to "Delete", gc_sport_entry_path(@sport_entry),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" },
+                      class: danger_button_class,
+                      role: "button" %>
+<% end %>
