@@ -10,7 +10,6 @@ class FinaliseGradesJob < ApplicationJob
 
         grades.each do |grade|
             balance_sections_in_grade(grade)
-            set_number_in_draw(grade)
       
             grade.status = "Allocated"
             grade.entry_limit = grade.sport_entries.entered.count
@@ -25,17 +24,59 @@ class FinaliseGradesJob < ApplicationJob
     def balance_sections_in_grade(grade)
         grade.possible_sessions.each do |session|
             sections = session.sections.where(grade_id: grade.id).load
-            total_courts = sections.active.sum(&:number_of_courts)
-            total_entries = sections.sum(&:number_of_teams)
-            teams_per_court = (total_entries / total_courts).ceil
+            courts_remaining = sections.active.sum(&:number_of_courts)
+            entries_remaining = sections.sum(&:number_of_teams)
+            from_sections = []
+            to_sections = []
 
-            sections.active.each do |section|
-                puts "#{section.name} - has #{section.number_of_teams}, should have #{section.number_of_courts * teams_per_court}"
+            sections.each do |section|
+                case 
+                when !section.active
+                    should_have = 0
+                when courts_remaining == section.number_of_courts
+                    should_have = entries_remaining
+                else
+                    should_have = (((entries_remaining.to_f / courts_remaining * section.number_of_courts) + 1)  / 2).to_i * 2
+                end
+
+                section.number_in_draw = should_have
+                section.save(validate: false)
+
+                if section.number_of_teams != should_have
+                    puts "->#{section.name} - has #{section.number_of_teams}, should have #{should_have}"
+
+                    if section.number_of_teams > should_have
+                        from_sections << section
+                    else
+                        to_sections << section
+                    end
+                end
+
+                entries_remaining -= should_have
+                courts_remaining -= section.number_of_courts unless !section.active
+            end
+
+            from_sections.each do |section|
+                puts "--> Moving entries from #{section.name}"
+                entries = section.entries_allowed_to_be_moved
+
+                while section.number_of_teams > section.number_in_draw
+                    new_section = to_sections.first
+                    moving_entry = entries.shift
+
+                    if moving_entry.venue_name != new_section.venue_name
+                        puts "*--> Entry in #{moving_entry.section_name} (#{moving_entry.name}) moving from #{moving_entry.venue_name} to #{section.venue_name}"
+                    end
+
+                    puts "---> Moving #{moving_entry.name} to #{new_section.name}"
+                    moving_entry.section_id = new_section.id
+                    moving_entry.save(validate: false)
+
+                    if new_section.number_of_teams == new_section.number_in_draw
+                        to_sections.shift
+                    end
+                end
             end
         end
-    end
-
-    def set_number_in_draw(grade)
-        
     end
 end

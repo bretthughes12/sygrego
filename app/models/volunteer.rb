@@ -112,11 +112,11 @@ class Volunteer < ApplicationRecord
     end
     
     def participant_name
-        if participant
-          participant.name
-        else
-          ''
-        end
+      if participant
+        participant.name
+      else
+        ''
+      end
     end
     
     def self.sport_coords_saturday
@@ -151,6 +151,14 @@ class Volunteer < ApplicationRecord
         end
     end
     
+    def group
+      if participant
+        participant.group
+      else
+        nil
+      end
+    end
+
     def sport_name
         if section.nil?
           description

@@ -72,7 +72,7 @@ class Section < ApplicationRecord
     end
     
     def number_of_teams
-        sport_entries.count
+        sport_entries.not_waiting.count
     end
     
     def session_and_venue
@@ -85,6 +85,17 @@ class Section < ApplicationRecord
     
     def can_take_more_entries?
         self.sport_entries.count < teams_allowed
+    end
+
+    def entries_allowed_to_be_moved
+        entries = []
+
+        sport_entries.each do |entry|
+            coord_groups = sport_coords.collect(&:group).flatten
+            entries << entry unless coord_groups.include?(entry.group)
+        end
+
+        entries.shuffle!
     end
 
     def courts_available
