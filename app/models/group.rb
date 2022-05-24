@@ -534,7 +534,7 @@ class Group < ApplicationRecord
 #                    participants_requested_for_session(grade.sport_session_id) <=
 #                    participants_allowed_per_session 
 
-        grade.sections.each do |section|
+        grade.sections.active.each do |section|
           next unless section.can_take_more_entries?
 
           sections_available << section

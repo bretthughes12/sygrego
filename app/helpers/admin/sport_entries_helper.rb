@@ -17,10 +17,9 @@ module Admin::SportEntriesHelper
     end
     
     def should_show_delete_link(entry)
-        @current_user.role?(:admin)|| 
-          !draw_complete(entry) ||
-          entry.grade.status == "Open" ||
-          entry.status == "Waiting List"
+        !draw_complete(entry) ||
+        entry.grade.status == "Open" ||
+        entry.status == "Waiting List"
     end
     
     def should_show_confirm_button(entry)
