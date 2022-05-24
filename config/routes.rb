@@ -374,6 +374,10 @@ Rails.application.routes.draw do
       member do
         patch :confirm
       end
+      collection do
+        get :sports_draws
+        get :sports_rules
+      end
     end
     resources :sport_preferences, :controller => "sport_preferences", :only => [:index] do
       member do

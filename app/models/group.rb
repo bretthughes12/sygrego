@@ -552,6 +552,10 @@ class Group < ApplicationRecord
       cached_sport_entries.each.collect(&:grade).uniq
     end
   
+    def sports
+      cached_sport_entries.each.collect(&:sport).uniq.sort
+    end
+  
 #    def can_enter_grade(grade)
 #      grades_available.include?(grade)
 #    end

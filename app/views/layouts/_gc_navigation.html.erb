@@ -48,6 +48,10 @@
                             <%- if @settings.sports_loaded %>
                                 <li class='dropdown-item'><%= link_to 'Sport Preferences', gc_sport_preferences_path %></li>
                                 <li class='dropdown-item'><%= link_to 'Sports Planner', sports_plan_gc_participants_path %></li>
+                                <li class='dropdown-item'><%= link_to 'Sports Rules', sports_rules_gc_sport_entries_path %></li>
+                            <%- end %>
+                            <%- if @settings.team_draws_complete || @settings.indiv_draws_complete %>
+                                <li class='dropdown-item'><%= link_to 'Sports Draws', sports_draws_gc_sport_entries_path %></li>
                             <%- end %>
                         </ul>
                     </li>

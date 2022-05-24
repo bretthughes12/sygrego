@@ -18,6 +18,30 @@ class Gc::SportEntriesController < ApplicationController
         format.csv  { render_csv "sport_entries", "sport_entries" }
       end
     end
+  
+    # GET /gc/sport_entries/sports_draws
+    def sports_draws
+      @sport_entries = @group.sport_entries.includes(:grade).
+        order('grades.name, sport_entries.status').load
+  
+      respond_to do |format|
+        format.html do
+          @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100)
+          render layout: @current_role.name
+        end
+      end
+    end
+  
+    # GET /gc/sport_entries/sports_rules
+    def sports_rules
+      @sports = @group.sports
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+      end
+    end
     
     # GET /gc/sport_entries/1
     def show

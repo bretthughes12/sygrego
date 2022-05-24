@@ -1,0 +1,14 @@
+<% title "Sports Rules" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Sport</th>
+      <th>Rules</th>
+    </tr>
+  </thead>
+
+	<%= render partial: 'sport_rules', collection: @sports, as: :sport %>
+</table>

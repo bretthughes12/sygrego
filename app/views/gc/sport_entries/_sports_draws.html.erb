@@ -1,0 +1,21 @@
+<% if sport_entry.section && sport_entry.section.draw_file.attached? %>
+	<tr valign="top">
+		<td>
+			<%= h(sport_entry.section_name) %>
+		</td>
+		
+		<td>
+			<%= h(sport_entry.name) %>
+		</td>
+			
+		<% if sport_entry.section.draw_file.representable? %>
+			<td><%= link_to(image_tag(sport_entry.section.draw_file.representation(resize_to_limit: [40, 50])), rails_blob_path(sport_entry.section.draw_file, disposition: "attachment")) %></td>
+		<% else %>
+			<td><%= link_to "Rules", rails_blob_path(sport_entry.section.draw_file, disposition: "attachment") %></td>
+		<% end %>
+
+		<td>
+			<%= h(sport_entry.section.draw_file.created_at.in_time_zone.strftime('%d/%m/%Y')) %>
+		</td>
+	</tr>
+<% end %>
