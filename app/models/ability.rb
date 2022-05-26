@@ -156,7 +156,7 @@ class Ability
             :edit_sports], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
-        can [:index, :create], SportEntry
+        can [:index, :create, :sports_rules, :sports_draws], SportEntry
         can [:show, :update, :destroy, :confirm], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
         end
