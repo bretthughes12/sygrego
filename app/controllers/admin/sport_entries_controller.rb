@@ -9,7 +9,7 @@ class Admin::SportEntriesController < ApplicationController
     # GET /admin/sport_entries
     def index
       @sport_entries = SportEntry.includes([:grade, :group]).
-      order('grades.name, sport_entries.status, groups.short_name').load
+        order('grades.name, sport_entries.status, groups.short_name').load
   
       respond_to do |format|
         format.html { @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100) }
@@ -23,8 +23,9 @@ class Admin::SportEntriesController < ApplicationController
   
     # GET /admin/sport_entries/new
     def new
-      @grades = Grade.all
-      @groups = Group.coming.all
+      @grades = Grade.active.order(:name).all
+      @sections = Section.active.order(:name).all
+      @groups = Group.coming.order(:short_name).all
     end
   
     # GET /admin/sport_entries/1/edit
@@ -37,10 +38,20 @@ class Admin::SportEntriesController < ApplicationController
       @sport_entry = SportEntry.new(sport_entry_params)
       @sport_entry.updated_by = current_user.id
 
-      @grade = @sport_entry.grade
-      if @grade
-        @sport_entry.status = @grade.starting_status
-        @sport_entry.section = @grade.starting_section
+      if params[:sport_entry][:section_id]
+        @section = @sport_entry.section
+        if @section
+          @sport_entry.grade = @section.grade
+          @sport_entry.status = @section.grade.starting_status
+        end
+      end
+
+      if params[:sport_entry][:grade_id]
+        @grade = @sport_entry.grade
+        if @grade
+          @sport_entry.status = @grade.starting_status
+          @sport_entry.section = @grade.starting_section
+        end
       end
   
       respond_to do |format|
