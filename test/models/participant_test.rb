@@ -159,8 +159,8 @@ class ParticipantTest < ActiveSupport::TestCase
       FactoryBot.create(:participant, group: full_participant.group)      
     end
     full_participant.group.reload
-    team_helper = FactoryBot.create(:participant, group: @group, spectator: true, helper: true, group: full_participant.group)
-    offsite_team_helper = FactoryBot.create(:participant, group: @group, spectator: true, helper: true, onsite: false, group: full_participant.group)
+    team_helper = FactoryBot.create(:participant, spectator: true, helper: true, group: full_participant.group)
+    offsite_team_helper = FactoryBot.create(:participant, spectator: true, helper: true, onsite: false, group: full_participant.group)
     @setting.early_bird = true
     @setting.save
     early_participant = FactoryBot.create(:participant, group: @group, early_bird: true)

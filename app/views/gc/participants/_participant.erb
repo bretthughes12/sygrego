@@ -16,16 +16,18 @@
 	</td>
 	
 	<td>
-		<% unless participant.coming %>
-			<%= link_to "Coming", coming_gc_participant_path(participant),
-				method: :patch,
-				class: primary_button_class,
+		<% if registrations_open %>
+			<% unless participant.coming %>
+				<%= link_to "Coming", coming_gc_participant_path(participant),
+					method: :patch,
+					class: primary_button_class,
+					role: "button" %>
+			<% end %>
+			<%= link_to "X", gc_participant_path(participant),
+				method: :delete,
+				data: { confirm: "Are you sure?" },
+				class: danger_button_class,
 				role: "button" %>
 		<% end %>
-		<%= link_to "X", gc_participant_path(participant),
-			method: :delete,
-			data: { confirm: "Are you sure?" },
-			class: danger_button_class,
-			role: "button" %>
 	</td>
 </tr>

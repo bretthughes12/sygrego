@@ -24,15 +24,19 @@
 
 <%= will_paginate @participants, :container => false %>
 
-<%= link_to "New participant", new_gc_participant_path,
-                  class: primary_button_class,
-                  role: "button" %>
+<% if registrations_open %>
+  <%= link_to "New participant", new_gc_participant_path,
+                    class: primary_button_class,
+                    role: "button" %>
+<% end %>
 <%= link_to "Download", gc_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Upload", new_import_gc_participants_path,
-                  class: primary_button_class,
-                  role: "button" %>
+<% if registrations_open %>
+  <%= link_to "Upload", new_import_gc_participants_path,
+                    class: primary_button_class,
+                    role: "button" %>
+<% end %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
 					{:name => "Spectator", :class => "table-warning"},

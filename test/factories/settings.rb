@@ -25,6 +25,7 @@
 #  medium_division_ceiling              :integer          default(40)
 #  missed_out_sports_allocation_factor  :integer          default(0)
 #  new_group_sports_allocation_factor   :integer          default(0)
+#  participant_registrations_closed     :boolean          default(FALSE)
 #  primary_age_adjustment               :decimal(8, 2)    default(0.0), not null
 #  public_website                       :string           default("")
 #  rego_email                           :string(100)      default("")

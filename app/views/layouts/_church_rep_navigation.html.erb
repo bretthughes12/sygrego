@@ -31,8 +31,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Participants</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li class='dropdown-item'><%= link_to 'Our Participants', gc_participants_path %></li>
-                            <% unless @group.participants.requiring_approval.empty? %>
-                                <li class='dropdown-item'><%= link_to 'Participants to be Accepted', approvals_gc_participants_path %></li>
+                            <% if registrations_open %>
+                                <% unless @group.participants.requiring_approval.empty? %>
+                                    <li class='dropdown-item'><%= link_to 'Participants to be Accepted', approvals_gc_participants_path %></li>
+                                <% end %>
                             <% end %>
                             <li class='dropdown-item'><%= link_to 'Nominated Drivers', drivers_gc_participants_path %></li>
                             <li class='dropdown-item'><%= link_to "Working With Children's Check", wwccs_gc_participants_path %></li>

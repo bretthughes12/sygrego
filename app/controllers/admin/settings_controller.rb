@@ -189,6 +189,7 @@ class Admin::SettingsController < ApplicationController
                                       :sports_loaded,
                                       :volunteers_loaded,
                                       :group_registrations_closed, 
+                                      :participant_registrations_closed, 
                                       :restricted_sports_allocated, 
                                       :indiv_draws_complete,
                                       :team_draws_complete,
