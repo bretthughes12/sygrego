@@ -2,7 +2,17 @@
 
 <h1><%= yield(:title) %></h1>
 
+<br/>
+
 <%= link_to "Finalise Team Sports", finalise_team_sports_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
+<%= link_to "Finalise Individual Sports", finalise_individual_sports_admin_tasks_path,
                   method: :post,
                   class: primary_button_class,
                   role: "button" %>
