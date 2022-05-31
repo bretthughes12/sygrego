@@ -1,0 +1,26 @@
+<%- headings = %w{Group FirstName Surname Age Gender Type Address 
+				  Suburb Postcode Phone Mobile Email Spectator 
+				  Onsite Helper WWCC } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @participants.each do |participant|
+  	line = [ participant.group.abbr,
+  		     participant.first_name,
+			 participant.surname,
+  		     participant.age,
+  		     participant.gender,
+  		     participant.rego_type,
+			 participant.address,
+  		     participant.suburb,
+  		     participant.postcode,
+  		     participant.phone_number,
+  		     participant.mobile_phone_number,
+  		     participant.email,
+  		     participant.spectator,
+			 participant.onsite,
+			 participant.helper,
+			 participant.wwcc_number
+		   ]
+    csv << line
+  end
+end.html_safe %>

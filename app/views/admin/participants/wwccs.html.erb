@@ -1,0 +1,30 @@
+<% title "Working With Children's Check numbers" %>
+
+<h1><%= yield(:title) %></h1>
+    
+<% if !@participants.empty? %>
+    <%= will_paginate @participants, :container => false %>
+
+    <br/>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Group</th>
+                <th>Name</th>
+                <th>WWCC Number</th>
+            </tr>
+        </thead>
+
+        <%= render partial: 'participant_wwcc', collection: @participants, as: :participant %>
+    </table>
+
+    <%= will_paginate @participants, :container => false %>
+<% end %>
+
+<%= link_to "Download", wwccs_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
+					{:name => "Spectator", :class => "table-warning"}] %>

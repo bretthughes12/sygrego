@@ -67,7 +67,6 @@
 #  fk_rails_...  (group_id => groups.id)
 #
 
-
 class Participant < ApplicationRecord
     include Auditable
     include Searchable
@@ -227,6 +226,22 @@ class Participant < ApplicationRecord
         name
       else
         name + ' (' + group.short_name + ')'
+      end
+    end
+
+    def ticket_email
+      if email.blank?
+        gc_email
+      else
+        email
+      end
+    end
+
+    def gc_email
+      if self.group.users.primary.empty?
+        self.group.gc_email
+      else
+        self.group.users.primary.first.email
       end
     end
 

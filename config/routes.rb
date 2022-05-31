@@ -182,6 +182,8 @@ Rails.application.routes.draw do
         get :new_import
         post :import
         get :search
+        get :ticket_download
+        get :wwccs
       end
       member do
         get :new_voucher

@@ -29,6 +29,27 @@ class Admin::ParticipantsController < ApplicationController
       end
     end
     
+    # GET /admin/participants/wwccs
+    def wwccs
+      @participants = Participant.coming.accepted.open_age.
+        order("first_name, surname").load
+  
+      respond_to do |format|
+        format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
+        format.csv  { render_csv "wwccs", "wwccs" }
+      end
+    end
+  
+    # GET /admin/participants/ticket_download
+    def ticket_download
+      @participants = Participant.coming.accepted.where('age > 5').
+        order('first_name, surname').load
+  
+      respond_to do |format|
+        format.csv  { render_csv "syg_tickets", "syg_tickets" }
+      end
+    end
+    
     # GET /admin/participants/1
     def show
     end

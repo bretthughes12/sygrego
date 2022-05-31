@@ -31,6 +31,9 @@
 <%= link_to "Upload", new_import_admin_participants_path,
                   class: primary_button_class,
                   role: "button" %>
+<%= link_to "Ticket Download", ticket_download_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
 					{:name => "Spectator", :class => "table-warning"},

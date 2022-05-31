@@ -1,0 +1,13 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+        <%= participant.group.abbr %>
+	</td>
+
+	<td> 
+        <%= link_to participant.name, edit_admin_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.wwcc_number %>
+	</td>
+</tr>
