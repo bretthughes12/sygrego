@@ -272,9 +272,23 @@ class Participant < ApplicationRecord
       return 0 if !onsite && helper
   
       # other set-price conditions
-      return 30 if !onsite && spectator && days == 1 && age && age >= 14
-      return 60 if !onsite && spectator && age && age >= 14
+#      return 30 if !onsite && spectator && days == 1 && age && age >= 14
+#      return 60 if !onsite && spectator && age && age >= 14
   
+      if !onsite && spectator
+        if days == 1 && age && age >= 14
+          fee = 30
+        elsif age && age >= 14
+          fee = 60
+        end
+
+        if fee && voucher
+          fee = voucher.apply(fee)
+        end
+
+        return fee if fee
+      end
+
       # subtract the early bird discount if appropriate
       base_fee -= settings.early_bird_discount if early_bird_applies?
   
@@ -292,6 +306,7 @@ class Participant < ApplicationRecord
       helper_fee = helper ? fee * settings.helper_adjustment : fee
   
       fee = [gc_fee, sc_fee, helper_fee].min
+      fee = 0 if fee < 0
   
       # calculate the daily fee, and apply if staying for fewer than 3 days
       if spectator 
