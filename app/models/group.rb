@@ -43,6 +43,8 @@ class Group < ApplicationRecord
     include Searchable
 
     require 'csv'
+  
+    attr_reader :file
 
     has_many :participants
     has_many :payments
@@ -72,6 +74,8 @@ class Group < ApplicationRecord
     scope :sun_early_service, -> { where('event_details.service_pref_sun': '7:00pm').includes(:event_detail) }
     scope :sun_late_service, -> { where('event_details.service_pref_sun': '8:30pm').includes(:event_detail) }
     scope :sun_no_pref_service, -> { where('event_details.service_pref_sun': 'No preference').includes(:event_detail) }
+
+    has_one_attached :booklet_file
 
     delegate :estimated_numbers,
       :onsite, to: :event_detail

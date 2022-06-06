@@ -12,6 +12,16 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 <p><strong>Groups attending:</strong> <%= @total_groups %></p>
 <p><strong>Participants attending:</strong> <%= @total_participants %></p>
 
+<% if @group.booklet_file.attached? %>
+    <h2>Booklet</h2>
+    <p>This is a customised booklet for your group, including all of your sport entries and their fixtures<p>
+    <% if @group.booklet_file.representable? %>
+        <%= link_to(image_tag(@group.booklet_file.representation(resize_to_limit: [80, 100])), rails_blob_path(@group.booklet_file, disposition: "attachment")) %>
+    <% else %>
+        <%= link_to "Booklet", rails_blob_path(@group.booklet_file, disposition: "attachment") %>
+    <% end %>
+<% end %>
+
 <br/>
 
 <%= pie_chart gc_participants_charts_path, title: "Our participants (#{@participants_registered})" %>
