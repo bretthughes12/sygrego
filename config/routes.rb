@@ -2,8 +2,11 @@ Rails.application.routes.draw do
 
   # Public routes
   root 'welcome#home'
-  get '/group_signup' => 'group_signups#new', :as => :group_signup
-  get 'static/:permalink' => 'pages#show', :as => :static
+  get '/group_signup' => 'group_signups#new', as: :group_signup
+  get '/sport_nomination' => 'awards#new_sport_nomination', as: :sport_nomination
+  get '/spirit' => 'awards#new_spirit', as: :spirit
+  get '/legend' => 'awards#new_legend', as: :legend
+  get 'static/:permalink' => 'pages#show', as: :static
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',

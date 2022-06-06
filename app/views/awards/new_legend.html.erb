@@ -1,0 +1,14 @@
+<% title "Graham Ball Award" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>The Graham Ball award is named for SYG legend Graham Ball, a pioneer and long-time contributor to State Youth Games, serving on the committee from 1991 to 2018.</p>
+<p>The Graham Ball award acknowledges the dogged determination and quiet generosity that characterised Graham's time with SYG, and highlights the contributions of volunteers, helpers, and teams in making their own communities and the SYG community great.</p>
+
+<% if @settings.syg_is_happening %>
+    <p>Lorem ipsum</p>
+<% else %>
+    <h2>Closed</h2>
+	<p>This award will start accepting nominations during State Youth Games. </p>
+    <p>Come back then to start nominating</p>
+<% end %>

@@ -272,9 +272,6 @@ class Participant < ApplicationRecord
       return 0 if !onsite && helper
   
       # other set-price conditions
-#      return 30 if !onsite && spectator && days == 1 && age && age >= 14
-#      return 60 if !onsite && spectator && age && age >= 14
-  
       if !onsite && spectator
         if days == 1 && age && age >= 14
           fee = 30
