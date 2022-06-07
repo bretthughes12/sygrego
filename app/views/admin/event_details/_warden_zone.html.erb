@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= group_display_class(event_detail.group) %>">
+	<td> 
+		<%= h(event_detail.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to event_detail.group.short_name, edit_warden_zone_admin_event_detail_path(event_detail) %>
+	</td>
+	
+	<td> 
+		<%= event_detail.group.participants.coming.accepted.count %>
+	</td>
+	
+	<td> 
+		<%= event_detail.warden_zone_name %>
+	</td>
+</tr>

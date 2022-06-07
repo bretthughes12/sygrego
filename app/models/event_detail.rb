@@ -21,6 +21,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  group_id           :bigint
+#  warden_zone_id     :bigint
 #
 # Indexes
 #
@@ -39,6 +40,7 @@ class EventDetail < ApplicationRecord
     attr_reader :file
 
     belongs_to :group
+    belongs_to :warden_zone, optional: true
 
     has_one_attached :food_cert
     has_one_attached :covid_plan
@@ -126,6 +128,14 @@ class EventDetail < ApplicationRecord
         groups
     end
 
+    def warden_zone_name
+        warden_zone.nil? ? '' : warden_zone.name
+    end
+    
+    def warden_info
+        warden_zone.nil? ? '' : warden_zone.warden_info
+    end
+    
     def self.import(file, user)
         creates = 0
         updates = 0

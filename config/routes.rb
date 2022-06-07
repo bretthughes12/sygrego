@@ -153,12 +153,15 @@ Rails.application.routes.draw do
     resources :event_details, only: [:index, :show, :edit, :update] do
       member do
         patch :purge_file
+        get :edit_warden_zone
+        patch :update_warden_zone
       end
       collection do
         get :new_import
         post :import
         get :search
         get :uploads
+        get :warden_zones
       end
     end
     resources :mysyg_settings, only: [:index, :show, :edit, :update] do
@@ -180,6 +183,7 @@ Rails.application.routes.draw do
       end
     end
     resources :vouchers
+    resources :warden_zones
     resources :participants do
       collection do
         get :new_import

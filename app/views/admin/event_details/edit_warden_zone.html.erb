@@ -1,0 +1,13 @@
+<% title "Editing warden zone for #{@event_detail.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_warden", locals: { 
+                              url: update_warden_zone_admin_event_detail_path(@event_detail), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", warden_zones_admin_event_details_path,
+                  class: primary_button_class,
+                  role: "button" %>

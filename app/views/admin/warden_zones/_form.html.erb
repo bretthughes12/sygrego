@@ -1,0 +1,10 @@
+<%= simple_form_for(@warden_zone, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :zone %>
+	<%= f.input :warden_info %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

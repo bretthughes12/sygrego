@@ -1,0 +1,21 @@
+<% title "Editing #{@warden_zone.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_warden_zone_path(@warden_zone), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", admin_warden_zones_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_warden_zone_path(@warden_zone),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_warden_zone_path(@warden_zone),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

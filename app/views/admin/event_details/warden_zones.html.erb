@@ -1,0 +1,20 @@
+<% title "Listing group warden zones" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th>Abbr</th>
+      <th>Short Name</th>
+      <th>Numbers</th>
+      <th>Zone</th>
+    </tr>
+  </thead>
+
+	<%= render partial: 'warden_zone', collection: @event_details, as: :event_detail %>
+</table>
+
+<%= legend_box [{:name => "Onsite", :class => "table-primary"},
+					{:name => "Offsite", :class => "table-warning"},
+					{:name => "Not Coming", :class => "table-dark"}] %>

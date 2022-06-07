@@ -1,0 +1,12 @@
+<% title "Warden Zone details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @warden_zone %>
+
+<%= link_to "Back", admin_warden_zones_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_warden_zone_path(@warden_zone),
+                  class: primary_button_class,
+                  role: "button" %>

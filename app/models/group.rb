@@ -51,7 +51,6 @@ class Group < ApplicationRecord
     has_many :sport_entries
     has_many :vouchers
     has_many :group_extras
-#    has_many :downloads
     has_many :groups_grades_filters
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
@@ -78,6 +77,7 @@ class Group < ApplicationRecord
     has_one_attached :booklet_file
 
     delegate :estimated_numbers,
+      :warden_zone,
       :onsite, to: :event_detail
     delegate :show_group_extras_in_mysyg,
       :show_finance_in_mysyg,

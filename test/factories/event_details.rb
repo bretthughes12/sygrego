@@ -21,6 +21,7 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  group_id           :bigint
+#  warden_zone_id     :bigint
 #
 # Indexes
 #

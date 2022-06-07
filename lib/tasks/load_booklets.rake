@@ -5,7 +5,7 @@ require 'aws-sdk-s3'
 
 namespace :syg do
 
-  # NOTE: This takes some time - about 5 minutes per booklet    
+  # NOTE: This takes some time - about 30 seconds per booklet    
   desc 'Load the customised group handbook booklets for each group'
   task load_booklets: ['db:migrate'] do |_t|
     s3 = Aws::S3::Resource.new(access_key_id: Rails.application.credentials.dig(:aws, :access_key_id), 

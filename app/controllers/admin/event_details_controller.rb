@@ -35,12 +35,25 @@ class Admin::EventDetailsController < ApplicationController
       end
     end
 
+    # GET /admin/event_details/warden_zones
+    def warden_zones
+      @event_details = EventDetail.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+  
+      respond_to do |format|
+        format.html # index.html.erb
+      end
+    end
+
     # GET /admin/event_details/1
     def show
     end
   
     # GET /admin/event_details/1/edit
     def edit
+    end
+  
+    # GET /admin/event_details/1/edit_warden_zone
+    def edit_warden_zone
     end
   
     # PATCH /admin/event_details/1
@@ -51,6 +64,20 @@ class Admin::EventDetailsController < ApplicationController
         if @event_detail.update(event_detail_params)
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to admin_event_details_url }
+        else
+          format.html { render action: "edit" }
+        end
+      end
+    end
+  
+    # PATCH /admin/event_details/1/update_warden_zone
+    def update_warden_zone
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_warden_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to warden_zones_admin_event_details_url }
         else
           format.html { render action: "edit" }
         end
@@ -110,7 +137,14 @@ class Admin::EventDetailsController < ApplicationController
                                     :service_pref_sun,
                                     :estimated_numbers,
                                     :number_of_vehicles,
-                                    :food_cert
+                                    :food_cert,
+                                    :warden_zone_id
+                                )
+    end
+  
+    def event_detail_warden_params
+      params.require(:event_detail).permit(
+                                    :warden_zone_id
                                 )
     end
 end

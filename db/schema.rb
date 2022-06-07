@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_30_061113) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_090911) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_061113) do
     t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "warden_zone_id"
     t.index ["group_id"], name: "index_event_details_on_group_id"
   end
 
@@ -583,6 +584,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_061113) do
     t.datetime "updated_at", null: false
     t.string "restricted_to", limit: 20
     t.index ["group_id"], name: "index_vouchers_on_group_id"
+  end
+
+  create_table "warden_zones", force: :cascade do |t|
+    t.integer "zone"
+    t.text "warden_info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
