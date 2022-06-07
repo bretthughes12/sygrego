@@ -32,6 +32,7 @@ class Admin::RegoChecklistsController < ApplicationController
   
     # GET /admin/rego_checklists/1/edit
     def edit
+      prepare_for_edit
     end
   
     # PATCH /admin/rego_checklists/1
@@ -41,13 +42,32 @@ class Admin::RegoChecklistsController < ApplicationController
           flash[:notice] = 'Checklist was successfully updated.'
           format.html { redirect_to admin_rego_checklists_url }
         else
-          format.html { render action: "edit" }
+          format.html do
+            prepare_for_edit
+            render action: "edit"
+          end
         end
       end
     end
 
     private
   
+    def prepare_for_edit
+      @group = @rego_checklist.group
+      @gc = @group.gcs.first
+      if @rego_checklist.rego_mobile.blank? && !@gc.nil?
+        @rego_checklist.rego_mobile = @gc.phone_number 
+      end
+      if @rego_checklist.rego_rep.blank? 
+        @rego_checklist.rego_rep = @group.gc_name 
+      end
+      if @rego_checklist.admin_rep.blank?
+        @rego_checklist.admin_rep = current_user.name 
+      end
+
+      @sport_coords = @group.sport_coords
+    end
+
     def rego_checklist_params
       params.require(:rego_checklist).permit(:registered, 
                                     :rego_rep,
@@ -59,7 +79,12 @@ class Admin::RegoChecklistsController < ApplicationController
                                     :disabled_notes,
                                     :driver_form,
                                     :finance_notes,
-                                    :sport_notes
+                                    :sport_notes,
+                                    :food_cert_sighted,
+                                    :covid_plan_sighted,
+                                    :insurance_sighted,
+                                    :upload_notes,
+                                    :driving_notes
                                 )
     end
 end

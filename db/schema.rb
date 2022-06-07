@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_07_090911) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_07_104607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -346,6 +346,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_07_090911) do
     t.bigint "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "covid_plan_sighted", default: false
+    t.boolean "food_cert_sighted", default: false
+    t.boolean "insurance_sighted", default: false
+    t.text "upload_notes"
+    t.text "driving_notes"
     t.index ["group_id"], name: "index_rego_checklists_on_group_id"
   end
 

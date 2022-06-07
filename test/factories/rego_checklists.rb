@@ -4,16 +4,21 @@
 #
 #  id                    :bigint           not null, primary key
 #  admin_rep             :string(40)
+#  covid_plan_sighted    :boolean          default(FALSE)
 #  disabled_notes        :text
 #  disabled_participants :boolean          default(FALSE)
 #  driver_form           :boolean          default(FALSE)
+#  driving_notes         :text
 #  finance_notes         :text
+#  food_cert_sighted     :boolean          default(FALSE)
+#  insurance_sighted     :boolean          default(FALSE)
 #  registered            :boolean          default(FALSE)
 #  rego_mobile           :string(30)
 #  rego_rep              :string(40)
 #  second_mobile         :string(30)
 #  second_rep            :string(40)
 #  sport_notes           :text
+#  upload_notes          :text
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  group_id              :bigint

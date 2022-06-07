@@ -7,10 +7,39 @@
 	<%= f.input :rego_mobile, :label => "Mobile Phone Number" %>
 	<%= f.input :second_rep, :label => "Second in charge" %>
 	<%= f.input :second_mobile, :label => "Second in charge mobile" %>
-	<%= f.input :registered %>
+
+	<br/>
 
 	<h2>Finances</h2>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Total amount payable</strong>
+			</td>
+			<td> 
+				<%= number_to_currency(@rego_checklist.group.total_amount_payable) %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Late Fees</strong>
+			</td>
+			<td> 
+				<%= number_to_currency(@rego_checklist.group.late_fees) %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Amount outstanding</strong>
+			</td>
+			<td> 
+				<%= number_to_currency(@rego_checklist.group.amount_outstanding) %>
+			</td>
+		</tr>
+	</table>
 	<%= f.input :finance_notes, :label => "Notes about finances" %>
+
+	<br/>
 
 	<h2>Camping</h2>
 	<table class="table table-dark table-striped">
@@ -31,6 +60,8 @@
 			</td>
 		</tr>
 	</table>
+
+	<br/>
 
 	<h2>Emergency</h2>
 	<table class="table table-dark table-striped">
@@ -61,21 +92,84 @@
 				If an accident/incident occurs please contact 000 and inform SYG admin. Please advise emergency services to enter Lardner Park via Gate 4 and send a representative of your group to Gate 4 to meet them and guide them to your site.
 			</td>
 		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Zone</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_zone_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Info</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_info %>
+			</td>
+		</tr>
 	</table> 
+
 	<%= f.input :disabled_participants, :label => "Do you have any participants with special needs that would be unable to easily participate in an emergency evacuation? You will need to allocate a person to be with them." %>
 	<%= f.input :disabled_notes, :label => "Notes about disabled participants" %>
+
+	<br/>
+
+	<h2>Uploads</h2>
+	<table class="table table-dark table-striped">
+		<thead>
+			<tr>
+				<th>Food Safety</th>
+				<th>Covid Plan</th>
+				<th>Insurance</th>
+			</tr>
+		</thead>
+
+		<tr>
+			<td> 
+				<% if @rego_checklist.group.event_detail.food_cert.attached? %>
+					<% if @rego_checklist.group.event_detail.food_cert.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.food_cert.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.food_cert, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Certificate", rails_blob_path(@rego_checklist.group.event_detail.food_cert, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					<%= f.input :food_cert_sighted, :label => "Sighted?" %>
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.covid_plan.attached? %>
+					<% if @rego_checklist.group.event_detail.covid_plan.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.covid_plan.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.covid_plan, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Plan", rails_blob_path(@rego_checklist.group.event_detail.covid_plan, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					<%= f.input :covid_plan_sighted, :label => "Sighted?" %>
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.insurance.attached? %>
+					<% if @rego_checklist.group.event_detail.insurance.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.insurance.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.insurance, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.insurance, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					<%= f.input :insurance_sighted, :label => "Sighted?" %>
+				<% end %>
+			</td>
+		</tr>
+	</table>
+	<%= f.input :upload_notes, :label => "Notes about files / uploads" %>
+
+	<br/>
 
 	<h2>Driving</h2>
 	<%= f.input :driver_form, :label => "Driver Nomination Form?" %>
 	<table class="table table-dark table-striped">
-		<tr>
-			<td> 
-				<strong>Parking</strong>
-			</td>
-			<td> 
-				Car permits for the number of cars you registered with your group are in the GC pack. These need to be handed to your drivers, and displayed by them on their dashboard, or security will direct them to park in the day visitors' car park. Security will be checking the parking passes of all cars entering Lardner Park on Saturday and Sunday.
-			</td>
-		</tr>
 		<tr>
 			<td> 
 				<strong>Driving Safely</strong>
@@ -85,6 +179,9 @@
 			</td>
 		</tr>
 	</table>
+	<%= f.input :driving_notes, :label => "Notes about driver nomination forms" %>
+
+	<br/>
 
 	<h2>Good Sports and Spirit Awards</h2>
 	<table class="table table-dark table-striped">
@@ -122,66 +219,62 @@
 		</tr>
 	</table>
 
-	<h2>Wrist Bands</h2>
-	<table class="table table-dark table-striped">
-		<tr>
-			<td> 
-				<strong>Parking</strong>
-			</td>
-			<td> 
-				Car permits for the number of cars you registered with your group are in the GC pack. These need to be handed to your drivers, and displayed by them on their dashboard, or security will direct them to park in the day visitors' car park. Security will be checking the parking passes of all cars entering Lardner Park on Saturday and Sunday.
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Driving Safely</strong>
-			</td>
-			<td> 
-				Please inform your team they must drive at 5km or under around the site
-			</td>
-		</tr>
-	</table>
+	<br/>
 
-	<h2>Good Sports and Spirit Awards</h2>
+	<h2>Wrist Bands</h2>
 	<table class="table table-dark table-striped">
 		<tr>
 			<td> 
 				<strong>Wrist Bands</strong>
 			</td>
 			<td> 
-				All registrants are required to wear their wristbands while not participating in sports - They must have their wristbands with them at SYG. Replacements are available here at the office if needed.
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Night Session access?</strong>
-			</td>
-			<td> 
-				Wrist bands are needed for access to the night session.
+				Everyone must wear their wrist bands at all times all weekend, including while playing sport.
 			</td>
 		</tr>
 	</table>
 
-	<h2>Village</h2>
+	<br/>
+
+	<h2>Sports</h2>
 	<table class="table table-dark table-striped">
 		<tr>
 			<td> 
-				<strong>Massages</strong>
+				<strong>Sports</strong>
 			</td>
 			<td> 
-				Massages are available here at the office 9.00pm - 11.00pm both Sat and Sun, 15 min for $10.
+				Please participate in the spirit of the games with an awareness and respect of groups and venues.
 			</td>
 		</tr>
+		<% if @sport_coords.any? %>
 		<tr>
 			<td> 
-				<strong>Meet and Greet</strong>
+				<strong>Sport Coordinators</strong>
 			</td>
 			<td> 
-				Group Coordinators / pastors meeting in the Exhibition Building on Saturday at 10pm
+				Please ensure that your sport coordinators are aware of the times for collection of their packs: 7:30pm to 10pm and 11pm to 12am Friday, for Saturday sports; and 9pm to 11pm, for Sunday sports
 			</td>
 		</tr>
+		<% end %>
 	</table>
 
+	<% if @sport_coords.any? %>
+		<table class="table table-dark table-striped">
+			<thead>
+				<tr>
+					<th>Session</th>
+					<th>Sport</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+
+			<%= render partial: 'sport_coord', collection: @sport_coords %>
+		</table>
+	<% end %>	
+	
+	<%= f.input :sport_notes, :label => "Notes about sports" %>
+
+	<br />
+	<%= f.input :registered %>
 	<br />
 
 	<%= f.button :submit, "Update" %>

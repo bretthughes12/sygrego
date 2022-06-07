@@ -312,15 +312,15 @@ class Group < ApplicationRecord
     this_group_volunteers
   end
 
-#  def sport_coords
-#    this_group_officials = []
-#    participants.includes(:officials).each do |participant|
-#      unless participant.officials.sport_coords.empty?
-#        this_group_officials += participant.officials.sport_coords
-#      end
-#    end
-#    this_group_officials.sort_by { |o| o.session.id }
-#  end
+  def sport_coords
+    this_group_volunteers = []
+    participants.includes(:volunteers).each do |participant|
+      unless participant.volunteers.sport_coords.empty?
+        this_group_volunteers += participant.volunteers.sport_coords
+      end
+    end
+    this_group_volunteers
+  end
 
 #  def cleaners
 #    this_group_cleaners = []
