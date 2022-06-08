@@ -35,6 +35,7 @@
 #  mobile_phone_number    :string(20)
 #  number_plate           :string(10)
 #  onsite                 :boolean          default(TRUE)
+#  paid                   :boolean          default(FALSE)
 #  phone_number           :string(20)
 #  postcode               :integer
 #  rego_type              :string(10)       default("Full Time")

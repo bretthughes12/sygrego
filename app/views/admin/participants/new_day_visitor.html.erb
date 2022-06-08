@@ -1,0 +1,13 @@
+<% title "New day visitor" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_day_visitor", locals: { 
+                              url: create_day_visitor_admin_participants_path(@participant), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", day_visitors_admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

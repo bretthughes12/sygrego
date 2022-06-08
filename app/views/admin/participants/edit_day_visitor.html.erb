@@ -1,0 +1,18 @@
+<% title "Editing #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_day_visitor", locals: { 
+                              url: update_day_visitor_admin_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", day_visitors_admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", destroy_day_visitor_admin_participant_path(@participant),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

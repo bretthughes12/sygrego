@@ -4,6 +4,15 @@
         </button> <%= link_to image_tag("syg.png", alt: 'State Youth Games', class: 'logo', width: 60, height: 40), root_path, class: 'navbar-brand' %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav mr-auto">
+                <% if @settings.syg_is_happening %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SYG</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Day Visitors', day_visitors_admin_participants_path %></li>
+                        </ul>
+                    </li>
+                <% end %>
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Regos</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -12,9 +21,6 @@
                         <li class='dropdown-item'><%= link_to 'Event Details', admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'Group Uploads', uploads_admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'MySYG Settings', admin_mysyg_settings_path %></li>
-                        <% if @settings.syg_is_happening %>
-                            <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
-                        <% end %>
                         <li class='dropdown-item'><%= link_to 'Participants', admin_participants_path %></li>
                         <li class='dropdown-item'><%= link_to 'WWCC Check', wwccs_admin_participants_path %></li>
                     </ul>

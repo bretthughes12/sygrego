@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+        <%= link_to participant.name, edit_day_visitor_admin_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.days %>
+	</td>
+	
+	<td> 
+		<%= number_to_currency(participant.fee) %>
+	</td>
+	
+	<td> 
+		<%= participant.paid ? "Yes" : "No" %>
+	</td>
+</tr>

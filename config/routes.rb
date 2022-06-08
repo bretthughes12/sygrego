@@ -191,11 +191,17 @@ Rails.application.routes.draw do
         get :search
         get :ticket_download
         get :wwccs
+        get :day_visitors
+        get :new_day_visitor
+        post :create_day_visitor
       end
       member do
         get :new_voucher
         post :add_voucher
         patch :delete_voucher
+        get :edit_day_visitor
+        patch :update_day_visitor
+        delete :destroy_day_visitor
       end
     end
 
