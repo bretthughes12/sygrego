@@ -1,0 +1,26 @@
+<% title "Graham Ball Award nominations" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Reason (Click for more)</th>
+      <th>Submitted by</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+	<%= render partial: 'volunteer', collection: @awards, as: :award %>
+</table>
+
+<%= link_to "New nomination", new_volunteer_admin_awards_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", volunteer_awards_admin_awards_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Flagged", :class => "table-primary"},
+					{:name => "Unflagged", :class => "table-secondary"}] %>

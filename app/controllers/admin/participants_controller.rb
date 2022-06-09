@@ -147,6 +147,7 @@ class Admin::ParticipantsController < ApplicationController
 
   # PATCH /admin/participants/1/update_day_visitor
   def update_day_visitor
+    @participant = Participant.find(params[:id])
     @participant.updated_by = current_user.id
 
     respond_to do |format|

@@ -1,0 +1,27 @@
+<tr valign="top" class="<%= award_display_class(award) %>" >
+	<td> 
+        <%= link_to award.name, edit_spirit_admin_award_path(award) %>
+	</td>
+
+	<td> 
+		<%= award.description[0..20] %>
+	</td>
+	
+	<td> 
+		<%= award.submitted_by %>
+	</td>
+	
+	<td> 
+		<% unless award.flagged %>
+			<%= link_to "Flag", flag_spirit_admin_award_path(award),
+				method: :patch,
+				class: primary_button_class,
+				role: "button" %>
+		<% end %>
+		<%= link_to "X", destroy_spirit_admin_award_path(award),
+			method: :delete,
+			data: { confirm: "Are you sure?" },
+			class: danger_button_class,
+			role: "button" %>
+	</td>
+</tr>

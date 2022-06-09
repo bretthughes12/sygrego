@@ -8,6 +8,12 @@ class Ability
 
     if user.nil?
       can :read, Page
+      can [:new_good_sports,
+           :new_spirit,
+           :new_volunteer,
+           :create_good_sports,
+           :create_spirit,
+           :create_volunteer], Award
 
     elsif session["current_role"] == "admin"
       can :manage, :all
@@ -104,7 +110,13 @@ class Ability
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
       can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
-    
+      can [:new_good_sports,
+        :new_spirit,
+        :new_volunteer,
+        :create_good_sports,
+        :create_spirit,
+        :create_volunteer], Award
+ 
     elsif session["current_role"] == "gc"
       if user.status == "Verified"
         can [:update, 
@@ -193,7 +205,13 @@ class Ability
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
       can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
-   
+      can [:new_good_sports,
+        :new_spirit,
+        :new_volunteer,
+        :create_good_sports,
+        :create_spirit,
+        :create_volunteer], Award
+
     elsif session["current_role"] == "participant"
       can [:update, :edit_password, :update_password], User do |u|
         user == u
@@ -211,8 +229,13 @@ class Ability
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
       can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
-
-    end
+      can [:new_good_sports,
+        :new_spirit,
+        :new_volunteer,
+        :create_good_sports,
+        :create_spirit,
+        :create_volunteer], Award
+ end
     
     # Define abilities for the passed in user here. For example:
     #

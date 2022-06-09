@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   # Public routes
   root 'welcome#home'
   get '/group_signup' => 'group_signups#new', as: :group_signup
-  get '/sport_nomination' => 'awards#new_sport_nomination', as: :sport_nomination
+  get '/sport_nomination' => 'awards#new_good_sports', as: :sport_nomination
   get '/spirit' => 'awards#new_spirit', as: :spirit
-  get '/legend' => 'awards#new_legend', as: :legend
+  get '/legend' => 'awards#new_volunteer', as: :legend
   get 'static/:permalink' => 'pages#show', as: :static
 
   devise_for :users, controllers: {
@@ -43,6 +43,17 @@ Rails.application.routes.draw do
   end
 
   resources :group_signups, :only => [:new, :create]
+
+  resources :awards do
+    collection do
+      get :new_good_sports
+      get :new_spirit
+      get :new_volunteer
+      post :create_good_sports
+      post :create_spirit
+      post :create_volunteer
+    end
+  end
 
   resources :charts, only: [] do
     collection do
@@ -271,6 +282,34 @@ Rails.application.routes.draw do
     resources :ballot_results, :only => [:index] do
       collection do
         get :summary
+      end
+    end
+
+    resources :awards do
+      collection do
+        get :good_sports
+        get :spirit
+        get :volunteer_awards
+        get :new_good_sports
+        get :new_spirit
+        get :new_volunteer
+        post :create_good_sports
+        post :create_spirit
+        post :create_volunteer
+      end
+      member do
+        get :edit_good_sports
+        get :edit_spirit
+        get :edit_volunteer
+        patch :update_good_sports
+        patch :update_spirit
+        patch :update_volunteer
+        patch :flag_good_sports
+        patch :flag_spirit
+        patch :flag_volunteer
+        delete :destroy_good_sports
+        delete :destroy_spirit
+        delete :destroy_volunteer
       end
     end
   end

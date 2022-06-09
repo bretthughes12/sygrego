@@ -1,0 +1,18 @@
+<% title "Mark Hughes Good Sports Award" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Named for SYG legend Mark Hughes, who was one of the first visionaries of SYG. These visionaries thought it would be great to run a sports weekend where churches could compete against each other, and at the same time outreach to young people to share about Jesus. Churches could use it as a way of encouraging non-Christian people to attend and hear about Jesus at the same time. </p>
+<p>Mark died of cancer in 2011, but his legacy lives on today.</p> 
+<p>The Mark Hughes award is given to an individual who demonstrates the SYG values of fairness, inclusion, welcome and Gospel-centred love for all as demonstrated through action.</p>
+
+<% if @settings.syg_is_happening %>
+    <%= render partial: "form", locals: { 
+                                url: create_good_sports_awards_path, 
+                                method: :post } %>
+
+<% else %>
+    <h2>Closed</h2>
+	<p>This award will start accepting nominations during State Youth Games. </p>
+    <p>Come back then to start nominating</p>
+<% end %>

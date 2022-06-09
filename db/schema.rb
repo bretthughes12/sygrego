@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_08_114309) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_08_224011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_08_114309) do
     t.string "event", limit: 20
     t.bigint "user_id"
     t.datetime "created_at", precision: nil
+  end
+
+  create_table "awards", force: :cascade do |t|
+    t.string "category", limit: 20, null: false
+    t.string "submitted_by", limit: 100, null: false
+    t.string "submitted_group", limit: 100, null: false
+    t.string "name", limit: 100, null: false
+    t.text "description", null: false
+    t.boolean "flagged", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_awards_on_name"
   end
 
   create_table "ballot_results", force: :cascade do |t|

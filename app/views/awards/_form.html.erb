@@ -1,0 +1,12 @@
+<%= simple_form_for(@award, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :submitted_by, label: 'Your name' %>
+	<%= f.input :submitted_group, label: 'Your group' %>
+	<%= f.input :name, label: 'Name of person(s) or group that you are nominating' %>
+	<%= f.input :description, label: 'Reason for nomination' %>
+
+	<br/>
+
+	<%= f.button :submit, 'Nominate' %>
+<% end %>	

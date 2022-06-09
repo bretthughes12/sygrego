@@ -1,0 +1,13 @@
+<%- headings = %w{Flagged Name SubmittedBy SubmittedGroup Reason } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @awards.each do |award|
+  	line = [ award.flagged,
+  		     award.name,
+			 award.submitted_by,
+			 award.submitted_group,
+  		     award.description
+		   ]
+    csv << line
+  end
+end.html_safe %>

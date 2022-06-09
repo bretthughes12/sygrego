@@ -6,10 +6,6 @@
 <p>Mark died of cancer in 2011, but his legacy lives on today.</p> 
 <p>The Mark Hughes award is given to an individual who demonstrates the SYG values of fairness, inclusion, welcome and Gospel-centred love for all as demonstrated through action.</p>
 
-<% if @settings.syg_is_happening %>
-    <p>Lorem ipsum</p>
-<% else %>
-    <h2>Closed</h2>
-	<p>This award will start accepting nominations during State Youth Games. </p>
-    <p>Come back then to start nominating</p>
-<% end %>
+<%= render partial: "form", locals: { 
+                            url: create_good_sports_admin_awards_path, 
+                            method: :post } %>

@@ -1,0 +1,9 @@
+<% title "Spirit of the Games Award" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>The Spirit award is given to a group that consistently demonstrates the SYG values of fairness, inclusion, welcome and Gospel-centred love for all as demonstrated through action.</p>
+
+<%= render partial: "form", locals: { 
+                            url: create_spirit_admin_awards_path, 
+                            method: :post } %>
