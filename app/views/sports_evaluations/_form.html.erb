@@ -1,0 +1,30 @@
+<%= simple_form_for(@sports_evaluation, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :sport, collection: Sport.order(:name).all, value_method: :name, include_blank: true %>
+	<%= f.input :section, collection: Section.order(:name).all, value_method: :name, include_blank: true %>
+	<%= f.input :session, collection: Session.order(:name).all, value_method: :name, include_blank: true %>
+
+	<br/>
+
+	<h2>Please rate the following</h2>
+	<%= f.input :venue_rating, label: 'Venue', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :equipment_rating, label: 'Equipment', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :length_rating, label: 'Length of games', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :umpiring_rating, label: 'Umpiring', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :scoring_rating, label: 'Scoring/Recording of results', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :time_rating, label: 'Time allocation', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :support_rating, label: 'Support from SYG Committee', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :safety_rating, label: 'Safety/First Aid', collection: SportsEvaluation::RATING, include_blank: false %>
+	<%= f.input :results_rating, label: 'Online results', collection: SportsEvaluation::RATING, include_blank: false %>
+
+	<br/>
+
+	<%= f.input :worked_well, label: 'What worked well?' %>
+	<%= f.input :to_improve, label: "What didn't work?" %>
+	<%= f.input :suggestions, label: 'Suggestions for next year?' %>
+
+	<br/>
+
+	<%= f.button :submit, 'Submit' %>
+<% end %>	

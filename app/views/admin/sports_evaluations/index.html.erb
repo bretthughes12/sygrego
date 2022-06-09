@@ -1,0 +1,21 @@
+<% title "Listing sports evaluations" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Sport</th>
+      <th>Section</th>
+    </tr>
+  </thead>
+
+	<%= render @sports_evaluations %>
+</table>
+
+<%= link_to "New evaluation", new_admin_sports_evaluation_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_sports_evaluations_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>

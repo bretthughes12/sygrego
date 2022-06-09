@@ -14,6 +14,7 @@ class Ability
            :create_good_sports,
            :create_spirit,
            :create_volunteer], Award
+      can :create, SportsEvaluation
 
     elsif session["current_role"] == "admin"
       can :manage, :all
@@ -116,7 +117,8 @@ class Ability
         :create_good_sports,
         :create_spirit,
         :create_volunteer], Award
- 
+      can :create, SportsEvaluation
+
     elsif session["current_role"] == "gc"
       if user.status == "Verified"
         can [:update, 
@@ -211,6 +213,7 @@ class Ability
         :create_good_sports,
         :create_spirit,
         :create_volunteer], Award
+      can :create, SportsEvaluation
 
     elsif session["current_role"] == "participant"
       can [:update, :edit_password, :update_password], User do |u|
@@ -235,7 +238,8 @@ class Ability
         :create_good_sports,
         :create_spirit,
         :create_volunteer], Award
- end
+      can :create, SportsEvaluation
+    end
     
     # Define abilities for the passed in user here. For example:
     #

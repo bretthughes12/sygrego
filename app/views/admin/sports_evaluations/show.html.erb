@@ -1,0 +1,12 @@
+<% title "Sports Evaluation details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @sports_evaluation %>
+
+<%= link_to "Back", admin_sports_evaluations_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_sports_evaluation_path(@sports_evaluation),
+                  class: primary_button_class,
+                  role: "button" %>

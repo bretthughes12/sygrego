@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_08_224011) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_09_040045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -504,6 +504,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_08_224011) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_sports_on_name", unique: true
+  end
+
+  create_table "sports_evaluations", force: :cascade do |t|
+    t.string "sport", limit: 20, null: false
+    t.string "section", limit: 50, null: false
+    t.string "session", limit: 50, null: false
+    t.string "venue_rating", limit: 10, null: false
+    t.string "equipment_rating", null: false
+    t.string "length_rating", null: false
+    t.string "umpiring_rating", null: false
+    t.string "results_rating", null: false
+    t.string "time_rating", null: false
+    t.string "support_rating", null: false
+    t.string "safety_rating", null: false
+    t.string "scoring_rating", null: false
+    t.text "worked_well"
+    t.text "to_improve"
+    t.text "suggestions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section"], name: "index_sports_evaluations_on_section"
   end
 
   create_table "statistics", force: :cascade do |t|

@@ -1,0 +1,21 @@
+<% title "Editing Sports evaluation" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_sports_evaluation_path(@sports_evaluation), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", admin_sports_evaluations_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_sports_evaluation_path(@sports_evaluation),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_sports_evaluation_path(@sports_evaluation),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

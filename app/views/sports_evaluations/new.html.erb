@@ -1,0 +1,9 @@
+<% title "Sport Coordinators Evaluation Report" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Please take a moment and provide us with your thoughts regarding the coordinating of your sport today. </p>
+
+<%= render partial: "form", locals: { 
+                            url: sports_evaluations_path, 
+                            method: :post } %>
