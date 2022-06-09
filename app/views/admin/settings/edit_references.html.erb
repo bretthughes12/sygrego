@@ -1,0 +1,7 @@
+<% title "Reference files" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "references", 
+           locals: { url: update_references_admin_setting_path(@setting),
+                     setting: @setting } %>

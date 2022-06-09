@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/sport_nomination' => 'awards#new_good_sports', as: :sport_nomination
   get '/spirit' => 'awards#new_spirit', as: :spirit
   get '/legend' => 'awards#new_volunteer', as: :legend
+  get '/knockout_reference' => 'admin/info#knockout_reference', controller: "admin/info", as: :knockout_reference
+  get '/ladder_reference' => 'admin/info#ladder_reference', controller: "admin/info", as: :ladder_reference
   get 'static/:permalink' => 'pages#show', as: :static
 
   devise_for :users, controllers: {
@@ -109,6 +111,7 @@ Rails.application.routes.draw do
         get :edit_divisions
         get :edit_sports_factors
         get :edit_website
+        get :edit_references
         patch :update_event
         patch :update_functionality
         patch :update_email
@@ -117,6 +120,9 @@ Rails.application.routes.draw do
         patch :update_divisions
         patch :update_sports_factors
         patch :update_website
+        patch :update_references
+        patch :purge_knockout_reference
+        patch :purge_ladder_reference
       end
     end
     resources :pages

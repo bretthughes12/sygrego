@@ -55,6 +55,11 @@ class Admin::SettingsController < ApplicationController
       @setting = Setting.find(params[:id])
     end
 
+    # GET /admin/settings/1/edit_references
+    def edit_references
+      @setting = Setting.find(params[:id])
+    end
+
   # PATCH /admin/settings/1
     def update
       @setting = Setting.find(params[:id])
@@ -180,6 +185,42 @@ class Admin::SettingsController < ApplicationController
       end
     end
   end
+  
+  # PATCH /admin/settings/1/update_references
+  def update_references
+    @setting = Setting.find(params[:id])
+
+    respond_to do |format|
+      if @setting.update(settings_params)
+        flash[:notice] = 'Reference files were successfully updated.'
+        format.html { render action: "edit_references" }
+      else
+        format.html { render action: "edit_references" }
+      end
+    end
+  end
+  
+  # PATCH /admin/settings/1/purge_knockout_reference
+  def purge_knockout_reference
+    @setting = Setting.find(params[:id])
+
+    @setting.knockout_reference.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
+  
+  # PATCH /admin/settings/1/purge_ladder_reference
+  def purge_ladder_reference
+    @setting = Setting.find(params[:id])
+
+    @setting.ladder_reference.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
 
   private
   
@@ -231,7 +272,9 @@ class Admin::SettingsController < ApplicationController
                                       :social_spotify_url,
                                       :public_website,
                                       :rego_website,
-                                      :website_host
+                                      :website_host,
+                                      :knockout_reference,
+                                      :ladder_reference
                                     )
 
     end

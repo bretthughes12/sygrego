@@ -1,0 +1,49 @@
+<%= simple_form_for(setting, url: url) do |f| %> 
+	<%= f.error_notification %>
+
+	<h3>References</h3>
+	<% if setting.knockout_reference.attached? %>
+		<% if setting.knockout_reference.representable? %>
+		    <%= link_to(image_tag(setting.knockout_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.knockout_reference, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.knockout_reference, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_knockout_reference_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :knockout_reference, as: :file, label: 'Knockout Reference: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+
+	<br/>
+
+	<% if setting.ladder_reference.attached? %>
+		<% if setting.ladder_reference.representable? %>
+		    <%= link_to(image_tag(setting.ladder_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.ladder_reference, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.ladder_reference, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_ladder_reference_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :ladder_reference, as: :file, label: 'Ladder Reference: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+
+	<% end %>
+<% end %>
