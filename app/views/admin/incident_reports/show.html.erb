@@ -1,0 +1,12 @@
+<% title "Incident Report details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @incident_report %>
+
+<%= link_to "Back", admin_incident_reports_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_incident_report_path(@incident_report),
+                  class: primary_button_class,
+                  role: "button" %>

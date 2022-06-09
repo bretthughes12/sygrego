@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/group_signup' => 'group_signups#new', as: :group_signup
   get '/sport_nomination' => 'awards#new_good_sports', as: :sport_nomination
   get '/sport_evaluation' => 'sports_evaluations#new', as: :sport_evaluation
+  get '/incident' => 'incident_reports#new', as: :incident
   get '/spirit' => 'awards#new_spirit', as: :spirit
   get '/legend' => 'awards#new_volunteer', as: :legend
   get '/knockout_reference' => 'admin/info#knockout_reference', controller: "admin/info", as: :knockout_reference
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
   resources :group_signups, :only => [:new, :create]
 
   resources :sports_evaluations, :only => [:new, :create]
+  resources :incident_reports, :only => [:new, :create]
   resources :awards do
     collection do
       get :new_good_sports
@@ -294,6 +296,7 @@ Rails.application.routes.draw do
     end
 
     resources :sports_evaluations
+    resources :incident_reports
     resources :awards do
       collection do
         get :good_sports

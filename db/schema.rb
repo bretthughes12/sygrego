@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_09_040045) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_09_051310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -214,6 +214,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_040045) do
     t.bigint "user_id"
     t.index ["group_id"], name: "index_groups_users_on_group_id"
     t.index ["user_id"], name: "index_groups_users_on_user_id"
+  end
+
+  create_table "incident_reports", force: :cascade do |t|
+    t.string "section", limit: 50, null: false
+    t.string "session", limit: 50, null: false
+    t.string "venue", limit: 50, null: false
+    t.text "description", null: false
+    t.string "name", limit: 100, null: false
+    t.text "action_taken"
+    t.text "other_info"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section"], name: "index_incident_reports_on_section"
   end
 
   create_table "mysyg_settings", force: :cascade do |t|

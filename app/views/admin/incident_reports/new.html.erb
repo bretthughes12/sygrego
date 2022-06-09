@@ -1,0 +1,10 @@
+<% title "Sports First Aid Incident Report" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Please complete this report to provide details on any incidents that took place where participants required medical attention. This information is crucial so that the SYG committee is fully informed regarding any incidents which have taken place. </p>
+<p>Sports Co-ordinators should advise the participant to attend the SYG Safety Desk at the Admin Office at Lardner Park and also submit an incident report form. </p>
+
+<%= render partial: "form", locals: { 
+                            url: admin_incident_reports_path, 
+                            method: :post } %>
