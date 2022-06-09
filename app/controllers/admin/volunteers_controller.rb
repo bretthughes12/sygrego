@@ -16,6 +16,26 @@ class Admin::VolunteersController < ApplicationController
       end
     end
 
+    # GET /admin/volunteers/sat_coords
+    def sat_coords
+      @volunteers = Volunteer.order(:description, :volunteer_type_id).all
+  
+      respond_to do |format|
+        format.html {  }
+        format.csv  { render_csv "volunteer" }
+      end
+    end
+
+    # GET /admin/volunteers/sun_coords
+    def sun_coords
+      @volunteers = Volunteer.order(:description, :volunteer_type_id).all
+  
+      respond_to do |format|
+        format.html {  }
+        format.csv  { render_csv "volunteer" }
+      end
+    end
+
     # GET /admin/volunteers/search
     def search
       @volunteers = Volunteer.

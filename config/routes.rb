@@ -284,8 +284,16 @@ Rails.application.routes.draw do
     resources :volunteers do
       collection do
         get :search
+        get :sat_coords
+        get :sun_coords
         get :new_import
         post :import
+      end
+      member do
+        get :collect
+        get :return
+        patch :update_collect
+        patch :update_return
       end
     end
 
