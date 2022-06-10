@@ -1,0 +1,13 @@
+<% title "Sport Coordinator Returns" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_return", locals: { 
+                              url: update_return_admin_volunteer_path(@volunteer), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  role: "button" %>

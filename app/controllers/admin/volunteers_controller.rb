@@ -18,21 +18,28 @@ class Admin::VolunteersController < ApplicationController
 
     # GET /admin/volunteers/sat_coords
     def sat_coords
-      @volunteers = Volunteer.order(:description, :volunteer_type_id).all
+      @volunteers = Volunteer.sport_coords_saturday
   
       respond_to do |format|
-        format.html {  }
-        format.csv  { render_csv "volunteer" }
+        format.html { render 'sport_coords' }
       end
     end
 
     # GET /admin/volunteers/sun_coords
     def sun_coords
-      @volunteers = Volunteer.order(:description, :volunteer_type_id).all
+      @volunteers = Volunteer.sport_coords_sunday
   
       respond_to do |format|
-        format.html {  }
-        format.csv  { render_csv "volunteer" }
+        format.html { render 'sport_coords' }
+      end
+    end
+
+    # GET /admin/volunteers/coords_notes
+    def coord_notes
+      @volunteers = Volunteer.sport_coords.order(:description).all
+  
+      respond_to do |format|
+        format.csv  { render_csv "sports_notes", "sports_notes" }
       end
     end
 
@@ -67,6 +74,42 @@ class Admin::VolunteersController < ApplicationController
       @volunteer_types = get_volunteer_types 
       @sessions = Session.order(:name).load
       @sections = Section.order(:name).load
+    end
+
+    # GET /admin/volunteers/1/collect
+    def collect
+      group_id = @volunteer.participant.nil? ? nil : @volunteer.participant.group.id 
+      if @volunteer.mobile_number.blank?
+        @volunteer.mobile_number = @volunteer.participant.mobile_phone_number unless @volunteer.participant.nil?
+      end
+  
+      if group_id.nil?
+        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      else
+        @participants = Participant.open_age.coming.accepted.
+          order("first_name, surname").
+          where(['group_id = ?', group_id]).load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      end
+    end
+  
+    # GET /admin/volunteers/1/return
+    def return
+      group_id = @volunteer.participant.nil? ? nil : @volunteer.participant.group.id 
+      if @volunteer.mobile_number.blank?
+        @volunteer.mobile_number = @volunteer.participant.mobile_phone_number unless @volunteer.participant.nil?
+      end
+  
+      if group_id.nil?
+        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      else
+        @participants = Participant.open_age.coming.accepted.
+          order("first_name, surname").
+          where(['group_id = ?', group_id]).load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      end
     end
   
     # POST /admin/volunteers
@@ -116,6 +159,36 @@ class Admin::VolunteersController < ApplicationController
         end
     end
   
+    # PATCH /admin/volunteers/1/update_collect
+    def update_collect
+      @volunteer.updated_by = current_user.id
+
+      respond_to do |format|
+        if @volunteer.update(volunteer_params)
+          flash[:notice] = 'Volunteer was successfully updated.'
+          format.html { redirect_to sport_coord_return_path }
+        else
+          prepare_for_sport_coords
+          format.html { render action: "collect" }
+        end
+      end
+    end
+  
+    # PATCH /admin/volunteers/1/update_return
+    def update_return
+      @volunteer.updated_by = current_user.id
+
+      respond_to do |format|
+        if @volunteer.update(volunteer_params)
+          flash[:notice] = 'Volunteer was successfully updated.'
+          format.html { redirect_to sport_coord_return_path }
+        else
+          prepare_for_sport_coords
+          format.html { render action: "return" }
+        end
+      end
+    end
+
     # DELETE /volunteers/1
     def destroy
         @volunteer.updated_by = current_user.id
@@ -174,5 +247,30 @@ class Admin::VolunteersController < ApplicationController
 
     def get_volunteer_types
       VolunteerType.active.order('name').load 
+    end
+
+    def prepare_for_sport_coords
+      group_id = @volunteer.participant.nil? ? nil : @volunteer.participant.group.id 
+      if @volunteer.mobile_number.blank?
+        @volunteer.mobile_number = @volunteer.participant.mobile_phone_number unless @volunteer.participant.nil?
+      end
+  
+      if group_id.nil?
+        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      else
+        @participants = Participant.open_age.coming.accepted.
+          order("first_name, surname").
+          where(['group_id = ?', group_id]).load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+      end
+    end
+
+    def sport_coord_return_path
+      if @volunteer.saturday?
+        sat_coords_admin_volunteers_url
+      else
+        sun_coords_admin_volunteers_url
+      end
     end
   end

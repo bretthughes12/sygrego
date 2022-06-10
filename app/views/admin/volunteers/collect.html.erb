@@ -1,0 +1,13 @@
+<% title "Sport Coordinator Collections" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_collection", locals: { 
+                              url: update_collect_admin_volunteer_path(@volunteer), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  role: "button" %>

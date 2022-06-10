@@ -119,10 +119,26 @@ class Volunteer < ApplicationRecord
       end
     end
     
+    def group_short_name
+      if participant
+        participant.group.short_name
+      else
+        ''
+      end
+    end
+    
+    def saturday?
+      session_name =~ /^Saturday.*/
+    end
+    
+    def sunday?
+      session_name =~ /^Sunday.*/
+    end
+
     def self.sport_coords_saturday
         coords = []
         sport_coords.order('volunteers.description').each do |o|
-          coords << o if o.session_name =~ /^Saturday.*/
+          coords << o if o.saturday?
         end
         coords
     end
@@ -130,7 +146,7 @@ class Volunteer < ApplicationRecord
     def self.sport_coords_sunday
         coords = []
         sport_coords.order('volunteers.description').each do |o|
-          coords << o if o.session_name =~ /^Sunday.*/
+          coords << o if o.sunday?
         end
         coords
     end

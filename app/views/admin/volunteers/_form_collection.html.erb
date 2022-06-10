@@ -1,0 +1,33 @@
+<%= simple_form_for(@volunteer, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, :as => :hidden %>
+
+	<table class="table table-dark table-striped">
+		<tr><th>Sport / Grade / Section</th><td><%= @volunteer.description %></td></tr>
+		<tr><th>Venue</th><td><%= @volunteer.venue_name %></td></tr>
+		<tr><th>Session</th><td><%= @volunteer.session_name %></td></tr>
+		<tr><th>Group</th><td><%= @volunteer.group_short_name %></td></tr>
+		<tr><th>T-Shirt Size</th><td><%= @volunteer.t_shirt_size %></td></tr>
+	</table>
+
+	<% unless @volunteer.group_short_name.blank? %>
+		<%= f.input :participant_id, :label => "Coordinator's name", collection: @participants, include_blank: true %>
+	<% else %>
+		<%= f.input :participant_id, :label => "Coordinator's name", collection: @participants_with_group_name, include_blank: true %>
+	<% end %>
+
+	<%= f.input :mobile_number %>
+
+	<br/>
+
+	<%= f.input :mobile_confirmed, label: "Contact number confirmed" %>
+	<%= f.input :details_confirmed, label: "Confirmed venue and starting time" %>
+	<%= f.input :collected, label: "Coordinators' paperwork pack given out" %>
+	<%= f.input :equipment_out, as: :select, collection: Volunteer::EQUIPMENT_OUT_OPTIONS, include_blank: true  %>
+	<%= f.input :notes %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

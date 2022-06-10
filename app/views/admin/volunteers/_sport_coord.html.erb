@@ -1,0 +1,34 @@
+<tr valign="top" class="<%= sport_coord_display_class(volunteer) %>">
+	<td> 
+    	<%= link_to h(volunteer.description), edit_admin_volunteer_path(volunteer) %></br>
+	</td>
+	<td> 
+    	<%= h(volunteer.session_name) %></br>
+	</td>
+	<% if volunteer.participant %>
+        <td> 
+			<%= volunteer.participant.name_with_group_name %>
+        </td>
+    	<td> 
+        	<%= h(volunteer.mobile_phone_number) %>
+        </td>
+	<% else %>
+		<td>&nbsp</td>					
+		<td>&nbsp</td>					
+	<% end %>
+
+    <td>
+		<% case %>
+		<% when volunteer.returned || volunteer.collected %>
+			<%= link_to "Return", return_admin_volunteer_path(volunteer),
+					method: :get,
+					class: primary_button_class,
+					role: "button" %>
+		<% else %>
+			<%= link_to "Collect", collect_admin_volunteer_path(volunteer),
+					method: :get,
+					class: primary_button_class,
+					role: "button" %>
+		<% end %>
+    </td>
+</tr>

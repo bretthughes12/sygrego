@@ -1,0 +1,30 @@
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th align="left">Sport / Grade / Section</th>
+      <th align="left">Session</th>
+      <th align="left">Name</th>
+      <th align="left">Mobile Number</th>
+      <th align="left">Actions</th>
+    </tr>
+  </thead>
+	    
+  <%= render partial: 'sport_coord', collection: @volunteers, as: :volunteer %>
+</table>
+
+<%= link_to "Saturday", sat_coords_admin_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Sunday", sun_coords_admin_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download Notes", coord_notes_admin_volunteers_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Not collected yet", :class => "table-dark"},
+				{:name => "Collected", :class => "table-warning"},
+				{:name => "Returned", :class => "table-primary"}] %>
+

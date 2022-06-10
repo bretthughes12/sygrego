@@ -286,6 +286,7 @@ Rails.application.routes.draw do
         get :search
         get :sat_coords
         get :sun_coords
+        get :coord_notes
         get :new_import
         post :import
       end
