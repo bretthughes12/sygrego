@@ -43,6 +43,16 @@ class Admin::VolunteersController < ApplicationController
       end
     end
 
+    # GET /admin/volunteers/sport_volunteers
+    def sport_volunteers
+      @volunteers = Volunteer.sport_volunteers
+  
+      respond_to do |format|
+        format.html 
+        format.csv  { render_csv "sports_volunteers", "sport_volunteers" }
+      end
+    end
+
     # GET /admin/volunteers/search
     def search
       @volunteers = Volunteer.

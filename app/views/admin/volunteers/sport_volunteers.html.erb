@@ -1,0 +1,21 @@
+<% title "Sport Volunteers" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th align="left">Sport / Grade / Section</th>
+      <th align="left">Session</th>
+      <th align="left">Type</th>
+      <th align="left">Name</th>
+      <th align="left">Mobile Number</th>
+    </tr>
+  </thead>
+	    
+  <%= render partial: 'sport_volunteer', collection: @volunteers, as: :volunteer %>
+</table>
+
+<%= link_to "Download", sport_volunteers_admin_volunteers_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>

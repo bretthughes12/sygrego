@@ -1,0 +1,22 @@
+<tr>
+	<td> 
+    	<%= link_to h(volunteer.description), edit_admin_volunteer_path(volunteer) %></br>
+	</td>
+	<td> 
+    	<%= h(volunteer.session_name) %></br>
+	</td>
+	<td> 
+    	<%= h(volunteer.volunteer_type.name) %></br>
+	</td>
+	<% if volunteer.participant %>
+        <td> 
+			<%= volunteer.participant.name_with_group_name %>
+        </td>
+    	<td> 
+        	<%= h(volunteer.mobile_phone_number) %>
+        </td>
+	<% else %>
+		<td>&nbsp</td>					
+		<td>&nbsp</td>					
+	<% end %>
+</tr>

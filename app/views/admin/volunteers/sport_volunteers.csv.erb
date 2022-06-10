@@ -1,0 +1,15 @@
+Sport / Grade / Section,Venue,Session,Volunteer Type,Name,Group,Mobile Number
+<%= CSV.generate do |csv|
+  @volunteers.each do |volunteer|
+    participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
+    participant_group = volunteer.participant.nil? ? nil : volunteer.participant.group.name
+    
+    csv << [volunteer.name,
+    	    volunteer.venue_name,
+    	    volunteer.session_name,
+    	    volunteer.volunteer_type.name,
+    	    participant_name, 
+			participant_group,
+			volunteer.mobile_phone_number]
+  end
+end.html_safe %>

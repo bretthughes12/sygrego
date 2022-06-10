@@ -45,6 +45,7 @@
                             <li class='dropdown-item'><%= link_to 'Sport Draws', sports_draws_admin_tasks_path %></li>
                         <% end %>
                         <% if @settings.syg_is_happening %>
+                            <li class='dropdown-item'><%= link_to 'Sport Volunteers', sport_volunteers_admin_volunteers_path %></li>
                             <li class='dropdown-item'><%= link_to 'Saturday Coordinators', sat_coords_admin_volunteers_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sunday Coordinators', sun_coords_admin_volunteers_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sport Evaluations', admin_sports_evaluations_path %></li>
