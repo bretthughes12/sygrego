@@ -12,6 +12,7 @@ class Admin::SportsEvaluationsController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "sports_evaluations", "sports_evaluations" }
+        format.pdf  # index.pdf.prawn
       end
     end
   

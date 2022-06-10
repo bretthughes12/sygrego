@@ -12,6 +12,7 @@ class Admin::IncidentReportsController < ApplicationController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "incident_reports", "incident_reports" }
+        format.pdf  # index.pdf.prawn
       end
     end
   
