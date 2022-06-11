@@ -11,6 +11,9 @@
 
 <br/>
 
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>
 <%= link_to "Destroy", destroy_volunteer_admin_award_path(@award),
                   method: :delete,
                   data: { confirm: "Are you sure?" },

@@ -256,6 +256,7 @@ class Admin::AwardsController < ApplicationController
 
   def award_params
     params.require(:award).permit(
+      :award_type,
       :name, 
       :flagged,
       :submitted_by, 

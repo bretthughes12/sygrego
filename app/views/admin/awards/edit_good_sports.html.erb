@@ -12,6 +12,9 @@
 
 <br/>
 
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>
 <%= link_to "Destroy", destroy_good_sports_admin_award_path(@award),
                   method: :delete,
                   data: { confirm: "Are you sure?" },

@@ -9,5 +9,9 @@
 
 	<br/>
 
+	<%= f.input :category, label: 'Re-categorise', collection: Award::CATEGORY, include_blank: false %>
+
+	<br/>
+
 	<%= f.button :submit, 'Nominate' %>
 <% end %>	
