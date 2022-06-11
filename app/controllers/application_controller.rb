@@ -45,6 +45,7 @@ class ApplicationController < ActionController::Base
             @current_role ||= Role.find_by_name(session["current_role"].to_s)
         elsif current_user
             @current_role ||= Role.find_by_name(current_user.default_role.to_s)
+            session["current_role"] = @current_role
         end
     end
 
@@ -72,8 +73,6 @@ class ApplicationController < ActionController::Base
                 home_gc_info_url
             elsif participant
                 home_mysyg_info_url(group: participant.group.mysyg_setting.mysyg_name)
-            elsif group
-                home_mysyg_info_url(group: group.mysyg_setting.mysyg_name)
             else
                 new_user_session_url
             end
