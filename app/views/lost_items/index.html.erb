@@ -1,0 +1,18 @@
+<% title "State Youth Games Lost Property" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= search_box search_lost_items_path, "Search" %>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+	<%= render @lost_items %>
+</table>

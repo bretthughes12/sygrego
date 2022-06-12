@@ -1,0 +1,22 @@
+<% title "Lost Property" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Category</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+
+	<%= render @lost_items %>
+</table>
+
+<%= link_to "New item", new_admin_lost_item_path,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<%= legend_box [{:name => "Claimed", :class => "table-primary"},
+					{:name => "Unclaimed", :class => "table-secondary"}] %>

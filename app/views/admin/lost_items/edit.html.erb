@@ -1,0 +1,21 @@
+<% title "Editing lost item" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_lost_item_path(@lost_item), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", admin_lost_items_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_lost_item_path(@lost_item),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_lost_item_path(@lost_item),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

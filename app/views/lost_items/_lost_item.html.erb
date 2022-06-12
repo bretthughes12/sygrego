@@ -1,0 +1,20 @@
+<tr>
+	<td> 
+		<% if lost_item.photo.representable? %>
+			<%= image_tag lost_item.photo.representation(resize_to_limit: [80, 100])  %>
+		<% end %>
+
+	</td>
+	<td> 
+		<%= h(lost_item.category) %>
+	</td>
+	<td> 
+		<%= h(truncate(lost_item.description, :length => 80)) %>
+	</td>
+	<td>
+		<%= link_to "Details", lost_item_path(lost_item),
+				method: :get,
+				class: primary_button_class,
+				role: "button" %>
+	</td>
+</tr>

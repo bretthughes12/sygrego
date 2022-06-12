@@ -1,0 +1,19 @@
+<% content_for(:title) { "Claimed item" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<%= image_tag @item.photo.representation(resize_to_limit: [400, 500]) %>
+
+<p>An item of lost property has been claimed.</p>
+
+<h3>Description</h3>          
+<p><%= @item.description %></p>
+
+<table>
+	<tr><td>Claimed by:</td><td><%= @item.name %></td></tr>
+	<tr><td>Address:</td><td><%= @item.address %></td></tr>
+	<tr><td>Suburb:</td><td><%= @item.suburb %></td></tr>
+	<tr><td>Postcode:</td><td><%= @item.postcode %></td></tr>
+	<tr><td>Phone number:</td><td><%= @item.phone_number %></td></tr>
+	<tr><td>Email:</td><td><%= @item.email %></td></tr>
+</table>

@@ -1,0 +1,41 @@
+<%= simple_form_for(@lost_item, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :category %>
+	<%= f.input :description %>
+	<%= f.input :claimed %>
+
+	<br/>
+
+	<% if @lost_item.photo.attached? %>
+		<% if @lost_item.photo.representable? %>
+		    <%= image_tag(@lost_item.photo.representation(resize_to_limit: [160, 200])) %>
+		<% else %>
+		    Photo
+		<% end %>
+		<%= link_to "Remove", purge_photo_admin_lost_item_path(@lost_item),
+			method: :patch,
+			class: danger_button_class,
+			role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :photo, as: :file %>
+
+	<% end %>
+	
+	<br/>
+
+	<%= f.input :name %>
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number %>
+	<%= f.input :email %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

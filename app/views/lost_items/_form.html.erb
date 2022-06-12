@@ -1,0 +1,28 @@
+<%= simple_form_for(@lost_item, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<table class="table table-dark table-striped">
+		<tr><td>Category</td><td><%= @lost_item.category %></td></tr>
+		<tr><td>Decription</td><td><%= @lost_item.description %></td></tr>
+	</table>
+
+	<br/>
+
+	<% if @lost_item.photo.representable? %>
+	<%= image_tag @lost_item.photo.representation(resize_to_limit: [400, 500]) %>
+	<% end %>
+
+	<br/>
+
+	<%= f.input :name %>
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number %>
+	<%= f.input :email %>
+
+	<br/>
+
+	<%= f.button :submit, 'Claim' %>
+<% end %>	

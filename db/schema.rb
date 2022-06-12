@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_09_051310) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_12_002314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -227,6 +227,21 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_09_051310) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section"], name: "index_incident_reports_on_section"
+  end
+
+  create_table "lost_items", force: :cascade do |t|
+    t.string "category", limit: 30, null: false
+    t.string "description", limit: 255, null: false
+    t.boolean "claimed", default: false
+    t.string "name", limit: 40
+    t.string "address", limit: 200
+    t.string "suburb", limit: 40
+    t.integer "postcode"
+    t.string "phone_number", limit: 30
+    t.string "email", limit: 100
+    t.integer "lock_version", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mysyg_settings", force: :cascade do |t|

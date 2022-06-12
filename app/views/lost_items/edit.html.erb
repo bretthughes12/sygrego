@@ -1,0 +1,13 @@
+<% title "Please enter your details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: lost_item_path(@lost_item), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", lost_items_path,
+                  class: primary_button_class,
+                  role: "button" %>

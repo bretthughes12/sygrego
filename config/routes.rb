@@ -20,6 +20,11 @@ Rails.application.routes.draw do
 
   # Public and general routes
   resources :pages, only: [:show]
+  resources :lost_items, only: [:show, :index, :edit, :update] do
+    collection do
+      get :search
+    end
+  end
 
   resources :roles do
     collection do
@@ -130,6 +135,11 @@ Rails.application.routes.draw do
       end
     end
     resources :pages
+    resources :lost_items do
+      member do
+        patch :purge_photo
+      end
+    end
     resources :roles
     resources :users do
       member do

@@ -1,0 +1,21 @@
+<% title "Lost Item details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @lost_item %>
+
+<br/>
+
+<% if @lost_item.photo.representable? %>
+<%= image_tag @lost_item.photo.representation(resize_to_limit: [400, 500]) %>
+<% end %>
+
+<br/>
+<br/>
+
+<%= link_to "Back", admin_lost_items_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_lost_item_path(@lost_item),
+                  class: primary_button_class,
+                  role: "button" %>
