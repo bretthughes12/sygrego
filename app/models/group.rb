@@ -75,6 +75,7 @@ class Group < ApplicationRecord
     scope :sun_no_pref_service, -> { where('event_details.service_pref_sun': 'No preference').includes(:event_detail) }
 
     has_one_attached :booklet_file
+    has_one_attached :results_file
 
     delegate :estimated_numbers,
       :warden_zone,
