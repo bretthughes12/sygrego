@@ -65,6 +65,9 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class='dropdown-item'><%= link_to 'Warden Zones', admin_warden_zones_path %></li>
                         <li class='dropdown-item'><%= link_to 'Group Zones', warden_zones_admin_event_details_path %></li>
+                        <% if @settings.syg_is_finished %>
+                            <li class='dropdown-item'><%= link_to 'Lost Property', admin_lost_items_path %></li>
+                        <% end %>
                     </ul>
                 </li>
                 <li class='nav-item dropdown'>
