@@ -3,6 +3,7 @@
 <h1><%= yield(:title) %></h1>
 
 <%= search_box search_lost_items_path, "Search" %>
+<%= yield(:search_box)%>
 
 <table class="table table-dark table-striped">
   <thead>
