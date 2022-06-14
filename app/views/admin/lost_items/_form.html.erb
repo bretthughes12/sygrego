@@ -4,6 +4,7 @@
 	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :category %>
 	<%= f.input :description %>
+	<%= f.input :notes, hint: "Use this for notes about the items that the participants will not see. For example, some detail about valuable items that can be used to help establish that the person claiming the item is the real owner." %>
 	<%= f.input :claimed %>
 
 	<br/>
@@ -27,6 +28,9 @@
 	<% end %>
 	
 	<br/>
+
+	<h2>Details about claim</h2>
+	<%= f.input :claimed %>
 
 	<%= f.input :name %>
 	<%= f.input :address %>

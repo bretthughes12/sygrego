@@ -10,6 +10,7 @@
 #  email        :string(100)
 #  lock_version :integer          default(0)
 #  name         :string(40)
+#  notes        :text
 #  phone_number :string(30)
 #  postcode     :integer
 #  suburb       :string(40)

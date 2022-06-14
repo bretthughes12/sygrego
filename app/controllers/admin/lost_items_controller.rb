@@ -80,6 +80,7 @@ class Admin::LostItemsController < ApplicationController
       params.require(:lost_item).permit(
         :category, 
         :description,
+        :notes,
         :claimed,
         :lock_version,
         :name,
