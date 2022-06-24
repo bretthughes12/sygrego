@@ -9,7 +9,7 @@ namespace :syg do
     volunteer_vacancies = Volunteer.unfilled.count
 
     settings = Setting.first
-    weeks_to_syg = ((settings.first_day_of_syg.amjd().to_f - DateTime.now.amjd().to_f) / 7).to_i + 1
+    weeks_to_syg = ((settings.first_day_of_syg.amjd().to_f - DateTime.now.amjd().to_f) / 7).floor + 1
 
     Statistic.create(number_of_groups: groups,
                       number_of_participants: participants,
