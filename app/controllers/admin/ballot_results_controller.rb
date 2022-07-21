@@ -9,7 +9,6 @@ class Admin::BallotResultsController < ApplicationController
         @ballot_results = BallotResult.order(:sport_name, :grade_name, :sport_entry_status, :section_name, :group_name).all
 
         respond_to do |format|
-            format.html # index.html.erb
             format.csv  { render_csv "restricted_sports_allocation" }
         end
     end

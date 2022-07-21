@@ -18,7 +18,7 @@
 #
 FactoryBot.define do
   factory :award do
-    category { "MyString" }
+    category { "Spirit" }
     submitted_by { "MyString" }
     submitted_group { "MyString" }
     name { "MyString" }
