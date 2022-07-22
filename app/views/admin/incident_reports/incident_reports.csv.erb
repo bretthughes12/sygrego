@@ -1,22 +1,14 @@
-<%- headings = %w{Sport Section Session Venue Equipment Length Umpiring Scoring Time Support Safety Results WorkedWell DidntWork Suggestions } -%>
+<%- headings = %w{Section Session Venue Description Name ActionTaken OtherInfo } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
-  @sports_evaluations.each do |sports_evaluation|
-  	line = [ sports_evaluation.sport,
-  		     sports_evaluation.section,
-			 sports_evaluation.session,
-			 sports_evaluation.venue_rating,
-			 sports_evaluation.equipment_rating,
-			 sports_evaluation.length_rating,
-			 sports_evaluation.umpiring_rating,
-			 sports_evaluation.scoring_rating,
-			 sports_evaluation.time_rating,
-			 sports_evaluation.support_rating,
-			 sports_evaluation.safety_rating,
-			 sports_evaluation.results_rating,
-			 sports_evaluation.worked_well,
-			 sports_evaluation.to_improve,
-  		     sports_evaluation.suggestions
+  @incident_reports.each do |incident_report|
+  	line = [ incident_report.section,
+			 incident_report.session,
+			 incident_report.venue,
+			 incident_report.description,
+			 incident_report.name,
+			 incident_report.action_taken,
+			 incident_report.other_info
 		   ]
     csv << line
   end

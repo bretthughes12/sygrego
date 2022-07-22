@@ -18,4 +18,20 @@
 #  index_incident_reports_on_section  (section)
 #
 class IncidentReport < ApplicationRecord
+
+    validates :name,
+        presence: true,
+        length: { maximum: 100 }
+    validates :section,
+        presence: true,
+        length: { maximum: 50 }
+    validates :session,
+        presence: true,
+        length: { maximum: 50 }
+    validates :venue,
+        presence: true,
+        length: { maximum: 50 }
+    validates :description,
+        presence: true
+
 end

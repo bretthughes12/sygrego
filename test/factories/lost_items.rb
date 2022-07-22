@@ -27,7 +27,7 @@ FactoryBot.define do
     suburb { "MyString" }
     postcode { 1 }
     phone_number { "MyString" }
-    email { "MyString" }
+    email { "My@String.com" }
     lock_version { 1 }
   end
 end
