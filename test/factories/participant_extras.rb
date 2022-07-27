@@ -25,8 +25,8 @@ FactoryBot.define do
   factory :participant_extra do
     participant { nil }
     group_extra { nil }
-    wanted { false }
-    size { "MyString" }
+    wanted { true }
+    size { "XL" }
     comment { "MyString" }
   end
 end
