@@ -12,13 +12,6 @@ class Mysyg::InfoController < MysygController
       end
     end
   
-#    # GET /mysyg/:group/camping
-#    def camping
-#      respond_to do |format|
-#        format.html 
-#      end
-#    end
-  
     # GET /mysyg/:group/finance
     def finance
       @fee = @participant.group_fee
