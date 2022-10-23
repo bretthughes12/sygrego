@@ -1,6 +1,9 @@
 {
   "name": "sygrego",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@popperjs/core": "^2.9.3",
     "@rails/actioncable": "^7.0.0",
