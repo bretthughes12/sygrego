@@ -23,7 +23,7 @@ class RolesController < ApplicationController
       if @role.name == "participant"
         session["current_participant"] = current_user.default_participant
         participant = Participant.find(current_user.default_participant)
-        session["current_group"] = participant.group.abbr
+        session["current_group"] = participant.group.id
       else
         session["current_participant"] = nil
       end

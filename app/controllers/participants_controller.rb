@@ -20,7 +20,7 @@ class ParticipantsController < ApplicationController
     def switch
       participant = Participant.find(params[:id])
       session["current_participant"] = participant.id
-      session["current_group"] = participant.group.abbr
+      session["current_group"] = participant.group.id
       session["current_role"] = "participant"
 
       respond_to do |format|

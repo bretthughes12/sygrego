@@ -57,7 +57,7 @@ class ParticipantSignupsController < ApplicationController
             flash[:notice] = "Thank you for registering for State Youth Games"
             bypass_sign_in @user
             session["current_role"] = "participant"
-            session["current_group"] = @group.abbr
+            session["current_group"] = @group.id
             session["current_participant"] = @participant.id
             format.html do
               if @participant_signup.new_user
@@ -87,7 +87,7 @@ class ParticipantSignupsController < ApplicationController
         ms = MysygSetting.find_by_mysyg_name(params[:group])
         @group = ms.group unless ms.nil?
       elsif session["current_group"]
-        @group = Group.find_by_abbr(session["current_group"])
+        @group = Group.find_by_id(session["current_group"])
       else
         @group = Group.find_by_abbr("DFLT")
       end

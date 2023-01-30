@@ -7,7 +7,7 @@ class GroupsController < ApplicationController
     # GET /gc/groups/available_groups
     def available_groups
       if session["current_group"]
-        current_group = Group.find_by_abbr(session["current_group"])
+        current_group = Group.find_by_id(session["current_group"])
         @groups = current_user.available_groups - [current_group]
       else
         @groups = current_user.available_groups
@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
 
     # PATCH /gc/group/1/switch
     def switch
-      session["current_group"] = @group.abbr
+      session["current_group"] = @group.id
       unless session["current_role"] == "church_rep" || session["current_role"] == "gc"
         session["current_role"] = current_user.church_rep_or_gc_role.to_s
       end

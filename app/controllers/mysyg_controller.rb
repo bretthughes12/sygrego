@@ -23,7 +23,7 @@ class MysygController < ApplicationController
       ms = MysygSetting.find_by_mysyg_name(params[:group])
       @group = ms.group unless ms.nil?
     elsif session["current_group"]
-      @group = Group.find_by_abbr(session["current_group"])
+      @group = Group.find_by_id(session["current_group"])
     end
 
     if @group.nil? && @participant

@@ -92,9 +92,9 @@ class User < ApplicationRecord
 
   def default_group
     if self.participants.empty?
-      self.groups.first ? self.groups.first.abbr : ""
+      self.groups.first ? self.groups.first.id : ""
     else
-      self.participants.first.group.abbr
+      self.participants.first.group.id
     end
   end
 

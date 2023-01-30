@@ -56,12 +56,12 @@ class ApplicationController < ActionController::Base
 
           else 
             role = session["current_role"]
-            group_abbr = session["current_group"]
-            group = Group.find_by_abbr(group_abbr)
+            group_id = session["current_group"]
+            group = Group.find_by_id(group_id)
 
             if group.nil?
-                group_abbr = current_user.default_group
-                group = Group.find_by_abbr(group_abbr)
+                group_id = current_user.default_group
+                group = Group.find_by_id(group_id)
             end
 
             participant_id = session["current_participant"]
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
     def find_group
         if @group.nil?
             if session["current_group"] && !session["current_group"].blank?
-              @group = Group.find_by_abbr(session["current_group"])
+              @group = Group.find_by_id(session["current_group"])
             end
         end
 

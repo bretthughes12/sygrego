@@ -39,7 +39,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     @user.groups << group
 
     patch switch_group_url(group)
-    assert_equal group.abbr, session["current_group"]
+    assert_equal group.id, session["current_group"]
 
     get available_groups_groups_url
 
@@ -54,6 +54,6 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     patch switch_group_url(group)
 
     assert_redirected_to home_gc_info_url
-    assert_equal group.abbr, session["current_group"]
+    assert_equal group.id, session["current_group"]
   end
 end
