@@ -255,6 +255,15 @@ class Participant < ApplicationRecord
       [d, 3].min
     end
 
+    def chargeable_days
+      return 3 if self.rego_type == "Full Time"
+      d = 0
+      [:coming_saturday, :coming_sunday].each do |b|
+        d += 1 if self.send(b) == true
+      end
+      d
+    end
+
     def fee
       return fee_when_withdrawn if withdrawn
       settings = Setting.first
@@ -306,19 +315,19 @@ class Participant < ApplicationRecord
       fee = [gc_fee, sc_fee, helper_fee].min
       fee = 0 if fee < 0
   
-      # calculate the daily fee, and apply if staying for fewer than 3 days
+      # calculate the daily fee, and apply if staying for fewer than 2 chargeable days
       if spectator 
         daily_fee = base_fee
       else
         daily_fee = Participant.round_up_to_5(fee * settings.daily_adjustment)
       end
-      total_fee = [Participant.round_up_to_5(fee), daily_fee * days, base_fee].min
+      total_fee = [Participant.round_up_to_5(fee), daily_fee * chargeable_days, base_fee].min
   
       total_fee
     end
 
     def early_bird_applies?
-      !group_coord && early_bird && (days >= 2) && voucher.nil?
+      !group_coord && early_bird && (chargeable_days >= 2) && voucher.nil?
     end
 
     def group_fee
@@ -326,10 +335,10 @@ class Participant < ApplicationRecord
     end
  
     def extra_fee
-      if days > 2
+      if chargeable_days > 1
         group.extra_fee_total
       else
-        [group.extra_fee_total, days * group.extra_fee_per_day].min
+        [group.extra_fee_total, chargeable_days * group.extra_fee_per_day].min
       end
     end
   
@@ -373,7 +382,7 @@ class Participant < ApplicationRecord
         'Team Helper'
       elsif !onsite && spectator
         'Day Visitor'
-      elsif !onsite && !spectator && early_bird && days >= 2
+      elsif !onsite && !spectator && early_bird && chargeable_days >= 2
         'Sport Participant (early bird)'
       elsif !onsite && !spectator
         'Sport Participant'
@@ -381,11 +390,11 @@ class Participant < ApplicationRecord
         'Ages 0-5'
       elsif age && age < 14 && spectator
         'Child'
-      elsif spectator && early_bird && days >= 2
+      elsif spectator && early_bird && chargeable_days >= 2
         'Spectator (early bird)'
       elsif spectator
         'Spectator'
-      elsif early_bird && days >= 2
+      elsif early_bird && chargeable_days >= 2
         'Sport Participant (early bird)'
       else
         'Sport Participant'
