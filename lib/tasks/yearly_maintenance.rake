@@ -1,0 +1,299 @@
+namespace :syg do
+    namespace :end_of_year do
+      desc 'Reset sport grade fields to pristine state'
+      task update_sport_grades: ['db:migrate'] do |_t|
+        puts 'Updating sport grades...'
+        Grade.all.each do |g|
+          g.entry_limit = g.starting_entry_limit
+          g.status = 'Open'
+          g.entries_to_be_allocated = 999
+          g.over_limit = false
+          g.one_entry_per_group = false
+          g.waitlist_expires_at = nil
+  
+          g.save(validate: false)
+        end
+      end
+  
+      desc 'Reset sport section fields to pristine state'
+      task update_sport_sections: ['db:migrate'] do |_t|
+        puts 'Updating sport sections...'
+        Section.all.each do |s|
+          s.draw_file.purge if s.draw_file.attached?
+          s.number_in_draw = nil
+  
+          s.save(validate: false)
+        end
+      end
+  
+      desc 'Reset sport models to pristine state'
+      task update_sport_models: %i[update_sport_grades
+                                   update_sport_sections]
+  
+      desc 'Clear all participant extras'
+      task destroy_participant_extras: ['db:migrate'] do |_t|
+        puts "Deleting last year's participant extras..."
+        ParticipantExtra.destroy_all
+      end
+  
+      desc 'Clear all group extras'
+      task destroy_group_extras: ['destroy_participant_extras'] do |_t|
+        puts "Deleting last year's group extras..."
+        GroupExtra.destroy_all
+      end
+  
+      desc 'Reset group fields to pristine state'
+      task update_groups: ['db:migrate'] do |_t|
+        puts 'Updating groups...'
+        Group.all.each do |g|
+          g.last_year = g.coming
+          g.coming = false
+          g.new_group = false
+          g.late_fees = 0
+          g.allocation_bonus = 0
+          g.years_attended = 0
+          g.status = 'Stale'
+
+          g.booklet_file.purge if g.booklet_file.attached?
+          g.results_file.purge if g.results_file.attached?
+  
+          g.save(validate: false)
+        end
+      end
+  
+      desc 'Reset group event detail fields to pristine state'
+      task update_event_details: ['db:migrate'] do |_t|
+        puts 'Updating group event details...'
+        EventDetail.all.each do |g|
+            g.estimated_numbers = g.participants.playing_sport.count
+            g.fire_pit = false
+            g.camping_rqmts = nil
+            g.tents = nil
+            g.caravans = nil
+            g.marquees = nil
+            g.marquee_sizes = nil
+            g.marquee_co = nil
+            g.number_of_vehicles = 0
+            g.buddy_interest = 'Not interested'
+            g.buddy_comments = nil
+            g.service_pref_sat = 'No preference'
+            g.service_pref_sun = 'No preference'
+            g.warden_zone_id = nil
+  
+            g.save(validate: false)
+        end
+      end
+  
+      desc 'Reset group mysyg settings fields to pristine state'
+      task update_mysyg_settings: ['db:migrate'] do |_t|
+        puts 'Updating group mysyg settings...'
+        MysygSetting.all.each do |g|
+            g.mysyg_enabled = APP_CONFIG[:mysyg_default_enabled]
+            g.mysyg_open = false
+            g.approve_option = "Normal"
+            g.indiv_sport_view_strategy = "Show all"
+            g.team_sport_view_strategy = "Show all"
+            g.payment_instructions = nil
+            g.extra_fee_total = 0.0
+            g.extra_fee_per_day = 0.0
+            g.show_finance_in_mysyg = true
+            g.show_group_extras_in_mysyg = true
+            g.show_sports_in_mysyg = true
+            g.show_volunteers_in_mysyg = true
+  
+            g.save(validate: false)
+        end
+      end
+  
+      desc 'Reset group rego checklists fields to pristine state'
+      task update_rego_checklists: ['db:migrate'] do |_t|
+        puts 'Updating group rego_checklists...'
+        RegoChecklist.all.each do |g|
+            g.second_rep = nil
+            g.registered = false
+            g.rego_rep = nil
+            g.admin_rep = nil
+            g.driver_form = false
+            g.driving_notes = nil
+            g.finance_notes = nil
+            g.sport_notes = nil
+            g.disabled_notes = nil
+            g.upload_notes = nil
+            g.second_mobile = nil
+            g.rego_mobile = nil
+            g.disabled_participants = false
+            g.food_cert_sighted = false
+            g.insurance_sighted = false
+            g.covid_plan_sighted = false
+  
+            g.save(validate: false)
+        end
+      end
+  
+      desc 'Refresh Groups for new year'
+      task refresh_groups: %i[destroy_group_extras
+                              update_groups,
+                              update_event_details,
+                              update_mysyg_settings.
+                              update_rego_checklists]
+  
+      desc 'Clear all sport preferences'
+      task destroy_sport_preferences: ['db:migrate'] do |_t|
+        puts "Deleting last year's sport preferences..."
+        SportPreference.destroy_all
+      end
+  
+      # This routine rescues nil due to callbacks in deleting Participants having the
+      # side effect of updating the Participant in the act of destroying it and therefore
+      # causing a StaleObjectError.
+      #
+      # Not sure if this is a Rails error, but feel that rescue nil is acceptable in a rake
+      # task that is executed only a couple of times a year
+  
+      desc 'Remove participants who did not come'
+      task remove_non_attending_participants: ['destroy_sport_preferences'] do |_t|
+        puts "Deleting last year's non-attending participants..."
+        Participant.not_coming.each do |p|
+          begin
+            p.destroy
+          rescue ActiveRecord::StaleObjectError
+            nil
+          end
+        end
+      end
+  
+      desc 'Reset participants to pristine state'
+      task update_remaining_participants: ['db:migrate'] do |_t|
+        puts "Updating last year's participants..."
+        Participant.all.each do |p|
+          if p.coming
+            p.years_attended += 1 unless p.years_attended.nil?
+          end
+  
+          p.status = 'Accepted'
+          p.coming = false
+          p.age += 1
+          p.coming_friday = true
+          p.coming_saturday = true
+          p.coming_sunday = true
+          p.coming_monday = true
+          p.spectator = false
+          p.onsite = p.group.onsite
+          p.helper = false
+          p.group_coord = false
+          p.sport_coord = false
+          p.guest = false
+          p.voucher = nil
+          p.early_bird = false
+          p.withdrawn = false
+          p.fee_when_withdrawn = 0
+          p.late_fee_charged = false
+          p.driver = false
+          p.number_plate = nil
+          p.driver_signature = false
+          p.driver_signature_date = nil
+          p.amount_paid = 0
+  
+          p.save(validate: false)
+        end
+      end
+  
+      desc 'Refresh Participants for new year'
+      task refresh_participants: %i[remove_non_attending_participants
+                                    update_remaining_participants]
+  
+      desc 'Clear all payments'
+      task destroy_payments: ['db:migrate'] do |_t|
+        puts "Deleting last year's payments..."
+        Payment.destroy_all
+      end
+  
+      desc 'Clear all participant sport entries'
+      task destroy_participants_sport_entries: ['environment'] do |_t|
+        puts "Deleting last year's sport entry participants..."
+            ParticipantsSportEntry.delete_all
+#            ActiveRecord::Base.connection.delete('DELETE FROM participants_sport_entries')
+      end
+  
+      desc 'Clear all sport entries'
+      task destroy_sport_entries: ['destroy_participants_sport_entries'] do |_t|
+        puts "Deleting last year's sport entries..."
+        SportEntry.destroy_all
+      end
+  
+      desc 'Clear all volunteers'
+      task destroy_volunteers: ['db:migrate'] do |_t|
+        puts "Deleting last year's volunteers..."
+        Volunteer.destroy_all
+      end
+  
+      desc 'Clear all lost property'
+      task destroy_lost_property: ['db:migrate'] do |_t|
+        puts "Deleting last year's lost property..."
+        LostItem.destroy_all
+      end
+  
+      desc 'Clear all ballot results'
+      task destroy_ballot_results: ['db:migrate'] do |_t|
+        puts "Deleting last year's ballot results..."
+        BallotResult.destroy_all
+      end
+  
+      desc 'Destroy all models that are transient between SYG years'
+      task destroy_transient_models: ['destroy_payments',
+                                      'destroy_sport_entries',
+                                      'destroy_volunteers',
+                                      'destroy_lost_property',
+                                      'destroy_ballot_results']
+  
+      desc 'Clear all audit trails'
+      task destroy_audit_trails: ['db:migrate'] do |_t|
+        puts 'Deleting old audit trails...'
+        AuditTrail.destroy_all
+      end
+  
+      desc 'Clean up logs'
+      task clear_logs: [:destroy_audit_trails,
+                        'log:clear']
+  
+      desc 'Reset settings to start of year state'
+      task reset_settings: ['db:migrate'] do |_t|
+        puts 'Resetting settings...'
+        Setting.all.each do |s|
+            s.group_registrations_closed = false
+            s.participant_registrations_closed = false
+            s.restricted_sports_allocated = false
+            s.indiv_draws_complete = false
+            s.team_draws_complete = false
+            s.syg_is_happening = false
+            s.syg_is_finished = false
+            s.updates_restricted = false
+            s.generate_stats = false
+            s.sports_loaded = false
+            s.volunteers_loaded = false
+            s.evening_sessions_final = false
+            s.early_bird = true
+    
+            s.save(validate: false)
+        end
+      end
+  
+      desc 'Roll State Youth Games models for a new year'
+      task roll: [:clear_logs,
+#                  'syg:deactivate_non_admin_users',
+#                  'syg:deactivate_participant_users',
+                  :refresh_groups,
+                  :refresh_participants,
+                  :update_sport_models,
+                  :destroy_transient_models,
+                  :reset_settings]
+    end
+
+# TODO: Clean up 'FREEHELPER' vouchers
+# TODO: Reset or delete users (groups_user?, participants_user?, roles_user?)
+# TODO: Delete all awards, incident_reports, sports_evaluations
+# TODO: Delete groups_grade_filters
+# TODO: Delete statistics more than x years old
+
+end
+  

@@ -37,3 +37,6 @@ yarn-debug.log*
 
 # Ignore test coverage output
 /coverage
+
+# Ignore downloaded dump files
+/db/data/*.dump
