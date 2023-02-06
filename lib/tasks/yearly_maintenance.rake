@@ -19,10 +19,11 @@ namespace :syg do
       task update_sport_sections: ['db:migrate'] do |_t|
         puts 'Updating sport sections...'
         Section.all.each do |s|
-          s.draw_file.purge if s.draw_file.attached?
           s.number_in_draw = nil
   
           s.save(validate: false)
+
+#          s.draw_file.purge if s.draw_file.attached?
         end
       end
   
@@ -46,18 +47,19 @@ namespace :syg do
       task update_groups: ['db:migrate'] do |_t|
         puts 'Updating groups...'
         Group.all.each do |g|
-          g.last_year = g.coming
-          g.coming = false
-          g.new_group = false
-          g.late_fees = 0
-          g.allocation_bonus = 0
-          g.years_attended = 0
-          g.status = 'Stale'
+            puts "--> #{g.abbr}"
+            g.last_year = g.coming
+            g.coming = g.admin_use
+            g.new_group = false
+            g.late_fees = 0
+            g.allocation_bonus = 0
+            g.years_attended = 0
+            g.status = 'Stale'
+    
+            g.save(validate: false)
 
-          g.booklet_file.purge if g.booklet_file.attached?
-          g.results_file.purge if g.results_file.attached?
-  
-          g.save(validate: false)
+#            g.booklet_file.purge if g.booklet_file.attached?
+#            g.results_file.purge if g.results_file.attached?
         end
       end
   
@@ -65,7 +67,7 @@ namespace :syg do
       task update_event_details: ['db:migrate'] do |_t|
         puts 'Updating group event details...'
         EventDetail.all.each do |g|
-            g.estimated_numbers = g.participants.playing_sport.count
+            g.estimated_numbers = g.group.participants.playing_sport.count
             g.fire_pit = false
             g.camping_rqmts = nil
             g.tents = nil
@@ -93,7 +95,7 @@ namespace :syg do
             g.approve_option = "Normal"
             g.indiv_sport_view_strategy = "Show all"
             g.team_sport_view_strategy = "Show all"
-            g.payment_instructions = nil
+            g.participant_instructions = nil
             g.extra_fee_total = 0.0
             g.extra_fee_per_day = 0.0
             g.show_finance_in_mysyg = true
@@ -131,11 +133,11 @@ namespace :syg do
       end
   
       desc 'Refresh Groups for new year'
-      task refresh_groups: %i[destroy_group_extras
-                              update_groups,
-                              update_event_details,
-                              update_mysyg_settings.
-                              update_rego_checklists]
+      task refresh_groups: [:destroy_group_extras,
+                            :update_groups,
+                            :update_event_details,
+                            :update_mysyg_settings,
+                            :update_rego_checklists]
   
       desc 'Clear all sport preferences'
       task destroy_sport_preferences: ['db:migrate'] do |_t|
@@ -239,12 +241,39 @@ namespace :syg do
         BallotResult.destroy_all
       end
   
+      desc 'Clear all awards'
+      task destroy_awards: ['db:migrate'] do |_t|
+        puts "Deleting last year's award nominations..."
+        Award.destroy_all
+      end
+  
+      desc 'Clear all sports evaluations'
+      task destroy_sports_evaluations: ['db:migrate'] do |_t|
+        puts "Deleting last year's sports evaluations..."
+        SportsEvaluation.destroy_all
+      end
+  
+      desc 'Clear all incident reports'
+      task destroy_incident_reports: ['db:migrate'] do |_t|
+        puts "Deleting last year's incident reports..."
+        IncidentReport.destroy_all
+      end
+  
+      desc 'Clear all groups grades filters'
+      task destroy_groups_grades_filters: ['db:migrate'] do |_t|
+        puts "Deleting last year's group / grade filters..."
+        GroupsGradesFilter.destroy_all
+      end
+
       desc 'Destroy all models that are transient between SYG years'
       task destroy_transient_models: ['destroy_payments',
                                       'destroy_sport_entries',
                                       'destroy_volunteers',
                                       'destroy_lost_property',
-                                      'destroy_ballot_results']
+                                      'destroy_ballot_results',
+                                      'destroy_awards',
+                                      'destroy_sports_evaluations',
+                                      'destroy_incident_reports']
   
       desc 'Clear all audit trails'
       task destroy_audit_trails: ['db:migrate'] do |_t|
@@ -280,7 +309,6 @@ namespace :syg do
   
       desc 'Roll State Youth Games models for a new year'
       task roll: [:clear_logs,
-#                  'syg:deactivate_non_admin_users',
 #                  'syg:deactivate_participant_users',
                   :refresh_groups,
                   :refresh_participants,
@@ -291,9 +319,8 @@ namespace :syg do
 
 # TODO: Clean up 'FREEHELPER' vouchers
 # TODO: Reset or delete users (groups_user?, participants_user?, roles_user?)
-# TODO: Delete all awards, incident_reports, sports_evaluations
-# TODO: Delete groups_grade_filters
 # TODO: Delete statistics more than x years old
+# TODO: Handle purge-or-detach with Active::Storage on Prod and Development environments
 
 end
   
