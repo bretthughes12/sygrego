@@ -47,7 +47,7 @@ class LostItem < ApplicationRecord
       claimed_item.validates :email,        presence: true
     end
   
-    has_one_attached :photo, dependent: :detach
+    has_one_attached :photo 
 
     searchable_by :category, :description
 end
