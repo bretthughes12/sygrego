@@ -30,7 +30,19 @@ namespace :syg do
     
                 s.save(validate: false)
 
-                if s.draw_file.attached? && Rails.env == :production
+                if s.draw_file.attached? && Rails.env.production?
+                    s.draw_file.purge 
+                    puts '--  draw file purged'
+                end
+            end
+        end
+    
+        desc 'Delete old sport draws'
+        task delete_sport_draws: ['db:migrate'] do |_t|
+            puts 'Deleting sport draws...'
+            Section.all.each do |s|
+                puts "--> #{s.name}"
+                if s.draw_file.attached? && Rails.env.production?
                     s.draw_file.purge 
                     puts '--  draw file purged'
                 end
@@ -68,11 +80,27 @@ namespace :syg do
         
                 g.save(validate: false)
 
-                if g.booklet_file.attached? && Rails.env == :production
+                if g.booklet_file.attached? && Rails.env.production?
                     g.booklet_file.purge
                     puts '--  booklet purged'
                 end
-                if g.results_file.attached? && Rails.env == :production
+                if g.results_file.attached? && Rails.env.production?
+                    g.results_file.purge 
+                    puts '--  results purged'
+                end
+            end
+        end
+    
+        desc 'Delete group attachments'
+        task delete_group_attachments: ['db:migrate'] do |_t|
+            puts 'Deleting group attachments...'
+            Group.all.each do |g|
+                puts "--> #{g.abbr}"
+                if g.booklet_file.attached? && Rails.env.production?
+                    g.booklet_file.purge
+                    puts '--  booklet purged'
+                end
+                if g.results_file.attached? && Rails.env.production?
                     g.results_file.purge 
                     puts '--  results purged'
                 end
@@ -101,15 +129,35 @@ namespace :syg do
     
                 g.save(validate: false)
 
-                if g.food_cert.attached? && Rails.env == :production
+                if g.food_cert.attached? && Rails.env.production?
                     g.food_cert.purge
                     puts '--  food cert purged'
                 end
-                if g.covid_plan.attached? && Rails.env == :production
+                if g.covid_plan.attached? && Rails.env.production?
                     g.covid_plan.purge 
                     puts '--  covid plan purged'
                 end
-                if g.insurance.attached? && Rails.env == :production
+                if g.insurance.attached? && Rails.env.production?
+                    g.insurance.purge 
+                    puts '--  insurance purged'
+                end
+            end
+        end
+    
+        desc 'Delete group event detail attachments'
+        task delete_event_detail_attachments: ['db:migrate'] do |_t|
+            puts 'Deleting group event detail attachments...'
+            EventDetail.all.each do |g|
+                puts "--> #{g.group.abbr}"
+                if g.food_cert.attached? && Rails.env.production?
+                    g.food_cert.purge
+                    puts '--  food cert purged'
+                end
+                if g.covid_plan.attached? && Rails.env.production?
+                    g.covid_plan.purge 
+                    puts '--  covid plan purged'
+                end
+                if g.insurance.attached? && Rails.env.production?
                     g.insurance.purge 
                     puts '--  insurance purged'
                 end
@@ -278,7 +326,7 @@ namespace :syg do
             LostItem.all.each do |i|
                 puts "--> #{i.description}"
 
-                if i.photo.attached? && Rails.env == :production
+                if i.photo.attached? && Rails.env.production?
                     i.photo.purge
                     puts "-->  photo purged"
                 end
@@ -374,9 +422,13 @@ namespace :syg do
                     :update_sport_models,
                     :destroy_transient_models,
                     :reset_settings]
+
+        desc 'Clean up old attachments'
+        task delete_attachments: [:delete_sport_draws,
+                    :delete_group_attachments,
+                    :delete_event_detail_attachments]
     end
 
-    # TODO: Reset or delete users (groups_user?, participants_user?, roles_user?)
     # TODO: Delete statistics more than x years old
 end
   
