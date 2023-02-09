@@ -83,6 +83,7 @@ namespace :syg do
         task update_event_details: ['db:migrate'] do |_t|
             puts 'Updating group event details...'
             EventDetail.all.each do |g|
+                puts "--> #{g.group.abbr}"
                 g.estimated_numbers = g.group.participants.playing_sport.count
                 g.fire_pit = false
                 g.camping_rqmts = nil
@@ -99,6 +100,19 @@ namespace :syg do
                 g.warden_zone_id = nil
     
                 g.save(validate: false)
+
+                if g.food_cert.attached? && Rails.env == :production
+                    g.food_cert.purge
+                    puts '--  food cert purged'
+                end
+                if g.covid_plan.attached? && Rails.env == :production
+                    g.covid_plan.purge 
+                    puts '--  covid plan purged'
+                end
+                if g.insurance.attached? && Rails.env == :production
+                    g.insurance.purge 
+                    puts '--  insurance purged'
+                end
             end
         end
     
@@ -107,7 +121,7 @@ namespace :syg do
             puts 'Updating group mysyg settings...'
             MysygSetting.all.each do |g|
                 g.mysyg_enabled = APP_CONFIG[:mysyg_default_enabled]
-                g.mysyg_open = false
+                g.mysyg_open = g.group.admin_use
                 g.approve_option = "Normal"
                 g.indiv_sport_view_strategy = "Show all"
                 g.team_sport_view_strategy = "Show all"
@@ -210,7 +224,7 @@ namespace :syg do
                 p.number_plate = nil
                 p.driver_signature = false
                 p.driver_signature_date = nil
-                p.amount_paid = 0stroy
+                p.amount_paid = 0
         
                 p.save(validate: false)
             end
@@ -306,7 +320,6 @@ namespace :syg do
         desc 'Destroy all models that are transient between SYG years'
         task destroy_transient_models: ['destroy_payments',
                                         'destroy_sport_entries',
-#                                        'destroy_volunteers',
                                         'destroy_lost_property',
                                         'destroy_ballot_results',
                                         'destroy_awards',
@@ -327,8 +340,8 @@ namespace :syg do
         task reset_settings: ['db:migrate'] do |_t|
             puts 'Resetting settings...'
             Setting.all.each do |s|
-                s.group_registrations_closed = false
-                s.participant_registrations_closed = false
+                s.group_registrations_closed = true
+                s.participant_registrations_closed = true
                 s.restricted_sports_allocated = false
                 s.indiv_draws_complete = false
                 s.team_draws_complete = false
@@ -345,9 +358,17 @@ namespace :syg do
             end
         end
     
+        desc 'Clean up all non-admin users'
+        task clean_up_users: ['db:migrate'] do |_t|
+            puts "Cleaning up non-admin users..."
+            User.all.each do |u|
+                u.destroy unless u.role?(:admin)
+            end
+        end
+    
         desc 'Roll State Youth Games models for a new year'
         task roll: [:clear_logs,
-    #                'syg:deactivate_participant_users',
+                    :clean_up_users,
                     :refresh_groups,
                     :refresh_participants,
                     :update_sport_models,
