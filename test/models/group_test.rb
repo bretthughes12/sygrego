@@ -332,29 +332,6 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal 8, group.helpers_allowed
   end
 
-  test "should calculate the helper rebate" do
-    group = FactoryBot.create(:group)
-    FactoryBot.create(:event_detail, group: group)
-    80.times do
-      FactoryBot.create(:participant, 
-        group: group,
-        spectator: false,
-        status: 'Accepted',
-        coming: true)
-    end
-    8.times do
-      FactoryBot.create(:participant, 
-        group: group,
-        spectator: true,
-        helper: true,
-        status: 'Accepted',
-        coming: true)
-    end
-
-    group.reload
-    assert_equal 180, group.helper_rebate
-  end
-
   test "should aggregate church reps" do
     cr_role = FactoryBot.create(:role, "church_rep")
     cr1 = FactoryBot.create(:user)

@@ -652,12 +652,6 @@ class Group < ApplicationRecord
         6
       end
     end
-  
-    def helper_rebate
-      helper_fees = helpers.collect(&:fee)
-  
-      helper_fees.sort.last(free_helpers).sum(0)
-    end
 
     def update_team_numbers(grade)
       entries = cached_sport_entries.where(['grade_id = ?', grade.id])
