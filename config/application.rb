@@ -4,7 +4,11 @@ raw_config = File.read(File.expand_path("../app_config.yml", __FILE__))
 
 require "rails/all"
 
-APP_CONFIG = YAML.load(raw_config)[Rails.env].symbolize_keys
+begin
+  APP_CONFIG = YAML.load(raw_config, aliases: true)[Rails.env].symbolize_keys
+rescue ArgumentError
+  APP_CONFIG = YAML.load(raw_config)[Rails.env].symbolize_keys
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
