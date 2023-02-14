@@ -71,9 +71,11 @@ group :development do
   gem 'letter_opener'
 end
 
+# Adds support for Capybara system testing and selenium driver
+# including outside :test group due to deploy issues to Heroku
+gem 'capybara', '>= 3.26'
+
 group :test do
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
