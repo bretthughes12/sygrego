@@ -76,7 +76,6 @@ class Admin::MysygSettingsController < ApplicationController
     def mysyg_setting_params
       params.require(:mysyg_setting).permit(:mysyg_enabled, 
                                     :mysyg_open,
-                                    :participant_instructions,
                                     :instructions,
                                     :extra_fee_total,
                                     :extra_fee_per_day,
