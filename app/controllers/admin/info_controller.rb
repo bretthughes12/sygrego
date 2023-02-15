@@ -29,8 +29,25 @@ class Admin::InfoController < ApplicationController
 
         @tech_stats << { type: "AuditTrail", 
                          low: "-",
-                         high: AuditTrail.order(:id).last.id }    
+                         high: AuditTrail.order(:id).last.id,
+                         count: AuditTrail.count }    
 
+        @other_stats = []
+
+        @other_stats << model_stats(User)    
+        @other_stats << model_stats(MysygSetting)    
+        @other_stats << model_stats(RegoChecklist)    
+        @other_stats << model_stats(Voucher)    
+        @other_stats << model_stats(Payment)    
+        @other_stats << model_stats(GroupsGradesFilter)    
+        @other_stats << model_stats(SportPreference)    
+        @other_stats << model_stats(GroupExtra)    
+        @other_stats << model_stats(ParticipantExtra)    
+        @other_stats << model_stats(Award)    
+        @other_stats << model_stats(IncidentReport)    
+        @other_stats << model_stats(SportsEvaluation)    
+        @other_stats << model_stats(LostItem)    
+                 
         @queue_stats = []
 
         @queue_stats << { type: "Jobs Queued", 
@@ -71,6 +88,7 @@ class Admin::InfoController < ApplicationController
     def model_stats(model)
         { type: model.name,
           low: model.count > 0 ? model.order(:id).minimum(:id) : 0,
-          high: model.count > 0 ? model.order(:id).maximum(:id) : 0 }
+          high: model.count > 0 ? model.order(:id).maximum(:id) : 0,
+          count: model.count }
     end
 end
