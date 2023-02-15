@@ -62,7 +62,8 @@
 	<%= f.input :show_finance_in_mysyg, 
 				label: "Show Finance Information in MySYG" %>
 	<%= f.hint  "untick this box if you do not want your participants to see any information about Finances when they log in to your MySYG site." %>
-	<%= f.input :participant_instructions, 
+	<%= f.input :instructions, as: :rich_text_area,
+				label: "Participant instructions",
 				hint: "your participants will see this on their Finances page when they log on. Example: 'Make cheques payable to Springfield Church of Christ'" %>
 	<%= f.input :extra_fee_total, 
 				label: "Additional Costs (full weekend)", 

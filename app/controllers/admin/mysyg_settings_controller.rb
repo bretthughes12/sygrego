@@ -77,6 +77,7 @@ class Admin::MysygSettingsController < ApplicationController
       params.require(:mysyg_setting).permit(:mysyg_enabled, 
                                     :mysyg_open,
                                     :participant_instructions,
+                                    :instructions,
                                     :extra_fee_total,
                                     :extra_fee_per_day,
                                     :show_sports_in_mysyg,

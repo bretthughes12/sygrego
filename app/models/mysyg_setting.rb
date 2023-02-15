@@ -37,6 +37,8 @@ class MysygSetting < ApplicationRecord
   
     belongs_to :group
 
+    has_rich_text :instructions
+
     APPROVAL_OPTIONS = %w[Tolerant
         Normal
         Strict].freeze

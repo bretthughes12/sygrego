@@ -63,6 +63,7 @@ class Gc::MysygSettingsController < ApplicationController
     def mysyg_setting_params
       params.require(:mysyg_setting).permit(:mysyg_open,
         :participant_instructions,
+        :instructions,
         :extra_fee_total,
         :extra_fee_per_day,
         :show_sports_in_mysyg,
