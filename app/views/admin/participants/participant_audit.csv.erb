@@ -3,7 +3,7 @@
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @participants.each do |participant|
-  	line = [ participant.group.abbr,
+  	line = [ participant.group.short_name,
   		     participant.coming,
 			 participant.surname,
   		     participant.first_name,
