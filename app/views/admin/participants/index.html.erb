@@ -6,6 +6,22 @@
 <%= yield(:search_box)%>
 <%= will_paginate @participants, :container => false %>
 
+<%= link_to "New participant", new_admin_participant_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_participants_path,
+                  class: danger_button_class,
+                  role: "button" %>
+<%= link_to "Ticket Download", ticket_download_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Audit", participant_audit_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
 <br/>
 
 <table class="table table-dark">
@@ -29,9 +45,12 @@
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_participants_path,
-                  class: primary_button_class,
+                  class: danger_button_class,
                   role: "button" %>
 <%= link_to "Ticket Download", ticket_download_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Audit", participant_audit_admin_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
 

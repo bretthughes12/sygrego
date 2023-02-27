@@ -256,12 +256,13 @@ class Participant < ApplicationRecord
     end
 
     def chargeable_days
-      return 3 if self.rego_type == "Full Time"
-      d = 0
-      [:coming_saturday, :coming_sunday].each do |b|
-        d += 1 if self.send(b) == true
-      end
-      d
+      days
+#      return 3 if self.rego_type == "Full Time"
+#      d = 0
+#      [:coming_saturday, :coming_sunday].each do |b|
+#        d += 1 if self.send(b) == true
+#      end
+#      d
     end
 
     def fee

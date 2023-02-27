@@ -221,6 +221,7 @@ Rails.application.routes.draw do
         post :import
         get :search
         get :ticket_download
+        get :participant_audit
         get :wwccs
         get :day_visitors
         get :new_day_visitor

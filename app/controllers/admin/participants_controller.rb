@@ -50,6 +50,16 @@ class Admin::ParticipantsController < ApplicationController
     end
   end
 
+  # GET /admin/participants/participant_audit
+  def participant_audit
+    @participants = Participant.coming.accepted.
+      order('surname, first_name').load
+
+    respond_to do |format|
+      format.csv  { render_csv "syg_participants", "participant_audit" }
+    end
+  end
+
   # GET /admin/participants/day_visitors
   def day_visitors
     @group = Group.find_by_abbr('DAY')

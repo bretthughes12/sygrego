@@ -1,0 +1,19 @@
+<%- headings = %w{Group Coming Surname FirstName Age   
+	              Gender Category Voucher #Days Cost } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @participants.each do |participant|
+  	line = [ participant.group.abbr,
+  		     participant.coming,
+			 participant.surname,
+  		     participant.first_name,
+  		     participant.age,
+  		     participant.gender,
+  		     participant.category,
+			 participant.voucher_code,
+			 participant.chargeable_days,
+			 participant.fee
+		   ]
+    csv << line
+  end
+end.html_safe %>
