@@ -44,6 +44,15 @@ class Admin::EventDetailsController < ApplicationController
       end
     end
 
+    # GET /admin/event_details
+    def orientation_details
+      @event_details = EventDetail.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+  
+      respond_to do |format|
+        format.html # orientation_details.html.erb
+      end
+    end
+
     # GET /admin/event_details/1
     def show
     end
@@ -81,6 +90,20 @@ class Admin::EventDetailsController < ApplicationController
         else
           format.html { render action: "edit" }
         end
+      end
+    end
+  
+    # PATCH /admin/event_details/update_multiple_orientations
+    def update_multiple_orientations
+      params[:event_details].keys.each do |id|
+        event_detail = EventDetail.find(id.to_i)
+        event_detail.updated_by = current_user.id
+        event_detail.update(event_details_orientation_params(id))
+      end
+      flash[:notice] = "Details updated"
+
+      respond_to do |format|
+        format.html { redirect_to orientation_details_admin_event_details_path }
       end
     end
   
@@ -137,6 +160,7 @@ class Admin::EventDetailsController < ApplicationController
                                     :service_pref_sun,
                                     :estimated_numbers,
                                     :number_of_vehicles,
+                                    :orientation_details,
                                     :food_cert,
                                     :warden_zone_id
                                 )
@@ -146,5 +170,11 @@ class Admin::EventDetailsController < ApplicationController
       params.require(:event_detail).permit(
                                     :warden_zone_id
                                 )
+    end
+  
+    def event_details_orientation_params(id)
+      params.require(:event_details)
+            .fetch(id)
+            .permit(:orientation_details)
     end
 end

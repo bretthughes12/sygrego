@@ -1,0 +1,16 @@
+<%= fields_for "event_details[]", event_detail do |f| %>
+<tr valign="top" class="<%= group_display_class(event_detail.group) %>">
+	<td> 
+		<%= h(event_detail.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= event_detail.group.short_name %>
+	</td>
+	
+	<td> 
+		<%= f.hidden_field :id %>
+		<%= f.text_field :orientation_details %> 
+	</td>
+</tr>
+<% end %>

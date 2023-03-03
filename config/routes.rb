@@ -193,6 +193,8 @@ Rails.application.routes.draw do
         get :search
         get :uploads
         get :warden_zones
+        get :orientation_details
+        patch :update_multiple_orientations
       end
     end
     resources :mysyg_settings, only: [:index, :show, :edit, :update] do

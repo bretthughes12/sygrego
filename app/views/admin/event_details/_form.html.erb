@@ -1,6 +1,7 @@
 <%= simple_form_for(@event_detail, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
+	<%= f.input :orientation_details %>
 	<%= f.input :onsite, label: "Staying onsite at Lardner Park" %>
 	<%= f.input :warden_zone_id, as: :select, label: "Warden Zone", collection: WardenZone.order(:zone).load, include_blank: true %>
 	<%= f.input :estimated_numbers %>
