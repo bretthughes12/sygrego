@@ -179,6 +179,7 @@ class Participant < ApplicationRecord
     before_validation :validate_eligibility_for_team_helper
     before_validation :validate_eligibility_for_group_coordinator
     before_validation :validate_years_attended
+    before_validation :validate_days_if_coming
     before_validation :validate_emergency_contact_details_if_under_18
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -765,6 +766,15 @@ class Participant < ApplicationRecord
   end
 
 private
+  def validate_days_if_coming
+    if coming
+      d = 0
+      [:coming_friday, :coming_saturday, :coming_sunday, :coming_monday].each do |b|
+        d += 1 if self.send(b) == true
+      end
+      errors.add(:coming, "at least one day must be selected if coming") if d == 0
+    end
+  end
 
   def validate_emergency_contact_details_if_under_18
     if age && age.to_i < 18
