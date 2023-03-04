@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  address                :string(200)
 #  age                    :integer          default(30), not null
+#  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
@@ -159,6 +160,8 @@ class Participant < ApplicationRecord
     validates :medical_info,           
         length: { maximum: 255 }
     validates :medications,            
+        length: { maximum: 255 }
+    validates :allergies,            
         length: { maximum: 255 }
     validates :years_attended,         
         numericality: { only_integer: true },
@@ -600,6 +603,7 @@ class Participant < ApplicationRecord
               participant.emergency_relationship  = fields[34]
               participant.emergency_phone_number  = fields[35]
               participant.wwcc_number             = fields[36]
+              participant.allergies               = fields[38]
               participant.updated_by = user.id
 
               if participant.save
@@ -647,6 +651,7 @@ class Participant < ApplicationRecord
                  emergency_relationship:  fields[34],
                  emergency_phone_number:  fields[35],
                  wwcc_number:             fields[36],
+                 allergies:               fields[38],
                  updated_by:              user.id)
 
               if participant.errors.empty?
@@ -669,10 +674,10 @@ class Participant < ApplicationRecord
 
     CSV.foreach(file.path, headers: true) do |fields|
         participant = Participant.where(first_name: fields[0], surname: fields[1], group_id: group.id).first
-        if fields[19].nil? || fields[19] == '0'
+        if fields[20].nil? || fields[20] == '0'
           years_attended = nil
         else
-          years_attended = fields[19].to_i
+          years_attended = fields[20].to_i
         end
       
         if participant
@@ -693,18 +698,19 @@ class Participant < ApplicationRecord
             participant.medicare_number         = fields[16]
             participant.medical_info            = fields[17]
             participant.medications             = fields[18]
+            participant.allergies               = fields[19]
             participant.years_attended          = years_attended
-            participant.spectator               = fields[20]
-            participant.onsite                  = fields[21]
-            participant.helper                  = fields[22]
-            participant.group_coord             = fields[23]
-            participant.driver                  = fields[24]
-            participant.number_plate            = fields[25]
-            participant.dietary_requirements    = fields[26]
-            participant.emergency_contact       = fields[27]
-            participant.emergency_relationship  = fields[28]
-            participant.emergency_phone_number  = fields[29]
-            participant.wwcc_number             = fields[30]
+            participant.spectator               = fields[21]
+            participant.onsite                  = fields[22]
+            participant.helper                  = fields[23]
+            participant.group_coord             = fields[24]
+            participant.driver                  = fields[25]
+            participant.number_plate            = fields[26]
+            participant.dietary_requirements    = fields[27]
+            participant.emergency_contact       = fields[28]
+            participant.emergency_relationship  = fields[29]
+            participant.emergency_phone_number  = fields[30]
+            participant.wwcc_number             = fields[31]
             participant.updated_by = user.id
 
             if participant.save
@@ -735,18 +741,19 @@ class Participant < ApplicationRecord
                medicare_number:         fields[16],
                medical_info:            fields[17],
                medications:             fields[18],
+               allergies:               fields[19],
                years_attended:          years_attended,
-               spectator:               fields[20],
-               onsite:                  fields[21],
-               helper:                  fields[22],
-               group_coord:             fields[23],
-               driver:                  fields[24],
-               number_plate:            fields[25],
-               dietary_requirements:    fields[26],
-               emergency_contact:       fields[27],
-               emergency_relationship:  fields[28],
-               emergency_phone_number:  fields[29],
-               wwcc_number:             fields[30],
+               spectator:               fields[21],
+               onsite:                  fields[22],
+               helper:                  fields[23],
+               group_coord:             fields[24],
+               driver:                  fields[25],
+               number_plate:            fields[26],
+               dietary_requirements:    fields[27],
+               emergency_contact:       fields[28],
+               emergency_relationship:  fields[29],
+               emergency_phone_number:  fields[30],
+               wwcc_number:             fields[31],
                updated_by:              user.id)
 
             if participant.errors.empty?

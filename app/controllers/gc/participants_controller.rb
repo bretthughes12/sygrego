@@ -395,6 +395,7 @@ class Gc::ParticipantsController < ApplicationController
         :medicare_number,
         :medical_info,
         :medications,
+        :allergies,
         :years_attended,
         :email,
         :spectator,

@@ -115,6 +115,7 @@ class Mysyg::ParticipantsController < MysygController
         :medicare_number,
         :medical_info,
         :medications,
+        :allergies,
         :years_attended,
         :email,
         :spectator,

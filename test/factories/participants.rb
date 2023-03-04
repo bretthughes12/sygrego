@@ -5,6 +5,7 @@
 #  id                     :bigint           not null, primary key
 #  address                :string(200)
 #  age                    :integer          default(30), not null
+#  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
