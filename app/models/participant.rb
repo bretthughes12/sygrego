@@ -152,6 +152,7 @@ class Participant < ApplicationRecord
     validates :mobile_phone_number,    
         length: { maximum: 20 }
     validates :email,                  
+        presence: true,
         length: { maximum: 100 }
     validates :email,                  
         format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
