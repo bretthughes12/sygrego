@@ -29,7 +29,7 @@
 	<%= f.input :postcode %>
 	<%= f.input :phone_number, label: "Home phone number"  %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
-	<%= f.input :email, hint: "enter an email address if you would like to receive updates and urgent messages from the SYG Admin team in the lead up to the SYG weekend" %>
+	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
 
 	<h2>Medical</h2>
 
@@ -41,7 +41,7 @@
 
 	<h2>Login details (if different from the above)</h2>
 
-	<%= f.input :login_email, hint: "if provided, this is the email your event ticket will be sent to. Otherwise, it will be sent to the email above" %>
+	<%= f.input :login_email, hint: "this may be different to the above. This is the email yuou should use to log back om with" %>
 	<%= f.input :login_name %>
 
 	<br/>

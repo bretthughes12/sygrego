@@ -103,12 +103,14 @@ class ParticipantSignup
     validates :password,               confirmation: true,
                                        length: { within: 5..40 },
                                        allow_nil: true
-    validates :email,                  length: { maximum: 100 },
+    validates :email,                  presence: true,
+                                       length: { maximum: 100 },
                                        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
                                        allow_blank: true,
                                        unless: proc { |o| o.email.blank? },
                                        message: 'invalid format' }
-    validates :login_email,            length: { maximum: 100 },
+    validates :login_email,            presence: true,
+                                       length: { maximum: 100 },
                                        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
                                        allow_blank: true,
                                        unless: proc { |o| o.login_email.blank? },
