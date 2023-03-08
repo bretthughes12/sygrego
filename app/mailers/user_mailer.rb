@@ -57,10 +57,11 @@ class UserMailer < ActionMailer::Base
     def new_participant(user, participant)
         @user = user
         @participant = participant
+        @group = @participant.group
         notifies = @participant.group.email_recipients
     
         mail(to:      notifies,
-             subject: "#{APP_CONFIG[:email_subject]} New participant details: #{participant.first_name} #{participant.surname}") 
+             subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
     end
     
     private
