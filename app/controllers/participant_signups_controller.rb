@@ -43,8 +43,9 @@ class ParticipantSignupsController < ApplicationController
         if @participant_signup.save
           @user = @participant_signup.user 
 
+          UserMailer.welcome_participant(@user, @participant).deliver_now
+
           if @participant.status == "Requiring Approval"
-            UserMailer.welcome_participant(@user, @participant).deliver_now
             flash[:notice] = "Thank you for registering for State Youth Games. Check your email for instructions for what comes next."
             format.html do 
               if group_name.nil? || group_name == ""
