@@ -36,9 +36,11 @@ class ParticipantSignup
                   :medical_info,
                   :medications,
                   :dietary_requirements,
+                  :allergies,
                   :emergency_contact,
                   :emergency_relationship,
                   :emergency_phone_number,
+                  :emergency_email,
                   :driver,
                   :number_plate,
                   :driver_signature,
@@ -80,9 +82,11 @@ class ParticipantSignup
       :medical_info,
       :medications,
       :dietary_requirements,
+      :allergies,
       :emergency_contact,
       :emergency_relationship,
       :emergency_phone_number,
+      :emergency_email,
       :driver,
       :number_plate,
       :driver_signature
@@ -144,7 +148,10 @@ class ParticipantSignup
     validates :medications,            length: { maximum: 255 }
     validates :years_attended,         numericality: { only_integer: true },
                                        allow_blank: true
-    validates :dietary_requirements,   length: { maximum: 255 }
+    validates :dietary_requirements,   presence: true,
+                                       length: { maximum: 255 }
+    validates :allergies,              presence: true,
+                                       length: { maximum: 255 }
     validates :emergency_contact,      length: { maximum: 40 }
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
@@ -241,6 +248,7 @@ class ParticipantSignup
         errors.add(:emergency_contact, "can't be blank for under 18's") if emergency_contact.blank?
         errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
         errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
+        errors.add(:emergency_email, "can't be blank for under 18's") if emergency_email.blank?
       end
     end
   

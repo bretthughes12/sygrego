@@ -7,6 +7,7 @@
 #  age                    :integer          default(30), not null
 #  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
+#  camping_preferences    :string(100)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
 #  coming_monday          :boolean          default(TRUE)
@@ -20,6 +21,7 @@
 #  early_bird             :boolean          default(FALSE)
 #  email                  :string(100)
 #  emergency_contact      :string(40)
+#  emergency_email        :string(100)
 #  emergency_phone_number :string(20)
 #  emergency_relationship :string(20)
 #  fee_when_withdrawn     :decimal(8, 2)    default(0.0)
@@ -88,12 +90,15 @@ FactoryBot.define do
     postcode              {"3333"}
     email                 {"blah@blah.com"}
     phone_number          {"9555-5555"}
+    dietary_requirements  {"None"}
+    allergies             {"None"}
 
     trait :under18 do
       age                 {"17"}
       emergency_contact   {"Mother Theresa"}
       emergency_relationship {"Mother"}
       emergency_phone_number {"9777-7777"}
+      emergency_email     {"mother@theresa.com"}
     end
   end
 end

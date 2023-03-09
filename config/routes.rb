@@ -426,6 +426,7 @@ Rails.application.routes.draw do
         get :vaccinations
         get :group_fees
         get :sports_plan
+        get :camping_preferences
       end
       member do
         get :new_voucher
@@ -434,6 +435,7 @@ Rails.application.routes.draw do
         get :edit_vaccination
         get :edit_fees
         get :edit_sports
+        get :edit_camping_preferences
         post :add_voucher
         patch :delete_voucher
         patch :accept
@@ -443,6 +445,7 @@ Rails.application.routes.draw do
         patch :update_wwcc
         patch :update_vaccination
         patch :update_fees
+        patch :update_camping_preferences
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

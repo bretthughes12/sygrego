@@ -19,5 +19,7 @@ FactoryBot.define do
     sequence(:email)      { |n| "group#{n}email@email.com" }
     sequence(:login_email){ |n| "jack#{n}@smith.com" }
     sequence(:login_name) { |n| "Jack Smith #{n}" }
+    dietary_requirements  {"None"}
+    allergies             {"None"}
   end
 end

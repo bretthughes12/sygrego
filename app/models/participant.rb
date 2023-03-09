@@ -7,6 +7,7 @@
 #  age                    :integer          default(30), not null
 #  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
+#  camping_preferences    :string(100)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
 #  coming_monday          :boolean          default(TRUE)
@@ -20,6 +21,7 @@
 #  early_bird             :boolean          default(FALSE)
 #  email                  :string(100)
 #  emergency_contact      :string(40)
+#  emergency_email        :string(100)
 #  emergency_phone_number :string(20)
 #  emergency_relationship :string(20)
 #  fee_when_withdrawn     :decimal(8, 2)    default(0.0)
@@ -163,11 +165,13 @@ class Participant < ApplicationRecord
     validates :medications,            
         length: { maximum: 255 }
     validates :allergies,            
+        presence: true,
         length: { maximum: 255 }
     validates :years_attended,         
         numericality: { only_integer: true },
         allow_blank: true
     validates :dietary_requirements,   
+        presence: true,
         length: { maximum: 255 }
     validates :emergency_contact,      
         length: { maximum: 40 }
@@ -175,6 +179,14 @@ class Participant < ApplicationRecord
         length: { maximum: 20 }
     validates :emergency_phone_number, 
         length: { maximum: 20 }
+    validates :emergency_email,                  
+        length: { maximum: 100 }
+    validates :emergency_email,                  
+        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
+        allow_blank: true,
+        unless: proc { |o| o.emergency_email.blank? }
+    validates :camping_preferences, 
+        length: { maximum: 100 }
     validates :vaccination_document, 
         length: { maximum: 40 }
     validates :vaccination_sighted_by, 
@@ -605,6 +617,8 @@ class Participant < ApplicationRecord
               participant.emergency_phone_number  = fields[35]
               participant.wwcc_number             = fields[36]
               participant.allergies               = fields[38]
+              participant.emergency_email         = fields[39]
+              participant.camping_preferences     = fields[40]
               participant.updated_by = user.id
 
               if participant.save
@@ -653,6 +667,8 @@ class Participant < ApplicationRecord
                  emergency_phone_number:  fields[35],
                  wwcc_number:             fields[36],
                  allergies:               fields[38],
+                 emergency_email:         fields[39],
+                 camping_preferences:     fields[40],
                  updated_by:              user.id)
 
               if participant.errors.empty?
@@ -789,6 +805,7 @@ private
       errors.add(:emergency_contact, "can't be blank for under 18's") if emergency_contact.blank?
       errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
       errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
+      errors.add(:emergency_email, "can't be blank for under 18's") if emergency_email.blank?
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_04_094406) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_09_081136) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -343,6 +343,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_04_094406) do
     t.bigint "voucher_id"
     t.boolean "paid", default: false
     t.string "allergies", limit: 255
+    t.string "emergency_email", limit: 100
+    t.string "camping_preferences", limit: 100
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"

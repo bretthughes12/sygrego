@@ -1,0 +1,9 @@
+<tr valign="top" class="<%= participant_display_class(participant) %>">
+	<td> 
+        <%= link_to participant.name, edit_camping_preferences_gc_participant_path(participant) %>
+	</td>
+	
+	<td> 
+		<%= participant.camping_preferences %>
+	</td>
+</tr>

@@ -112,6 +112,19 @@ class Gc::ParticipantsController < ApplicationController
       end
     end
     
+    # GET /gc/participants/camping_preferences
+    def camping_preferences
+      @participants = @group.participants.accepted.coming.
+        order("first_name, surname").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+        format.csv  { render_csv "camping_preferences", "camping_preferences" }
+      end
+    end
+    
     # GET /gc/participants/1
     def show
       render layout: @current_role.name
@@ -146,6 +159,11 @@ class Gc::ParticipantsController < ApplicationController
   
     # GET /gc/participants/1/edit_fees
     def edit_fees
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/participants/1/edit_camping_preferences
+    def edit_camping_preferences
       render layout: @current_role.name
     end
   
@@ -241,6 +259,20 @@ class Gc::ParticipantsController < ApplicationController
           format.html { redirect_to group_fees_gc_participants_url }
         else
           format.html { render action: "edit_fees", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_camping_preferences
+    def update_camping_preferences
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_camping_preferences_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to camping_preferences_gc_participants_url }
+        else
+          format.html { render action: "edit_camping_preferences", layout: @current_role.name }
         end
       end
     end
@@ -408,7 +440,9 @@ class Gc::ParticipantsController < ApplicationController
         :emergency_contact,
         :emergency_relationship,
         :emergency_phone_number,
-        :amount_paid
+        :emergency_email,
+        :amount_paid,
+        :camping_preferences
       )
     end
 
@@ -440,6 +474,13 @@ class Gc::ParticipantsController < ApplicationController
       params.require(:participant).permit(
         :lock_version,
         :amount_paid
+      )
+    end
+  
+    def participant_camping_preferences_params
+      params.require(:participant).permit(
+        :lock_version,
+        :camping_preferences
       )
     end
   end

@@ -1,2 +1,2 @@
 FirstName,Surname,Coming,Age,Gender,Days,Address,Suburb,Postcode,Phone,Mobile,Email,Medicare,MedicalInfo,Medications,Allergies,YearsAttended,Spectator,Onsite,Helper,GC,Driver,NumberPlate,DietaryRqmts,EmergContact,EmergRel,EmergPhone,WWCC
-Amos,Burton,true,35,M,Full Time,true,true,true,true,123 Main St,Mordialloc,3195,+61434006439,"",amos@burton.com.au,"",,,,2,false,true,false,false,false,"","","","","",""
+Amos,Burton,true,35,M,Full Time,true,true,true,true,123 Main St,Mordialloc,3195,+61434006439,"",amos@burton.com.au,"",,,"None",2,false,true,false,false,false,"","None","","","","","",""

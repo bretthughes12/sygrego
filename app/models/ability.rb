@@ -51,7 +51,8 @@ class Ability
             :wwccs, 
             :vaccinations, 
             :group_fees,
-            :sports_plan], Participant
+            :sports_plan,
+            :camping_preferences], Participant
         can [:show, 
             :update, 
             :destroy, 
@@ -69,6 +70,8 @@ class Ability
             :update_vaccination,
             :edit_fees,
             :update_fees,
+            :edit_camping_preferences,
+            :update_camping_preferences,
             :edit_sports], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
@@ -153,7 +156,8 @@ class Ability
           :wwccs, 
           :vaccinations, 
           :group_fees,
-          :sports_plan], Participant
+          :sports_plan,
+          :camping_preferences], Participant
       can [:show, 
             :update, 
             :destroy, 
@@ -171,6 +175,8 @@ class Ability
             :update_vaccination,
             :edit_fees,
             :update_fees,
+            :edit_camping_preferences,
+            :update_camping_preferences,
             :edit_sports], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end

@@ -4,7 +4,7 @@
 	              Email Medicare MedicalInfo Medications Allergies YearsAttended
 				  Spectator Onsite Helper GC Driver NumberPlate
 				  DietaryRqmts EmergContact EmergRel EmergPhone 
-				  WWCC } -%>
+				  EmergEmail WWCC CampPrefs } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @participants.each do |participant|
@@ -39,7 +39,9 @@
 			 participant.emergency_contact,
 			 participant.emergency_relationship,
 			 participant.emergency_phone_number,
-			 participant.wwcc_number
+			 participant.emergency_email,
+			 participant.wwcc_number,
+			 participant.camping_preferences
 		   ]
     csv << line
   end

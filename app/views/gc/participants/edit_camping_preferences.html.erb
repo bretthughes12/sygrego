@@ -1,0 +1,13 @@
+<% title "Camping Preferences for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_camping_preferences", locals: { 
+                              url: update_camping_preferences_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", camping_preferences_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

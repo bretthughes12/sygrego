@@ -126,9 +126,11 @@ class Mysyg::ParticipantsController < MysygController
         :emergency_contact,
         :emergency_relationship,
         :emergency_phone_number,
+        :emergency_email,
         :wwcc_number,
         :driver_signature,
-        :driver_signature_date
+        :driver_signature_date,
+        :camping_preferences
       )
     end
     

@@ -1,0 +1,10 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :camping_preferences %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

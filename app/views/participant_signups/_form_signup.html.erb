@@ -33,9 +33,15 @@
 
 	<h2>Medical</h2>
 
+	<%= f.input :medicare_number %>
+	<%= f.input :medical_info, label: "Medical information" %>
+	<%= f.input :medications %>
+	<%= f.input :allergies %>
+	<%= f.input :dietary_requirements %>
 	<%= f.input :emergency_contact, label: "Emergency contact (required for participants under 18)" %>
 	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
 	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
+	<%= f.input :emergency_email, label: "Emergency contact email" %>
 
 	<br/>
 

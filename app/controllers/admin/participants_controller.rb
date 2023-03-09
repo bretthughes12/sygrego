@@ -128,6 +128,8 @@ class Admin::ParticipantsController < ApplicationController
     @participant.spectator = true
     @participant.onsite = false
     @participant.group = @group
+    @participant.dietary_requirements = "N/A"
+    @participant.allergies = "N/A"
 
     @participant.updated_by = current_user.id
 
@@ -314,11 +316,13 @@ private
       :emergency_contact,
       :emergency_relationship,
       :emergency_phone_number,
+      :emergency_email,
       :amount_paid,
       :status,
       :wwcc_number,
       :driver_signature,
-      :driver_signature_date
+      :driver_signature_date,
+      :camping_preferences
     )
   end
 

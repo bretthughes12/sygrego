@@ -166,6 +166,48 @@ namespace :syg do
     puts "Worked: #{worked}; Failed: #{failed}"
   end
 
+  desc 'Pre-populate required fields on participants'
+  task pre_populate_participant_fields: ['environment'] do |_t|
+    puts "Setting default values on required participant fields..."
+    changed_allergies = 0
+    changed_diet = 0
+    changed_emerg_email = 0
+    changed_email = 0
+    worked = 0
+    failed = 0
+
+    Participant.all.each do |p| 
+      if p.allergies.blank?
+        p.allergies = "None"
+        changed_allergies += 1
+      end
+
+      if p.dietary_requirements.blank?
+        p.dietary_requirements = "None"
+        changed_diet += 1
+      end
+
+      if p.email.blank?
+        p.email = "registrations@stateyouthgames.com"
+        changed_email += 1
+      end
+
+      if p.emergency_email.blank? && p.age < 18
+        p.emergency_email = "changeme@example.com"
+        changed_emerg_email += 1
+      end
+
+      if p.save 
+        worked += 1
+      else
+        failed += 1
+        puts "--> save failed for #{p.name_with_group_name}"
+      end
+    end
+    puts "Allergies: #{changed_allergies}; Diet: #{changed_diet}; Email: #{changed_email}; Emerg Email: #{changed_emerg_email}"
+    puts "Worked: #{worked}; Failed: #{failed}"
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',
