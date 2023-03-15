@@ -390,6 +390,9 @@ class GroupTest < ActiveSupport::TestCase
     group = FactoryBot.create(:group)
     fresh_user = FactoryBot.create(:user, status: 'Verified')
     stale_user = FactoryBot.create(:user, status: 'Stale')
+    gc_role = FactoryBot.create(:role, "gc")
+    fresh_user.roles << gc_role
+    stale_user.roles << gc_role
 
     group.users << fresh_user
     group.users << stale_user
@@ -401,6 +404,9 @@ class GroupTest < ActiveSupport::TestCase
     group = FactoryBot.create(:group)
     fresh_user = FactoryBot.create(:user, status: 'Verified')
     stale_user = FactoryBot.create(:user, status: 'Stale')
+    gc_role = FactoryBot.create(:role, "gc")
+    fresh_user.roles << gc_role
+    stale_user.roles << gc_role
 
     group.users << fresh_user
     group.users << stale_user
