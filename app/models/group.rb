@@ -259,7 +259,7 @@ class Group < ApplicationRecord
     end
 
     def email_recipients
-      active_users.collect(&:email)
+      gcs.collect(&:email)
     end
 
 #    def participant_users
