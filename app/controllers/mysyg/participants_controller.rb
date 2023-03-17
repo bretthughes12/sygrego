@@ -13,6 +13,10 @@ class Mysyg::ParticipantsController < MysygController
     def drivers
     end
   
+    # GET /mysyg/:group/notes
+    def notes
+    end
+  
     # PATCH /mysyg/:group/participants/1
     def update
       respond_to do |format|
@@ -39,6 +43,21 @@ class Mysyg::ParticipantsController < MysygController
           format.html do
             flash[:notice] = 'Update failed. See below for the reasons.'
             render action: "drivers"
+          end
+        end
+      end
+    end
+  
+    # PATCH /mysyg/:group/participants/1/update_notes
+    def update_notes
+      respond_to do |format|
+        if @participant.update(participant_notes_params)
+          flash[:notice] = 'Details successfully updated.'
+          format.html { redirect_to root_url(current_user) }
+        else
+          format.html do
+            flash[:notice] = 'Update failed. See below for the reasons.'
+            render action: "edit_notes"
           end
         end
       end
@@ -129,8 +148,7 @@ class Mysyg::ParticipantsController < MysygController
         :emergency_email,
         :wwcc_number,
         :driver_signature,
-        :driver_signature_date,
-        :camping_preferences
+        :driver_signature_date
       )
     end
     
@@ -140,6 +158,14 @@ class Mysyg::ParticipantsController < MysygController
         :driver,
         :number_plate,
         :driver_signature
+      )
+    end
+    
+    def participant_notes_params
+      params.require(:participant).permit( 
+        :lock_version,
+        :camping_preferences,
+        :sport_notes
       )
     end
 end

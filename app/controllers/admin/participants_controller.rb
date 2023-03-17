@@ -322,7 +322,8 @@ private
       :wwcc_number,
       :driver_signature,
       :driver_signature_date,
-      :camping_preferences
+      :camping_preferences,
+      :sport_notes
     )
   end
 

@@ -44,6 +44,7 @@
 #  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
+#  sport_notes            :string
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null

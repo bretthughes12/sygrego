@@ -1,0 +1,24 @@
+<% title "Participant sport notes" %>
+
+<h1><%= yield(:title) %></h1>
+    
+<% if !@participants.empty? %>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Sport Notes</th>
+            </tr>
+        </thead>
+
+        <%= render partial: 'participant_sport_notes', collection: @participants, as: :participant %>
+    </table>
+<% end %>
+
+<%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
+					{:name => "Spectator", :class => "table-warning"},
+					{:name => "Not Coming", :class => "table-dark"}] %>
+
+<%= link_to "Download", sport_notes_gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>

@@ -427,6 +427,7 @@ Rails.application.routes.draw do
         get :group_fees
         get :sports_plan
         get :camping_preferences
+        get :sport_notes
       end
       member do
         get :new_voucher
@@ -436,6 +437,7 @@ Rails.application.routes.draw do
         get :edit_fees
         get :edit_sports
         get :edit_camping_preferences
+        get :edit_sport_notes
         post :add_voucher
         patch :delete_voucher
         patch :accept
@@ -446,6 +448,7 @@ Rails.application.routes.draw do
         patch :update_vaccination
         patch :update_fees
         patch :update_camping_preferences
+        patch :update_sport_notes
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do
@@ -496,6 +499,7 @@ Rails.application.routes.draw do
       get '/home' => 'mysyg/info#home', :as => :home
       get '/details' => 'mysyg/participants#edit', :as => :details
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
+      get '/notes' => 'mysyg/participants#notes', as: :notes
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
       get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
       get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
@@ -511,9 +515,12 @@ Rails.application.routes.draw do
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
         member do
           get :new_voucher
+          get :edit_notes
+          get :drivers
           post :add_voucher
           patch :delete_voucher
           patch :update_drivers
+          patch :update_notes
         end
       end
       resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]

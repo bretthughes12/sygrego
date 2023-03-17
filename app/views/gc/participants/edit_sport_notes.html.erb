@@ -1,0 +1,13 @@
+<% title "Sport Notes for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_sport_notes", locals: { 
+                              url: update_sport_notes_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", sport_notes_gc_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

@@ -1,0 +1,10 @@
+<%- headings = %w{Name SportNotes } -%>
+<%= headings.join(',') %>
+<%= CSV.generate do |csv|
+  @participants.each do |participant|
+  	line = [ participant.name,
+      			 participant.sport_notes
+		   ]
+    csv << line
+  end
+end.html_safe %>

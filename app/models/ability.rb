@@ -52,7 +52,8 @@ class Ability
             :vaccinations, 
             :group_fees,
             :sports_plan,
-            :camping_preferences], Participant
+            :camping_preferences,
+            :sport_notes], Participant
         can [:show, 
             :update, 
             :destroy, 
@@ -72,6 +73,8 @@ class Ability
             :update_fees,
             :edit_camping_preferences,
             :update_camping_preferences,
+            :edit_sport_notes,
+            :update_sport_notes,
             :edit_sports], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
@@ -157,7 +160,8 @@ class Ability
           :vaccinations, 
           :group_fees,
           :sports_plan,
-          :camping_preferences], Participant
+          :camping_preferences,
+          :sport_notes], Participant
       can [:show, 
             :update, 
             :destroy, 
@@ -177,6 +181,8 @@ class Ability
             :update_fees,
             :edit_camping_preferences,
             :update_camping_preferences,
+            :edit_sport_notes,
+            :update_sport_notes,
             :edit_sports], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
@@ -231,8 +237,15 @@ class Ability
       can [:update, :edit_password, :update_password], User do |u|
         user == u
       end
-      can [:update, :new_voucher, :add_voucher, :delete_voucher, :drivers, :update_drivers], Participant do |participant|
-        user.participants.include?(participant) || user.role?(:admin)
+      can [:update, 
+        :new_voucher, 
+        :add_voucher, 
+        :delete_voucher, 
+        :drivers, 
+        :update_drivers, 
+        :edit_notes, 
+        :update_notes], Participant do |participant|
+          user.participants.include?(participant) || user.role?(:admin)
       end
       can [:index, :update_multiple], ParticipantExtra
       can [:index, :update_multiple], SportPreference

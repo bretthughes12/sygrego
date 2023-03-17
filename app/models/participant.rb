@@ -44,6 +44,7 @@
 #  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
+#  sport_notes            :string
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null
@@ -187,6 +188,8 @@ class Participant < ApplicationRecord
         unless: proc { |o| o.emergency_email.blank? }
     validates :camping_preferences, 
         length: { maximum: 100 }
+    validates :camping_preferences, 
+        length: { maximum: 255 }
     validates :vaccination_document, 
         length: { maximum: 40 }
     validates :vaccination_sighted_by, 
@@ -619,6 +622,7 @@ class Participant < ApplicationRecord
               participant.allergies               = fields[38]
               participant.emergency_email         = fields[39]
               participant.camping_preferences     = fields[40]
+              participant.sport_notes             = fields[41]
               participant.updated_by = user.id
 
               if participant.save
@@ -669,6 +673,7 @@ class Participant < ApplicationRecord
                  allergies:               fields[38],
                  emergency_email:         fields[39],
                  camping_preferences:     fields[40],
+                 sport_notes:             fields[41],
                  updated_by:              user.id)
 
               if participant.errors.empty?

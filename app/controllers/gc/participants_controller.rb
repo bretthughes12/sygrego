@@ -125,6 +125,19 @@ class Gc::ParticipantsController < ApplicationController
       end
     end
     
+    # GET /gc/participants/sport_notes
+    def sport_notes
+      @participants = @group.participants.accepted.coming.
+        order("first_name, surname").load
+  
+      respond_to do |format|
+        format.html do
+          render layout: @current_role.name
+        end
+        format.csv  { render_csv "sport_notes", "sport_notes" }
+      end
+    end
+    
     # GET /gc/participants/1
     def show
       render layout: @current_role.name
@@ -164,6 +177,11 @@ class Gc::ParticipantsController < ApplicationController
   
     # GET /gc/participants/1/edit_camping_preferences
     def edit_camping_preferences
+      render layout: @current_role.name
+    end
+  
+    # GET /gc/participants/1/edit_sport_notes
+    def edit_sport_notes
       render layout: @current_role.name
     end
   
@@ -273,6 +291,20 @@ class Gc::ParticipantsController < ApplicationController
           format.html { redirect_to camping_preferences_gc_participants_url }
         else
           format.html { render action: "edit_camping_preferences", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_sport_notes
+    def update_sport_notes
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_sport_notes_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to sport_notes_gc_participants_url }
+        else
+          format.html { render action: "edit_sport_notes", layout: @current_role.name }
         end
       end
     end
@@ -481,6 +513,13 @@ class Gc::ParticipantsController < ApplicationController
       params.require(:participant).permit(
         :lock_version,
         :camping_preferences
+      )
+    end
+  
+    def participant_sport_notes_params
+      params.require(:participant).permit(
+        :lock_version,
+        :sport_notes
       )
     end
   end
