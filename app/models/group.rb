@@ -793,8 +793,8 @@ class Group < ApplicationRecord
   
     # TODO: Move this to either Participant or SportGrade
     def gender_matches_gender_type(gender, gender_type)
-      if gender_type == 'Mens' && gender.casecmp('m').zero? ||
-         gender_type == 'Ladies' && gender.casecmp('f').zero? ||
+      if gender_type == 'Mens' && !gender.casecmp('f').zero? ||
+         gender_type == 'Ladies' && !gender.casecmp('m').zero? ||
          gender_type == 'Mixed' ||
          gender_type == 'Open'
         true

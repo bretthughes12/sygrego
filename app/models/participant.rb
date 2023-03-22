@@ -107,16 +107,17 @@ class Participant < ApplicationRecord
     scope :children, -> { where('age < 12') }
     scope :to_be_charged, -> { where("(coming = true OR withdrawn = true) AND status = 'Accepted'") }
     scope :drivers, -> { where(driver: true) }
-    scope :males, -> { where("gender IN ('M', 'm')") }
-    scope :females, -> { where("gender IN ('F', 'f')") }
+    scope :males, -> { where("gender IN ('M', 'm', 'U', 'u')") }
+    scope :females, -> { where("gender IN ('F', 'f', 'U', 'u')") }
     scope :day_visitors, -> { where(spectator: true).where(onsite: false) }
 
     delegate :group_extras, to: :group
 
     encrypts :wwcc_number, :medicare_number
 
-    SEX = %w[M F].freeze
-    DAYS = [3, 2, 1].freeze
+    SEX = [['Male', 'M'],
+           ['Female', 'F'],
+           ['Prefer not to say', 'U']].freeze
   
     validates :first_name,             
         presence: true,
@@ -134,7 +135,7 @@ class Participant < ApplicationRecord
     validates :gender,                 
         presence: true,
         length: { maximum: 1 },
-        inclusion: { in: %w[m f M F], message: "should be 'm' or 'f'" }
+        inclusion: { in: %w[m f u M F U], message: "should be 'Male', 'Female' or 'Prefer not to say'" }
     validates :number_plate,           
         length: { maximum: 10 }
     validates :amount_paid,            

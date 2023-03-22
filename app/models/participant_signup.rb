@@ -131,7 +131,7 @@ class ParticipantSignup
                                        inclusion: { in: 0..130, message: 'should be between 0 and 130' }
     validates :gender,                 presence: true,
                                        length: { maximum: 1 },
-                                       inclusion: { in: %w[m f M F], message: "should be 'm' or 'f'" }
+                                       inclusion: { in: %w[m f u M F U], message: "should be 'Male', 'Female' or 'Prefer not to say'" }
     validates :number_plate,           length: { maximum: 10 }
     validates :address,                presence: true,
                                        length: { maximum: 200 }
