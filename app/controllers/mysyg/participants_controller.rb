@@ -156,6 +156,8 @@ class Mysyg::ParticipantsController < MysygController
       params.require(:participant).permit( 
         :lock_version,
         :driver,
+        :driving_to_syg,
+        :licence_type,
         :number_plate,
         :driver_signature
       )
