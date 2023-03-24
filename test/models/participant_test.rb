@@ -18,6 +18,7 @@
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)
 #  driver_signature_date  :datetime
+#  driving_to_syg         :boolean          default(FALSE)
 #  early_bird             :boolean          default(FALSE)
 #  email                  :string(100)
 #  emergency_contact      :string(40)
@@ -31,6 +32,7 @@
 #  guest                  :boolean          default(FALSE)
 #  helper                 :boolean          default(FALSE)
 #  late_fee_charged       :boolean          default(FALSE)
+#  licence_type           :string(15)
 #  lock_version           :integer          default(0)
 #  medical_info           :string(255)
 #  medicare_number        :string

@@ -18,6 +18,7 @@
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)
 #  driver_signature_date  :datetime
+#  driving_to_syg         :boolean          default(FALSE)
 #  early_bird             :boolean          default(FALSE)
 #  email                  :string(100)
 #  emergency_contact      :string(40)
@@ -31,6 +32,7 @@
 #  guest                  :boolean          default(FALSE)
 #  helper                 :boolean          default(FALSE)
 #  late_fee_charged       :boolean          default(FALSE)
+#  licence_type           :string(12)
 #  lock_version           :integer          default(0)
 #  medical_info           :string(255)
 #  medicare_number        :string
@@ -119,6 +121,10 @@ class Participant < ApplicationRecord
            ['Female', 'F'],
            ['Prefer not to say', 'U']].freeze
   
+    LICENCE_TYPES = ['Full',
+                     'Green P-Plate',
+                     'Red P-Plate'].freeze
+  
     validates :first_name,             
         presence: true,
         uniqueness: { scope: %i[surname group_id],
@@ -138,6 +144,10 @@ class Participant < ApplicationRecord
         inclusion: { in: %w[m f u M F U], message: "should be 'Male', 'Female' or 'Prefer not to say'" }
     validates :number_plate,           
         length: { maximum: 10 }
+    validates :licence_type,           
+        length: { maximum: 15 },
+        inclusion: { in: LICENCE_TYPES }, 
+        allow_blank: true
     validates :amount_paid,            
         numericality: true,
         allow_blank: true

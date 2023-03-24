@@ -42,6 +42,8 @@ class ParticipantSignup
                   :emergency_phone_number,
                   :emergency_email,
                   :driver,
+                  :driving_to_syg,
+                  :licence_type,
                   :number_plate,
                   :driver_signature,
                   :participant,
@@ -88,6 +90,8 @@ class ParticipantSignup
       :emergency_phone_number,
       :emergency_email,
       :driver,
+      :driving_to_syg,
+      :licence_type,
       :number_plate,
       :driver_signature
     ].compact
@@ -133,6 +137,9 @@ class ParticipantSignup
                                        length: { maximum: 1 },
                                        inclusion: { in: %w[m f u M F U], message: "should be 'Male', 'Female' or 'Prefer not to say'" }
     validates :number_plate,           length: { maximum: 10 }
+    validates :licence_type,           length: { maximum: 15 },
+                                       inclusion: { in: Participant::LICENCE_TYPES }, 
+                                       allow_blank: true
     validates :address,                presence: true,
                                        length: { maximum: 200 }
     validates :suburb,                 presence: true,
