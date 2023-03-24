@@ -5,28 +5,43 @@
     <%= f.input :status, :as => :hidden %>
 
     <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
-    <%= f.input :number_plate, :label => "Number Plate" %>
+    <%= f.input :driving_to_syg, :as => :boolean, :label => "I will be driving to SYG"  %>
+    <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
+    <%= f.input :number_plate %>
     
-    <p>Over the duration of the weekend, the State Youth Games committee is extremely concerned about the safety of people on the roads while travelling to and from State Youth Games, and to the various sporting venues. We would like to bring to the attention of Group Coordinators and all drivers the following information.</p>
-    <br/>
-    <p>The <%= APP_CONFIG[:conference_name] %>, in their CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES, states the following concerning safe care in private motor vehicles:</p>
+	<br/>
 
-    <h3>1-2-11 PRIVATE MOTOR VEHICLES</h3>
-    <p>All passengers including the driver must wear their seat belts. Leaders should make it their responsibility to determine, to the best of their ability, that the vehicle used is registered, the driver holds a current driver's license and is a sound driver, and that the vehicle is roadworthy. If a child is to be transported by a person other than a recognised leader, that person should have been, wherever possible, known to a leader for a reasonable period of time.</p>
-    
-    <h3>1-2-15 INSURANCE CONDITIONS OF VEHICLE</h3>
-    <p>The leader will need to satisfy themselves that the vehicle to be driven has correct current minimum third party insurance and property insurance.</p>
-    <br/>
-    <p>Following on from this, we would ask all drivers that will be driving over the weekend to agree to the following statement. Only those drivers that do this will be able to drive over the weekend of the Games.</p>
+	<div class="accordion" id="driving_accordion">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="driving_heading">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#driving_collapse" aria-expanded="false" aria-controls="driving_collapse">
+					Nominated Driver Declaration (click to expand)
+				</button>
+			</h2>
+			<div id="driving_collapse" class="accordion-collapse collapse" aria-labelledby="driving_heading" data-bs-parent="#driving_accordion">
+				<div class="accordion-body">
+					<p>Over the duration of the weekend, the State Youth Games committee is extremely concerned about the safety of people on the roads while travelling to and from State Youth Games, and to the various sporting venues. We would like to bring to the attention of Group Coordinators and all drivers the following information.</p>
+					<p>The <%= APP_CONFIG[:conference_name] %>, in their CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES, states the following concerning safe care in private motor vehicles:</p>
 
-    <h3>STATEMENT</h3>
-    <p>I will be driving a car which will be in a roadworthy condition, and have current registration. This vehicle has current minimum third party insurance and property insurance.</p>
-    <br/>
-    <p>I will ensure that both myself and all my passengers will be wearing seatbelts, and I will drive in a safe manner according to the local road conditions and traffic laws. I have read and understand the excerpts from the CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES.</p>
-    <br/>
-    <p>In the event of a motor vehicle accident occurring, I will not hold the State Youth Games Committee, or Youth Vision <%= APP_CONFIG[:state_name] %> responsible for any injury or damage that may result, either to myself, to other people, or to any property.</p>
+					<h3>1-2-11 PRIVATE MOTOR VEHICLES</h3>
+					<p>All passengers including the driver must wear their seat belts. Leaders should make it their responsibility to determine, to the best of their ability, that the vehicle used is registered, the driver holds a current driver's license and is a sound driver, and that the vehicle is roadworthy. If a child is to be transported by a person other than a recognised leader, that person should have been, wherever possible, known to a leader for a reasonable period of time.</p>
+					
+					<h3>1-2-15 INSURANCE CONDITIONS OF VEHICLE</h3>
+					<p>The leader will need to satisfy themselves that the vehicle to be driven has correct current minimum third party insurance and property insurance.</p>
+					<p>Following on from this, we would ask all drivers that will be driving over the weekend to agree to the following statement. Only those drivers that do this will be able to drive over the weekend of the Games.</p>
 
-    <%= f.input :driver_signature, :as => :boolean, :label => "I agree" %> 
+					<h3>STATEMENT</h3>
+					<p>I will be driving a car which will be in a roadworthy condition, and have current registration. This vehicle has current minimum third party insurance and property insurance.</p>
+					<p>I will ensure that both myself and all my passengers will be wearing seatbelts, and I will drive in a safe manner according to the local road conditions and traffic laws. I have read and understand the excerpts from the CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES.</p>
+					<p>In the event of a motor vehicle accident occurring, I will not hold the State Youth Games Committee, or Youth Vision <%= APP_CONFIG[:state_name] %> responsible for any injury or damage that may result, either to myself, to other people, or to any property.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br/>
+
+    <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration" %> 
 
     <br/>
 

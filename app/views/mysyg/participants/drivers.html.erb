@@ -2,4 +2,4 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= render partial: 'form_driving', locals: {url: update_drivers_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), method: 'patch', button_text: 'Agree' } %>
+<%= render partial: 'form_driving', locals: {url: update_drivers_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id), method: 'patch', button_text: 'Submit' } %>
