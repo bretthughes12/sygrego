@@ -308,6 +308,8 @@ private
       :fee_when_withdrawn,
       :late_fee_charged,
       :driver,
+      :driving_to_syg,
+      :licence_type,
       :number_plate,
       :early_bird,
       :email,

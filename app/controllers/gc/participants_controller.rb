@@ -482,6 +482,8 @@ class Gc::ParticipantsController < ApplicationController
       params.require(:participant).permit(
         :lock_version,
         :driver,
+        :driving_to_syg,
+        :licence_type,
         :number_plate
       )
     end

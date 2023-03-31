@@ -63,6 +63,8 @@
 	<h2>Driver Info</h2>
 
    	<%= f.input :driver, label: "Nominated Driver"  %>
+    <%= f.input :driving_to_syg, :as => :boolean %>
+    <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
    	<%= f.input :number_plate, label: "Number Plate", hint: "drivers only"%>
    	<%= f.input :driver_signature, label: "Driver Electronic Signature" %>
    	<%= f.input :driver_signature_date, as: :date, label: "Date Signed", include_blank: true %>
