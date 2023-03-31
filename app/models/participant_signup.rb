@@ -46,6 +46,8 @@ class ParticipantSignup
                   :licence_type,
                   :number_plate,
                   :driver_signature,
+                  :camping_preferences,
+                  :sport_notes,
                   :participant,
                   :user,
                   :group,
@@ -93,7 +95,9 @@ class ParticipantSignup
       :driving_to_syg,
       :licence_type,
       :number_plate,
-      :driver_signature
+      :driver_signature,
+      :camping_preferences,
+      :sport_notes
     ].compact
   
     USER_ATTRIBUTES = {
