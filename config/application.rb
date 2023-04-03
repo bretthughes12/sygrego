@@ -53,6 +53,10 @@ module Sygrego
 
       # All keys interpolated as strings, so you can use symbols, strings or integers where necessary
       exceptions: {
+        '422' => {
+          layout: "exception", # define layout
+          notification: true  # (false by default)
+        },    
         '4xx' => {
           layout: "exception", # define layout
           notification: false  # (false by default)
