@@ -8,4 +8,12 @@
 			<span class="<%= role_badge_class(r) %>"> <%= r.name %> </span>
 		<% end %>
 	</td>
+
+	<td> 
+		<% if user.role?(:participant) %>
+			<%= user.participants.count %>
+		<% else %>
+			&nbsp;
+		<% end %>
+	</td>
 </tr>

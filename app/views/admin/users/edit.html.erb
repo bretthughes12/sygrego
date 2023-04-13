@@ -29,6 +29,14 @@
 
 </table>
 
+<h2>Participants</h2>
+
+<table class="table table-dark">
+    <%= render partial: "user_participant", collection: @user.participants.order(:first_name, :surname) %>
+</table>
+
+<br/>
+
 <br/>
 
 <%= link_to "Back", admin_users_path,

@@ -12,6 +12,14 @@ It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
 <p><strong>Groups attending:</strong> <%= @total_groups %></p>
 <p><strong>Participants attending:</strong> <%= @total_participants %></p>
 
+<% if current_user.participants.count > 1 %>
+    <p>Your user can manage multiple participants. You can use the links below to switch between them.<p>
+
+    <table class="table table-dark">
+        <%= render partial: "user_participant", collection: current_user.participants.order(:first_name, :surname) %>
+    </table>
+<% end %>
+
 <% if @group.results_file.attached? %>
     <h2>Results</h2>
     <p>Thanks for another fantastic SYG weekend. Here is a summary of your team results.<p>
