@@ -24,6 +24,7 @@ class Users::PasswordsController < Devise::PasswordsController
     super
     session["current_role"] = current_user.default_role if current_user
     session["current_group"] = current_user.default_group if current_user
+    session["current_participant"] = current_user.default_participant if current_user
   end
 
   # protected
