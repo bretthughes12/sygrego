@@ -358,7 +358,7 @@ class Participant < ApplicationRecord
     end
 
     def early_bird_applies?
-      !group_coord && early_bird && (chargeable_days >= 2) && voucher.nil?
+      !group_coord && !helper && early_bird && (chargeable_days >= 2) && voucher.nil?
     end
 
     def group_fee

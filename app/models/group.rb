@@ -648,8 +648,10 @@ class Group < ApplicationRecord
         2
       elsif division == 'Medium Churches'
         4
-      else
+      elsif participants.coming.accepted.playing_sport.size <= 80
         6
+      else
+        8
       end
     end
 
