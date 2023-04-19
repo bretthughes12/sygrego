@@ -1,8 +1,8 @@
-<% title "Covid Safety Plan" %>
+<% title "Safety Plan" %>
 
 <h1><%= yield(:title) %></h1>
 
-<p>Groups are required to provide and follow a COVID-safety plan tailored to their time at State Youth Games. This safety plan may be based on existing church or organisation COVID-safety plans, but must be adapted to the specifics of State Youth Games.</p>
+<p>Groups are recommended to provide and follow a safety plan tailored to their time at State Youth Games. This safety plan may be based on existing church or organisation safety plans, but must be adapted to the specifics of State Youth Games.</p>
 
 <%= simple_form_for(@event_detail, url: update_covid_plan_gc_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
 	<%= f.error_notification %>
