@@ -3,6 +3,13 @@
 <h1><%= yield(:title) %></h1>
     
 <% if !@participants.empty? %>
+    <%= link_to "Download", camping_preferences_gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+    
+    <br/>
+    <br/>
+
     <table class="table table-dark">
         <thead>
             <tr>
@@ -13,12 +20,13 @@
 
         <%= render partial: 'participant_camping_preferences', collection: @participants, as: :participant %>
     </table>
+
+    <%= link_to "Download", camping_preferences_gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
 <% end %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
 					{:name => "Spectator", :class => "table-warning"},
 					{:name => "Not Coming", :class => "table-dark"}] %>
 
-<%= link_to "Download", camping_preferences_gc_participants_path(format: :csv),
-                  class: primary_button_class,
-                  role: "button" %>

@@ -4,6 +4,14 @@
 
 <%= will_paginate @participants, :container => false %>
 
+<%= link_to "New day visitor", new_day_visitor_admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", day_visitors_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark">

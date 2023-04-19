@@ -3,6 +3,19 @@
 <h1><%= yield(:title) %></h1>
 <%= will_paginate @grades, :container => false %>
 
+<%= link_to "New grade", new_admin_grade_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_grades_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_grades_path,
+                  class: danger_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark">
   <thead>
     <tr>

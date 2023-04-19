@@ -5,6 +5,11 @@
 <% if !@participants.empty? %>
     <%= will_paginate @participants, :container => false %>
 
+    <%= link_to "Download", wwccs_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+    <br/>
     <br/>
 
     <table class="table table-dark">
@@ -20,11 +25,11 @@
     </table>
 
     <%= will_paginate @participants, :container => false %>
-<% end %>
 
-<%= link_to "Download", wwccs_admin_participants_path(format: :csv),
+    <%= link_to "Download", wwccs_admin_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
+<% end %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
 					{:name => "Spectator", :class => "table-warning"}] %>

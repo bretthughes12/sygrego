@@ -2,6 +2,17 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "Allocate", allocate_restricted_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download Details", admin_ballot_results_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark">
     <thead>
         <tr>

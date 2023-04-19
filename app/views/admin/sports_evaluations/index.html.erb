@@ -2,6 +2,19 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "New evaluation", new_admin_sports_evaluation_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_sports_evaluations_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "PDF", admin_sports_evaluations_path(format: :pdf),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>

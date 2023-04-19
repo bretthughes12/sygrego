@@ -6,6 +6,16 @@
 <%= yield(:search_box)%>
 <%= will_paginate @participants, :container => false %>
 
+<% if registrations_open %>
+  <%= link_to "New participant", new_gc_participant_path,
+                    class: primary_button_class,
+                    role: "button" %>
+<% end %>
+<%= link_to "Download", gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark">

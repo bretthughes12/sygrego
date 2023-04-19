@@ -2,6 +2,12 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "New item", new_admin_lost_item_path,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>

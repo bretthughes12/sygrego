@@ -5,6 +5,11 @@
 <%= search_box search_admin_users_path, "Search" %>
 <%= yield(:search_box)%>
 
+<%= link_to "New user", new_admin_user_path,
+                  class: primary_button_class,
+                  user: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark table-striped">

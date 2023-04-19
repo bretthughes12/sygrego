@@ -7,6 +7,12 @@
 <br/>
 
 <% unless @sport_preferences.empty? %>
+    <%= link_to "Download", gc_sport_preferences_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+    <br/>
+    <br/>
 
     <table class="table table-dark">
         <thead>
@@ -21,11 +27,11 @@
     
         <%= render @sport_preferences %>
     </table>
-<% end %>
 
-<%= link_to "Download", gc_sport_preferences_path(format: :csv),
+    <%= link_to "Download", gc_sport_preferences_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
+<% end %>
 
 <%= legend_box [{:name => "Allocated to this grade", :class => "table-primary"},
 				{:name => "Unallocated preferences", :class => "table-secondary"}, 

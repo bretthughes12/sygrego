@@ -5,6 +5,11 @@
 <%= search_box search_admin_rego_checklists_path, "Search" %>
 <%= yield(:search_box)%>
 
+<%= link_to "Download", admin_rego_checklists_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark">

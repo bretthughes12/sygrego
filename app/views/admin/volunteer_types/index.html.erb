@@ -2,6 +2,19 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "New Type", new_admin_volunteer_type_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_volunteer_types_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_volunteer_types_path,
+                  class: danger_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>

@@ -2,6 +2,16 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "New voucher", new_admin_voucher_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_vouchers_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>

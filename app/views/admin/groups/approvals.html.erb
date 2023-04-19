@@ -2,6 +2,13 @@
 
 <h1><%= yield(:title) %></h1>
     
+<%= link_to "Download", approvals_admin_groups_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class= "table table-dark">
     <thead>
     <tr>

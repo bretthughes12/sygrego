@@ -5,6 +5,19 @@
 <%= search_box search_admin_volunteers_path, "Search" %>
 <%= yield(:search_box)%>
 
+<%= link_to "New Volunteer", new_admin_volunteer_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_volunteers_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_volunteers_path,
+                  class: danger_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>
@@ -25,5 +38,5 @@
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_volunteers_path,
-                  class: primary_button_class,
+                  class: danger_button_class,
                   role: "button" %>

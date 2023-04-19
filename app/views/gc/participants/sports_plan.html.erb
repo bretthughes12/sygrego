@@ -3,6 +3,13 @@
 <h1><%= yield(:title) %></h1>
     
 <% if !@participants.empty? %>
+    <%= link_to "Download", sports_plan_gc_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+    <br/>
+    <br/>
+
     <table class="table table-dark table-striped">
         <thead>
             <tr>
@@ -18,8 +25,8 @@
 
         <%= render partial: 'participant_sports', collection: @participants, as: :participant %>
     </table>
-<% end %>
 
-<%= link_to "Download", sports_plan_gc_participants_path(format: :csv),
+    <%= link_to "Download", sports_plan_gc_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
+<% end %>

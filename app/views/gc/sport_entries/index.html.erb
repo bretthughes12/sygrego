@@ -6,6 +6,14 @@
 
 <%= will_paginate @sport_entries, :container => false %>
 
+<%= link_to "New sport entry", new_gc_sport_entry_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", gc_sport_entries_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark">

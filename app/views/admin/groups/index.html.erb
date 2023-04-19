@@ -5,6 +5,17 @@
 <%= search_box search_admin_groups_path, "Search" %>
 <%= yield(:search_box)%>
 
+<%= link_to "New group", new_admin_group_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", admin_groups_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Upload", new_import_admin_groups_path,
+                  class: danger_button_class,
+                  role: "button" %>
+
+<br/>
 <br/>
 
 <table class="table table-dark">
