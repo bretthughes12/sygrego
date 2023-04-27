@@ -46,7 +46,11 @@ class Gc::VolunteersController < ApplicationController
   
     # GET /gc/volunteers/1/edit
     def edit
-      @participants = @group.participants.open_age.order("first_name, surname").load
+      if @volunteer.age_category == 'Over 18'
+        @participants = @group.participants.open_age.coming.accepted.order("first_name, surname").load
+      else
+        @participants = @group.participants.volunteer_age.coming.accepted.order("first_name, surname").load
+      end
 
       render layout: @current_role.name
     end
@@ -60,8 +64,12 @@ class Gc::VolunteersController < ApplicationController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to gc_volunteers_url }
         else
-          @participants = @group.participants.open_age.order("first_name, surname").load
-
+          if @volunteer.age_category == 'Over 18'
+            @participants = @group.participants.open_age.coming.accepted.order("first_name, surname").load
+          else
+            @participants = @group.participants.volunteer_age.coming.accepted.order("first_name, surname").load
+          end
+    
           format.html { render action: "edit", layout: @current_role.name }
         end
       end

@@ -7,9 +7,7 @@ class Mysyg::VolunteersController < MysygController
     
     def index
         @my_volunteers = @participant.volunteers
-  
-        @volunteers = Volunteer.unfilled.
-            order("volunteers.description, volunteer_type_id")
+        @volunteers = @participant.available_volunteers
     end
   
     def edit

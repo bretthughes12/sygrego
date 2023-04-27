@@ -70,7 +70,7 @@ class Admin::VolunteersController < ApplicationController
   
     # GET /admin/volunteers/new
     def new
-      @participants = Participant.open_age.order("first_name, surname").load
+      @participants = Participant.volunteer_age.order("first_name, surname").load
       @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
       @volunteer_types = get_volunteer_types 
       @sessions = Session.order(:name).load
@@ -79,7 +79,7 @@ class Admin::VolunteersController < ApplicationController
   
     # GET /admin/volunteers/1/edit
     def edit
-      @participants = Participant.open_age.order("first_name, surname").load
+      @participants = Participant.volunteer_age.order("first_name, surname").load
       @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
       @volunteer_types = get_volunteer_types 
       @sessions = Session.order(:name).load
@@ -94,10 +94,10 @@ class Admin::VolunteersController < ApplicationController
       end
   
       if group_id.nil?
-        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants = Participant.volunteer_age.accepted.coming.order('first_name, surname').load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
       else
-        @participants = Participant.open_age.coming.accepted.
+        @participants = Participant.volunteer_age.coming.accepted.
           order("first_name, surname").
           where(['group_id = ?', group_id]).load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
@@ -112,10 +112,10 @@ class Admin::VolunteersController < ApplicationController
       end
   
       if group_id.nil?
-        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants = Participant.volunteer_age.accepted.coming.order('first_name, surname').load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
       else
-        @participants = Participant.open_age.coming.accepted.
+        @participants = Participant.volunteer_age.coming.accepted.
           order("first_name, surname").
           where(['group_id = ?', group_id]).load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
@@ -130,7 +130,7 @@ class Admin::VolunteersController < ApplicationController
         respond_to do |format|
             if @volunteer.save
               flash[:notice] = 'Volunteer was successfully created.'
-              @participants = Participant.open_age.order("first_name, surname").load
+              @participants = Participant.volunteer_age.order("first_name, surname").load
               @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
               @volunteer_types = get_volunteer_types 
               @sessions = Session.order(:name).load
@@ -138,7 +138,7 @@ class Admin::VolunteersController < ApplicationController
 
               format.html { render action: "edit" }
             else
-              @participants = Participant.open_age.order("first_name, surname").load
+              @participants = Participant.volunteer_age.order("first_name, surname").load
               @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
               @volunteer_types = get_volunteer_types 
               @sessions = Session.order(:name).load
@@ -158,7 +158,7 @@ class Admin::VolunteersController < ApplicationController
             flash[:notice] = 'Volunteer was successfully updated.'
             format.html { redirect_to admin_volunteers_url }
           else
-            @participants = Participant.open_age.order("first_name, surname").load
+            @participants = Participant.volunteer_age.order("first_name, surname").load
             @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
             @volunteer_types = get_volunteer_types 
             @sessions = Session.order(:name).load
@@ -266,10 +266,10 @@ class Admin::VolunteersController < ApplicationController
       end
   
       if group_id.nil?
-        @participants = Participant.open_age.accepted.coming.order('first_name, surname').load
+        @participants = Participant.volunteer_age.accepted.coming.order('first_name, surname').load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
       else
-        @participants = Participant.open_age.coming.accepted.
+        @participants = Participant.volunteer_age.coming.accepted.
           order("first_name, surname").
           where(['group_id = ?', group_id]).load
         @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }

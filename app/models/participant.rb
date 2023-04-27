@@ -550,6 +550,15 @@ class Participant < ApplicationRecord
     sections
   end
 
+  def available_volunteers
+    av_vol = []
+    Volunteer.unfilled.order("volunteers.description, volunteer_type_id").each do |volunteer|
+      next if age < volunteer.min_age
+      av_vol << volunteer
+    end
+    av_vol
+  end
+
   def grades
     sport_entries.each.collect(&:grade)
   end
