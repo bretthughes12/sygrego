@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  active        :boolean          default(TRUE)
+#  age_category  :string(20)       default("Over 18")
 #  database_code :string(4)
 #  description   :text
 #  name          :string(100)      not null
@@ -29,12 +30,26 @@ class VolunteerType < ApplicationRecord
     scope :sport_related, -> { where(sport_related: true) }
     scope :non_sport_related, -> { where(sport_related: false) }
     scope :active, -> { where(active: true) }
-  
+
+    AGE_CATEGORIES = ['Over 18',
+                      'Over 16'].freeze
+
     validates :name, presence: true, uniqueness: true,
         length: { maximum: 100 }
     validates :database_code, uniqueness: true,
         length: { maximum: 4 }
+    validates :age_category,           
+        length: { maximum: 20 },
+        inclusion: { in: AGE_CATEGORIES }
         
+    def min_age
+        if age_category == 'Over 16'
+            16
+        else
+            18
+        end
+    end
+    
     def self.import(file, user)
         creates = 0
         updates = 0
@@ -49,6 +64,7 @@ class VolunteerType < ApplicationRecord
                 type.sport_related = fields[3]
                 type.t_shirt = fields[4]
                 type.description = fields[5]
+                type.age_category = fields[6]
                 type.updated_by = user.id
                 if type.save
                     updates += 1
@@ -64,6 +80,7 @@ class VolunteerType < ApplicationRecord
                     sport_related:             fields[3],
                     t_shirt:                   fields[4],
                     description:               fields[5],
+                    age_category:              fields[6],
                     updated_by:                user.id)
                 if type.errors.empty?
                     creates += 1

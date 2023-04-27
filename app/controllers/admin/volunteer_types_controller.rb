@@ -104,6 +104,7 @@ class Admin::VolunteerTypesController < ApplicationController
                                     :active,
                                     :sport_related,
                                     :t_shirt,
-                                    :description)
+                                    :description,
+                                    :age_category)
     end
   end

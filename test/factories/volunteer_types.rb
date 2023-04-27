@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  active        :boolean          default(TRUE)
+#  age_category  :string(20)       default("Over 18")
 #  database_code :string(4)
 #  description   :text
 #  name          :string(100)      not null
@@ -25,6 +26,7 @@ FactoryBot.define do
     sport_related { false }
     t_shirt { false }
     description { "Ipsup Lorem..." }
+    age_category { "Over 18" }
     active { true }
   end
 end

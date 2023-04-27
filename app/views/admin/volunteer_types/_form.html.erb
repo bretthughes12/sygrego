@@ -4,6 +4,7 @@
 	<%= f.input :name, label: "Type" %>
 	<%= f.input :database_code, label: "Type code" %>
 	<%= f.input :active %>
+	<%= f.input :age_category, as: :select, collection: VolunteerType::AGE_CATEGORIES, include_blank: false %>
 	<%= f.input :sport_related %>
 	<%= f.input :t_shirt, :label => "Do volunteers get a T-Shirt?" %>
 	<%= f.input :description, :label => "Tool Tip" %>

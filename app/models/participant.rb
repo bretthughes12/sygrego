@@ -32,7 +32,7 @@
 #  guest                  :boolean          default(FALSE)
 #  helper                 :boolean          default(FALSE)
 #  late_fee_charged       :boolean          default(FALSE)
-#  licence_type           :string(12)
+#  licence_type           :string(15)
 #  lock_version           :integer          default(0)
 #  medical_info           :string(255)
 #  medicare_number        :string
@@ -106,6 +106,7 @@ class Participant < ApplicationRecord
     scope :sport_coords, -> { where(sport_coord: true) }
     scope :helpers, -> { where(helper: true) }
     scope :open_age, -> { where('age > 17') }
+    scope :volunteer_age, -> { where('age > 15') }
     scope :children, -> { where('age < 12') }
     scope :to_be_charged, -> { where("(coming = true OR withdrawn = true) AND status = 'Accepted'") }
     scope :drivers, -> { where(driver: true) }
