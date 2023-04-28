@@ -64,6 +64,7 @@
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Grounds</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Buddy Groups', buddy_groups_admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'Warden Zones', admin_warden_zones_path %></li>
                         <li class='dropdown-item'><%= link_to 'Group Zones', warden_zones_admin_event_details_path %></li>
                         <% if @settings.syg_is_finished %>

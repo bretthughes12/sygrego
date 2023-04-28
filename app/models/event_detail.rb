@@ -47,8 +47,6 @@ class EventDetail < ApplicationRecord
     has_one_attached :covid_plan
     has_one_attached :insurance
 
-    scope :coming, -> { where(coming: true) }
-    scope :not_coming, -> { where(coming: false) }
     scope :onsite, -> { where(onsite: true) }
     scope :offsite, -> { where(onsite: false) }
     scope :buddy_interest, -> { where("not (buddy_interest = 'Not interested')") }

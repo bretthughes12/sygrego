@@ -1,0 +1,17 @@
+<tr valign="top">
+	<td> 
+		<%= h(event_detail.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= h(event_detail.group.short_name) %>
+	</td>
+	
+	<td> 
+		<%= event_detail.buddy_interest %>
+	</td>
+	
+	<td> 
+		<%= event_detail.buddy_comments[0..255] %>
+	</td>
+</tr>

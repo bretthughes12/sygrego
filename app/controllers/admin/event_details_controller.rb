@@ -44,7 +44,16 @@ class Admin::EventDetailsController < ApplicationController
       end
     end
 
-    # GET /admin/event_details
+    # GET /admin/event_details/buddy_groups
+    def buddy_groups
+      @event_details = EventDetail.onsite.buddy_interest.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+  
+      respond_to do |format|
+        format.html # index.html.erb
+      end
+    end
+
+    # GET /admin/event_details/orientation_details
     def orientation_details
       @event_details = EventDetail.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
   

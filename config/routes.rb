@@ -194,6 +194,7 @@ Rails.application.routes.draw do
         get :search
         get :uploads
         get :warden_zones
+        get :buddy_groups
         get :orientation_details
         patch :update_multiple_orientations
       end

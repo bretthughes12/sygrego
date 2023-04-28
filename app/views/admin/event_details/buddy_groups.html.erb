@@ -1,0 +1,16 @@
+<% title "Listing groups with interest in Buddy Groups" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Abbr</th>
+      <th>Short Name</th>
+      <th>Interest</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+
+	<%= render partial: 'buddy_group', collection: @event_details, as: :event_detail %>
+</table>
