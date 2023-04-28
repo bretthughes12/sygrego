@@ -655,6 +655,18 @@ class Group < ApplicationRecord
       end
     end
 
+    def males
+      participants.coming.accepted.where("gender IN ('M', 'm')").count
+    end
+
+    def females
+      participants.coming.accepted.where("gender IN ('F', 'f')").count
+    end
+
+    def gender_neutral
+      participants.coming.accepted.where("gender IN ('U', 'u')").count
+    end
+
     def update_team_numbers(grade)
       entries = cached_sport_entries.where(['grade_id = ?', grade.id])
                                     .order(:id).load

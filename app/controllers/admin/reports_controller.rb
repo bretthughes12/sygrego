@@ -56,4 +56,9 @@ class Admin::ReportsController < ApplicationController
             format.html 
         end
     end
+
+    # GET /admin/reports/gender_summary
+    def gender_summary
+        @groups = Group.coming.not_admin.order(:abbr).load
+    end
 end

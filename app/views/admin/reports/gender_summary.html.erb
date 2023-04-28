@@ -1,0 +1,15 @@
+<% title "Gender Pastoral Care Summary" %>
+
+<table class="table table-dark table-striped">
+	<thead>
+		<tr>
+			<th>Abbr</th>
+			<th>Short Name</th>
+			<th>Males</th>
+			<th>Females</th>
+			<th>Other</th>
+		</tr>
+	</thead>
+
+	<%= render :partial => 'gender_summary', :collection => @groups, :as => :group %>
+</table>

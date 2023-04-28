@@ -98,6 +98,7 @@ Rails.application.routes.draw do
         get :finance_summary
         get :service_preferences
         get :fees
+        get :gender_summary
       end
     end
 
