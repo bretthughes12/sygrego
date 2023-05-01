@@ -4,10 +4,11 @@
 	              Email Medicare MedicalInfo Medications Allergies YearsAttended
 				  Spectator Onsite Helper GC Driver NumberPlate
 				  DietaryRqmts EmergContact EmergRel EmergPhone 
-				  EmergEmail WWCC CampPrefs } -%>
+				  EmergEmail WWCC CampPrefs Voucher } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @participants.each do |participant|
+    voucher = participant.voucher.nil? ? '' : participant.voucher.name
   	line = [ participant.first_name,
 			 participant.surname,
   		     participant.coming,
@@ -41,7 +42,8 @@
 			 participant.emergency_phone_number,
 			 participant.emergency_email,
 			 participant.wwcc_number,
-			 participant.camping_preferences
+			 participant.camping_preferences,
+			 voucher
 		   ]
     csv << line
   end
