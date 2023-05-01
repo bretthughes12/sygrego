@@ -48,7 +48,7 @@ class Gc::SportPreferencesController < ApplicationController
       sport_entry = @sport_preference.available_sport_entry
       participant = @sport_preference.participant
 
-      sport_entry.participants << @sport_preference.participant if participant.available_sport_entries.includes?(sport_entry)
+      sport_entry.participants << @sport_preference.participant if participant.available_sport_entries.include?(sport_entry)
       flash[:notice] = "Participant added to sport entry"
   
       respond_to do |format|
