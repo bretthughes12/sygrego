@@ -1,4 +1,4 @@
-class FinanceReport < Prawn::Document
+class TaxInvoice < Prawn::Document
     include ReportLayout
   
     def add_data(group, payments)
@@ -12,7 +12,7 @@ class FinanceReport < Prawn::Document
     def to_pdf
         @settings = Setting.first
     
-        report_header("Account Summary")
+        report_header("Tax Invoice")
         report_content
     
         render

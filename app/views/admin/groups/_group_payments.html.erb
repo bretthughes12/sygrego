@@ -1,0 +1,17 @@
+<tr valign="top">
+
+    <td>
+        <%= h(group.abbr) %>
+    </td>
+
+    <td>
+        <%= h(group.name) %>
+    </td>
+
+    <td>
+        <%= link_to "Invoice", invoice_admin_group_path(group, format: :pdf),
+                method: :post,
+                class: primary_button_class,
+                role: "button" %>
+    </td>
+</tr>

@@ -177,8 +177,10 @@ Rails.application.routes.draw do
         get :approvals
         get :session_participants
         get :summary
+        get :payments
       end
       member do
+        post :invoice        
         patch :approve
       end
     end

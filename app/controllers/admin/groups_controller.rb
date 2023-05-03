@@ -46,6 +46,15 @@ class Admin::GroupsController < ApplicationController
       end
     end
 
+    # GET /admin/groups/payments
+    def payments
+      @groups = Group.coming.not_admin.order(:name).load
+
+      respond_to do |format|
+        format.html # payments.html.erb
+      end
+    end
+
     # GET /admin/groups/search
     def search
       @groups = Group.search(params[:search]).order("abbr")
@@ -95,6 +104,20 @@ class Admin::GroupsController < ApplicationController
           format.html { redirect_to admin_groups_url }
         else
           format.html { render action: "edit" }
+        end
+      end
+    end
+  
+    # POST /admin/groups/1/invoice
+    def invoice
+      @payments = @group.payments.
+        order(:paid_at).load
+
+      respond_to do |format|
+        format.pdf  do
+          output = TaxInvoice.new.add_data(@group, @payments).to_pdf
+          
+          render_pdf output, 'tax-invoice'
         end
       end
     end
