@@ -1,0 +1,24 @@
+<% title "Editing key date: #{@timeline.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_timeline_path(@timeline), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "New key date", new_admin_timeline_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Back", admin_timelines_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Details", admin_timeline_path(@timeline),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", admin_timeline_path(@timeline),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

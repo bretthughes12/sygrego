@@ -2,15 +2,17 @@
 
 <h1><%= yield(:title) %></h1>
 
-Welcome! <br />
-<br />
-
-It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
-
-<br/><br/>
+<h2>Event Statistics</h2>
 
 <p><strong>Groups attending:</strong> <%= @total_groups %></p>
 <p><strong>Participants attending:</strong> <%= @total_participants %></p>
+
+<h2>Upcoming dates and deadlines</h2>
+
+<table class="table table-dark table-striped">
+    <%= render partial: "timeline", collection: @timelines %>
+</table>
+
 
 <% if @group.results_file.attached? %>
     <h2>Results</h2>

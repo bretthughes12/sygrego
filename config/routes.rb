@@ -142,6 +142,7 @@ Rails.application.routes.draw do
       end
     end
     resources :roles
+    resources :timelines
     resources :users do
       member do
         get :edit_password

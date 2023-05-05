@@ -5,7 +5,7 @@
 #  id          :bigint           not null, primary key
 #  description :string(255)
 #  key_date    :date             not null
-#  name        :string(20)
+#  name        :string(50)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

@@ -576,7 +576,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_104019) do
 
   create_table "timelines", force: :cascade do |t|
     t.date "key_date", null: false
-    t.string "name", limit: 20
+    t.string "name", limit: 50
     t.string "description", limit: 255
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

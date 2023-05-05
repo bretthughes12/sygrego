@@ -1,0 +1,11 @@
+<%= simple_form_for(@timeline, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :key_date, label: "Date" %>
+	<%= f.input :name, label: "Title" %>
+	<%= f.input :description %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	
