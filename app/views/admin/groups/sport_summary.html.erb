@@ -1,0 +1,17 @@
+<% title "Group Sport Summary" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Church</th>
+            <th>Abbr</th>
+            <th>Entered</th>
+            <th>Requested</th>
+            <th>Missed Out</th>
+        </tr>
+    </thead>
+
+    <%= render :partial => 'group_sport_summary', :collection => @groups, :as => :group %>
+</table>

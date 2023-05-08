@@ -1,0 +1,22 @@
+<tr valign="top">
+
+    <td width="30%">
+        <%= h(group.name) %>
+    </td>
+
+    <td align="center">
+        <%= h(group.abbr) %>
+    </td>
+
+    <td align="center">
+        <%= group.sport_entries.entered.count %>
+    </td>
+
+    <td align="center">
+        <%= group.sport_entries.requested.count %>
+    </td>
+
+    <td align="center">
+        <%= group.sport_entries.waiting_list.count %>
+    </td>
+</tr>

@@ -178,6 +178,7 @@ Rails.application.routes.draw do
         get :approvals
         get :session_participants
         get :summary
+        get :sport_summary
         get :payments
       end
       member do
