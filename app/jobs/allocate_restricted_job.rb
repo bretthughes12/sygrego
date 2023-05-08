@@ -55,7 +55,21 @@ class AllocateRestrictedJob < ApplicationJob
         logger.info("Rejecting low priority entries for groups where #groups greater or equal limits...")
         Grade.over_limit.ballot_for_high_priority.each do |g|
           g.sport_entries.requested.each do |e| 
-            e.reject! if !e.high_priority
+            if !e.high_priority
+                e.reject! 
+                result = BallotResult.new(
+                    :sport_name => g.sport.name,
+                    :grade_name => g.name,
+                    :entry_limit => g.entry_limit,
+                    :over_limit => g.over_limit, 
+                    :one_entry_per_group => g.one_entry_per_group, 
+                    :group_name => e.group.short_name,
+                    :new_group => e.group.new_group,
+                    :sport_entry_name => e.name, 
+                    :sport_entry_status => e.status, 
+                    :factor => 0)
+                result.save(:validate => false)
+              end
           end
         end
     end
@@ -63,10 +77,24 @@ class AllocateRestrictedJob < ApplicationJob
     def allocate_entries_in_grades_under_limits
         logger.info("Allocating entries for grades not over limits...")
         Grade.not_over_limit.each do |g|
-          g.sport_entries.requested.each do |e| 
-            e.enter!
-            e.assign_section!
-          end
+            g.sport_entries.requested.each do |e| 
+                e.enter!
+                e.assign_section!
+                result = BallotResult.new(
+                    :sport_name => g.sport.name,
+                    :grade_name => g.name,
+                    :entry_limit => g.entry_limit,
+                    :over_limit => g.over_limit, 
+                    :one_entry_per_group => g.one_entry_per_group, 
+                    :group_name => e.group.short_name,
+                    :new_group => e.group.new_group,
+                    :sport_entry_name => e.name, 
+                    :sport_entry_status => e.status, 
+                    :section_name => e.allocated_section_name, 
+                    :preferred_section_name => e.preferred_section_name, 
+                    :factor => 100)
+                result.save(:validate => false)
+            end
         end
     end
     
@@ -77,6 +105,20 @@ class AllocateRestrictedJob < ApplicationJob
                 if e.high_priority
                     e.require_confirmation!
                     e.assign_section!
+                    result = BallotResult.new(
+                        :sport_name => g.sport.name,
+                        :grade_name => g.name,
+                        :entry_limit => g.entry_limit,
+                        :over_limit => g.over_limit, 
+                        :one_entry_per_group => g.one_entry_per_group, 
+                        :group_name => e.group.short_name,
+                        :new_group => e.group.new_group,
+                        :sport_entry_name => e.name, 
+                        :sport_entry_status => e.status, 
+                        :section_name => e.allocated_section_name, 
+                        :preferred_section_name => e.preferred_section_name, 
+                        :factor => 100)
+                    result.save(:validate => false)
                 end
             end
         end

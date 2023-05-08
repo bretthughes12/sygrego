@@ -53,6 +53,7 @@ class BallotResult < ApplicationRecord
         results[:group_name] = group_name
         results[:new_group] = new_group?(group_name)
         results[:number_entered] = count_of_entered(group_name)
+        results[:number_to_confirm] = count_of_to_confirm(group_name)
         results[:number_missed_out] = count_of_missed_out(group_name)
         results
     end
@@ -63,6 +64,10 @@ class BallotResult < ApplicationRecord
     end
 
     def self.count_of_entered(group_name)
+        BallotResult.where(group_name: group_name, sport_entry_status: 'Entered').count
+    end
+
+    def self.count_of_to_confirm(group_name)
         BallotResult.where(group_name: group_name, sport_entry_status: 'To Be Confirmed').count
     end
 

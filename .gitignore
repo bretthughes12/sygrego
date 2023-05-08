@@ -40,3 +40,5 @@ yarn-debug.log*
 
 # Ignore downloaded dump files
 /db/data/*.dump
+/db/data/backup*
+/db/data/latest*
