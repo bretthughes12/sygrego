@@ -1,0 +1,68 @@
+<nav class="navbar navbar-dark navbar-static-top navbar-expand-md">
+    <div class="container">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="navbar-toggler-icon"></span>
+        </button> <%= link_to image_tag("syg.png", alt: 'State Youth Games', class: 'logo', width: 60, height: 40), root_path, class: 'navbar-brand' %>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav mr-auto">
+                <% if @settings.syg_is_happening %>
+                    <li class='nav-item dropdown'>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SYG</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Day Visitors', day_visitors_admin_participants_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Good Sports Awards', good_sports_admin_awards_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Spirit Awards', spirit_admin_awards_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Volunteer Awards', volunteer_awards_admin_awards_path %></li>
+                        </ul>
+                    </li>
+                <% end %>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Sports</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Sports', admin_sports_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Grades', admin_grades_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Sections', admin_sections_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Sessions', admin_sessions_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Venues', admin_venues_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Sport Entries', admin_sport_entries_path %></li>
+                        <% unless @settings.syg_is_happening %>
+                            <li class='dropdown-item'><%= link_to 'Sports Allocation', summary_admin_ballot_results_path %></li>
+                        <% end %>
+                        <% if @settings.restricted_sports_allocated && !@settings.syg_is_happening %>
+                            <li class='dropdown-item'><%= link_to 'Sport / Participant Audit', session_participants_admin_groups_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Sport Draws', sports_draws_admin_tasks_path %></li>
+                        <% end %>
+                        <% if @settings.syg_is_happening %>
+                            <li class='dropdown-item'><%= link_to 'Sport Volunteers', sport_volunteers_admin_volunteers_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Saturday Coordinators', sat_coords_admin_volunteers_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Sunday Coordinators', sun_coords_admin_volunteers_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Sport Evaluations', admin_sports_evaluations_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Incident Reports', admin_incident_reports_path %></li>
+                        <% end %>
+                    </ul>
+                </li>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Profile', profile_admin_user_path(current_user) %></li>
+                        <li class='dropdown-item'><%= link_to 'Change Password', edit_password_admin_user_path(current_user) %></li>
+                        <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
+                        <li class='dropdown-item'><%= link_to 'Switch Participant', available_participants_participants_path %></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <% if current_user && current_user.roles.count > 1 %>
+        <% unless @current_role.nil? %>
+            <span class="<%= role_badge_class(@current_role) %>"> <%= @current_role.name %> </span>
+        <% end %>
+    <% end %>
+
+    <%=  link_to_if(current_user.nil?, "Login", new_user_session_path, class: 'btn btn-primary m-5') do
+            link_to('Sign out', destroy_user_session_path, :method => 'delete', class: 'btn btn-danger m-5')
+        end %>
+ 
+</nav>

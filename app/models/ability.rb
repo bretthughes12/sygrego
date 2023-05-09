@@ -21,6 +21,10 @@ class Ability
     elsif session["current_role"] == "admin"
       can :manage, :all
 
+    # TODO: update abilities for SC's
+    elsif session["current_role"] == "sc"
+      can :manage, :all
+
     elsif session["current_role"] == "church_rep"
       if user.status == "Verified"
         can [:update, 

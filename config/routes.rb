@@ -373,6 +373,15 @@ Rails.application.routes.draw do
     resources :volunteers, only: [:show]
   end
 
+  # Sport Coordinator routes
+  namespace :sc do
+    resource :info, :controller => "info" do
+      collection do
+        get :home
+      end
+    end
+  end
+  
   # Group Coordinator routes
   namespace :gc do
     resource :info, :controller => "info" do

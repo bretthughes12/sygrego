@@ -1,0 +1,26 @@
+<% title "Sport Coordinator Home" %>
+
+<h1><%= yield(:title) %></h1>
+
+Welcome! <br />
+<br />
+
+It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
+
+<br/><br/>
+
+<h2>Dashboard</h2>
+
+<%= pie_chart admin_groups_charts_path, title: "Groups (#{@total_groups})", refresh: 60 %>
+
+<br/><br/>
+
+<%= pie_chart admin_participants_charts_path, title: "Participants (#{@total_participants})", refresh: 60 %>
+
+<br/><br/>
+
+<%= pie_chart admin_volunteers_charts_path, title: "Volunteers (#{@total_volunteers})", refresh: 60 %>
+
+<br/><br/>
+
+<%= pie_chart admin_sport_entries_charts_path, title: "Sport Entries (#{@total_entries})", refresh: 60 %>

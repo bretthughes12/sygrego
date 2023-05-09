@@ -69,6 +69,8 @@ class ApplicationController < ActionController::Base
 
             if role == "admin"
                 home_admin_info_url
+            elsif role == "sc"
+                home_sc_info_url
             elsif role == "gc" || role == "church_rep"
                 home_gc_info_url
             elsif participant

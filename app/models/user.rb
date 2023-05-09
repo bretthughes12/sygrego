@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def default_role
-    [:admin, :church_rep, :gc, :participant].each do |r|
+    [:admin, :church_rep, :gc, :sc, :participant].each do |r|
       return r if role?(r)
     end
   end
