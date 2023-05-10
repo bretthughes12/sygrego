@@ -6,6 +6,14 @@
 
 <%= will_paginate @sport_entries, :container => false %>
 
+<% if @settings.restricted_sports_allocated %>
+  <%= link_to "By session", gc_sport_entries_path(order: :session),
+                    class: primary_button_class,
+                    role: "button" %>
+  <%= link_to "By sport", gc_sport_entries_path,
+                    class: primary_button_class,
+                    role: "button" %>
+<% end %>
 <%= link_to "New sport entry", new_gc_sport_entry_path,
                   class: primary_button_class,
                   role: "button" %>

@@ -7,9 +7,14 @@ class Gc::SportEntriesController < ApplicationController
   
     # GET /gc/sport_entries
     def index
-      @sport_entries = @group.sport_entries.includes(:grade).
-        order('grades.name, sport_entries.status').load
-  
+      if params[:order] == 'session'
+        @sport_entries = @group.sport_entries.includes(:grade, section: :session).
+          order('sessions.database_rowid, grades.name, sport_entries.status').load
+      else
+        @sport_entries = @group.sport_entries.includes(:grade).
+          order('grades.name, sport_entries.status').load
+      end
+      
       respond_to do |format|
         format.html do
           @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100)
