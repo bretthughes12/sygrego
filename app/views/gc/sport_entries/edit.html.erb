@@ -94,7 +94,7 @@
 
 <br/>
 
-<% unless @sport_entry.available_sport_preferences.empty? %>
+<% unless @sport_entry.available_sport_preferences.empty? || @eligible_participants.empty? %>
     <h2>Additional Preferences</h2>
 
     <table class="table table-dark table-striped">
@@ -119,10 +119,12 @@
                     <%= pref.preference %>
                 </td>
                 <td> 
-                    <%= link_to 'Add', gc_sport_entry_participants_path(sport_entry_id: @sport_entry.id, id: pref.participant.id),
-                        class: primary_button_class,
-                        role: :button,
-					    method: :post %>
+                    <% unless pref.is_entered_this_sport? %>
+                        <%= link_to 'Add', gc_sport_entry_participants_path(sport_entry_id: @sport_entry.id, id: pref.participant.id),
+                            class: primary_button_class,
+                            role: :button,
+                            method: :post %>
+                    <% end %>
                 </td>
             </tr>
         <% end %>
