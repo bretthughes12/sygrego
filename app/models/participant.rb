@@ -263,11 +263,7 @@ class Participant < ApplicationRecord
     end
 
     def ticket_email
-      if email.blank?
-        gc_email
-      else
-        email
-      end
+      gc_email
     end
 
     def gc_email
