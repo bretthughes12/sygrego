@@ -2,6 +2,10 @@
 
 <h1><%= yield(:title) %></h1>
 
+<p>SYG takes safety very seriously, and part of safety is being able to minimise the damage unforeseen and unavoidable accidents and incidents can cause. For this reason, we strongly ask that the participating church arrange your General Public & Products Liability insurance before attending SYG.</p>
+<p>SYG is a sport event with all the risks that come along with it through competition, physical activity, and camping. While SYG has General Public & Products Liability insurance, the event's insurance will not extend to the churches involved in the SYG games for any personal injury or, property damage caused by the churches, and any item loss or stolen. Insurance for participants should be arranged by the church or the individual participants.</p>
+<p>Please upload a copy here of any insurance policy you or your church has arranged.</p>
+
 <%= simple_form_for(@event_detail, url: update_insurance_gc_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
 	<%= f.error_notification %>
 	
