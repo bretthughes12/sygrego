@@ -52,7 +52,7 @@ class EventDetail < ApplicationRecord
     scope :buddy_interest, -> { where("not (buddy_interest = 'Not interested')") }
     
     SERVICE_PREFERENCES = ['7:00pm',
-        '8:30pm',
+        '8:45pm',
         'No preference'].freeze
 
     BUDDY_INTEREST = ['Not interested',
@@ -91,7 +91,7 @@ class EventDetail < ApplicationRecord
     def self.sat_late_service
         groups = []
         EventDetail.all.each do |ed|
-            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sat == '8:30pm'
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sat == '8:45pm'
         end
         groups
     end
@@ -115,7 +115,7 @@ class EventDetail < ApplicationRecord
     def self.sun_late_service
         groups = []
         EventDetail.all.each do |ed|
-            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sun == '8:30pm'
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_sun == '8:45pm'
         end
         groups
     end

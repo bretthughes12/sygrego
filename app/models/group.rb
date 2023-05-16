@@ -68,10 +68,10 @@ class Group < ApplicationRecord
     scope :is_admin, -> { where(admin_use: true) }
     scope :not_admin, -> { where(admin_use: false) }
     scope :sat_early_service, -> { where('event_details.service_pref_sat': '7:00pm').includes(:event_detail) }
-    scope :sat_late_service, -> { where('event_details.service_pref_sat': '8:30pm').includes(:event_detail) }
+    scope :sat_late_service, -> { where('event_details.service_pref_sat': '8:45pm').includes(:event_detail) }
     scope :sat_no_pref_service, -> { where('event_details.service_pref_sat': 'No preference').includes(:event_detail) }
     scope :sun_early_service, -> { where('event_details.service_pref_sun': '7:00pm').includes(:event_detail) }
-    scope :sun_late_service, -> { where('event_details.service_pref_sun': '8:30pm').includes(:event_detail) }
+    scope :sun_late_service, -> { where('event_details.service_pref_sun': '8:45pm').includes(:event_detail) }
     scope :sun_no_pref_service, -> { where('event_details.service_pref_sun': 'No preference').includes(:event_detail) }
 
     has_one_attached :booklet_file
