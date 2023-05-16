@@ -226,7 +226,7 @@ class Admin::ParticipantsController < ApplicationController
   # POST /admin/participants/1/add_voucher
   def add_voucher
     if params[:participant] && !params[:participant][:voucher_name].blank?
-      name = (params[:participant][:voucher_name])
+      name = (params[:participant][:voucher_name]).strip
       name.upcase!
       voucher = Voucher.find_by_name(name)
 
