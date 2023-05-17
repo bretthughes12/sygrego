@@ -1,11 +1,12 @@
-<%- headings = %w{Group FirstName Surname Age Gender Type 
+<%- headings = %w{SYGid Group FirstName Surname Age Gender Type 
 				  Friday Saturday Sunday Monday Email BackupEmail
 				  Spectator Onsite Helper Driver NumberPlate
 				  WWCC } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @participants.each do |participant|
-  	line = [ participant.group.abbr,
+  	line = [ participant.id,
+			 participant.group.abbr,
   		     participant.first_name,
 			 participant.surname,
   		     participant.age,
