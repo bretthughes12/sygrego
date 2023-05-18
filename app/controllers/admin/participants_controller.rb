@@ -219,6 +219,31 @@ class Admin::ParticipantsController < ApplicationController
     end
   end
 
+  # GET /admin/participants/new_ticket_import
+  def new_ticket_import
+    @participant = Participant.new
+  end
+
+  # POST /admin/participants/ticket_import
+  def ticket_import
+    if params[:participant] && params[:participant][:file].path =~ %r{\.csv$}i
+      result = Participant.import_ticket(params[:participant][:file], current_user)
+
+      flash[:notice] = "Ticket upload complete: #{result[:updates]} updates; #{result[:misses]} participants not found; #{result[:errors]} errors"
+
+      respond_to do |format|
+        format.html { redirect_to admin_participants_url }
+      end
+    else
+      flash[:notice] = "Upload file must be in '.csv' format"
+      @participant = Participant.new
+
+      respond_to do |format|
+        format.html { render action: "new_ticket_import" }
+      end
+    end
+  end
+
   # GET /admin/participants/1/new_voucher
   def new_voucher
   end

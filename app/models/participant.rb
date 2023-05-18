@@ -7,6 +7,7 @@
 #  age                    :integer          default(30), not null
 #  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
+#  booking_nbr            :string(10)
 #  camping_preferences    :string(100)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
@@ -15,6 +16,7 @@
 #  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
 #  dietary_requirements   :string(255)
+#  dirty                  :boolean          default(FALSE)
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)
 #  driver_signature_date  :datetime
@@ -25,6 +27,7 @@
 #  emergency_email        :string(100)
 #  emergency_phone_number :string(20)
 #  emergency_relationship :string(20)
+#  exported               :boolean          default(FALSE)
 #  fee_when_withdrawn     :decimal(8, 2)    default(0.0)
 #  first_name             :string(20)       not null
 #  gender                 :string(1)        default("M"), not null
@@ -43,6 +46,7 @@
 #  paid                   :boolean          default(FALSE)
 #  phone_number           :string(20)
 #  postcode               :integer
+#  registration_nbr       :string(24)
 #  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
@@ -805,6 +809,34 @@ class Participant < ApplicationRecord
     end
 
     { creates: creates, updates: updates, errors: errors, error_list: error_list }
+  end
+
+  def self.import_ticket(file, user)
+    misses = 0
+    updates = 0
+    errors = 0
+    error_list = []
+
+    CSV.foreach(file.path, headers: true) do |fields|
+        participant = Participant.where(id: fields[28]).first
+      
+        if participant
+            participant.registration_nbr        = fields[5]
+            participant.booking_nbr             = fields[6]
+            participant.updated_by = user.id
+
+            if participant.save
+                updates += 1
+            else
+                errors += 1
+                error_list << participant
+            end
+        else
+            misses += 1
+        end
+    end
+
+    { misses: misses, updates: updates, errors: errors, error_list: error_list }
   end
 
   def self.round_up_to_5(num)

@@ -227,6 +227,8 @@ Rails.application.routes.draw do
       collection do
         get :new_import
         post :import
+        get :new_ticket_import
+        post :ticket_import
         get :search
         get :ticket_download
         get :participant_audit

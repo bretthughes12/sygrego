@@ -1,0 +1,52 @@
+<% title "Upload ticket details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Import file must be in '.csv' format, with columns the same as the download:</p>
+<ul>
+  <li>Name</li>
+  <li>Last Name</li>
+  <li>Email</li>
+  <li>Registration Type</li>
+  <li>Booking Type</li>
+  <li>Registration#</li>
+  <li>Booking#</li>
+  <li>Purchased By</li>
+  <li>Purchaser Email</li>
+  <li>Phone</li>
+  <li>Booking Date</li>
+  <li>Wearable ID</li>
+  <li>Notes</li>
+  <li>Question 1</li>
+  <li>Question 2</li>
+  <li>Question 3</li>
+  <li>Question 4</li>
+  <li>Question 5</li>
+  <li>Question 6</li>
+  <li>Question 7</li>
+  <li>Question 8</li>
+  <li>Question 9</li>
+  <li>Question 10</li>
+  <li>Question 11</li>
+  <li>Question 12</li>
+  <li>Question 13</li>
+  <li>Question 14</li>
+  <li>Question 15</li>
+  <li>Question 16</li>
+</ul>
+
+<%= simple_form_for(@participant, url: ticket_import_admin_participants_path) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :file, as: :file, label: "Upload file" %>
+
+    <br/>
+
+	<%= f.button :submit, "Upload" %>
+<% end %>	
+
+<br/>
+
+<%= link_to "Back", admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>

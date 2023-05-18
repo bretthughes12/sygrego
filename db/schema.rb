@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_104019) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_104211) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -348,6 +348,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_104019) do
     t.string "sport_notes"
     t.boolean "driving_to_syg", default: false
     t.string "licence_type", limit: 15
+    t.string "registration_nbr", limit: 24
+    t.string "booking_nbr", limit: 10
+    t.boolean "exported", default: false
+    t.boolean "dirty", default: false
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
