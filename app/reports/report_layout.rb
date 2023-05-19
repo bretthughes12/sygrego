@@ -10,6 +10,11 @@ module ReportLayout
         heading1 "State Youth Games #{APP_CONFIG[:this_year]}", 30
         heading1 "#{@group.name}"
     
+        text @group.trading_name, style: :bold
+        text @group.address
+        text "#{@group.suburb}, #{@group.postcode}"
+        move_down(10)
+
         stroke_horizontal_rule
         move_down(10)
     end
