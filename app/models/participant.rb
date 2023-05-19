@@ -81,6 +81,7 @@
 class Participant < ApplicationRecord
     include Auditable
     include Searchable
+    include Ticketable
 
     require 'csv'
     require 'pp'
@@ -117,6 +118,9 @@ class Participant < ApplicationRecord
     scope :males, -> { where("gender IN ('M', 'm', 'U', 'u')") }
     scope :females, -> { where("gender IN ('F', 'f', 'U', 'u')") }
     scope :day_visitors, -> { where(spectator: true).where(onsite: false) }
+    scope :ticketed, -> { where(exported: true) }
+    scope :to_be_ticketed, -> { where(exported: false) }
+    scope :ticket_updates, -> { where(exported: true).where(dirty: true) }
 
     delegate :group_extras, to: :group
 
@@ -1131,6 +1135,26 @@ private
       'group_coord',
       'sport_coord',
       'guest'
+    ]
+  end
+
+  def self.ticket_fields
+    ['first_name',
+      'surname', 
+      'group_id',
+      'coming',
+      'coming_friday',
+      'coming_saturday',
+      'coming_sunday',
+      'coming_monday',
+      'age',
+      'gender',
+      'spectator',
+      'onsite',
+      'helper',
+      'driver',
+      'number_plate',
+      'wwcc_number'
     ]
   end
 end

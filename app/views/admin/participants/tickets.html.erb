@@ -1,0 +1,34 @@
+<% title "Ticket dashboard" %>
+
+<h1><%= yield(:title) %></h1>
+
+<table class="table table-dark table-striped">
+  <tr>
+    <td>Total tickets created</td>
+    <td><%= @ticketed %></td>
+  </tr>
+  <tr>
+    <td>Tickets to be created</td>
+    <td><%= @to_be_ticketed %></td>
+  </tr>
+  <tr>
+    <td>Ticket updates required</td>
+    <td><%= @ticket_updates %></td>
+  </tr>
+</table>
+
+<%= link_to "Ticket Download", ticket_download_admin_participants_path(format: :csv),
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Ticket Updates", ticket_updates_admin_participants_path(format: :csv),
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Ticket Upload", new_ticket_import_admin_participants_path,
+                  class: danger_button_class,
+                  role: "button" %>
+<%= link_to "Ticket Reset", ticket_reset_admin_participants_path,
+                  method: :post,
+                  class: danger_button_class,
+                  role: "button" %>

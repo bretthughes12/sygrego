@@ -40,13 +40,57 @@ class Admin::ParticipantsController < ApplicationController
     end
   end
 
-  # GET /admin/participants/ticket_download
+  # GET /admin/participants/tickets
+  def tickets
+    @ticketed = Participant.coming.accepted.ticketed.where('age > 5').count
+    @to_be_ticketed = Participant.coming.accepted.to_be_ticketed.where('age > 5').count
+    @ticket_updates = @participants = Participant.coming.accepted.ticket_updates.where('age > 5').count
+
+    respond_to do |format|
+      format.html # tickets.html.erb
+    end
+  end
+
+  # POST /admin/participants/ticket_download
   def ticket_download
-    @participants = Participant.coming.accepted.where('age > 5').
+    @participants = Participant.coming.accepted.to_be_ticketed.where('age > 5').
       order('first_name, surname').load
 
     respond_to do |format|
-      format.csv  { render_csv "syg_tickets", "syg_tickets" }
+      format.csv  do
+        render_csv "syg_tickets_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets"
+        @participants.update_all(exported: true, dirty: false)
+      end
+    end
+  end
+
+  # POST /admin/participants/ticket_updates
+  def ticket_updates
+    @participants = Participant.coming.accepted.ticket_updates.where('age > 5').
+      order('first_name, surname').load
+
+    respond_to do |format|
+      format.csv do 
+        render_csv "syg_ticket_updates_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets" 
+        @participants.update_all(dirty: false)
+      end
+    end
+  end
+
+  # POST /admin/participants/ticket_reset
+  def ticket_reset
+    @participants = Participant.coming.accepted.ticketed.load
+
+    respond_to do |format|
+      format.html do 
+        @participants.update_all(registration_nbr: nil, booking_nbr: nil, exported: false, dirty: false)
+
+        @ticketed = Participant.coming.accepted.ticketed.where('age > 5').count
+        @to_be_ticketed = Participant.coming.accepted.to_be_ticketed.where('age > 5').count
+        @ticket_updates = @participants = Participant.coming.accepted.ticket_updates.where('age > 5').count
+
+        render action: 'tickets'
+      end
     end
   end
 
@@ -232,7 +276,7 @@ class Admin::ParticipantsController < ApplicationController
       flash[:notice] = "Ticket upload complete: #{result[:updates]} updates; #{result[:misses]} participants not found; #{result[:errors]} errors"
 
       respond_to do |format|
-        format.html { redirect_to admin_participants_url }
+        format.html { redirect_to tickets_admin_participants_url }
       end
     else
       flash[:notice] = "Upload file must be in '.csv' format"
