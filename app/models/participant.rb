@@ -270,6 +270,17 @@ class Participant < ApplicationRecord
       gc_email
     end
 
+    def ticket_type
+      return "All Days" if coming_friday && coming_saturday && coming_sunday && coming_monday
+      return "NONE" if !coming_friday && !coming_saturday && !coming_sunday && !coming_monday
+      coming_days = []
+      coming_days << "FRI" if coming_friday
+      coming_days << "SAT" if coming_saturday 
+      coming_days << "SUN" if coming_sunday 
+      coming_days << "MON" if coming_monday 
+      coming_days.join(" / ")
+    end
+
     def gc_email
       if self.group.users.primary.empty?
         self.group.gc_email
