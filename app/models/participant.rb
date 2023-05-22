@@ -768,7 +768,9 @@ class Participant < ApplicationRecord
             participant.emergency_contact       = fields[28]
             participant.emergency_relationship  = fields[29]
             participant.emergency_phone_number  = fields[30]
-            participant.wwcc_number             = fields[31]
+            participant.emergency_email         = fields[31]
+            participant.wwcc_number             = fields[32]
+            participant.camping_preferences     = fields[33]
             participant.updated_by = user.id
 
             if participant.save
@@ -811,7 +813,9 @@ class Participant < ApplicationRecord
                emergency_contact:       fields[28],
                emergency_relationship:  fields[29],
                emergency_phone_number:  fields[30],
-               wwcc_number:             fields[31],
+               emergency_email:         fields[31],
+               wwcc_number:             fields[32],
+               camping_preferences:     fields[33],
                updated_by:              user.id)
 
             if participant.errors.empty?
