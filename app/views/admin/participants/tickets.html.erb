@@ -17,6 +17,9 @@
   </tr>
 </table>
 
+<%= link_to "Refresh", tickets_admin_participants_path,
+                  class: primary_button_class,
+                  role: "button" %>
 <%= link_to "Ticket Download", ticket_download_admin_participants_path(format: :csv),
                   method: :post,
                   class: primary_button_class,
