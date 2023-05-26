@@ -65,7 +65,7 @@ class FinaliseGradesJob < ApplicationJob
                     moving_entry = entries.shift
 
                     if moving_entry.venue_name != new_section.venue_name
-                        puts "*--> Entry in #{moving_entry.section_name} (#{moving_entry.name}) moving from #{moving_entry.venue_name} to #{section.venue_name}"
+                        puts "*--> Entry in #{moving_entry.section_name} (#{moving_entry.name}) moving from #{moving_entry.venue_name} to #{new_section.venue_name}"
                     end
 
                     puts "---> Moving #{moving_entry.name} to #{new_section.name}"
