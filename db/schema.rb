@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_104211) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_110608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -195,6 +195,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_104211) do
     t.bigint "updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ticket_preference", limit: 20, default: "Send to GC"
     t.index ["abbr"], name: "index_groups_on_abbr", unique: true
     t.index ["name"], name: "index_groups_on_name", unique: true
     t.index ["short_name"], name: "index_groups_on_short_name", unique: true
