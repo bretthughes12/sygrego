@@ -102,6 +102,9 @@ class Group < ApplicationRecord
                 Submitted
                 Approved].freeze
 
+    TICKET_PREFERENCES = ['Send to GC',
+                          'Send to Participant'].freeze
+  
     validates :abbr,                presence: true,
                                     uniqueness: true,
                                     length: { in: 2..4 }
@@ -125,6 +128,8 @@ class Group < ApplicationRecord
     validates :phone_number,        length: { maximum: 20 }
     validates :status,              length: { maximum: 12 },
                                     inclusion: { in: STATUS }
+    validates :ticket_preference,   length: { maximum: 20 },
+                                    inclusion: { in: TICKET_PREFERENCES }
     validates :allocation_bonus,    numericality: { only_integer: true },
                                     allow_blank: true
     validates :late_fees,           numericality: true,

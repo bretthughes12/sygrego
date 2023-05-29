@@ -271,7 +271,15 @@ class Participant < ApplicationRecord
     end
 
     def ticket_email
-      gc_email
+      if group.ticket_preference == 'Send to Participant'
+        if email.blank?
+          gc_email
+        else
+          email
+        end
+      else
+        gc_email
+      end
     end
 
     def ticket_type

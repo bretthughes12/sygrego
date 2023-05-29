@@ -222,6 +222,7 @@ private
                                     :postcode,
                                     :phone_number,
                                     :last_year,
+                                    :ticket_preference,
                                     :admin_use,
                                     :late_fees,
                                     :email,

@@ -39,6 +39,7 @@ private
                                     :phone_number,
                                     :email,
                                     :website,
+                                    :ticket_preference,
                                     :denomination,
                                     :years_attended,
                                     :age_demographic,
