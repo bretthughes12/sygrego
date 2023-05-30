@@ -23,6 +23,7 @@
 #  short_name        :string(50)       not null
 #  status            :string(12)       default("Stale")
 #  suburb            :string(40)       not null
+#  ticket_email      :string(100)
 #  ticket_preference :string(20)       default("Send to GC")
 #  trading_name      :string(100)      not null
 #  updated_by        :bigint
@@ -130,6 +131,9 @@ class Group < ApplicationRecord
                                     inclusion: { in: STATUS }
     validates :ticket_preference,   length: { maximum: 20 },
                                     inclusion: { in: TICKET_PREFERENCES }
+    validates :ticket_email,        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
+                                    allow_blank: true,
+                                    unless: proc { |o| o.email.blank? }
     validates :allocation_bonus,    numericality: { only_integer: true },
                                     allow_blank: true
     validates :late_fees,           numericality: true,
