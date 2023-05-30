@@ -2,6 +2,8 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= will_paginate @sport_entries, :container => false %>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>
@@ -14,3 +16,5 @@
 
 	<%= render partial: 'sports_draws', collection: @sport_entries, as: :sport_entry %>
 </table>
+
+<%= will_paginate @sport_entries, :container => false %>
