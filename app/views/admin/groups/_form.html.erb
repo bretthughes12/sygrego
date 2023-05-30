@@ -19,6 +19,7 @@
 	<h2>Tickets</h2>
 
 	<%= f.input :ticket_preference, as: :select, collection: Group::TICKET_PREFERENCES, include_blank: false %>
+	<%= f.input :ticket_email %>
 
 	<br/>
 

@@ -40,6 +40,7 @@ private
                                     :email,
                                     :website,
                                     :ticket_preference,
+                                    :ticket_email,
                                     :denomination,
                                     :years_attended,
                                     :age_demographic,

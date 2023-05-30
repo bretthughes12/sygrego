@@ -104,7 +104,8 @@ class Group < ApplicationRecord
                 Approved].freeze
 
     TICKET_PREFERENCES = ['Send to GC',
-                          'Send to Participant'].freeze
+                          'Send to Participant',
+                          'Send to Ticket Email'].freeze
   
     validates :abbr,                presence: true,
                                     uniqueness: true,
@@ -131,9 +132,9 @@ class Group < ApplicationRecord
                                     inclusion: { in: STATUS }
     validates :ticket_preference,   length: { maximum: 20 },
                                     inclusion: { in: TICKET_PREFERENCES }
-    validates :ticket_email,        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
+    validates :ticket_email,        format: { with: URI::MailTo::EMAIL_REGEXP, message: 'invalid format' },
                                     allow_blank: true,
-                                    unless: proc { |o| o.email.blank? }
+                                    unless: proc { |o| o.ticket_email.blank? }
     validates :allocation_bonus,    numericality: { only_integer: true },
                                     allow_blank: true
     validates :late_fees,           numericality: true,

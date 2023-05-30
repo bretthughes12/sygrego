@@ -223,6 +223,7 @@ private
                                     :phone_number,
                                     :last_year,
                                     :ticket_preference,
+                                    :ticket_email,
                                     :admin_use,
                                     :late_fees,
                                     :email,

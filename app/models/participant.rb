@@ -277,6 +277,12 @@ class Participant < ApplicationRecord
         else
           email
         end
+      elsif group.ticket_preference == 'Send to Ticket Email'
+        if group.ticket_email.blank?
+          gc_email
+        else
+          group.ticket_email
+        end
       else
         gc_email
       end
