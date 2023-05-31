@@ -1,5 +1,5 @@
 class Admin::InfoController < ApplicationController
-    before_action :authenticate_user!, except: [:knockout_reference, :ladder_reference]
+    before_action :authenticate_user!, except: [:knockout_reference, :ladder_reference, :results_reference]
 
     layout 'admin' 
 
@@ -81,6 +81,11 @@ class Admin::InfoController < ApplicationController
     # GET /admin/info/ladder_reference
     def ladder_reference
         redirect_to rails_blob_path(@settings.ladder_reference)
+    end
+
+    # GET /admin/info/results_reference
+    def results_reference
+        redirect_to rails_blob_path(@settings.results_reference)
     end
 
     private

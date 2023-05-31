@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/legend' => 'awards#new_volunteer', as: :legend
   get '/knockout_reference' => 'admin/info#knockout_reference', controller: "admin/info", as: :knockout_reference
   get '/ladder_reference' => 'admin/info#ladder_reference', controller: "admin/info", as: :ladder_reference
+  get '/results_reference' => 'admin/info#results_reference', controller: "admin/info", as: :results_reference
   get 'static/:permalink' => 'pages#show', as: :static
 
   devise_for :users, controllers: {
@@ -133,6 +134,7 @@ Rails.application.routes.draw do
         patch :update_references
         patch :purge_knockout_reference
         patch :purge_ladder_reference
+        patch :purge_results_reference
       end
     end
     resources :pages

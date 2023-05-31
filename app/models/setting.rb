@@ -58,9 +58,11 @@
 class Setting < ApplicationRecord
   attr_reader :knockout_file
   attr_reader :ladder_file
+  attr_reader :results_file
 
   has_one_attached :knockout_reference
   has_one_attached :ladder_reference
+  has_one_attached :results_reference
 
   validates :new_group_sports_allocation_factor,
                                            numericality: { only_integer: true },

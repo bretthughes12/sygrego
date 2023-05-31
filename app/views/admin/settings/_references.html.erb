@@ -46,4 +46,28 @@
         <%= f.button :submit, "Upload" %>
 
 	<% end %>
+
+	<br/>
+
+	<% if setting.results_reference.attached? %>
+		<% if setting.results_reference.representable? %>
+		    <%= link_to(image_tag(setting.results_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.results_reference, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.results_reference, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_results_reference_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :results_reference, as: :file, label: 'Results Reference: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+
+	<% end %>
 <% end %>

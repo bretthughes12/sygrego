@@ -221,6 +221,17 @@ class Admin::SettingsController < ApplicationController
       format.html { render action: "edit_references" }
     end
   end
+  
+  # PATCH /admin/settings/1/purge_results_reference
+  def purge_results_reference
+    @setting = Setting.find(params[:id])
+
+    @setting.results_reference.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
 
   private
   
@@ -274,7 +285,8 @@ class Admin::SettingsController < ApplicationController
                                       :rego_website,
                                       :website_host,
                                       :knockout_reference,
-                                      :ladder_reference
+                                      :ladder_reference,
+                                      :results_reference
                                     )
 
     end
