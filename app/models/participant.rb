@@ -851,11 +851,11 @@ class Participant < ApplicationRecord
     error_list = []
 
     CSV.foreach(file.path, headers: true) do |fields|
-        participant = Participant.where(id: fields[28]).first
+        participant = Participant.where(id: fields[27]).first
       
         if participant
-            participant.registration_nbr        = fields[5]
-            participant.booking_nbr             = fields[6]
+            participant.registration_nbr        = fields[9]
+            participant.booking_nbr             = fields[8]
             participant.updated_by = user.id
 
             if participant.save
