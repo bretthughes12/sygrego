@@ -12,6 +12,6 @@
 	</td>
 	
 	<td> 
-		<%= event_detail.buddy_comments[0..255] %>
+		<%= event_detail.buddy_comments[0..255] unless event_detail.buddy_comments.nil? %>
 	</td>
 </tr>
