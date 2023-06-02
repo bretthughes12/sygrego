@@ -43,7 +43,7 @@ class Admin::ParticipantsController < ApplicationController
   # GET /admin/participants/tickets
   def tickets
     @ticketed = Participant.coming.accepted.ticketed.where('age > 5').count
-    @ticketed_not_uploaded = Participant.coming.accepted.ticketed.where('age > 5').where(registration_nbr: '').count
+    @ticketed_not_uploaded = Participant.coming.accepted.ticketed.where('age > 5').where('registration_nbr is null').count
     @to_be_ticketed = Participant.coming.accepted.to_be_ticketed.where('age > 5').count
     @ticket_updates = @participants = Participant.coming.accepted.ticket_updates.where('age > 5').count
 
