@@ -21,7 +21,7 @@ namespace :syg do
             puts "No match to #{booklet.key}"
         else
             abbr = Regexp.last_match(1).tr('-', ' ')
-            /^booklet_files\/(.+)\.PDF/.match(booklet.key)
+            /^booklet_files\/(.+)\.pdf/.match(booklet.key)
             name = Regexp.last_match(1).tr('-', ' ')
             group = Group.find_by_abbr(abbr)
             file = s3.bucket(APP_CONFIG[:s3_bucket]).object(booklet.key).get.body
