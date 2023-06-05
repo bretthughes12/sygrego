@@ -341,6 +341,7 @@ class Participant < ApplicationRecord
       return 0 if age && (age < 6)
       return 0 if guest
       return 0 if !onsite && helper
+      return 0 if chargeable_days == 0
   
       # other set-price conditions
       if !onsite && spectator
