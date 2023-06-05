@@ -773,7 +773,7 @@ class Group < ApplicationRecord
     end
   
     def uppercase_abbr!
-      abbr.upcase!
+      abbr.strip.upcase!
     end
   
     def create_event_details!
