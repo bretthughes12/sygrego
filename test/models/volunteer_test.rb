@@ -124,7 +124,7 @@ class VolunteerTest < ActiveSupport::TestCase
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, email: nil, participant: participant)
     
-    assert_equal [user.email], volunteer.email_recipients
+    assert_equal participant.email, volunteer.email_recipients
   end
   
   test "number of teams should be the total number of teams for this coordinator" do
