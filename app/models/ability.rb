@@ -23,7 +23,16 @@ class Ability
 
     # TODO: update abilities for SC's
     elsif session["current_role"] == "sc"
-      can :manage, :all
+      can :read, Page
+      can [:new_good_sports,
+           :new_spirit,
+           :new_volunteer,
+           :create_good_sports,
+           :create_spirit,
+           :create_volunteer], Award
+      can :create, SportsEvaluation
+      can :create, IncidentReport
+      can [:index, :update, :show, :search], LostItem
 
     elsif session["current_role"] == "church_rep"
       if user.status == "Verified"
