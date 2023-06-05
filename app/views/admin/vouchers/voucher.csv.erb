@@ -1,4 +1,4 @@
-<%- headings = %w{Name Group Limit Expiry Type Adjustment } -%>
+<%- headings = %w{Name Group Limit Used Expiry Type Adjustment } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @vouchers.each do |voucher|
@@ -8,6 +8,7 @@
   	line = [ voucher.name,
 		  	 g,
   		     voucher.limit,
+  		     voucher.participants.count,
   		     e,
 			 voucher.voucher_type,
   		     voucher.adjustment
