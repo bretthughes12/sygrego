@@ -18,7 +18,7 @@
 		<li><%= link_to "How to Complete a Knockout draw", rails_blob_url(@settings.knockout_reference) %></li>
 	<% end %>
 	<% if @sport && @sport.draw_type == "Round Robin" && @settings.ladder_reference.attached? %>
-		<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.knockout_reference) %></li>
+		<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.ladder_reference) %></li>
 	<% end %>
 	<% if @sport.rules_file.attached? %>
 		<li><%= link_to "Rules for your Sport", rails_blob_url(@sport.rules_file) %></li>
