@@ -210,8 +210,12 @@ class Volunteer < ApplicationRecord
     end
    
     def email_recipients
-        if email.blank?
-          participant.group.email_recipients
+        if email.blank? 
+          if participant.email.blank?
+            participant.group.email_recipients
+          else
+            participant.email
+          end
         else
           email
         end

@@ -1,0 +1,75 @@
+<% content_for(:title) { "Welcome Sports Coordinator!" } %>
+
+<p>Hi SYG sports co-ordinator!</p>
+
+<i>Note: You may be receiving this as a Group Co-ordinator of the intended Sports Co-ordinator, if the Sports Co-ordinator does not have an email address recorded in the SYG Registrations system. If that is the case, please pass this email on to the actual Sports Co-ordinator.</i>
+
+<p>Firstly: thank you for volunteering to coordinate a sport (or sports!!) over the SYG weekend!  SYG wouldn’t have been running for over 30 years if it wasn’t for people like you volunteering to help the event run!</p>
+
+<p>Please follow these links to download some crucial documents that will help you in your role:</p>
+<ul>
+	<% if @info %>
+	<li><%= link_to "Sports Information & Rules Booklet", @info.first.attachment.url %></li>
+	<% end %>
+	<% if @sport && @sport.draw_type == "Knockout" && @settings.knockout_reference.attached? %>
+	<li><%= link_to "How to Complete a Knockout draw", rails_blob_url(@settings.knockout_reference, disposition: "attachment") %></li>
+	<% end %>
+	<% if @sport && @sport.draw_type == "Round Robin" && @settings.ladder_reference.attached? %>
+	<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.knockout_reference, disposition: "attachment") %></li>
+	<% end %>
+	<% if @sport.rules_file.attached? %>
+		<% if @sport.rules_file.representable? %>
+		    <li>Rules for your Sport <%= link_to(image_tag(@sport.rules_file.representation(resize_to_limit: [80, 100])), rails_blob_url(@sport.rules_file, disposition: "attachment")) %></li>
+		<% else %>
+			<li><%= link_to "Rules for your Sport", rails_blob_url(@sport.rules_file, disposition: "attachment") %></li>
+		<% end %>
+	<% end %>
+	<% if @maps %>
+	<li><%= link_to "Maps of the Sport Venues", @maps.first.attachment.url %></li>
+	<% end %>
+</ul>
+
+<p>Over the weekend:</p>
+
+<p>You will need to register at the Lardner Park admin office the night before the event you are coordinating. The sports desk at the SYG admin office will be open from the following times for you to collect your sports pack and equipment:</p>
+<ul>
+	<li>Friday (4pm to 10pm, and from 11pm)</li>
+	<li>Saturday (5pm to 7pm to return equipment and packs, and from 9pm to 11pm to collect equipment and packs for Sunday)</li>
+	<li>Sunday (5pm to 7pm to return equipment and packs, and from 9pm to 11pm)</li>
+</ul>
+
+<p>These packs will include the rules for your sport, scoresheets, score pads, stationery, calculator, whistle, timer, stopwatch, your FREE SYG shirt, sports equipment and venue keys, if applicable.</p>
+
+<% if @sport && @sport.draw_type == "Round Robin" %>
+	<p>For the results from your section, you can enter them online for easy tracking. Website is https://sygrego.com/users/sign_in and user name is sygresults@gmail.com and password syg2023</p>
+
+	<p>For information on how to enter results online, head to this website https://sygrego.com/results_reference</p>
+
+	<p>OR</p>
+
+	<p>Send a clear photo of the fully completed results to sygresults@gmail.com This should show the winners of each match and forfeits / no shows - but most importantly the finalists and winners!</p>
+
+<% else %>
+
+	<p>For the results from your section, please send a clear photo of the fully completed results to  sygresults@gmail.com  This should show the winners of each match and forfeits / no shows - but most importantly the finalists and winners!</p>
+<% end %>
+
+<p>Following your sport we will need you to your return the sports pack (minus your shirt!) back to the office as per the times above. This will allow us to distribute the equipment to the co-ordinators of the same sport for the next day without delay.</p>
+
+<p>At the end of the session, can you please make a detailed effort to ensure your venue is left clean and tidy. This is very important!</p>
+
+<p>If First Aid is required on the day, please advise the participants of the nearest SYG First Aid crews, who will be based at Lardner Park, Warragul Regional College Stadium, Drouin Secondary College Stadium, Warragul Netball Courts and Bellbird Park Volleyball Stadium.</p>
+
+<p>If you have any problems at your sport or have any questions please contact us, our mobiles are:  Jarrod: 0413 703 106 or Glenn: 0438 534 512.</p>
+
+<p>Please take the time to read through your documents in advance to make your role at SYG easier. We look forward to meeting with you over the weekend and look forward to working with you to make this an amazing SYG for 2019!</p>
+
+<p>Thanks once again!</p>
+ 
+<p>Regards,</p>
+
+<b>Glenn Davey & Jarrod Parsons</b>
+<p>Sports Directors</p>
+<p>E: sports@stateyouthgames.com</p>
+<p>Jarrod: 0413 703 106</p>
+<p>Glenn: 0438 534 512</p>
