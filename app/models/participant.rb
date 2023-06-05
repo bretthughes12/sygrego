@@ -333,7 +333,7 @@ class Participant < ApplicationRecord
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       base_fee -= 30 if spectator
-      base_fee = 60 if spectator && days == 1
+      base_fee = 60 if spectator && chargeable_days == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
@@ -345,7 +345,7 @@ class Participant < ApplicationRecord
   
       # other set-price conditions
       if !onsite && spectator
-        if days == 1 && age && age >= 14
+        if chargeable_days == 1 && age && age >= 14
           fee = 30
         elsif age && age >= 14
           fee = 60
