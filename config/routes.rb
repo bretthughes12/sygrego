@@ -135,6 +135,8 @@ Rails.application.routes.draw do
         patch :purge_knockout_reference
         patch :purge_ladder_reference
         patch :purge_results_reference
+        patch :purge_sports_reference
+        patch :purge_sports_maps
       end
     end
     resources :pages

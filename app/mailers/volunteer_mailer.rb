@@ -7,6 +7,7 @@ class VolunteerMailer < ActionMailer::Base
     
     def welcome(volunteer)
       @sport = volunteer.sport
+      @section = volunteer.section
       
       unless volunteer.sport.nil?
 #        map_type = DownloadType.find_by_name("Maps - Sports Venues")

@@ -232,6 +232,28 @@ class Admin::SettingsController < ApplicationController
       format.html { render action: "edit_references" }
     end
   end
+  
+  # PATCH /admin/settings/1/purge_sports_reference
+  def purge_sports_reference
+    @setting = Setting.find(params[:id])
+
+    @setting.sports_reference.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
+  
+  # PATCH /admin/settings/1/purge_sports_maps
+  def purge_sports_maps
+    @setting = Setting.find(params[:id])
+
+    @setting.sports_maps.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
 
   private
   
@@ -286,7 +308,9 @@ class Admin::SettingsController < ApplicationController
                                       :website_host,
                                       :knockout_reference,
                                       :ladder_reference,
-                                      :results_reference
+                                      :results_reference,
+                                      :sports_reference,
+                                      :sports_maps
                                     )
 
     end

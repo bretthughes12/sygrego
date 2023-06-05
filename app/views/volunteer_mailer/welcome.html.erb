@@ -8,24 +8,23 @@
 
 <p>Please follow these links to download some crucial documents that will help you in your role:</p>
 <ul>
-	<% if @info %>
-	<li><%= link_to "Sports Information & Rules Booklet", @info.first.attachment.url %></li>
+	<% if @section && @section.draw_file.attached? %>
+		<li><%= link_to "Fixture for your section", rails_blob_url(@section.draw_file) %></li>
+	<% end %>
+	<% if @settings.sports_reference.attached? %>
+		<li><%= link_to "Sports Information & Rules Booklet", rails_blob_url(@settings.sports_reference) %></li>
 	<% end %>
 	<% if @sport && @sport.draw_type == "Knockout" && @settings.knockout_reference.attached? %>
-	<li><%= link_to "How to Complete a Knockout draw", rails_blob_url(@settings.knockout_reference, disposition: "attachment") %></li>
+		<li><%= link_to "How to Complete a Knockout draw", rails_blob_url(@settings.knockout_reference) %></li>
 	<% end %>
 	<% if @sport && @sport.draw_type == "Round Robin" && @settings.ladder_reference.attached? %>
-	<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.knockout_reference, disposition: "attachment") %></li>
+		<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.knockout_reference) %></li>
 	<% end %>
 	<% if @sport.rules_file.attached? %>
-		<% if @sport.rules_file.representable? %>
-		    <li>Rules for your Sport <%= link_to(image_tag(@sport.rules_file.representation(resize_to_limit: [80, 100])), rails_blob_url(@sport.rules_file, disposition: "attachment")) %></li>
-		<% else %>
-			<li><%= link_to "Rules for your Sport", rails_blob_url(@sport.rules_file, disposition: "attachment") %></li>
-		<% end %>
+		<li><%= link_to "Rules for your Sport", rails_blob_url(@sport.rules_file) %></li>
 	<% end %>
-	<% if @maps %>
-	<li><%= link_to "Maps of the Sport Venues", @maps.first.attachment.url %></li>
+	<% if @settings.sports_maps.attached? %>
+		<li><%= link_to "Maps of the Sport Venues", rails_blob_url(@settings.sports_maps) %></li>
 	<% end %>
 </ul>
 
@@ -41,9 +40,9 @@
 <p>These packs will include the rules for your sport, scoresheets, score pads, stationery, calculator, whistle, timer, stopwatch, your FREE SYG shirt, sports equipment and venue keys, if applicable.</p>
 
 <% if @sport && @sport.draw_type == "Round Robin" %>
-	<p>For the results from your section, you can enter them online for easy tracking. Website is https://sygrego.com/users/sign_in and user name is sygresults@gmail.com and password syg2023</p>
+	<p>For the results from your section, you can enter them online for easy tracking, and to also calculate your finalists for you. The website is <%= link_to "here", new_user_session_url %> and user name is sygresults@gmail.com with password syg2023.</p>
 
-	<p>For information on how to enter results online, head to this website https://sygrego.com/results_reference</p>
+	<p>For information on how to enter results online, see <%= link_to "this reference", rails_blob_url(@settings.results_reference) %></p>
 
 	<p>OR</p>
 
@@ -62,7 +61,7 @@
 
 <p>If you have any problems at your sport or have any questions please contact us, our mobiles are:  Jarrod: 0413 703 106 or Glenn: 0438 534 512.</p>
 
-<p>Please take the time to read through your documents in advance to make your role at SYG easier. We look forward to meeting with you over the weekend and look forward to working with you to make this an amazing SYG for 2019!</p>
+<p>Please take the time to read through your documents in advance to make your role at SYG easier. We look forward to meeting with you over the weekend and look forward to working with you to make this an amazing SYG for 2023!</p>
 
 <p>Thanks once again!</p>
  

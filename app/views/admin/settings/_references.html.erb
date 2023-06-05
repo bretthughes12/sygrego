@@ -1,7 +1,55 @@
 <%= simple_form_for(setting, url: url) do |f| %> 
 	<%= f.error_notification %>
 
-	<h3>References</h3>
+	<h3>SYG Sport Information Guide</h3>
+	<% if setting.sports_reference.attached? %>
+		<% if setting.sports_reference.representable? %>
+		    <%= link_to(image_tag(setting.sports_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.sports_reference, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.sports_reference, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_sports_reference_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :sports_reference, as: :file, label: 'Sports Reference: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+
+	<br/>
+
+	<h3>Maps of the Sport Venues</h3>
+	<% if setting.sports_maps.attached? %>
+		<% if setting.sports_maps.representable? %>
+		    <%= link_to(image_tag(setting.sports_maps.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.sports_maps, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.sports_maps, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_sports_maps_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :sports_maps, as: :file, label: 'Sports Maps: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+
+	<br/>
+
+	<h3>How to Complete a Knockout Draw</h3>
 	<% if setting.knockout_reference.attached? %>
 		<% if setting.knockout_reference.representable? %>
 		    <%= link_to(image_tag(setting.knockout_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.knockout_reference, disposition: "attachment")) %>
@@ -25,6 +73,7 @@
 
 	<br/>
 
+	<h3>How to Complete the Ladder Worksheet</h3>
 	<% if setting.ladder_reference.attached? %>
 		<% if setting.ladder_reference.representable? %>
 		    <%= link_to(image_tag(setting.ladder_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.ladder_reference, disposition: "attachment")) %>
@@ -49,6 +98,7 @@
 
 	<br/>
 
+	<h3>How to Report Sports Results online</h3>
 	<% if setting.results_reference.attached? %>
 		<% if setting.results_reference.representable? %>
 		    <%= link_to(image_tag(setting.results_reference.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.results_reference, disposition: "attachment")) %>
