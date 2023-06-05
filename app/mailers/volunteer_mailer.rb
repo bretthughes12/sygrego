@@ -9,7 +9,7 @@ class VolunteerMailer < ActionMailer::Base
       @section = volunteer.section
       
       mail(to:      volunteer.email_recipients, 
-           subject: "#{APP_CONFIG[:email_subject]} SYG #{APP_CONFIG[:this_year]} - Welcome Sports Coordinators")
+           subject: "#{APP_CONFIG[:email_subject]} SYG #{APP_CONFIG[:this_year]} - Welcome Sports Coordinators - #{@section.name}")
     end
 
     private
