@@ -177,6 +177,13 @@ class Admin::ParticipantsController < ApplicationController
     @participant.allergies = "N/A"
     @participant.email = 'changeme@example.com'
 
+    if @participant.age < 18
+      @participant.emergency_contact = 'Unknown'
+      @participant.emergency_relationship = 'Unknown'
+      @participant.emergency_phone_number = 'Unknown'
+      @participant.emergency_email = 'changeme@example.com'
+    end
+
     @participant.updated_by = current_user.id
 
     respond_to do |format|
