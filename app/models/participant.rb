@@ -1166,14 +1166,7 @@ private
       'coming_saturday',
       'coming_sunday',
       'coming_monday',
-      'age',
-      'gender',
-      'spectator',
-      'onsite',
-      'helper',
-      'driver',
-      'number_plate',
-      'wwcc_number'
+      'email'
     ]
   end
 end
