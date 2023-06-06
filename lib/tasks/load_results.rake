@@ -16,7 +16,7 @@ namespace :syg do
 
     files.each do |result|
         next if result.key == 'results_files/'
-        /^results_files\/SYG_\d+_Results_(\w+)\.pdf/.match(result.key)
+        /^results_files\/SYG_\d+_Results_(\.+)\.pdf/.match(result.key)
         if Regexp.last_match(1).nil?
             puts "No match to #{result.key}"
         else
