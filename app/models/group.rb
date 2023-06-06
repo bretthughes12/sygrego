@@ -258,7 +258,11 @@ class Group < ApplicationRecord
     end
 
     def gc_email
-      gc.nil? ? '' : gc.email
+      if self.users.primary.empty?
+        gc.nil? ? '' : gc.email
+      else
+        self.users.primary.first.email
+      end
     end
 
     def gc_phone_number
@@ -267,6 +271,20 @@ class Group < ApplicationRecord
 
     def gc_wwcc
       gc.nil? ? '' : gc.wwcc_number
+    end
+
+    def ticket_recipient_text
+      if self.ticket_preference == 'Send to Participant'
+        'each participant'
+      elsif self.ticket_preference == 'Send to Ticket Email'
+        if self.ticket_email.blank?
+          gc_email
+        else
+          self.ticket_email
+        end
+      else
+        self.gc_email
+      end
     end
 
     def email_recipients

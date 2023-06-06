@@ -18,6 +18,18 @@
 
 	<h2>Tickets</h2>
 
+	<table class="table table-dark table-striped">
+		<tr valign="top">
+			<td> 
+				Tickets will be sent to
+			</td>
+
+			<td> 
+				<%= @group.ticket_recipient_text  %>
+			</td>
+		</tr>
+	</table>
+
 	<%= f.input :ticket_preference, as: :select, collection: Group::TICKET_PREFERENCES, include_blank: false, :hint => "do you want your participants' tickets to be sent to you, or directly to them?" %>
 	<%= f.input :ticket_email %>
 

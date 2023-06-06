@@ -122,7 +122,8 @@ class Participant < ApplicationRecord
     scope :to_be_ticketed, -> { where(exported: false) }
     scope :ticket_updates, -> { where(exported: true).where(dirty: true) }
 
-    delegate :group_extras, to: :group
+    delegate :group_extras,
+             :gc_email, to: :group
 
     encrypts :wwcc_number, :medicare_number
 
@@ -297,14 +298,6 @@ class Participant < ApplicationRecord
       coming_days << "SUN" if coming_sunday 
       coming_days << "MON" if coming_monday 
       coming_days.join(" / ")
-    end
-
-    def gc_email
-      if self.group.users.primary.empty?
-        self.group.gc_email
-      else
-        self.group.users.primary.first.email
-      end
     end
 
     def days
