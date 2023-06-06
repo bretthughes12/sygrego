@@ -175,6 +175,7 @@ class Admin::ParticipantsController < ApplicationController
     @participant.group = @group
     @participant.dietary_requirements = "N/A"
     @participant.allergies = "N/A"
+    @participant.email = 'changeme@example.com'
 
     @participant.updated_by = current_user.id
 
