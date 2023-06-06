@@ -2,6 +2,34 @@
 
 <h1><%= yield(:title) %></h1>
 
+<% if @settings.syg_is_happening %>
+<h2>Welcome to SYG!</h2>
+
+<p>If you need this over the weekend, this is your emergency warden information</p>
+
+<table class="table table-dark table-striped">
+    <tr valign="top">
+        <td> 
+            Warden Zone
+        </td>
+
+        <td> 
+            <%= @group.warden_zone_name  %>
+        </td>
+    </tr>
+    <tr valign="top">
+        <td> 
+            Contact Info
+        </td>
+
+        <td> 
+            <%= @group.warden_info  %>
+        </td>
+    </tr>
+</table>
+
+<% end %>
+
 <h2>Event Statistics</h2>
 
 <p><strong>Groups attending:</strong> <%= @total_groups %></p>

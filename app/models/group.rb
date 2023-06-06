@@ -385,13 +385,13 @@ class Group < ApplicationRecord
 #                .size
 #  end
 
-#  def warden_zone_name
-#    warden_zone.nil? ? '' : warden_zone.name
-#  end
+  def warden_zone_name
+    warden_zone.nil? ? '' : warden_zone.name
+  end
 
-#  def warden_info
-#    warden_zone.nil? ? '' : warden_zone.warden_info
-#  end
+  def warden_info
+    warden_zone.nil? ? '' : warden_zone.warden_info
+  end
 
   def entries_requiring_participants
     entries = []
