@@ -4,6 +4,7 @@
 	<%= f.input :email %>
 	<%= f.input :password %>
 	<%= f.input :password_confirmation %>
+	<%= f.input :protect_password %>
 
 	<%= f.input :name %>
 	<%= f.input :status, as: :select, collection: User::STATUS, include_blank: false %>

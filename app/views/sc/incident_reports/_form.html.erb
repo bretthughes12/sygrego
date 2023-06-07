@@ -1,0 +1,18 @@
+<%= simple_form_for(@incident_report, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :section, collection: Section.order(:name).all, value_method: :name, include_blank: true %>
+	<%= f.input :session, collection: Session.order(:name).all, value_method: :name, include_blank: true %>
+	<%= f.input :venue, collection: Venue.order(:name).all, value_method: :name, include_blank: true %>
+
+	<br/>
+
+	<%= f.input :description, label: 'Description of any First Aid incidents that took place in your session' %>
+	<%= f.input :name, label: 'Participant Name and Group' %>
+	<%= f.input :action_taken, label: 'Action taken by Professional First Aid crews' %>
+	<%= f.input :other_info, label: 'Any further information' %>
+
+	<br/>
+
+	<%= f.button :submit, 'Submit' %>
+<% end %>	

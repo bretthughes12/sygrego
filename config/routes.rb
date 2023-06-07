@@ -389,6 +389,25 @@ Rails.application.routes.draw do
         get :home
       end
     end
+    resources :users, only: [:edit, :update] do
+      member do
+        get :edit_password
+        patch :update_password
+      end
+    end
+
+    resources :sports_evaluations, :only => [:new, :create]
+    resources :incident_reports, :only => [:new, :create]
+    resources :awards do
+      collection do
+        get :new_good_sports
+        get :new_spirit
+        get :new_volunteer
+        post :create_good_sports
+        post :create_spirit
+        post :create_volunteer
+      end
+    end
   end
   
   # Group Coordinator routes

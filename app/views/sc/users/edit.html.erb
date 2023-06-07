@@ -1,0 +1,43 @@
+<% if @user.protect_password %>
+    <% title "Profile" %>
+
+    <h1><%= yield(:title) %></h1>
+
+    <p>This user is protected. No updates permitted to profile</p>
+
+    <table class="table table-dark table-striped">
+        <tr valign="top">
+            <td> 
+                Email
+            </td>
+
+            <td> 
+                <%= @user.email  %>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td> 
+                Name
+            </td>
+
+            <td> 
+                <%= @user.name  %>
+            </td>
+        </tr>
+    </table>
+
+<% else %>
+    <% title "Update profile" %>
+
+    <h1><%= yield(:title) %></h1>
+
+    <%= render partial: "form", locals: { 
+                                url: sc_user_path(@user), 
+                                method: :patch } %>
+<% end %>
+
+<br/>
+
+<%= link_to "Back", :back,
+                  class: primary_button_class,
+                  user: "button" %>

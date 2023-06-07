@@ -32,7 +32,12 @@ class Ability
            :create_volunteer], Award
       can :create, SportsEvaluation
       can :create, IncidentReport
-      can [:index, :update, :show, :search], LostItem
+      can [:available_roles, :switch], Role if user.roles.count > 1
+      can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
+      can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
+      can [:update, :edit_password, :update_password], User do |u|
+        user == u && !u.protect_password
+      end
 
     elsif session["current_role"] == "church_rep"
       if user.status == "Verified"

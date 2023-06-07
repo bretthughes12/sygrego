@@ -6,16 +6,34 @@
             <ul class="nav navbar-nav mr-auto">
                 <% if @settings.syg_is_happening %>
                     <li class='nav-item dropdown'>
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">SYG</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Awards</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li class='dropdown-item'><%= link_to 'Registrations', admin_rego_checklists_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Day Visitors', day_visitors_admin_participants_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Good Sports Awards', good_sports_admin_awards_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Spirit Awards', spirit_admin_awards_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Volunteer Awards', volunteer_awards_admin_awards_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Good Sports Awards', new_good_sports_sc_awards_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Spirit Awards', new_spirit_sc_awards_url %></li>
+                            <li class='dropdown-item'><%= link_to 'Volunteer Awards', new_volunteer_sc_awards_path %></li>
                         </ul>
                     </li>
+                    <li class='nav-item'><%= link_to 'Incident Reports', new_sc_incident_report_path, class: 'nav-link' %></li>
+                    <li class='nav-item'><%= link_to 'Sports Evaluation', new_sc_sports_evaluation_path, class: 'nav-link' %></li>
                 <% end %>
+                <li class='nav-item dropdown'>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li class='dropdown-item'><%= link_to 'Profile', edit_sc_user_path(current_user) %></li>
+                        <% unless current_user && current_user.protect_password %>
+                            <li class='dropdown-item'><%= link_to 'Change Password', edit_password_sc_user_path(current_user) %></li>
+                        <% end %>
+                        <% if current_user && current_user.roles.count > 1 %>
+                            <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
+                        <% end %>
+                        <% if current_user && (current_user.groups.count > 1 || current_user.role?(:admin))  %>
+                            <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
+                        <% end %>
+                        <% if current_user && (current_user.participants.count > 1 || current_user.role?(:admin))  %>
+                            <li class='dropdown-item'><%= link_to 'Switch Participant', available_participants_participants_path %></li>
+                        <% end %>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
