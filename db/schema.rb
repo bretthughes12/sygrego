@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_04_063651) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_022032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -637,6 +637,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_04_063651) do
     t.boolean "primary_gc", default: false
     t.string "status", limit: 12, default: "Not Verified"
     t.string "wwcc_number"
+    t.boolean "protect_password", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

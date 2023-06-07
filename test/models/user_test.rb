@@ -13,6 +13,7 @@
 #  phone_number           :string(30)
 #  postcode               :integer          default(0)
 #  primary_gc             :boolean          default(FALSE)
+#  protect_password       :boolean          default(FALSE)
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
