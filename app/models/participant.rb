@@ -1169,6 +1169,7 @@ private
       'coming_saturday',
       'coming_sunday',
       'coming_monday',
+      'wwcc_number',
       'email'
     ]
   end
