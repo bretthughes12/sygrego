@@ -300,6 +300,16 @@ class Participant < ApplicationRecord
       coming_days.join(" / ")
     end
 
+    def wwcc_text
+      if !self.wwcc_number.blank?
+        "WWCC: #{wwcc_number}"
+      elsif self.age && self.age < 18
+        "WWCC: not required"
+      else
+        "WWCC: missing"
+      end
+    end
+
     def days
       return 3 if self.rego_type == "Full Time"
       d = 0

@@ -78,6 +78,18 @@ class Admin::ParticipantsController < ApplicationController
     end
   end
 
+  # GET /admin/participants/ticket_full_extract
+  def ticket_full_extract
+    @participants = Participant.coming.accepted.where('age > 5').
+      order('first_name, surname').load
+
+    respond_to do |format|
+      format.csv do 
+        render_csv "syg_ticket_extract_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets" 
+      end
+    end
+  end
+
   # POST /admin/participants/ticket_reset
   def ticket_reset
     @participants = Participant.coming.accepted.ticketed.load

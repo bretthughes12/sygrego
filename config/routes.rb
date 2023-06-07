@@ -237,6 +237,7 @@ Rails.application.routes.draw do
         post :ticket_download
         post :ticket_updates
         post :ticket_reset
+        get :ticket_full_extract
         get :search
         get :participant_audit
         get :wwccs

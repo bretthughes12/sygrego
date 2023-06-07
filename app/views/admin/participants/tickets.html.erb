@@ -32,6 +32,9 @@
                   method: :post,
                   class: primary_button_class,
                   role: "button" %>
+<%= link_to "Ticket Full Extract", ticket_full_extract_admin_participants_path(format: :csv),
+                  class: primary_button_class,
+                  role: "button" %>
 <%= link_to "Ticket Upload", new_ticket_import_admin_participants_path,
                   class: danger_button_class,
                   role: "button" %>
