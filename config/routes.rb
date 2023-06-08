@@ -304,6 +304,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :sport_results
+    resources :sport_result_entries
+
     resources :volunteer_types do
       collection do
         get :new_import

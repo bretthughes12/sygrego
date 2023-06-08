@@ -40,18 +40,19 @@
 #
 FactoryBot.define do
   factory :sport_result_entry do
+    section
     court { 1 }
     match { 1 }
     complete { false }
-    entry_a { 1 }
+    entry_a_id { 1 }
     team_a { 1 }
     score_a { 1 }
-    entry_b { 1 }
+    entry_b_id { 1 }
     team_b { 1 }
     score_b { 1 }
     forfeit_a { false }
     forfeit_b { false }
-    entry_umpire { 1 }
+    entry_umpire_id { 1 }
     forfeit_umpire { false }
     blowout_rule { false }
     forfeit_score { 1 }

@@ -1,0 +1,38 @@
+<p style="color: green"><%= notice %></p>
+
+<h1><%= @section.name %></h1>
+
+<table class="table">
+  <thead>
+    <th>Court</th>
+    <th>Match</th>
+    <th>Complete</th>
+    <th>Team A</th>
+    <th>Score A</th>
+    <th>Team B</th>
+    <th>Score B</th>
+    <th />
+  </thead>
+  <tbody>
+    <% @results.each do |result| %>
+      <tr>
+        <td><%= result.court %></td>
+        <td><%= result.match %></td>
+        <td><%= result.complete %></td>
+        <td><%= result.team_a.name %></td>
+        <td><%= result.score_a %></td>
+        <td><%= result.team_b.name %></td>
+        <td><%= result.score_b %></td>
+        <td>
+          <%= link_to "View", admin_sport_result_entry_path(:result),
+                  class: primary_button_class,
+                  role: "button" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+        
+<div>
+  <%= link_to "Back to sport results", admin_sport_results_path %>
+</div>

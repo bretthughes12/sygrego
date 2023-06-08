@@ -50,22 +50,17 @@ class SportResultEntry < ApplicationRecord
       'court',
       'match',
       'complete',
-      'entry_a',
+      'entry_a_id',
       'team_a',
       'score_a',
-      'entry_b',
+      'entry_b_id',
       'team_b',
       'score_b',
       'forfeit_a',
       'forfeit_b',
-      'entry_umpire',
+      'entry_umpire_id',
       'forfeit_umpire',
-      'blowout_rule',
-      'forfeit_score',
-      'groups',
-      'finals_format',
-      'start_court',
-      'section'
+      'section_id'
     ]
   end
 end
