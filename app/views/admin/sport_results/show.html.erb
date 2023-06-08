@@ -19,9 +19,9 @@
         <td><%= result.court %></td>
         <td><%= result.match %></td>
         <td><%= result.complete %></td>
-        <td><%= result.team_a.name %></td>
+        <td><%= result.entry_a_team_text %></td>
         <td><%= result.score_a %></td>
-        <td><%= result.team_b.name %></td>
+        <td><%= result.entry_a_team_text %></td>
         <td><%= result.score_b %></td>
         <td>
           <%= link_to "View", admin_sport_result_entry_path(:result),
@@ -34,5 +34,7 @@
 </table>
         
 <div>
-  <%= link_to "Back to sport results", admin_sport_results_path %>
+  <%= link_to "Back", admin_sport_results_path,
+          class: primary_button_class,
+          role: "button" %>
 </div>

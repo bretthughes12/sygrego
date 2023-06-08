@@ -9,7 +9,7 @@ module Auditable
 
   private
 
-# TODO: remove hard-coding for ParticipantsSportEntry and 
+# TODO: remove hard-coding for ParticipantsSportEntry and SportResultEntry and 
 #       handle this using metadata from the model
 
   def log_create
@@ -21,7 +21,9 @@ module Auditable
       action = 'CREATE'
     end
 
-    ModelAuditJob.perform_now(model, action, audit_user_id)
+    unless self.class.name == 'SportResultEntry'
+      ModelAuditJob.perform_now(model, action, audit_user_id)
+    end
   end
 
   def log_update

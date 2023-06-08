@@ -1,6 +1,8 @@
 class Admin::SportResultEntriesController < ApplicationController
     before_action :set_admin_sport_result_entry, only: %i[ show edit update destroy ]
-  
+
+    layout "admin"
+
     # GET /admin/sport_result_entries or /admin/sport_result_entries.json
     def index
       @admin_sport_result_entries = SportResultEntry.all
@@ -56,7 +58,32 @@ class Admin::SportResultEntriesController < ApplicationController
         format.json { head :no_content }
       end
     end
+
+    # GET /admin/sport_result_entries/new_import
+    def new_import
+      @sport_result_entry = SportResultEntry.new
+    end
   
+    # POST /admin/sport_result_entries/import
+    def import
+      if params[:sport_result_entry] && params[:sport_result_entry][:file].path =~ %r{\.csv$}i
+        result = SportResultEntry.import(params[:sport_result_entry][:file], current_user)
+
+        flash[:notice] = "Sport Draws upload complete: #{result[:creates]} sports created; #{result[:updates]} updates; #{result[:errors]} errors"
+
+        respond_to do |format|
+          format.html { redirect_to admin_sport_results_url }
+        end
+      else
+        flash[:notice] = "Upload file must be in '.csv' format"
+        @sport_result_entry = SportResultEntry.new
+
+        respond_to do |format|
+          format.html { render action: "new_import" }
+        end
+      end
+    end
+
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_admin_sport_result_entry

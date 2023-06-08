@@ -11,6 +11,7 @@
 #  forfeit_b       :boolean          default(FALSE)
 #  forfeit_score   :integer
 #  forfeit_umpire  :boolean          default(FALSE)
+#  group           :integer
 #  groups          :integer
 #  match           :integer
 #  score_a         :integer          default(0)
@@ -18,6 +19,7 @@
 #  start_court     :integer
 #  team_a          :integer
 #  team_b          :integer
+#  updated_by      :bigint
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  entry_a_id      :bigint

@@ -21,7 +21,6 @@ class Ability
     elsif session["current_role"] == "admin"
       can :manage, :all
 
-    # TODO: update abilities for SC's
     elsif session["current_role"] == "sc"
       can :read, Page
       can [:new_good_sports,
@@ -30,6 +29,7 @@ class Ability
            :create_good_sports,
            :create_spirit,
            :create_volunteer], Award
+      can :update, SportResultEntry
       can :create, SportsEvaluation
       can :create, IncidentReport
       can [:available_roles, :switch], Role if user.roles.count > 1
