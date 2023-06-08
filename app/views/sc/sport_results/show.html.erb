@@ -1,34 +1,29 @@
-<p style="color: green"><%= notice %></p>
-
 <h1><%= @section.name %></h1>
 
-<table class="table table-dark table-striped">
-  <thead>
-    <th>Court</th>
-    <th>Match</th>
-    <th>Complete</th>
-    <th>Team A</th>
-    <th>Score A</th>
-    <th>Team B</th>
-    <th>Score B</th>
-  </thead>
-  <tbody>
-    <% @results.each do |result| %>
-      <tr>
-        <td><%= result.court %></td>
-        <td><%= result.match %></td>
-        <td><%= result.complete? ? 'Yes' : 'No' %></td>
-        <td><%= result.entry_a_team_text %></td>
-        <td><%= result.score_a %></td>
-        <td><%= result.entry_a_team_text %></td>
-        <td><%= result.score_b %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-        
-<div>
+<%= form_tag update_multiple_sc_sport_result_entries_path(section_id: @section.id), method: :patch do  %>
+  <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
+
+    <br/>
+    <br/>
+
+    <table class="table table-dark table-striped">
+      <thead>
+        <th>Court</th>
+        <th>Match</th>
+        <th>Complete</th>
+        <th>Team A</th>
+        <th>Score A</th>
+        <th>Team B</th>
+        <th>Score B</th>
+      </thead>
+      <tbody>
+        <%= render @sport_result_entries %>
+      </tbody>
+    </table>
+
+  <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
   <%= link_to "Back", sc_sport_results_path,
           class: primary_button_class,
           role: "button" %>
-</div>
+<% end %>
+

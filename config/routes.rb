@@ -406,7 +406,11 @@ Rails.application.routes.draw do
     end
 
     resources :sport_results
-    resources :sport_result_entries
+    resources :sport_result_entries do
+      collection do
+        patch :update_multiple
+      end
+    end
 
     resources :sports_evaluations, :only => [:new, :create]
     resources :incident_reports, :only => [:new, :create]

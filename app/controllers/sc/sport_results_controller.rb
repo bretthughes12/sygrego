@@ -8,7 +8,7 @@ class Sc::SportResultsController < ApplicationController
   
     # GET /sc/sport_results/1 or /sc/sport_results/1.json
     def show
-        @results = SportResultEntry.where(section: params[:id])
+        @sport_result_entries = SportResultEntry.where(section: params[:id]).order(:court, :match).load
         @section = Section.find_by_id(params[:id])
     end
 end

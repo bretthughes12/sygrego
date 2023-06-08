@@ -1,2 +1,18 @@
-<div id="<%= dom_id sport_result_entry %>">
-</div>
+<%= fields_for "sport_result_entries[]", sport_result_entry do |f| %>
+<tr>
+    <td><%= sport_result_entry.court %></td>
+    <td><%= sport_result_entry.match %></td>
+	<td> 
+		<%= f.hidden_field :section_id %>
+		<%= f.check_box :complete %>
+	</td>
+    <td><%= sport_result_entry.entry_a_team_text %></td>
+	<td> 
+		<%= f.text_field :score_a, size: 3 %>
+	</td>
+    <td><%= sport_result_entry.entry_a_team_text %></td>
+	<td> 
+		<%= f.text_field :score_b, size: 3 %>
+	</td>
+</tr>
+<% end %>

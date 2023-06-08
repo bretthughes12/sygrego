@@ -29,7 +29,7 @@ class Ability
            :create_good_sports,
            :create_spirit,
            :create_volunteer], Award
-      can :update, SportResultEntry
+      can [:update_multiple], SportResultEntry
       can :create, SportsEvaluation
       can :create, IncidentReport
       can [:available_roles, :switch], Role if user.roles.count > 1

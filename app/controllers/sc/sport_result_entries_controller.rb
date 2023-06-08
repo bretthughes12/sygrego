@@ -58,7 +58,26 @@ class Sc::SportResultEntriesController < ApplicationController
         format.json { head :no_content }
       end
     end
-
+  
+    # PATCH sc/sport_result_entries/update_multiple
+    def update_multiple
+      @sport_result_entries = []
+      @section = Section.find(params[:section_id])
+      
+      params[:sport_result_entries].keys.each do |id|
+        sre = SportResultEntry.find(id.to_i)
+        sre.update(sport_result_entry_params(id))
+        @sport_result_entries << sre unless sre.errors.empty?
+      end
+  
+      if @sport_result_entries.empty?
+        flash[:notice] = "Updated"
+        redirect_to sc_sport_result_url(@section.id)
+      else
+        render :action => "index"  
+      end
+    end
+    
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_sport_result_entry
@@ -66,7 +85,11 @@ class Sc::SportResultEntriesController < ApplicationController
       end
   
       # Only allow a list of trusted parameters through.
-      def sport_result_entry_params
-        params.fetch(:sport_result_entry, {})
+      def sport_result_entry_params(id)
+        params.require(:sport_result_entries)
+              .fetch(id)
+              .permit(:complete,
+                      :score_a,
+                      :score_b)
       end
   end
