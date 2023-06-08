@@ -32,12 +32,6 @@
 #  index_sport_result_entries_on_entry_umpire_id  (entry_umpire_id)
 #  index_sport_result_entries_on_section_id       (section_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (entry_a_id => sport_entries.id)
-#  fk_rails_...  (entry_b_id => sport_entries.id)
-#  fk_rails_...  (entry_umpire_id => groups.id)
-#
 FactoryBot.define do
   factory :sport_result_entry do
     section

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_022032) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_033020) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -739,8 +739,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_022032) do
   add_foreign_key "sport_entries", "groups"
   add_foreign_key "sport_preferences", "grades"
   add_foreign_key "sport_preferences", "participants"
-  add_foreign_key "sport_result_entries", "groups", column: "entry_umpire_id"
-  add_foreign_key "sport_result_entries", "sport_entries", column: "entry_a_id"
-  add_foreign_key "sport_result_entries", "sport_entries", column: "entry_b_id"
   add_foreign_key "volunteers", "volunteer_types"
 end

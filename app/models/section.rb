@@ -38,6 +38,7 @@ class Section < ApplicationRecord
 
     has_many :volunteers
     has_many :sport_entries, dependent: :destroy
+    has_many :sport_result_entries
     belongs_to :grade
     belongs_to :venue
     belongs_to :session
@@ -48,7 +49,7 @@ class Section < ApplicationRecord
 
     delegate :name, to: :venue, prefix: 'venue'
     delegate :name, to: :session, prefix: 'session'
-    delegate :sport_name, :sport, to: :grade
+    delegate :sport_name, :sport, :draw_type, to: :grade
   
     validates :name,                   presence: true,
                                        uniqueness: true,
@@ -109,6 +110,16 @@ class Section < ApplicationRecord
         else    
             grade.teams_per_court * number_of_courts
         end
+    end
+
+    def self.round_robin
+        sections = []
+
+        Section.active.order(:name).includes(:grade).all.each do |section|
+            sections << section if section.grade.sport.draw_type == 'Round Robin'
+        end
+
+        sections
     end
 
     def self.import(file, user)

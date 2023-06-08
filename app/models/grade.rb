@@ -63,7 +63,8 @@ class Grade < ApplicationRecord
     scope :individual, -> { where('sports.classification' => 'Individual').includes(:sport) }
 
     delegate :name, to: :sport, prefix: true
-    delegate :classificaion, to: :sport
+    delegate :classificaion,
+             :draw_type, to: :sport
 
     before_save :update_grade_flags_on_limit_change, if: :will_save_change_to_entry_limit?
 

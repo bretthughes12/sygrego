@@ -3,7 +3,7 @@ class Admin::SportResultsController < ApplicationController
   
     # GET /admin/sport_results or /admin/sport_results.json
     def index
-        @sections = Section.all
+        @sections = Section.round_robin
     end
   
     # GET /admin/sport_results/1 or /admin/sport_results/1.json
