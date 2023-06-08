@@ -1,0 +1,12 @@
+<h1>Editing sport result entry</h1>
+
+<%= render partial: "form", locals: { 
+                    url: sc_sport_result_entry_path(@sport_result_entry), 
+                    method: :patch } %>
+
+<br>
+
+<div>
+  <%= link_to "Show this sport result entry", sc_sport_result_entry_path(@sport_result_entry) %> |
+  <%= link_to "Back to sport result entries", sc_sport_result_entries_path %>
+</div>

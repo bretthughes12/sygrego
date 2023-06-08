@@ -405,6 +405,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :sport_results
+    resources :sport_result_entries
+
     resources :sports_evaluations, :only => [:new, :create]
     resources :incident_reports, :only => [:new, :create]
     resources :awards do
