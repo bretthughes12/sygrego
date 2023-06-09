@@ -145,6 +145,15 @@ class Sc::SportResultEntriesController < ApplicationController
       @sport_result_entries = []
       @section = Section.find(params[:section_id])
       
+      ladder = RoundRobinLadder.new
+      ladder.add_sports_entries(@section.sport_entries)
+      
+      @section.sport_result_entries.where('match < 100').load.each do |sre|
+        ladder.add_result(sre)
+      end
+
+#      pp ladder.ladder
+
       flash[:notice] = "Finalists calculated"
       redirect_to sc_sport_result_url(@section.id)
     end
