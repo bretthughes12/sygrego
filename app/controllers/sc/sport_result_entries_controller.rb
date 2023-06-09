@@ -106,6 +106,15 @@ class Sc::SportResultEntriesController < ApplicationController
       @sport_result_entries = []
       @section = Section.find(params[:section_id])
       
+      @section.sport_result_entries.all.each do |sre|
+        sre.score_a = 0
+        sre.forfeit_a = false
+        sre.score_b = 0
+        sre.forfeit_b = false
+        sre.complete = false
+        sre.save(validate: false)
+      end
+
       flash[:notice] = "Results reset"
       redirect_to sc_sport_result_url(@section.id)
     end
