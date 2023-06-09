@@ -43,7 +43,8 @@ class Sport < ApplicationRecord
 
     DRAW_TYPES = ['Knockout',
                   'Open',
-                  'Round Robin']
+                  'Round Robin',
+                  'Quad Round Robin']
 
     validates :name,                    presence: true,
                                         uniqueness: { case_sensitive: false },
