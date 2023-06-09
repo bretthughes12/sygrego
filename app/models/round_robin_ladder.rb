@@ -1,4 +1,5 @@
 class RoundRobinLadder
+    attr_accessor :finals_format, :groups, :section_id, :start_court
 
     def initialize()
         @ladder = {}
@@ -11,8 +12,12 @@ class RoundRobinLadder
     end
 
     def add_result(result)
-        @ladder[result.entry_a_id].group = result.group
-        @ladder[result.entry_b_id].group = result.group
+        @ladder[result.entry_a_id].group ||= result.group
+        @ladder[result.entry_b_id].group ||= result.group
+        @finals_format ||= result.finals_format
+        @groups ||= result.groups
+        @start_court ||= result.start_court
+        @section_id ||= result.section_id
 
         if result.match > 99
 
@@ -71,5 +76,27 @@ class RoundRobinLadder
         end
 
         @ladder.sort_by(&:last).reverse
+    end
+
+    def nth_in_group(group, n)
+        k = 0
+        ladder.each do |key, entry|
+            k += 1 if entry.group == group
+            return key if entry.group == group && k == n
+        end
+    end
+
+    def next_best
+        nb = {}
+        nb[nth_in_group(1, 2)] = @ladder[nth_in_group(1, 2)]
+        nb[nth_in_group(2, 2)] = @ladder[nth_in_group(2, 2)]
+        nb[nth_in_group(3, 2)] = @ladder[nth_in_group(3, 2)]
+
+        nb[nth_in_group(1, 2)].group = 0
+        nb[nth_in_group(2, 2)].group = 0
+        nb[nth_in_group(3, 2)].group = 0
+
+        r = nb.sort_by(&:last).reverse
+        r.first[0]
     end
 end

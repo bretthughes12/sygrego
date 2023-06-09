@@ -35,7 +35,6 @@
 #  index_sport_result_entries_on_section_id       (section_id)
 #
 class SportResultEntry < ApplicationRecord
-  # TODO: Remove start_court
   include Auditable
 
   belongs_to :section
@@ -79,6 +78,7 @@ class SportResultEntry < ApplicationRecord
         result.group = fields[20]
         result.groups = fields[22]
         result.finals_format = fields[25]
+        result.start_court = fields[26]
         result.updated_by = user.id
 
         if result.save
@@ -108,6 +108,7 @@ class SportResultEntry < ApplicationRecord
           group:                fields[20],
           groups:               fields[22],
           finals_format:        fields[25],
+          start_court:          fields[26],
           updated_by:           user.id)
 
         if result.errors.empty?
@@ -130,10 +131,8 @@ class SportResultEntry < ApplicationRecord
       'match',
       'complete',
       'entry_a_id',
-      'team_a',
       'score_a',
       'entry_b_id',
-      'team_b',
       'score_b',
       'forfeit_a',
       'forfeit_b',

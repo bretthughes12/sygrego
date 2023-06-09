@@ -144,32 +144,143 @@ class Sc::SportResultEntriesController < ApplicationController
     def calculate_finalists
       @sport_result_entries = []
       @section = Section.find(params[:section_id])
-      
-      ladder = RoundRobinLadder.new
-      ladder.add_sports_entries(@section.sport_entries)
-      
-      @section.sport_result_entries.where('match < 100').load.each do |sre|
-        ladder.add_result(sre)
-      end
 
-#      pp ladder.ladder
+      # initial finals (semis or final depending on finals format)
+      if @section.sport_result_entries.maximum(:match) < 100
+        ladder = RoundRobinLadder.new
+        ladder.add_sports_entries(@section.sport_entries)
+        
+        @section.sport_result_entries.where('match < 100').load.each do |sre|
+          ladder.add_result(sre)
+        end
+
+        add_finals_from_ladder(ladder)
+
+      elsif @section.sport_result_entries.maximum(:match) < 200
+        add_finalists_from_semis(@section)
+      end
 
       flash[:notice] = "Finalists calculated"
       redirect_to sc_sport_result_url(@section.id)
     end
     
     private
-      # Use callbacks to share common setup or constraints between actions.
-      def set_sport_result_entry
-        @sport_result_entry = SportResultEntry.find(params[:id])
+
+    def add_finals_from_ladder(ladder)
+      # 1 v 2 straight to grand final (only 1 group)
+      if ladder.finals_format == 'Top 2'
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court,
+          match: 200,
+          entry_a_id: ladder.nth_in_group(1, 1),
+          entry_b_id: ladder.nth_in_group(1, 2)
+        )
+      # 1 v 4 and 2 v 3 to semi finals (only 1 group)
+      elsif ladder.finals_format == 'Top 4'
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court,
+          match: 100,
+          entry_a_id: ladder.nth_in_group(1, 1),
+          entry_b_id: ladder.nth_in_group(1, 4)
+        )
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court + 1,
+          match: 101,
+          entry_a_id: ladder.nth_in_group(1, 2),
+          entry_b_id: ladder.nth_in_group(1, 3)
+        )
+      # 1 v 2 of opposing groups to semi finals (2 groups)
+      elsif ladder.finals_format == 'Top 2 in Group'
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court,
+          match: 100,
+          entry_a_id: ladder.nth_in_group(1, 1),
+          entry_b_id: ladder.nth_in_group(2, 2)
+        )
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court + 1,
+          match: 101,
+          entry_a_id: ladder.nth_in_group(2, 1),
+          entry_b_id: ladder.nth_in_group(1, 2)
+        )
+      elsif ladder.finals_format == 'Top in Group' && ladder.groups == 3
+        # Top from each group, and next best (3 groups)
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court,
+          match: 100,
+          entry_a_id: ladder.nth_in_group(1, 1),
+          entry_b_id: ladder.nth_in_group(2, 1)
+        )
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court + 1,
+          match: 101,
+          entry_a_id: ladder.nth_in_group(3, 1),
+          entry_b_id: ladder.next_best
+        )
+      else # ladder.finals_format == 'Top in Group' && ladder.groups == 4
+        # Top from each group (4 groups)
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court,
+          match: 100,
+          entry_a_id: ladder.nth_in_group(1, 1),
+          entry_b_id: ladder.nth_in_group(2, 1)
+        )
+        SportResultEntry.create(
+          section_id: ladder.section_id,
+          court: ladder.start_court + 1,
+          match: 101,
+          entry_a_id: ladder.nth_in_group(3, 1),
+          entry_b_id: ladder.nth_in_group(4, 1)
+        )
       end
+    end
+
+    def add_finalists_from_semis(section)
+      # winners of each semi play in finals
+      s1 = section.sport_result_entries.where(match: 100).first
+      s2 = section.sport_result_entries.where(match: 101).first
+
+      if s1.score_a > s1.score_b
+        w1 = s1.entry_a_id
+      else
+        w1 = s1.entry_b_id
+      end
+
+      if s2.score_a > s2.score_b
+        w2 = s2.entry_a_id
+      else
+        w2 = s2.entry_b_id
+      end
+
+      # TODO: change hard-coded start court
+      SportResultEntry.create(
+        section_id: section.id,
+        court: 1,
+        match: 200,
+        entry_a_id: w1,
+        entry_b_id: w2
+      )
+    end
+    
+    # Use callbacks to share common setup or constraints between actions.
+    def set_sport_result_entry
+      @sport_result_entry = SportResultEntry.find(params[:id])
+    end
   
       # Only allow a list of trusted parameters through.
-      def sport_result_entry_params(id)
-        params.require(:sport_result_entries)
-              .fetch(id)
-              .permit(:complete,
-                      :score_a,
-                      :score_b)
-      end
+    def sport_result_entry_params(id)
+      params.require(:sport_result_entries)
+            .fetch(id)
+            .permit(:complete,
+                    :score_a,
+                    :score_b)
+    end
   end
