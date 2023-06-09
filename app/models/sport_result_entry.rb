@@ -43,8 +43,6 @@ class SportResultEntry < ApplicationRecord
   belongs_to :entry_b, class_name: "SportEntry", optional: true
   belongs_to :entry_umpire, class_name: "SportEntry", optional: true
 
-  SCORES = [0, 1, 2]
-
   # TODO: Add validations
 
   def entry_a_team_text

@@ -409,6 +409,9 @@ Rails.application.routes.draw do
     resources :sport_result_entries do
       collection do
         patch :update_multiple
+        get :calculate_finalists
+        get :submit
+        get :reset
       end
     end
 

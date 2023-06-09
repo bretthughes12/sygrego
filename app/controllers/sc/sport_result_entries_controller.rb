@@ -66,6 +66,29 @@ class Sc::SportResultEntriesController < ApplicationController
       
       params[:sport_result_entries].keys.each do |id|
         sre = SportResultEntry.find(id.to_i)
+
+        if params[:sport_result_entries][id][:score_a] == 'Forfeit' && params[:sport_result_entries][id][:score_b] == 'Forfeit'
+          sre.forfeit_a = true
+          sre.forfeit_b = true
+          sre.complete = true
+        elsif params[:sport_result_entries][id][:score_a] == 'Forfeit'
+          sre.forfeit_a = true
+          sre.forfeit_b = false
+          sre.complete = true
+          params[:sport_result_entries][id][:score_b] = sre.forfeit_score
+        elsif params[:sport_result_entries][id][:score_b] == 'Forfeit'
+          sre.forfeit_b = true
+          sre.forfeit_a = false
+          sre.complete = true
+          params[:sport_result_entries][id][:score_a] = sre.forfeit_score
+        elsif params[:sport_result_entries][id][:score_a] == '0' && params[:sport_result_entries][id][:score_b] == '0'
+          sre.forfeit_b = false
+          sre.forfeit_a = false
+          sre.complete = false
+        else
+          sre.complete = true
+        end
+
         sre.update(sport_result_entry_params(id))
         @sport_result_entries << sre unless sre.errors.empty?
       end
@@ -74,8 +97,36 @@ class Sc::SportResultEntriesController < ApplicationController
         flash[:notice] = "Updated"
         redirect_to sc_sport_result_url(@section.id)
       else
-        render :action => "index"  
+        render action: :show, controller: "sport_results"  
       end
+    end
+  
+    # GET sc/sport_result_entries/reset
+    def reset
+      @sport_result_entries = []
+      @section = Section.find(params[:section_id])
+      
+      flash[:notice] = "Results reset"
+      redirect_to sc_sport_result_url(@section.id)
+    end
+  
+    # GET sc/sport_result_entries/submit
+    def submit
+      @sport_result_entries = []
+      @section = Section.find(params[:section_id])
+      SportResultMailer.draw_submitted(@section).deliver_now
+      
+      flash[:notice] = "Results submitted"
+      redirect_to sc_sport_result_url(@section.id)
+    end
+  
+    # GET sc/sport_result_entries/calculate_finalists
+    def calculate_finalists
+      @sport_result_entries = []
+      @section = Section.find(params[:section_id])
+      
+      flash[:notice] = "Finalists calculated"
+      redirect_to sc_sport_result_url(@section.id)
     end
     
     private
