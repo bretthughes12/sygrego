@@ -114,10 +114,21 @@ class Sc::SportResultEntriesController < ApplicationController
     def submit
       @sport_result_entries = []
       @section = Section.find(params[:section_id])
-      SportResultMailer.draw_submitted(@section).deliver_now
-      
-      flash[:notice] = "Results submitted"
-      redirect_to sc_sport_result_url(@section.id)
+
+      final = @section.sport_result_entries.order(:match).last 
+
+      if final.match == 200 && final.complete
+        @section.results_locked = true
+        @section.save(validate: false)
+
+        SportResultMailer.draw_submitted(@section).deliver_now
+        
+        flash[:notice] = "Results submitted, thank you!"
+        redirect_to sc_sport_results_path
+      else
+        flash[:notice] = "Results not completed"
+        redirect_to sc_sport_result_url(@section.id)
+      end
     end
   
     # GET sc/sport_result_entries/calculate_finalists

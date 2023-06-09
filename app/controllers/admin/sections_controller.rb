@@ -120,6 +120,7 @@ private
                                     :number_in_draw,
                                     :number_of_courts,
                                     :year_introduced,
-                                    :draw_file)
+                                    :draw_file,
+                                    :results_locked)
     end
 end

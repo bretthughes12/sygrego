@@ -12,9 +12,11 @@
         <td><%= section.session.name %></td>
         <td><%= section.name %></td>
         <td>
-          <%= link_to "Results", sc_sport_result_path(section.id),
-                  class: primary_button_class,
-                  role: "button" %>
+          <% unless section.results_locked %>
+            <%= link_to "Results", sc_sport_result_path(section.id),
+                    class: primary_button_class,
+                    role: "button" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

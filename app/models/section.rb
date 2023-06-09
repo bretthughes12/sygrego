@@ -8,6 +8,7 @@
 #  name             :string(50)       not null
 #  number_in_draw   :integer
 #  number_of_courts :integer          default(1)
+#  results_locked   :boolean          default(FALSE)
 #  updated_by       :bigint
 #  year_introduced  :integer
 #  created_at       :datetime         not null
