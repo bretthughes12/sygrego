@@ -1,6 +1,6 @@
 class SportResultMailer < ActionMailer::Base
-    default from: 'registrations@stateyouthgames.com'
-            to:    'sygresults.gmail.com'
+    default from: 'registrations@stateyouthgames.com',
+            to:    'sygresults@gmail.com',
             cc:    'registrations@stateyouthgames.com'
     layout 'mailer'
     before_action :get_settings
