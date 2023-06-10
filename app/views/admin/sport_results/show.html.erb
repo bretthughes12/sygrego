@@ -29,4 +29,7 @@
   <%= link_to "Back", admin_sport_results_path,
           class: primary_button_class,
           role: "button" %>
+  <%= link_to "Download", admin_sport_result_path(@section.id, format: :csv),
+          class: primary_button_class,
+          role: "button" %>
 </div>

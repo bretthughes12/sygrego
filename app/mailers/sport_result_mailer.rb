@@ -7,6 +7,7 @@ class SportResultMailer < ActionMailer::Base
   
     def draw_submitted(section)
       @section = section
+      @results = @section.sport_result_entries.order(:match)
   
       mail(subject: "#{APP_CONFIG[:email_subject]} Results submitted online for #{@section.name}")
     end

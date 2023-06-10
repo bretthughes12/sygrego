@@ -52,6 +52,14 @@ class SportResultEntry < ApplicationRecord
     entry_b.nil? ? '' : entry_b.group.abbr + ' ' + entry_b.team_number.to_s
   end
 
+  def import_score_a
+    forfeit_a? ? -1 : score_a
+  end
+
+  def import_score_b
+    forfeit_b? ? -1 : score_b
+  end
+
   def self.import(file, user)
     creates = 0
     updates = 0

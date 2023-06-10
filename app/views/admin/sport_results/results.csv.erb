@@ -1,0 +1,11 @@
+<%= CSV.generate do |csv|
+  @results.each do |r|
+	csv << [ r.section_id, 
+			 r.match,
+			 r.entry_a.draw_text,
+			 r.entry_b.draw_text,
+			 r.import_score_a,
+			 r.import_score_b
+		    ] 
+  end
+end.html_safe %>

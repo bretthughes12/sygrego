@@ -10,6 +10,11 @@ class Admin::SportResultsController < ApplicationController
     def show
         @results = SportResultEntry.where(section: params[:id]).order(:court, :match).load
         @section = Section.find_by_id(params[:id])
+
+        respond_to do |format|
+            format.html # show.html.erb
+            format.csv  { render_csv "results_#{@section.id}", "results" }
+        end
     end
   
     private
