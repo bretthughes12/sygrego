@@ -382,6 +382,7 @@ Rails.application.routes.draw do
     resources :sport_entries, only: [:show] do
       resources :participants, controller: "participants_sport_entries", only: [:index]
     end
+    resources :sport_result_entries, only: [:show]
     resources :sports, only: [:show]
     resources :grades, only: [:show]
     resources :sections, only: [:show]
