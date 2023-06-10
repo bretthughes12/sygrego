@@ -85,6 +85,22 @@ class Section < ApplicationRecord
         name + " (#{session_name})"
     end
     
+    def last_result
+        sport_result_entries.last
+    end
+
+    def submitted?
+        last_result && last_result.match == 200 && last_result.complete? ? true : false
+    end
+
+    def started?
+        sport_result_entries.each do |sre|
+            return true if sre.complete?
+        end
+
+        false
+    end
+
     def can_take_more_entries?
         self.sport_entries.count < teams_allowed
     end
