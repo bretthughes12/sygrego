@@ -126,6 +126,10 @@ class SportEntry < ApplicationRecord
     end
   end
 
+  def team_text
+    group.abbr + " #{team_number}"
+  end
+
   def number_of_participants
     @number_of_participants ||= cached_participants.count
   end

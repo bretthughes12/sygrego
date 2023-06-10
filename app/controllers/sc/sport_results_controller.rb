@@ -10,5 +10,6 @@ class Sc::SportResultsController < ApplicationController
     def show
         @sport_result_entries = SportResultEntry.where(section: params[:id]).order(:court, :match).load
         @section = Section.find_by_id(params[:id])
+        @teams = @section.sport_entries
     end
 end

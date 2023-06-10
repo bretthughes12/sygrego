@@ -1,11 +1,23 @@
 <%= fields_for "sport_result_entries[]", sport_result_entry do |f| %>
 <tr>
     <td><%= sport_result_entry.court %></td>
-    <td><%= sport_result_entry.entry_a_team_text %></td>
+	<td> 
+		<% if sport_result_entry.match > 99 %>
+			<%= f.collection_select :entry_a_id, @teams, :id, :team_text %>
+		<% else %>
+			<%= sport_result_entry.entry_a_team_text %>
+		<% end %>
+	</td>
 	<td> 
 		<%= f.select :score_a, ['Forfeit', *0..99] %>
 	</td>
-    <td><%= sport_result_entry.entry_b_team_text %></td>
+	<td> 
+		<% if sport_result_entry.match > 99 %>
+			<%= f.collection_select :entry_b_id, @teams, :id, :team_text %>
+		<% else %>
+			<%= sport_result_entry.entry_b_team_text %>
+		<% end %>
+	</td>
 	<td> 
 		<%= f.select :score_b, ['Forfeit', *0..99] %>
 	</td>

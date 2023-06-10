@@ -284,6 +284,8 @@ class Sc::SportResultEntriesController < ApplicationController
       params.require(:sport_result_entries)
             .fetch(id)
             .permit(:complete,
+                    :entry_a_id,
+                    :entry_b_id,
                     :score_a,
                     :score_b)
     end
