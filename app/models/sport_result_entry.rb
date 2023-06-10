@@ -35,7 +35,7 @@
 #  index_sport_result_entries_on_section_id       (section_id)
 #
 class SportResultEntry < ApplicationRecord
-  include Auditable
+#  include Auditable
 
   belongs_to :section
   belongs_to :entry_a, class_name: "SportEntry", optional: true
