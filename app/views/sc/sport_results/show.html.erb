@@ -2,12 +2,8 @@
 
 <%= form_tag update_multiple_sc_sport_result_entries_path(section_id: @section.id), method: :patch do  %>
   <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
-  <%= link_to "Calculate Finalists", calculate_finalists_sc_sport_result_entries_path(section_id: @section.id),
-          class: primary_button_class,
-          role: "button" %>
-  <%= link_to "Submit", submit_sc_sport_result_entries_path(section_id: @section.id),
-          class: primary_button_class,
-          role: "button" %>
+  <%= submit_tag "Calculate Finalists", class: primary_button_class, role: "button" %>	
+  <%= submit_tag "Submit", class: primary_button_class, role: "button" %>	
   <%= link_to "Reset", reset_sc_sport_result_entries_path(section_id: @section.id),
           data: { confirm: "Are you sure?" },
           class: danger_button_class,
@@ -33,12 +29,8 @@
     </table>
 
   <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
-  <%= link_to "Calculate Finalists", calculate_finalists_sc_sport_result_entries_path(section_id: @section.id),
-          class: primary_button_class,
-          role: "button" %>
-  <%= link_to "Submit", submit_sc_sport_result_entries_path(section_id: @section.id),
-          class: primary_button_class,
-          role: "button" %>
+  <%= submit_tag "Calculate Finalists", class: primary_button_class, role: "button" %>	
+  <%= submit_tag "Submit", class: primary_button_class, role: "button" %>	
   <%= link_to "Reset", reset_sc_sport_result_entries_path(section_id: @section.id),
           data: { confirm: "Are you sure?" },
           class: danger_button_class,

@@ -94,8 +94,45 @@ class Sc::SportResultEntriesController < ApplicationController
       end
   
       if @sport_result_entries.empty?
-        flash[:notice] = "Updated"
-        redirect_to sc_sport_result_url(@section.id)
+        if params[:commit] == "Calculate Finalists"
+          # initial finals (semis or final depending on finals format)
+          if @section.sport_result_entries.maximum(:match) < 100
+            ladder = RoundRobinLadder.new
+            ladder.add_sports_entries(@section.sport_entries)
+            
+            @section.sport_result_entries.where('match < 100').load.each do |sre|
+              ladder.add_result(sre)
+            end
+
+            add_finals_from_ladder(ladder)
+
+          elsif @section.sport_result_entries.maximum(:match) < 200
+            add_finalists_from_semis(@section)
+          end
+
+          flash[:notice] = "Finalists calculated"
+          redirect_to sc_sport_result_url(@section.id)
+
+        elsif params[:commit] == "Submit"
+          final = @section.sport_result_entries.order(:match).last 
+
+          if final.match == 200 && final.complete
+            @section.results_locked = true
+            @section.save(validate: false)
+    
+            SportResultMailer.draw_submitted(@section).deliver_now
+            
+            flash[:notice] = "Results submitted, thank you!"
+            redirect_to sc_sport_results_path
+          else
+            flash[:notice] = "Results not completed"
+            redirect_to sc_sport_result_url(@section.id)
+          end
+    
+        else
+          flash[:notice] = "Updated"
+          redirect_to sc_sport_result_url(@section.id)
+        end
       else
         render action: :show, controller: "sport_results"  
       end
@@ -123,51 +160,6 @@ class Sc::SportResultEntriesController < ApplicationController
       redirect_to sc_sport_result_url(@section.id)
     end
   
-    # GET sc/sport_result_entries/submit
-    def submit
-      @sport_result_entries = []
-      @section = Section.find(params[:section_id])
-
-      final = @section.sport_result_entries.order(:match).last 
-
-      if final.match == 200 && final.complete
-        @section.results_locked = true
-        @section.save(validate: false)
-
-        SportResultMailer.draw_submitted(@section).deliver_now
-        
-        flash[:notice] = "Results submitted, thank you!"
-        redirect_to sc_sport_results_path
-      else
-        flash[:notice] = "Results not completed"
-        redirect_to sc_sport_result_url(@section.id)
-      end
-    end
-  
-    # GET sc/sport_result_entries/calculate_finalists
-    def calculate_finalists
-      @sport_result_entries = []
-      @section = Section.find(params[:section_id])
-
-      # initial finals (semis or final depending on finals format)
-      if @section.sport_result_entries.maximum(:match) < 100
-        ladder = RoundRobinLadder.new
-        ladder.add_sports_entries(@section.sport_entries)
-        
-        @section.sport_result_entries.where('match < 100').load.each do |sre|
-          ladder.add_result(sre)
-        end
-
-        add_finals_from_ladder(ladder)
-
-      elsif @section.sport_result_entries.maximum(:match) < 200
-        add_finalists_from_semis(@section)
-      end
-
-      flash[:notice] = "Finalists calculated"
-      redirect_to sc_sport_result_url(@section.id)
-    end
-    
     private
 
     def add_finals_from_ladder(ladder)
