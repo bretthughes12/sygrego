@@ -2,25 +2,34 @@
 
 <h1><%= yield(:title) %></h1>
 
-Welcome! <br />
+<p>Welcome to the Sport Coordinator dashboard<p>
+
+<p>Please use this to submit results for Round Robin draws (except Four Square and e-Sports)<p>
+
+<p>For all other sports, please email a clear photo of the results to sygresults@gmail.com - please especially ensure that the winner and place holder(s) are clearly marked.<p>
+
+<br />
 <br />
 
-It is now <%= Time.now.in_time_zone.strftime("%d/%m/%Y %I:%M %p") %>.
+<h2>Quick Links</h2>
 
-<br/><br/>
-
-<h2>Dashboard</h2>
-
-<%= pie_chart admin_groups_charts_path, title: "Groups (#{@total_groups})", refresh: 60 %>
-
-<br/><br/>
-
-<%= pie_chart admin_participants_charts_path, title: "Participants (#{@total_participants})", refresh: 60 %>
-
-<br/><br/>
-
-<%= pie_chart admin_volunteers_charts_path, title: "Volunteers (#{@total_volunteers})", refresh: 60 %>
-
-<br/><br/>
-
-<%= pie_chart admin_sport_entries_charts_path, title: "Sport Entries (#{@total_entries})", refresh: 60 %>
+<%= link_to "Sport Results", sc_sport_results_path,
+          class: primary_button_class,
+          role: "button" %>
+<%= link_to "Incident Reports", new_sc_incident_report_path,
+          class: primary_button_class,
+          role: "button" %>
+<%= link_to "Sports Evaluations", new_sc_sports_evaluation_path,
+          class: primary_button_class,
+          role: "button" %>
+<br/>
+<br/>
+<%= link_to "Good Sports", new_good_sports_sc_awards_path,
+          class: primary_button_class,
+          role: "button" %>
+<%= link_to "Spirit Awards", new_spirit_sc_awards_url,
+          class: primary_button_class,
+          role: "button" %>
+<%= link_to "Volunteer Awards", new_volunteer_sc_awards_path,
+          class: primary_button_class,
+          role: "button" %>
