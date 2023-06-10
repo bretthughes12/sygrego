@@ -35,7 +35,10 @@ class Ability
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
       can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
-      can [:update, :edit_password, :update_password], User do |u|
+      can :update, User do |u|
+        user == u 
+      end
+      can [:edit_password, :update_password], User do |u|
         user == u && !u.protect_password
       end
 
