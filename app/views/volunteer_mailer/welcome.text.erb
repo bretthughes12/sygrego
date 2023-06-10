@@ -14,7 +14,7 @@ Please follow these links to download some crucial documents that will help you 
 <% if @sport && @sport.draw_type == "Knockout" && @settings.knockout_reference.attached? %>
 - How to Complete a Knockout draw (<%= rails_blob_url(@settings.knockout_reference) %>)
 <% end %>
-<% if @sport && @sport.draw_type == "Round Robin" && @settings.ladder_reference.attached? %>
+<% if @sport && (@sport.draw_type == "Round Robin" || @sport.draw_type == "Quad Round Robin") && @settings.ladder_reference.attached? %>
 - How to Complete the Ladder Worksheet (<%= rails_blob_url(@settings.ladder_reference) %>)
 <% end %>
 <% if @sport.rules_file.attached? %>
@@ -33,7 +33,7 @@ You will need to register at the Lardner Park admin office the night before the 
 
 These packs will include the rules for your sport, scoresheets, score pads, stationery, calculator, whistle, timer, stopwatch, your FREE SYG shirt, sports equipment and venue keys, if applicable.
 
-<% if @sport && @sport.draw_type == "Round Robin" %>
+<% if @sport && (@sport.draw_type == "Round Robin" || @sport.draw_type == "Quad Round Robin") %>
 For the results from your section, you can enter them online for easy tracking, and to also calculate your finalists for you. The website is <<%= new_user_session_url %>> and user name is sygresults@gmail.com with password syg2023
 
 For information on how to enter results online, head to this reference: <%= rails_blob_url(@settings.results_reference) %>
