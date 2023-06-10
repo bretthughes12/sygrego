@@ -20,8 +20,10 @@
                 <li class='nav-item dropdown'>
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li class='dropdown-item'><%= link_to 'Profile', edit_sc_user_path(current_user) %></li>
-                        <% unless current_user && current_user.protect_password %>
+                        <% if current_user %>
+                            <li class='dropdown-item'><%= link_to 'Profile', edit_sc_user_path(current_user) %></li>
+                        <% end %>
+                        <% if current_user && !current_user.protect_password %>
                             <li class='dropdown-item'><%= link_to 'Change Password', edit_password_sc_user_path(current_user) %></li>
                         <% end %>
                         <% if current_user && current_user.roles.count > 1 %>
