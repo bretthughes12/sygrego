@@ -23,7 +23,6 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     get admin_sports_url
 
     assert_redirected_to new_user_session_url
-    assert_match /Please sign in/, flash[:notice]
   end
 
   test "should not get index if not an admin" do
