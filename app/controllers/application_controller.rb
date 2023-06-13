@@ -54,6 +54,7 @@ class ApplicationController < ActionController::Base
     def home_url(user)
         case
           when user.nil?
+            sign_out
             new_user_session_url
 
           else 
