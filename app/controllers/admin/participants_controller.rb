@@ -294,7 +294,7 @@ class Admin::ParticipantsController < ApplicationController
     if params[:participant] && params[:participant][:file].path =~ %r{\.csv$}i
       result = Participant.import_ticket(params[:participant][:file], current_user)
 
-      flash[:notice] = "Ticket upload complete: #{result[:updates]} updates; #{result[:misses]} participants not found; #{result[:errors]} errors"
+      flash[:notice] = "Ticket upload complete: #{result[:updates]} updates; #{result[:misses]} participants not found; #{result[:day_visitors]} day visitors added; #{result[:errors]} errors"
 
       respond_to do |format|
         format.html { redirect_to tickets_admin_participants_url }

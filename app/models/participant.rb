@@ -851,10 +851,14 @@ class Participant < ApplicationRecord
   def self.import_ticket(file, user)
     misses = 0
     updates = 0
+    day_visitors = 0
     errors = 0
     error_list = []
 
+    day_group = Group.find_by_abbr('DAY')
+
     CSV.foreach(file.path, headers: true) do |fields|
+      unless fields[27].blank?
         participant = Participant.where(id: fields[27]).first
       
         if participant
@@ -871,9 +875,44 @@ class Participant < ApplicationRecord
         else
             misses += 1
         end
+      else
+        if !fields[10].nil?
+          participant = Participant.create(
+            group_id:                day_group.id,
+            first_name:              fields[2],
+            surname:                 fields[3],
+            coming:                  true,
+            age:                     30,
+            gender:                  'U',
+            coming_friday:           fields[10].include?('FRI') || fields[10] == 'All Days',
+            coming_saturday:         fields[10].include?('SAT') || fields[10] == 'All Days',
+            coming_sunday:           fields[10].include?('SUN') || fields[10] == 'All Days',
+            coming_monday:           fields[10].include?('MON') || fields[10] == 'All Days',
+            mobile_phone_number:     fields[7],
+            email:                   fields[6],
+            allergies:               'Unknown',
+            spectator:               true,
+            onsite:                  false,
+            driver:                  !fields[24].blank?,
+            number_plate:            fields[24],
+            dietary_requirements:    'Unknown',
+            wwcc_number:             fields[25],
+            registration_nbr:        fields[9],
+            booking_nbr:             fields[8],
+            exported:                true,
+            updated_by:              user.id)
+
+          if participant.errors.empty?
+            day_visitors += 1
+          else
+            errors += 1
+            error_list << participant
+          end
+        end
+      end
     end
 
-    { misses: misses, updates: updates, errors: errors, error_list: error_list }
+    { misses: misses, updates: updates, day_visitors: day_visitors, errors: errors, error_list: error_list }
   end
 
   def self.round_up_to_5(num)
