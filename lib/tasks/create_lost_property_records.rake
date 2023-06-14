@@ -16,14 +16,14 @@ namespace :syg do
     files.each do |item|
         next if item.key == 'lost_property/'
         puts item.key
-        /^lost_property\/(.+)\.jpg/.match(item.key)
+        /^lost_property\/(.+)\.JPG/.match(item.key)
         name = Regexp.last_match(1).tr('_', ' ')
         file = s3.bucket(APP_CONFIG[:s3_bucket]).object(item.key).get.body
 
         item = LostItem.create(category: 'Update category',
                                 description: 'Update description')
         item.photo.attach(io: file,
-            filename: "#{name}.jpg", content_type: 'image/jpeg', identify: false)
+            filename: "#{name}.JPG", content_type: 'image/jpeg', identify: false)
         puts "Created lost item for #{name}"
     end
 
