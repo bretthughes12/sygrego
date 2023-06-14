@@ -14,6 +14,7 @@ class MysygController < ApplicationController
         end
     else
         flash[:notice] = "Please log in"
+        sign_out
         redirect_to new_user_session_url
     end
   end

@@ -79,6 +79,7 @@ class ApplicationController < ActionController::Base
             elsif participant
                 home_mysyg_info_url(group: participant.group.mysyg_setting.mysyg_name)
             else
+                sign_out
                 new_user_session_url
             end
         end
