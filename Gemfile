@@ -40,7 +40,7 @@ gem 'aws-sdk-s3', require: false
 # gem 'gmaps4rails'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap-style'
-gem 'chartkick', '5.0.1'
+gem 'chartkick'
 # gem 'coffee-rails'
 # gem 'jquery-rails'
 gem 'prawn-rails'

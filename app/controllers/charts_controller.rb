@@ -48,24 +48,24 @@ class ChartsController < ApplicationController
     end
 
     def admin_group_stats
-        group_data = Statistic.group(:year).group('20 - weeks_to_syg').sum(:number_of_groups).chart_json
+        group_data = Statistic.order(:year).group(:year).group('20 - weeks_to_syg').sum(:number_of_groups).chart_json
 
         render json: group_data
     end
 
     def admin_participant_stats
-        participant_data = Statistic.group(:year).group('20 - weeks_to_syg').sum(:number_of_participants).chart_json
+        participant_data = Statistic.order(:year).group(:year).group('20 - weeks_to_syg').sum(:number_of_participants).chart_json
         render json: participant_data
     end
 
     def admin_sport_entry_stats
-        sport_data = Statistic.group(:year).group('20 - weeks_to_syg').sum(:number_of_sport_entries).chart_json
+        sport_data = Statistic.order(:year).group(:year).group('20 - weeks_to_syg').sum(:number_of_sport_entries).chart_json
 
         render json: sport_data
     end
 
     def admin_volunteer_stats
-        volunteer_data = Statistic.group(:year).group('20 - weeks_to_syg').sum(:number_of_volunteer_vacancies).chart_json
+        volunteer_data = Statistic.order(:year).group(:year).group('20 - weeks_to_syg').sum(:number_of_volunteer_vacancies).chart_json
 
         render json: volunteer_data
     end
