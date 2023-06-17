@@ -1,1 +1,0 @@
-json.array! @admin_sport_results, partial: "admin_sport_results/admin_sport_result", as: :admin_sport_result

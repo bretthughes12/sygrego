@@ -287,6 +287,7 @@ Rails.application.routes.draw do
         patch :purge_file
       end
       collection do
+        get :results
         get :new_import
         post :import
       end
@@ -406,6 +407,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :sections, only: [:show, :index]
+    
     resources :sport_results
     resources :sport_result_entries do
       collection do

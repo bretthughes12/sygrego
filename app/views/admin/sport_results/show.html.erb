@@ -1,6 +1,6 @@
 <h1><%= @section.name %></h1>
 
-<%= link_to "Back", admin_sport_results_path,
+<%= link_to "Back", results_admin_sections_path,
         class: primary_button_class,
         role: "button" %>
 <%= link_to "Download", admin_sport_result_path(@section.id, format: :csv),
@@ -35,7 +35,7 @@
 </table>
         
 <div>
-  <%= link_to "Back", admin_sport_results_path,
+  <%= link_to "Back", results_admin_sections_path,
           class: primary_button_class,
           role: "button" %>
   <%= link_to "Download", admin_sport_result_path(@section.id, format: :csv),

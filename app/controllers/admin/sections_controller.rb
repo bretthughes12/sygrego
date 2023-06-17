@@ -18,6 +18,15 @@ class Admin::SectionsController < ApplicationController
       end
     end
   
+    # GET /admin/sections/results
+    def results
+      @sections = Section.round_robin
+  
+      respond_to do |format|
+        format.html # index.html.erb
+      end
+    end
+  
     # GET /admin/sections/1
     def show
     end
