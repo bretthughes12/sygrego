@@ -1,1 +1,0 @@
-json.array! @sport_result_entries, partial: "sport_result_entries/sport_result_entry", as: :sport_result_entry
