@@ -5,10 +5,13 @@
 #  id               :bigint           not null, primary key
 #  active           :boolean
 #  database_rowid   :integer
+#  finals_format    :string(10)
 #  name             :string(50)       not null
 #  number_in_draw   :integer
 #  number_of_courts :integer          default(1)
+#  number_of_groups :integer          default(1)
 #  results_locked   :boolean          default(FALSE)
+#  start_court      :integer          default(1)
 #  updated_by       :bigint
 #  year_introduced  :integer
 #  created_at       :datetime         not null

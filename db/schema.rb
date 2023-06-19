@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_073646) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_092312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -425,6 +425,30 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_073646) do
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
+  create_table "round_robin_matches", force: :cascade do |t|
+    t.integer "court", default: 1
+    t.integer "match"
+    t.boolean "complete", default: false
+    t.bigint "entry_a_id"
+    t.integer "score_a", default: 0
+    t.bigint "entry_b_id"
+    t.integer "score_b", default: 0
+    t.boolean "forfeit_a", default: false
+    t.boolean "forfeit_b", default: false
+    t.bigint "entry_umpire_id"
+    t.boolean "forfeit_umpire", default: false
+    t.bigint "draw_number"
+    t.bigint "section_id"
+    t.bigint "updated_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draw_number"], name: "index_round_robin_matches_on_draw_number"
+    t.index ["entry_a_id"], name: "index_round_robin_matches_on_entry_a_id"
+    t.index ["entry_b_id"], name: "index_round_robin_matches_on_entry_b_id"
+    t.index ["entry_umpire_id"], name: "index_round_robin_matches_on_entry_umpire_id"
+    t.index ["section_id"], name: "index_round_robin_matches_on_section_id"
+  end
+
   create_table "sections", force: :cascade do |t|
     t.bigint "grade_id", default: 0, null: false
     t.string "name", limit: 50, null: false
@@ -439,6 +463,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_073646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "results_locked", default: false
+    t.string "finals_format", limit: 10
+    t.integer "number_of_groups", default: 1
+    t.integer "start_court", default: 1
     t.index ["name"], name: "index_sections_on_name", unique: true
   end
 
@@ -519,6 +546,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_073646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "preferred_section_id"
+    t.integer "group_number", default: 1
     t.index ["grade_id"], name: "index_sport_entries_on_grade_id"
     t.index ["group_id"], name: "index_sport_entries_on_group_id"
   end
@@ -576,6 +604,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_073646) do
     t.bigint "updated_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "blowout_rule", default: false
+    t.integer "forfeit_score", default: 0
     t.index ["name"], name: "index_sports_on_name", unique: true
   end
 

@@ -4,6 +4,7 @@
 #
 #  id                   :bigint           not null, primary key
 #  chance_of_entry      :integer          default(100)
+#  group_number         :integer          default(1)
 #  multiple_teams       :boolean          default(FALSE)
 #  status               :string(20)       default("Requested")
 #  team_number          :integer          default(1), not null
