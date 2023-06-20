@@ -130,6 +130,9 @@ private
                                     :number_of_courts,
                                     :year_introduced,
                                     :draw_file,
+                                    :finals_format,
+                                    :number_of_groups,
+                                    :start_court,
                                     :results_locked)
     end
 end

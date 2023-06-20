@@ -5,7 +5,7 @@
 #  id               :bigint           not null, primary key
 #  active           :boolean
 #  database_rowid   :integer
-#  finals_format    :string(10)
+#  finals_format    :string(20)
 #  name             :string(50)       not null
 #  number_in_draw   :integer
 #  number_of_courts :integer          default(1)
@@ -42,7 +42,9 @@ class Section < ApplicationRecord
 
     has_many :volunteers
     has_many :sport_entries, dependent: :destroy
-    has_many :sport_result_entries
+    # TODO: Remove once no longer needed
+    has_many :sport_result_entries 
+    has_many :round_robin_matches
     belongs_to :grade
     belongs_to :venue
     belongs_to :session
@@ -55,6 +57,13 @@ class Section < ApplicationRecord
     delegate :name, to: :session, prefix: 'session'
     delegate :sport_name, :sport, :draw_type, to: :grade
   
+    FINALS_FORMATS = [
+        'Top 2',
+        'Top 2 in Group',
+        'Top 4',
+        'Top in Group'
+    ]
+
     validates :name,                   presence: true,
                                        uniqueness: true,
                                        length: { maximum: 50 }
@@ -202,7 +211,10 @@ class Section < ApplicationRecord
          'active',
          'database_rowid',
          'number_of_courts',
+         'finals_format',
          'number_in_draw',
+         'number_of_groups',
+         'start_court',
          'grade_id',
          'session_id',
          'venue_id'

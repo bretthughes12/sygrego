@@ -57,6 +57,7 @@ class Sport < ApplicationRecord
                                         numericality: { only_integer: true }
     validates :max_entries_indiv,       presence: true,
                                         numericality: { only_integer: true }
+    validates :forfeit_score,           numericality: { only_integer: true }
     validates :classification,          presence: true,
                                         length: { maximum: 10 },
                                         inclusion: { in: CLASSIFICATIONS }
@@ -175,6 +176,8 @@ class Sport < ApplicationRecord
          'max_entries_indiv',
          'max_indiv_entries_group',
          'max_team_entries_group',
-         'court_name']
+         'court_name',
+         'blowout_rule',
+         'forfeit_score']
     end
 end

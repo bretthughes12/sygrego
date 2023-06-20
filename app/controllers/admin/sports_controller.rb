@@ -131,6 +131,8 @@ class Admin::SportsController < ApplicationController
                                     :bonus_for_officials,
                                     :court_name,
                                     :draw_type,
+                                    :blowout_rule,
+                                    :forfeit_score,
                                     :rules_file)
     end
   end

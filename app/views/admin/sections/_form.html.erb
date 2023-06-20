@@ -8,6 +8,9 @@
 	<%= f.input :venue_id, as: :select, collection: Venue.order(:name).load %>
 	<%= f.input :session_id, as: :select, collection: Session.order(:database_rowid).load %>
 	<%= f.input :number_of_courts %>
+	<%= f.input :start_court %>
+	<%= f.input :number_of_groups %>
+	<%= f.input :finals_format, as: :select, collection: Section::FINALS_FORMATS, allow_blank: true %>
 	<%= f.input :year_introduced %>
 	<%= f.input :number_in_draw %>
 

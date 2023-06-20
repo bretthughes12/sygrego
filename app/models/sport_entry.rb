@@ -81,6 +81,8 @@ class SportEntry < ApplicationRecord
     presence: true
   validates :group_id,               
     presence: true
+  validates :group_number,
+    numericality: { only_integer: true }
   validates :team_number,            
     presence: true,
     numericality: { only_integer: true },
@@ -520,7 +522,8 @@ private
 
   def self.sync_fields
     ['section_id',
-      'team_number', 
+      'team_number',
+      'group_number', 
       'group_id',
       'status',
       'grade_id'

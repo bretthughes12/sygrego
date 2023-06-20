@@ -5,6 +5,8 @@
 	<%= f.input :active %>
 	<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS %>
 	<%= f.input :draw_type, as: :select, collection: Sport::DRAW_TYPES %>
+	<%= f.input :blowout_rule, label: "Is the blowout rule in effect?" %>
+	<%= f.input :forfeit_score, label: "Score for forfeits and blowout limit" %>
     <%= f.input :max_indiv_entries_group, label: "Max times each group may enter singles / doubles grades" %>
 	<%= f.input :max_team_entries_group, label: "Max times each group may enter team-individual grades" %>
 	<%= f.input :max_entries_indiv, label: "Max times each open-age participant may enter" %>

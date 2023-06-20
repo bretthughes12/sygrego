@@ -149,7 +149,8 @@ private
         :grade_id,
         :section_id,
         :status,
-        :preferred_section_id
+        :preferred_section_id,
+        :group_number
       )
     end
 end

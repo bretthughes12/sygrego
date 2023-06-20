@@ -463,7 +463,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_092312) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "results_locked", default: false
-    t.string "finals_format", limit: 10
+    t.string "finals_format", limit: 20
     t.integer "number_of_groups", default: 1
     t.integer "start_court", default: 1
     t.index ["name"], name: "index_sections_on_name", unique: true

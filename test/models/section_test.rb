@@ -5,7 +5,7 @@
 #  id               :bigint           not null, primary key
 #  active           :boolean
 #  database_rowid   :integer
-#  finals_format    :string(10)
+#  finals_format    :string(20)
 #  name             :string(50)       not null
 #  number_in_draw   :integer
 #  number_of_courts :integer          default(1)
