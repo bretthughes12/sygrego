@@ -183,4 +183,8 @@ class EventDetail < ApplicationRecord
         ['onsite'
         ]
     end
+
+    def self.sync_create_action
+        'UPDATE'
+    end
 end

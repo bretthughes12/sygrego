@@ -9,20 +9,9 @@ module Auditable
 
   private
 
-# TODO: remove hard-coding for ParticipantsSportEntry and SportResultEntry and 
-#       handle this using metadata from the model
-
   def log_create
-    if self.class.name == 'ParticipantsSportEntry'
-      model = self.sport_entry
-      action = 'UPDATE'
-    else
-      model = self
-      action = 'CREATE'
-    end
-
-    unless self.class.name == 'SportResultEntry'
-      ModelAuditJob.perform_now(model, action, audit_user_id)
+    unless create_action.nil?
+      ModelAuditJob.perform_now(model, create_action, audit_user_id)
     end
   end
 
@@ -33,15 +22,7 @@ module Auditable
   end
 
   def log_destroy
-    if self.class.name == 'ParticipantsSportEntry'
-      model = self.sport_entry
-      action = 'UPDATE'
-    else
-      model = self
-      action = 'DESTROY'
-    end
-
-    ModelAuditJob.perform_now(model, action, audit_user_id)
+    ModelAuditJob.perform_now(model, destroy_action, audit_user_id)
   end
 
   def audit_user_id
@@ -60,6 +41,30 @@ module Auditable
       return false
     else
       true
+    end
+  end
+
+  def model
+    if self.respond_to?(:sync_model)
+      self.sync_model
+    else
+      self
+    end
+  end
+
+  def create_action
+    if self.class.respond_to?(:sync_create_action)
+      self.class.sync_create_action
+    else
+      'CREATE'
+    end
+  end
+
+  def destroy_action
+    if self.class.respond_to?(:sync_destroy_action)
+      self.class.sync_destroy_action
+    else
+      'DESTROY'
     end
   end
 end

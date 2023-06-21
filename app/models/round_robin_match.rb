@@ -146,4 +146,8 @@ class RoundRobinMatch < ApplicationRecord
       'section_id'
     ]
   end
+
+  def self.sync_create_action
+    nil
+  end
 end

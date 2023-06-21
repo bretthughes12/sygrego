@@ -11,5 +11,19 @@ class ParticipantsSportEntry < ApplicationRecord
 
     belongs_to :participant
     belongs_to :sport_entry
+
+    def sync_model
+        self.sport_entry
+    end
+
+    private
+
+    def self.sync_create_action
+        'UPDATE'
+    end
+
+    def self.sync_destroy_action
+        'UPDATE'
+    end
 end
   
