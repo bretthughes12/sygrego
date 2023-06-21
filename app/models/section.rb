@@ -172,6 +172,9 @@ class Section < ApplicationRecord
                 section.year_introduced         = fields[5].to_i
                 section.number_of_courts        = fields[6].to_i
                 section.session                 = session
+                section.finals_format           = fields[8]
+                section.number_of_groups        = fields[9].to_i
+                section.start_court             = fields[10].to_i
                 section.updated_by              = user.id
  
                 if section.save
@@ -190,6 +193,9 @@ class Section < ApplicationRecord
                    year_introduced:         fields[5].to_i,
                    number_of_courts:        fields[6].to_i,
                    session:                 session,
+                   finals_format:           fields[8],
+                   number_of_groups:        fields[9].to_i,
+                   start_court:             fields[10].to_i,
                    updated_by:              user.id)
 
                 if section.errors.empty?

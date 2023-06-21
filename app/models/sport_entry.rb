@@ -405,6 +405,7 @@ end
         sport_entry.preferred_section_id      = preferred_section_id
         sport_entry.group_id                  = group.id 
         sport_entry.status                    = fields[7]
+        sport_entry.group_number              = fields[10].to_i
 
         if sport_entry.save
           updates += 1
@@ -420,6 +421,7 @@ end
           group_id:                group.id,
           status:                  fields[7],
           team_number:             fields[9].to_i,
+          group_number:            fields[10].to_i,
           updated_by:              user.id)
 
         if sport_entry.errors.empty?

@@ -137,6 +137,8 @@ class Sport < ApplicationRecord
                 sport.bonus_for_officials = fields[6]
                 sport.court_name = fields[7]
                 sport.draw_type = fields[8]
+                sport.blowout_rule = fields[9]
+                sport.forfeit_score = fields[10].to_i
                 sport.updated_by = user.id
                 if sport.save
                     updates += 1
@@ -155,6 +157,8 @@ class Sport < ApplicationRecord
                     max_entries_indiv:         fields[5].to_i,
                     bonus_for_officials:       fields[6],
                     court_name:                fields[7],
+                    blowout_rule:              fields[9],
+                    forfeit_score:             fields[10].to_i,
                     updated_by:                user.id)
                 if sport.errors.empty?
                     creates += 1

@@ -1,4 +1,4 @@
-<%- headings = %w{RowID Grade Name Active Venue YearIntroduced NbrOfCourts Session } -%>
+<%- headings = %w{RowID Grade Name Active Venue YearIntroduced NbrOfCourts Session FinalsFormat Groups StartCourt } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
   @sections.each do |section|
@@ -9,7 +9,11 @@
   		     section.venue.database_code,
   		     section.year_introduced,
   		     section.number_of_courts,
-			 section.session.database_rowid ]
+			 section.session.database_rowid,
+			 section.finals_format,
+			 section.number_of_groups,
+			 section.start_court
+			]
     csv << line
   end
 end.html_safe %>

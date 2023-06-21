@@ -1,2 +1,2 @@
-Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType
-Hockey,true,Team,0,99,1,true,Field,Round Robin
+Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType,BlowoutRule,ForfeitScore
+Hockey,true,Team,0,99,1,true,Field,Round Robin,true,5
