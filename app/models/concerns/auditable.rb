@@ -53,7 +53,9 @@ module Auditable
   end
 
   def create_action
-    if self.class.respond_to?(:sync_create_action)
+    if self.respond_to?(:sync_create_action)
+      self.sync_create_action
+    elsif self.class.respond_to?(:sync_create_action)
       self.class.sync_create_action
     else
       'CREATE'

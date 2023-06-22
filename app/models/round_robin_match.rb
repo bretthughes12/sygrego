@@ -64,26 +64,18 @@ class RoundRobinMatch < ApplicationRecord
     error_list = []
 
     CSV.foreach(file.path, headers: true) do |fields|
-      result = SportResultEntry.where(section_id: fields[0].to_i, match: fields[3].to_i).first
+      result = RoundRobinMatch.where(draw_number: fields[0].to_i).first
       if result
-        result.court = fields[2]
-        result.complete = fields[4]
-        result.entry_a_id = fields[5]
-        result.team_a = fields[7]
-        result.score_a = fields[8]
-        result.entry_b_id = fields[9]
-        result.team_b = fields[11]
-        result.score_b = fields[12]
-        result.forfeit_a = fields[13]
-        result.forfeit_b = fields[14]
-        result.entry_umpire_id = fields[15]
-        result.forfeit_umpire = fields[17]
-        result.blowout_rule = fields[18]
-        result.forfeit_score = fields[19]
-        result.group = fields[20]
-        result.groups = fields[22]
-        result.finals_format = fields[25]
-        result.start_court = fields[26]
+        result.court = fields[3]
+        result.complete = fields[5]
+        result.entry_a_id = fields[6]
+        result.score_a = fields[9]
+        result.entry_b_id = fields[10]
+        result.score_b = fields[13]
+        result.forfeit_a = fields[14]
+        result.forfeit_b = fields[15]
+        result.entry_umpire_id = fields[16]
+        result.forfeit_umpire = fields[18]
         result.updated_by = user.id
 
         if result.save
@@ -93,27 +85,20 @@ class RoundRobinMatch < ApplicationRecord
           error_list << result
         end
       else
-        result = SportResultEntry.create(
-          section_id:           fields[0],
-          court:                fields[2],
-          match:                fields[3].to_i,
-          complete:             fields[4].to_i,
-          entry_a_id:           fields[5],
-          team_a:               fields[7],
-          score_a:              fields[8],
-          entry_b_id:           fields[9],
-          team_b:               fields[11],
-          score_b:              fields[12],
-          forfeit_a:            fields[13],
-          forfeit_b:            fields[14],
-          entry_umpire_id:      fields[15],
-          forfeit_umpire:       fields[17],
-          blowout_rule:         fields[18],
-          forfeit_score:        fields[19],
-          group:                fields[20],
-          groups:               fields[22],
-          finals_format:        fields[25],
-          start_court:          fields[26],
+        result = RoundRobinMatch.create(
+          draw_number:          fields[0],
+          section_id:           fields[1],
+          court:                fields[3],
+          match:                fields[4].to_i,
+          complete:             fields[5].to_i,
+          entry_a_id:           fields[6],
+          score_a:              fields[9],
+          entry_b_id:           fields[10],
+          score_b:              fields[13],
+          forfeit_a:            fields[14],
+          forfeit_b:            fields[15],
+          entry_umpire_id:      fields[16],
+          forfeit_umpire:       fields[18],
           updated_by:           user.id)
 
         if result.errors.empty?
@@ -126,6 +111,14 @@ class RoundRobinMatch < ApplicationRecord
     end
 
     { creates: creates, updates: updates, errors: errors, error_list: error_list }
+  end
+
+  def sync_create_action
+    if match < 100
+      nil
+    else
+      'CREATE'
+    end
   end
 
   private
@@ -145,9 +138,5 @@ class RoundRobinMatch < ApplicationRecord
       'forfeit_umpire',
       'section_id'
     ]
-  end
-
-  def self.sync_create_action
-    nil
   end
 end
