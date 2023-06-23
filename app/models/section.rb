@@ -98,7 +98,7 @@ class Section < ApplicationRecord
     end
     
     def last_result
-        sport_result_entries.last
+        round_robin_matches.last
     end
 
     def submitted?
@@ -106,7 +106,7 @@ class Section < ApplicationRecord
     end
 
     def started?
-        sport_result_entries.each do |sre|
+        round_robin_matches.each do |sre|
             return true if sre.complete?
         end
 

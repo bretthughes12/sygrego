@@ -283,6 +283,7 @@ Rails.application.routes.draw do
       end
     end
     resources :sections do
+      resources :round_robin_matches, only: [:index]
       member do
         patch :purge_file
       end

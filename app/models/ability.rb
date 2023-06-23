@@ -30,6 +30,7 @@ class Ability
            :create_spirit,
            :create_volunteer], Award
       can [:show, :index], Section
+      can [:update_multiple], RoundRobinMatch
       can [:update_multiple], SportResultEntry
       can :create, SportsEvaluation
       can :create, IncidentReport

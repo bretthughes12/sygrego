@@ -2,7 +2,7 @@
 	<td><%= section.session_name %></td>
 	<td><%= section.name %></td>
 	<td>
-		<%= link_to "Results", admin_sport_result_path(section.id),
+		<%= link_to "Results", admin_section_round_robin_matches_path(section_id: section.id),
 				class: primary_button_class,
 				role: "button" %>
 	</td>

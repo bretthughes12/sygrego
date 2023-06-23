@@ -5,6 +5,17 @@ class Admin::RoundRobinMatchesController < ApplicationController
   
   layout "admin"
 
+  # GET /admin/sections/1/round_robin_mmatches
+  def index
+    @section = Section.find_by_id(params[:section_id])
+    @round_robin_matches = RoundRobinMatch.where(section: @section.id).order(:match).load
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.csv  { render_csv "results_#{@section.name}", "results" }
+    end
+  end
+
   # GET /admin/round_robin_matches/new_import
   def new_import
     @round_robin_match = RoundRobinMatch.new

@@ -1,5 +1,5 @@
 <%= CSV.generate do |csv|
-  @results.each do |r|
+  @round_robin_matches.each do |r|
 	csv << [ r.section_id, 
 			 r.match,
 			 r.entry_a.draw_text,
