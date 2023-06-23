@@ -8,6 +8,7 @@ class RoundRobinLadder
         @start_court = section.start_court
         @second_court = section.start_court + (section.number_of_courts > 1 ? 1 : 0)
         @section_id = section.id
+        @forfeit_score = section.sport.forfeit_score
     end
   
     def add_sports_entries(sport_entries)
@@ -24,16 +25,16 @@ class RoundRobinLadder
             @ladder[result.entry_b_id].games += 1
         elsif result.forfeit_a
             @ladder[result.entry_a_id].games += 1
-            @ladder[result.entry_a_id].against += result.forfeit_score
+            @ladder[result.entry_a_id].against += @forfeit_score
             @ladder[result.entry_b_id].games += 1
             @ladder[result.entry_b_id].wins += 1
-            @ladder[result.entry_b_id].for += result.forfeit_score
+            @ladder[result.entry_b_id].for += @forfeit_score
         elsif result.forfeit_b
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_a_id].wins += 1
-            @ladder[result.entry_a_id].for += result.forfeit_score
+            @ladder[result.entry_a_id].for += @forfeit_score
             @ladder[result.entry_b_id].games += 1
-            @ladder[result.entry_b_id].against += result.forfeit_score
+            @ladder[result.entry_b_id].against += @forfeit_score
         elsif result.score_a == result.score_b
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_a_id].draws += 1

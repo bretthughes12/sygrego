@@ -65,6 +65,28 @@ class RoundRobinMatch < ApplicationRecord
 
     CSV.foreach(file.path, headers: true) do |fields|
       result = RoundRobinMatch.where(draw_number: fields[0].to_i).first
+      group = fields[21].to_i
+      section_id = fields[1].to_i
+
+      entry_a = SportEntry.where(id: fields[6].to_i).first
+      if entry_a && entry_a.group_number != group
+        entry_a.group_number = group
+        entry_a.save(validate: false)
+      end
+
+      entry_b = SportEntry.where(id: fields[10].to_i).first
+      if entry_b && entry_b.group_number != group
+        entry_b.group_number = group
+        entry_b.save(validate: false)
+      end
+
+      section = Section.where(id: section_id).first
+      if section && section.finals_format != fields[26]
+        section.finals_format = fields[26]
+        section.number_of_groups = fields[23].to_i
+        section.save(validate: false)
+      end
+
       if result
         result.court = fields[3].to_i
         result.complete = fields[5]

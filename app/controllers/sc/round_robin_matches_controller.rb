@@ -32,12 +32,12 @@ class Sc::RoundRobinMatchesController < ApplicationController
         sre.forfeit_a = true
         sre.forfeit_b = false
         sre.complete = true
-        params[:round_robin_matches][id][:score_b] = sre.forfeit_score
+        params[:round_robin_matches][id][:score_b] = @section.sport.forfeit_score
       elsif params[:round_robin_matches][id][:score_b] == 'Forfeit'
         sre.forfeit_b = true
         sre.forfeit_a = false
         sre.complete = true
-        params[:round_robin_matches][id][:score_a] = sre.forfeit_score
+        params[:round_robin_matches][id][:score_a] = @section.sport.forfeit_score
       elsif params[:round_robin_matches][id][:score_a] == '0' && params[:round_robin_matches][id][:score_b] == '0'
         sre.forfeit_b = false
         sre.forfeit_a = false
