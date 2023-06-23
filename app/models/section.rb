@@ -42,8 +42,6 @@ class Section < ApplicationRecord
 
     has_many :volunteers
     has_many :sport_entries, dependent: :destroy
-    # TODO: Remove once no longer needed
-    has_many :sport_result_entries 
     has_many :round_robin_matches
     belongs_to :grade
     belongs_to :venue

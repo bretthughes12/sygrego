@@ -1,4 +1,4 @@
-class SportResultMailer < ActionMailer::Base
+class RoundRobinMatchMailer < ActionMailer::Base
     default from: 'registrations@stateyouthgames.com',
             to:    'sygresults@gmail.com',
             cc:    'registrations@stateyouthgames.com'
@@ -7,7 +7,7 @@ class SportResultMailer < ActionMailer::Base
   
     def draw_submitted(section)
       @section = section
-      @results = @section.sport_result_entries.order(:match)
+      @results = @section.round_robin_matches.order(:match)
   
       mail(subject: "#{APP_CONFIG[:email_subject]} Results submitted online for #{@section.name}")
     end

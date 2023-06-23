@@ -1,0 +1,7 @@
+Sports results have been submitted for the sport section below:
+
+Section:      <%= @section.name %>
+
+<% @results.each do |result| %>
+	<%= "#{result.section_id},#{result.match},#{result.entry_a.draw_text},#{result.entry_b.draw_text},#{result.import_score_a},#{result.import_score_b}" %><br/>
+<% end %>

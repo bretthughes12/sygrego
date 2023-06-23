@@ -29,9 +29,8 @@ class Ability
            :create_good_sports,
            :create_spirit,
            :create_volunteer], Award
-      can [:show, :index], Section
-      can [:update_multiple], RoundRobinMatch
-      can [:update_multiple], SportResultEntry
+      can :index, Section
+      can [:index, :reset, :update_multiple], RoundRobinMatch
       can :create, SportsEvaluation
       can :create, IncidentReport
       can [:available_roles, :switch], Role if user.roles.count > 1

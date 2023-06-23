@@ -1,10 +1,10 @@
 <h1><%= @section.name %></h1>
 
-<%= form_tag update_multiple_sc_sport_result_entries_path(section_id: @section.id), method: :patch do  %>
+<%= form_tag update_multiple_sc_section_round_robin_matches_path(section_id: @section.id), method: :patch do  %>
   <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
   <%= submit_tag "Calculate Finalists", class: primary_button_class, role: "button" %>	
   <%= submit_tag "Submit", class: primary_button_class, role: "button" %>	
-  <%= link_to "Reset", reset_sc_sport_result_entries_path(section_id: @section.id),
+  <%= link_to "Reset", reset_sc_section_round_robin_matches_path(section_id: @section.id),
           data: { confirm: "Are you sure?" },
           class: danger_button_class,
           role: "button" %>
@@ -24,14 +24,14 @@
         <th>Score B</th>
       </thead>
       <tbody>
-        <%= render @sport_result_entries %>
+        <%= render @round_robin_matches %>
       </tbody>
     </table>
 
   <%= submit_tag "Update", class: primary_button_class, role: "button" %>	
   <%= submit_tag "Calculate Finalists", class: primary_button_class, role: "button" %>	
   <%= submit_tag "Submit", class: primary_button_class, role: "button" %>	
-  <%= link_to "Reset", reset_sc_sport_result_entries_path(section_id: @section.id),
+  <%= link_to "Reset", reset_sc_section_round_robin_matches_path(section_id: @section.id),
           data: { confirm: "Are you sure?" },
           class: danger_button_class,
           role: "button" %>

@@ -306,13 +306,6 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :sport_results
-    resources :sport_result_entries do
-      collection do
-        get :new_import
-        post :import
-      end
-    end
     resources :round_robin_matches do
       collection do
         get :new_import
@@ -390,7 +383,7 @@ Rails.application.routes.draw do
     resources :sport_entries, only: [:show] do
       resources :participants, controller: "participants_sport_entries", only: [:index]
     end
-    resources :sport_result_entries, only: [:show]
+    resources :round_robin_matches, only: [:show]
     resources :sports, only: [:show]
     resources :grades, only: [:show]
     resources :sections, only: [:show]
@@ -414,16 +407,15 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :sections, only: [:show, :index]
-    
-    resources :sport_results
-    resources :sport_result_entries do
-      collection do
-        patch :update_multiple
-        get :reset
+    resources :sections, only: [:show, :index] do
+      resources :round_robin_matches, only: [:index]  do
+        collection do
+          patch :update_multiple
+          get :reset
+        end
       end
     end
-
+    
     resources :sports_evaluations, :only => [:new, :create]
     resources :incident_reports, :only => [:new, :create]
     resources :awards do

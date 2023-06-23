@@ -1,0 +1,15 @@
+<% content_for(:title) { "Draw submitted" } %>
+
+<h2 class="h2"><%= yield(:title) %></h2>
+
+<p>Sports results have been submitted for the sport section below:</p>
+
+<table>
+	<tr><td>Section:</td><td><%= @section.name %></td></tr>
+</table>
+
+<br/>
+
+<% @results.each do |result| %>
+	<%= "#{result.section_id},#{result.match},#{result.entry_a.draw_text},#{result.entry_b.draw_text},#{result.import_score_a},#{result.import_score_b}" %><br/>
+<% end %>

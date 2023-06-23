@@ -3,7 +3,7 @@
     <td><%= section.name %></td>
     <td>
         <% unless section.results_locked %>
-            <%= link_to "Results", sc_sport_result_path(section.id),
+            <%= link_to "Results", sc_section_round_robin_matches_path(section_id: section.id),
                     class: primary_button_class,
                     role: "button" %>
         <% end %>

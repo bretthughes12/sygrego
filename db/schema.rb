@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_092312) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_23_105444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -559,36 +559,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_092312) do
     t.datetime "updated_at", null: false
     t.index ["grade_id"], name: "index_sport_preferences_on_grade_id"
     t.index ["participant_id"], name: "index_sport_preferences_on_participant_id"
-  end
-
-  create_table "sport_result_entries", force: :cascade do |t|
-    t.integer "court"
-    t.integer "match"
-    t.boolean "complete", default: false
-    t.bigint "entry_a_id"
-    t.integer "team_a"
-    t.integer "score_a", default: 0
-    t.bigint "entry_b_id"
-    t.integer "team_b"
-    t.integer "score_b", default: 0
-    t.boolean "forfeit_a", default: false
-    t.boolean "forfeit_b", default: false
-    t.bigint "entry_umpire_id"
-    t.boolean "forfeit_umpire", default: false
-    t.boolean "blowout_rule"
-    t.integer "forfeit_score"
-    t.integer "groups"
-    t.string "finals_format"
-    t.integer "start_court"
-    t.bigint "section_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "group"
-    t.bigint "updated_by"
-    t.index ["entry_a_id"], name: "index_sport_result_entries_on_entry_a_id"
-    t.index ["entry_b_id"], name: "index_sport_result_entries_on_entry_b_id"
-    t.index ["entry_umpire_id"], name: "index_sport_result_entries_on_entry_umpire_id"
-    t.index ["section_id"], name: "index_sport_result_entries_on_section_id"
   end
 
   create_table "sports", force: :cascade do |t|

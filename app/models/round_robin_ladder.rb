@@ -1,26 +1,24 @@
 class RoundRobinLadder
-    attr_accessor :finals_format, :groups, :section_id, :start_court
+    attr_accessor :finals_format, :groups, :section_id, :start_court, :second_court
 
-    def initialize()
+    def initialize(section)
         @ladder = {}
+        @finals_format = section.finals_format
+        @groups = section.number_of_groups
+        @start_court = section.start_court
+        @second_court = section.start_court + (section.number_of_courts > 1 ? 1 : 0)
+        @section_id = section.id
     end
   
     def add_sports_entries(sport_entries)
         sport_entries.each do |entry|
-            @ladder[entry.id] = RoundRobinEntry.new(games: 0, wins: 0, draws: 0, for: 0, against: 0)
+            @ladder[entry.id] = RoundRobinEntry.new(games: 0, wins: 0, draws: 0, for: 0, against: 0, group: entry.group_number)
         end
     end
 
     def add_result(result)
-        @ladder[result.entry_a_id].group ||= result.group
-        @ladder[result.entry_b_id].group ||= result.group
-        @finals_format ||= result.finals_format
-        @groups ||= result.groups
-        @start_court ||= result.start_court
-        @section_id ||= result.section_id
-
         if result.match > 99
-
+            # do nothing - finals do not count in ladder calculation
         elsif result.forfeit_a && result.forfeit_b
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_b_id].games += 1

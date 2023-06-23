@@ -1,21 +1,21 @@
-<%= fields_for "sport_result_entries[]", sport_result_entry do |f| %>
+<%= fields_for "round_robin_matches[]", round_robin_match do |f| %>
 <tr>
-    <td><%= sport_result_entry.court %></td>
+    <td><%= round_robin_match.court %></td>
 	<td> 
-		<% if sport_result_entry.match > 99 %>
+		<% if round_robin_match.match > 99 %>
 			<%= f.collection_select :entry_a_id, @teams, :id, :team_text %>
 		<% else %>
-			<%= sport_result_entry.entry_a_team_text %>
+			<%= round_robin_match.entry_a_team_text %>
 		<% end %>
 	</td>
 	<td> 
 		<%= f.select :score_a, ['Forfeit', *0..99] %>
 	</td>
 	<td> 
-		<% if sport_result_entry.match > 99 %>
+		<% if round_robin_match.match > 99 %>
 			<%= f.collection_select :entry_b_id, @teams, :id, :team_text %>
 		<% else %>
-			<%= sport_result_entry.entry_b_team_text %>
+			<%= round_robin_match.entry_b_team_text %>
 		<% end %>
 	</td>
 	<td> 
