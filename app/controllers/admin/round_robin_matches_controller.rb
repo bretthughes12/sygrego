@@ -5,10 +5,11 @@ class Admin::RoundRobinMatchesController < ApplicationController
   
   layout "admin"
 
-  # GET /admin/sections/1/round_robin_mmatches
+  # GET /admin/sections/1/round_robin_matches
   def index
     @section = Section.find_by_id(params[:section_id])
     @round_robin_matches = RoundRobinMatch.where(section: @section.id).order(:match).load
+    @ladder = RoundRobinLadder.new(@section)
 
     respond_to do |format|
       format.html # index.html.erb

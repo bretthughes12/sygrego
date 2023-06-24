@@ -10,6 +10,7 @@ class Sc::RoundRobinMatchesController < ApplicationController
     @section = Section.find_by_id(params[:section_id])
     @round_robin_matches = RoundRobinMatch.where(section: @section.id).order(:court, :match).load
     @teams = @section.sport_entries
+    @ladder = RoundRobinLadder.new(@section)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -55,11 +56,6 @@ class Sc::RoundRobinMatchesController < ApplicationController
         # initial finals (semis or final depending on finals format)
         if @section.round_robin_matches.maximum(:match) < 100
           ladder = RoundRobinLadder.new(@section)
-          ladder.add_sports_entries(@section.sport_entries)
-          
-          @section.round_robin_matches.where('match < 100').load.each do |sre|
-            ladder.add_result(sre)
-          end
 
           @section.add_finals_from_ladder(ladder)
 

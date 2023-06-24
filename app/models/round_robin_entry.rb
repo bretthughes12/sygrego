@@ -1,4 +1,6 @@
 class RoundRobinEntry
+    include Comparable
+
     attr_accessor :games,
                   :wins,
                   :draws,

@@ -40,3 +40,23 @@
           role: "button" %>
 <% end %>
 
+<% content_for :sidebar do -%>
+	<div id="sidebar">
+    <h2>Ladder</h2>
+
+    <table class="table table-dark table-striped">
+      <thead>
+        <th>Team</th>
+        <th>Group</th>
+        <th>W</th>
+        <th>D</th>
+        <th>L</th>
+        <th>Pts</th>
+        <th>%</th>
+      </thead>
+      <tbody>
+        <%= render partial: 'ladder_entry', collection: @ladder.ladder, as: :team %>
+      </tbody>
+    </table>
+	</div>
+<% end -%>

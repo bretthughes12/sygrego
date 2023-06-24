@@ -9,6 +9,11 @@ class RoundRobinLadder
         @second_court = section.start_court + (section.number_of_courts > 1 ? 1 : 0)
         @section_id = section.id
         @forfeit_score = section.sport.forfeit_score
+
+        add_sports_entries(section.sport_entries)
+        section.round_robin_matches.where('match < 100').load.each do |match|
+            add_result(match)
+        end
     end
   
     def add_sports_entries(sport_entries)
