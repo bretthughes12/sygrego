@@ -84,6 +84,7 @@ class RoundRobinMatch < ApplicationRecord
       if section && section.finals_format != fields[26]
         section.finals_format = fields[26]
         section.number_of_groups = fields[23].to_i
+        section.start_court = fields[27].to_i
         section.save(validate: false)
       end
 
