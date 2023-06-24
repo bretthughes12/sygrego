@@ -81,7 +81,7 @@ class RoundRobinMatch < ApplicationRecord
       end
 
       section = Section.where(id: section_id).first
-      if section && section.finals_format != fields[26]
+      if section
         section.finals_format = fields[26]
         section.number_of_groups = fields[23].to_i
         section.start_court = fields[27].to_i
