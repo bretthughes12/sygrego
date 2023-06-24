@@ -139,6 +139,129 @@ class Section < ApplicationRecord
         end
     end
 
+    def add_finals_from_ladder(ladder)
+        # 1 v 2 straight to grand final (only 1 group)
+        if finals_format == 'Top 2'
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.start_court,
+            match: 200,
+            entry_a_id: ladder.nth_in_group(1, 1),
+            entry_b_id: ladder.nth_in_group(1, 2)
+        )
+        # 1 v 4 and 2 v 3 to semi finals (only 1 group)
+        elsif finals_format == 'Top 4'
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.start_court,
+            match: 100,
+            entry_a_id: ladder.nth_in_group(1, 1),
+            entry_b_id: ladder.nth_in_group(1, 4)
+        )
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.second_court,
+            match: 101,
+            entry_a_id: ladder.nth_in_group(1, 2),
+            entry_b_id: ladder.nth_in_group(1, 3)
+        )
+        # 1 v 2 of opposing groups to semi finals (2 groups)
+        elsif finals_format == 'Top 2 in Group'
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.start_court,
+            match: 100,
+            entry_a_id: ladder.nth_in_group(1, 1),
+            entry_b_id: ladder.nth_in_group(2, 2)
+        )
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.second_court,
+            match: 101,
+            entry_a_id: ladder.nth_in_group(2, 1),
+            entry_b_id: ladder.nth_in_group(1, 2)
+        )
+        elsif finals_format == 'Top in Group' && number_of_groups == 3
+        # Top from each group, and next best (3 groups)
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.start_court,
+            match: 100,
+            entry_a_id: ladder.nth_in_group(1, 1),
+            entry_b_id: ladder.nth_in_group(2, 1)
+        )
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.second_court,
+            match: 101,
+            entry_a_id: ladder.nth_in_group(3, 1),
+            entry_b_id: ladder.next_best
+        )
+        else # section.finals_format == 'Top in Group' && section.number_of_groups == 4
+        # Top from each group (4 groups)
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.start_court,
+            match: 100,
+            entry_a_id: ladder.nth_in_group(1, 1),
+            entry_b_id: ladder.nth_in_group(2, 1)
+        )
+        RoundRobinMatch.create(
+            section_id: id,
+            court: ladder.second_court,
+            match: 101,
+            entry_a_id: ladder.nth_in_group(3, 1),
+            entry_b_id: ladder.nth_in_group(4, 1)
+        )
+        end
+    end
+
+    def add_finalists_from_semis
+        # winners of each semi play in finals
+        s1 = round_robin_matches.where(match: 100).first
+        s2 = round_robin_matches.where(match: 101).first
+
+        if s1.score_a > s1.score_b
+            w1 = s1.entry_a_id
+        else
+            w1 = s1.entry_b_id
+        end
+
+        if s2.score_a > s2.score_b
+            w2 = s2.entry_a_id
+        else
+            w2 = s2.entry_b_id
+        end
+
+        RoundRobinMatch.create(
+            section_id: id,
+            court: start_court,
+            match: 200,
+            entry_a_id: w1,
+            entry_b_id: w2
+        )
+    end
+
+    def reset_round_robin_draw!
+        round_robin_matches.all.each do |match|
+            if match.match > 99
+                match.delete
+            else 
+                match.score_a = 0
+                match.forfeit_a = false
+                match.score_b = 0
+                match.forfeit_b = false
+                match.complete = false
+                match.save(validate: false)
+            end
+        end
+    end
+
+    def lock_results!
+        self.results_locked = true
+        self.save(validate: false)
+    end
+
     def self.round_robin
         sections = []
 

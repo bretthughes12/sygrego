@@ -61,10 +61,10 @@ class Sc::RoundRobinMatchesController < ApplicationController
             ladder.add_result(sre)
           end
 
-          add_finals_from_ladder(@section, ladder)
+          @section.add_finals_from_ladder(ladder)
 
         elsif @section.round_robin_matches.maximum(:match) < 200
-          add_finalists_from_semis(@section)
+          @section.add_finalists_from_semis
         end
 
         flash[:notice] = "Finalists calculated"
@@ -74,8 +74,7 @@ class Sc::RoundRobinMatchesController < ApplicationController
         final = @section.round_robin_matches.order(:match).last 
 
         if final.match == 200 && final.complete
-          @section.results_locked = true
-          @section.save(validate: false)
+          @section.lock_results!
 
           RoundRobinMatchMailer.draw_submitted(@section).deliver_now
           
@@ -100,18 +99,7 @@ class Sc::RoundRobinMatchesController < ApplicationController
     @round_robin_matches = []
     @section = Section.find(params[:section_id])
     
-    @section.round_robin_matches.all.each do |sre|
-      if sre.match > 99
-        sre.delete
-      else 
-        sre.score_a = 0
-        sre.forfeit_a = false
-        sre.score_b = 0
-        sre.forfeit_b = false
-        sre.complete = false
-        sre.save(validate: false)
-      end
-    end
+    @section.reset_round_robin_draw!
 
     flash[:notice] = "Results reset"
     redirect_to sc_section_round_robin_matches_url(section_id: @section.id)
@@ -119,109 +107,6 @@ class Sc::RoundRobinMatchesController < ApplicationController
     
   private
 
-  def add_finals_from_ladder(section, ladder)
-    # 1 v 2 straight to grand final (only 1 group)
-    if section.finals_format == 'Top 2'
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.start_court,
-        match: 200,
-        entry_a_id: ladder.nth_in_group(1, 1),
-        entry_b_id: ladder.nth_in_group(1, 2)
-      )
-    # 1 v 4 and 2 v 3 to semi finals (only 1 group)
-    elsif section.finals_format == 'Top 4'
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.start_court,
-        match: 100,
-        entry_a_id: ladder.nth_in_group(1, 1),
-        entry_b_id: ladder.nth_in_group(1, 4)
-      )
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.second_court,
-        match: 101,
-        entry_a_id: ladder.nth_in_group(1, 2),
-        entry_b_id: ladder.nth_in_group(1, 3)
-      )
-    # 1 v 2 of opposing groups to semi finals (2 groups)
-    elsif section.finals_format == 'Top 2 in Group'
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.start_court,
-        match: 100,
-        entry_a_id: ladder.nth_in_group(1, 1),
-        entry_b_id: ladder.nth_in_group(2, 2)
-      )
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.second_court,
-        match: 101,
-        entry_a_id: ladder.nth_in_group(2, 1),
-        entry_b_id: ladder.nth_in_group(1, 2)
-      )
-    elsif section.finals_format == 'Top in Group' && section.number_of_groups == 3
-      # Top from each group, and next best (3 groups)
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.start_court,
-        match: 100,
-        entry_a_id: ladder.nth_in_group(1, 1),
-        entry_b_id: ladder.nth_in_group(2, 1)
-      )
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.second_court,
-        match: 101,
-        entry_a_id: ladder.nth_in_group(3, 1),
-        entry_b_id: ladder.next_best
-      )
-    else # section.finals_format == 'Top in Group' && section.number_of_groups == 4
-      # Top from each group (4 groups)
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.start_court,
-        match: 100,
-        entry_a_id: ladder.nth_in_group(1, 1),
-        entry_b_id: ladder.nth_in_group(2, 1)
-      )
-      RoundRobinMatch.create(
-        section_id: section.id,
-        court: ladder.second_court,
-        match: 101,
-        entry_a_id: ladder.nth_in_group(3, 1),
-        entry_b_id: ladder.nth_in_group(4, 1)
-      )
-    end
-  end
-
-  def add_finalists_from_semis(section)
-    # winners of each semi play in finals
-    s1 = section.round_robin_matches.where(match: 100).first
-    s2 = section.round_robin_matches.where(match: 101).first
-
-    if s1.score_a > s1.score_b
-      w1 = s1.entry_a_id
-    else
-      w1 = s1.entry_b_id
-    end
-
-    if s2.score_a > s2.score_b
-      w2 = s2.entry_a_id
-    else
-      w2 = s2.entry_b_id
-    end
-
-    RoundRobinMatch.create(
-      section_id: section.id,
-      court: section.start_court,
-      match: 200,
-      entry_a_id: w1,
-      entry_b_id: w2
-    )
-  end
-  
   # Only allow a list of trusted parameters through.
   def round_robin_match_params(id)
     params.require(:round_robin_matches)
