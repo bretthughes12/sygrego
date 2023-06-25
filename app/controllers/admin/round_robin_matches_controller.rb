@@ -17,6 +17,15 @@ class Admin::RoundRobinMatchesController < ApplicationController
     end
   end
 
+  # GET /admin/sections/1/round_robin_matches
+  def matches
+    @round_robin_matches = RoundRobinMatch.order(:section_id, :match).load
+
+    respond_to do |format|
+      format.csv  { render_csv "matches" }
+    end
+  end
+
   # GET /admin/round_robin_matches/new_import
   def new_import
     @round_robin_match = RoundRobinMatch.new

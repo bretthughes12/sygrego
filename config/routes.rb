@@ -308,6 +308,7 @@ Rails.application.routes.draw do
 
     resources :round_robin_matches do
       collection do
+        get :matches
         get :new_import
         post :import
       end
