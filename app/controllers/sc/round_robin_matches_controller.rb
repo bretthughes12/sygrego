@@ -29,15 +29,19 @@ class Sc::RoundRobinMatchesController < ApplicationController
         sre.forfeit_a = true
         sre.forfeit_b = true
         sre.complete = true
+        params[:round_robin_matches][id][:score_a] = 0
+        params[:round_robin_matches][id][:score_b] = 0
       elsif params[:round_robin_matches][id][:score_a] == 'Forfeit'
         sre.forfeit_a = true
         sre.forfeit_b = false
         sre.complete = true
+        params[:round_robin_matches][id][:score_a] = 0
         params[:round_robin_matches][id][:score_b] = @section.sport.forfeit_score
       elsif params[:round_robin_matches][id][:score_b] == 'Forfeit'
         sre.forfeit_b = true
         sre.forfeit_a = false
         sre.complete = true
+        params[:round_robin_matches][id][:score_b] = 0
         params[:round_robin_matches][id][:score_a] = @section.sport.forfeit_score
       elsif params[:round_robin_matches][id][:score_a] == '0' && params[:round_robin_matches][id][:score_b] == '0'
         sre.forfeit_b = false
@@ -50,6 +54,8 @@ class Sc::RoundRobinMatchesController < ApplicationController
       sre.update(round_robin_match_params(id))
       @round_robin_matches << sre unless sre.errors.empty?
     end
+
+    @ladder = RoundRobinLadder.new(@section)
 
     if @round_robin_matches.empty?
       if params[:commit] == "Calculate Finalists"
@@ -86,6 +92,7 @@ class Sc::RoundRobinMatchesController < ApplicationController
         redirect_to sc_section_round_robin_matches_url(section_id: @section.id)
       end
     else
+      flash[:notice] = "There was a problem updating the results"
       render action: :index  
     end
   end
