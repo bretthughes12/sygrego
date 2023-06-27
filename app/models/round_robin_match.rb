@@ -36,6 +36,11 @@ class RoundRobinMatch < ApplicationRecord
   belongs_to :entry_b, class_name: "SportEntry", optional: true
   belongs_to :entry_umpire, class_name: "SportEntry", optional: true
 
+  scope :finals, -> { where('match > 99') }
+  scope :semis, -> { where('match > 99 AND match < 200') }
+  scope :gf, -> { where(match: 200) }
+  scope :fixture, -> { where('match < 100') }
+  
   validates :court,         numericality: { only_integer: true }
   validates :match,         numericality: { only_integer: true }
   validates :score_a,       numericality: { only_integer: true }

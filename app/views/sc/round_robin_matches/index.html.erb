@@ -24,7 +24,9 @@
         <th>Score B</th>
       </thead>
       <tbody>
-        <%= render @round_robin_matches %>
+        <%= render partial: 'round_robin_match', collection: @round_robin_matches.fixture, as: :round_robin_match %>
+        <%= render partial: 'round_robin_match', collection: @round_robin_matches.semis, as: :round_robin_match %>
+        <%= render partial: 'round_robin_match', collection: @round_robin_matches.gf, as: :round_robin_match %>
       </tbody>
     </table>
 
