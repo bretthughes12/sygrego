@@ -82,6 +82,14 @@ class RoundRobinLadder
         @ladder.sort_by(&:last).reverse
     end
 
+    def ladder_for_group(group)
+        group_ladder = []
+        ladder.each do |entry|
+            group_ladder << entry if entry[1].group == group
+        end
+        group_ladder
+    end
+
     def nth_in_group(group, n)
         k = 0
         ladder.each do |key, entry|

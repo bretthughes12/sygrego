@@ -46,6 +46,10 @@
 	<div id="sidebar">
     <h2>Ladder</h2>
 
+    <% if @section.number_of_groups > 1 %>
+      <h3>Group 1</h3>
+    <% end %>
+
     <table class="table table-dark table-striped">
       <thead>
         <th>Team</th>
@@ -57,9 +61,66 @@
         <th>%</th>
       </thead>
       <tbody>
-        <%= render partial: 'ladder_entry', collection: @ladder.ladder, as: :team %>
+        <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(1), as: :team %>
       </tbody>
     </table>
+
+    <% if @section.number_of_groups > 1 %>
+      <h3>Group 2</h3>
+
+      <table class="table table-dark table-striped">
+        <thead>
+          <th>Team</th>
+          <th>Group</th>
+          <th>W</th>
+          <th>D</th>
+          <th>L</th>
+          <th>Pts</th>
+          <th>%</th>
+        </thead>
+        <tbody>
+          <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(2), as: :team %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <% if @section.number_of_groups > 2 %>
+      <h3>Group 3</h3>
+
+      <table class="table table-dark table-striped">
+        <thead>
+          <th>Team</th>
+          <th>Group</th>
+          <th>W</th>
+          <th>D</th>
+          <th>L</th>
+          <th>Pts</th>
+          <th>%</th>
+        </thead>
+        <tbody>
+          <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(3), as: :team %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <% if @section.number_of_groups > 3 %>
+      <h3>Group 4</h3>
+
+      <table class="table table-dark table-striped">
+        <thead>
+          <th>Team</th>
+          <th>Group</th>
+          <th>W</th>
+          <th>D</th>
+          <th>L</th>
+          <th>Pts</th>
+          <th>%</th>
+        </thead>
+        <tbody>
+          <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(4), as: :team %>
+        </tbody>
+      </table>
+    <% end %>
 
     <% if @section.sport.blowout_rule %>
       <strong>Please note: </strong><p>The blowout rule is in place for this sport. Any score where the winner wins by more than <%= @section.sport.forfeit_score %> points will only count as a win by <%= @section.sport.forfeit_score %> points.</p>
