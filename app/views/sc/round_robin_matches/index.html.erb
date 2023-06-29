@@ -46,6 +46,9 @@
 	<div id="sidebar">
     <h2>Ladder</h2>
 
+    <strong>Finals</strong>
+    <p><%= finals_explanation(@section) %></p>
+
     <% if @section.number_of_groups > 1 %>
       <h3>Group 1</h3>
     <% end %>

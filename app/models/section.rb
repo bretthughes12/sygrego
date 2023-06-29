@@ -188,13 +188,13 @@ class Section < ApplicationRecord
             court: ladder.start_court,
             match: 100,
             entry_a_id: ladder.nth_in_group(1, 1),
-            entry_b_id: ladder.nth_in_group(2, 1)
+            entry_b_id: ladder.nth_in_group(3, 1)
         )
         RoundRobinMatch.create(
             section_id: id,
             court: ladder.second_court,
             match: 101,
-            entry_a_id: ladder.nth_in_group(3, 1),
+            entry_a_id: ladder.nth_in_group(2, 1),
             entry_b_id: ladder.next_best
         )
         else # section.finals_format == 'Top in Group' && section.number_of_groups == 4
@@ -204,13 +204,13 @@ class Section < ApplicationRecord
             court: ladder.start_court,
             match: 100,
             entry_a_id: ladder.nth_in_group(1, 1),
-            entry_b_id: ladder.nth_in_group(2, 1)
+            entry_b_id: ladder.nth_in_group(3, 1)
         )
         RoundRobinMatch.create(
             section_id: id,
             court: ladder.second_court,
             match: 101,
-            entry_a_id: ladder.nth_in_group(3, 1),
+            entry_a_id: ladder.nth_in_group(2, 1),
             entry_b_id: ladder.nth_in_group(4, 1)
         )
         end
