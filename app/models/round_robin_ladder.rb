@@ -18,7 +18,7 @@ class RoundRobinLadder
   
     def add_sports_entries(sport_entries)
         sport_entries.each do |entry|
-            @ladder[entry.id] = RoundRobinEntry.new(games: 0, wins: 0, draws: 0, for: 0, against: 0, group: entry.group_number)
+            @ladder[entry.id] = RoundRobinEntry.new(games: 0, wins: 0, draws: 0, forfeits: 0, for: 0, against: 0, group: entry.group_number)
         end
     end
 
@@ -28,8 +28,11 @@ class RoundRobinLadder
         elsif result.forfeit_a && result.forfeit_b
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_b_id].games += 1
+            @ladder[result.entry_a_id].forfeits += 1
+            @ladder[result.entry_b_id].forfeits += 1
         elsif result.forfeit_a
             @ladder[result.entry_a_id].games += 1
+            @ladder[result.entry_a_id].forfeits += 1
             @ladder[result.entry_a_id].against += @forfeit_score
             @ladder[result.entry_b_id].games += 1
             @ladder[result.entry_b_id].wins += 1
@@ -39,6 +42,7 @@ class RoundRobinLadder
             @ladder[result.entry_a_id].wins += 1
             @ladder[result.entry_a_id].for += @forfeit_score
             @ladder[result.entry_b_id].games += 1
+            @ladder[result.entry_b_id].forfeits += 1
             @ladder[result.entry_b_id].against += @forfeit_score
         elsif result.score_a == result.score_b
             @ladder[result.entry_a_id].games += 1
@@ -69,9 +73,9 @@ class RoundRobinLadder
     end
 
     def ladder
-        # 3 points for a win; 2 points for a draw and 1 point for each loss
+        # 3 points for a win; 2 points for a draw; 1 point for each loss and 0 points for a forfeit
         @ladder.each do |key, entry|
-            entry.points = entry.wins * 2 + entry.draws * 1 + entry.games
+            entry.points = entry.wins * 2 + entry.draws * 1 + entry.games - entry.forfeits
             if entry.against == 0
                 entry.percent = 999.to_f
             else

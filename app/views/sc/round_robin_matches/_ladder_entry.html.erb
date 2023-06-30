@@ -1,10 +1,10 @@
 <% entry = SportEntry.where(id: team[0]).first %>
 <tr>
     <td><%= entry.team_text %></td>
-    <td><%= team[1].group %></td>
     <td><%= team[1].wins %></td>
     <td><%= team[1].draws %></td>
-    <td><%= team[1].games - team[1].wins - team[1].draws %></td>
+    <td><%= team[1].games - team[1].wins - team[1].draws - team[1].forfeits %></td>
+    <td><%= team[1].forfeits %></td>
     <td><%= team[1].points %></td>
     <td><%= number_with_precision (team[1].percent * 100), precision: 1 %></td>
 </tr>

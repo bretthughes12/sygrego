@@ -4,6 +4,7 @@ class RoundRobinEntry
     attr_accessor :games,
                   :wins,
                   :draws,
+                  :forfeits,
                   :for,
                   :against,
                   :group,
