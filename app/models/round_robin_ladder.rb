@@ -54,20 +54,22 @@ class RoundRobinLadder
             @ladder[result.entry_b_id].for += result.score_b
             @ladder[result.entry_b_id].against += result.score_a
         elsif result.score_a > result.score_b
+            score = result.score_a > (result.score_b + @forfeit_score) ? result.score_b + @forfeit_score : result.score_a
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_a_id].wins += 1
-            @ladder[result.entry_a_id].for += result.score_a
+            @ladder[result.entry_a_id].for += score
             @ladder[result.entry_a_id].against += result.score_b
             @ladder[result.entry_b_id].games += 1
             @ladder[result.entry_b_id].for += result.score_b
-            @ladder[result.entry_b_id].against += result.score_a
+            @ladder[result.entry_b_id].against += score
         else
+            score = result.score_b > (result.score_a + @forfeit_score) ? result.score_a + @forfeit_score : result.score_b
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_a_id].for += result.score_a
-            @ladder[result.entry_a_id].against += result.score_b
+            @ladder[result.entry_a_id].against += score
             @ladder[result.entry_b_id].games += 1
             @ladder[result.entry_b_id].wins += 1
-            @ladder[result.entry_b_id].for += result.score_b
+            @ladder[result.entry_b_id].for += score
             @ladder[result.entry_b_id].against += result.score_a
         end
     end
