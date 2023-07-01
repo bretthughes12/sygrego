@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_23_105444) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_01_002326) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -576,6 +576,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_105444) do
     t.datetime "updated_at", null: false
     t.boolean "blowout_rule", default: false
     t.integer "forfeit_score", default: 0
+    t.string "ladder_tie_break", limit: 20, default: "Percentage"
+    t.string "point_name", limit: 20, default: "Point"
+    t.boolean "allow_negative_score", default: false
     t.index ["name"], name: "index_sports_on_name", unique: true
   end
 
