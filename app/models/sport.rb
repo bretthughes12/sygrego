@@ -149,6 +149,9 @@ class Sport < ApplicationRecord
                 sport.draw_type = fields[8]
                 sport.blowout_rule = fields[9]
                 sport.forfeit_score = fields[10].to_i
+                sport.ladder_tie_break = fields[11]
+                sport.allow_negative_score = fields[12]
+                sport.point_name = fields[13]
                 sport.updated_by = user.id
                 if sport.save
                     updates += 1
@@ -169,6 +172,9 @@ class Sport < ApplicationRecord
                     court_name:                fields[7],
                     blowout_rule:              fields[9],
                     forfeit_score:             fields[10].to_i,
+                    ladder_tie_break:          fields[11],
+                    allow_negative_score:      fields[12],
+                    point_name:                fields[13],
                     updated_by:                user.id)
                 if sport.errors.empty?
                     creates += 1

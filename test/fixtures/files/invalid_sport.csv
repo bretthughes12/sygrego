@@ -1,2 +1,2 @@
-Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType,BlowoutRule,ForfeitScore
-Hockey,true,Team,0,99,1,true,Field,Random,true,5
+Name,Active,Classification,MaxIndivGrp,MaxTeamGrp,MaxIndiv,Bonus,CourtName,DrawType,BlowoutRule,ForfeitScore,TieBreak,AllowNeg,PointName
+Hockey,true,Team,0,99,1,true,Field,Random,true,5,Percentage,false,Point
