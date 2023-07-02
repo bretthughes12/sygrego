@@ -51,6 +51,9 @@ class Sport < ApplicationRecord
                   'Round Robin',
                   'Quad Round Robin']
 
+    TIE_TYPES = ['Percentage',
+                 'Point Difference']
+  
     validates :name,                    presence: true,
                                         uniqueness: { case_sensitive: false },
                                         length: { maximum: 20 }
@@ -67,7 +70,11 @@ class Sport < ApplicationRecord
     validates :draw_type,               presence: true,
                                         length: { maximum: 20 },
                                         inclusion: { in: DRAW_TYPES }
+    validates :ladder_tie_break,        presence: true,
+                                        length: { maximum: 20 },
+                                        inclusion: { in: TIE_TYPES }
     validates :court_name,              length: { maximum: 20 }
+    validates :point_name,              length: { maximum: 20 }
 
     def self.per_page
         15

@@ -130,7 +130,10 @@ class Admin::SportsController < ApplicationController
                                     :active,
                                     :bonus_for_officials,
                                     :court_name,
+                                    :point_name,
                                     :draw_type,
+                                    :ladder_tie_break,
+                                    :allow_negative_score,
                                     :blowout_rule,
                                     :forfeit_score,
                                     :rules_file)
