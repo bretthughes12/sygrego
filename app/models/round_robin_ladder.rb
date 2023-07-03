@@ -45,32 +45,49 @@ class RoundRobinLadder
             @ladder[result.entry_b_id].forfeits += 1
             @ladder[result.entry_b_id].against += @forfeit_score
         elsif result.score_a == result.score_b
+            score = result.score_a < 0 ? 0 : result.score_a
             @ladder[result.entry_a_id].games += 1
             @ladder[result.entry_a_id].draws += 1
-            @ladder[result.entry_a_id].for += result.score_a
-            @ladder[result.entry_a_id].against += result.score_b
-            @ladder[result.entry_b_id].games += 1
-            @ladder[result.entry_b_id].draws += 1
-            @ladder[result.entry_b_id].for += result.score_b
-            @ladder[result.entry_b_id].against += result.score_a
-        elsif result.score_a > result.score_b
-            score = result.score_a > (result.score_b + @forfeit_score) ? result.score_b + @forfeit_score : result.score_a
-            @ladder[result.entry_a_id].games += 1
-            @ladder[result.entry_a_id].wins += 1
             @ladder[result.entry_a_id].for += score
-            @ladder[result.entry_a_id].against += result.score_b
-            @ladder[result.entry_b_id].games += 1
-            @ladder[result.entry_b_id].for += result.score_b
-            @ladder[result.entry_b_id].against += score
-        else
-            score = result.score_b > (result.score_a + @forfeit_score) ? result.score_a + @forfeit_score : result.score_b
-            @ladder[result.entry_a_id].games += 1
-            @ladder[result.entry_a_id].for += result.score_a
             @ladder[result.entry_a_id].against += score
             @ladder[result.entry_b_id].games += 1
-            @ladder[result.entry_b_id].wins += 1
+            @ladder[result.entry_b_id].draws += 1
             @ladder[result.entry_b_id].for += score
-            @ladder[result.entry_b_id].against += result.score_a
+            @ladder[result.entry_b_id].against += score
+        elsif result.score_a > result.score_b
+            if result.score_b < 0 
+                score_win = result.score_a - result.score_b
+                score_lose = 0
+            else
+                score_win = result.score_a 
+                score_lose = result.score_b
+            end
+            score_win = score_win > (score_lose + @forfeit_score) ? score_lose + @forfeit_score : score_win
+
+            @ladder[result.entry_a_id].games += 1
+            @ladder[result.entry_a_id].wins += 1
+            @ladder[result.entry_a_id].for += score_win
+            @ladder[result.entry_a_id].against += score_lose
+            @ladder[result.entry_b_id].games += 1
+            @ladder[result.entry_b_id].for += score_lose
+            @ladder[result.entry_b_id].against += score_win
+        else
+            if result.score_a < 0 
+                score_win = result.score_b - result.score_a
+                score_lose = 0
+            else
+                score_win = result.score_b
+                score_lose = result.score_a
+            end
+            score_win = score_win > (score_lose + @forfeit_score) ? score_lose + @forfeit_score : score_win
+
+            @ladder[result.entry_a_id].games += 1
+            @ladder[result.entry_a_id].for += score_lose
+            @ladder[result.entry_a_id].against += score_win
+            @ladder[result.entry_b_id].games += 1
+            @ladder[result.entry_b_id].wins += 1
+            @ladder[result.entry_b_id].for += score_win
+            @ladder[result.entry_b_id].against += score_lose
         end
     end
 
