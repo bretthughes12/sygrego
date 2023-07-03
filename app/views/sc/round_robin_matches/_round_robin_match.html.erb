@@ -9,7 +9,7 @@
 		<% end %>
 	</td>
 	<td> 
-		<%= f.select :score_a, ['Forfeit', *0..99] %>
+		<%= f.select :score_a, score_range(@section.sport) %>
 	</td>
 	<td> 
 		<% if round_robin_match.match > 99 %>
@@ -19,7 +19,7 @@
 		<% end %>
 	</td>
 	<td> 
-		<%= f.select :score_b, ['Forfeit', *0..99] %>
+		<%= f.select :score_b, score_range(@section.sport) %>
 	</td>
 </tr>
 <% end %>
