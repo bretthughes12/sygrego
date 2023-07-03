@@ -198,6 +198,9 @@ class Sport < ApplicationRecord
          'max_team_entries_group',
          'court_name',
          'blowout_rule',
-         'forfeit_score']
+         'forfeit_score',
+         'allow_negative_score',
+         'ladder_tie_break',
+         'point_name']
     end
 end
