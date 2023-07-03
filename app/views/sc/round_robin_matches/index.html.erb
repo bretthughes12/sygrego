@@ -126,7 +126,7 @@
     <% end %>
 
     <% if @section.sport.blowout_rule %>
-      <strong>Please note: </strong><p>The blowout rule is in place for this sport. Any score where the winner wins by more than <%= @section.sport.forfeit_score %> points will only count as a win by <%= @section.sport.forfeit_score %> points.</p>
+      <strong>Please note: </strong><p>The blowout rule is in place for this sport. Any score where the winner wins by more than <%= @section.sport.forfeit_score %> <%= @section.sport.point_name.downcase.pluralize %> will only count as a win by <%= @section.sport.forfeit_score %> <%= @section.sport.point_name.downcase.pluralize %>.</p>
     <% end %>
 	</div>
 <% end -%>
