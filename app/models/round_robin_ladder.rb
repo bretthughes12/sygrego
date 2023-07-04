@@ -92,13 +92,20 @@ class RoundRobinLadder
     end
 
     def ladder
+        section = Section.where(id: @section_id).first
+        sport = section.sport
+
         # 3 points for a win; 2 points for a draw; 1 point for each loss and 0 points for a forfeit
         @ladder.each do |key, entry|
             entry.points = entry.wins * 2 + entry.draws * 1 + entry.games - entry.forfeits
-            if entry.against == 0
-                entry.percent = 999.to_f
-            else
-                entry.percent = (entry.for.to_f / entry.against.to_f)
+            if sport.ladder_tie_break == 'Percentage'
+                if entry.against == 0
+                    entry.percent = 999.to_f
+                else
+                    entry.percent = (entry.for.to_f / entry.against.to_f)
+                end
+            elsif sport.ladder_tie_break == 'Point Difference'
+                entry.percent = entry.for - entry.against
             end
         end
 

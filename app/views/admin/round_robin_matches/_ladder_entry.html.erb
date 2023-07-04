@@ -6,5 +6,5 @@
     <td><%= team[1].games - team[1].wins - team[1].draws - team[1].forfeits %></td>
     <td><%= team[1].forfeits %></td>
     <td><%= team[1].points %></td>
-    <td><%= number_with_precision (team[1].percent * 100), precision: 1 %></td>
+    <td><%= @section.sport.ladder_tie_break == 'Percentage' ? (number_with_precision (team[1].percent * 100), precision: 1) : team[1].percent %></td>
 </tr>

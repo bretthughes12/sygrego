@@ -6,4 +6,12 @@ module Admin::SportsHelper
             ['Forfeit', *0..99]
         end
     end
+
+    def tie_breaker(sport)
+        if sport.ladder_tie_break == 'Percentage'
+            '%'
+        elsif sport.ladder_tie_break == 'Point Difference'
+            'Diff'
+        end
+    end
 end

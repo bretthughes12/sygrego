@@ -61,7 +61,7 @@
         <th>L</th>
         <th>F</th>
         <th>Pts</th>
-        <th>%</th>
+        <th><%= tie_breaker(@section.sport) %></th>
       </thead>
       <tbody>
         <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(1), as: :team %>
@@ -79,7 +79,7 @@
           <th>L</th>
           <th>F</th>
           <th>Pts</th>
-          <th>%</th>
+          <th><%= tie_breaker(@section.sport) %></th>
         </thead>
         <tbody>
           <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(2), as: :team %>
@@ -98,7 +98,7 @@
           <th>L</th>
           <th>F</th>
           <th>Pts</th>
-          <th>%</th>
+          <th><%= tie_breaker(@section.sport) %></th>
         </thead>
         <tbody>
           <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(3), as: :team %>
@@ -117,7 +117,7 @@
           <th>L</th>
           <th>F</th>
           <th>Pts</th>
-          <th>%</th>
+          <th><%= tie_breaker(@section.sport) %></th>
         </thead>
         <tbody>
           <%= render partial: 'ladder_entry', collection: @ladder.ladder_for_group(4), as: :team %>
