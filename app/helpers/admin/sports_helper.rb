@@ -14,4 +14,15 @@ module Admin::SportsHelper
             'Diff'
         end
     end
+
+    def ladder_explanation(sport)
+        case
+        when sport.ladder_tie_break == "Percentage"
+            "Teams on equal points are separated by percentage."
+        when sport.ladder_tie_break == "Point Difference"
+            "Teams on equal points are separated by #{sport.point_name.downcase} difference."
+        when sport.ladder_tie_break == "Points For"
+            "Teams on equal points are separated by total #{sport.point_name.downcase.pluralize} scored."
+        end
+    end
 end
