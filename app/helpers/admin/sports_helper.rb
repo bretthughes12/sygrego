@@ -12,6 +12,8 @@ module Admin::SportsHelper
             '%'
         elsif sport.ladder_tie_break == 'Point Difference'
             'Diff'
+        elsif sport.ladder_tie_break == 'Points For'
+            'For'
         end
     end
 

@@ -106,6 +106,8 @@ class RoundRobinLadder
                 end
             elsif sport.ladder_tie_break == 'Point Difference'
                 entry.percent = entry.for - entry.against
+            elsif sport.ladder_tie_break == 'Points For'
+                entry.percent = entry.for 
             end
         end
 

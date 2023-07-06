@@ -52,7 +52,8 @@ class Sport < ApplicationRecord
                   'Quad Round Robin']
 
     TIE_TYPES = ['Percentage',
-                 'Point Difference']
+                 'Point Difference',
+                 'Points For']
   
     validates :name,                    presence: true,
                                         uniqueness: { case_sensitive: false },
