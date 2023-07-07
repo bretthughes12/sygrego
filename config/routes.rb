@@ -189,6 +189,11 @@ Rails.application.routes.draw do
         post :invoice        
         patch :approve
       end
+      resources :participants, only: [:index] do
+        collection do
+          get :drivers
+        end
+      end
     end
     resources :event_details, only: [:index, :show, :edit, :update] do
       member do

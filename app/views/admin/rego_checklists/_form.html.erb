@@ -180,7 +180,23 @@
 	<br/>
 
 	<h2>Driving</h2>
-	<%= f.input :driver_form, :label => "Driver Nomination Form?" %>
+	<% if @rego_checklist.group.drivers_all_electronic? %>
+		<p>Physical copy of driver's nomination form is not required. All drivers' information and signatures have been entered online.</p>
+	<% else %>
+		<%= f.input :driver_form, :label => "Driver Nomination Form?" %>
+	<% end %>
+
+    <%= link_to "Drivers' Details", drivers_admin_group_participants_path(group_id: @group.id),
+        target: :_blank,
+        class: primary_button_class,
+        role: "button" %>
+    <%= link_to "Drivers Nomination Form (PDF)", drivers_admin_group_participants_path(group_id: @group.id, format: :pdf),
+        class: primary_button_class,
+        role: "button" %>
+
+	<br/>
+	<br/>
+
 	<table class="table table-dark table-striped">
 		<tr>
 			<td> 

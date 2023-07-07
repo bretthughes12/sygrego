@@ -291,13 +291,6 @@ class Group < ApplicationRecord
       gcs.collect(&:email)
     end
 
-#    def participant_users
-#      User.participants.active
-#          .joins(participant: :group)
-#          .where(participants: { group_id: id })
-#          .includes(:participant)
-#    end
-    
     def mysyg_status
       if mysyg_setting.mysyg_open
         'Open'
@@ -328,10 +321,6 @@ class Group < ApplicationRecord
 #      active_groups
 #    end
     
-  #def cached_officials
-  #  @officials ||= officials
-  #end
-
   def volunteers
     this_group_volunteers = []
     participants.includes(:volunteers).each do |participant|
@@ -384,6 +373,13 @@ class Group < ApplicationRecord
 #                .uniq
 #                .size
 #  end
+
+  def drivers_all_electronic?
+    participants.coming.accepted.drivers.each do |p|
+      return false if !p.driver_signature || p.number_plate.blank?
+    end
+    return true
+  end
 
   def warden_zone_name
     warden_zone.nil? ? '' : warden_zone.name
