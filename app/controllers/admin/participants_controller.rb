@@ -22,7 +22,9 @@ class Admin::ParticipantsController < ApplicationController
     @participants = Participant.
       search(params[:search]).
       order('coming desc, first_name, surname').
-      paginate(page: params[:page], per_page: 100)
+      load
+
+    @participants = @participants.paginate(page: params[:page], per_page: 100)
 
     respond_to do |format|
       format.html { render action: 'index' }

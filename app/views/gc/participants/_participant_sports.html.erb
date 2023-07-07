@@ -4,26 +4,26 @@
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Saturday Morning").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Saturday Morning").uniq.join("<br/>").html_safe) %>
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Saturday Afternoon").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Saturday Afternoon").uniq.join("<br/>").html_safe) %>
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Saturday Evening").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Saturday Evening").uniq.join("<br/>").html_safe) %>
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Sunday Morning").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Sunday Morning").uniq.join("<br/>").html_safe) %>
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Sunday Afternoon").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Sunday Afternoon").uniq.join("<br/>").html_safe) %>
 	</td>
 	
 	<td>
-		<%= participant.sports_in_session("Sunday Evening").uniq.join("<br/>").html_safe %>
+		<%= h(participant.sports_in_session("Sunday Evening").uniq.join("<br/>").html_safe) %>
 	</td>
 </tr>
