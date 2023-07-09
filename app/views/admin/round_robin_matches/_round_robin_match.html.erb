@@ -3,7 +3,7 @@
     <td><%= round_robin_match.match %></td>
     <td><%= round_robin_match.complete? ? 'Yes' : 'No' %></td>
     <td><%= round_robin_match.entry_a_team_text %></td>
-    <td><%= round_robin_match.score_a %></td>
+    <td class="<%= forfeit_display_class(round_robin_match.forfeit_a) %>"><%= round_robin_match.score_a %></td>
     <td><%= round_robin_match.entry_b_team_text %></td>
-    <td><%= round_robin_match.score_b %></td>
+    <td class="<%= forfeit_display_class(round_robin_match.forfeit_b) %>"><%= round_robin_match.score_b %></td>
 </tr>

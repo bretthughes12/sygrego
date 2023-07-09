@@ -8,7 +8,7 @@
 			<%= round_robin_match.entry_a_team_text %>
 		<% end %>
 	</td>
-	<td> 
+	<td class="<%= forfeit_display_class(round_robin_match.forfeit_a) %>"> 
 		<%= f.select :score_a, score_range(@section.sport) %>
 	</td>
 	<td> 
@@ -18,7 +18,7 @@
 			<%= round_robin_match.entry_b_team_text %>
 		<% end %>
 	</td>
-	<td> 
+	<td class="<%= forfeit_display_class(round_robin_match.forfeit_b) %>"> 
 		<%= f.select :score_b, score_range(@section.sport) %>
 	</td>
 </tr>
