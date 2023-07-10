@@ -1,7 +1,6 @@
 class Sc::AwardsController < ScController
 
   load_and_authorize_resource
-  layout 'sc'
   
   # GET /sc/awards/new_sport_nominations
   def new_good_sports

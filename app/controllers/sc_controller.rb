@@ -1,7 +1,8 @@
 class ScController < ApplicationController
-
   before_action :authorize_sc_access
   
+  layout 'sc'
+
   private
     
   def authorize_sc_access

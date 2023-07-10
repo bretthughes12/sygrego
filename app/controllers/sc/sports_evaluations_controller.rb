@@ -1,7 +1,6 @@
 class Sc::SportsEvaluationsController < ScController
 
   load_and_authorize_resource
-  layout 'sc'
   
   # GET /sc/sports_evaluations/new
   def new

@@ -3,8 +3,6 @@ class Sc::RoundRobinMatchesController < ScController
   load_and_authorize_resource 
   before_action :authenticate_user!
   
-  layout "sc"
-
   # GET /sc/sections/1/round_robin_mmatches
   def index
     @section = Section.find_by_id(params[:section_id])

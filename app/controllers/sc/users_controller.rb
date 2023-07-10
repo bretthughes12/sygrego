@@ -3,8 +3,6 @@ class Sc::UsersController < ScController
   load_and_authorize_resource
   before_action :authenticate_user!
   
-  layout 'sc'
-    
   # GET /sc/users/1/edit
   def edit
     render layout: @current_role.name

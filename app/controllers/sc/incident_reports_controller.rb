@@ -1,7 +1,6 @@
 class Sc::IncidentReportsController < ScController
 
   load_and_authorize_resource
-  layout 'sc'
   
   # GET /sc/incident_reports/new
   def new

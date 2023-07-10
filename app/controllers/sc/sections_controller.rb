@@ -1,7 +1,6 @@
 class Sc::SectionsController < ScController
 
   load_and_authorize_resource
-  layout 'sc'
 
   # GET /sc/section
   def index

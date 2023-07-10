@@ -1,8 +1,6 @@
 class Sc::InfoController < ScController
     before_action :authenticate_user!
 
-    layout 'sc' 
-
     # GET /sc/info/home
     def home
         @total_groups = Group.coming.count
