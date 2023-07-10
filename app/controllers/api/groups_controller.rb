@@ -1,6 +1,4 @@
-class Api::GroupsController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::GroupsController < ApiController
     
     # GET /api/groups/1.xml
     def show

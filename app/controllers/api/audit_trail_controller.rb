@@ -1,6 +1,4 @@
-class Api::AuditTrailController < ApplicationController
-  before_action :authorize_xml
-  before_action :authenticate_user!
+class Api::AuditTrailController < ApiController
 
   # GET /api/audit_trail.xml?start=0&limit=20
   def index

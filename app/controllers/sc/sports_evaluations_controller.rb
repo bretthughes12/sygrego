@@ -1,4 +1,4 @@
-class Sc::SportsEvaluationsController < ApplicationController
+class Sc::SportsEvaluationsController < ScController
 
   load_and_authorize_resource
   layout 'sc'

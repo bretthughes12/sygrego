@@ -1,6 +1,4 @@
-class Api::ParticipantsController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::ParticipantsController < ApiController
     
     # GET /api/participants/1.xml
     def show

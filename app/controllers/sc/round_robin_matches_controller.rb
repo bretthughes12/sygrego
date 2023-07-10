@@ -1,4 +1,4 @@
-class Sc::RoundRobinMatchesController < ApplicationController
+class Sc::RoundRobinMatchesController < ScController
 
   load_and_authorize_resource 
   before_action :authenticate_user!

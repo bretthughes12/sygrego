@@ -1,4 +1,4 @@
-class Sc::UsersController < ApplicationController
+class Sc::UsersController < ScController
   
   load_and_authorize_resource
   before_action :authenticate_user!

@@ -1,4 +1,4 @@
-class Sc::IncidentReportsController < ApplicationController
+class Sc::IncidentReportsController < ScController
 
   load_and_authorize_resource
   layout 'sc'

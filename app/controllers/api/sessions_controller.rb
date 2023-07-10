@@ -1,7 +1,5 @@
-class Api::SessionsController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
-    
+class Api::SessionsController < ApiController
+   
     # GET /api/sessions/1.xml
     def show
       @session = Session.find(params[:id])

@@ -1,6 +1,4 @@
-class Api::SportEntriesController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::SportEntriesController < ApiController
     
     # GET /api/sport_entries/1.xml
     def show

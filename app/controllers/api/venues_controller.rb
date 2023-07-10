@@ -1,6 +1,4 @@
-class Api::VenuesController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::VenuesController < ApiController
 
     # GET /api/venues/1.xml
     def show

@@ -1,6 +1,4 @@
-class Api::EventDetailsController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::EventDetailsController < ApiController
     
     # GET /api/event_details/1.xml
     def show

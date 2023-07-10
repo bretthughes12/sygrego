@@ -1,4 +1,4 @@
-class Sc::SectionsController < ApplicationController
+class Sc::SectionsController < ScController
 
   load_and_authorize_resource
   layout 'sc'

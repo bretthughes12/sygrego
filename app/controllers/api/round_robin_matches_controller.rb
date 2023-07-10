@@ -1,6 +1,4 @@
-class Api::RoundRobinMatchesController < ApplicationController
-    before_action :authorize_xml
-    before_action :authenticate_user!
+class Api::RoundRobinMatchesController < ApiController
   
     # GET /api/round_robin_matches/1.xml
     def show

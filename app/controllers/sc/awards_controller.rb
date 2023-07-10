@@ -1,4 +1,4 @@
-class Sc::AwardsController < ApplicationController
+class Sc::AwardsController < ScController
 
   load_and_authorize_resource
   layout 'sc'

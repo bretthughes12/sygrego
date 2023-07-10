@@ -1,4 +1,4 @@
-class Sc::InfoController < ApplicationController
+class Sc::InfoController < ScController
     before_action :authenticate_user!
 
     layout 'sc' 
