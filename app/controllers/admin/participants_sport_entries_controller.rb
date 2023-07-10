@@ -1,9 +1,7 @@
-class Admin::ParticipantsSportEntriesController < ApplicationController
+class Admin::ParticipantsSportEntriesController < AdminController
     authorize_resource
     before_action :authenticate_user!
     
-    layout "admin" 
-  
     # PATCH /admin/sport_entries/1/participants/1/make_captain
     def make_captain
         @sport_entry = SportEntry.find(params[:sport_entry_id])

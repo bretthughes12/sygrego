@@ -1,7 +1,6 @@
-class Admin::AwardsController < ApplicationController
+class Admin::AwardsController < AdminController
 
   load_and_authorize_resource
-  layout 'admin'
   
   # GET /admin/awards/good_sports
   def good_sports

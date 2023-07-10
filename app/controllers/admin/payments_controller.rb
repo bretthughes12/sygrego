@@ -1,9 +1,7 @@
-class Admin::PaymentsController < ApplicationController
+class Admin::PaymentsController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/payments
     def index

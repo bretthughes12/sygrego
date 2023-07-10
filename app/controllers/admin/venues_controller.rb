@@ -1,10 +1,8 @@
-class Admin::VenuesController < ApplicationController
+class Admin::VenuesController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
-  
-    layout "admin"
   
     # GET /admin/venues
     def index

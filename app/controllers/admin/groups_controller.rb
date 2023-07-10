@@ -1,11 +1,9 @@
-class Admin::GroupsController < ApplicationController
+class Admin::GroupsController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/groups
     def index
       @groups = Group.order(:abbr).load

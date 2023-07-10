@@ -1,7 +1,5 @@
-class Admin::InfoController < ApplicationController
+class Admin::InfoController < AdminController
     before_action :authenticate_user!, except: [:knockout_reference, :ladder_reference, :results_reference]
-
-    layout 'admin' 
 
     # GET /admin/info/home
     def home

@@ -1,7 +1,5 @@
-class Admin::BallotResultsController < ApplicationController
+class Admin::BallotResultsController < AdminController
     before_action :authenticate_user!
-
-    layout 'admin'
 
     # GET /admin/ballot_results
     # GET /admin/ballot_results?format=csv

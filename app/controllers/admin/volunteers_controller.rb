@@ -1,10 +1,8 @@
-class Admin::VolunteersController < ApplicationController
+class Admin::VolunteersController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
-  
-    layout "admin"
   
     # GET /admin/volunteers
     def index

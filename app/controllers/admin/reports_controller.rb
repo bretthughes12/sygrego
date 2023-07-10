@@ -1,7 +1,5 @@
-class Admin::ReportsController < ApplicationController
+class Admin::ReportsController < AdminController
     before_action :authenticate_user!
-
-    layout 'admin'
 
     # GET /admin/reports/finance_summary
     def finance_summary

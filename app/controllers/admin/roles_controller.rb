@@ -1,9 +1,7 @@
-class Admin::RolesController < ApplicationController
+class Admin::RolesController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/roles
     def index

@@ -1,9 +1,7 @@
-class Admin::PagesController < ApplicationController
+class Admin::PagesController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/pages
     def index

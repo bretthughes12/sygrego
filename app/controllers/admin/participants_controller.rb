@@ -1,11 +1,9 @@
-class Admin::ParticipantsController < ApplicationController
+class Admin::ParticipantsController < AdminController
   require 'csv'
 
   load_and_authorize_resource
   before_action :authenticate_user!
   
-  layout "admin"
-
   # GET /admin/participants
   def index
     @participants = Participant.

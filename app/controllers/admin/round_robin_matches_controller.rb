@@ -1,10 +1,8 @@
-class Admin::RoundRobinMatchesController < ApplicationController
+class Admin::RoundRobinMatchesController < AdminController
 
   load_and_authorize_resource 
   before_action :authenticate_user!
   
-  layout "admin"
-
   # GET /admin/sections/1/round_robin_matches
   def index
     @section = Section.find_by_id(params[:section_id])

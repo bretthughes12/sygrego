@@ -1,9 +1,7 @@
-class Admin::LostItemsController < ApplicationController
+class Admin::LostItemsController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/lost_items
     def index

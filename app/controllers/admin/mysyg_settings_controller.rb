@@ -1,11 +1,9 @@
-class Admin::MysygSettingsController < ApplicationController
+class Admin::MysygSettingsController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/mysyg_settings
     def index
       @mysyg_settings = MysygSetting.includes(:group).where("groups.coming = true").all.order("groups.abbr").load

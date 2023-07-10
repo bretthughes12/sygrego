@@ -1,7 +1,5 @@
-class Admin::TasksController < ApplicationController
+class Admin::TasksController < AdminController
   before_action :authenticate_user!
-
-  layout 'admin'
 
   # GET /admin/tasks/sports_draws
   def sports_draws

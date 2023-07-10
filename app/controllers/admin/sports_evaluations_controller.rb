@@ -1,9 +1,7 @@
-class Admin::SportsEvaluationsController < ApplicationController
+class Admin::SportsEvaluationsController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/sports_evaluations
     def index

@@ -1,9 +1,7 @@
-class Admin::IncidentReportsController < ApplicationController
+class Admin::IncidentReportsController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/incident_reports
     def index

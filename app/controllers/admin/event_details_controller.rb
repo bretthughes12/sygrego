@@ -1,11 +1,9 @@
-class Admin::EventDetailsController < ApplicationController
+class Admin::EventDetailsController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/event_details
     def index
       @event_details = EventDetail.includes(:group).where("groups.coming = true").all.order("groups.abbr").load

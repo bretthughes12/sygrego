@@ -1,11 +1,9 @@
-class Admin::SessionsController < ApplicationController
+class Admin::SessionsController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/sessions
     def index
       @sessions = Session.order(:database_rowid).includes(:sections).load

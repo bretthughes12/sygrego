@@ -1,9 +1,7 @@
-class Admin::WardenZonesController < ApplicationController
+class Admin::WardenZonesController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/warden_zones
     def index

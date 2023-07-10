@@ -1,5 +1,4 @@
-class Admin::SettingsController < ApplicationController
-    layout 'admin'
+class Admin::SettingsController < AdminController
     before_action :authenticate_user!
 
     # GET /admin/settings/1

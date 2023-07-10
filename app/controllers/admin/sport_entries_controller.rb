@@ -1,11 +1,9 @@
-class Admin::SportEntriesController < ApplicationController
+class Admin::SportEntriesController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/sport_entries
     def index
       @sport_entries = SportEntry.includes([:grade, :group]).

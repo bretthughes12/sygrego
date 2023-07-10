@@ -1,9 +1,7 @@
-class Admin::TimelinesController < ApplicationController
+class Admin::TimelinesController < AdminController
   
     load_and_authorize_resource
     before_action :authenticate_user!
-    
-    layout 'admin'
     
     # GET /admin/timelines
     def index

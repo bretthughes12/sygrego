@@ -1,11 +1,9 @@
-class Admin::RegoChecklistsController < ApplicationController
+class Admin::RegoChecklistsController < AdminController
     require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
     
-    layout "admin"
-  
     # GET /admin/rego_checklists
     def index
       @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
