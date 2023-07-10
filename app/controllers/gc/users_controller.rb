@@ -1,10 +1,6 @@
-class Gc::UsersController < ApplicationController
+class Gc::UsersController < GcController
   
   load_and_authorize_resource except: [:create]
-  before_action :authenticate_user!
-  before_action :find_group
-  
-  layout 'gc'
     
   # GET /gc/users
   def index

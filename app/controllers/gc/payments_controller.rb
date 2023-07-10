@@ -1,9 +1,5 @@
-class Gc::PaymentsController < ApplicationController
+class Gc::PaymentsController < GcController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc" 
   
     # GET /gc/payments
     def index

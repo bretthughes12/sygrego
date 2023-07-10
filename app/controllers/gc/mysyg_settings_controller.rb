@@ -1,9 +1,5 @@
-class Gc::MysygSettingsController < ApplicationController
+class Gc::MysygSettingsController < GcController
     load_and_authorize_resource except: [:show]
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc"
   
     # GET /gc/mysyg_settings/1/edit
     def edit

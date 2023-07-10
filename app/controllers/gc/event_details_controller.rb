@@ -1,9 +1,5 @@
-class Gc::EventDetailsController < ApplicationController
+class Gc::EventDetailsController < GcController
     load_and_authorize_resource except: [:show]
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc"
   
     # GET /gc/event_details/1/edit
     def edit

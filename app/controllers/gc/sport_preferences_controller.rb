@@ -1,9 +1,5 @@
-class Gc::SportPreferencesController < ApplicationController
+class Gc::SportPreferencesController < GcController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-
-    layout "gc"
   
     # GET gc/groups/1/sport_preferences
     def index

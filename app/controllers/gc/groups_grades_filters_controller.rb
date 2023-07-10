@@ -1,4 +1,4 @@
-class Gc::GroupsGradesFiltersController < ApplicationController
+class Gc::GroupsGradesFiltersController < GcController
 
     def hide_team
         @mysyg_setting = MysygSetting.find(params[:id])

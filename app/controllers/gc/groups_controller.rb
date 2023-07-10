@@ -1,9 +1,5 @@
-class Gc::GroupsController < ApplicationController
+class Gc::GroupsController < GcController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc"
   
     # GET /gc/groups/1/edit
     def edit

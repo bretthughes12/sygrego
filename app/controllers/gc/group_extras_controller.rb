@@ -1,9 +1,5 @@
-class Gc::GroupExtrasController < ApplicationController
+class Gc::GroupExtrasController < GcController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc" 
   
     # GET /gc/group_extras
     def index

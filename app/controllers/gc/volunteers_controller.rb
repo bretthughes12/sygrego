@@ -1,9 +1,5 @@
-class Gc::VolunteersController < ApplicationController
+class Gc::VolunteersController < GcController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc" 
   
     # GET /gc/volunteers
     def index

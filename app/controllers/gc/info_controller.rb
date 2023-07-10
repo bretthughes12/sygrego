@@ -1,8 +1,4 @@
-class Gc::InfoController < ApplicationController
-    before_action :authenticate_user!
-    before_action :find_group
-
-    layout 'gc'
+class Gc::InfoController < GcController
 
     # GET /gc/info/home
     def home

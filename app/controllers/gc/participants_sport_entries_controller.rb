@@ -1,9 +1,5 @@
-class Gc::ParticipantsSportEntriesController < ApplicationController
+class Gc::ParticipantsSportEntriesController < GcController
     authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    
-    layout "gc" 
   
     # PATCH /gc/sport_entries/1/participants/1/make_captain
     def make_captain
