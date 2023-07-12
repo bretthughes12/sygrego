@@ -53,6 +53,10 @@ FactoryBot.define do
       roles               { [association(:role, :gc)] }
     end
 
+    trait :sc do
+      roles               { [association(:role, :sc)] }
+    end
+
     trait :participant do
       roles               { [association(:role, :participant)] }
     end

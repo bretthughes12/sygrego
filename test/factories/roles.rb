@@ -34,6 +34,10 @@ FactoryBot.define do
       group_related       { true }
     end
 
+    trait :sc do
+      name                { "sc" }
+    end
+
     trait :participant do
       name                { "participant" }
       participant_related { true }
