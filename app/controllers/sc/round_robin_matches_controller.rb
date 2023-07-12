@@ -41,6 +41,8 @@ class Sc::RoundRobinMatchesController < ScController
         sre.complete = true
         params[:round_robin_matches][id][:score_b] = 0
         params[:round_robin_matches][id][:score_a] = @section.sport.forfeit_score
+      elsif params[:commit] == "Calculate Finalists"
+        sre.complete = true
       elsif params[:round_robin_matches][id][:score_a] == '0' && params[:round_robin_matches][id][:score_b] == '0'
         sre.forfeit_b = false
         sre.forfeit_a = false
