@@ -32,17 +32,61 @@ FactoryBot.define do
   factory :round_robin_match do
     section
     court { 1 }
-    match { 1 }
+    sequence(:match) { |n| n }
     complete { false }
     entry_a_id { 1 }
     team_a { 1 }
-    score_a { 1 }
+    score_a { 0 }
     entry_b_id { 1 }
     team_b { 1 }
-    score_b { 1 }
+    score_b { 0 }
     forfeit_a { false }
     forfeit_b { false }
     entry_umpire_id { 1 }
     forfeit_umpire { false }
+
+    trait :semi do
+      sequence(:match) { |n| n+99 }
+    end
+
+    trait :grand do
+      sequence(:match) { |n| n+199 }
+    end
+
+    trait :a_wins do
+      complete { true }
+      score_a { 3 }
+      score_b { 1 }
+    end
+
+    trait :b_wins do
+      complete { true }
+      score_a { 2 }
+      score_b { 4 }
+    end
+
+    trait :draw do
+      complete { true }
+      score_a { 2 }
+      score_b { 2 }
+    end
+
+    trait :a_forfeits do
+      complete { true }
+      forfeit_a { true }
+      score_b { 5 }
+    end
+
+    trait :b_forfeits do
+      complete { true }
+      forfeit_b { true }
+      score_a { 5 }
+    end
+
+    trait :both_forfeit do
+      complete { true }
+      forfeit_a { true }
+      forfeit_b { true }
+    end
   end
 end
