@@ -38,5 +38,6 @@ FactoryBot.define do
     session
     sequence(:name)             { |n| "Section#{n}"}
     active                      {true}
+    finals_format               {"Top 2"}
   end
 end

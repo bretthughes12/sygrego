@@ -35,10 +35,8 @@ FactoryBot.define do
     sequence(:match) { |n| n }
     complete { false }
     entry_a_id { 1 }
-    team_a { 1 }
     score_a { 0 }
     entry_b_id { 1 }
-    team_b { 1 }
     score_b { 0 }
     forfeit_a { false }
     forfeit_b { false }

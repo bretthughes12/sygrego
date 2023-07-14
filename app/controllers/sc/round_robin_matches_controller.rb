@@ -91,9 +91,6 @@ class Sc::RoundRobinMatchesController < ScController
         flash[:notice] = "Updated"
         redirect_to sc_section_round_robin_matches_url(section_id: @section.id)
       end
-    else
-      flash[:notice] = "There was a problem updating the results"
-      render action: :index  
     end
   end
 

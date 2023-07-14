@@ -35,5 +35,6 @@ FactoryBot.define do
         max_indiv_entries_group     {99}
         max_team_entries_group      {99}
         max_entries_indiv           {1}
+        forfeit_score               {2}
     end
 end    
