@@ -1,0 +1,2 @@
+nDraw,idSection,dsSection,nCourt,nMatch,bComplete,idWebA,nEntryA,nTeamA,nScoreA,idWebB,nEntryB,nTeamB,nScoreB,bForfeitA,bForfeitB,idWebUmp,nEntryUmpire,bForfeitUmpire,bBlowoutRule,nForfeitScore,SYG Sport Entries_1_nGroup,tblSYGSportEntries_nGroup,nGroups,Churcha,Churchb,cFinalsFormat,nStartCourt
+1322,1,AFL Recreational Football Mixed B1,1,1,TRUE,111,2145361536,1,15,222,2145362430,2,20,FALSE,FALSE,2658,2145360610,FALSE,TRUE,20,1,1,1,CCW,SHFT,Top 2,1
