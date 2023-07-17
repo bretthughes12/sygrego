@@ -19,7 +19,7 @@ module Admin::SectionsHelper
         when section.finals_format == "Top 2 in Group"
             "Top two teams from each group to play cross-over semi-finals: 1st from Group 1 vs 2nd from Group 2 and 1st from Group 2 vs 2nd from Group 1."
         when section.finals_format == "Top in Group" && section.number_of_groups == 3
-            "Top team in each group to play semi-finals, plus next best teams: 1st from Group 1 vs 1st from Group 3 and 1st from Group 2 vs next best team."
+            "Top team in each group to play semi-finals, plus next best team: 1st from Group 1 vs 1st from Group 3 and 1st from Group 2 vs next best team."
         else
             "Top team in each group to play semi-finals: 1st from Group 1 vs 1st from Group 3 and 1st from Group 2 1st from Group 4."
         end
