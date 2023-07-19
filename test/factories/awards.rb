@@ -18,11 +18,11 @@
 #
 FactoryBot.define do
   factory :award do
-    category { "Spirit" }
-    submitted_by { "MyString" }
-    submitted_group { "MyString" }
-    name { "MyString" }
-    description { "MyText" }
-    flagged { false }
+    category          { "Spirit" }
+    submitted_by      { "Madonna" }
+    submitted_group   { "Caffeine" }
+    name              { "Admin team" }
+    description       { "Did awesome stuff" }
+    flagged           { false }
   end
 end

@@ -48,6 +48,16 @@ class Admin::GroupsHelperTest < ActionView::TestCase
     assert_equal "table-dark", mysyg_settings_display_class(mysyg_setting)
   end
   
+  test "sport oversubscribed class" do
+    session1 = FactoryBot.create(:session)
+    session2 = FactoryBot.create(:session)
+    section = FactoryBot.create(:section, session: session1)
+    entry = FactoryBot.create(:sport_entry, section: section, group: @group)
+
+    assert_equal 'table-danger', sport_oversubscribed_class(@group, session1.id)
+    assert_equal 'table-primary', sport_oversubscribed_class(@group, session2.id)
+  end
+  
   test "group rego checklist display classes" do
     rego_checklist = FactoryBot.create(:rego_checklist, registered: true)
     assert_equal "table-primary", rego_display_class(rego_checklist)

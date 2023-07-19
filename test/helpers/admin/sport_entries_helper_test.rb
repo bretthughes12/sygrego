@@ -46,6 +46,12 @@ class Admin::SportEntriesHelperTest < ActionView::TestCase
     assert_equal true, should_show_draw_link(entry)
   end
   
+  test "should show confirm button when entry to be confirmed" do
+    entry = FactoryBot.create(:sport_entry, status: 'To Be Confirmed')
+
+    assert_equal true, should_show_confirm_button(entry)
+  end
+  
   test "should show delete link" do
     gc = FactoryBot.create(:user, :gc)
     @current_user = gc

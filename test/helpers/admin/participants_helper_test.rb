@@ -14,6 +14,10 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
   end
   
   test "participant display classes" do
+    @participant.status = 'Requiring Approval'
+    assert_equal "table-secondary", participant_display_class(@participant)
+
+    @participant.status = 'Accepted'
     @participant.coming = @participant.spectator = true
     assert_equal "table-warning", participant_display_class(@participant)
 

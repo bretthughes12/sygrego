@@ -19,15 +19,18 @@
 #
 FactoryBot.define do
   factory :lost_item do
-    category { "MyString" }
-    description { "MyString" }
-    claimed { false }
-    name { "MyString" }
-    address { "MyString" }
-    suburb { "MyString" }
-    postcode { 1 }
-    phone_number { "MyString" }
-    email { "My@String.com" }
-    lock_version { 1 }
+    category    { "Stuff" }
+    description { "Dooverlackey" }
+    claimed     { false }
+  end
+
+  trait :claimed do
+    claimed         { true }
+    sequence(:name) { |n| "Mary Jones#{n}"}
+    address         { "123 Main St" }
+    suburb          { "Disneyland" }
+    postcode        { 3000 }
+    phone_number    { "9555-4444" }
+    email           { "My@String.com" }
   end
 end
