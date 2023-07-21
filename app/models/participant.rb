@@ -680,10 +680,19 @@ class Participant < ApplicationRecord
               participant.updated_by = user.id
 
               if participant.save
-                  updates += 1
+                name = fields[37].strip
+                name.upcase!
+                voucher = Voucher.find_by_name(name)
+          
+                if voucher && voucher.valid_for?(participant)
+                  participant.voucher = voucher
+                  participant.save
+                end
+
+                updates += 1
               else
-                  errors += 1
-                  error_list << participant
+                errors += 1
+                error_list << participant
               end
           else
               participant = Participant.create(
@@ -731,10 +740,19 @@ class Participant < ApplicationRecord
                  updated_by:              user.id)
 
               if participant.errors.empty?
-                  creates += 1
+                name = fields[37].strip
+                name.upcase!
+                voucher = Voucher.find_by_name(name)
+          
+                if voucher && voucher.valid_for?(participant)
+                  participant.voucher = voucher
+                  participant.save
+                end
+          
+                creates += 1
               else
-                  errors += 1
-                  error_list << participant
+                errors += 1
+                error_list << participant
               end
           end
       end
