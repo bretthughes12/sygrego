@@ -1,8 +1,4 @@
-class UserMailer < ActionMailer::Base
-    default from: 'registrations@stateyouthgames.com'
-    layout 'mailer'
-    before_action :get_settings
-  
+class UserMailer < ApplicationMailer
     def welcome_church_rep(user)
         @user = user
         mail(to:      user.email, 
@@ -63,11 +59,5 @@ class UserMailer < ActionMailer::Base
         mail(to:      notifies,
              subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
     end
-    
-    private
-
-    def get_settings
-        @settings ||= Setting.first
-    end
-  end
+end
   

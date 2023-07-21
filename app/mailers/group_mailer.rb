@@ -1,8 +1,4 @@
-class GroupMailer < ActionMailer::Base
-    default from: 'registrations@stateyouthgames.com'
-    layout 'mailer'
-    before_action :get_settings
-  
+class GroupMailer < ApplicationMailer
     def new_group_signup(group, church_rep, gc)
         @group = group
         @church_rep = church_rep
@@ -16,10 +12,6 @@ class GroupMailer < ActionMailer::Base
           format.html { render layout: 'mailer' }
           format.text
         end
-    end
-
-    def get_settings
-        @settings ||= Setting.first
     end
   end
   

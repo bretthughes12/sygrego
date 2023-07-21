@@ -1,9 +1,7 @@
-class SportEntryMailer < ActionMailer::Base
+class SportEntryMailer < ApplicationMailer
     default from: 'registrations@stateyouthgames.com',
             to:    ['sports@stateyouthgames.com', 'registrations@stateyouthgames.com'],
             cc:    'sportadmin@stateyouthgames.com'
-    layout 'mailer'
-    before_action :get_settings
   
     def restricted_sport_withdrawal(entry)
       @entry = entry
@@ -36,12 +34,6 @@ class SportEntryMailer < ActionMailer::Base
       @entry = entry
   
       mail(subject: "#{APP_CONFIG[:email_subject]} Draw affected: New entry in #{entry.section_name}")
-    end
-
-    private
-
-    def get_settings
-        @settings ||= Setting.first
     end
 end
   
