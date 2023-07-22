@@ -42,7 +42,8 @@ class Section < ApplicationRecord
 
     has_many :volunteers
     has_many :sport_entries, dependent: :destroy
-    has_many :round_robin_matches
+    has_many :preferred_entries, class_name: 'SportEntry'
+    has_many :round_robin_matches, dependent: :destroy
     belongs_to :grade
     belongs_to :venue
     belongs_to :session

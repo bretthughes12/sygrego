@@ -36,6 +36,7 @@ class SportEntry < ApplicationRecord
   belongs_to :group
   belongs_to :grade
   belongs_to :section, optional: true
+  belongs_to :preferred_section, class_name: 'Section', optional: true
   belongs_to :captaincy, class_name: 'Participant', optional: true
   has_many   :participants_sport_entries
   has_many   :participants, through: :participants_sport_entries
@@ -50,7 +51,6 @@ class SportEntry < ApplicationRecord
   delegate :draw, to: :section
   delegate :grade_type,
            :sport,
-           :session_name,
            :eligible_to_participate?,
            :sport_preferences,
            :team_size, to: :grade
@@ -150,16 +150,7 @@ class SportEntry < ApplicationRecord
   end
 
   def preferred_section_name
-    if preferred_section_id.nil? 
-      "" 
-    else
-      section = Section.where(id: preferred_section_id).first
-      if section.nil?
-        ""
-      else
-        section.name 
-      end
-    end
+    preferred_section.nil? ? "" : preferred_section.name 
   end
 
   def requires_participants?
@@ -198,6 +189,8 @@ class SportEntry < ApplicationRecord
   def venue_name
     if section
       section.venue_name
+    elsif preferred_section  
+      "Preferred: #{preferred_section.venue_name}"
     elsif cached_grade
       cached_grade.venue_name
       # else no action
@@ -218,16 +211,18 @@ def session_known?
     true
   elsif cached_grade
     cached_grade.possible_sessions.size == 1
-    # else no action
+  # else no action
   end
 end
 
 def session_name
   if section
     section.session_name
+  elsif preferred_section  
+      "Preferred: #{preferred_section.session_name}"
   elsif cached_grade
     cached_grade.session_name
-    # else no action
+  # else no action (should not be possible)
   end
 end
 
@@ -360,8 +355,8 @@ end
       s = Section.where(id: self.preferred_section_id).first
     end
     
-    if s && s.can_take_more_entries?
-      self.section = s
+    if preferred_section && preferred_section.can_take_more_entries?
+      self.section = preferred_section
       save
     end
   end
