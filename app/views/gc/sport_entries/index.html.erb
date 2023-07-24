@@ -57,6 +57,54 @@
 					{:name => "Requested", :class => "table-warning"},
 					{:name => "Requiring Confirmation", :class => "table-danger"},
 					{:name => "Waiting List", :class => "table-dark"}] %>
+
+<% if @settings.restricted_sports_allocated && !@settings.syg_is_happening && !@settings.syg_is_over %>
+  <% content_for :sidebar do -%>
+    <div id="sidebar">
+      <h2>Required Participants</h2>
+      <p>For the sports that you are entered into, you required the following number of participants for each session.</p>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Sat AM</th>
+            <th>Sat PM</th>
+            <th>Sat Eve</th>
+            <th>Sun AM</th>
+            <th>Sun PM</th>
+            <th>Sun Eve</th>
+          </tr>
+
+          <tr valign="top">
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 2) %>">
+                <%= @group.participants_needed_for_session(2) %>
+            </td>
+
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 3) %>">
+                <%= @group.participants_needed_for_session(3) %>
+            </td>
+
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 4) %>">
+                <%= @group.participants_needed_for_session(4) %>
+            </td>
+
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 5) %>">
+                <%= @group.participants_needed_for_session(5) %>
+            </td>
+
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 6) %>">
+                <%= @group.participants_needed_for_session(6) %>
+            </td>
+
+            <td align="center" class="<%= sport_oversubscribed_class(@group, 7) %>">
+                <%= @group.participants_needed_for_session(7) %>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  <% end -%>
+<% end -%>
+
 <% else %>
 
 	<p>The sports program has not been finalised as yet for <%= @settings.this_year %>. This will be updated shortly.</p>
