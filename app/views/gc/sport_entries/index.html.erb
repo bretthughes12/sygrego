@@ -31,7 +31,9 @@
       <th>Sport</th>
       <th>Name</th>
       <th>Venue</th>
-    	<% unless @settings.restricted_sports_allocated %>
+    	<% if @settings.restricted_sports_allocated %>
+        <th>Team Size</th>
+      <% else %>
         <th>Limit</th>
         <th>Entries</th>
       <% end %>

@@ -15,7 +15,11 @@
 		<%= h(sport_entry.venue_name) %>
 	</td>
 	 
-	<% unless @settings.restricted_sports_allocated %>
+	<% if @settings.restricted_sports_allocated %>
+		<td align="center">
+			<%= h(sport_entry.grade.team_size) %>
+		</td>
+	<% else %>
 		<% if sport_entry.grade.entry_limit %> 
 			<td align="center">
 				<%= h(sport_entry.grade.entry_limit) %>
