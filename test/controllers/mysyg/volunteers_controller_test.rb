@@ -12,7 +12,7 @@ class Mysyg::VolunteersControllerTest < ActionDispatch::IntegrationTest
     @participant = FactoryBot.create(:participant, group: @group)
     @user.groups << @group
     @user.participants << @participant
-    @volunteer = FactoryBot.create(:volunteer, participant: @participant)
+    @volunteer = FactoryBot.create(:volunteer, participant: @participant, lock_version: 1)
     @vacancy = FactoryBot.create(:volunteer)
     
     sign_in @user
@@ -52,5 +52,13 @@ class Mysyg::VolunteersControllerTest < ActionDispatch::IntegrationTest
     @volunteer.reload
 
     assert_not_equal "INVALID", @volunteer.t_shirt_size
+  end
+
+  test "should not update stale volunteer" do
+    patch mysyg_volunteer_url(@volunteer, group: @group.mysyg_setting.mysyg_name), 
+      params: { volunteer: { lock_version: 0 } }
+
+    assert_redirected_to mysyg_volunteers_path(group: @group.mysyg_setting.mysyg_name)
+    assert_match /Somebody else has updated/, flash[:notice]
   end
 end

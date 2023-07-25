@@ -47,6 +47,66 @@ class Mysyg::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "a", @participant.age
   end
 
+  test "should get drivers" do
+    get drivers_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name)
+
+    assert_response :success
+  end
+
+  test "should update participant driving info" do
+    patch update_drivers_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name), 
+      params: { participant: { driver_signature: true } }
+
+    assert_redirected_to home_mysyg_info_url(group: @participant.group.mysyg_setting.mysyg_name)
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @participant.reload
+
+    assert_equal true, @participant.driver_signature
+  end
+
+  test "should not update participant driving info with errors" do
+    patch update_drivers_mysyg_participant_url(group: @group.mysyg_setting.mysyg_name, id: @participant.id), 
+      params: { participant: { licence_type: "invalid" } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @participant.reload
+
+    assert_not_equal "invalid", @participant.licence_type
+  end
+
+  test "should get notes" do
+    get edit_notes_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name)
+
+    assert_response :success
+  end
+
+  test "should update participant notes" do
+    patch update_notes_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name), 
+      params: { participant: { camping_preferences: "I camp alone" } }
+
+    assert_redirected_to home_mysyg_info_url(group: @participant.group.mysyg_setting.mysyg_name)
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @participant.reload
+
+    assert_equal "I camp alone", @participant.camping_preferences
+  end
+
+  test "should not update participant notes with errors" do
+    patch update_notes_mysyg_participant_url(group: @group.mysyg_setting.mysyg_name, id: @participant.id), 
+      params: { participant: { camping_preferences: "this is too long....--------------------....................--------------------....................-" } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @participant.reload
+
+    refute_match /this is too long/, @participant.camping_preferences
+  end
+
   test "should add a valid voucher" do
     voucher = FactoryBot.create(:voucher, name: "MYVOUCHER")
 

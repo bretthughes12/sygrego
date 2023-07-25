@@ -14,7 +14,7 @@ class Mysyg::ParticipantsController < MysygController
     end
   
     # GET /mysyg/:group/notes
-    def notes
+    def edit_notes
     end
   
     # PATCH /mysyg/:group/participants/1
@@ -38,7 +38,7 @@ class Mysyg::ParticipantsController < MysygController
             @participant.save
           end
           flash[:notice] = 'Details successfully updated.'
-          format.html { redirect_to root_url(current_user) }
+          format.html { redirect_to home_url(current_user) }
         else
           format.html do
             flash[:notice] = 'Update failed. See below for the reasons.'
@@ -53,7 +53,7 @@ class Mysyg::ParticipantsController < MysygController
       respond_to do |format|
         if @participant.update(participant_notes_params)
           flash[:notice] = 'Details successfully updated.'
-          format.html { redirect_to root_url(current_user) }
+          format.html { redirect_to home_url(current_user) }
         else
           format.html do
             flash[:notice] = 'Update failed. See below for the reasons.'

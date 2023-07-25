@@ -209,7 +209,7 @@ class Participant < ApplicationRecord
         unless: proc { |o| o.emergency_email.blank? }
     validates :camping_preferences, 
         length: { maximum: 100 }
-    validates :camping_preferences, 
+    validates :sport_notes, 
         length: { maximum: 255 }
     validates :vaccination_document, 
         length: { maximum: 40 }

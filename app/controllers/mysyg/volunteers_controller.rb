@@ -37,7 +37,8 @@ class Mysyg::VolunteersController < MysygController
       params.require(:volunteer).permit(:email, 
                                        :mobile_number,
                                        :t_shirt_size,
-                                       :participant_id)
+                                       :participant_id,
+                                       :lock_version)
     end
   end
   

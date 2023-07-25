@@ -568,7 +568,7 @@ Rails.application.routes.draw do
       get '/home' => 'mysyg/info#home', :as => :home
       get '/details' => 'mysyg/participants#edit', :as => :details
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
-      get '/notes' => 'mysyg/participants#notes', as: :notes
+      get '/notes' => 'mysyg/participants#edit_notes', as: :notes
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
       get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
       get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
