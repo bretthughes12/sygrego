@@ -1,5 +1,4 @@
 class GcController < ApplicationController
-  before_action :authenticate_user!
   before_action :find_group
   before_action :authorize_gc_access
   
