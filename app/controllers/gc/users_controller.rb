@@ -10,12 +10,6 @@ class Gc::UsersController < GcController
     render layout: @current_role.name
   end
 
-  # GET /gc/users/1
-  # 'show' must be explicitly invoked from the address bar - it is not available from the UI
-  def show
-    render layout: @current_role.name
-  end
-
   # GET /gc/users/new
   def new
     render layout: @current_role.name
@@ -37,6 +31,7 @@ class Gc::UsersController < GcController
 
     if @user.nil?
       @user = User.new
+      new_record = true
     end
 
     @user.update(user_params)
@@ -45,7 +40,7 @@ class Gc::UsersController < GcController
 
     respond_to do |format|
       if @user.save
-        if @user.new_record?
+        if new_record
           flash.now[:notice] = "GC #{@user.email} created"
         else
           flash.now[:notice] = "GC role added to #{@user.email}"

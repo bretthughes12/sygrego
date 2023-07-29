@@ -8,11 +8,66 @@ class Gc::UsersControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :gc)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: @group)
     @church_rep = FactoryBot.create(:user, :church_rep)
     @user.groups << @group
     @church_rep.groups << @group
+    @participant = FactoryBot.create(:participant, group: @group)
+    @participant_user = FactoryBot.create(:user, :participant)
+    @participant_user.participants << @participant
 
     sign_in @user
+  end
+
+  test "should get index" do
+    sign_out @user
+    sign_in @church_rep
+
+    get gc_users_url
+
+    assert_response :success
+  end
+
+  test "should get new" do
+    sign_out @user
+    sign_in @church_rep
+
+    get new_gc_user_url
+
+    assert_response :success
+  end
+
+  test "should create user" do
+    assert_difference('User.count') do
+      post gc_users_path, params: { user: FactoryBot.attributes_for(:user) }
+    end
+
+    assert_redirected_to gc_users_url
+    assert_match /created/, flash[:notice]
+  end
+
+  test "should add gc role to existing participant user" do
+    assert_no_difference('User.count') do
+      post gc_users_path, params: { 
+        user: FactoryBot.attributes_for(:user,
+        email: @participant_user.email) }
+    end
+
+    @participant_user.reload
+
+    assert_redirected_to gc_users_url
+    assert_match /GC role added/, flash[:notice]
+    assert @participant_user.role?(:gc)
+  end
+
+  test "should not create user with errors" do
+    assert_no_difference('User.count') do
+      post gc_users_path, params: { 
+        user: FactoryBot.attributes_for(:user,
+        postcode: "Invalid") }
+    end
+
+    assert_response :success
   end
 
   test "should get edit" do
