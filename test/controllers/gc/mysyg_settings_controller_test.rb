@@ -18,6 +18,18 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should edit team sports" do
+    get edit_team_sports_gc_mysyg_setting_url(@mysyg_setting)
+
+    assert_response :success
+  end
+
+  test "should edit individual sports" do
+    get edit_indiv_sports_gc_mysyg_setting_url(@mysyg_setting)
+
+    assert_response :success
+  end
+
   test "should update mysyg settings" do
     patch gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { approve_option: "Tolerant" } }
 
@@ -56,5 +68,49 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     @mysyg_setting.reload
 
     assert_not_equal "a", @mysyg_setting.approve_option
+  end
+
+  test "should update team sports" do
+    patch update_team_sports_gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { team_sport_view_strategy: "Show none" } }
+
+    assert_redirected_to home_gc_info_path
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @mysyg_setting.reload
+
+    assert_equal "Show none", @mysyg_setting.team_sport_view_strategy
+  end
+
+  test "should not update team sport settings with errors" do
+    patch update_team_sports_gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { team_sport_view_strategy: "Invalid" } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @mysyg_setting.reload
+
+    assert_not_equal "Invalid", @mysyg_setting.team_sport_view_strategy
+  end
+
+  test "should update individual sports" do
+    patch update_indiv_sports_gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { indiv_sport_view_strategy: "Show none" } }
+
+    assert_redirected_to home_gc_info_path
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @mysyg_setting.reload
+
+    assert_equal "Show none", @mysyg_setting.indiv_sport_view_strategy
+  end
+
+  test "should not update individual sport settings with errors" do
+    patch update_indiv_sports_gc_mysyg_setting_url(@mysyg_setting), params: { mysyg_setting: { indiv_sport_view_strategy: "Invalid" } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @mysyg_setting.reload
+
+    assert_not_equal "Invalid", @mysyg_setting.indiv_sport_view_strategy
   end
 end
