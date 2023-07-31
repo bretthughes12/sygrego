@@ -29,4 +29,12 @@ FactoryBot.define do
     age_category { "Over 18" }
     active { true }
   end
+
+  trait :over_18 do
+    age_category { "Over 18" }
+  end
+
+  trait :over_16 do
+    age_category { "Over 16" }
+  end
 end

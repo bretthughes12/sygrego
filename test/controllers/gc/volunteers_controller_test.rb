@@ -12,7 +12,10 @@ class Gc::VolunteersControllerTest < ActionDispatch::IntegrationTest
     @user.groups << @group
     @church_rep.groups << @group
     @participant = FactoryBot.create(:participant, group: @group)
+    @participant16 = FactoryBot.create(:participant, :under18, group: @group)
+    @volunteer16 = FactoryBot.create(:volunteer_type, age_category: "Over 16")
     @volunteer = FactoryBot.create(:volunteer, participant: @participant)
+    @volunteer2 = FactoryBot.create(:volunteer, volunteer_type: @volunteer16)
     @vacancy = FactoryBot.create(:volunteer)
     
     sign_in @user
@@ -26,6 +29,12 @@ class Gc::VolunteersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get available volunteers" do
     get available_gc_volunteers_url
+
+    assert_response :success
+  end
+
+  test "should search available volunteers" do
+    get search_gc_volunteers_url(search: "Elvis")
 
     assert_response :success
   end
@@ -57,6 +66,12 @@ class Gc::VolunteersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit where 16 year olds can apply" do
+    get edit_gc_volunteer_url(@volunteer2)
+
+    assert_response :success
+  end
+
   test "should update volunteer" do
     patch gc_volunteer_url(@volunteer), 
       params: { volunteer: { email: "elvis@presley.com" } }
@@ -79,6 +94,17 @@ class Gc::VolunteersControllerTest < ActionDispatch::IntegrationTest
     @volunteer.reload
 
     assert_not_equal "INVALID", @volunteer.t_shirt_size
+  end
+
+  test "should not update volunteer with errors when 16 year olds can apply" do
+    patch gc_volunteer_url(@volunteer2), 
+      params: { volunteer: { t_shirt_size: "INVALID" } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @volunteer2.reload
+
+    assert_not_equal "INVALID", @volunteer2.t_shirt_size
   end
 
   test "should release volunteer" do
