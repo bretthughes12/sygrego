@@ -21,6 +21,13 @@ class Gc::PaymentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should generate payment summary" do
+    get gc_payments_url(format: :pdf)
+
+    assert_response :success
+    assert_match %r{application\/pdf}, @response.content_type
+  end
+
   test "should show payment" do
     get gc_payment_url(@payment)
 
