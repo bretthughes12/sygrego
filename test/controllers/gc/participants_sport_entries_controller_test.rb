@@ -29,6 +29,18 @@ class Gc::ParticipantsSportEntriesControllerTest < ActionDispatch::IntegrationTe
     assert_equal 1, @sport_entry.participants.count
   end
 
+  test "should add participant to sport entry from edit sports" do
+    assert_difference('ParticipantsSportEntry.count') do
+      post gc_participant_sport_entries_path(@participant), params: { id: @sport_entry.id, return: 'edit_sports' }
+    end
+
+    assert_redirected_to edit_sports_gc_participant_url(@participant)
+    assert_match /Participant added/, flash[:notice]
+
+    @sport_entry.reload
+    assert_equal 1, @sport_entry.participants.count
+  end
+
   test "should not add participant if already in sport entry" do
     @sport_entry.participants << @participant
 
@@ -45,6 +57,8 @@ class Gc::ParticipantsSportEntriesControllerTest < ActionDispatch::IntegrationTe
 
   test "should remove a participant from a sport entry" do
     @sport_entry.participants << @participant
+    @sport_entry.captaincy = @participant
+    @sport_entry.save
     @sport_entry.reload
 
     assert_difference('ParticipantsSportEntry.count', -1) do
@@ -52,6 +66,23 @@ class Gc::ParticipantsSportEntriesControllerTest < ActionDispatch::IntegrationTe
     end
 
     assert_redirected_to edit_gc_sport_entry_url(@sport_entry)
+    assert_match /Participant removed/, flash[:notice]
+
+    @sport_entry.reload
+    assert_equal 0, @sport_entry.participants.count
+  end
+
+  test "should remove a participant from a sport entry from edit sports" do
+    @sport_entry.participants << @participant
+    @sport_entry.captaincy = @participant
+    @sport_entry.save
+    @sport_entry.reload
+
+    assert_difference('ParticipantsSportEntry.count', -1) do
+      delete gc_sport_entry_participant_path(sport_entry_id: @sport_entry.id, id: @participant.id, return: 'edit_sports')
+    end
+
+    assert_redirected_to edit_sports_gc_participant_url(@participant)
     assert_match /Participant removed/, flash[:notice]
 
     @sport_entry.reload

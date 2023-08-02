@@ -22,11 +22,29 @@ class Gc::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should sort index by session" do
+    get gc_sport_entries_url(order: 'session')
+
+    assert_response :success
+  end
+
   test "should download sport_entry data" do
     get gc_sport_entries_url(format: :csv)
 
     assert_response :success
     assert_match %r{text\/csv}, @response.content_type
+  end
+
+  test "should get list of sport draws" do
+    get sports_draws_gc_sport_entries_url
+
+    assert_response :success
+  end
+
+  test "should get list of sport rules" do
+    get sports_rules_gc_sport_entries_url
+
+    assert_response :success
   end
 
   test "should show sport_entry" do
@@ -58,10 +76,40 @@ class Gc::SportEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create sport_entry" do
     assert_difference('SportEntry.count') do
-      post gc_sport_entries_path, params: { sport_entry: FactoryBot.attributes_for(:sport_entry, grade_id: @sport_entry.grade.id) }
+      post gc_sport_entries_path, params: { 
+        sport_entry: FactoryBot.attributes_for(:sport_entry, 
+          grade_id: @sport_entry.grade.id) }
     end
 
     assert_response :redirect
+    assert_match /successfully created/, flash[:notice]
+  end
+
+  test "should create sport_entry for a specific section" do
+    section = FactoryBot.create(:section, grade: @sport_entry.grade)
+
+    assert_difference('SportEntry.count') do
+      post gc_sport_entries_path, params: { 
+        sport_entry: FactoryBot.attributes_for(:sport_entry, 
+          section_id: section.id) }
+    end
+
+    assert_response :redirect
+    assert_match /successfully created/, flash[:notice]
+  end
+
+  test "should create sport_entry from edit sports" do
+    participant = FactoryBot.create(:participant, group: @group)
+
+    assert_difference('SportEntry.count') do
+      post gc_sport_entries_path, params: { 
+        sport_entry: FactoryBot.attributes_for(:sport_entry, 
+          grade_id: @sport_entry.grade.id), 
+          participant_id: participant.id,
+          return: 'edit_sports' }
+    end
+
+    assert_redirected_to edit_sports_gc_participant_url(participant)
     assert_match /successfully created/, flash[:notice]
   end
 
@@ -74,6 +122,21 @@ class Gc::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to new_gc_sport_entry_url
+  end
+
+  test "should not create sport entry with errors from edit sports" do
+    participant = FactoryBot.create(:participant, group: @group)
+    
+    assert_no_difference('SportEntry.count') do
+      post gc_sport_entries_path, params: { 
+        sport_entry: FactoryBot.attributes_for(:sport_entry,
+          grade_id: @sport_entry.grade.id,
+          preferred_section_id: "a"),
+          participant_id: participant.id,
+          return: 'edit_sports' }
+    end
+
+    assert_redirected_to edit_sports_gc_participant_url(participant)
   end
 
   test "should get edit" do
@@ -116,6 +179,20 @@ class Gc::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     @sport_entry.reload
 
     assert_not_equal "a", @sport_entry.preferred_section_id
+  end
+
+  test "should confirm sport_entry" do
+    entry2 = FactoryBot.create(:sport_entry, status: "Requested", group: @group)
+
+    patch confirm_gc_sport_entry_url(entry2)
+
+    assert_redirected_to gc_sport_entries_path
+    assert_match /confirmed/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    entry2.reload
+
+    assert_equal "Entered", entry2.status
   end
 
 #  test "should get new import" do

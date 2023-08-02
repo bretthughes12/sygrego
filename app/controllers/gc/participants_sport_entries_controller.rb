@@ -38,7 +38,6 @@ class Gc::ParticipantsSportEntriesController < GcController
     end
   
     # DELETE /groups/1/sport_entries/1/participants/1
-    # DELETE /groups/1/participants/1/sport_entries/1
     def destroy
         @sport_entry = SportEntry.find(params[:sport_entry_id])
         @participant = Participant.find(params[:id])
