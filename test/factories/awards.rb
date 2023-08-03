@@ -25,4 +25,16 @@ FactoryBot.define do
     description       { "Did awesome stuff" }
     flagged           { false }
   end
+
+  trait :good_sports do
+    category          { "Good Sports" }
+  end
+
+  trait :spirit do
+    category          { "Spirit" }
+  end
+
+  trait :volunteer do
+    category          { "Volunteer" }
+  end
 end

@@ -148,7 +148,8 @@ class Admin::AwardsController < AdminController
             redirect_to good_sports_admin_awards_url
           end
       else
-          format.html { render action: "new_good_sports" }
+        flash[:notice] = 'There was a problem updating the nomination.'
+        format.html { render action: "edit_good_sports" }
       end
     end
   end
@@ -164,7 +165,8 @@ class Admin::AwardsController < AdminController
             redirect_to spirit_admin_awards_url
           end
       else
-          format.html { render action: "new_spirit" }
+        flash[:notice] = 'There was a problem updating the nomination.'
+        format.html { render action: "edit_spirit" }
       end
     end
   end
@@ -180,12 +182,13 @@ class Admin::AwardsController < AdminController
             redirect_to volunteer_awards_admin_awards_url
           end
       else
-          format.html { render action: "new_volunteer" }
+        flash[:notice] = 'There was a problem updating the nomination.'
+        format.html { render action: "edit_volunteer" }
       end
     end
   end
 
-  # PATCH /admin/awards/flag_good_sports
+  # PATCH /admin/award/1/flag_good_sports
   def flag_good_sports
     @award = Award.find(params[:id])
     @award.flagged = true
@@ -198,7 +201,7 @@ class Admin::AwardsController < AdminController
     end
   end
 
-  # PATCH /admin/awards/flag_spirit
+  # PATCH /admin/award/1/flag_spirit
   def flag_spirit
     @award = Award.find(params[:id])
     @award.flagged = true
@@ -211,7 +214,7 @@ class Admin::AwardsController < AdminController
     end
   end
 
-  # PATCH /admin/awards/flag_volunteer
+  # PATCH /admin/award/1/flag_volunteer
   def flag_volunteer
     @award = Award.find(params[:id])
     @award.flagged = true
