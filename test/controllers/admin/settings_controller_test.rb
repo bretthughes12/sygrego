@@ -75,6 +75,12 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit references" do
+    get edit_references_admin_setting_url(@setting)
+
+    assert_response :success
+  end
+
   test "should update setting" do
     patch admin_setting_url(@setting), params: { setting: { new_group_sports_allocation_factor: 10 } }
 
@@ -271,5 +277,104 @@ class Admin::SettingsControllerTest < ActionDispatch::IntegrationTest
     @setting.reload
 
     assert_not_equal "a", @setting.full_fee
+  end
+
+  test "should update reference file settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+
+    patch update_references_admin_setting_url(@setting), params: { setting: { knockout_reference: file } }
+
+    assert_response :success
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal true, @setting.knockout_reference.attached?
+  end
+
+  test "should not update reference file settings with errors" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    Setting.any_instance.stubs(:update).returns(false)
+
+    patch update_references_admin_setting_url(@setting), params: { setting: { knockout_reference: file } }
+
+    assert_response :success
+    assert_no_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.knockout_reference.attached?
+  end
+
+  test "should purge the knockout reference from settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @setting.knockout_reference.attach(file)
+
+    patch purge_knockout_reference_admin_setting_url(@setting)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.knockout_reference.attached?
+  end
+
+  test "should purge the ladder reference from settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @setting.ladder_reference.attach(file)
+
+    patch purge_ladder_reference_admin_setting_url(@setting)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.ladder_reference.attached?
+  end
+
+  test "should purge the results reference from settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @setting.results_reference.attach(file)
+
+    patch purge_results_reference_admin_setting_url(@setting)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.results_reference.attached?
+  end
+
+  test "should purge the sports reference from settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @setting.sports_reference.attach(file)
+
+    patch purge_sports_reference_admin_setting_url(@setting)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.sports_reference.attached?
+  end
+
+  test "should purge the sports maps from settings" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @setting.sports_maps.attach(file)
+
+    patch purge_sports_maps_admin_setting_url(@setting)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @setting.reload
+
+    assert_equal false, @setting.sports_maps.attached?
   end
 end
