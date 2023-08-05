@@ -15,7 +15,7 @@ class Admin::RoundRobinMatchesController < AdminController
     end
   end
 
-  # GET /admin/sections/1/round_robin_matches
+  # GET /admin/round_robin_matches/matches
   def matches
     @round_robin_matches = RoundRobinMatch.order(:section_id, :match).load
 
