@@ -95,4 +95,18 @@ class Admin::LostItemsControllerTest < ActionDispatch::IntegrationTest
       delete admin_lost_item_url(12345678)
     }
   end
+
+  test "should purge the lost item photo" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @lost_item.photo.attach(file)
+
+    patch purge_photo_admin_lost_item_url(@lost_item)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @lost_item.reload
+
+    assert_equal false, @lost_item.photo.attached?
+  end
 end
