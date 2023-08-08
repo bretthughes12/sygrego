@@ -95,7 +95,7 @@ class Admin::EventDetailsController < AdminController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to warden_zones_admin_event_details_url }
         else
-          format.html { render action: "edit" }
+          format.html { render action: "edit_warden_zone" }
         end
       end
     end

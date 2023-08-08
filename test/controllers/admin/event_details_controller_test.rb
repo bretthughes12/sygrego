@@ -30,6 +30,30 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_match %r{text\/csv}, @response.content_type
   end
 
+  test "should list group uploads" do
+    get uploads_admin_event_details_url
+
+    assert_response :success
+  end
+
+  test "should list group warden zones" do
+    get warden_zones_admin_event_details_url
+
+    assert_response :success
+  end
+
+  test "should list buddy groups" do
+    get buddy_groups_admin_event_details_url
+
+    assert_response :success
+  end
+
+  test "should list orientation details zones" do
+    get orientation_details_admin_event_details_url
+
+    assert_response :success
+  end
+
   test "should show event_detail" do
     get admin_event_detail_url(@event_detail)
 
@@ -44,6 +68,12 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit" do
     get edit_admin_event_detail_url(@event_detail)
+
+    assert_response :success
+  end
+
+  test "should edit warden zone details" do
+    get edit_warden_zone_admin_event_detail_url(@event_detail)
 
     assert_response :success
   end
@@ -74,6 +104,48 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     get new_import_admin_event_details_url
 
     assert_response :success
+  end
+
+  test "should update warden zone details" do
+    zone = FactoryBot.create(:warden_zone)
+
+    patch update_warden_zone_admin_event_detail_url(@event_detail), 
+      params: { event_detail: { warden_zone_id: zone.id } }
+
+    assert_redirected_to warden_zones_admin_event_details_path
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @event_detail.reload
+
+    assert_equal zone, @event_detail.warden_zone
+  end
+
+  test "should not update warden zone detail with errors" do
+    EventDetail.any_instance.stubs(:update).returns(false)
+
+    patch update_warden_zone_admin_event_detail_url(@event_detail), 
+      params: { event_detail: { warden_zone_id: nil } }
+
+    assert_response :success
+    # Reload association to fetch updated data and assert that title is updated.
+    @event_detail.reload
+  end
+
+  test "should update multiple orientation details" do
+    patch update_multiple_orientations_admin_event_details_url(
+      event_details: { 
+        @event_detail.id => {orientation_details: "Collingwood"} 
+      }
+    )
+
+    assert_redirected_to orientation_details_admin_event_details_path
+    assert_match /Details updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @event_detail.reload
+
+    assert_equal "Collingwood", @event_detail.orientation_details
   end
 
   test "should import event details" do
