@@ -48,6 +48,16 @@ class Admin::RegoChecklistsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit and pre-populate" do
+    rego_checklist = FactoryBot.create(:rego_checklist, :blank)
+    gc = FactoryBot.create(:user, :gc)
+    rego_checklist.group.users << gc
+
+    get edit_admin_rego_checklist_url(rego_checklist)
+
+    assert_response :success
+  end
+
   test "should update rego checklist" do
     patch admin_rego_checklist_url(@rego_checklist), params: { rego_checklist: { registered: true } }
 

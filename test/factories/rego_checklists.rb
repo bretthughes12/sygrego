@@ -48,4 +48,10 @@ FactoryBot.define do
     finance_notes { "MyText" }
     sport_notes { "MyText" }
   end
+
+  trait :blank do
+    rego_rep    { "" }
+    rego_mobile { "" }
+    admin_rep   { "" }
+  end
 end
