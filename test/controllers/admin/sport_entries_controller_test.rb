@@ -55,6 +55,18 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_match /successfully created/, flash[:notice]
   end
 
+  test "should create sport_entry with a section" do
+    group = FactoryBot.create(:group)
+    section = FactoryBot.create(:section)
+
+    assert_difference('SportEntry.count') do
+      post admin_sport_entries_path, params: { sport_entry: FactoryBot.attributes_for(:sport_entry, group_id: group.id, section_id: section.id) }
+    end
+
+    assert_response :success
+    assert_match /successfully created/, flash[:notice]
+  end
+
   test "should not create sport_entry with errors" do
     assert_no_difference('SportEntry.count') do
       post admin_sport_entries_path, params: { 
@@ -88,6 +100,21 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     params: { sport_entry: { preferred_section_id: section.id } }
 
     assert_redirected_to admin_sport_entries_path
+    assert_match /successfully updated/, flash[:notice]
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @sport_entry.reload
+
+    assert_equal section.id, @sport_entry.preferred_section_id
+  end
+
+  test "should update sport_entry and return to edit grade" do
+    section = FactoryBot.create(:section, grade: @sport_entry.grade)
+
+    patch admin_sport_entry_url(@sport_entry), 
+    params: { sport_entry: { preferred_section_id: section.id }, return: "edit_grade" }
+
+    assert_redirected_to edit_admin_grade_path(section.grade)
     assert_match /successfully updated/, flash[:notice]
 
     # Reload association to fetch updated data and assert that title is updated.
