@@ -161,4 +161,18 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_sports_path
     assert_match /Can't delete/, flash[:notice]
   end
+
+  test "should purge the sport rules" do
+    file = fixture_file_upload('test.pdf','application/pdf')
+    @sport.rules_file.attach(file)
+
+    patch purge_file_admin_sport_url(@sport)
+
+    assert_response :success
+
+    # Reload association to fetch updated data and assert that title is updated.
+    @sport.reload
+
+    assert_equal false, @sport.rules_file.attached?
+  end
 end
