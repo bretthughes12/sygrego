@@ -86,85 +86,59 @@ class Admin::VolunteersController < AdminController
 
     # GET /admin/volunteers/1/collect
     def collect
-      group_id = @volunteer.participant.nil? ? nil : @volunteer.participant.group.id 
-      if @volunteer.mobile_number.blank?
-        @volunteer.mobile_number = @volunteer.participant.mobile_phone_number unless @volunteer.participant.nil?
-      end
-  
-      if group_id.nil?
-        @participants = Participant.volunteer_age.accepted.coming.order('first_name, surname').load
-        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-      else
-        @participants = Participant.volunteer_age.coming.accepted.
-          order("first_name, surname").
-          where(['group_id = ?', group_id]).load
-        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-      end
+      prepare_for_sport_coords
     end
   
     # GET /admin/volunteers/1/return
     def return
-      group_id = @volunteer.participant.nil? ? nil : @volunteer.participant.group.id 
-      if @volunteer.mobile_number.blank?
-        @volunteer.mobile_number = @volunteer.participant.mobile_phone_number unless @volunteer.participant.nil?
-      end
-  
-      if group_id.nil?
-        @participants = Participant.volunteer_age.accepted.coming.order('first_name, surname').load
-        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-      else
-        @participants = Participant.volunteer_age.coming.accepted.
-          order("first_name, surname").
-          where(['group_id = ?', group_id]).load
-        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-      end
+      prepare_for_sport_coords
     end
   
     # POST /admin/volunteers
     def create
-        @volunteer = Volunteer.new(volunteer_params)
-        @volunteer.updated_by = current_user.id
+      @volunteer = Volunteer.new(volunteer_params)
+      @volunteer.updated_by = current_user.id
 
-        respond_to do |format|
-            if @volunteer.save
-              flash[:notice] = 'Volunteer was successfully created.'
-              @participants = Participant.volunteer_age.order("first_name, surname").load
-              @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-              @volunteer_types = get_volunteer_types 
-              @sessions = Session.order(:name).load
-              @sections = Section.order(:name).load
+      respond_to do |format|
+        if @volunteer.save
+          flash[:notice] = 'Volunteer was successfully created.'
+          @participants = Participant.volunteer_age.order("first_name, surname").load
+          @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+          @volunteer_types = get_volunteer_types 
+          @sessions = Session.order(:name).load
+          @sections = Section.order(:name).load
 
-              format.html { render action: "edit" }
-            else
-              @participants = Participant.volunteer_age.order("first_name, surname").load
-              @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-              @volunteer_types = get_volunteer_types 
-              @sessions = Session.order(:name).load
-              @sections = Section.order(:name).load
+          format.html { render action: "edit" }
+        else
+          @participants = Participant.volunteer_age.order("first_name, surname").load
+          @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+          @volunteer_types = get_volunteer_types 
+          @sessions = Session.order(:name).load
+          @sections = Section.order(:name).load
 
-              format.html { render action: "new" }
-            end
+          format.html { render action: "new" }
         end
+      end
     end
   
     # PATCH /admin/volunteers/1
     def update
-        @volunteer.updated_by = current_user.id
+      @volunteer.updated_by = current_user.id
 
-        respond_to do |format|
-          if @volunteer.update(volunteer_params)
-            flash[:notice] = 'Volunteer was successfully updated.'
-            format.html { redirect_to admin_volunteers_url }
-          else
-            @participants = Participant.volunteer_age.order("first_name, surname").load
-            @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
-            @volunteer_types = get_volunteer_types 
-            @sessions = Session.order(:name).load
-            @sections = Section.order(:name).load
+      respond_to do |format|
+        if @volunteer.update(volunteer_params)
+          flash[:notice] = 'Volunteer was successfully updated.'
+          format.html { redirect_to admin_volunteers_url }
+        else
+          @participants = Participant.volunteer_age.order("first_name, surname").load
+          @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+          @volunteer_types = get_volunteer_types 
+          @sessions = Session.order(:name).load
+          @sections = Section.order(:name).load
 
-            format.html { render action: "edit" }
-          end
+          format.html { render action: "edit" }
         end
+      end
     end
   
     # PATCH /admin/volunteers/1/update_collect
@@ -199,13 +173,13 @@ class Admin::VolunteersController < AdminController
 
     # DELETE /volunteers/1
     def destroy
-        @volunteer.updated_by = current_user.id
+      @volunteer.updated_by = current_user.id
 
-        @volunteer.destroy
+      @volunteer.destroy
 
-        respond_to do |format|
-            format.html { redirect_to admin_volunteers_url }
-        end
+      respond_to do |format|
+        format.html { redirect_to admin_volunteers_url }
+      end
     end
 
     # GET /admin/volunteers/new_import

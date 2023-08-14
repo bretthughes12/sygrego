@@ -21,4 +21,12 @@ FactoryBot.define do
     sequence(:name)             { |n| "Session#{n}"}
     sequence(:database_rowid)   { |n| n + 100 }
   end
+
+  trait :saturday do
+    name                        { "Saturday sometime" }
+  end
+
+  trait :sunday do
+    name                        { "Sunday sometime" }
+  end
 end
