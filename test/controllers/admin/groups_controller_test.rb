@@ -23,6 +23,51 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should download group approvals" do
+    get approvals_admin_groups_url(format: :csv)
+
+    assert_response :success
+    assert_match %r{text\/csv}, @response.content_type
+  end
+
+  test "should get group session participants" do
+    get session_participants_admin_groups_url
+
+    assert_response :success
+  end
+
+  test "should download group session participants" do
+    get session_participants_admin_groups_url(format: :csv)
+
+    assert_response :success
+    assert_match %r{text\/csv}, @response.content_type
+  end
+
+  test "should get group summary" do
+    get summary_admin_groups_url
+
+    assert_response :success
+  end
+
+  test "should download group summary" do
+    get summary_admin_groups_url(format: :csv)
+
+    assert_response :success
+    assert_match %r{text\/csv}, @response.content_type
+  end
+
+  test "should get group payments" do
+    get payments_admin_groups_url
+
+    assert_response :success
+  end
+
+  test "should get group sport summary" do
+    get sport_summary_admin_groups_url
+
+    assert_response :success
+  end
+  
   test "should search groups" do
     get search_admin_groups_url
 
@@ -99,6 +144,15 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     @group.reload
 
     assert_not_equal "a", @group.abbr
+  end
+
+  test "should generate group invoice" do
+    FactoryBot.create(:payment, group: @group)
+
+    post invoice_admin_group_url(@group, format: :pdf)
+
+    assert_response :success
+    assert_match %r{application\/pdf}, @response.content_type
   end
 
   test "should approve group" do
