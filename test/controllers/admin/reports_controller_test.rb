@@ -40,4 +40,14 @@ class Admin::ReportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test "should get gender summary" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:participant, group: group, gender: "U")
+
+    get gender_summary_admin_reports_url
+
+    assert_response :success
+  end
 end
