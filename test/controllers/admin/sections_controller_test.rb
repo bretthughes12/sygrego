@@ -24,6 +24,12 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_match %r{text\/csv}, @response.content_type
   end
 
+  test "should get results" do
+    get results_admin_sections_url
+
+    assert_response :success
+  end
+
   test "should show section" do
     get admin_section_url(@section)
 
