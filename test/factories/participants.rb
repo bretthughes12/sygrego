@@ -107,5 +107,23 @@ FactoryBot.define do
       emergency_phone_number {"9777-7777"}
       emergency_email     {"mother@theresa.com"}
     end
+
+    trait :ticketed do
+      sequence(:registration_nbr) { |n| "#{n}" }
+      sequence(:booking_nbr)      { |n| "#{n}" }
+      exported            { true }
+      dirty               { false }
+    end
+
+    trait :day_visitor do
+      paid                { true }
+      address             { nil }
+      suburb              { nil }
+      postcode            { nil }
+      email               { nil }
+      phone_number        { nil }
+      dietary_requirements  { nil }
+      allergies           { nil }
+    end
   end
 end
