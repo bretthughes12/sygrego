@@ -55,6 +55,24 @@ class Admin::ParticipantsSportEntriesControllerTest < ActionDispatch::Integratio
     assert_equal 0, @sport_entry.participants.count
   end
 
+  test "should remove a captain from a sport entry" do
+    @sport_entry.participants << @participant
+    @sport_entry.captaincy = @participant
+    @sport_entry.save
+    @sport_entry.reload
+
+    assert_difference('ParticipantsSportEntry.count', -1) do
+      delete admin_sport_entry_participant_path(sport_entry_id: @sport_entry.id, id: @participant.id)
+    end
+
+    assert_redirected_to edit_admin_sport_entry_url(@sport_entry)
+    assert_match /Participant removed/, flash[:notice]
+
+    @sport_entry.reload
+    assert_equal 0, @sport_entry.participants.count
+    assert_nil @sport_entry.captaincy
+  end
+
   test "should not remove a participant from a sport entry it is not in" do
     assert_no_difference('ParticipantsSportEntry.count') do
       delete admin_sport_entry_participant_path(sport_entry_id: @sport_entry.id, id: @participant.id)
