@@ -34,7 +34,7 @@ class Admin::TasksController < AdminController
   # POST /admin/tasks/finalise_individual_sports
   def finalise_individual_sports
     if !@settings.indiv_draws_complete
-      FinaliseGradesJob.perform_now(:individual)
+      FinaliseGradesJob.perform_later(:individual)
       set_indiv_draws_complete_setting
       flash[:notice] = 'Finalisation of individual grades is under way. Look for an email when finished'
     else
