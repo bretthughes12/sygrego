@@ -12,7 +12,7 @@ class LostItemsController < ApplicationController
     end
   end
 
-  # GET /admin/lost_items/search
+  # GET /lost_items/search
   def search
     @lost_items = LostItem.unclaimed.search(params[:search]).order(:description).load
 
