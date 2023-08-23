@@ -39,6 +39,34 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, json[1][1]
   end
 
+  test "should prepare admin sport entries chart" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:sport_entry, group: group)
+
+    get admin_sport_entries_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 4, json.length
+    assert_equal "Entered", json[0][0]
+    assert_equal 1, json[0][1]
+  end
+
+  test "should prepare admin volunteers chart" do
+    FactoryBot.create(:volunteer)
+
+    get admin_volunteers_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 2, json.length
+    assert_equal "Vacant", json[1][0]
+    assert_equal 1, json[1][1]
+  end
+
   test "should prepare admin group stats chart" do
     FactoryBot.create(:statistic, year: 2022, weeks_to_syg: 5, number_of_groups: 55)
 
@@ -109,6 +137,26 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 3, json.length
     assert_equal "Playing sport", json[1][0]
     assert_equal 1, json[1][1]
+  end
+
+  test "should prepare gc sport entries chart" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:sport_entry, group: group)
+    gc = FactoryBot.create(:user, :gc)
+    group.users << gc
+    
+    sign_out @user
+    sign_in gc
+
+    get gc_sport_entries_charts_url
+
+    assert_response :success
+
+    json = JSON.parse(response.body)
+    assert_equal 4, json.length
+    assert_equal "Entered", json[0][0]
+    assert_equal 1, json[0][1]
   end
 
   test "should prepare evening saturday preferences chart" do
