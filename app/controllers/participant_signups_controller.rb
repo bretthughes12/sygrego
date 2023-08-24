@@ -48,11 +48,7 @@ class ParticipantSignupsController < ApplicationController
           if @participant.status == "Requiring Approval"
             flash[:notice] = "Thank you for registering for State Youth Games. Check your email for instructions for what comes next."
             format.html do 
-              if group_name.nil? || group_name == ""
-                redirect_to mysyg_generic_signup_url
-              else
-                redirect_to mysyg_signup_url(group: group_name)
-              end
+              redirect_to mysyg_signup_url(group: group_name)
             end
           else
             flash[:notice] = "Thank you for registering for State Youth Games"
@@ -84,14 +80,8 @@ class ParticipantSignupsController < ApplicationController
     private
 
     def find_group
-      if params[:group]
-        ms = MysygSetting.find_by_mysyg_name(params[:group])
-        @group = ms.group unless ms.nil?
-      elsif session["current_group"]
-        @group = Group.find_by_id(session["current_group"])
-      else
-        @group = Group.find_by_abbr("DFLT")
-      end
+      ms = MysygSetting.find_by_mysyg_name(params[:group])
+      @group = ms.group unless ms.nil?
       
       unless @group
         raise ActiveRecord::RecordNotFound.new('Could not find your group. Please check the link with your group coordinator.')

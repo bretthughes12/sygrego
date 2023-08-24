@@ -34,19 +34,27 @@ FactoryBot.define do
   factory :mysyg_setting do
     group
 
-    sequence(:mysyg_name)  { |n| "test#{n}" }
-    mysyg_enabled { false }
-    mysyg_open { false }
+    sequence(:mysyg_name)    { |n| "test#{n}" }
+    mysyg_enabled            { false }
+    mysyg_open               { false }
     participant_instructions { "MyText" }
-    extra_fee_total { "0.00" }
-    extra_fee_per_day { "0.00" }
-    show_sports_in_mysyg { true }
+    extra_fee_total          { "0.00" }
+    extra_fee_per_day        { "0.00" }
+    show_sports_in_mysyg     { true }
     show_volunteers_in_mysyg { true }
-    show_finance_in_mysyg { true }
+    show_finance_in_mysyg    { true }
     show_group_extras_in_mysyg { true }
-    approve_option { "Normal" }
+    approve_option           { "Normal" }
     team_sport_view_strategy { "Show all" }
     indiv_sport_view_strategy { "Show all" }
-    mysyg_code { "ABC123" }
+    mysyg_code               { "ABC123" }
+  end
+
+  trait :tolerant do
+    approve_option           { "Tolerant" }
+  end
+
+  trait :strict do
+    approve_option           { "Strict" }
   end
 end
