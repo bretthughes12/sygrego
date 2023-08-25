@@ -57,26 +57,29 @@ class ParticipantSignupsControllerTest < ActionDispatch::IntegrationTest
     assert_match /Thank you for registering/, flash[:notice]
   end
 
-  test "should update an existing participant when group not active" do
+  test "should update an existing participant and user" do
     gc = FactoryBot.create(:user)
     gc.roles << @gc_role
     @group.users << gc
     @group.reload
-    participant = FactoryBot.create(:participant, group_id: @group.id)
+    pu = FactoryBot.create(:user)
+    participant = FactoryBot.create(:participant, 
+      group_id: @group.id)
 
     assert_no_difference('Participant.count') do
-      assert_difference('User.count', 1) do
+      assert_no_difference('User.count') do
         post mysyg_participant_signups_path(
           group: @group.mysyg_setting.mysyg_name), 
           params: {
             participant_signup: FactoryBot.attributes_for(:participant_signup, 
               first_name: participant.first_name, 
               surname: participant.surname, 
-              group_id: participant.group.id ) }
+              group_id: participant.group.id,
+              login_email: pu.email ) }
       end
     end
 
-    assert_response :redirect
+    assert_redirected_to root_url(pu)
     assert_match /Thank you for registering/, flash[:notice]
   end
 
@@ -138,6 +141,21 @@ class ParticipantSignupsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :redirect
     assert_match /Thank you for registering/, flash[:notice]
+  end
+
+  test "should not create participant signup with errors" do
+    assert_no_difference('Participant.count') do
+      assert_no_difference('User.count') do
+        post mysyg_participant_signups_path(
+          group: @group.mysyg_setting.mysyg_name), 
+          params: { 
+            participant_signup: FactoryBot.attributes_for(:participant_signup, 
+              group_id: @group.id,
+              age: "A") }
+      end
+    end
+
+    assert_response :success
   end
 
   test "should not create participant signup when group not found" do
