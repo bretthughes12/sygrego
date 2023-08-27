@@ -21,4 +21,14 @@ class SportsEvaluationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_match /Thanks for your evaluation/, flash[:notice]
   end
+
+  test "should not create sports_evaluation with errors" do
+    assert_no_difference('SportsEvaluation.count') do
+      post sports_evaluations_path, params: { 
+                                sports_evaluation: FactoryBot.attributes_for(:sports_evaluation,
+                                  section: "this code is too long.............................." ) }
+    end
+
+    assert_response :success
+  end
 end

@@ -21,4 +21,14 @@ class IncidentReportsControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     assert_match /Thanks for reporting/, flash[:notice]
   end
+
+  test "should not create incident_report with errors" do
+    assert_no_difference('IncidentReport.count') do
+      post incident_reports_path, params: { 
+                                incident_report: FactoryBot.attributes_for(:incident_report,
+                                  section: "this code is too long.............................." ) }
+    end
+
+    assert_response :success
+  end
 end
