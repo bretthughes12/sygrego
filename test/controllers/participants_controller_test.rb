@@ -57,4 +57,19 @@ class ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to home_mysyg_info_url(group: participant.group.mysyg_setting.mysyg_name)
     assert_equal participant.id, session["current_participant"]
   end
+
+  test "should switch participants when an admin" do
+    sign_out @user
+
+    user = FactoryBot.create(:user, :admin)
+    participant = FactoryBot.create(:participant, group_id: @group.id)
+    user.participants << participant
+    
+    sign_in user
+
+    patch switch_participant_url(participant)
+
+    assert_redirected_to home_mysyg_info_url(group: participant.group.mysyg_setting.mysyg_name)
+    assert_equal participant.id, session["current_participant"]
+  end
 end

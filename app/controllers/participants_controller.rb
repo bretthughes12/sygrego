@@ -33,8 +33,6 @@ class ParticipantsController < ApplicationController
     def find_participant
       if session["current_participant"]
         @participant = Participant.where(id: session["current_participant"]).first
-      elsif current_user && !current_user.participants.empty?
-        @participant = Participant.where(id: current_user.participants.first.id).first
       end
     end
   end
