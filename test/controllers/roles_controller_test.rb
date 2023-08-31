@@ -47,6 +47,26 @@ class RolesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to home_mysyg_info_url(@group1.mysyg_setting.mysyg_name)
   end
 
+  test "should switch roles from participant" do
+    FactoryBot.create(:event_detail, group: @group1)
+    FactoryBot.create(:mysyg_setting, group: @group1)
+    participant = FactoryBot.create(:participant, group: @group1)
+    role = FactoryBot.create(:role, :participant)
+    user = FactoryBot.create(:user)
+    user.participants << participant
+    user.roles << role
+    user.roles << @admin
+    user.reload
+    @group1.reload
+
+    sign_out @user    
+    sign_in user
+
+    patch switch_role_url(@admin)
+
+    assert_redirected_to home_admin_info_url
+  end
+
   test "should use session for current group" do
     role = FactoryBot.create(:role, :gc)
     @user.roles << role
