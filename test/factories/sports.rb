@@ -37,4 +37,12 @@ FactoryBot.define do
         max_entries_indiv           {1}
         forfeit_score               {2}
     end
+
+    trait :individual do
+        classification              {"Individual"}
+    end
+
+    trait :team do
+        classification              {"Team"}
+    end
 end    
