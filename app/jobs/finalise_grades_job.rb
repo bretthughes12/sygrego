@@ -43,7 +43,7 @@ class FinaliseGradesJob < ApplicationJob
                 section.save(validate: false)
 
                 if section.number_of_teams != should_have
-                    puts "->#{section.name} - has #{section.number_of_teams}, should have #{should_have}"
+                    logger.info "->#{section.name} - has #{section.number_of_teams}, should have #{should_have}"
 
                     if section.number_of_teams > should_have
                         from_sections << section
@@ -57,7 +57,7 @@ class FinaliseGradesJob < ApplicationJob
             end
 
             from_sections.each do |section|
-                puts "--> Moving entries from #{section.name}"
+                logger.info "--> Moving entries from #{section.name}"
                 entries = section.entries_allowed_to_be_moved
 
                 while section.number_of_teams > section.number_in_draw
@@ -65,10 +65,10 @@ class FinaliseGradesJob < ApplicationJob
                     moving_entry = entries.shift
 
                     if moving_entry.venue_name != new_section.venue_name
-                        puts "*--> Entry in #{moving_entry.section_name} (#{moving_entry.name}) moving from #{moving_entry.venue_name} to #{new_section.venue_name}"
+                        logger.info "*--> Entry in #{moving_entry.section_name} (#{moving_entry.name}) moving from #{moving_entry.venue_name} to #{new_section.venue_name}"
                     end
 
-                    puts "---> Moving #{moving_entry.name} to #{new_section.name}"
+                    logger.info "---> Moving #{moving_entry.name} to #{new_section.name}"
                     moving_entry.section_id = new_section.id
                     moving_entry.save(validate: false)
 
