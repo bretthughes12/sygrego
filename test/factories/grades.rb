@@ -50,4 +50,8 @@ FactoryBot.define do
     status                      {"Open"}
     active                      {true}
   end
+
+  trait :restricted do
+    entry_limit                 {10}
+  end
 end
