@@ -357,13 +357,6 @@ class Grade < ApplicationRecord
         end
     end
     
-#    def refresh_sport_entry_chances!
-#        cached_sport_entries.each do |e|
-#          e.chance_of_entry = e.allocation_chance
-#          e.save(validate: false)
-#        end
-#    end
-    
     def set_waiting_list_expiry!
         self.waitlist_expires_at = Time.now + 2.days
         save(validate: false) 

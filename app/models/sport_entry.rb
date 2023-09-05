@@ -252,56 +252,6 @@ end
     @ac.allocation_factor
   end
 
-  def allocation_chance
-    @ac ||= AllocationCalculation.new(self)
-    limit = cached_grade.entries_to_be_allocated
-
-    if status == 'Entered'
-      100
-
-      # already missed out
-    elsif status == 'Waiting List'
-      0
-
-      # all entries for this grade have been allocated
-    elsif limit < 1
-      0
-
-      # the grade has not reached its limit yet
-    elsif cached_grade.sport_entries.requested.count <= limit
-      100
-
-      # there are enough spots to be allocated for each group to have one (groups
-      # wanting more than one go into a ballot)
-    elsif @ac.number_of_groups_in_sport_grade < limit
-      if high_priority
-        100
-      else
-        @ac.high_priority = false
-        @ac.allocation_chance
-      end
-        
-      # there are exactly enough spots to be allocated for each group to have one,
-      # so all second (and third, etc) entries automatically miss out
-    elsif @ac.number_of_groups_in_sport_grade == limit
-      if high_priority
-        100
-      else
-        0
-      end
-
-      # there are not enough spots for one for each church, so all second (and third, etc)
-      # entries automatically miss out and first entries go into the ballot
-    else
-      if high_priority
-        @ac.high_priority = true
-        @ac.allocation_chance
-      else
-        0
-      end
-    end
-  end
-
   def available_sport_preferences
     sport.sport_preferences(group).reject do |p|
       p.preference.nil? ||

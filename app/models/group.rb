@@ -707,13 +707,6 @@ class Group < ApplicationRecord
       end
     end
   
-#    def refresh_sport_entry_chances!
-#      cached_sport_entries.each do |e|
-#        e.chance_of_entry = e.allocation_chance
-#        e.save(validate: false)
-#      end
-#    end
-  
     def self.import(file, user)
         creates = 0
         updates = 0
