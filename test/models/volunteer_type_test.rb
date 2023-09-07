@@ -27,7 +27,16 @@ class VolunteerTypeTest < ActiveSupport::TestCase
   def setup
       FactoryBot.create(:role, name: 'admin')
       @user = FactoryBot.create(:user)
-      @volunteer_type = FactoryBot.create(:volunteer_type, database_code: 'ABC')
+      @volunteer_type = FactoryBot.create(:volunteer_type, 
+        database_code: 'ABC')
+  end
+
+  test "should calculate the minimum age" do
+    @volunteer_type.age_category = "Over 18"
+    assert_equal 18, @volunteer_type.min_age
+
+    @volunteer_type.age_category = "Over 16"
+    assert_equal 16, @volunteer_type.min_age
   end
 
   test "should import volunteer_types from file" do
