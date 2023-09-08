@@ -24,6 +24,15 @@ class Gc::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should list sport preferences for a church rep" do
+    sign_out @user
+    sign_in @church_rep
+
+    get gc_sport_preferences_path
+
+    assert_response :success
+  end
+
   test "should list sport preferences with entered option" do
     get gc_sport_preferences_path(entered: 'on')
 
@@ -57,6 +66,18 @@ class Gc::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create sport entry from preference" do
+    assert_difference('SportEntry.count') do
+      post create_sport_entry_gc_sport_preference_path(@sport_preference)
+    end
+
+    assert_redirected_to gc_sport_preferences_path
+    assert_match /entry created/, flash[:notice]
+  end
+
+  test "should create sport entry from preference for a church rep" do
+    sign_out @user
+    sign_in @church_rep
+
     assert_difference('SportEntry.count') do
       post create_sport_entry_gc_sport_preference_path(@sport_preference)
     end
