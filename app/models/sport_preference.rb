@@ -50,7 +50,7 @@ class SportPreference < ApplicationRecord
                 participant.grades)
                  .uniq
                  .sort &
-                 participant.group.filtered_grades
+                participant.group.filtered_grades
              else
                []
              end
@@ -94,10 +94,6 @@ class SportPreference < ApplicationRecord
     @grade ||= grade
   end
 
-#  def cached_session
-#    @session ||= session
-#  end
-
   def group
     @group ||= cached_participant.group
   end
@@ -114,21 +110,12 @@ class SportPreference < ApplicationRecord
     @is_entered ||= cached_participant.is_entered_in?(cached_grade)
   end
 
-#  def is_entered_this_session?
-#    @is_entered_this_session ||= cached_participant.is_entered_in_session?(cached_grade.session)
-#  end
-
   def is_entered_this_sport?
     @is_entered_this_sport ||= cached_participant.is_entered_in_sport?(cached_grade.sport)
   end
 
   def is_sport_entry_available?
     @is_sport_entry_available ||= !available_sport_entry.nil?
-  end
-
-  def is_sport_entry_allowed?
-    @is_sport_entry_allowed ||= cached_participant.can_play_grade(cached_grade) &&
-                                group.can_enter_grade(cached_grade)
   end
 
   def entry_comment(entry)
