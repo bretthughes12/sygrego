@@ -11,7 +11,9 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:event_detail, group: @group)
     @user.groups << @group
     @church_rep.groups << @group
-    @participant = FactoryBot.create(:participant, group: @group)
+    @participant = FactoryBot.create(:participant, 
+      group: @group, 
+      driver: true)
     
     sign_in @user
   end
