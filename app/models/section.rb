@@ -128,7 +128,7 @@ class Section < ApplicationRecord
     end
 
     def courts_available
-        return number_of_courts unless number_of_courts.blank?
+        return number_of_courts unless number_of_courts.blank? || number_of_courts == 0
         return 1
     end
 
