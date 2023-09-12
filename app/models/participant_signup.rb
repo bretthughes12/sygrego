@@ -63,7 +63,6 @@ class ParticipantSignup
       :group_id,
       :coming,
       :status,
-      :voucher_id,
       :age,
       :onsite,
       :gender,
@@ -168,7 +167,6 @@ class ParticipantSignup
     validates :emergency_phone_number, length: { maximum: 20 }
   
     before_validation :validate_emergency_contact_details_if_under_18
-    before_validation :validate_voucher_name
     before_validation :validate_email_provided
   
     before_validation :normalize_first_name!
@@ -222,16 +220,6 @@ class ParticipantSignup
       first_name + ' ' + surname
     end
   
-    def voucher_id
-      return nil if voucher_name.blank?
-
-      if @voucher && @voucher.valid_for?(@participant)
-        return @voucher.id 
-      end
-
-      return nil
-    end
-
     def user_name
       login_name.blank? ? name : login_name
     end
@@ -272,10 +260,6 @@ class ParticipantSignup
         name = voucher_name
         name.upcase!
         @voucher = Voucher.find_by_name(name)
-
-        unless @voucher && @voucher.valid_for?(@participant)
-          errors.add(:voucher_name, "is either invalid or not valid for you")
-        end
       end
     end
 
@@ -291,6 +275,11 @@ class ParticipantSignup
     def update_participant
       PARTICIPANT_ATTRIBUTES.each do |name|
         @participant.send("#{name}=", send(name))
+      end
+
+      validate_voucher_name
+      if @voucher && @voucher.valid_for?(@participant)
+        @participant.voucher = @voucher 
       end
     end
   

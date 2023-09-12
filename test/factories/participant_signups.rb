@@ -8,6 +8,7 @@ FactoryBot.define do
     onsite                { true }
     age                   { 30 }
     gender                { "M" }
+    status                { "Accepted" }
     coming_friday         { true }
     coming_saturday       { true }
     coming_sunday         { true }

@@ -92,7 +92,6 @@ class Participant < ApplicationRecord
     belongs_to :voucher, optional: true
     has_many   :volunteers
     has_many   :participants_sport_entries #, dependent: :destroy
-#    has_many   :fee_audit_trails
     has_many   :sport_entries, through: :participants_sport_entries
     has_many   :sport_preferences, dependent: :destroy
     has_many   :participant_extras, dependent: :destroy

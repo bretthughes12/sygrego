@@ -19,10 +19,10 @@
 #
 FactoryBot.define do
   factory :voucher do
-    sequence(:name) { |n| "Voucher#{n}"}
-    limit { 1 }
-    restricted_to { nil }
-    voucher_type { "Multiply" }
-    adjustment { "1.0" }
+    sequence(:name) { |n| "VOUCHER#{n}"}
+    limit           { 1 }
+    restricted_to   { nil }
+    voucher_type    { "Multiply" }
+    adjustment      { "1.0" }
   end
 end
