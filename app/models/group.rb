@@ -132,6 +132,9 @@ class Group < ApplicationRecord
                                     inclusion: { in: STATUS }
     validates :ticket_preference,   length: { maximum: 20 },
                                     inclusion: { in: TICKET_PREFERENCES }
+    validates :email,               format: { with: URI::MailTo::EMAIL_REGEXP, message: 'invalid format' },
+                                    allow_blank: true,
+                                    unless: proc { |o| o.email.blank? }
     validates :ticket_email,        format: { with: URI::MailTo::EMAIL_REGEXP, message: 'invalid format' },
                                     allow_blank: true,
                                     unless: proc { |o| o.ticket_email.blank? }

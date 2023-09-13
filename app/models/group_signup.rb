@@ -169,11 +169,7 @@ class GroupSignup
         if @church_rep.valid?
           @church_rep.save
         else
-          error_map = CHURCH_REP_ATTRIBUTES.invert
-          @church_rep.errors.each do |key, value|
-            errors.add error_map[key.to_s], value
-          end
-          false
+          return false
         end
         @group.status = 'Submitted'
 
@@ -182,14 +178,10 @@ class GroupSignup
         if @gc.valid?
           @gc.save
         else
-          error_map = GC_ATTRIBUTES.invert
-          @gc.errors.each do |key, value|
-            errors.add error_map[key.to_s], value
-          end
-          false
+          return false
         end
       else
-        false
+        return false
       end
     end
   
@@ -285,8 +277,6 @@ class GroupSignup
       end
   
       @church_rep.status = 'Not Verified'
-#      @church_rep.stale = false
-#      @church_rep.active = true
       @church_rep.password = @church_rep.password_confirmation = User.random_password
       @church_rep.groups << @group unless @church_rep.groups.include?(@group)
     end
@@ -297,11 +287,7 @@ class GroupSignup
       end
   
       @gc.status = 'Nominated'
-#      @gc.stale = false
-#      @gc.active = true
       @gc.password = @gc.password_confirmation = User.random_password
-#      @gc.reset_password = true
-#      @gc.generate_one_time_login_token!
       @gc.groups << @group unless @gc.groups.include?(@group)
     end
   
