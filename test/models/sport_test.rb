@@ -139,4 +139,22 @@ class SportTest < ActiveSupport::TestCase
     assert_equal false, sport.grades_as_limited.include?(wrong_sport_grade)
     assert_equal false, sport.grades_as_limited.include?(exclude_grade)
   end
+
+  test "should find a groups preferences for a sport" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:mysyg_setting, group: group)
+    participant = FactoryBot.create(:participant, group: group)
+    grade = FactoryBot.create(:grade, sport: @sport)
+    entry = FactoryBot.create(:sport_entry, group: group, grade: grade)
+    entry.participants << participant
+    sport_preference = FactoryBot.create(:sport_preference, 
+      participant: participant, 
+      grade: grade)
+
+    prefs = @sport.sport_preferences(group)
+
+    assert_equal 1, prefs.size
+    assert_equal sport_preference, prefs[0]
+  end
 end
