@@ -162,22 +162,6 @@ class Grade < ApplicationRecord
         name + " (#{session_name})"
     end
         
-#    def name_with_percentage_full
-#        if entry_limit && entry_limit > 0
-#          name + " (#{percentage_full}% full)"
-#        else
-#          name
-#        end
-#    end
-    
-#    def percentage_full
-#        if entry_limit && entry_limit > 0
-#          number_of_teams * 100 / entry_limit
-#        else
-#          0
-#        end
-#    end
-    
     def entries_entered
         sport_entries.entered
     end
@@ -193,10 +177,6 @@ class Grade < ApplicationRecord
     def entries_to_be_confirmed
         sport_entries.to_be_confirmed
     end
-
-#    def number_of_teams
-#        cached_sport_entries.count
-#    end
 
     def starting_status
         if entry_limit && status == 'Open'
@@ -256,10 +236,6 @@ class Grade < ApplicationRecord
            (status == 'Open' ||
             entry_limit && sport_entries.count < entry_limit)
     end
-
-#    def sport_entry_ids
-#        cached_sport_entries.collect(&:id)
-#    end
 
     def self.reset_all_restricted_entries_to_requested!
         Grade.restricted.each do |g|
@@ -390,15 +366,6 @@ class Grade < ApplicationRecord
         end
     end
 
-#    def expire_wait_list!
-#        entries_waiting.each do |entry|
-#          entry.destroy
-#        end
-        
-#        self.waitlist_expires_at = nil
-#        save(validate: false) 
-#    end
-    
     def self.import(file, user)
         creates = 0
         updates = 0

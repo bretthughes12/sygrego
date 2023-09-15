@@ -254,10 +254,6 @@ class Participant < ApplicationRecord
       h.sort
     end
   
-#    def self.total_fees
-#      coming.accepted.to_a.sum(&:fee)
-#    end
-  
     def name
         first_name + ' ' + surname
     end
@@ -480,29 +476,6 @@ class Participant < ApplicationRecord
       save(validate: false)
     end
   
-    # Mark this participant as having had a late fee charged,
-    # so that we know not to charge it again
-#    def charge_late_fee!
-#      if coming && !late_fee_charged
-#        self.late_fee_charged = true
-#        save(validate: false)
-#        group.charge_late_fee!
-#      end
-#    end
-
-#    def withdraw!(old_fee)
-#      self.withdrawn = true
-#      self.coming = false
-#      self.fee_when_withdrawn = old_fee
-#      save(validate: false)
-#    end
-
-#    def reverse_withdrawal!
-#      self.withdrawn = false
-#      self.fee_when_withdrawn = 0
-#      save(validate: false)
-#    end
-
     def first_entry_in_grade(grade)
       sport_entries.select { |entry| entry.grade == grade }.first
     end
@@ -510,10 +483,6 @@ class Participant < ApplicationRecord
     def is_entered_in?(grade)
       sport_entries.collect(&:grade).include?(grade)
     end
-
-#    def is_entered_in_session?(session)
-#      sport_entries.collect(&:session).include?(session)
-#    end
 
     def is_entered_in_sport?(sport)
       sport_entries.collect(&:sport).include?(sport)
@@ -605,10 +574,6 @@ class Participant < ApplicationRecord
     end
     grades
   end
-
-#  def sport_entry_ids
-#    sport_entries.collect(&:id)
-#  end
 
     def driver_sign
       self.driver_signature ? "[electronic]" : ""

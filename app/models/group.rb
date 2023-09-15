@@ -316,14 +316,6 @@ class Group < ApplicationRecord
       active_groups
     end
   
-#    def self.actives
-#      active_groups = []
-#      Group.order(:abbr).each do |group|
-#        active_groups << group if group.active
-#      end
-#      active_groups
-#    end
-    
   def volunteers
     this_group_volunteers = []
     participants.includes(:volunteers).each do |participant|
@@ -343,39 +335,6 @@ class Group < ApplicationRecord
     end
     this_group_volunteers
   end
-
-#  def cleaners
-#    this_group_cleaners = []
-#    participants.includes(:officials).each do |participant|
-#      unless participant.officials.cleaners.empty?
-#        this_group_cleaners += participant.officials.cleaners
-#      end
-#    end
-#    this_group_cleaners.sort_by { |o| o.session.id }
-#  end
-
-#  def participants_with_no_extras
-#    participants_with_no_extras = []
-#    participants.includes(:participant_extras).each do |participant|
-#      if participant.participant_extras.empty?
-#        participants_with_no_extras << participant
-#      end
-#    end
-#    participants_with_no_extras
-#  end
-
-#  def volunteers_required
-#    (participants.coming.accepted.playing_sport.count / 10).to_i
-#  end
-
-#  def unique_number_plates
-#    participants.coming
-#                .accepted
-#                .drivers
-#                .collect(&:number_plate)
-#                .uniq
-#                .size
-#  end
 
   def drivers_all_electronic?
     participants.coming.accepted.drivers.each do |p|
@@ -416,22 +375,9 @@ class Group < ApplicationRecord
     entries
   end
 
-#  def entries_that_must_be_confirmed
-#    cached_sport_entries.to_be_confirmed.collect
-#  end
-
   def first_entry_in_grade(grade)
     cached_sport_entries.select { |entry| entry.grade == grade }.first
   end
-
-#  def sport_preferences
-#    participants.collect do |p|
-#      p.sport_preferences
-#      .entered
-#      .includes(:sport_grade)
-#      .order('sport_grades.name')
-#    end
-#  end
 
   def participant_extras
     participants.coming.accepted.order(:surname, :first_name).collect do |p|
@@ -441,12 +387,6 @@ class Group < ApplicationRecord
       .order('group_extras.name')
     end.flatten
   end
-
-#  def initialise_new_participant_extras
-#    participants.each do |p|
-#      ParticipantExtra.initialise_for_participant(p)
-#    end
-#  end
 
     def reset_allocation_bonus!
         self.allocation_bonus = 0
@@ -498,14 +438,6 @@ class Group < ApplicationRecord
       payments.to_a.sum(&:amount)
     end
   
-#    def other_charges
-#      @other_charges ||= calculated_other_charges
-#    end
-  
-#    def calculated_other_charges
-#      payments.debits.to_a.sum(&:amount)
-#    end
-  
     def total_amount_payable
       fees + deposit + nz(late_fees)
     end
@@ -513,14 +445,6 @@ class Group < ApplicationRecord
     def amount_outstanding
       total_amount_payable - amount_paid
     end
-  
-#    def sections
-#      sections = []
-#      cached_sport_entries.entered.each do |entry|
-#        sections << entry.section if entry.section
-#      end
-#      sections.sort.uniq
-#    end
   
     def sports_participants_for_grade(grade)
       players = []
@@ -546,9 +470,6 @@ class Group < ApplicationRecord
         next unless include_all || grade.can_accept_entries
         next unless grade_type_entries(grade.sport, grade.grade_type) <
                     grade.max_entries_group
-#        next unless grade.team_size +
-#                    participants_requested_for_session(grade.sport_session_id) <=
-#                    participants_allowed_per_session 
         grades_available << grade
       end
   
@@ -563,9 +484,6 @@ class Group < ApplicationRecord
         next unless grade.can_accept_entries
         next unless grade_type_entries(grade.sport, grade.grade_type) <
                     grade.max_entries_group
-#        next unless grade.team_size +
-#                    participants_requested_for_session(grade.sport_session_id) <=
-#                    participants_allowed_per_session 
 
         grade.sections.active.each do |section|
           next unless section.can_take_more_entries?
@@ -637,24 +555,10 @@ class Group < ApplicationRecord
       number_of_participants
     end
   
-#    def participants_requested_for_session(session)
-#      number_of_participants = 0
-#      cached_sport_entries.entered_or_requested
-#                          .includes(:grade)
-#                          .each do |e|
-#        number_of_participants += e.team_size if e.sport_session.id == session
-#      end
-#      number_of_participants
-#    end
-    
     def coordinators_allowed
       2
     end
 
-#    def can_have_more_gcs?
-#      participants.coming.group_coords.size < coordinators_allowed
-#    end
-  
     def helpers_allowed
       (participants.coming.accepted.size / 5).to_i
     end
@@ -663,10 +567,6 @@ class Group < ApplicationRecord
       participants.coming.accepted.helpers
     end
 
-#    def can_have_more_helpers?
-#      participants.coming.accepted.helpers.size < helpers_allowed
-#    end
-  
     def free_helpers
       if division == 'Small Churches'
         2
@@ -819,10 +719,6 @@ class Group < ApplicationRecord
       end
     end
 
-#    def active?
-#      !participants.coming.accepted.empty? || coming
-#    end
-  
     # TODO: Move this to either Participant or SportGrade
     def gender_matches_gender_type(gender, gender_type)
       if gender_type == 'Mens' && !gender.casecmp('f').zero? ||
