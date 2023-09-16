@@ -109,7 +109,16 @@ class VolunteerTest < ActiveSupport::TestCase
     
     assert_equal participant.name, volunteer.participant_name
   end
-  
+
+  test "should take group from participant" do
+    assert_nil @volunteer.group
+
+    participant = FactoryBot.create(:participant, group: @group)
+    volunteer = FactoryBot.create(:volunteer, participant: participant)
+    
+    assert_equal participant.group, volunteer.group
+  end
+
   test "email recipients should include volunteer email" do
     volunteer = FactoryBot.create(:volunteer, email: "fred@nurk.com")
     
@@ -250,5 +259,50 @@ class VolunteerTest < ActiveSupport::TestCase
 
     volunteer.reload
     assert_not_equal "BIG", volunteer.t_shirt_size
+  end
+
+  test "should update participant sport coord flag when signs up" do
+    sc = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, volunteer_type: sc)
+    participant = FactoryBot.create(:participant, 
+      group: @group, 
+      sport_coord: false)
+
+    volunteer.participant_id = participant.id
+    volunteer.save
+
+    participant.reload
+    assert_equal true, participant.sport_coord
+  end
+
+  test "should update participant sport coord flag when releases" do
+    participant = FactoryBot.create(:participant, 
+      group: @group, 
+      sport_coord: true)
+    sc = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, 
+      volunteer_type: sc,
+      participant: participant)
+
+    volunteer.participant_id = nil
+    volunteer.save
+
+    participant.reload
+    assert_equal false, participant.sport_coord
+  end
+
+  test "should update participant sport coord flag when volunteer destroyed" do
+    participant = FactoryBot.create(:participant, 
+      group: @group, 
+      sport_coord: true)
+    sc = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, 
+      volunteer_type: sc,
+      participant: participant)
+
+    volunteer.destroy
+
+    participant.reload
+    assert_equal false, participant.sport_coord
   end
 end

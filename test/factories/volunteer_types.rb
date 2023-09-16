@@ -37,4 +37,8 @@ FactoryBot.define do
   trait :over_16 do
     age_category { "Over 16" }
   end
+
+  trait :sport_coord do
+    name         { "Sport Coordinator" }
+  end
 end

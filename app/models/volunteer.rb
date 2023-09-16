@@ -120,7 +120,15 @@ class Volunteer < ApplicationRecord
         ''
       end
     end
-    
+      
+    def group
+      if participant
+        participant.group
+      else
+        nil
+      end
+    end
+  
     def group_short_name
       if participant
         participant.group.short_name
@@ -168,14 +176,6 @@ class Volunteer < ApplicationRecord
           section.number_of_teams
         end
     end
-    
-    def group
-      if participant
-        participant.group
-      else
-        nil
-      end
-    end
 
     def sport_name
         if section.nil?
@@ -202,23 +202,21 @@ class Volunteer < ApplicationRecord
     end
     
     def mobile_phone_number
-        if mobile_number.present?
-          Participant.normalize_phone_number(mobile_number)
-        elsif participant && participant.mobile_phone_number.present?
-          participant.mobile_phone_number
-          end
+      if mobile_number.present?
+        Participant.normalize_phone_number(mobile_number)
+      elsif participant && participant.mobile_phone_number.present?
+        participant.mobile_phone_number
+      end
     end
    
     def email_recipients
-        if email.blank? 
-          if participant.email.blank?
-            participant.group.email_recipients
-          else
-            participant.email
-          end
-        else
-          email
+      if email.blank? 
+        if participant
+          participant.email
         end
+      else
+        email
+      end
     end
 
     def self.import(file, user)
