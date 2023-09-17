@@ -314,13 +314,13 @@ class RoundRobinLadderTest < ActiveSupport::TestCase
       entry_a_id: entry2.id,
       entry_b_id: entry4.id,
       score_a: 1,
-      score_b: 2
+      score_b: 3
     )
 
     rrl = RoundRobinLadder.new(section)
 
     assert_equal entry4.id, rrl.ladder[0][0]
-    assert_equal 4, rrl.ladder[0][1].percent
+    assert_equal 5, rrl.ladder[0][1].percent
 
     assert_equal entry1.id, rrl.ladder[1][0]
     assert_equal 4, rrl.ladder[1][1].percent

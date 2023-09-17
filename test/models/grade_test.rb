@@ -376,6 +376,38 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal "Closed", @grade.status
   end
 
+  test "should calculate number of courts from sections" do
+    FactoryBot.create(:section, grade: @grade, number_of_courts: 2)
+
+    @grade.reload
+    assert_equal 2, @grade.total_courts_available
+  end
+
+  test "should default number of courts with no sections" do
+    assert_equal 0, @grade.total_courts_available
+  end
+
+  test "should calculate teams per court from sections" do
+    grade = FactoryBot.create(:grade, entry_limit: 10)
+
+    FactoryBot.create(:section, grade: grade, number_of_courts: 2)
+
+    @grade.reload
+    assert_equal 5, grade.teams_per_court
+  end
+
+  test "should default teams per court with no sections" do
+    grade = FactoryBot.create(:grade, entry_limit: 10)
+
+    assert_equal 0, grade.teams_per_court
+  end
+
+  test "should default teams per court with no limit" do
+    grade = FactoryBot.create(:grade, entry_limit: nil)
+
+    assert_equal 999, grade.teams_per_court
+  end
+
   test "should import grades from file" do
     FactoryBot.create(:sport, name: "Hockey")
     file = fixture_file_upload('grade.csv','application/csv')
