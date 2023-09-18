@@ -376,6 +376,46 @@ class GradeTest < ActiveSupport::TestCase
     assert_equal "Closed", @grade.status
   end
 
+  test "should collect volunteers from sections" do
+    section = FactoryBot.create(:section, grade: @grade)
+    volunteer = FactoryBot.create(:volunteer, 
+      section: section)
+
+    @grade.reload
+    assert_equal 1, @grade.volunteers.size
+    assert_equal volunteer, @grade.volunteers.first
+  end
+
+  test "should collect sport coordinators" do
+    section = FactoryBot.create(:section, grade: @grade)
+    participant = FactoryBot.create(:participant, group: @group)
+    vt = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, 
+      volunteer_type: vt,
+      section: section,
+      participant: participant)
+
+    @grade.reload
+    assert_equal 1, @grade.coordinators_groups.size
+    assert_equal participant.group, @grade.coordinators_groups.first
+  end
+
+  test "should set the waiting list expiry" do
+    @grade.set_waiting_list_expiry!
+
+    @grade.reload
+    assert_not_nil @grade.waitlist_expires_at
+  end
+
+  test "should reset the waiting list expiry" do
+    grade = FactoryBot.create(:grade, waitlist_expires_at: Time.now + 2.days)
+
+    grade.check_waiting_list_status!
+
+    grade.reload
+    assert_nil grade.waitlist_expires_at
+  end
+
   test "should calculate number of courts from sections" do
     FactoryBot.create(:section, grade: @grade, number_of_courts: 2)
 
