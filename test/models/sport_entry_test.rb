@@ -59,10 +59,6 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_equal @entry.grade.grade_type, @entry.grade_type
   end
 
-#  def test_sport_entry_session
-#    assert_equal @entry.grade.session, @entry.session
-#  end
-
   def test_sport_entry_name
     group = FactoryBot.create(:group)
     FactoryBot.create(:event_detail, group: group)
@@ -329,6 +325,17 @@ class SportEntryTest < ActiveSupport::TestCase
 
     assert_equal "Multiple venues available", entry.venue_name
     assert_equal "Multiple sessions available", entry.session_name
+    
+    #entry has a preferred section
+    section1 = FactoryBot.create(:section)
+    section2 = FactoryBot.create(:section, 
+      grade: section1.grade)
+    entry = FactoryBot.create(:sport_entry,
+      grade: section1.grade,
+      preferred_section: section2)
+
+    assert_equal "Preferred: #{section2.venue.name}", entry.venue_name
+    assert_equal "Preferred: #{section2.session.name}", entry.session_name
   end
 
   test "should be able to be deleted" do
@@ -437,35 +444,6 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_not_equal "Invalid", sport_entry.status
   end
 
-#  def test_sport_entry_venue
-    #entry has sport section
-#    section = FactoryBot.create(:section)
-#    entry = FactoryBot.create(:sport_entry,
-#                    grade: section.grade,
-#                    section: section)
-
-#    assert_equal section.venue, entry.venue
-
-    #entry grade only one possible venue
-#    section1 = FactoryBot.create(:section)
-#    section2 = FactoryBot.create(:section, 
-#                       grade: section1.grade,
-#                       venue: section1.venue)
-#    entry = FactoryBot.create(:sport_entry,
-#                    grade: section1.grade)
-
-#    assert_equal section1.venue, entry.venue
-    
-    #entry grade has many possible venues
-#    section1 = FactoryBot.create(:section)
-#    section2 = FactoryBot.create(:section, 
-#                       grade: section1.grade)
-#    entry = FactoryBot.create(:sport_entry,
-#                    grade: section1.grade)
-
-#    assert_equal section1.venue, entry.venue
-#  end
-
   def test_should_not_create_entry_when_group_limit_reached
     grade_with_few_entries_allowed = FactoryBot.create(:grade,
       grade_type: "Team",
@@ -484,19 +462,6 @@ class SportEntryTest < ActiveSupport::TestCase
     assert e.errors[:grade_id].any?
   end
   
-#  test "section name should use section name when section exists" do
-#    section = FactoryBot.create(:section)
-#    entry = FactoryBot.create(:sport_entry, grade_id: section.grade_id, section_id: section.id)
-    
-#    assert_equal section.name, entry.section_name
-#  end
-  
-#  test "section name should use grade name when section does not exist" do
-#    entry = FactoryBot.create(:sport_entry)
-    
-#    assert_equal entry.grade.name, entry.section_name
-#  end
-
   # Don't know why, but this test fails in the context of the whole test suite
   # even though it passes when just testing this file
     
