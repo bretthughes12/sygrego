@@ -357,6 +357,126 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_equal false, @entry.entry_can_be_deleted(@setting)
   end
 
+  test "should include available sport preferences" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group)
+    entry = FactoryBot.create(:sport_entry,
+      group: group)
+    pref = FactoryBot.create(:sport_preference,
+      grade: entry.grade,
+      participant: participant)
+    
+    assert_equal true, entry.available_sport_preferences.include?(pref)
+  end
+
+  test "should assign section when there is only one" do
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade)
+
+    assert_nil entry.section
+
+    entry.check_for_only_section!
+    
+    entry.reload
+    assert_equal section, entry.section
+  end
+
+  test "should not assign section when there are two" do
+    grade = FactoryBot.create(:grade)
+    section1 = FactoryBot.create(:section, grade: grade)
+    section2 = FactoryBot.create(:section, grade: grade)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade)
+
+    assert_nil entry.section
+
+    entry.check_for_only_section!
+    
+    entry.reload
+    assert_nil entry.section
+  end
+
+  test "should assign preferred section" do
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade,
+      preferred_section: section)
+
+    assert_nil entry.section
+
+    entry.check_and_assign_preferred_section!
+    
+    entry.reload
+    assert_equal section, entry.section
+  end
+
+  test "should not assign section when preferred section nil" do
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade,
+      preferred_section: nil)
+
+    assert_nil entry.section
+
+    entry.check_and_assign_preferred_section!
+    
+    entry.reload
+    assert_nil entry.section
+  end
+
+  test "should assign entry to sport coord section" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group)
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
+    sc = FactoryBot.create(:volunteer,
+      volunteer_type: sc_type,
+      section: section,
+      participant: participant)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade,
+      group: group)
+
+    assert_nil entry.section
+
+    entry.check_and_assign_sport_coord_section!
+    
+    entry.reload
+    assert_equal section, entry.section
+  end
+
+  test "should not assign entry to other group sport coord" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group)
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
+    sc = FactoryBot.create(:volunteer,
+      volunteer_type: sc_type,
+      section: section,
+      participant: participant)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade)
+
+    assert_nil entry.section
+
+    entry.check_and_assign_sport_coord_section!
+    
+    entry.reload
+    assert_nil entry.section
+  end
+
   test "should import sport entries from file" do
     FactoryBot.create(:group, short_name: "Caffeine")
     FactoryBot.create(:grade, name: "Kite Flying Open A")
