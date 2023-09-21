@@ -372,6 +372,40 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal gc1.name, @group.gc_name
     assert_equal gc1.phone_number, @group.gc_phone_number
     assert_equal gc1.wwcc_number, @group.gc_wwcc
+    assert_equal gc1.email, @group.gc_email
+  end
+
+  test "should determine the gc email from primary gc" do
+    gc_role = FactoryBot.create(:role, "gc")
+    gc1 = FactoryBot.create(:user)
+    gc2 = FactoryBot.create(:user, primary_gc: true)
+    gc1.roles << gc_role
+    gc2.roles << gc_role
+    @group.users << gc1
+    @group.users << gc2
+
+    assert_equal gc2.email, @group.gc_email
+  end
+
+  test "should show text for ticket recipient" do
+    gc_role = FactoryBot.create(:role, "gc")
+    gc1 = FactoryBot.create(:user)
+    gc1.roles << gc_role
+    @group.users << gc1
+
+    # @group.ticket_preference = 'Send to GC'
+    assert_equal gc1.email, @group.ticket_recipient_text
+
+    @group.ticket_preference = 'Send to Participant'
+    assert_equal 'each participant', @group.ticket_recipient_text
+
+    @group.ticket_preference = 'Send to Ticket Email'
+    # @group.ticket_email = nil
+    assert_equal gc1.email, @group.ticket_recipient_text
+
+    @group.ticket_preference = 'Send to Ticket Email'
+    @group.ticket_email = 'send@to-me.com'
+    assert_equal 'send@to-me.com', @group.ticket_recipient_text
   end
 
   def test_should_be_active_with_a_non_stale_user
