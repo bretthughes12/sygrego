@@ -60,7 +60,7 @@ class SportEntry < ApplicationRecord
   after_create :update_grade_flags
   after_create :check_waiting_list
   after_create :check_sport_draw_addition_emails
-  after_update :update_grade_flags_on_status_change
+  after_update :update_grade_flags, if: :saved_change_to_status?
   before_destroy :check_sport_entry_emails
   before_destroy :check_sport_draw_withdrawal_emails
   before_destroy :remove_participants_from_entry!
@@ -379,12 +379,6 @@ private
 
   def update_grade_flags
     self.grade.update_for_change_in_entries
-  end
-
-  def update_grade_flags_on_status_change
-    if status_changed?
-      self.grade.update_for_change_in_entries
-    end
   end
 
   def check_sport_entry_emails

@@ -477,6 +477,67 @@ class SportEntryTest < ActiveSupport::TestCase
     assert_nil entry.section
   end
 
+  test "should remove participants from entry on destroy" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group)
+    entry = FactoryBot.create(:sport_entry,
+      group: group)
+    entry.participants << participant
+
+    entry.destroy
+    
+    participant.reload
+    assert_equal 0, participant.sport_entries.size
+  end
+
+  test "should update flags on grade when status updates" do
+    grade = FactoryBot.create(:grade, entry_limit: 10)
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade,
+      status: "Waiting List")
+
+    assert_equal "Waiting List", entry.status
+
+    entry.status = "Entered"
+    entry.save(validate: false)
+
+    entry.reload
+    assert_equal "Entered", entry.status
+    grade.reload
+    assert_equal 9, grade.entries_to_be_allocated
+  end
+
+  test "should send an email when an entry withdraws from a closed grade" do
+    grade = FactoryBot.create(:grade, 
+      entry_limit: 10,
+      status: "Closed")
+    section = FactoryBot.create(:section, 
+      grade: grade,
+      number_in_draw: 10)
+    9.times do
+      FactoryBot.create(:sport_entry,
+        grade: grade,
+        section: section,
+        status: "Entered")
+    end
+    2.times do
+      FactoryBot.create(:sport_entry,
+        grade: grade,
+        section: section,
+        status: "Waiting List")
+    end
+    entry = FactoryBot.create(:sport_entry,
+      grade: grade,
+      section: section,
+      status: "Entered")
+
+    assert_difference('ActionMailer::Base.deliveries.size', 3) do
+      entry.destroy
+    end
+  end
+
   test "should import sport entries from file" do
     FactoryBot.create(:group, short_name: "Caffeine")
     FactoryBot.create(:grade, name: "Kite Flying Open A")

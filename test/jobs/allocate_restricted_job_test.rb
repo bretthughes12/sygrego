@@ -57,7 +57,7 @@ class AllocateRestrictedJobTest < ActiveJob::TestCase
     grade.reload
     entry2.reload
     assert_equal "Closed", grade.status
-    assert_equal 10, grade.sport_entries.to_be_confirmed.count
+    assert_equal 0, grade.sport_entries.to_be_confirmed.count
     assert_equal 1, grade.sport_entries.waiting_list.count
     assert_equal 'Waiting List', entry2.status
   end
