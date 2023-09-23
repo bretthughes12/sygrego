@@ -261,6 +261,20 @@ class GroupTest < ActiveSupport::TestCase
 
     assert_equal "Large Churches", large_church.division
     assert_equal 6, large_church.free_helpers
+    
+    #X-Large church
+    x_large_church = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, group: x_large_church)
+    81.times do
+      FactoryBot.create(:participant, 
+                     group: x_large_church, 
+                     coming: true, 
+                     spectator: false)  
+    end
+    x_large_church.reload
+
+    assert_equal "Large Churches", x_large_church.division
+    assert_equal 8, x_large_church.free_helpers
   end
   
   test "divisions should list all groups" do
@@ -406,6 +420,209 @@ class GroupTest < ActiveSupport::TestCase
     @group.ticket_preference = 'Send to Ticket Email'
     @group.ticket_email = 'send@to-me.com'
     assert_equal 'send@to-me.com', @group.ticket_recipient_text
+  end
+
+  test "should prepare name for mysyg selection" do
+    assert_equal "#{@group.abbr} - #{@group.name}", @group.mysyg_selection_name
+  end
+
+  test "should collect all volunteers" do
+    participant = FactoryBot.create(:participant, 
+      group: @group)
+    volunteer = FactoryBot.create(:volunteer, 
+      participant: participant)
+
+    assert @group.volunteers.include?(volunteer) 
+  end
+
+  test "should collect all sport coords" do
+    participant = FactoryBot.create(:participant, 
+      group: @group)
+    sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, 
+      participant: participant)
+    sc = FactoryBot.create(:volunteer, 
+      volunteer_type: sc_type,
+      participant: participant)
+  
+    assert_equal true, @group.sport_coords.include?(sc) 
+    assert_equal false, @group.sport_coords.include?(volunteer) 
+  end
+
+  test "should collect all helpers" do
+    5.times do
+      FactoryBot.create(:participant, 
+        group: @group)
+    end
+    participant = FactoryBot.create(:participant, 
+      group: @group)
+    helper = FactoryBot.create(:participant, 
+      group: @group,
+      spectator: true,
+      helper: true)
+  
+    assert_equal true, @group.helpers.include?(helper) 
+    assert_equal false, @group.helpers.include?(participant) 
+  end
+
+  test "should identify all electronic drivers" do
+    participant = FactoryBot.create(:participant, 
+      group: @group,
+      driver: true,
+      driver_signature: true,
+      number_plate: "ABC123")
+  
+    assert_equal true, @group.drivers_all_electronic? 
+  end
+
+  test "should identify all electronic drivers when no participants" do
+    assert_equal true, @group.drivers_all_electronic? 
+  end
+
+  test "should identify not all electronic drivers" do
+    participant = FactoryBot.create(:participant, 
+      group: @group,
+      driver: true,
+      driver_signature: true,
+      number_plate: nil)
+  
+    assert_equal false, @group.drivers_all_electronic? 
+  end
+
+  test "should get warden zone info from warden zone" do
+    wz = FactoryBot.create(:warden_zone)
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail,
+      group: group,
+      warden_zone: wz)
+      
+    assert_equal wz.name, group.warden_zone_name
+    assert_equal wz.warden_info, group.warden_info
+  end
+
+  test "should set defaults when no warden zone assigned" do
+    assert_equal '', @group.warden_zone_name
+    assert_equal '', @group.warden_info
+  end
+
+  test "should filter out all team sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      team_sport_view_strategy: 'Show none')
+    sport = FactoryBot.create(:sport, :team)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+  
+    assert_equal 0, @group.filtered_team_grades.size
+  end
+
+  test "should filter in all team sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      team_sport_view_strategy: 'Show all')
+    sport = FactoryBot.create(:sport, :team)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+  
+    assert_equal 2, @group.filtered_team_grades.size
+  end
+
+  test "should filter in team sports entered" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      team_sport_view_strategy: 'Show sport entries only')
+    sport = FactoryBot.create(:sport, :team)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+    FactoryBot.create(:sport_entry, 
+      grade: grade2,
+      group: @group)
+  
+    assert_equal 1, @group.filtered_team_grades.size
+    assert_equal grade2, @group.filtered_team_grades.first
+  end
+
+  test "should filter out listed team sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      team_sport_view_strategy: 'Show listed')
+    sport = FactoryBot.create(:sport, :team)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+    FactoryBot.create(:groups_grades_filter, 
+      grade: grade1,
+      group: @group)
+  
+    assert_equal 1, @group.filtered_team_grades.size
+    assert_equal grade2, @group.filtered_team_grades.first
+  end
+
+  test "should filter out all individual sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      indiv_sport_view_strategy: 'Show none')
+    sport = FactoryBot.create(:sport, :individual)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+  
+    assert_equal 0, @group.filtered_indiv_grades.size
+  end
+
+  test "should filter in all individual sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      indiv_sport_view_strategy: 'Show all')
+    sport = FactoryBot.create(:sport, :individual)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+  
+    assert_equal 2, @group.filtered_indiv_grades.size
+  end
+
+  test "should filter in individual sports entered" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      indiv_sport_view_strategy: 'Show sport entries only')
+    sport = FactoryBot.create(:sport, :individual)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+    FactoryBot.create(:sport_entry, 
+      grade: grade2,
+      group: @group)
+  
+    assert_equal 1, @group.filtered_indiv_grades.size
+    assert_equal grade2, @group.filtered_indiv_grades.first
+  end
+
+  test "should filter out listed individual sports" do
+    FactoryBot.create(:mysyg_setting,
+      group: @group,
+      indiv_sport_view_strategy: 'Show listed')
+    sport = FactoryBot.create(:sport, :individual)
+    grade1 = FactoryBot.create(:grade, 
+      sport: sport)
+    grade2 = FactoryBot.create(:grade, 
+      sport: sport)
+    FactoryBot.create(:groups_grades_filter, 
+      grade: grade1,
+      group: @group)
+  
+    assert_equal 1, @group.filtered_indiv_grades.size
+    assert_equal grade2, @group.filtered_indiv_grades.first
   end
 
   def test_should_be_active_with_a_non_stale_user
@@ -789,6 +1006,15 @@ class GroupTest < ActiveSupport::TestCase
     #override doesn't help groups that have used their allowance
     assert !@group.grades_available(true).include?(used_team_grade)
     assert !@group.grades_available(true).include?(used_indiv_grade)
+  end
+
+  test "should identify available sections" do
+    grade = FactoryBot.create(:grade, 
+                              status: "Open")
+    section = FactoryBot.create(:section, 
+                               grade: grade)
+
+    assert @group.sections_available.include?(section)
   end
 
   def test_group_sports_available
