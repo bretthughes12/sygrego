@@ -297,6 +297,19 @@ class ParticipantTest < ActiveSupport::TestCase
     assert !participant.available_grades.include?(grade)
   end
   
+  test "should show WWCC text" do
+    assert_equal "WWCC: missing", @participant.wwcc_text
+
+    @participant.wwcc_number = "A12345-BC"
+    assert_equal "WWCC: A12345-BC", @participant.wwcc_text
+
+    @participant.age = 17
+    assert_equal "WWCC: A12345-BC", @participant.wwcc_text
+
+    @participant.wwcc_number = nil
+    assert_equal "WWCC: not required", @participant.wwcc_text
+  end
+  
   test "should import participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('participant.csv','application/csv')
