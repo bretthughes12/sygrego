@@ -296,6 +296,30 @@ class ParticipantTest < ActiveSupport::TestCase
     
     assert !participant.available_grades.include?(grade)
   end
+
+  test "should show text for ticket recipient" do
+    gc_role = FactoryBot.create(:role, "gc")
+    gc1 = FactoryBot.create(:user)
+    gc1.roles << gc_role
+    @group.users << gc1
+
+    # @group.ticket_preference = 'Send to GC'
+    assert_equal gc1.email, @participant.ticket_email
+
+    @group.ticket_preference = 'Send to Participant'
+    @group.save
+    assert_equal @participant.email, @participant.ticket_email
+
+    @group.ticket_preference = 'Send to Ticket Email'
+    # @group.ticket_email = nil
+    @group.save
+    assert_equal gc1.email, @participant.ticket_email
+
+    @group.ticket_preference = 'Send to Ticket Email'
+    @group.ticket_email = 'send@to-me.com'
+    @group.save
+    assert_equal 'send@to-me.com', @participant.ticket_email
+  end
   
   test "should show WWCC text" do
     assert_equal "WWCC: missing", @participant.wwcc_text
