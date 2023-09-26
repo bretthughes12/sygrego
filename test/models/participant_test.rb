@@ -297,7 +297,7 @@ class ParticipantTest < ActiveSupport::TestCase
     assert !participant.available_grades.include?(grade)
   end
 
-  test "should show text for ticket recipient" do
+  test "should show text for ticket email" do
     gc_role = FactoryBot.create(:role, "gc")
     gc1 = FactoryBot.create(:user)
     gc1.roles << gc_role
@@ -319,6 +319,25 @@ class ParticipantTest < ActiveSupport::TestCase
     @group.ticket_email = 'send@to-me.com'
     @group.save
     assert_equal 'send@to-me.com', @participant.ticket_email
+  end
+
+  test "should show text for ticket type" do
+    # @participant.coming_* = true
+    assert_equal 'All Days', @participant.ticket_type
+
+    @participant.coming_friday = false
+    @participant.coming_monday = false
+    assert_equal 'SAT / SUN', @participant.ticket_type
+
+    @participant.coming_friday = true
+    @participant.coming_saturday = false
+    @participant.coming_sunday = false
+    @participant.coming_monday = true
+    assert_equal 'FRI / MON', @participant.ticket_type
+
+    @participant.coming_friday = false
+    @participant.coming_monday = false
+    assert_equal 'NONE', @participant.ticket_type
   end
   
   test "should show WWCC text" do
