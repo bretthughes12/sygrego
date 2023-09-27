@@ -87,7 +87,12 @@ class ParticipantTest < ActiveSupport::TestCase
     @user = FactoryBot.create(:user, :admin)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group)
-    FactoryBot.create(:event_detail, group: @group)
+    FactoryBot.create(:event_detail, 
+      group: @group)
+    FactoryBot.create(:mysyg_setting, 
+      group: @group,
+      extra_fee_total: 30,
+      extra_fee_per_day: 20)
     @participant = FactoryBot.create(:participant, group: @group)
   end
 
@@ -129,6 +134,11 @@ class ParticipantTest < ActiveSupport::TestCase
     guest_not_playing_sport = FactoryBot.create(:participant, group: @group, guest: true, spectator: true)
     free_voucher = FactoryBot.create(:voucher, voucher_type: "Set", adjustment: 0)
     band_member = FactoryBot.create(:participant, group: @group, voucher: free_voucher)
+    offsite_band_member = FactoryBot.create(:participant, 
+      group: @group, 
+      onsite: false,
+      spectator: true,
+      voucher: free_voucher)
     @setting.early_bird = true
     @setting.save
     early_participant = FactoryBot.create(:participant, group: @group, early_bird: true)
@@ -151,6 +161,22 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 0, guest_playing_sport.fee
     assert_equal 0, guest_not_playing_sport.fee
     assert_equal 0, band_member.fee
+    assert_equal 0, offsite_band_member.fee
+  end
+
+  test "should calculate the group extra fee" do
+    full_participant = FactoryBot.create(:participant, 
+      group: @group)
+    day_visitor_playing_sport = FactoryBot.create(:participant, 
+      group: @group, 
+      onsite: false, 
+      rego_type: "Part Time", 
+      coming_friday: false, 
+      coming_sunday: false, 
+      coming_monday: false)
+
+    assert_equal @group.extra_fee_total, full_participant.extra_fee
+    assert_equal @group.extra_fee_per_day, day_visitor_playing_sport.extra_fee
   end
 
   def test_participant_category_values
