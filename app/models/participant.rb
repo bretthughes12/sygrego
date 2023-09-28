@@ -500,7 +500,7 @@ class Participant < ApplicationRecord
     end
 
     volunteers.each do |volunteer|
-      if volunteer.session && volunteer.session.name == session
+      if volunteer.session_name == session
         sports << volunteer.sport_name
       end
     end

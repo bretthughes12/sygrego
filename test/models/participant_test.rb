@@ -256,6 +256,26 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal @participant.name, @participant.name_with_group_name
   end
 
+  test "should use sport entries for sports in session" do
+    participant = FactoryBot.create(:participant, group: @group)
+    entry = FactoryBot.create(:sport_entry, group: participant.group)
+    entry.participants << participant
+    
+    assert participant.sports_in_session(entry.session_name).include?(entry.sport.name)
+  end
+
+  test "should use volunteers for sports in session" do
+    participant = FactoryBot.create(:participant, group: @group)
+    section = FactoryBot.create(:section)
+    sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
+    volunteer = FactoryBot.create(:volunteer, 
+      volunteer_type: sc_type,
+      section: section,
+      participant: participant)
+    
+    assert participant.sports_in_session(section.session_name).include?(section.sport.name)
+  end
+
   test "available sport entries should include entries participant can enter" do
     participant = FactoryBot.create(:participant, group: @group)
     entry = FactoryBot.create(:sport_entry, group: participant.group)
