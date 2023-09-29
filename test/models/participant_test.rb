@@ -343,6 +343,80 @@ class ParticipantTest < ActiveSupport::TestCase
     assert !participant.available_grades.include?(grade)
   end
 
+  test "available sport sections should include sections participant can enter" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    participant.stubs(:can_play_sport).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert participant.available_sections.include?(section)
+  end
+  
+  test "available sport sections should not include sections in sports that participants cannot play" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    participant.stubs(:can_play_sport).returns(false)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.available_sections.include?(section)
+  end
+  
+  test "available sport sections should not include sections for which participant is ineligible" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    section = FactoryBot.create(:section, grade: grade)
+    participant.stubs(:can_play_sport).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(false)
+    
+    assert !participant.available_sections.include?(section)
+  end
+
+  test "grades i can join should include grades participant can enter" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    FactoryBot.create(:sport_entry, grade: grade, group: @group)
+    participant.stubs(:can_play_sport).returns(true)
+    participant.stubs(:can_play_grade).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert participant.group_grades_i_can_join.include?(grade)
+  end
+  
+  test "grades i can join should not include grades in sports that participants cannot play" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    FactoryBot.create(:sport_entry, grade: grade, group: @group)
+    participant.stubs(:can_play_sport).returns(false)
+    participant.stubs(:can_play_grade).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.group_grades_i_can_join.include?(grade)
+  end
+  
+  test "grades i can join should not grades that participants cannot play" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    FactoryBot.create(:sport_entry, grade: grade, group: @group)
+    participant.stubs(:can_play_sport).returns(true)
+    participant.stubs(:can_play_grade).returns(false)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(true)
+    
+    assert !participant.group_grades_i_can_join.include?(grade)
+  end
+  
+  test "grades i can join should not include grades for which participant is ineligible" do
+    participant = FactoryBot.create(:participant, group: @group)
+    grade = FactoryBot.create(:grade)
+    FactoryBot.create(:sport_entry, grade: grade, group: @group)
+    participant.stubs(:can_play_sport).returns(true)
+    participant.stubs(:can_play_grade).returns(true)
+    Grade.any_instance.stubs(:eligible_to_participate?).with(participant).returns(false)
+    
+    assert !participant.group_grades_i_can_join.include?(grade)
+  end
+
   test "should show text for ticket email" do
     gc_role = FactoryBot.create(:role, "gc")
     gc1 = FactoryBot.create(:user)
