@@ -395,7 +395,7 @@ class ParticipantTest < ActiveSupport::TestCase
     assert !participant.group_grades_i_can_join.include?(grade)
   end
   
-  test "grades i can join should not grades that participants cannot play" do
+  test "grades i can join should not include grades that participants cannot play" do
     participant = FactoryBot.create(:participant, group: @group)
     grade = FactoryBot.create(:grade)
     FactoryBot.create(:sport_entry, grade: grade, group: @group)
@@ -489,7 +489,11 @@ class ParticipantTest < ActiveSupport::TestCase
   test "should import alterenate participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('participant2.csv','application/csv')
-    
+    voucher = FactoryBot.create(:voucher,
+      name: "VOUCHER",
+      voucher_type: "Set",
+      adjustment: 0.0)
+
     assert_difference('Participant.count') do
       @result = Participant.import(file, @user)
     end
@@ -534,6 +538,32 @@ class ParticipantTest < ActiveSupport::TestCase
 
     participant.reload
     assert_equal 35, participant.age
+  end
+
+  test "should update exiting participants from file and assign voucher" do
+    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      first_name: "Amos",
+      surname: "Burton")
+    voucher = FactoryBot.create(:voucher,
+      name: "VOUCHER",
+      voucher_type: "Set",
+      adjustment: 0.0)
+    file = fixture_file_upload('participant2.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import(file, @user)
+    end
+
+    assert_equal 0, @result[:creates]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    participant.reload
+    assert_equal 35, participant.age
+    assert_equal 0, participant.fee
   end
 
   test "should not import participants with errors from file" do

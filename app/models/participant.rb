@@ -703,7 +703,7 @@ class Participant < ApplicationRecord
                 name = fields[37].strip
                 name.upcase!
                 voucher = Voucher.find_by_name(name)
-          
+
                 if voucher && voucher.valid_for?(participant)
                   participant.voucher = voucher
                   participant.save
