@@ -844,12 +844,9 @@ class Participant < ApplicationRecord
             participant.booking_nbr             = fields[8]
             participant.updated_by = user.id
 
-            if participant.save(validate: false)
-                updates += 1
-            else
-                errors += 1
-                error_list << participant
-            end
+            participant.save(validate: false)
+
+            updates += 1
         else
             misses += 1
         end

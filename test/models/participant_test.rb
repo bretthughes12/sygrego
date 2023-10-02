@@ -486,7 +486,7 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 0, @result[:errors]
   end
   
-  test "should import alterenate participants from file" do
+  test "should import alternate participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('participant2.csv','application/csv')
     voucher = FactoryBot.create(:voucher,
@@ -679,6 +679,57 @@ class ParticipantTest < ActiveSupport::TestCase
 
     participant.reload
     assert_not_equal "X", participant.gender
+  end
+
+  test "should import day visitors from ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    file = fixture_file_upload('tickets.csv','application/csv')
+    
+    assert_difference('Participant.count', 1) do
+      @result = Participant.import_ticket(file, @user)
+    end
+
+    assert_equal 1, @result[:day_visitors]
+    assert_equal 1, @result[:misses]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update existing day visitors from ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      id: 1234)
+    file = fixture_file_upload('tickets.csv','application/csv')
+    
+    assert_difference('Participant.count', 1) do
+      @result = Participant.import_ticket(file, @user)
+    end
+
+    assert_equal 1, @result[:day_visitors]
+    assert_equal 0, @result[:misses]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    participant.reload
+    assert_equal 'zY_HBUXAHke9GlJIttEuaA', participant.registration_nbr
+  end
+
+  test "should not import invalid day visitors from ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    file = fixture_file_upload('invalid_tickets.csv','application/csv')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import_ticket(file, @user)
+    end
+
+    assert_equal 0, @result[:day_visitors]
+    assert_equal 0, @result[:misses]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
   end
 
   def test_should_normalize_phone_number
