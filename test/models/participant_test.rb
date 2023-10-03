@@ -732,6 +732,19 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 1, @result[:errors]
   end
 
+  test "force participant to offsite when group is offsite" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, 
+      group: group,
+      onsite: false)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      onsite: true)
+
+    participant.reload
+    assert_equal false, participant.onsite
+  end
+
   def test_should_normalize_phone_number
     #local number
     assert_equal "(0#{APP_CONFIG[:state_area_code]}) 9555-1122", Participant.normalize_phone_number("95551122")
