@@ -732,7 +732,7 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 1, @result[:errors]
   end
 
-  test "force participant to offsite when group is offsite" do
+  test "should force participant to offsite when group is offsite" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:event_detail, 
       group: group,
@@ -743,6 +743,75 @@ class ParticipantTest < ActiveSupport::TestCase
 
     participant.reload
     assert_equal false, participant.onsite
+  end
+
+  test "should remove participant from sport entries when changed to not coming" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, 
+      group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      coming: true)
+    entry = FactoryBot.create(:sport_entry,
+      group: group)
+    entry.participants << participant
+    entry.captaincy = participant
+    entry.save
+
+    participant.coming = false
+    participant.save
+
+    entry.reload
+
+    assert_equal 0, entry.participants.size
+    assert_nil entry.captaincy
+  end
+
+  test "should remove participant from sport entries when changed to spectator" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, 
+      group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      coming: true,
+      spectator: false)
+    entry = FactoryBot.create(:sport_entry,
+      group: group)
+    entry.participants << participant
+    entry.captaincy = participant
+    entry.save
+
+    participant.spectator = true
+    participant.save
+
+    entry.reload
+
+    assert_equal 0, entry.participants.size
+    assert_nil entry.captaincy
+  end
+
+  test "should remove participant from volunteers when destroyed" do
+    group = FactoryBot.create(:group)
+    FactoryBot.create(:event_detail, 
+      group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      coming: true,
+      spectator: false)
+    volunteer = FactoryBot.create(:volunteer,
+      participant: participant,
+      mobile_number: "0444444444",
+      email: "ace@rimmer.com",
+      t_shirt_size: "M")
+
+    participant.destroy
+
+    volunteer.reload
+
+    assert_nil volunteer.participant
+    assert_nil volunteer.mobile_number
+    assert_nil volunteer.email
+    assert_nil volunteer.t_shirt_size
   end
 
   def test_should_normalize_phone_number
