@@ -47,6 +47,7 @@ gem 'prawn-rails'
 
 group :production do
   gem 'newrelic_rpm'
+  gem 'lograge'
 end
 
 group :development, :test do
