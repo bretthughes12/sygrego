@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'admin/lost_item_helper'
 
 class Admin::LostItemsHelperTest < ActionView::TestCase
   include Admin::LostItemHelper

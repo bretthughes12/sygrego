@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'admin/sport_entries_helper'
 
 class Admin::SportEntriesHelperTest < ActionView::TestCase
   include Admin::SportEntriesHelper

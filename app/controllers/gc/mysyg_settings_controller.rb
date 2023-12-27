@@ -1,5 +1,5 @@
 class Gc::MysygSettingsController < GcController
-    load_and_authorize_resource except: [:show]
+    load_and_authorize_resource
   
     # GET /gc/mysyg_settings/1/edit
     def edit

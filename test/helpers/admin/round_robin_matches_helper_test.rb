@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../../test_helper'
-require 'admin/round_robin_matches_helper'
 
 class Admin::RoundRobinMatchesHelperTest < ActionView::TestCase
   include Admin::RoundRobinMatchesHelper

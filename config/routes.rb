@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   get '/results_reference' => 'admin/info#results_reference', controller: "admin/info", as: :results_reference
   get 'static/:permalink' => 'pages#show', as: :static
 
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get "up" => "rails/health#show", as: :rails_health_check
+  
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
