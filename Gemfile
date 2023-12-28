@@ -44,6 +44,8 @@ gem 'chartkick'
 # gem 'coffee-rails'
 # gem 'jquery-rails'
 gem 'prawn-rails'
+gem 'caxlsx'
+gem 'caxlsx_rails'
 
 group :production do
   gem 'newrelic_rpm'

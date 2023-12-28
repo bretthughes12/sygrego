@@ -82,6 +82,10 @@ class Admin::ParticipantsController < AdminController
         render_csv "syg_tickets_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets"
         @participants.update_all(exported: true, dirty: false)
       end
+      format.xlsx do
+        render xlsx: "ticket_download", filename: "syg_tickets_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
+        @participants.update_all(exported: true, dirty: false)
+      end
     end
   end
 
