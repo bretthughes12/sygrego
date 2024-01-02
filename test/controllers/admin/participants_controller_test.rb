@@ -65,25 +65,46 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should download new tickets" do
+  test "should download new tickets in CSV" do
     post ticket_download_admin_participants_url(format: :csv)
 
     assert_response :success
     assert_match %r{text\/csv}, @response.content_type
   end
 
-  test "should download updated tickets" do
+  test "should download new tickets" do
+    post ticket_download_admin_participants_url(format: :xlsx)
+
+    assert_response :success
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
+  end
+
+  test "should download updated tickets in CSV" do
     post ticket_updates_admin_participants_url(format: :csv)
 
     assert_response :success
     assert_match %r{text\/csv}, @response.content_type
   end
 
-  test "should download full ticket extract" do
+  test "should download updated tickets" do
+    post ticket_updates_admin_participants_url(format: :xlsx)
+
+    assert_response :success
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
+  end
+
+  test "should download full ticket extract in CSV" do
     get ticket_full_extract_admin_participants_url(format: :csv)
 
     assert_response :success
     assert_match %r{text\/csv}, @response.content_type
+  end
+
+  test "should download full ticket extract" do
+    get ticket_full_extract_admin_participants_url(format: :xlsx)
+
+    assert_response :success
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should reset tickets" do

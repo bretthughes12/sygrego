@@ -99,6 +99,10 @@ class Admin::ParticipantsController < AdminController
         render_csv "syg_ticket_updates_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets" 
         @participants.update_all(dirty: false)
       end
+      format.xlsx do
+        render xlsx: "ticket_download", filename: "syg_ticket_updates_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
+        @participants.update_all(dirty: false)
+      end
     end
   end
 
@@ -110,6 +114,9 @@ class Admin::ParticipantsController < AdminController
     respond_to do |format|
       format.csv do 
         render_csv "syg_ticket_extract_#{Time.now.in_time_zone.strftime('%Y%m%d')}", "syg_tickets" 
+      end
+      format.xlsx do
+        render xlsx: "ticket_download", filename: "syg_ticket_extract_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
       end
     end
   end
