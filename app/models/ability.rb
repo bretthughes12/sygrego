@@ -184,30 +184,30 @@ class Ability
           :sports_plan,
           :camping_preferences,
           :sport_notes], Participant
-      can [:show, 
-            :update, 
-            :destroy, 
-            :new_voucher, 
-            :add_voucher, 
-            :delete_voucher, 
-            :accept, 
-            :reject, 
-            :coming, 
-            :edit_driver, 
-            :update_driver, 
-            :edit_wwcc, 
-            :update_wwcc, 
-            :edit_vaccination, 
-            :update_vaccination,
-            :edit_fees,
-            :update_fees,
-            :edit_camping_preferences,
-            :update_camping_preferences,
-            :edit_sport_notes,
-            :update_sport_notes,
-            :edit_sports], Participant do |participant|
-          user.groups.include?(participant.group) || user.role?(:admin)
-        end
+        can [:show, 
+          :update, 
+          :destroy, 
+          :new_voucher, 
+          :add_voucher, 
+          :delete_voucher, 
+          :accept, 
+          :reject, 
+          :coming, 
+          :edit_driver, 
+          :update_driver, 
+          :edit_wwcc, 
+          :update_wwcc, 
+          :edit_vaccination, 
+          :update_vaccination,
+          :edit_fees,
+          :update_fees,
+          :edit_camping_preferences,
+          :update_camping_preferences,
+          :edit_sport_notes,
+          :update_sport_notes,
+          :edit_sports], Participant do |participant|
+             user.groups.include?(participant.group) || user.role?(:admin)
+          end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry
         can [:show, :update, :destroy, :confirm], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
