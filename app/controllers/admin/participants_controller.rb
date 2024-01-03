@@ -322,8 +322,8 @@ class Admin::ParticipantsController < AdminController
 
   # POST /admin/participants/ticket_import
   def ticket_import
-    if params[:participant] && params[:participant][:file].path =~ %r{\.csv$}i
-      result = Participant.import_ticket(params[:participant][:file], current_user)
+    if params[:participant] && params[:participant][:file].path =~ %r{\.xlsx$}i
+      result = Participant.import_ticket_excel(params[:participant][:file], current_user)
 
       flash[:notice] = "Ticket upload complete: #{result[:updates]} updates; #{result[:misses]} participants not found; #{result[:day_visitors]} day visitors added; #{result[:errors]} errors"
 
@@ -331,7 +331,7 @@ class Admin::ParticipantsController < AdminController
         format.html { redirect_to tickets_admin_participants_url }
       end
     else
-      flash[:notice] = "Upload file must be in '.csv' format"
+      flash[:notice] = "Upload file must be in '.xlsx' format"
       @participant = Participant.new
 
       respond_to do |format|

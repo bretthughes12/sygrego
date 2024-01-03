@@ -46,6 +46,7 @@ gem 'chartkick'
 gem 'prawn-rails'
 gem 'caxlsx'
 gem 'caxlsx_rails'
+gem 'roo', "~> 2.10.0"
 
 group :production do
   gem 'newrelic_rpm'

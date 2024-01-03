@@ -85,6 +85,7 @@ class Participant < ApplicationRecord
 
     require 'csv'
     require 'pp'
+    require 'roo'
 
     attr_reader :voucher_name
 
@@ -882,6 +883,74 @@ class Participant < ApplicationRecord
           else
             errors += 1
             error_list << participant
+          end
+        end
+      end
+    end
+
+    { misses: misses, updates: updates, day_visitors: day_visitors, errors: errors, error_list: error_list }
+  end
+
+  def self.import_ticket_excel(file, user)
+    misses = 0
+    updates = 0
+    day_visitors = 0
+    errors = 0
+    error_list = []
+
+    day_group = Group.find_by_abbr('DAY')
+
+    xlsx = Roo::Spreadsheet.open(file)
+
+    xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+      unless row['First Name'] == 'First Name'
+        unless row['Question 16'].blank?
+          participant = Participant.where(id: row['Question 16']).first
+        
+          if participant
+            participant.registration_nbr        = row['Ticket Number']
+            participant.booking_nbr             = row['Booking Number']
+            participant.updated_by = user.id
+
+            participant.save(validate: false)
+
+            updates += 1
+          else
+            misses += 1
+          end
+        else
+          if !row['Ticket Type'].nil?
+            participant = Participant.create(
+              group_id:                day_group.id,
+              first_name:              row['First Name'],
+              surname:                 row['Last Name'],
+              coming:                  true,
+              age:                     30,
+              gender:                  'U',
+              coming_friday:           row['Ticket Type'].include?('FRI') || row['Ticket Type'] == 'All Days',
+              coming_saturday:         row['Ticket Type'].include?('SAT') || row['Ticket Type'] == 'All Days',
+              coming_sunday:           row['Ticket Type'].include?('SUN') || row['Ticket Type'] == 'All Days',
+              coming_monday:           row['Ticket Type'].include?('MON') || row['Ticket Type'] == 'All Days',
+              mobile_phone_number:     row['Phone'],
+              email:                   row['Email'],
+              allergies:               'Unknown',
+              spectator:               true,
+              onsite:                  false,
+              driver:                  !row['Question 13'].blank?,
+              number_plate:            row['Question 13'],
+              dietary_requirements:    'Unknown',
+              wwcc_number:             row['Question 14'],
+              registration_nbr:        row['Ticket Number'],
+              booking_nbr:             row['Booking Number'],
+              exported:                true,
+              updated_by:              user.id)
+
+            if participant.errors.empty?
+              day_visitors += 1
+            else
+              errors += 1
+              error_list << participant
+            end
           end
         end
       end

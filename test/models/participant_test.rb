@@ -732,6 +732,57 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal 1, @result[:errors]
   end
 
+  test "should import day visitors from excel ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    
+    assert_difference('Participant.count', 1) do
+      @result = Participant.import_ticket_excel(file, @user)
+    end
+
+    assert_equal 1, @result[:day_visitors]
+    assert_equal 1, @result[:misses]
+    assert_equal 0, @result[:updates]
+    assert_equal 0, @result[:errors]
+  end
+
+  test "should update existing day visitors from excel ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    participant = FactoryBot.create(:participant, 
+      group: group,
+      id: 1234)
+    file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    
+    assert_difference('Participant.count', 1) do
+      @result = Participant.import_ticket_excel(file, @user)
+    end
+
+    assert_equal 1, @result[:day_visitors]
+    assert_equal 0, @result[:misses]
+    assert_equal 1, @result[:updates]
+    assert_equal 0, @result[:errors]
+
+    participant.reload
+    assert_equal 'zY_HBUXAHke9GlJIttEuaA', participant.registration_nbr
+  end
+
+  test "should not import invalid day visitors from excel ticket file" do
+    group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:event_detail, group: group)
+    file = fixture_file_upload('invalid_tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    
+    assert_no_difference('Participant.count') do
+      @result = Participant.import_ticket_excel(file, @user)
+    end
+
+    assert_equal 0, @result[:day_visitors]
+    assert_equal 0, @result[:misses]
+    assert_equal 0, @result[:updates]
+    assert_equal 1, @result[:errors]
+  end
+
   test "should force participant to offsite when group is offsite" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:event_detail, 

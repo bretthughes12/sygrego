@@ -339,7 +339,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     group = FactoryBot.create(:group, abbr: "DAY")
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: @group, id: 1234)
-    file = fixture_file_upload('tickets.csv','application/csv')
+    file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Participant.count') do
       post ticket_import_admin_participants_url, params: { participant: { file: file }}
@@ -349,7 +349,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import tickets when the file is not csv" do
+  test "should not import tickets when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Participant.count') do
@@ -357,7 +357,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should get new voucher" do
