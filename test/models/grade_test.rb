@@ -378,8 +378,8 @@ class GradeTest < ActiveSupport::TestCase
 
   test "should collect volunteers from sections" do
     section = FactoryBot.create(:section, grade: @grade)
-    volunteer = FactoryBot.create(:volunteer, 
-      section: section)
+    volunteer = FactoryBot.create(:volunteer)
+    volunteer.sections << section
 
     @grade.reload
     assert_equal 1, @grade.volunteers.size
@@ -392,8 +392,8 @@ class GradeTest < ActiveSupport::TestCase
     vt = FactoryBot.create(:volunteer_type, :sport_coord)
     volunteer = FactoryBot.create(:volunteer, 
       volunteer_type: vt,
-      section: section,
       participant: participant)
+    volunteer.sections << section
 
     @grade.reload
     assert_equal 1, @grade.coordinators_groups.size

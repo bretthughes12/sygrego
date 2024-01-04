@@ -15,7 +15,8 @@ class VolunteerMailerTest < ActionMailer::TestCase
       FactoryBot.create(:event_detail, group: group)
       section = FactoryBot.create(:section)
       participant = FactoryBot.create(:participant, group: group)
-      volunteer = FactoryBot.create(:volunteer, section: section, participant: participant)
+      volunteer = FactoryBot.create(:volunteer, participant: participant)
+      volunteer.sections << section
       
       email = VolunteerMailer.welcome(volunteer)
       

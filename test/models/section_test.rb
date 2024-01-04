@@ -68,7 +68,8 @@ class SectionTest < ActiveSupport::TestCase
 
   test "should list all sport coordinators" do
     vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
-    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: @section)
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt)
+    sc.sections << @section
 
     assert @section.sport_coords.include?(sc)
   end

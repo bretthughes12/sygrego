@@ -38,8 +38,8 @@ class Volunteer < ApplicationRecord
 
     require 'csv'
 
+    has_and_belongs_to_many :sections
     belongs_to :volunteer_type
-    belongs_to :section, optional: true
     belongs_to :session, optional: true
     belongs_to :participant, optional: true
   
@@ -96,20 +96,20 @@ class Volunteer < ApplicationRecord
     searchable_by 'volunteers.description'
   
     def venue_name
-        if section.nil?
+        if sections.empty?
           '(not venue-specific)'
         else
-          section.venue_name
+          sections.first.venue_name
         end
     end
     
     def session_name
         if session
           session.name
-        elsif section.nil?
+        elsif sections.empty?
           '(not session-specific)'
         else
-          section.session_name
+          sections.first.session_name
         end
     end
     
@@ -170,34 +170,34 @@ class Volunteer < ApplicationRecord
     end
     
     def number_of_teams
-        if section.nil?
+        if sections.empty?
           nil
         else
-          section.number_of_teams
+          sections.first.number_of_teams
         end
     end
 
     def sport_name
-        if section.nil?
+        if sections.empty?
           description
         else
-          section.sport_name
+          sections.first.sport_name
         end
     end
     
     def sport
-        if section.nil?
+        if sections.empty?
           nil
         else
-          section.sport
+          sections.first.sport
         end
     end
     
     def name
-        if section.nil?
+        if sections.empty?
           description
         else
-          section.name
+          sections.first.name
         end
     end
     
@@ -235,7 +235,7 @@ class Volunteer < ApplicationRecord
         if volunteer
 
           volunteer.volunteer_type = type
-          volunteer.section = section
+          volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
           volunteer.session = session
           volunteer.participant = participant
           volunteer.description = fields[2]
@@ -253,7 +253,6 @@ class Volunteer < ApplicationRecord
         else
           volunteer = Volunteer.create(
               volunteer_type: type,
-              section:        section,
               session:        session,
               participant:    participant,
               description:    fields[2],
@@ -262,6 +261,7 @@ class Volunteer < ApplicationRecord
               t_shirt_size:   fields[10],
               updated_by:     user.id
           )
+          volunteer.sections << section unless section.nil?
 
           if volunteer.errors.empty?
             creates += 1

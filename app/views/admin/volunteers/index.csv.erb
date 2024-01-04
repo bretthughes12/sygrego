@@ -3,8 +3,8 @@
 <%= CSV.generate do |csv|
     @volunteers.each do |volunteer|
     session = volunteer.session.nil? ? nil : volunteer.session.name
-    section = volunteer.section.nil? ? nil : volunteer.section.name
-    section_session = volunteer.section.nil? ? nil : volunteer.section.session.name
+    section = volunteer.sections.empty? ? nil : volunteer.sections.first.name
+    section_session = volunteer.sections.empty? ? nil : volunteer.sections.first.session.name
     participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
     participant_id = volunteer.participant.nil? ? nil : volunteer.participant.id
     group = volunteer.participant.nil? ? nil : volunteer.participant.group.abbr

@@ -42,8 +42,9 @@ class VolunteerTest < ActiveSupport::TestCase
     FactoryBot.create(:role, name: 'admin')
     @user = FactoryBot.create(:user)
     @volunteer = FactoryBot.create(:volunteer)
-    @section_volunteer = FactoryBot.create(:volunteer,
-      section: FactoryBot.create(:section))
+    @section = FactoryBot.create(:section)
+    @section_volunteer = FactoryBot.create(:volunteer)
+    @section_volunteer.sections << @section
     @volunteer_with_session = FactoryBot.create(:volunteer,
       session: FactoryBot.create(:session))
     @group = FactoryBot.create(:group)
@@ -52,7 +53,7 @@ class VolunteerTest < ActiveSupport::TestCase
 
   def test_volunteer_venue_name
     #volunteer has a Section
-    assert_equal @section_volunteer.section.venue_name, @section_volunteer.venue_name
+    assert_equal @section_volunteer.sections.first.venue_name, @section_volunteer.venue_name
     
     #no coordinator requirement
     assert_equal "(not venue-specific)", @volunteer.venue_name
@@ -63,7 +64,7 @@ class VolunteerTest < ActiveSupport::TestCase
     assert_equal @volunteer_with_session.session.name, @volunteer_with_session.session_name
     
     #volunteer has a Section
-    assert_equal @section_volunteer.section.session_name, @section_volunteer.session_name
+    assert_equal @section_volunteer.sections.first.session_name, @section_volunteer.session_name
     
     #no coordinator requirement
     assert_equal "(not session-specific)", @volunteer.session_name
@@ -71,7 +72,7 @@ class VolunteerTest < ActiveSupport::TestCase
 
   def test_volunteer_name
     #volunteer has a Section
-    assert_equal @section_volunteer.section.name, @section_volunteer.name
+    assert_equal @section_volunteer.sections.first.name, @section_volunteer.name
     
     #no coordinator requirement
     assert_equal @volunteer.description, @volunteer.name
@@ -79,7 +80,7 @@ class VolunteerTest < ActiveSupport::TestCase
 
   def test_volunteer_sport_name
     #volunteer has a Section
-    assert_equal @section_volunteer.section.sport_name, @section_volunteer.sport_name
+    assert_equal @section_volunteer.sections.first.sport_name, @section_volunteer.sport_name
     
     #no coordinator requirement
     assert_equal @volunteer.description, @volunteer.sport_name
@@ -87,7 +88,7 @@ class VolunteerTest < ActiveSupport::TestCase
 
   def test_volunteer_sport
     #volunteer has a Section
-    assert_equal @section_volunteer.section.sport, @section_volunteer.sport
+    assert_equal @section_volunteer.sections.first.sport, @section_volunteer.sport
     
     #no coordinator requirement
     assert_nil @volunteer.sport
@@ -141,14 +142,15 @@ class VolunteerTest < ActiveSupport::TestCase
     section = FactoryBot.create(:section, grade: grade)
     5.times { FactoryBot.create(:sport_entry, grade: grade, section: section) }
     participant = FactoryBot.create(:participant, group: @group)
-    volunteer = FactoryBot.create(:volunteer, participant: participant, section: section)
+    volunteer = FactoryBot.create(:volunteer, participant: participant)
+    volunteer.sections << section
     
     assert_equal 5, volunteer.number_of_teams
   end
   
   test "number of teams should be nil when nothing associated" do
     participant = FactoryBot.create(:participant, group: @group)
-    volunteer = FactoryBot.create(:volunteer, participant: participant, section: nil)
+    volunteer = FactoryBot.create(:volunteer, participant: participant)
     
     assert_nil volunteer.number_of_teams
   end
@@ -178,7 +180,8 @@ class VolunteerTest < ActiveSupport::TestCase
     sat_arvo = FactoryBot.create(:session, name: "Saturday Afternoon")
     section = FactoryBot.create(:section, session: sat_arvo)
     vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
-    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: section)
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt)
+    sc.sections << section
 
     assert Volunteer.sport_coords_saturday.include?(sc)
     assert !Volunteer.sport_coords_sunday.include?(sc)
@@ -188,7 +191,8 @@ class VolunteerTest < ActiveSupport::TestCase
     sun_arvo = FactoryBot.create(:session, name: "Sunday Afternoon")
     section = FactoryBot.create(:section, session: sun_arvo)
     vt = FactoryBot.create(:volunteer_type, name: 'Sport Coordinator')
-    sc = FactoryBot.create(:volunteer, volunteer_type: vt, section: section)
+    sc = FactoryBot.create(:volunteer, volunteer_type: vt)
+    sc.sections << section
 
     assert Volunteer.sport_coords_sunday.include?(sc)
     assert !Volunteer.sport_coords_saturday.include?(sc)

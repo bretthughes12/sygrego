@@ -440,8 +440,8 @@ class SportEntryTest < ActiveSupport::TestCase
     sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
     sc = FactoryBot.create(:volunteer,
       volunteer_type: sc_type,
-      section: section,
       participant: participant)
+    sc.sections << section
     entry = FactoryBot.create(:sport_entry,
       grade: grade,
       group: group)
@@ -464,8 +464,8 @@ class SportEntryTest < ActiveSupport::TestCase
     sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
     sc = FactoryBot.create(:volunteer,
       volunteer_type: sc_type,
-      section: section,
       participant: participant)
+    sc.sections << section
     entry = FactoryBot.create(:sport_entry,
       grade: grade)
 

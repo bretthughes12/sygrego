@@ -270,8 +270,8 @@ class ParticipantTest < ActiveSupport::TestCase
     sc_type = FactoryBot.create(:volunteer_type, :sport_coord)
     volunteer = FactoryBot.create(:volunteer, 
       volunteer_type: sc_type,
-      section: section,
       participant: participant)
+    volunteer.sections << section
     
     assert participant.sports_in_session(section.session_name).include?(section.sport.name)
   end

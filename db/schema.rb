@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_002326) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_04_090419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -469,6 +469,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_002326) do
     t.index ["name"], name: "index_sections_on_name", unique: true
   end
 
+  create_table "sections_volunteers", id: false, force: :cascade do |t|
+    t.bigint "section_id", null: false
+    t.bigint "volunteer_id", null: false
+    t.index ["section_id"], name: "index_sections_volunteers_on_section_id"
+    t.index ["volunteer_id"], name: "index_sections_volunteers_on_volunteer_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "active", default: true
@@ -741,6 +748,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_002326) do
   add_foreign_key "sections", "grades"
   add_foreign_key "sections", "sessions"
   add_foreign_key "sections", "venues"
+  add_foreign_key "sections_volunteers", "sections"
+  add_foreign_key "sections_volunteers", "volunteers"
   add_foreign_key "sport_entries", "grades"
   add_foreign_key "sport_entries", "groups"
   add_foreign_key "sport_preferences", "grades"

@@ -40,7 +40,7 @@ class Section < ApplicationRecord
   
     attr_reader :file
 
-    has_many :volunteers
+    has_and_belongs_to_many :volunteers
     has_many :sport_entries, dependent: :destroy
     has_many :preferred_entries, class_name: 'SportEntry'
     has_many :round_robin_matches, dependent: :destroy
