@@ -80,4 +80,24 @@ namespace :syg do
 
       puts "Event details created - #{event_count}"
     end
+
+    desc 'Migrate volunteer section_id to sections'
+    task migrate_volunteer_sections: ['db:migrate'] do |t|
+      puts 'Updating volunteer sections to has and belongs to many association...'
+
+      migrate_count = 0
+
+      Volunteer.all.each do |volunteer|
+        unless volunteer.section_id.nil? 
+          section = Section.find(volunteer.section_id)
+
+          volunteer.sections << section
+          puts "#{volunteer.name} -> #{section.name}"
+
+          migrate_count += 1
+        end
+      end
+
+      puts "Volunteer sections updated - #{migrate_count}"
+    end
 end
