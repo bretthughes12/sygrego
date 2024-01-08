@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_04_090419) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_08_085218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -695,7 +695,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_04_090419) do
     t.boolean "returned", default: false
     t.text "notes"
     t.bigint "session_id"
-    t.bigint "section_id"
     t.bigint "participant_id"
     t.integer "lock_version", default: 0
     t.bigint "updated_by"

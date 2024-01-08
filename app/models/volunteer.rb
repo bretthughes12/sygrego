@@ -19,7 +19,6 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  participant_id    :bigint
-#  section_id        :bigint
 #  session_id        :bigint
 #  volunteer_type_id :bigint
 #
