@@ -7,8 +7,14 @@
 	<table class="table table-dark table-striped">
 		<tr><td>Type</td><td><%= @volunteer.volunteer_type.name %></td></tr>
 		<tr><td>Description</td><td><%= @volunteer.volunteer_type.description %></td></tr>
-		<% if @volunteer.sections.first  %>
-			<tr><td>Sport Section</td><td><%= @volunteer.sections.first.name %></td></tr>
+		<tr><td>Name</td><td><%= @volunteer.description %></td></tr>
+		<% unless @volunteer.sections.size < 2 %>
+			<tr><td>Section(s)</td>
+			<td>
+			<% @volunteer.sections.order(:name).each do |section| %>
+			   <%= section.name %><br/>
+			<% end %>
+			</td>
 		<% end %> 
 		<tr><td>Session</td><td><%= @volunteer.session_name %></td></tr>
 		<% if @volunteer.sections.first  %>

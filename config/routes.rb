@@ -345,6 +345,14 @@ Rails.application.routes.draw do
         patch :update_collect
         patch :update_return
       end
+      resources :sections, only: [:index] do
+        collection do
+          patch :add_section
+        end
+        member do
+          delete :purge
+        end
+      end
     end
 
     resources :ballot_results, :only => [:index] do

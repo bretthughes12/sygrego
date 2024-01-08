@@ -8,6 +8,23 @@
 
 <br/>
 
+<h2>Sections</h2>
+
+<table class="table table-dark">
+    <%= render partial: "volunteer_section", collection: @volunteer.sections.order(:name) %>
+    <tr>
+        <%= form_with(url: add_section_admin_volunteer_sections_path(volunteer_id: @volunteer), method: :patch) do |f| %> 
+            <td><%= f.collection_select :section_id, @sections, :id, :name %></td>
+	        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+        <% end %>	
+    </tr>
+
+</table>
+
+<br/>
+
+<br/>
+
 <%= link_to "Back", admin_volunteers_path,
                   class: primary_button_class,
                   role: "button" %>

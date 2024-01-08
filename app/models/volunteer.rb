@@ -280,7 +280,6 @@ class Volunteer < ApplicationRecord
     def self.sync_fields
       ['description',
         'session_id',
-        'section_id',
         'participant_id',
         'volunteer_type_id']
     end

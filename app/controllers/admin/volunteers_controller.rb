@@ -222,7 +222,6 @@ class Admin::VolunteersController < AdminController
                                     :returned,
                                     :notes,
                                     :session_id,
-                                    :section_id,
                                     :participant_id,
                                     :volunteer_type_id)
     end

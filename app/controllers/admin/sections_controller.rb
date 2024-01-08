@@ -91,6 +91,29 @@ class Admin::SectionsController < AdminController
         end
     end
   
+    # PATCH /admin/volunteer/1/sections/add_section
+    def add_section
+      @volunteer = Volunteer.find(params[:volunteer_id])
+      @section = Section.find(params[:section_id])
+
+      @volunteer.sections << @section unless @volunteer.sections.include?(@section)
+
+      respond_to do |format|
+        format.html { redirect_to edit_admin_volunteer_url(@volunteer) }
+      end
+    end
+  
+    # DELETE /admin/volunteer/1/section/1/purge
+    def purge
+      @volunteer = Volunteer.find(params[:volunteer_id])
+
+      @volunteer.sections.delete(@section)
+  
+      respond_to do |format|
+        format.html { redirect_to edit_admin_volunteer_url(@volunteer) }
+      end
+    end
+
     # GET /admin/sections/new_import
     def new_import
       @section = Section.new

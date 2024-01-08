@@ -4,7 +4,6 @@
 	<%= f.input :volunteer_type_id, as: :select, :collection => @volunteer_types %>
 
 	<%= f.input :description %>
-	<%= f.input :section_id, as: :select, :collection => @sections, :include_blank => true  %>
 	<%= f.input :session_id, as: :select, :collection => @sessions, :include_blank => true  %>
 
 	<%= f.input :participant_id, as: :select, :label => "Volunteer", :collection => @participants_with_group_name, :include_blank => true %>

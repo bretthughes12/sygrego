@@ -1,0 +1,12 @@
+<tr>
+    <td> 
+        <%= volunteer_section.name  %></span></br>
+    </td>
+
+    <td> 
+        <%= link_to "Remove", purge_admin_volunteer_section_path(volunteer_id: @volunteer, id: volunteer_section),
+	        	              class: danger_button_class,
+    	        	          role: "button",
+                              method: :delete %>
+    </td>
+</tr>
