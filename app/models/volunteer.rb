@@ -36,6 +36,7 @@ class Volunteer < ApplicationRecord
     include Searchable
 
     require 'csv'
+    require 'roo'
 
     has_and_belongs_to_many :sections
     belongs_to :volunteer_type
@@ -112,6 +113,10 @@ class Volunteer < ApplicationRecord
         end
     end
     
+    def section_names
+      names = sections.collect(&:name)
+    end
+
     def participant_name
       if participant
         participant.name
@@ -227,14 +232,13 @@ class Volunteer < ApplicationRecord
       CSV.foreach(file.path, headers: true) do |fields|
         volunteer = fields[0].nil? ? nil : Volunteer.find_by_id(fields[0].to_i)
         type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
-        section = fields[3].nil? ? nil : Section.find_by_name(fields[3])
+        section_names = fields[3].nil? ? [] : fields[3].split(', ')
         session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
         participant = fields[5].nil? ? nil : Participant.find_by_id(fields[5].to_i)
 
         if volunteer
 
           volunteer.volunteer_type = type
-          volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
           volunteer.session = session
           volunteer.participant = participant
           volunteer.description = fields[2]
@@ -244,6 +248,12 @@ class Volunteer < ApplicationRecord
           volunteer.updated_by = user.id
           
           if volunteer.save
+            volunteer.sections.delete_all
+            section_names.each do |s|
+              section = Section.find_by_name(s)
+              volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
+            end
+
             updates += 1
           else
             errors += 1
@@ -260,13 +270,86 @@ class Volunteer < ApplicationRecord
               t_shirt_size:   fields[10],
               updated_by:     user.id
           )
-          volunteer.sections << section unless section.nil?
+          volunteer.sections.delete_all
+          section_names.each do |s|
+            section = Section.find_by_name(s)
+            volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
+          end
 
           if volunteer.errors.empty?
             creates += 1
           else
             errors += 1
             error_list << session
+          end
+        end
+      end
+  
+      { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+  
+    def self.import_excel(file, user)
+      creates = 0
+      updates = 0
+      errors = 0
+      error_list = []
+
+      xlsx = Roo::Spreadsheet.open(file)
+
+      xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+        unless row['ID'] == 'ID'
+          volunteer = row['ID'].nil? ? nil : Volunteer.find_by_id(row['ID'].to_i)
+          type = row['Type'].nil? ? nil : VolunteerType.find_by_database_code(row['Type'])
+          section_names = row['Sections'].nil? ? [] : row['Sections'].split(', ')
+          session = row['VolunteerSession'].nil? ? nil : Session.find_by_name(row['VolunteerSession'])
+          participant = row['ParticipantID'].nil? ? nil : Participant.find_by_id(row['ParticipantID'].to_i)
+
+          if volunteer
+
+            volunteer.volunteer_type = type
+            volunteer.session = session
+            volunteer.participant = participant
+            volunteer.description = row['Description']
+            volunteer.email = row['Email']
+            volunteer.mobile_number = row['Mobile']
+            volunteer.t_shirt_size = row['T-Shirt']
+            volunteer.updated_by = user.id
+  
+            if volunteer.save
+              volunteer.sections.delete_all
+              section_names.each do |s|
+                section = Section.find_by_name(s)
+                volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
+              end
+  
+              updates += 1
+            else
+              errors += 1
+              error_list << volunteer
+            end
+          else
+            volunteer = Volunteer.create(
+                volunteer_type: type,
+                session:        session,
+                participant:    participant,
+                description:    row['Description'],
+                email:          row['Email'],
+                mobile_number:  row['Mobile'],
+                t_shirt_size:   row['T-Shirt'],
+                updated_by:     user.id
+            )
+            volunteer.sections.delete_all
+            section_names.each do |s|
+              section = Section.find_by_name(s)
+              volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
+            end
+  
+            if volunteer.errors.empty?
+              creates += 1
+            else
+              errors += 1
+              error_list << session
+            end
           end
         end
       end

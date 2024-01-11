@@ -1,0 +1,41 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Volunteers") do |sheet|
+	sheet.add_row ["ID","Type","Description","Sections","VolunteerSession","ParticipantID","Name","Group","Email","Mobile","T-Shirt","SectionSession"], 
+		b: true,
+		style: header_border
+
+	@volunteers.each do |volunteer|
+		session = volunteer.session.nil? ? nil : volunteer.session.name
+		sections = volunteer.section_names.join(', ')
+		section_session = volunteer.sections.empty? ? nil : volunteer.sections.first.session.name
+		participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
+		participant_id = volunteer.participant.nil? ? nil : volunteer.participant.id
+		group = volunteer.participant.nil? ? nil : volunteer.participant.group.abbr
+		email = volunteer.email.blank? ? nil : volunteer.email
+		mobile = volunteer.mobile_number.blank? ? nil : volunteer.mobile_number
+		t_shirt = volunteer.t_shirt_size.blank? ? nil : volunteer.t_shirt_size
+
+		sheet.add_row [
+		    volunteer.id,
+		    volunteer.volunteer_type.database_code,
+            volunteer.description,
+            sections,
+            session,
+            participant_id,
+            participant_name,
+            group,
+            email,
+            mobile,
+            t_shirt,
+            section_session
+		   ],
+		style: row_border
+	end
+end

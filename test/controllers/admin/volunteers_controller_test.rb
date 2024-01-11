@@ -250,7 +250,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import volunteers" do
-    file = fixture_file_upload('volunteer.csv','application/csv')
+    file = fixture_file_upload('volunteer.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Volunteer.count') do
       post import_admin_volunteers_url, params: { volunteer: { file: file }}
@@ -260,7 +260,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import volunteers when the file is not csv" do
+  test "should not import volunteers when the file is not xlsx" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Volunteer.count') do
@@ -268,7 +268,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy volunteer" do
