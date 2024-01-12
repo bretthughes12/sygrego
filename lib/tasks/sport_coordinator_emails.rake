@@ -47,7 +47,7 @@ namespace :syg do
   
     desc 'Send test email to a single sport coordinator'
     task send_test_sport_coordinator_email: ['db:migrate'] do |_t|
-       volunteer = Volunteer.find(381)
+       volunteer = Volunteer.find(383)
 #       volunteer = Volunteer.find(300)
   
       if volunteer.participant.nil?

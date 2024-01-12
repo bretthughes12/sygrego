@@ -8,8 +8,10 @@
 
 <p>Please follow these links to download some crucial documents that will help you in your role:</p>
 <ul>
-	<% if @section && @section.draw_file.attached? %>
-		<li><%= link_to "Fixture for your section", rails_blob_url(@section.draw_file) %></li>
+	<% @sections.each do |section| %>
+		<% if section.draw_file.attached? %>
+			<li><%= link_to "Fixture for #{section.name}", rails_blob_url(section.draw_file) %></li>
+		<% end %>
 	<% end %>
 	<% if @settings.sports_reference.attached? %>
 		<li><%= link_to "Sports Information & Rules Booklet", rails_blob_url(@settings.sports_reference) %></li>

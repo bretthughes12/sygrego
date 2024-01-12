@@ -5,8 +5,10 @@ Note: You may be receiving this as a Group Co-ordinator of the intended Sports C
 Firstly: thank you for volunteering to coordinate a sport (or sports!!) over the SYG weekend!  SYG wouldn’t have been running for over 30 years if it wasn’t for people like you volunteering to help the event run!
 
 Please follow these links to download some crucial documents that will help you in your role:
-<% if @section && @section.draw_file.attached? %>
-- Fixture for your section", (<%= rails_blob_url(@section.draw_file) %>)
+<% @sections.each do |section| %>
+    <% if section.draw_file.attached? %>
+- Fixture for <%= section.name %> (<%= rails_blob_url(section.draw_file) %>)
+    <% end %>
 <% end %>
 <% if @settings.sports_reference.attached? %>
 - Sports Information and Rules Booklet (<%= rails_blob_url(@settings.sports_reference) %>)
