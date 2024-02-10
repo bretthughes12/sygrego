@@ -27,6 +27,10 @@ namespace :syg do
             Section.all.each do |s|
                 puts "--> #{s.name}"
                 s.number_in_draw = nil
+                s.finals_format = 'Top 4'
+                s.number_of_groups = 1
+                s.start_court = 1
+                s.results_locked = false
     
                 s.save(validate: false)
 
@@ -48,10 +52,17 @@ namespace :syg do
                 end
             end
         end
-    
+
+        desc 'Clear all round robin matches'
+        task destroy_round_robin_matches: ['db:migrate'] do |_t|
+            puts "Deleting last year's round robin matches..."
+            RoundRobinMatch.destroy_all
+        end
+   
         desc 'Reset sport models to pristine state'
         task update_sport_models: %i[update_sport_grades
-                                    update_sport_sections]
+                                    update_sport_sections,
+                                    destroy_round_robin_matches]
     
         desc 'Clear all participant extras'
         task destroy_participant_extras: ['db:migrate'] do |_t|
@@ -126,6 +137,7 @@ namespace :syg do
                 g.service_pref_sat = 'No preference'
                 g.service_pref_sun = 'No preference'
                 g.warden_zone_id = nil
+                g.orientation_details = nil
     
                 g.save(validate: false)
 
@@ -269,10 +281,19 @@ namespace :syg do
                 p.fee_when_withdrawn = 0
                 p.late_fee_charged = false
                 p.driver = false
+                p.driving_to_syg = false
                 p.number_plate = nil
                 p.driver_signature = false
                 p.driver_signature_date = nil
+                p.licence_type = nil
                 p.amount_paid = 0
+                p.registration_nbr = nil
+                p.booking_nbr = nil
+                p.exported = false
+                p.dirty = false
+                p.emergency_email = nil
+                p.camping_preferences = nil
+                p.sport_notes = nil
         
                 p.save(validate: false)
             end
