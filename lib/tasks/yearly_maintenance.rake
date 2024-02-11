@@ -60,9 +60,9 @@ namespace :syg do
         end
    
         desc 'Reset sport models to pristine state'
-        task update_sport_models: %i[update_sport_grades,
-                                    update_sport_sections,
-                                    destroy_round_robin_matches]
+        task update_sport_models: [:update_sport_grades,
+                                   :update_sport_sections,
+                                   :destroy_round_robin_matches]
     
         desc 'Clear all participant extras'
         task destroy_participant_extras: ['db:migrate'] do |_t|
