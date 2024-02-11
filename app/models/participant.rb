@@ -327,15 +327,15 @@ class Participant < ApplicationRecord
       base_fee = settings.full_fee
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
-      base_fee -= 30 if spectator
-      base_fee = 60 if spectator && chargeable_days == 1
+      base_fee -= 35 if spectator
+      base_fee = 90 if spectator && chargeable_days == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
       return 0 if status == 'Requiring Approval'
       return 0 if age && (age < 6)
       return 0 if guest
-      return 0 if !onsite && helper
+      return 10 if !onsite && helper
       return 0 if chargeable_days == 0
   
       # other set-price conditions
