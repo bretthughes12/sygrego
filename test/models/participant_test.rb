@@ -147,17 +147,17 @@ class ParticipantTest < ActiveSupport::TestCase
     assert_equal @setting.full_fee, full_participant.fee
     assert_equal @setting.full_fee, eleven_year_old_playing_sport.fee
     assert_equal 75, early_participant.fee
-    assert_equal 50, spectator.fee
-    assert_equal 20, primary_aged.fee
+    assert_equal 45, spectator.fee
+    assert_equal 15, primary_aged.fee
     assert_equal 0, pre_schooler.fee
     assert_equal 25, day_visitor_playing_sport.fee
     assert_equal 25, early_day_visitor_playing_sport.fee
     assert_equal 60, day_visitor_not_playing_sport.fee
     assert_equal 60, early_day_visitor_not_playing_sport.fee
     assert_equal 60, group_coordinator_playing_sport.fee
-    assert_equal 40, group_coordinator_not_playing_sport.fee
+    assert_equal 35, group_coordinator_not_playing_sport.fee
     assert_equal 80, sport_coordinator_playing_sport.fee
-    assert_equal 50, sport_coordinator_not_playing_sport.fee
+    assert_equal 45, sport_coordinator_not_playing_sport.fee
     assert_equal 0, guest_playing_sport.fee
     assert_equal 0, guest_not_playing_sport.fee
     assert_equal 0, band_member.fee
