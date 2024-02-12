@@ -130,7 +130,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class='dropdown-item'><%= link_to 'Profile', profile_admin_user_path(current_user) %></li>
                         <% unless current_user && current_user.protect_password %>
-                            <li class='dropdown-item'><%= link_to 'Change Password', edit_password_gc_user_path(current_user) %></li>
+                            <li class='dropdown-item'><%= link_to 'Change Password', edit_password_admin_user_path(current_user) %></li>
                         <% end %>
                         <li class='dropdown-item'><%= link_to 'Switch Role', available_roles_roles_path %></li>
                         <li class='dropdown-item'><%= link_to 'Switch Group', available_groups_groups_path %></li>
