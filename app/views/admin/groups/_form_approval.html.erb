@@ -1,0 +1,233 @@
+<%= simple_form_for(@group, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :reference_caller, :label => "Person making the reference call" %>
+
+	<br/>
+
+	<h2>Church Representative</h2>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Church Rep</strong>
+			</td>
+			<td> 
+				<%= @group.church_rep_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Church Rep Email</strong>
+			</td>
+			<td> 
+				<%= @group.church_rep_email %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Church Rep Phone</strong>
+			</td>
+			<td> 
+				<%= @group.church_rep_phone_number %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Church Rep WWCC</strong>
+			</td>
+			<td> 
+				<%= @group.church_rep_wwcc %>
+			</td>
+		</tr>
+	</table> 
+
+	<br/>
+
+	<h2>Group</h2>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Group Name</strong>
+			</td>
+			<td> 
+				<%= @group.name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Abbr.</strong>
+			</td>
+			<td> 
+				<%= @group.abbr %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Short Name</strong>
+			</td>
+			<td> 
+				<%= @group.short_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Church or Org Name</strong>
+			</td>
+			<td> 
+				<%= @group.trading_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Expected Numbers</strong>
+			</td>
+			<td> 
+				<%= @group.estimated_numbers %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Address</strong>
+			</td>
+			<td> 
+				<%= @group.address %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Suburb</strong>
+			</td>
+			<td> 
+				<%= @group.suburb %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Postcode</strong>
+			</td>
+			<td> 
+				<%= @group.postcode %>
+			</td>
+		</tr>
+	</table> 
+
+	<br/>
+
+	<%= f.input :years_attended, label: "Years group has attended", hint: "To help gain idea of whether this group will require additional support" %>
+	<br/>
+	<%= f.input :group_changes, label: "Any changes to previous years (if attended prior)", hint: "Any changes to previous years (if attended prior), church leadership, youth turn over etc - pastoral needs that will effect the young people" %>
+	<br/>
+	<%= f.input :ministry_goal, label: "Briefly describe ministry goal", hint: "Gives understanding to reason of attendance, helps to address cultural or pastoral care needs. What is the aim for your group - outreach, discipleship, team building" %>
+	<br/>
+	<%= f.input :attendee_profile, label: "Briefly describe those attending", hint: "Gives understanding to who we have at the event. Information to help departments shape what they do" %>
+
+	<br/>
+
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Theme Brief</strong>
+			</td>
+			<td> 
+				Gather, Grow, Go - have you been given the theme brief, do you have an understanding of the resources available? Post material for small groups etc
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Volunteers</strong>
+			</td>
+			<td> 
+				SYG runs on volunteers, unless you are a first time group, are you aware your group will be called upon to supply volunteers to the running of the event, etc - marshals, sport coordinators, ushers...
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Insurance cover</strong>
+			</td>
+			<td> 
+				SYG has public indemnity cover. Covering injury due to neglience of organisers, does not cover sporting injuries. Claims must be made through the church. If not possible church must clearly 
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>WWCC</strong>
+			</td>
+			<td> 
+				All participants over 18 must have WWCC, including visitors and teachers and police officers. If there is a reason they don't we need to discuss
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Financial Liability</strong>
+			</td>
+			<td> 
+				By accepting a participant to attend with your group on the registration system you are liable for their place. AKA group's responsibility to cover their cost if they pull out - no refunds
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>OHS Camping</strong>
+			</td>
+			<td> 
+				Are they staying onsite? Lardener Park requires them to follow all OHS procedures, please make sure items are tested and tagged and follow safety compliance rules - Please note 2019 Marquee & fire pit updates
+			</td>
+		</tr>
+	</table> 
+
+	<br/>
+
+	<h2>GC</h2>
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Group Coordinator</strong>
+			</td>
+			<td> 
+				<%= @group.gc_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>GC Email</strong>
+			</td>
+			<td> 
+				<%= @group.gc_email %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>GC Phone</strong>
+			</td>
+			<td> 
+				<%= @group.gc_phone_number %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>GC WWCC</strong>
+			</td>
+			<td> 
+				<%= @group.gc_wwcc %>
+			</td>
+		</tr>
+	</table> 
+
+	<br/>
+
+	<%= f.input :gc_role, label: "GC's role at church", hint: "GC as a volunteer, or part of their church role. Who is keeping them accountable and supporting them? Aim is to ensure there is a team behind the GC and they arent in this alone from their church perspective" %>
+	<br/>
+	<%= f.input :gc_decision, label: "How did you decide on this GC? What support structures are in place?", hint: "Gauging whether this person is 'filling a need' or this is part of their ministry" %>
+	<br/>
+	<%= f.input :gc_years_attended_church, label: "Years attended church", hint: "This will help us gauge if they are suitable to be in the role. GCs who have been at the church for under 1 year require a co-leader as it is difficult to take on this role without understanding your church culture and community" %>
+	<br/>
+	<%= f.input :gc_thoughts, label: "Additional thoughts or any concerns about this GC?" %>
+
+	<br/>
+
+	<h2>Notes</h2>
+	<%= f.input :reference_notes, label: "Notes" %>
+	<br/>
+	<br/>
+
+	<%= f.button :submit, "Update" %>
+<% end %>	

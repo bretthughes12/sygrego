@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_08_085218) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_22_092700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -197,6 +197,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_085218) do
     t.datetime "updated_at", null: false
     t.string "ticket_preference", limit: 20, default: "Send to GC"
     t.string "ticket_email", limit: 100
+    t.string "reference_caller", limit: 20
+    t.text "group_changes"
+    t.text "ministry_goal"
+    t.text "attendee_profile"
+    t.text "gc_role"
+    t.text "gc_decision"
+    t.integer "gc_years_attended_church"
+    t.text "gc_thoughts"
+    t.text "reference_notes"
     t.index ["abbr"], name: "index_groups_on_abbr", unique: true
     t.index ["name"], name: "index_groups_on_name", unique: true
     t.index ["short_name"], name: "index_groups_on_short_name", unique: true

@@ -22,7 +22,7 @@
     <%= render :partial => 'group_approvals', :collection => @groups, :as => :group %>
 </table>
     
-<%= link_to "Download", approvals_admin_groups_path(format: :csv),
+<%= link_to "Download", approvals_admin_groups_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 

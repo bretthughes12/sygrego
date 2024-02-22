@@ -192,6 +192,8 @@ Rails.application.routes.draw do
       member do
         post :invoice        
         patch :approve
+        get :edit_approval
+        patch :update_approval
       end
       resources :participants, only: [:index] do
         collection do

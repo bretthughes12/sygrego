@@ -21,6 +21,9 @@ class Admin::GroupsController < AdminController
       respond_to do |format|
         format.html # approvals.html.erb
         format.csv  { render_csv "submissions", "submissions" }
+        format.xlsx do
+          render xlsx: "submissions", filename: "Reference Checklist.xlsx"
+        end
       end
     end
 
@@ -86,6 +89,10 @@ class Admin::GroupsController < AdminController
     def edit
     end
   
+    # GET /admin/groups/1/edit_approval
+    def edit_approval
+    end
+  
     # POST /admin/groups
     def create
         @group = Group.new(group_params)
@@ -111,6 +118,20 @@ class Admin::GroupsController < AdminController
           format.html { redirect_to admin_groups_url }
         else
           format.html { render action: "edit" }
+        end
+      end
+    end
+  
+    # PATCH /admin/groups/1/update_approval
+    def update_approval
+      @group.updated_by = current_user.id
+
+      respond_to do |format|
+        if @group.update(group_approval_params)
+          flash[:notice] = 'Group was successfully updated.'
+          format.html { redirect_to approvals_admin_groups_url }
+        else
+          format.html { render action: "edit_approval" }
         end
       end
     end
@@ -231,6 +252,20 @@ private
                                     :status,
                                     :age_demographic,
                                     :group_focus
+                                )
+    end
+
+    def group_approval_params
+      params.require(:group).permit(:years_attended,
+                                    :reference_caller,
+                                    :group_changes,
+                                    :ministry_goal,
+                                    :attendee_profile,
+                                    :gc_role,
+                                    :gc_decision,
+                                    :gc_years_attended_church,
+                                    :gc_thoughts,
+                                    :reference_notes
                                 )
     end
 end

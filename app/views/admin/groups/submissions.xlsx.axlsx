@@ -1,0 +1,45 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Reference Checks") do |sheet|
+	sheet.add_row ["Group Name","Abbr.","Short Name","Church or Org Name","Expected Numbers","Address","Suburb","Postcode","Church Rep","Church Rep email","Church Rep phone","Church Rep WWCC","GC","GC Email","GC Phone","GC WWCC","Years group has attended","Any changes to previous years (if attended prior)","Ministry goal","Attendee profile","GC's role at church","How did you decid on this GC?","Years GC attended church","Additional thoughts on this GC","Notes","Caller"], 
+		b: true,
+		style: header_border
+
+	@groups.each do |g|
+		sheet.add_row [
+				g.name,
+				g.abbr,
+				g.short_name,
+				g.trading_name,
+				g.estimated_numbers,
+				g.address,
+				g.suburb,
+				g.postcode,
+				g.church_rep_name,
+				g.church_rep_email,
+				g.church_rep_phone_number,
+				g.church_rep_wwcc,
+				g.gc_name,
+				g.gc_email,
+				g.gc_phone_number,
+				g.gc_wwcc,
+				g.years_attended,
+				g.group_changes,
+				g.ministry_goal,
+				g.attendee_profile,
+				g.gc_role,
+				g.gc_decision,
+				g.gc_years_attended_church,
+				g.gc_thoughts,
+				g.reference_notes,
+				g.reference_caller
+		   ],
+		style: row_border
+	end
+end
