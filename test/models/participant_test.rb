@@ -461,8 +461,6 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "should show WWCC text" do
-    assert_equal "WWCC: missing", @participant.wwcc_text
-
     @participant.wwcc_number = "A12345-BC"
     assert_equal "WWCC: A12345-BC", @participant.wwcc_text
 

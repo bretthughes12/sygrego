@@ -14,7 +14,7 @@
 	<%= f.input :spectator, as: :boolean %>
 	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
-	<%= f.input :wwcc_number, label: "WWCC Number" %>
+	<%= f.input :wwcc_number, label: "WWCC Number (required for participants 18 and over)" %>
 	<%= f.input :voucher_name, label: "Voucher" %>
 	<br/>
 	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant_signup.participant) %>"><%= @participant_signup.participant.rego_type %></span></div>
@@ -71,8 +71,8 @@
 
     <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
     <%= f.input :driving_to_syg, :as => :boolean, :label => "I will be driving to SYG"  %>
-    <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
-    <%= f.input :number_plate %>
+    <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true, :label => "Licence Type (required for drivers)" %>
+    <%= f.input :number_plate, :label => "Number Plate (required for drivers)" %>
 
 	<br/>
 
@@ -106,7 +106,7 @@
 
 	<br/>
 
-    <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration" %> 
+    <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration (required for drivers)" %> 
 
 	<br/>
 

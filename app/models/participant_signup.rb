@@ -167,6 +167,8 @@ class ParticipantSignup
     validates :emergency_phone_number, length: { maximum: 20 }
   
     before_validation :validate_emergency_contact_details_if_under_18
+    before_validation :validate_wwcc_if_over_18
+    before_validation :validate_driver_fields_if_driving
     before_validation :validate_email_provided
   
     before_validation :normalize_first_name!
@@ -248,6 +250,20 @@ class ParticipantSignup
         errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
         errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
         errors.add(:emergency_email, "can't be blank for under 18's") if emergency_email.blank?
+      end
+    end
+  
+    def validate_wwcc_if_over_18
+      if age && age.to_i >= 18
+        errors.add(:wwcc_number, "can't be blank for over 18's") if wwcc_number.blank?
+      end
+    end
+  
+    def validate_driver_fields_if_driving
+      if driver
+        errors.add(:licence_type, "can't be blank for drivers") if licence_type.blank?
+        errors.add(:number_plate, "can't be blank for drivers") if number_plate.blank?
+        errors.add(:driver_signature, "must be ticked for drivers") if !driver_signature
       end
     end
   

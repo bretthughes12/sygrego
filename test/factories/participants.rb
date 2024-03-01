@@ -99,13 +99,22 @@ FactoryBot.define do
     phone_number          {"9555-5555"}
     dietary_requirements  {"None"}
     allergies             {"None"}
+    wwcc_number           {"9876543-C"}
 
     trait :under18 do
       age                 {"17"}
+      wwcc_number         {""}
       emergency_contact   {"Mother Theresa"}
       emergency_relationship {"Mother"}
       emergency_phone_number {"9777-7777"}
       emergency_email     {"mother@theresa.com"}
+    end
+
+    trait :driver do
+      driver              {true}
+      licence_type        {"Full"}
+      number_plate        {"I 8 NY"}
+      driver_signature    {true}
     end
 
     trait :ticketed do

@@ -470,7 +470,8 @@ class Gc::ParticipantsController < GcController
         :emergency_phone_number,
         :emergency_email,
         :amount_paid,
-        :camping_preferences
+        :camping_preferences,
+        :wwcc_number
       )
     end
 

@@ -17,6 +17,7 @@ FactoryBot.define do
     suburb                {"Maintown"}
     postcode              {"3999"}
     phone_number          {"0395557777"}
+    wwcc_number           {"1234567-AB"}
     sequence(:email)      { |n| "group#{n}email@email.com" }
     sequence(:login_email){ |n| "jack#{n}@smith.com" }
     sequence(:login_name) { |n| "Jack Smith #{n}" }

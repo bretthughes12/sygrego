@@ -133,7 +133,8 @@ class Participant < ApplicationRecord
   
     LICENCE_TYPES = ['Full',
                      'Green P-Plate',
-                     'Red P-Plate'].freeze
+                     'Red P-Plate',
+                     'Unknown'].freeze
   
     validates :first_name,             
         presence: true,
@@ -221,6 +222,8 @@ class Participant < ApplicationRecord
     before_validation :validate_years_attended
     before_validation :validate_days_if_coming
     before_validation :validate_emergency_contact_details_if_under_18
+    before_validation :validate_wwcc_if_over_18
+    before_validation :validate_driver_fields_if_driving
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
     before_validation :normalize_gender!
@@ -853,6 +856,14 @@ class Participant < ApplicationRecord
         end
       else
         if !fields[10].nil?
+          if fields[24].blank?
+            licence_type = nil
+            driver_signature = false
+          else
+            licence_type = "Unknown"
+            driver_signature = true
+          end
+
           participant = Participant.create(
             group_id:                day_group.id,
             first_name:              fields[2],
@@ -871,6 +882,8 @@ class Participant < ApplicationRecord
             onsite:                  false,
             driver:                  !fields[24].blank?,
             number_plate:            fields[24],
+            licence_type:            licence_type,
+            driver_signature:        driver_signature,
             dietary_requirements:    'Unknown',
             wwcc_number:             fields[25],
             registration_nbr:        fields[9],
@@ -920,6 +933,14 @@ class Participant < ApplicationRecord
           end
         else
           if !row['Ticket Type'].nil?
+            if row['Question 13'].blank?
+              licence_type = nil
+              driver_signature = false
+            else
+              licence_type = "Unknown"
+              driver_signature = true
+            end
+  
             participant = Participant.create(
               group_id:                day_group.id,
               first_name:              row['First Name'],
@@ -938,6 +959,8 @@ class Participant < ApplicationRecord
               onsite:                  false,
               driver:                  !row['Question 13'].blank?,
               number_plate:            row['Question 13'],
+              licence_type:            licence_type,
+              driver_signature:        driver_signature,
               dietary_requirements:    'Unknown',
               wwcc_number:             row['Question 14'],
               registration_nbr:        row['Ticket Number'],
@@ -980,6 +1003,19 @@ private
       errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
       errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
       errors.add(:emergency_email, "can't be blank for under 18's") if emergency_email.blank?
+    end
+  end
+
+  def validate_wwcc_if_over_18
+    if age && age.to_i >= 18
+      errors.add(:wwcc_number, "can't be blank for over 18's") if wwcc_number.blank?
+    end
+  end
+
+  def validate_driver_fields_if_driving
+    if driver
+      errors.add(:licence_type, "can't be blank for drivers") if licence_type.blank?
+      errors.add(:number_plate, "can't be blank for drivers") if number_plate.blank?
     end
   end
 

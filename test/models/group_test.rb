@@ -479,6 +479,7 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       driver: true,
       driver_signature: true,
+      licence_type: "Full",
       number_plate: "ABC123")
   
     assert_equal true, @group.drivers_all_electronic? 
@@ -492,8 +493,9 @@ class GroupTest < ActiveSupport::TestCase
     participant = FactoryBot.create(:participant, 
       group: @group,
       driver: true,
-      driver_signature: true,
-      number_plate: nil)
+      driver_signature: false,
+      licence_type: "Full",
+      number_plate: "IAMSAM")
   
     assert_equal false, @group.drivers_all_electronic? 
   end
