@@ -21,7 +21,7 @@
 	
 	<td>
 		<% if registrations_open %>
-			<% unless participant.coming %>
+			<% if !participant.coming && gc_can_add_participants %>
 				<%= link_to "Coming", coming_gc_participant_path(participant),
 					method: :patch,
 					class: primary_button_class,

@@ -4,6 +4,7 @@
 #
 #  id                                   :bigint           not null, primary key
 #  admin_email                          :string(100)      default("")
+#  allow_gc_to_add_participants         :boolean          default(FALSE)
 #  comms_email                          :string(100)      default("")
 #  coordinator_adjustment               :decimal(8, 2)    default(0.5), not null
 #  daily_adjustment                     :decimal(8, 2)    default(0.55), not null

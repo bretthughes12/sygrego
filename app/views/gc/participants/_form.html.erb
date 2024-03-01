@@ -2,9 +2,34 @@
 	<%= f.error_notification %>
 
 	<%= f.input :lock_version, as: :hidden %>
-	<%= f.input :first_name %>
-	<%= f.input :surname %>
-	<%= f.input :coming if registrations_open %>
+	<% if gc_can_add_participants %>
+		<%= f.input :first_name %>
+		<%= f.input :surname %>
+	<% else %>
+		<table class="table table-dark table-striped">
+			<tr>
+				<td> 
+					<strong>First Name</strong>
+				</td>
+				<td> 
+					<%= @participant.first_name %>
+				</td>
+			</tr>
+			<tr>
+				<td> 
+					<strong>Surname</strong>
+				</td>
+				<td> 
+					<%= @participant.surname %>
+				</td>
+			</tr>
+		</table>
+	<% end %>
+
+	<% if registrations_open && gc_can_add_participants && @participant.coming %>
+		<%= f.input :coming %>
+	<% end %>
+	
 	<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator %>
 	<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
