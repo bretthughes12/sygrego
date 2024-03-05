@@ -81,6 +81,10 @@ class ParticipantSignupsController < ApplicationController
 
     def find_group
       ms = MysygSetting.find_by_mysyg_name(params[:group])
+      if ms.nil?
+        ms = MysygSetting.find_by_mysyg_name("nogroup")
+      end
+
       @group = ms.group unless ms.nil?
       
       unless @group

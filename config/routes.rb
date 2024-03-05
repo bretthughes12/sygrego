@@ -568,7 +568,7 @@ Rails.application.routes.draw do
 
   # Participant User routes 
   scope 'mysyg', as: 'mysyg' do
-    get '/signup' => 'participant_signups#new', :as => :generic_signup
+    get '/signup' => 'participant_signups#new', as: :generic_signup
     
     resources :users, controller: 'mysyg/users', only: [:edit, :update] do
       member do
