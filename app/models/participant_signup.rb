@@ -53,7 +53,8 @@ class ParticipantSignup
                   :group,
                   :new_user,
                   :login_name,
-                  :login_email
+                  :login_email,
+                  :disclaimer
   
     INTEGER_FIELDS = %w[age].freeze
   
@@ -170,6 +171,7 @@ class ParticipantSignup
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
     before_validation :validate_email_provided
+    before_validation :validate_disclaimer_ticked
   
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -260,15 +262,19 @@ class ParticipantSignup
     end
   
     def validate_driver_fields_if_driving
-      if driver
+      if driver == "1"
         errors.add(:licence_type, "can't be blank for drivers") if licence_type.blank?
         errors.add(:number_plate, "can't be blank for drivers") if number_plate.blank?
-        errors.add(:driver_signature, "must be ticked for drivers") if !driver_signature
+        errors.add(:driver_signature, "must be ticked for drivers") if driver_signature == "0"
       end
     end
   
     def validate_email_provided
       errors.add(:login_email, "must be provided for your user login") if email.blank? && login_email.blank?
+    end
+
+    def validate_disclaimer_ticked
+      errors.add(:disclaimer, "must be ticked") if disclaimer == "0"
     end
 
     def validate_voucher_name
