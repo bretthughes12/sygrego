@@ -8,7 +8,7 @@ class GcController < ApplicationController
     
   def authorize_gc_access
     if current_user 
-        unless current_role.name == 'gc' || current_role.name == 'church_rep'
+        unless current_role && (current_role.name == 'gc' || current_role.name == 'church_rep')
             flash[:notice] = "You are not authorised to perform the requested function"
             redirect_to home_url(current_user)
         end

@@ -7,7 +7,7 @@ class AdminController < ApplicationController
     
   def authorize_admin_access
     if current_user 
-        unless current_role.name == 'admin'
+        unless current_role && current_role.name == 'admin'
             flash[:notice] = "You are not authorised to perform the requested function"
             redirect_to home_url(current_user)
         end

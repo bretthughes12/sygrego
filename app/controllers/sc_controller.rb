@@ -7,7 +7,7 @@ class ScController < ApplicationController
     
   def authorize_sc_access
     if current_user 
-        unless current_role.name == 'sc'
+        unless current_role && current_role.name == 'sc'
             flash[:notice] = "You are not authorised to perform the requested function"
             redirect_to home_url(current_user)
         end
