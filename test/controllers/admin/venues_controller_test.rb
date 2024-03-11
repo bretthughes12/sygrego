@@ -96,7 +96,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import venues" do
-    file = fixture_file_upload('venue.csv','application/csv')
+    file = fixture_file_upload('venue.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Venue.count') do
       post import_admin_venues_url, params: { venue: { file: file }}
@@ -114,7 +114,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy venue" do

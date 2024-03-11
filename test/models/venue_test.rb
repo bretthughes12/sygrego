@@ -29,10 +29,10 @@ class VenueTest < ActiveSupport::TestCase
   end
 
   test "should import venues from file" do
-    file = fixture_file_upload('venue.csv','application/csv')
+    file = fixture_file_upload('venue.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Venue.count') do
-      @result = Venue.import(file, @user)
+      @result = Venue.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -42,10 +42,10 @@ class VenueTest < ActiveSupport::TestCase
 
   test "should update exiting venues from file" do
     venue = FactoryBot.create(:venue, database_code: 'MCG')
-    file = fixture_file_upload('venue.csv','application/csv')
+    file = fixture_file_upload('venue.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Venue.count') do
-      @result = Venue.import(file, @user)
+      @result = Venue.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -57,10 +57,10 @@ class VenueTest < ActiveSupport::TestCase
   end
 
   test "should not import venues with errors from file" do
-    file = fixture_file_upload('invalid_venue.csv','application/csv')
+    file = fixture_file_upload('invalid_venue.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Venue.count') do
-      @result = Venue.import(file, @user)
+      @result = Venue.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -70,10 +70,10 @@ class VenueTest < ActiveSupport::TestCase
 
   test "should not update venues with errors from file" do
     venue = FactoryBot.create(:venue, database_code: 'MCG')
-    file = fixture_file_upload('invalid_venue.csv','application/csv')
+    file = fixture_file_upload('invalid_venue.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Venue.count') do
-      @result = Venue.import(file, @user)
+      @result = Venue.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

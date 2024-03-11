@@ -11,6 +11,7 @@ class Admin::VenuesController < AdminController
       respond_to do |format|
         format.html {  }
         format.csv  { render_csv "sport_venue" }
+        format.xlsx { render xlsx: "index", filename: "venues.xlsx" }
       end
     end
   
@@ -85,8 +86,8 @@ class Admin::VenuesController < AdminController
   
     # POST /admin/venues/import
     def import
-      if params[:venue] && params[:venue][:file].path =~ %r{\.csv$}i
-        result = Venue.import(params[:venue][:file], current_user)
+      if params[:venue] && params[:venue][:file].path =~ %r{\.xlsx$}i
+        result = Venue.import_excel(params[:venue][:file], current_user)
 
         flash[:notice] = "Venues upload complete: #{result[:creates]} venues created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -94,7 +95,7 @@ class Admin::VenuesController < AdminController
           format.html { redirect_to admin_venues_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @venue = Venue.new
 
         respond_to do |format|
