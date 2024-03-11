@@ -167,7 +167,7 @@ class ParticipantSignup
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
   
-    before_validation :validate_emergency_contact_details_if_under_18
+    before_validation :validate_emergency_contact_details
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
     before_validation :validate_email_provided
@@ -246,12 +246,12 @@ class ParticipantSignup
   
     private
   
-    def validate_emergency_contact_details_if_under_18
-      if age && age.to_i < 18
-        errors.add(:emergency_contact, "can't be blank for under 18's") if emergency_contact.blank?
-        errors.add(:emergency_relationship, "can't be blank for under 18's") if emergency_relationship.blank?
-        errors.add(:emergency_phone_number, "can't be blank for under 18's") if emergency_phone_number.blank?
-        errors.add(:emergency_email, "can't be blank for under 18's") if emergency_email.blank?
+    def validate_emergency_contact_details
+      if (age && age.to_i < 18) || @group.mysyg_setting.require_emerg_contact
+        errors.add(:emergency_contact, "can't be blank") if emergency_contact.blank?
+        errors.add(:emergency_relationship, "can't be blank") if emergency_relationship.blank?
+        errors.add(:emergency_phone_number, "can't be blank") if emergency_phone_number.blank?
+        errors.add(:emergency_email, "can't be blank") if emergency_email.blank?
       end
     end
   

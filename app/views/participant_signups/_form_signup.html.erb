@@ -48,10 +48,17 @@
 	<%= f.input :medications %>
 	<%= f.input :allergies %>
 	<%= f.input :dietary_requirements %>
-	<%= f.input :emergency_contact, label: "Emergency contact (required for participants under 18)" %>
-	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
-	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
-	<%= f.input :emergency_email, label: "Emergency contact email" %>
+	<% if @group.mysyg_setting.require_emerg_contact %>
+		<%= f.input :emergency_contact, required: true, label: "Emergency contact (required for all participants)" %>
+		<%= f.input :emergency_relationship, required: true, label: "Relationship to participant" %>
+		<%= f.input :emergency_phone_number, required: true, label: "Emergency contact phone number" %>
+		<%= f.input :emergency_email, required: true, label: "Emergency contact email" %>
+	<% else %>
+		<%= f.input :emergency_contact, label: "Emergency contact (required for participants under 18)" %>
+		<%= f.input :emergency_relationship, label: "Relationship to participant" %>
+		<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
+		<%= f.input :emergency_email, label: "Emergency contact email" %>
+	<% end %>
 
 	<br/>
 
@@ -156,6 +163,8 @@
 
 	<br/>
 
+    <h3>State Youth Games Disclaimer</h3>
+
 	<ul>
 		<li>This is to acknowledge and confirm the Liability Waiver for Churches of Christ VIC/TAS and the State Youth Games Victoria in relation to my participation in all activities/games associated with State Youth Games Victoria.</li>
 		<li>I fully understand the terms and conditions outlined in the Liability Waiver, and I willingly agree to abide by them. I acknowledge the risks involved in participating in the activities/games associated with the State Youth Games Victoria and release Churches of Christ VIC/TAS and the State Youth Games Victoria from any liability concerns associated with property damage, incident, accident, or illness that may arise as a result of my participation.</li>
@@ -165,6 +174,22 @@
 	</ul>
 
 	<p style="font-size: 8pt">* To ensure State Youth Games Victoria participants are adequately covered in the event of a personal or sporting related accident, it is strongly recommended that participating groups or individual participants arrange personal accident insurance, It is the responsibility of the group co-ordinator to ensure this is communicated to all State Youth Games Victoria participants associate with their group.</p>
+
+	<% if !@group.mysyg_setting.policy_text.blank? || @group.mysyg_setting.policy.attached? %>
+		<h3>Your Group Disclaimer</h3>
+		<p><%= @group.mysyg_setting.policy_text %></p>
+
+		<% if @group.mysyg_setting.policy.attached? %>
+			<% if @group.mysyg_setting.policy.representable? %>
+				<%= link_to(image_tag(@group.mysyg_setting.policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@group.mysyg_setting.policy, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Policy", rails_blob_path(@group.mysyg_setting.policy, disposition: "attachment") %>
+			<% end %>
+
+			<br/>
+			<br/>
+		<% end %>
+	<% end %>
 
 	By ticking this box, you confirm that you have read and accepted the above Code of Conduct and Disclaimer, and that either you are over the age of 18 and will be an attendee of State Youth Games, or that you are the parent or guardian of the participant who will be an attendee of State Youth Games.
 
