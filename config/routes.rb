@@ -490,8 +490,11 @@ Rails.application.routes.draw do
       member do
         get :edit_team_sports
         get :edit_indiv_sports
+        get :new_policy
         patch :update_team_sports
         patch :update_indiv_sports
+        patch :update_policy
+        patch :purge_policy
       end
     end
     resources :payments

@@ -1,0 +1,37 @@
+<% title "Policy Document" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>This page is for you to optionally provide your own policy / disclaimer document for your participants to accept when they sign up.</p>
+
+<%= simple_form_for(@mysyg_setting, url: update_policy_gc_mysyg_setting_path(@mysyg_setting), html: { method: :patch }) do |f| %> 
+	<%= f.error_notification %>
+
+	<% if @mysyg_setting.policy.attached? %>
+		<% if @mysyg_setting.policy.representable? %>
+		    <%= link_to(image_tag(@mysyg_setting.policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@mysyg_setting.policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@mysyg_setting.policy, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_policy_gc_mysyg_setting_path(@mysyg_setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :policy, as: :file, label: 'Policy: ' %>
+
+		<br/>
+		<br/>
+	<% end %>
+	
+	<%= f.input :policy_text, as: :rich_text_area,
+				label: "Policy or Instructions",
+				hint: "your participants will see this when they sign up. You can use this to either provide instructions relating to the file you upload above, or to contain the text of your policy itself. Leave this blank if you do not wish to provide any specific policy on top of what SYG asks participants to accept." %>
+
+	<br/>
+
+	<%= f.button :submit, "Update" %>
+<% end %>

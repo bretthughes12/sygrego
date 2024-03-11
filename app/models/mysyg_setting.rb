@@ -12,6 +12,7 @@
 #  mysyg_name                 :string(50)
 #  mysyg_open                 :boolean          default(FALSE)
 #  participant_instructions   :text
+#  require_emerg_contact      :boolean          default(FALSE)
 #  show_finance_in_mysyg      :boolean          default(TRUE)
 #  show_group_extras_in_mysyg :boolean          default(TRUE)
 #  show_sports_in_mysyg       :boolean          default(TRUE)
@@ -37,7 +38,9 @@ class MysygSetting < ApplicationRecord
   
     belongs_to :group
 
+    has_one_attached :policy
     has_rich_text :instructions
+    has_rich_text :policy_text
 
     APPROVAL_OPTIONS = %w[Tolerant
         Normal

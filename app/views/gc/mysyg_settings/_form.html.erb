@@ -25,6 +25,13 @@
 				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br/>
 
+	<%= f.input :require_emerg_contact, 
+				label: "Require Emergency Contact for all participants" %>
+	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
+
+	<br/>
+	<br/>
+
 	<h2>Extras</h2>
 
 	<p>Use 'Custom Extras' to allow your participants to be able to select things like team uniforms, transport costs, food costs, etc. To set these up for your MySYG site, use the menu option "MySYG > Custom extra costs"</p>
