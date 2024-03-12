@@ -79,7 +79,7 @@ class Venue < ApplicationRecord
         errors = 0
         error_list = []
   
-        xlsx = Roo::Spreadsheet.open(file)
+        xlsx = Roo::Excelx.new(file)
 
         xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
             unless row['RowID'] == 'RowID'
