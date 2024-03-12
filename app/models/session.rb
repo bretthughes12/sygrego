@@ -21,6 +21,7 @@ class Session < ApplicationRecord
     include Auditable
 
     require 'csv'
+    require 'roo'
   
     attr_reader :file
 
@@ -79,6 +80,48 @@ class Session < ApplicationRecord
           else
             errors += 1
             error_list << session
+          end
+        end
+      end
+
+      { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+
+    def self.import_excel(file, user)
+      creates = 0
+      updates = 0
+      errors = 0
+      error_list = []
+
+      xlsx = Roo::Spreadsheet.open(file)
+
+      xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+        unless row['RowID'] == 'RowID'
+
+          session = Session.find_by_database_rowid(row['RowID'])
+          if session
+            session.active = row['Active']
+            session.name = row['Name']
+            session.updated_by = user.id
+            
+            if session.save
+              updates += 1
+            else
+              errors += 1
+              error_list << session
+            end
+          else
+            session = Session.create(database_rowid: row['RowID'],
+                                    active:         row['Active'],
+                                    name:           row['Name'],
+                                    updated_by:     user.id)
+
+            if session.errors.empty?
+              creates += 1
+            else
+              errors += 1
+              error_list << session
+            end
           end
         end
       end

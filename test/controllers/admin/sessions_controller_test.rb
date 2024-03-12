@@ -96,7 +96,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import sessions" do
-    file = fixture_file_upload('session.csv','application/csv')
+    file = fixture_file_upload('session.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Session.count') do
       post import_admin_sessions_url, params: { session: { file: file }}
@@ -106,7 +106,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import sessions when the file is not csv" do
+  test "should not import sessions when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Session.count') do
@@ -114,7 +114,7 @@ class Admin::SessionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy session" do

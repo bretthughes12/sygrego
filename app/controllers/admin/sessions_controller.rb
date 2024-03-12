@@ -11,6 +11,7 @@ class Admin::SessionsController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "sport_session" }
+        format.xlsx { render xlsx: "index", filename: "sessions.xlsx" }
       end
     end
   
@@ -85,8 +86,8 @@ class Admin::SessionsController < AdminController
   
     # POST /admin/sessions/import
     def import
-      if params[:session] && params[:session][:file].path =~ %r{\.csv$}i
-        result = Session.import(params[:session][:file], current_user)
+      if params[:session] && params[:session][:file].path =~ %r{\.xlsx$}i
+        result = Session.import_excel(params[:session][:file], current_user)
 
         flash[:notice] = "Sessions upload complete: #{result[:creates]} sessions created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -94,7 +95,7 @@ class Admin::SessionsController < AdminController
           format.html { redirect_to admin_sessions_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @session = Session.new
 
         respond_to do |format|

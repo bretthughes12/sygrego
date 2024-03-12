@@ -50,10 +50,10 @@ class SessionTest < ActiveSupport::TestCase
   end
 
   test "should import sessions from file" do
-    file = fixture_file_upload('session.csv','application/csv')
+    file = fixture_file_upload('session.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Session.count') do
-      @result = Session.import(file, @user)
+      @result = Session.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -63,10 +63,10 @@ class SessionTest < ActiveSupport::TestCase
 
   test "should update exiting sessions from file" do
     session = FactoryBot.create(:session, database_rowid: 1)
-    file = fixture_file_upload('session.csv','application/csv')
+    file = fixture_file_upload('session.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Session.count') do
-      @result = Session.import(file, @user)
+      @result = Session.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -78,10 +78,10 @@ class SessionTest < ActiveSupport::TestCase
   end
 
   test "should not import sessions with errors from file" do
-    file = fixture_file_upload('invalid_session.csv','application/csv')
+    file = fixture_file_upload('invalid_session.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Session.count') do
-      @result = Session.import(file, @user)
+      @result = Session.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -91,10 +91,10 @@ class SessionTest < ActiveSupport::TestCase
 
   test "should not update sessions with errors from file" do
     session = FactoryBot.create(:session, database_rowid: 1)
-    file = fixture_file_upload('invalid_session.csv','application/csv')
+    file = fixture_file_upload('invalid_session.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Session.count') do
-      @result = Session.import(file, @user)
+      @result = Session.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

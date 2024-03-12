@@ -1,0 +1,21 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Sessions") do |sheet|
+	sheet.add_row ["RowID","Active","Name"], 
+		style: header_border
+
+	@sessions.each do |session|
+		sheet.add_row [
+		    session.database_rowid,
+		    session.active,
+            session.name
+		   ],
+		style: row_border
+	end
+end
