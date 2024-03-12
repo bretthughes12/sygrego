@@ -91,10 +91,6 @@ class Admin::VenuesController < AdminController
 
         flash[:notice] = "Venues upload complete: #{result[:creates]} venues created; #{result[:updates]} updates; #{result[:errors]} errors"
 
-        if result[:errors].to_i > 0 
-          pp result[:error_list]
-        end
-
         respond_to do |format|
           format.html { redirect_to admin_venues_url }
         end
