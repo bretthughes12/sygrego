@@ -82,6 +82,7 @@ class Venue < ApplicationRecord
         xlsx = Roo::Excelx.new(file)
 
         xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            pp row
             unless row['RowID'] == 'RowID'
 
                 venue = Venue.find_by_database_code(row['RowID'])
