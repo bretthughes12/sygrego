@@ -69,10 +69,10 @@ class SportTest < ActiveSupport::TestCase
   end
 
   test "should import sports from file" do
-    file = fixture_file_upload('sport.csv','application/csv')
+    file = fixture_file_upload('sport.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Sport.count') do
-      @result = Sport.import(file, @user)
+      @result = Sport.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -82,10 +82,10 @@ class SportTest < ActiveSupport::TestCase
 
   test "should update exiting sports from file" do
     sport = FactoryBot.create(:sport, name: 'Hockey')
-    file = fixture_file_upload('sport.csv','application/csv')
+    file = fixture_file_upload('sport.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Sport.count') do
-      @result = Sport.import(file, @user)
+      @result = Sport.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -97,10 +97,10 @@ class SportTest < ActiveSupport::TestCase
   end
 
   test "should not import sports with errors from file" do
-    file = fixture_file_upload('invalid_sport.csv','application/csv')
+    file = fixture_file_upload('invalid_sport.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Sport.count') do
-      @result = Sport.import(file, @user)
+      @result = Sport.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -110,10 +110,10 @@ class SportTest < ActiveSupport::TestCase
 
   test "should not update sports with errors from file" do
     sport = FactoryBot.create(:sport, name: 'Hockey')
-    file = fixture_file_upload('invalid_sport.csv','application/csv')
+    file = fixture_file_upload('invalid_sport.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Sport.count') do
-      @result = Sport.import(file, @user)
+      @result = Sport.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Sports") do |sheet|
+	sheet.add_row ["Name","Active","Classification","MaxIndivGrp","MaxTeamGrp","MaxIndiv","Bonus","CourtName","DrawType","BlowoutRule","ForfeitScore","TieBreak","AllowNeg","PointName"], 
+		style: header_border
+
+	@sports.each do |sport|
+		sheet.add_row [
+            sport.name,
+		    sport.active,
+		    sport.classification,
+			sport.max_indiv_entries_group,
+			sport.max_team_entries_group,
+			sport.max_entries_indiv,
+			sport.bonus_for_officials,
+			sport.court_name,
+			sport.draw_type,
+			sport.blowout_rule,
+			sport.forfeit_score,
+			sport.ladder_tie_break,
+			sport.allow_negative_score,
+            sport.point_name
+		   ],
+		style: row_border
+	end
+end

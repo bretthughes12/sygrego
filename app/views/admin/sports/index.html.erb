@@ -5,7 +5,7 @@
 <%= link_to "New Sport", new_admin_sport_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Download", admin_sports_path(format: :csv),
+<%= link_to "Download", admin_sports_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_sports_path,
@@ -21,7 +21,7 @@
       <th>#Grades</th>
       <th>Max Group Entries (indiv)</th>
       <th>Max Group Entries (team)</th>
-      <th>Max Individual Entries</th>
+      <th>Max Entries per Individual</th>
     </tr>
   </thead>
 
@@ -31,7 +31,7 @@
 <%= link_to "New Sport", new_admin_sport_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Download", admin_sports_path(format: :csv),
+<%= link_to "Download", admin_sports_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_sports_path,

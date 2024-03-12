@@ -116,7 +116,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import sports" do
-    file = fixture_file_upload('sport.csv','application/csv')
+    file = fixture_file_upload('sport.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Sport.count') do
       post import_admin_sports_url, params: { sport: { file: file }}
@@ -134,7 +134,7 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy sport" do

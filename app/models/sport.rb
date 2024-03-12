@@ -31,6 +31,7 @@ class Sport < ApplicationRecord
     include Auditable
 
     require 'csv'
+    require 'roo'
 
     attr_reader :file
     attr_reader :grades_as_limited
@@ -182,6 +183,70 @@ class Sport < ApplicationRecord
                 else
                     errors += 1
                     error_list << sport
+                end
+            end
+        end
+  
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+        
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+  
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['Name'] == 'Name'
+
+                sport = Sport.find_by_name(row['Name'].to_s)
+
+                if sport
+                    sport.active = row['Active']
+                    sport.classification = row['Classification'].to_s
+                    sport.max_indiv_entries_group = row['MaxIndivGrp'].to_i
+                    sport.max_team_entries_group = row['MaxTeamGrp'].to_i
+                    sport.max_entries_indiv = row['MaxIndiv'].to_i
+                    sport.bonus_for_officials = row['Bonus']
+                    sport.court_name = row['CourtName']
+                    sport.draw_type = row['DrawType']
+                    sport.blowout_rule = row['BlowoutRule']
+                    sport.forfeit_score = row['ForfeitScore'].to_i
+                    sport.ladder_tie_break = row['TieBreak']
+                    sport.allow_negative_score = row['AllowNeg']
+                    sport.point_name = row['PointName']
+                    sport.updated_by = user.id
+                    if sport.save
+                        updates += 1
+                    else
+                        errors += 1
+                        error_list << sport
+                    end
+                else
+                    sport = Sport.create(
+                        name:                      row['Name'],
+                        active:                    row['Active'],
+                        classification:            row['Classification'],
+                        draw_type:                 row['DrawType'],
+                        max_indiv_entries_group:   row['MaxIndivGrp'].to_i,
+                        max_team_entries_group:    row['MaxTeamGrp'].to_i,
+                        max_entries_indiv:         row['MaxIndiv'].to_i,
+                        bonus_for_officials:       row['Bonus'],
+                        court_name:                row['CourtName'],
+                        blowout_rule:              row['BlowoutRule'],
+                        forfeit_score:             row['ForfeitScore'].to_i,
+                        ladder_tie_break:          row['TieBreak'],
+                        allow_negative_score:      row['AllowNeg'],
+                        point_name:                row['PointName'],
+                        updated_by:                user.id)
+                    if sport.errors.empty?
+                        creates += 1
+                    else
+                        errors += 1
+                        error_list << sport
+                    end
                 end
             end
         end
