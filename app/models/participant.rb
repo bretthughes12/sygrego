@@ -331,7 +331,7 @@ class Participant < ApplicationRecord
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       base_fee -= 35 if spectator
-      base_fee = 90 if spectator && chargeable_days == 1
+      base_fee = 75 if spectator && chargeable_days == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
