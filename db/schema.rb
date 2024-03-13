@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_11_101608) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_13_092551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -166,6 +166,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_101608) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_group_extras_on_group_id"
+  end
+
+  create_table "group_fee_categories", force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.string "description", limit: 40
+    t.string "adjustment_type", limit: 15, default: "Add"
+    t.decimal "amount", precision: 8, scale: 2, default: "1.0"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_fee_categories_on_group_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -741,6 +751,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_11_101608) do
   add_foreign_key "event_details", "groups"
   add_foreign_key "grades", "sports"
   add_foreign_key "group_extras", "groups"
+  add_foreign_key "group_fee_categories", "groups"
   add_foreign_key "groups_grades_filters", "grades"
   add_foreign_key "groups_grades_filters", "groups"
   add_foreign_key "groups_users", "groups"
