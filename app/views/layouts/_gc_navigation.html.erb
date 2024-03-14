@@ -80,6 +80,7 @@
                                 <li class='dropdown-item'><%= link_to 'Filter Team Sports for Participants', edit_team_sports_gc_mysyg_setting_path(@group.mysyg_setting) %></li>
                                 <li class='dropdown-item'><%= link_to 'Filter Individual Sports for Participants', edit_indiv_sports_gc_mysyg_setting_path(@group.mysyg_setting) %></li>
                             <%- end %>
+                            <li class='dropdown-item'><%= link_to 'Fee categories', gc_group_fee_categories_path %></li>
                             <li class='dropdown-item'><%= link_to 'Custom / extra costs', gc_group_extras_path %></li>
                             <li class='dropdown-item'><%= link_to 'Wanted extras', gc_participant_extras_path %></li>
                         </ul>

@@ -1,0 +1,11 @@
+<%= simple_form_for(@group_fee_category, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+    <%= f.input :description %>
+    <%= f.input :adjustment_type, as: :select, label: "How to adjust", hint: "'Add' and 'Subtract' are in addition to the SYG fee; 'Set' replaces the SYG fee  with your own total", collection: GroupFeeCategory::TYPES, include_blank: false %>
+    <%= f.input :amount, labbel: "Adjustment amount" %>
+
+    <br/>
+
+	<%= f.button :submit %>
+<% end %>	

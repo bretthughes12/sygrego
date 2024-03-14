@@ -1,0 +1,17 @@
+<tr valign="top">
+	<td>
+        <%= link_to (group_fee_category.description), edit_gc_group_fee_category_path(group_fee_category) %>
+	</td>
+	
+	<td>
+	    <%= group_fee_category.effect %>
+	</td>
+	
+	<td>
+        <%= link_to "X", gc_group_fee_category_path(group_fee_category),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: danger_button_class,
+                role: "button" %>
+	</td>
+</tr>

@@ -473,6 +473,15 @@ Rails.application.routes.draw do
         delete :show_indiv
       end
     end
+    resources :groups_grades_filters, only: [:show] do
+      member do
+        post :hide_team
+        post :hide_indiv
+        delete :show_team
+        delete :show_indiv
+      end
+    end
+    resources :group_fee_categories
     resources :event_details, only: [:edit, :update] do
       member do
         get :new_food_certificate

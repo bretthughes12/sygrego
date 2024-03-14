@@ -1,0 +1,12 @@
+<% title "Fee category details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @group_fee_category %>
+
+<%= link_to "Back", gc_group_fee_categories_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_gc_group_fee_category_path(@group_fee_category),
+                  class: primary_button_class,
+                  role: "button" %>

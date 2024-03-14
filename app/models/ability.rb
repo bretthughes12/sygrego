@@ -63,6 +63,10 @@ class Ability
         can [:show, :index, :update, :destroy], GroupExtra do |group_extra|
           user.groups.include?(group_extra.try(:group)) || user.role?(:admin)
         end
+        can :create, GroupFeeCategory
+        can [:show, :index, :update, :destroy], GroupFeeCategory do |group_fee_category|
+          user.groups.include?(group_fee_category.try(:group)) || user.role?(:admin)
+        end
         can [:index], ParticipantExtra do |participant_extra|
           user.groups.include?(participant_extra.participant.group) || user.role?(:admin)
         end
@@ -173,6 +177,10 @@ class Ability
         can :create, GroupExtra
         can [:show, :index, :update, :destroy], GroupExtra do |group_extra|
           user.groups.include?(group_extra.try(:group)) || user.role?(:admin)
+        end
+        can :create, GroupFeeCategory
+        can [:show, :index, :update, :destroy], GroupFeeCategory do |group_fee_category|
+          user.groups.include?(group_fee_category.try(:group)) || user.role?(:admin)
         end
         can [:index], ParticipantExtra do |participant_extra|
           user.groups.include?(participant_extra.participant.group) || user.role?(:admin)

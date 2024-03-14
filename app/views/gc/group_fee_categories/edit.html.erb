@@ -1,0 +1,14 @@
+<% title "Editing fee category" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:url => gc_group_fee_category_path(@group_fee_category), :method => 'patch'} %>
+
+<br/>
+
+<%= link_to "New fee category", new_gc_group_fee_category_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Back", gc_group_fee_categories_path,
+                  class: primary_button_class,
+                  role: "button" %>
