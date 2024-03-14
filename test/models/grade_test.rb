@@ -15,6 +15,7 @@
 #  min_females             :integer          default(0), not null
 #  min_males               :integer          default(0), not null
 #  min_participants        :integer          default(0), not null
+#  min_under_18s           :integer          default(0), not null
 #  name                    :string(50)       not null
 #  one_entry_per_group     :boolean          default(FALSE)
 #  over_limit              :boolean          default(FALSE)
