@@ -2,6 +2,10 @@
 
 <h1><%= yield(:title) %></h1>
 
+<p>Use this page to add flexibility to how you add your group costs to each participant's finance page, if for example, you want to add different costs for your youth, young adults, helpers, spectators, etc.</p>
+<p>Each category has a description, adjustment type and amount – you can add the amount to your participant’s SYG fee, you can subtract the amount from this, or you can set your participant fee to a specific value (eg. $0 for an Adult Helper).<p>
+<p>The categories you define will be selectable by your participants when they sign up, and they can later modify these. You can also modify them from the 'Finance' > 'Manage Participant Fees' page, by clicking through to each participant.</p>
+
 <% unless @group_fee_categories.empty? %>
     <table class="table table-dark table-striped">
         <thead>
