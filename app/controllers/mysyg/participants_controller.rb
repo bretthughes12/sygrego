@@ -123,6 +123,7 @@ class Mysyg::ParticipantsController < MysygController
         :lock_version,
         :age,
         :gender,
+        :group_fee_category_id,
         :coming_friday,
         :coming_saturday,
         :coming_sunday,

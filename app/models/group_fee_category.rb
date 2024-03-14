@@ -20,6 +20,7 @@
 #
 class GroupFeeCategory < ApplicationRecord
   belongs_to :group
+  has_many :participants
 
   TYPES = %w[
     Set

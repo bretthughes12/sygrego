@@ -3,6 +3,10 @@
         <%= link_to participant.name, edit_fees_gc_participant_path(participant) %>
 	</td>
 	
+	<td> 
+        <%= participant.fee_category %>
+	</td>
+	
 	<td align="right"> 
 		<%= number_to_currency(participant.total_owing) %>
 	</td>

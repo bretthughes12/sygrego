@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_13_092551) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_14_084251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -374,7 +374,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_13_092551) do
     t.string "booking_nbr", limit: 10
     t.boolean "exported", default: false
     t.boolean "dirty", default: false
+    t.bigint "group_fee_category_id"
     t.index ["coming"], name: "index_participants_on_coming"
+    t.index ["group_fee_category_id"], name: "index_participants_on_group_fee_category_id"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
     t.index ["voucher_id"], name: "index_participants_on_voucher_id"

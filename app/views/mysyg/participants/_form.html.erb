@@ -7,6 +7,13 @@
 	<%= f.input :coming if registrations_open %>
 	<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator %>
+
+	<% unless @group.group_fee_categories.empty? %>
+		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @group.group_fee_categories.order(:description), label_method: :description, include_blank: false %>
+	<% end %>
+
+	<br/>
+
 	<% if @participant.voucher %>
 		<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
 			<%= link_to "X", delete_voucher_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id),

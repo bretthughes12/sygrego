@@ -504,6 +504,7 @@ class Gc::ParticipantsController < GcController
     def participant_fees_params
       params.require(:participant).permit(
         :lock_version,
+        :group_fee_category_id,
         :amount_paid
       )
     end

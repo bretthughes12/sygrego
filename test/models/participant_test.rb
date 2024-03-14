@@ -63,12 +63,14 @@
 #  years_attended         :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  group_fee_category_id  :bigint
 #  group_id               :bigint           default(0), not null
 #  voucher_id             :bigint
 #
 # Indexes
 #
 #  index_participants_on_coming                               (coming)
+#  index_participants_on_group_fee_category_id                (group_fee_category_id)
 #  index_participants_on_group_id_and_surname_and_first_name  (group_id,surname,first_name) UNIQUE
 #  index_participants_on_surname_and_first_name               (surname,first_name)
 #  index_participants_on_voucher_id                           (voucher_id)
