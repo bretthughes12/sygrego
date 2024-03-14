@@ -15,6 +15,9 @@
 	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number (required for participants 18 and over)" %>
+	<% unless @group.group_fee_categories.empty? %>
+		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @group.group_fee_categories.order(:description), label_method: :description, include_blank: false %>
+	<% end %>
 	<%= f.input :voucher_name, label: "Voucher" %>
 	<br/>
 	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant_signup.participant) %>"><%= @participant_signup.participant.rego_type %></span></div>
