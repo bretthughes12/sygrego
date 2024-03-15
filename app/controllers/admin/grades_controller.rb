@@ -111,6 +111,7 @@ private
                                     :min_participants,
                                     :min_males,
                                     :min_females,
+                                    :min_under_18s,
                                     :status,
                                     :entry_limit,
                                     :starting_entry_limit,

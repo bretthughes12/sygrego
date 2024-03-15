@@ -22,6 +22,9 @@
     <% if @sport_entry.grade.min_males && @sport_entry.grade.min_males > 0 %>
         <tr><td>Minimum number of males</td><td><%= @sport_entry.grade.min_males %></td></tr>
     <% end %> 
+    <% if @sport_entry.grade.min_under_18s && @sport_entry.grade.min_under_18s > 0 %>
+        <tr><td>Minimum number of under 18's</td><td><%= @sport_entry.grade.min_under_18s %></td></tr>
+    <% end %> 
 </table>
 
 <%= simple_form_for(@sport_entry, :url => admin_sport_entry_path(id: @sport_entry.id, return: @return_path), 

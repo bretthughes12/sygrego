@@ -159,6 +159,10 @@ class SportEntry < ApplicationRecord
     cached_participants.females.count < cached_grade.min_females
   end
 
+  def requires_under_18s?
+    cached_participants.under_18s.count < cached_grade.min_under_18s
+  end
+
   def can_take_participants?
     number_of_participants < cached_grade.max_participants
   end
@@ -168,6 +172,7 @@ class SportEntry < ApplicationRecord
     issues << 'Not enough females' if requires_females?
     issues << 'Not enough males' if requires_males?
     issues << 'Not enough participants' if requires_participants?
+    issues << 'Not enough under 18s' if requires_under_18s?
     issues
   end
 

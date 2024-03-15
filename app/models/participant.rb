@@ -114,6 +114,7 @@ class Participant < ApplicationRecord
     scope :sport_coords, -> { where(sport_coord: true) }
     scope :helpers, -> { where(helper: true) }
     scope :open_age, -> { where('age > 17') }
+    scope :under_18s, -> { where('age < 18') }
     scope :volunteer_age, -> { where('age > 15') }
     scope :children, -> { where('age < 12') }
     scope :to_be_charged, -> { where("(coming = true OR withdrawn = true) AND status = 'Accepted'") }
