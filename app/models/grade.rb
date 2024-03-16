@@ -466,6 +466,7 @@ class Grade < ApplicationRecord
                     grade.min_participants        = row['MinPart'].to_i
                     grade.min_males               = row['MinMales'].to_i
                     grade.min_females             = row['MinFemales'].to_i
+                    grade.min_under_18s           = row['MinU18'].to_i
                     grade.team_size               = row['TeamSize'].to_i
                     grade.entry_limit             = limit
                     grade.starting_entry_limit    = start_limit
@@ -492,6 +493,7 @@ class Grade < ApplicationRecord
                     min_participants:        row['MinPart'].to_i,
                     min_males:               row['MinMales'].to_i,
                     min_females:             row['MinFemales'].to_i,
+                    min_under_18s:           row['MinU18'].to_i,
                     team_size:               row['TeamSize'].to_i,
                     entry_limit:             limit,
                     starting_entry_limit:    start_limit,
