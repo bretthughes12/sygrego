@@ -1,0 +1,36 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Venues") do |sheet|
+	sheet.add_row ["RowID","Sport","Name","Active","Type","Status","MaxAge","MinAge",
+	              "GenderType","MaxPart","MinPart","MinMales","MinFemales","TeamSize", 
+	              "Limit","StartLimit"], 
+		style: header_border
+
+	@grades.each do |grade|
+		sheet.add_row [
+			 grade.database_rowid,
+  		     grade.sport.name,
+  		     grade.name,
+  		     grade.active,
+  		     grade.grade_type,
+  		     grade.status,
+  		     grade.max_age,
+  		     grade.min_age,
+  		     grade.gender_type,
+  		     grade.max_participants,
+  		     grade.min_participants,
+  		     grade.min_males,
+  		     grade.min_females,
+  		     grade.team_size,
+  		     grade.entry_limit,
+  		     grade.starting_entry_limit
+			],
+		style: row_border
+	end
+end

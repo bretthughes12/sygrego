@@ -102,7 +102,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
 
   test "should import grades" do
     FactoryBot.create(:sport, name: "Hockey")
-    file = fixture_file_upload('grade.csv','application/csv')
+    file = fixture_file_upload('grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Grade.count') do
       post import_admin_grades_url, params: { grade: { file: file }}
@@ -112,7 +112,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import grades when the file is not csv" do
+  test "should not import grades when the file is not xlsx" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Grade.count') do
@@ -120,7 +120,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy grade" do

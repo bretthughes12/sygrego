@@ -14,6 +14,7 @@ class Admin::GradesController < AdminController
       respond_to do |format|
         format.html { @grades = @grades.paginate(page: params[:page], per_page: 50) }
         format.csv  { render_csv "sport_grade", "sport_grade" }
+        format.xlsx { render xlsx: "index", filename: "grades.xlsx" }
       end
     end
   
@@ -79,8 +80,8 @@ class Admin::GradesController < AdminController
   
     # POST /admin/grades/import
     def import
-      if params[:grade] && params[:grade][:file].path =~ %r{\.csv$}i
-        result = Grade.import(params[:grade][:file], current_user)
+      if params[:grade] && params[:grade][:file].path =~ %r{\.xlsx$}i
+        result = Grade.import_excel(params[:grade][:file], current_user)
 
         flash[:notice] = "Grades upload complete: #{result[:creates]} grades created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -88,7 +89,7 @@ class Admin::GradesController < AdminController
           format.html { redirect_to admin_grades_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @grade = Grade.new
 
         respond_to do |format|

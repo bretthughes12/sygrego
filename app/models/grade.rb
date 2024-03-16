@@ -436,6 +436,80 @@ class Grade < ApplicationRecord
         { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+  
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['RowID'] == 'RowID'
+
+                limit = row['Limit'].to_i == 0 ? nil : row['Limit'].to_i
+                start_limit = row['StartLimit'].to_i == 0 ? nil : row['StartLimit'].to_i
+                sport = Sport.where(name: row['Sport']).first
+
+                grade = Grade.find_by_name(row['Name'].to_s)
+
+                if grade
+                    grade.database_rowid          = row['RowID'].to_i
+                    grade.sport                   = sport
+                    grade.active                  = true
+                    grade.grade_type              = row['Type']
+                    grade.status                  = row['Status']
+                    grade.max_age                 = row['MaxAge'].to_i
+                    grade.min_age                 = row['MinAge'].to_i
+                    grade.gender_type             = row['GenderType']
+                    grade.max_participants        = row['MaxPart'].to_i
+                    grade.min_participants        = row['MinPart'].to_i
+                    grade.min_males               = row['MinMales'].to_i
+                    grade.min_females             = row['MinFemales'].to_i
+                    grade.team_size               = row['TeamSize'].to_i
+                    grade.entry_limit             = limit
+                    grade.starting_entry_limit    = start_limit
+                    grade.updated_by = user.id
+    
+                    if grade.save
+                        updates += 1
+                    else
+                        errors += 1
+                        error_list << grade
+                    end
+                else
+                    grade = Grade.create(
+                    database_rowid:          row['RowID'].to_i,
+                    sport:                   sport,
+                    name:                    row['Name'],
+                    active:                  true,
+                    grade_type:              row['Type'],
+                    status:                  row['Status'],
+                    max_age:                 row['MaxAge'].to_i,
+                    min_age:                 row['MinAge'].to_i,
+                    gender_type:             row['GenderType'],
+                    max_participants:        row['MaxPart'].to_i,
+                    min_participants:        row['MinPart'].to_i,
+                    min_males:               row['MinMales'].to_i,
+                    min_females:             row['MinFemales'].to_i,
+                    team_size:               row['TeamSize'].to_i,
+                    entry_limit:             limit,
+                    starting_entry_limit:    start_limit,
+                    updated_by:              user.id)
+
+                    if grade.errors.empty?
+                        creates += 1
+                    else
+                        errors += 1
+                        error_list << grade
+                    end
+                end
+            end
+        end
+  
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+
   private
 
     def groups_requested

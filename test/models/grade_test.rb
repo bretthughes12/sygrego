@@ -451,10 +451,10 @@ class GradeTest < ActiveSupport::TestCase
 
   test "should import grades from file" do
     FactoryBot.create(:sport, name: "Hockey")
-    file = fixture_file_upload('grade.csv','application/csv')
+    file = fixture_file_upload('grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Grade.count') do
-      @result = Grade.import(file, @user)
+      @result = Grade.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -465,10 +465,10 @@ class GradeTest < ActiveSupport::TestCase
   test "should update exiting grades from file" do
     sport = FactoryBot.create(:sport, name: "Hockey")
     grade = FactoryBot.create(:grade, sport: sport, name: 'Hockey Open B', status: "Open")
-    file = fixture_file_upload('grade.csv','application/csv')
+    file = fixture_file_upload('grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Grade.count') do
-      @result = Grade.import(file, @user)
+      @result = Grade.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -481,10 +481,10 @@ class GradeTest < ActiveSupport::TestCase
 
   test "should not import grades with errors from file" do
     FactoryBot.create(:sport, name: "Hockey")
-    file = fixture_file_upload('invalid_grade.csv','application/csv')
+    file = fixture_file_upload('invalid_grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Grade.count') do
-      @result = Grade.import(file, @user)
+      @result = Grade.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -495,10 +495,10 @@ class GradeTest < ActiveSupport::TestCase
   test "should not update grades with errors from file" do
     sport = FactoryBot.create(:sport, name: "Hockey")
     grade = FactoryBot.create(:grade, sport: sport, name: 'Hockey Open B')
-    file = fixture_file_upload('invalid_grade.csv','application/csv')
+    file = fixture_file_upload('invalid_grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Grade.count') do
-      @result = Grade.import(file, @user)
+      @result = Grade.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
