@@ -451,11 +451,13 @@ class Grade < ApplicationRecord
                 start_limit = row['StartLimit'].to_i == 0 ? nil : row['StartLimit'].to_i
                 sport = Sport.where(name: row['Sport']).first
 
-                grade = Grade.find_by_name(row['Name'].to_s)
+                grade = Grade.find_by_database_rowid(row['RowID'].to_i) unless row['RowID'] == '0'
+                grade = Grade.find_by_name(row['Name'].to_s) if grade.nil?
 
                 if grade
                     grade.database_rowid          = row['RowID'].to_i
                     grade.sport                   = sport
+                    grade.name                    = row['Name']
                     grade.active                  = true
                     grade.grade_type              = row['Type']
                     grade.status                  = row['Status']

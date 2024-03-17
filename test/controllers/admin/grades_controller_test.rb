@@ -73,7 +73,7 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update grade" do
-    patch admin_grade_url(@grade), params: { grade: { name: "Hockey Open B" } }
+    patch admin_grade_url(@grade), params: { grade: { name: "Hockey Open B", database_rowid: 202401 } }
 
     assert_redirected_to admin_grades_path
     assert_match /successfully updated/, flash[:notice]

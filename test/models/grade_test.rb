@@ -464,7 +464,7 @@ class GradeTest < ActiveSupport::TestCase
 
   test "should update exiting grades from file" do
     sport = FactoryBot.create(:sport, name: "Hockey")
-    grade = FactoryBot.create(:grade, sport: sport, name: 'Hockey Open B', status: "Open")
+    grade = FactoryBot.create(:grade, sport: sport, name: 'Hockey Open B', status: "Open", database_rowid: 202401)
     file = fixture_file_upload('grade.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Grade.count') do
