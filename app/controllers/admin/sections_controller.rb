@@ -13,6 +13,7 @@ class Admin::SectionsController < AdminController
       respond_to do |format|
         format.html { @sections = @sections.paginate(page: params[:page], per_page: 50) }
         format.csv  { render_csv "sport_section", "sport_section" }
+        format.xlsx { render xlsx: "index", filename: "sections.xlsx" }
       end
     end
   
@@ -121,8 +122,8 @@ class Admin::SectionsController < AdminController
   
     # POST /admin/sections/import
     def import
-      if params[:section] && params[:section][:file].path =~ %r{\.csv$}i
-        result = Section.import(params[:section][:file], current_user)
+      if params[:section] && params[:section][:file].path =~ %r{\.xlsx$}i
+        result = Section.import_excel(params[:section][:file], current_user)
 
         flash[:notice] = "Sections upload complete: #{result[:creates]} sections created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -130,7 +131,7 @@ class Admin::SectionsController < AdminController
           format.html { redirect_to admin_sections_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @section = Section.new
 
         respond_to do |format|

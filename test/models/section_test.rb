@@ -102,10 +102,10 @@ class SectionTest < ActiveSupport::TestCase
     FactoryBot.create(:grade, name: "Hockey Open B")
     FactoryBot.create(:venue, database_code: "HOCK")
     FactoryBot.create(:session, database_rowid: 1)
-    file = fixture_file_upload('section.csv','application/csv')
+    file = fixture_file_upload('section.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Section.count') do
-      @result = Section.import(file, @user)
+      @result = Section.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -118,10 +118,10 @@ class SectionTest < ActiveSupport::TestCase
     venue = FactoryBot.create(:venue, database_code: "HOCK")
     session = FactoryBot.create(:session, database_rowid: 1)
     section = FactoryBot.create(:section, name: 'Hockey Open B1', grade: grade, venue: venue, session: session)
-    file = fixture_file_upload('section.csv','application/csv')
+    file = fixture_file_upload('section.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Section.count') do
-      @result = Section.import(file, @user)
+      @result = Section.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -136,10 +136,10 @@ class SectionTest < ActiveSupport::TestCase
     FactoryBot.create(:grade, name: "Hockey Open B")
     FactoryBot.create(:venue, database_code: "HOCK")
     FactoryBot.create(:session, database_rowid: 1)
-    file = fixture_file_upload('invalid_section.csv','application/csv')
+    file = fixture_file_upload('invalid_section.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Section.count') do
-      @result = Section.import(file, @user)
+      @result = Section.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -152,10 +152,10 @@ class SectionTest < ActiveSupport::TestCase
     venue = FactoryBot.create(:venue, database_code: "HOCK")
     session = FactoryBot.create(:session, database_rowid: 1)
     section = FactoryBot.create(:section, name: 'Hockey Open B1', grade: grade, venue: venue, session: session)
-    file = fixture_file_upload('invalid_section.csv','application/csv')
+    file = fixture_file_upload('invalid_section.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Section.count') do
-      @result = Section.import(file, @user)
+      @result = Section.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

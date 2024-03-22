@@ -116,7 +116,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:grade, name: "Hockey Open B")
     FactoryBot.create(:venue, database_code: "HOCK")
     FactoryBot.create(:session, database_rowid: 1)
-    file = fixture_file_upload('section.csv','application/csv')
+    file = fixture_file_upload('section.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Section.count') do
       post import_admin_sections_url, params: { section: { file: file }}
@@ -126,7 +126,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import sections when the file is not csv" do
+  test "should not import sections when the file is not xlsx" do
     FactoryBot.create(:grade, name: "Hockey Open B")
     FactoryBot.create(:venue, database_code: "HOCK")
     FactoryBot.create(:session, database_rowid: 1)
@@ -137,7 +137,7 @@ class Admin::SectionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should purge draw_file" do

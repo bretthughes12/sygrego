@@ -332,6 +332,70 @@ class Section < ApplicationRecord
         { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+  
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['RowID'] == 'RowID'
+
+                grade = Grade.where(name: row['Grade']).first
+                venue = Venue.where(database_code: row['Venue']).first
+                session = Session.where(database_rowid: row['Session'].to_i).first
+        
+                section = Section.find_by_name(row['Name'].to_s)
+                if section
+                    section.database_rowid          = row['RowID'].to_i
+                    section.grade                   = grade
+                    section.name                    = row['Name']
+                    section.active                  = row['Active']
+                    section.venue                   = venue
+                    section.year_introduced         = row['YearIntroduced'].to_i
+                    section.number_of_courts        = row['NbrOfCourts'].to_i
+                    section.session                 = session
+                    section.finals_format           = row['FinalsFormat']
+                    section.number_of_groups        = row['Groups'].to_i
+                    section.start_court             = row['StartCourt'].to_i
+                    section.updated_by              = user.id
+     
+                    if section.save
+                        updates += 1
+                    else
+                        errors += 1
+                        error_list << section
+                    end
+                else
+                    section = Section.create(
+                       database_rowid:          row['RowID'],
+                       grade:                   grade,
+                       name:                    row['Name'],
+                       active:                  row['Active'],
+                       venue:                   venue,
+                       year_introduced:         row['YearIntroduced'].to_i,
+                       number_of_courts:        row['NbrOfCourts'].to_i,
+                       session:                 session,
+                       finals_format:           row['FinalsFormat'],
+                       number_of_groups:        row['Groups'].to_i,
+                       start_court:             row['StartCourt'].to_i,
+                       updated_by:              user.id)
+    
+                    if section.errors.empty?
+                        creates += 1
+                    else
+                        errors += 1
+                        error_list << section
+                    end
+                end
+            end
+        end
+  
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+
   private
 
     def self.sync_fields
