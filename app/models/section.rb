@@ -347,7 +347,9 @@ class Section < ApplicationRecord
                 venue = Venue.where(database_code: row['Venue']).first
                 session = Session.where(database_rowid: row['Session'].to_i).first
         
-                section = Section.find_by_name(row['Name'].to_s)
+                section = Section.find_by_database_rowid(row['RowID'].to_i) unless row['RowID'] == '0'
+                section = Section.find_by_name(row['Name'].to_s) if section.nil?
+
                 if section
                     section.database_rowid          = row['RowID'].to_i
                     section.grade                   = grade
