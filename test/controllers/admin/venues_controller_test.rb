@@ -48,7 +48,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /successfully created/, flash[:notice]
+    assert_match(/successfully created/, flash[:notice])
   end
 
   test "should not create venue with errors" do
@@ -71,7 +71,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     patch admin_venue_url(@venue), params: { venue: { name: "MCG" } }
 
     assert_redirected_to admin_venues_path
-    assert_match /successfully updated/, flash[:notice]
+    assert_match(/successfully updated/, flash[:notice])
 
     # Reload association to fetch updated data and assert that title is updated.
     @venue.reload
@@ -103,7 +103,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_venues_path 
-    assert_match /upload complete/, flash[:notice]
+    assert_match(/upload complete/, flash[:notice])
   end
 
   test "should not import venues when the file is not csv" do
@@ -114,7 +114,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.xlsx' format/, flash[:notice]
+    assert_match(/must be in '\.xlsx' format/, flash[:notice])
   end
 
   test "should destroy venue" do
@@ -139,6 +139,6 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to admin_venues_path
-    assert_match /Can't delete/, flash[:notice]
+    assert_match(/Can't delete/, flash[:notice])
   end
 end

@@ -47,7 +47,7 @@ class SectionTest < ActiveSupport::TestCase
     assert_equal 0, @section <=> @section 
     #different name
     other_section = FactoryBot.create(:section, name: "Order2")
-    assert_equal -1, @section <=> other_section
+    assert_equal(-1, @section <=> other_section)
   end
 
   test "should inherit sport name from grade" do
