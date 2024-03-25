@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_14_104452) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_25_093832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -287,6 +287,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_104452) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "require_emerg_contact", default: false
+    t.boolean "show_sports_on_signup", default: false
+    t.string "collect_age_by", limit: 20, default: "Age"
+    t.boolean "allow_part_time", default: true
+    t.boolean "allow_offsite", default: true
+    t.boolean "require_medical", default: false
     t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
   end
 
