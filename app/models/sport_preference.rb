@@ -65,11 +65,39 @@ class SportPreference < ApplicationRecord
     prefs
   end
 
+  def self.prepare_for_group(group)
+    grades = group.filtered_grades.sort
+
+    prefs = []
+    prefs = grades.collect do |g|
+      SignupSportPreference.new(grade_id: g.id)
+    end
+    prefs
+  end
+
   def self.store(participant_id, grade_id, preference)
     pref = SportPreference.find_by_participant_id_and_grade_id(participant_id, grade_id) || SportPreference.new(participant_id: participant_id, grade_id: grade_id)
 
     pref.preference = preference
     pref.save
+  end
+
+  def self.create_for_participant(participant, params)
+    pp participant 
+    params.each do |param|
+      unless param[:preference] == ""
+#        pp param
+        pref = SportPreference.new(participant_id: participant.id, grade_id: param[:grade_id].to_i, preference: param[:preference].to_i) 
+        if pref.save
+          puts 'Created SP'
+          pp pref
+        else
+          puts 'Save failed'
+          pp pref
+          pp pref.errors
+        end
+      end
+    end
   end
 
   def self.locate_for_group(group, options = {})

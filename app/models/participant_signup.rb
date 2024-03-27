@@ -52,6 +52,7 @@ class ParticipantSignup
                   :participant,
                   :user,
                   :group,
+                  :sport_preferences,
                   :new_user,
                   :login_name,
                   :login_email,

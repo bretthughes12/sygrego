@@ -71,9 +71,26 @@
 
 	<br/>
 
-	<h2>Sport Notes</h2>
+	<h2>Sports</h2>
 
 	<%= f.input :sport_notes, hint: "let us know if you want to be put in teams with a particular friend, or if there is anything else we should know about you and sports" %>
+
+	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup %>
+		<% if @participant_signup.sport_preferences.empty? %>
+			<p>There are no eligible sport grades available for you </p>
+	
+		<% else %>
+	
+			<br/>
+			<p>Select your top ten preferences, with (1) being the most wanted</p>
+			<br/>
+	
+			<table class="table table-dark table-striped">
+		        <%= render partial: 'sport_preference', collection: @participant_signup.sport_preferences, as: :sport_preference %>
+			</table>
+			
+		<% end %>
+	<% end %>
 
 	<br/>
 

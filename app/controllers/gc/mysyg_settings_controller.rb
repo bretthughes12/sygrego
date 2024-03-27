@@ -88,6 +88,7 @@ class Gc::MysygSettingsController < GcController
         :extra_fee_total,
         :extra_fee_per_day,
         :require_emerg_contact,
+        :show_sports_on_signup,
         :show_sports_in_mysyg,
         :show_volunteers_in_mysyg,
         :show_finance_in_mysyg,

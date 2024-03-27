@@ -16,6 +16,8 @@ class ParticipantSignupsController < ApplicationController
       @participant_signup.onsite = @group.event_detail.onsite
       @participant_signup.group_id = @group.id
       
+      @participant_signup.sport_preferences = SportPreference.prepare_for_group(@group)
+
       @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
     end
     
@@ -42,6 +44,7 @@ class ParticipantSignupsController < ApplicationController
       respond_to do |format|
         if @participant_signup.save
           @user = @participant_signup.user 
+          SportPreference.create_for_participant(@participant, params[:sport_preferences]) if params[:sport_preferences]
 
           UserMailer.welcome_participant(@user, @participant).deliver_now
 
@@ -67,10 +70,11 @@ class ParticipantSignupsController < ApplicationController
           
           UserMailer.new_participant(@user, @participant).deliver_now if @participant_signup.participant.group.active
   
-        else
+        else(:name)
           format.html do
             flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
             @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
+            @participant_signup.sport_preferences = SportPreference.prepare_for_group(@group)
             render "new"
           end
         end
