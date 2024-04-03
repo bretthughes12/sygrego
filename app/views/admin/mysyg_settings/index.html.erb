@@ -5,7 +5,7 @@
 <%= search_box search_admin_mysyg_settings_path, "Search" %>
 <%= yield(:search_box)%>
 
-<%= link_to "Download", admin_mysyg_settings_path(format: :csv),
+<%= link_to "Download", admin_mysyg_settings_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_mysyg_settings_path,
@@ -28,7 +28,7 @@
 	<%= render @mysyg_settings %>
 </table>
 
-<%= link_to "Download", admin_mysyg_settings_path(format: :csv),
+<%= link_to "Download", admin_mysyg_settings_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_mysyg_settings_path,

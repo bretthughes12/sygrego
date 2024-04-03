@@ -38,6 +38,7 @@
 
 class MysygSetting < ApplicationRecord
     require 'csv'
+    require 'roo'
   
     attr_reader :file
   
@@ -117,6 +118,56 @@ class MysygSetting < ApplicationRecord
                     else
                         errors += 1
                         error_list << mysyg_setting
+                    end
+                end
+            end
+        end
+    
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+    
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['RowID'] == 'RowID'
+
+                group = Group.find_by_abbr(row['Abbr'].to_s)
+
+                if group
+                    mysyg_setting = group.mysyg_setting
+                    if mysyg_setting
+                        mysyg_setting.mysyg_name                 = group.short_name.downcase
+                        mysyg_setting.mysyg_enabled              = row['Enabled']
+                        mysyg_setting.mysyg_open                 = row['Open']
+                        mysyg_setting.participant_instructions   = row['Instr']
+                        mysyg_setting.extra_fee_total            = row['ExtraFee']
+                        mysyg_setting.extra_fee_per_day          = row['ExtraFeePerDay']
+                        mysyg_setting.show_sports_on_signup      = row['ShowSportsOnSignup']
+                        mysyg_setting.show_sports_in_mysyg       = row['ShowSportsInMySYG']
+                        mysyg_setting.show_volunteers_in_mysyg   = row['ShowVol']
+                        mysyg_setting.show_finance_in_mysyg      = row['ShowFinance']  
+                        mysyg_setting.show_group_extras_in_mysyg = row['ShowExtras']
+                        mysyg_setting.allow_offsite              = row['AllowOffsite']
+                        mysyg_setting.allow_part_time            = row['AllowPartTime']
+                        mysyg_setting.collect_age_by             = row['AgeOption']
+                        mysyg_setting.require_emerg_contact      = row['RequireEmerg']
+                        mysyg_setting.require_medical            = row['RequireMedical']
+                        mysyg_setting.approve_option             = row['ApproveOption']
+                        mysyg_setting.team_sport_view_strategy   = row['TeamView']
+                        mysyg_setting.indiv_sport_view_strategy  = row['IndivView']
+            
+                        if mysyg_setting.save
+                            updates += 1
+                        else
+                            errors += 1
+                            error_list << mysyg_setting
+                        end
                     end
                 end
             end

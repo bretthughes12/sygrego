@@ -50,10 +50,10 @@ class MysygSettingTest < ActiveSupport::TestCase
   test "should update exiting MySYG settings from file" do
     group = FactoryBot.create(:group, abbr: 'CAF')
     
-    file = fixture_file_upload('mysyg_setting.csv','application/csv')
+    file = fixture_file_upload('mysyg_setting.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('MysygSetting.count') do
-      @result = MysygSetting.import(file, @user)
+      @result = MysygSetting.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -67,10 +67,10 @@ class MysygSettingTest < ActiveSupport::TestCase
 
   test "should not update MySYG settings with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('invalid_mysyg_setting.csv','application/csv')
+    file = fixture_file_upload('invalid_mysyg_setting.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('MysygSetting.count') do
-      @result = MysygSetting.import(file, @user)
+      @result = MysygSetting.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

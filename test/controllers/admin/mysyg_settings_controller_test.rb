@@ -78,7 +78,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
 
   test "should import mysyg settings" do
     group = FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('mysyg_setting.csv','application/csv')
+    file = fixture_file_upload('mysyg_setting.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_no_difference('MysygSetting.count') do
       post import_admin_mysyg_settings_url, params: { mysyg_setting: { file: file }}
@@ -97,6 +97,6 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 end

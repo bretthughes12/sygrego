@@ -11,6 +11,7 @@ class Admin::MysygSettingsController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "mysyg_setting", "mysyg_setting" }
+        format.xlsx { render xlsx: "index", filename: "mysyg_settings.xlsx" }
       end
     end
 
@@ -51,8 +52,8 @@ class Admin::MysygSettingsController < AdminController
   
     # POST /admin/mysyg_settings/import
     def import
-      if params[:mysyg_setting] && params[:mysyg_setting][:file].path =~ %r{\.csv$}i
-        result = MysygSetting.import(params[:mysyg_setting][:file], current_user)
+      if params[:mysyg_setting] && params[:mysyg_setting][:file].path =~ %r{\.xlsx$}i
+        result = MysygSetting.import_excel(params[:mysyg_setting][:file], current_user)
 
         flash[:notice] = "MySYG Settings upload complete: #{result[:creates]} details created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -60,7 +61,7 @@ class Admin::MysygSettingsController < AdminController
           format.html { redirect_to admin_mysyg_settings_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @mysyg_setting = MysygSetting.new
 
         respond_to do |format|
@@ -77,6 +78,7 @@ class Admin::MysygSettingsController < AdminController
                                     :instructions,
                                     :extra_fee_total,
                                     :extra_fee_per_day,
+                                    :show_sports_on_signup,
                                     :show_sports_in_mysyg,
                                     :show_volunteers_in_mysyg,
                                     :show_finance_in_mysyg,
