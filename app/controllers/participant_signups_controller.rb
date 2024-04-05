@@ -12,7 +12,6 @@ class ParticipantSignupsController < ApplicationController
       @participant_signup.coming_saturday = true
       @participant_signup.coming_sunday = true
       @participant_signup.coming_monday = true
-      @participant_signup.coming = true
       @participant_signup.onsite = @group.event_detail.onsite
       @participant_signup.group_id = @group.id
       
@@ -25,6 +24,7 @@ class ParticipantSignupsController < ApplicationController
     def create
       group_name = params[:group]
       @participant_signup = ParticipantSignup.new(params[:participant_signup])
+      @participant_signup.coming = true
       @group = @participant_signup.group || Group.find_by_abbr("DFLT")
       @participant = @participant_signup.participant
 
