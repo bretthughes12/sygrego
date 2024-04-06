@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_093832) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_06_014218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -176,6 +176,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_093832) do
     t.decimal "amount", precision: 8, scale: 2, default: "1.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "expiry_date"
     t.index ["group_id"], name: "index_group_fee_categories_on_group_id"
   end
 
@@ -381,6 +382,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_093832) do
     t.boolean "exported", default: false
     t.boolean "dirty", default: false
     t.bigint "group_fee_category_id"
+    t.date "date_of_birth"
+    t.date "medicare_expiry"
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_fee_category_id"], name: "index_participants_on_group_fee_category_id"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true

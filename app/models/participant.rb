@@ -15,6 +15,7 @@
 #  coming_saturday        :boolean          default(TRUE)
 #  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
+#  date_of_birth          :date
 #  dietary_requirements   :string(255)
 #  dirty                  :boolean          default(FALSE)
 #  driver                 :boolean          default(FALSE)
@@ -38,6 +39,7 @@
 #  licence_type           :string(15)
 #  lock_version           :integer          default(0)
 #  medical_info           :string(255)
+#  medicare_expiry        :date
 #  medicare_number        :string
 #  medications            :string(255)
 #  mobile_phone_number    :string(20)

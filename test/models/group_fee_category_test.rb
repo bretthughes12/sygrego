@@ -6,6 +6,7 @@
 #  adjustment_type :string(15)       default("Add")
 #  amount          :decimal(8, 2)    default(1.0)
 #  description     :string(40)
+#  expiry_date     :date
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  group_id        :bigint           not null
