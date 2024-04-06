@@ -453,6 +453,7 @@ class Gc::ParticipantsController < GcController
         :postcode,
         :phone_number,
         :medicare_number,
+        :medicare_expiry,
         :medical_info,
         :medications,
         :allergies,

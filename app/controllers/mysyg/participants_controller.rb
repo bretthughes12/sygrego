@@ -133,6 +133,7 @@ class Mysyg::ParticipantsController < MysygController
         :postcode,
         :phone_number,
         :medicare_number,
+        :medicare_expiry,
         :medical_info,
         :medications,
         :allergies,

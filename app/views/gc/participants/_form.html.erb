@@ -84,6 +84,7 @@
 	<h2>Medical</h2>
 
 	<%= f.input :medicare_number %>
+	<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
 	<%= f.input :medical_info, label: "Medical information" %>
 	<%= f.input :medications %>
 	<%= f.input :allergies %>

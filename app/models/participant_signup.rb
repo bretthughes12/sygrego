@@ -34,6 +34,7 @@ class ParticipantSignup
                   :years_attended,
                   :wwcc_number,
                   :medicare_number,
+                  :medicare_expiry,
                   :medical_info,
                   :medications,
                   :dietary_requirements,
@@ -59,6 +60,8 @@ class ParticipantSignup
                   :disclaimer
   
     INTEGER_FIELDS = %w[age].freeze
+    DATE_FIELDS = %w[medicare_expiry(1i)].freeze
+    DATE_IGNORE = %w[medicare_expiry(2i) medicare_expiry(3i)].freeze
   
     PARTICIPANT_ATTRIBUTES = [
       :first_name,
@@ -86,6 +89,7 @@ class ParticipantSignup
       :years_attended,
       :wwcc_number,
       :medicare_number,
+      :medicare_expiry, 
       :medical_info,
       :medications,
       :dietary_requirements,
@@ -239,11 +243,16 @@ class ParticipantSignup
       attributes.each do |name, value|
         if INTEGER_FIELDS.include?(name)
           value = value.to_i
+        elsif DATE_FIELDS.include?(name)
+          name = name.partition("(")[0]
+          value = construct_date(name, attributes)
         else
           value = value.strip if value.respond_to?(:strip)
         end
-  
-        send("#{name}=", value)
+
+        unless DATE_IGNORE.include?(name)
+          send("#{name}=", value)
+        end
       end
     end
   
@@ -339,7 +348,17 @@ class ParticipantSignup
     def find_group
       Group.where(id: @group_id).first
     end
-  
+
+    def construct_date(name, attributes)
+      year_attribute = eval("\"#{name}(1i)\"")
+      year = eval("\"#{attributes[year_attribute.to_sym]}\"")
+      month_attribute = eval("\"#{name}(2i)\"")
+      month = eval("\"#{attributes[month_attribute.to_sym]}\"")
+      day_attribute = eval("\"#{name}(3i)\"")
+      day = eval("\"#{attributes[day_attribute.to_sym]}\"")
+      "#{year}-#{month}-#{day}"
+    end 
+
     def normalize_first_name!
       self.first_name = first_name.titleize if first_name
     end
