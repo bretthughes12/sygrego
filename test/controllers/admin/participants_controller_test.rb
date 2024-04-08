@@ -308,7 +308,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should import participants" do
     group = FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('participant.csv','application/csv')
+    file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Participant.count') do
       post import_admin_participants_url, params: { participant: { file: file }}
@@ -326,7 +326,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should get new ticket import" do

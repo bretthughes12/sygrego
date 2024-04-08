@@ -477,10 +477,10 @@ class ParticipantTest < ActiveSupport::TestCase
   
   test "should import participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('participant.csv','application/csv')
+    file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -490,14 +490,14 @@ class ParticipantTest < ActiveSupport::TestCase
   
   test "should import alternate participants from file" do
     FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('participant2.csv','application/csv')
+    file = fixture_file_upload('participant2.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     voucher = FactoryBot.create(:voucher,
       name: "VOUCHER",
       voucher_type: "Set",
       adjustment: 0.0)
 
-    assert_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      assert_difference('Participant.count') do
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -507,10 +507,10 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should assign participants to default group if group not found" do
     group = FactoryBot.create(:group, abbr: "DFLT")
-    file = fixture_file_upload('participant.csv','application/csv')
+    file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -528,10 +528,10 @@ class ParticipantTest < ActiveSupport::TestCase
       group: group,
       first_name: "Amos",
       surname: "Burton")
-    file = fixture_file_upload('participant.csv','application/csv')
+    file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -553,10 +553,10 @@ class ParticipantTest < ActiveSupport::TestCase
       name: "VOUCHER",
       voucher_type: "Set",
       adjustment: 0.0)
-    file = fixture_file_upload('participant2.csv','application/csv')
+    file = fixture_file_upload('participant2.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -570,10 +570,10 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not import participants with errors from file" do
     FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('invalid_participant.csv','application/csv')
+    file = fixture_file_upload('invalid_participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -588,10 +588,10 @@ class ParticipantTest < ActiveSupport::TestCase
       group: group,
       first_name: "Amos",
       surname: "Burton")
-    file = fixture_file_upload('invalid_participant.csv','application/csv')
+    file = fixture_file_upload('invalid_participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Participant.count') do
-      @result = Participant.import(file, @user)
+      @result = Participant.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

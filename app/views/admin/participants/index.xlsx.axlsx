@@ -1,0 +1,73 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+# NOTE: If you add any fields to this, adjust the column fields appropriately
+medicare_exp_col = 20
+
+wb.add_worksheet(name: "Participants") do |sheet|
+	sheet.add_row ["RowID","Group","FirstName","Surname","Coming","Status","Age",
+	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
+				  "Suburb","Postcode","Phone","Mobile",
+	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","YearsAttended",
+				  "Spectator","Onsite","Helper","GC","SC","Guest","Driver","NumberPlate",
+				  "EarlyBird","DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
+				  "WWCC","Voucher","Allergies","EmergEmail","CampPrefs","SportNotes"], 
+		style: header_border
+
+	@participants.each do |participant|
+		sheet.add_row [
+ 		     participant.database_rowid,
+  		     participant.group.abbr,
+  		     participant.first_name,
+			 participant.surname,
+  		     participant.coming,
+  		     participant.status,
+  		     participant.age,
+  		     participant.gender,
+  		     participant.rego_type,
+			 participant.coming_friday,
+			 participant.coming_saturday,
+			 participant.coming_sunday,
+			 participant.coming_monday,
+  		     participant.address,
+  		     participant.suburb,
+  		     participant.postcode,
+  		     participant.phone_number,
+  		     participant.mobile_phone_number,
+  		     participant.email,
+  		     participant.medicare_number,
+  		     participant.medicare_expiry,
+			 participant.medical_info,
+			 participant.medications,
+			 participant.years_attended,
+			 participant.spectator,
+			 participant.onsite,
+			 participant.helper,
+			 participant.group_coord,
+			 participant.sport_coord,
+			 participant.guest,
+			 participant.driver,
+			 participant.number_plate,
+			 participant.early_bird,
+			 participant.dietary_requirements,
+			 participant.emergency_contact,
+			 participant.emergency_relationship,
+			 participant.emergency_phone_number,
+			 participant.wwcc_number,
+			 participant.voucher_code,
+			 participant.allergies,
+			 participant.emergency_email,
+			 participant.camping_preferences,
+			 participant.sport_notes
+		   ],
+		style: row_border
+	end
+
+	sheet.col_style medicare_exp_col, date, row_offset: 1
+end

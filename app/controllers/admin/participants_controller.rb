@@ -12,6 +12,7 @@ class Admin::ParticipantsController < AdminController
     respond_to do |format|
       format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
       format.csv  { render_csv "participant", "participant" }
+      format.xlsx { render xlsx: "index", filename: "participants.xlsx" }
     end
   end
 
@@ -297,8 +298,8 @@ class Admin::ParticipantsController < AdminController
 
   # POST /admin/participants/import
   def import
-    if params[:participant] && params[:participant][:file].path =~ %r{\.csv$}i
-      result = Participant.import(params[:participant][:file], current_user)
+    if params[:participant] && params[:participant][:file].path =~ %r{\.xlsx$}i
+      result = Participant.import_excel(params[:participant][:file], current_user)
 
       flash[:notice] = "Participants upload complete: #{result[:creates]} participants created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -306,7 +307,7 @@ class Admin::ParticipantsController < AdminController
         format.html { redirect_to admin_participants_url }
       end
     else
-      flash[:notice] = "Upload file must be in '.csv' format"
+      flash[:notice] = "Upload file must be in '.xlsx' format"
       @participant = Participant.new
 
       respond_to do |format|

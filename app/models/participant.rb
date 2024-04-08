@@ -742,7 +742,155 @@ class Participant < ApplicationRecord
       { creates: creates, updates: updates, errors: errors, error_list: error_list }
   end
   
-  def self.import_gc(file, group, user)
+  def self.import_excel(file, user)
+    creates = 0
+    updates = 0
+    errors = 0
+    error_list = []
+
+    xlsx = Roo::Spreadsheet.open(file)
+
+    xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+      unless row['RowID'] == 'RowID'
+
+        group = Group.find_by_abbr(row["Group"].to_s)
+        if group.nil?
+          group = Group.find_by_abbr("DFLT")
+        end
+
+        participant = Participant.where(first_name: row["FirstName"], surname: row["Surname"], group_id: group.id).first
+        if row["YearsAttended"].nil? || row["YearsAttended"] == '0'
+          years_attended = nil
+        else
+          years_attended = row["YearsAttended"].to_i
+        end
+        
+        if participant
+          participant.database_rowid          = row["RowID"].to_i
+          participant.coming                  = row["Coming"]
+          participant.status                  = row["Status"]
+          participant.age                     = row["Age"].to_i
+          participant.gender                  = row["Gender"]
+          participant.rego_type               = row["Type"]
+          participant.coming_friday           = row["Friday"]
+          participant.coming_saturday         = row["Saturday"]
+          participant.coming_sunday           = row["Sunday"]
+          participant.coming_monday           = row["Monday"]
+          participant.address                 = row["Address"]
+          participant.suburb                  = row["Suburb"]
+          participant.postcode                = row["Postcode"].to_i
+          participant.phone_number            = row["Phone"]
+          participant.mobile_phone_number     = row["Mobile"]
+          participant.email                   = row["Email"]
+          participant.medicare_number         = row["Medicare"]
+          participant.medicare_expiry         = row["MedicareExpiry"]
+          participant.medical_info            = row["MedicalInfo"]
+          participant.medications             = row["Medications"]
+          participant.years_attended          = years_attended
+          participant.spectator               = row["Spectator"]
+          participant.onsite                  = row["Onsite"]
+          participant.helper                  = row["Helper"]
+          participant.group_coord             = row["GC"]
+          participant.sport_coord             = row["SC"]
+          participant.guest                   = row["Guest"]
+          participant.driver                  = row["Driver"]
+          participant.number_plate            = row["NumberPlate"]
+          participant.early_bird              = row["EarlyBird"]
+          participant.dietary_requirements    = row["DietaryRqmts"]
+          participant.allergies               = row["Allergies"]
+          participant.emergency_contact       = row["EmergContact"]
+          participant.emergency_relationship  = row["EmergRel"]
+          participant.emergency_phone_number  = row["EmergPhone"]
+          participant.emergency_email         = row["EmergEmail"]
+          participant.wwcc_number             = row["WWCC"]
+          participant.camping_preferences     = row["CampPrefs"]
+          participant.sport_notes             = row["SportNotes"]
+          participant.updated_by = user.id
+
+          if participant.save
+            name = row["Voucher"].nil? ? "" : row["Voucher"].strip
+            name.upcase!
+            voucher = Voucher.find_by_name(name)
+      
+            if voucher && voucher.valid_for?(participant)
+              participant.voucher = voucher
+              participant.save
+            end
+
+            updates += 1
+          else
+            errors += 1
+            error_list << participant
+          end
+        else
+          participant = Participant.create(
+              database_rowid:          row["RowID"],
+              group_id:                group.id,
+              first_name:              row["FirstName"],
+              surname:                 row["Surname"],
+              coming:                  row["Coming"],
+              status:                  row["Status"],
+              age:                     row["Age"].to_i,
+              gender:                  row["Gender"],
+              rego_type:               row["Type"],
+              coming_friday:           row["Friday"],
+              coming_saturday:         row["Saturday"],
+              coming_sunday:           row["Sunday"],
+              coming_monday:           row["Monday"],
+              address:                 row["Address"],
+              suburb:                  row["Suburb"],
+              postcode:                row["Postcode"].to_i,
+              phone_number:            row["Phone"],
+              mobile_phone_number:     row["Mobile"],
+              email:                   row["Email"],
+              medicare_number:         row["Medicare"],
+              medicare_expiry:         row["MedicareExpiry"],
+              medical_info:            row["MedicalInfo"],
+              medications:             row["Medications"],
+              years_attended:          years_attended,
+              spectator:               row["Spectator"],
+              onsite:                  row["Onsite"],
+              helper:                  row["Helper"],
+              group_coord:             row["GC"],
+              sport_coord:             row["SC"],
+              guest:                   row["Guest"],
+              driver:                  row["Driver"],
+              number_plate:            row["NumberPlate"],
+              early_bird:              row["EarlyBird"],
+              dietary_requirements:    row["DietaryRqmts"],
+              allergies:               row["Allergies"],
+              emergency_contact:       row["EmergContact"],
+              emergency_relationship:  row["EmergRel"],
+              emergency_phone_number:  row["EmergPhone"],
+              emergency_email:         row["EmergEmail"],
+              wwcc_number:             row["WWCC"],
+              camping_preferences:     row["CampPrefs"],
+              sport_notes:             row["SportNotes"],
+              updated_by:              user.id)
+
+          if participant.errors.empty?
+            name = row["Voucher"].nil? ? "" : row["Voucher"].strip
+            name.upcase!
+            voucher = Voucher.find_by_name(name)
+
+            if voucher && voucher.valid_for?(participant)
+              participant.voucher = voucher
+              participant.save
+            end
+      
+            creates += 1
+          else
+            errors += 1
+            error_list << participant
+          end
+        end
+      end
+    end
+
+    { creates: creates, updates: updates, errors: errors, error_list: error_list }
+end
+
+def self.import_gc(file, group, user)
     creates = 0
     updates = 0
     errors = 0

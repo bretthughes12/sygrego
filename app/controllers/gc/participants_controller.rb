@@ -12,6 +12,7 @@ class Gc::ParticipantsController < GcController
           render layout: @current_role.name
         end
         format.csv  { render_csv "participant", "participant" }
+        format.xlsx { render xlsx: "index", filename: "participants.xlsx" }
       end
     end
 
