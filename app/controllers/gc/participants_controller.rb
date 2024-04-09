@@ -311,11 +311,11 @@ class Gc::ParticipantsController < GcController
       @participant.updated_by = current_user.id
       @participant.accept!
       user = @participant.users.first
-      token = user.get_reset_password_token
+      token = user.get_reset_password_token if user
 
       respond_to do |format|
         flash[:notice] = 'Participant was accepted into your group.'
-        UserMailer.accept_participant(@participant, @group, token).deliver_now
+        UserMailer.accept_participant(@participant, @group, token).deliver_now if token
         format.html { redirect_to approvals_gc_participants_url }
       end
     end
