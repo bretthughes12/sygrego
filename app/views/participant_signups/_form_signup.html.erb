@@ -45,8 +45,13 @@
 
 	<h2>Medical</h2>
 
-	<%= f.input :medicare_number %>
-	<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<% if @group.mysyg_setting.require_emerg_contact %>
+		<%= f.input :medicare_number, required: true %>
+		<%= f.input :medicare_expiry, required: true, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<% else %>
+		<%= f.input :medicare_number %>
+		<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<% end %>
 	<%= f.input :medical_info, label: "Medical information" %>
 	<%= f.input :medications %>
 	<%= f.input :allergies %>

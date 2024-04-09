@@ -83,6 +83,8 @@ class Admin::MysygSettingsController < AdminController
                                     :show_volunteers_in_mysyg,
                                     :show_finance_in_mysyg,
                                     :show_group_extras_in_mysyg,
+                                    :require_emerg_contact,
+                                    :require_medical,
                                     :approve_option,
                                     :team_sport_view_strategy,
                                     :indiv_sport_view_strategy,

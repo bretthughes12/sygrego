@@ -174,6 +174,7 @@ class ParticipantSignup
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
   
+    before_validation :validate_medicare_details
     before_validation :validate_emergency_contact_details
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
@@ -267,6 +268,13 @@ class ParticipantSignup
       end
     end
   
+    def validate_medicare_details
+      if @group.mysyg_setting.require_medical
+        errors.add(:medicare_number, "can't be blank") if medicare_number.blank?
+        errors.add(:medicare_expiry, "can't be blank") if medicare_expiry.blank?
+      end
+    end
+  
     def validate_wwcc_if_over_18
       if age && age.to_i >= 18
         errors.add(:wwcc_number, "can't be blank for over 18's") if wwcc_number.blank?
@@ -356,7 +364,12 @@ class ParticipantSignup
       month = eval("\"#{attributes[month_attribute.to_sym]}\"")
       day_attribute = eval("\"#{name}(3i)\"")
       day = eval("\"#{attributes[day_attribute.to_sym]}\"")
-      "#{year}-#{month}-#{day}"
+
+      if year == "" || month == "" || day == ""
+        nil
+      else
+        "#{year}-#{month}-#{day}".to_date
+      end
     end 
 
     def normalize_first_name!

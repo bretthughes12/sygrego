@@ -22,6 +22,18 @@
 				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br />
 
+	<%= f.input :require_emerg_contact, 
+				label: "Require Emergency Contact for all participants" %>
+	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
+	<br/>
+	<br/>
+	<%= f.input :require_medical, 
+				label: "Require Medicare Card number and Expiry for all participants" %>
+	<%= f.hint  "By default, SYG does not require the Medicare Card number or expiry date. Tick this box if you want to enforce the entry of Medicare Card details for your participants." %>
+
+	<br/>
+	<br/>
+
 	<h2>Extras</h2>
 
 	<p>Use 'Custom Extras' to allow your participants to be able to select things like team uniforms, transport costs, food costs, etc. To set these up for your MySYG site, use the menu option "MySYG > Custom extra costs"</p>
@@ -37,6 +49,10 @@
 
 	<p>Your participants will be able to use their sports tab to select their sports preferences. You will then be able to see these and use them when you are determining which sports to enter.
 	To customise which sports your participants will be able to see and not see, use the menu options "MySYG > Filter <> Sports for Participants".</p>
+
+	<%= f.input :show_sports_on_signup, label: "Show Sports Preferences on Signup" %>
+	<%= f.hint  "tick this box if you want your participants to be able to provide their Sports Preferences when they sign up to your MySYG site." %>
+	<br/>
 	<br />
 
 	<%= f.input :show_sports_in_mysyg, 

@@ -28,6 +28,11 @@
 	<%= f.input :require_emerg_contact, 
 				label: "Require Emergency Contact for all participants" %>
 	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
+	<br/>
+	<br/>
+	<%= f.input :require_medical, 
+				label: "Require Medicare Card number and Expiry for all participants" %>
+	<%= f.hint  "By default, SYG does not require the Medicare Card number or expiry date. Tick this box if you want to enforce the entry of Medicare Card details for your participants." %>
 
 	<br/>
 	<br/>
