@@ -404,6 +404,17 @@ class Participant < ApplicationRecord
       end
     end
 
+    def fee_categories
+      fc = []
+      fc << group_fee_category
+
+      group.group_fee_categories.current.all.each do |c|
+        fc << c unless fc.include?(c)
+      end
+
+      fc
+    end
+
     def group_fee
       if group_fee_category.nil?
         fee + extra_fee

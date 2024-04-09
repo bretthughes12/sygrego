@@ -73,7 +73,8 @@ class Gc::GroupFeeCategoriesController < GcController
       params.require(:group_fee_category).permit(
         :description, 
         :adjustment_type,
-        :amount
+        :amount,
+        :expiry_date
       )
     end
 end

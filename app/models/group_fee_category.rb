@@ -23,6 +23,8 @@ class GroupFeeCategory < ApplicationRecord
   belongs_to :group
   has_many :participants
 
+  scope :current, -> { where(['expiry_date is null OR expiry_date >= ?', Date.today.in_time_zone]) }
+
   TYPES = %w[
     Set
     Add

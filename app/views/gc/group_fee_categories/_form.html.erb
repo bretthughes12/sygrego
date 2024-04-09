@@ -3,7 +3,8 @@
 
     <%= f.input :description %>
     <%= f.input :adjustment_type, as: :select, label: "How to adjust", hint: "'Add' and 'Subtract' are in addition to the SYG fee; 'Set' replaces the SYG fee  with your own total", collection: GroupFeeCategory::TYPES, include_blank: false %>
-    <%= f.input :amount, labbel: "Adjustment amount" %>
+    <%= f.input :amount, label: "Adjustment amount" %>
+    <%= f.input :expiry_date, as: :date, include_blank: true %>
 
     <br/>
 
