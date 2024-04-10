@@ -11,7 +11,11 @@
 	<%= f.input :surname %>
 	<%= f.input :onsite, as: :boolean, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
 	<%= f.input :spectator, as: :boolean %>
-	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
+	<% if @group.mysyg_setting.collect_age_by == "Age" %>
+		<%= f.input :age, required: true, hint: "as at #{@settings.first_day_of_syg}" %>
+	<% else %>
+		<%= f.input :date_of_birth, required: true, as: :date, start_year: Date.today.year - 80 %>
+	<% end %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number (required for participants 18 and over)" %>
 	<% unless @group.group_fee_categories.empty? %>

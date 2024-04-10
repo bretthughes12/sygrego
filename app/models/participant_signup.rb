@@ -18,6 +18,7 @@ class ParticipantSignup
                   :spectator,
                   :onsite,
                   :age,
+                  :date_of_birth,
                   :gender,
                   :coming_friday,
                   :coming_saturday,
@@ -60,8 +61,8 @@ class ParticipantSignup
                   :disclaimer
   
     INTEGER_FIELDS = %w[age].freeze
-    DATE_FIELDS = %w[medicare_expiry(1i)].freeze
-    DATE_IGNORE = %w[medicare_expiry(2i) medicare_expiry(3i)].freeze
+    DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
+    DATE_IGNORE = %w[medicare_expiry(2i) medicare_expiry(3i) date_of_birth(2i) date_of_birth(3i)].freeze
   
     PARTICIPANT_ATTRIBUTES = [
       :first_name,
@@ -71,6 +72,7 @@ class ParticipantSignup
       :coming,
       :status,
       :age,
+      :date_of_birth,
       :onsite,
       :gender,
       :coming_friday,
@@ -141,9 +143,9 @@ class ParticipantSignup
     validates :login_name,             length: { maximum: 40 }
     validates :status,                 presence: true,
                                        inclusion: { in: STATUSES, message: 'status is invalid value' }
-    validates :age,                    presence: true,
-                                       numericality: { only_integer: true },
-                                       inclusion: { in: 0..130, message: 'should be between 0 and 130' }
+    validates :age,                    numericality: { only_integer: true },
+                                       inclusion: { in: 0..130, message: 'should be between 0 and 130' },
+                                       allow_blank: true
     validates :gender,                 presence: true,
                                        length: { maximum: 1 },
                                        inclusion: { in: %w[m f u M F U], message: "should be 'Male', 'Female' or 'Prefer not to say'" }
@@ -174,6 +176,8 @@ class ParticipantSignup
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
   
+    before_validation :calculate_age
+    before_validation :validate_age_or_dob
     before_validation :validate_medicare_details
     before_validation :validate_emergency_contact_details
     before_validation :validate_wwcc_if_over_18
@@ -258,6 +262,14 @@ class ParticipantSignup
     end
   
     private
+  
+    def validate_age_or_dob
+      if @group.mysyg_setting.collect_age_by == "Age"
+        errors.add(:age, "can't be blank") if age.blank?
+      else
+        errors.add(:date_of_birth, "can't be blank") if date_of_birth.nil?
+      end
+    end
   
     def validate_emergency_contact_details
       if (age && age.to_i < 18) || @group.mysyg_setting.require_emerg_contact
@@ -371,6 +383,14 @@ class ParticipantSignup
         "#{year}-#{month}-#{day}".to_date
       end
     end 
+
+    def calculate_age
+      if age.nil? && !date_of_birth.nil?
+        s = Setting.first
+        @age = s.first_day_of_syg.year - date_of_birth.year
+        @age -= 1 if s.first_day_of_syg < date_of_birth + @age.years
+      end
+    end
 
     def normalize_first_name!
       self.first_name = first_name.titleize if first_name

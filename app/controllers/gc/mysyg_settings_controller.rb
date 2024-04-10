@@ -87,6 +87,7 @@ class Gc::MysygSettingsController < GcController
         :instructions,
         :extra_fee_total,
         :extra_fee_per_day,
+        :collect_age_by,
         :require_emerg_contact,
         :require_medical,
         :show_sports_on_signup,
