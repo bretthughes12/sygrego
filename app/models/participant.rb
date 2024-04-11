@@ -781,6 +781,7 @@ class Participant < ApplicationRecord
           participant.database_rowid          = row["RowID"].to_i
           participant.coming                  = row["Coming"]
           participant.status                  = row["Status"]
+          participant.date_of_birth           = row["DOB"]
           participant.age                     = row["Age"].to_i
           participant.gender                  = row["Gender"]
           participant.rego_type               = row["Type"]
@@ -842,6 +843,7 @@ class Participant < ApplicationRecord
               surname:                 row["Surname"],
               coming:                  row["Coming"],
               status:                  row["Status"],
+              date_of_birth:           row["DOB"],
               age:                     row["Age"].to_i,
               gender:                  row["Gender"],
               rego_type:               row["Type"],

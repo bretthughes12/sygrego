@@ -8,10 +8,11 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
-medicare_exp_col = 20
+dob_col = 6
+medicare_exp_col = 21
 
 wb.add_worksheet(name: "Participants") do |sheet|
-	sheet.add_row ["RowID","Group","FirstName","Surname","Coming","Status","Age",
+	sheet.add_row ["RowID","Group","FirstName","Surname","Coming","Status","DOB","Age",
 	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
 				  "Suburb","Postcode","Phone","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","YearsAttended",
@@ -28,6 +29,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.surname,
   		     participant.coming,
   		     participant.status,
+  		     participant.date_of_birth,
   		     participant.age,
   		     participant.gender,
   		     participant.rego_type,
@@ -69,5 +71,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
 		style: row_border
 	end
 
+	sheet.col_style dob_col, date, row_offset: 1
 	sheet.col_style medicare_exp_col, date, row_offset: 1
 end
