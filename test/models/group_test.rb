@@ -59,6 +59,7 @@ class GroupTest < ActiveSupport::TestCase
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group, name: "Order1")
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
   end
 
@@ -126,6 +127,7 @@ class GroupTest < ActiveSupport::TestCase
   def test_group_fees
     #group has people registered
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
@@ -140,6 +142,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #group has one participant, who is not coming
     group_with_noone_coming = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group_with_noone_coming)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group_with_noone_coming)
@@ -152,6 +155,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #group has one normal camper - fees is not greater than deposit
     group_with_one_coming = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group_with_one_coming)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group_with_one_coming)
@@ -181,6 +185,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the amount payable" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
@@ -196,6 +201,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the amount outstanding" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     event_detail = FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
@@ -220,6 +226,7 @@ class GroupTest < ActiveSupport::TestCase
   def test_division_boundaries
     #Small church
     small_church = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: small_church)
     FactoryBot.create(:event_detail, group: small_church)
     @setting.small_division_ceiling.times do
       FactoryBot.create(:participant, 
@@ -234,6 +241,7 @@ class GroupTest < ActiveSupport::TestCase
 
     #Medium church
     medium_church_low = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: medium_church_low)
     FactoryBot.create(:event_detail, group: medium_church_low)
     (@setting.small_division_ceiling + 1).times do
       FactoryBot.create(:participant, 
@@ -244,6 +252,7 @@ class GroupTest < ActiveSupport::TestCase
     medium_church_low.reload
 
     medium_church_high = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: medium_church_high)
     FactoryBot.create(:event_detail, group: medium_church_high)
     @setting.medium_division_ceiling.times do
       FactoryBot.create(:participant, 
@@ -259,6 +268,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #Large church
     large_church = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: large_church)
     FactoryBot.create(:event_detail, group: large_church)
     (@setting.medium_division_ceiling + 1).times do
       FactoryBot.create(:participant, 
@@ -273,6 +283,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #X-Large church
     x_large_church = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: x_large_church)
     FactoryBot.create(:event_detail, group: x_large_church)
     81.times do
       FactoryBot.create(:participant, 
@@ -315,6 +326,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should determine participants allowed per session" do
     # based on estimated numbers
     ed = FactoryBot.create(:event_detail, estimated_numbers: 10)
+    FactoryBot.create(:mysyg_setting, group: ed.group)
     assert_equal 15, ed.group.participants_allowed_per_session
 
     # based on actual numbers
@@ -327,6 +339,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the number playing sport" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     12.times do
       FactoryBot.create(:participant, 
@@ -342,6 +355,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should determine helpers allowed" do
     # basic number
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     assert_equal 0, group.helpers_allowed
 
@@ -680,6 +694,7 @@ class GroupTest < ActiveSupport::TestCase
 
   def test_group_entries_requiring_participants
     other_group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: other_group)
     participant1 = FactoryBot.create(:participant, group: @group)
     participant2 = FactoryBot.create(:participant, group: @group)
     singles_grade = FactoryBot.create(:grade,
@@ -740,6 +755,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should list all entries requiring males" do
     other_group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: other_group)
     participant1 = FactoryBot.create(:participant, group: @group, gender: "M")
     participant2 = FactoryBot.create(:participant, group: @group, gender: "F")
     mens_grade = FactoryBot.create(:grade,
@@ -820,6 +836,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should list all entries requiring females" do
     other_group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: other_group)
     participant1 = FactoryBot.create(:participant, group: @group, gender: "M")
     participant2 = FactoryBot.create(:participant, group: @group, gender: "F")
     mens_grade = FactoryBot.create(:grade,

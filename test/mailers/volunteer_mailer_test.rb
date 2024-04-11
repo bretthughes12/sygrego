@@ -12,6 +12,7 @@ class VolunteerMailerTest < ActionMailer::TestCase
     
     def test_sport_coordinator_email
       group = FactoryBot.create(:group)
+      FactoryBot.create(:mysyg_setting, group: group)
       FactoryBot.create(:event_detail, group: group)
       section = FactoryBot.create(:section)
       participant = FactoryBot.create(:participant, group: group)

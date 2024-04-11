@@ -127,6 +127,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   test "should edit volunteer returning gear" do
     sun = FactoryBot.create(:session, :sunday)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, 
@@ -164,6 +165,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   test "should update volunteer collecting gear" do
     sat = FactoryBot.create(:session, :saturday)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, 
@@ -185,6 +187,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   test "should not update volunteer collecting gear with errors" do
     sat = FactoryBot.create(:session, :saturday)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, 
@@ -205,6 +208,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   test "should update volunteer returning gear" do
     sun = FactoryBot.create(:session, :sunday)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, 
@@ -226,6 +230,7 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   test "should not update volunteer returning gear with errors" do
     sat = FactoryBot.create(:session, :saturday)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     volunteer = FactoryBot.create(:volunteer, 

@@ -8,6 +8,7 @@ class ParticipantSignupTest < ActiveSupport::TestCase
     @user = FactoryBot.create(:user)
     FactoryBot.create(:setting)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
   end
 

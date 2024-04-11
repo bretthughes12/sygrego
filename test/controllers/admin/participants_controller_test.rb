@@ -130,6 +130,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get day visitors" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -140,6 +141,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should download day visitors" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -169,6 +171,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get new day visitor" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
 
     get new_day_visitor_admin_participants_url
@@ -178,6 +181,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create participant" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
 
     assert_difference('Participant.count') do
       post admin_participants_path, params: { participant: FactoryBot.attributes_for(:participant, group_id: group.id) }
@@ -199,6 +203,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create day visitor" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -215,6 +220,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not create day visitor with errors" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -236,6 +242,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should edit day visitor" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -270,6 +277,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update day visitor" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -287,6 +295,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not update day visitor with errors" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
@@ -308,6 +317,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should import participants" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
     file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Participant.count') do
@@ -337,6 +347,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should import ticket data" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: @group, id: 1234)
     file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -437,6 +448,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy day visitor" do
     group = FactoryBot.create(:group, abbr: "DAY")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 

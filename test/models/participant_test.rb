@@ -476,7 +476,9 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "should import participants from file" do
-    FactoryBot.create(:group, abbr: "CAF")
+    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
+
     file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Participant.count') do
@@ -489,14 +491,16 @@ class ParticipantTest < ActiveSupport::TestCase
   end
   
   test "should import alternate participants from file" do
-    FactoryBot.create(:group, abbr: "CAF")
+    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
+
     file = fixture_file_upload('participant2.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     voucher = FactoryBot.create(:voucher,
       name: "VOUCHER",
       voucher_type: "Set",
       adjustment: 0.0)
 
-      assert_difference('Participant.count') do
+    assert_difference('Participant.count') do
       @result = Participant.import_excel(file, @user)
     end
 
@@ -507,6 +511,8 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should assign participants to default group if group not found" do
     group = FactoryBot.create(:group, abbr: "DFLT")
+    FactoryBot.create(:mysyg_setting, group: group)
+    
     file = fixture_file_upload('participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Participant.count') do
@@ -523,6 +529,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update exiting participants from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -544,6 +551,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update exiting participants from file and assign voucher" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -569,7 +577,9 @@ class ParticipantTest < ActiveSupport::TestCase
   end
 
   test "should not import participants with errors from file" do
-    FactoryBot.create(:group, abbr: "CAF")
+    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
+
     file = fixture_file_upload('invalid_participant.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Participant.count') do
@@ -583,6 +593,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not update participants with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -604,6 +615,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should import GC participants from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     file = fixture_file_upload('participant_gc.csv','application/csv')
     
     assert_difference('Participant.count') do
@@ -617,6 +629,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should import alternate GC participants from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     file = fixture_file_upload('participant2_gc.csv','application/csv')
     
     assert_difference('Participant.count') do
@@ -630,6 +643,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update exiting GC participants from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -651,6 +665,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not import GC participants with errors from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     file = fixture_file_upload('invalid_participant_gc.csv','application/csv')
     
     assert_no_difference('Participant.count') do
@@ -664,6 +679,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not update GC participants with errors from file" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -685,6 +701,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should import day visitors from ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     file = fixture_file_upload('tickets.csv','application/csv')
     
@@ -700,6 +717,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update existing day visitors from ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -721,6 +739,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not import invalid day visitors from ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     file = fixture_file_upload('invalid_tickets.csv','application/csv')
     
@@ -736,6 +755,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should import day visitors from excel ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
@@ -751,6 +771,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should update existing day visitors from excel ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group,
@@ -772,6 +793,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should not import invalid day visitors from excel ticket file" do
     group = FactoryBot.create(:group, abbr: 'DAY')
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     file = fixture_file_upload('invalid_tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
@@ -787,6 +809,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should force participant to offsite when group is offsite" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, 
       group: group,
       onsite: false)
@@ -800,6 +823,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should remove participant from sport entries when changed to not coming" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, 
       group: group)
     participant = FactoryBot.create(:participant, 
@@ -822,6 +846,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should remove participant from sport entries when changed to spectator" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, 
       group: group)
     participant = FactoryBot.create(:participant, 
@@ -845,6 +870,7 @@ class ParticipantTest < ActiveSupport::TestCase
 
   test "should remove participant from volunteers when destroyed" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, 
       group: group)
     participant = FactoryBot.create(:participant, 

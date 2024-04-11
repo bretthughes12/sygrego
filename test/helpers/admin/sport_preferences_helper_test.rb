@@ -8,6 +8,7 @@ class Admin::SportPreferencesHelperTest < ActionView::TestCase
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
     @player = FactoryBot.create(:participant, group: @group)
     @pref = FactoryBot.create(:sport_preference, participant: @player)

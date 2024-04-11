@@ -5,6 +5,7 @@ class Api::ParticipantsSportEntriesControllerTest < ActionDispatch::IntegrationT
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :admin)
     @sport_entry = FactoryBot.create(:sport_entry)
+    FactoryBot.create(:mysyg_setting, group: @sport_entry.group)
     @participant1 = FactoryBot.create(:participant, group_id: @sport_entry.group_id)
     @participant2 = FactoryBot.create(:participant, group_id: @sport_entry.group_id)
     @sport_entry.participants << @participant1

@@ -405,6 +405,7 @@ private
       :coming,
       :lock_version,
       :age,
+      :date_of_birth,
       :gender,
       :coming_friday,
       :coming_saturday,

@@ -8,6 +8,7 @@ class Gc::UsersControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :gc)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
     @church_rep = FactoryBot.create(:user, :church_rep)
     @user.groups << @group

@@ -62,6 +62,7 @@ class SportTest < ActiveSupport::TestCase
     entry = FactoryBot.create(:sport_entry, grade: grade)
     group = entry.group
     FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:mysyg_setting, group: group)
     participant = FactoryBot.create(:participant, group: entry.group)
     entry.participants << participant
     

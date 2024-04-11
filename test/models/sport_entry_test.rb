@@ -61,6 +61,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_name
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant1 = FactoryBot.create(:participant, group: group)
     participant2 = FactoryBot.create(:participant, group: group)
@@ -116,6 +117,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_participants
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant1 = FactoryBot.create(:participant, group: group)
     participant2 = FactoryBot.create(:participant, group: group)
@@ -174,6 +176,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_males
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     male_participant = FactoryBot.create(:participant, 
       group: group,
@@ -201,6 +204,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   def test_sport_entry_requires_females
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     female_participant = FactoryBot.create(:participant, 
       group: group,
@@ -228,6 +232,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "sport entry should identify issues" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     male_participant = FactoryBot.create(:participant, 
       group: group,
@@ -359,6 +364,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "should include available sport preferences" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group)
@@ -432,6 +438,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "should assign entry to sport coord section" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group)
@@ -456,6 +463,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "should not assign entry to other group sport coord" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group)
@@ -479,6 +487,7 @@ class SportEntryTest < ActiveSupport::TestCase
 
   test "should remove participants from entry on destroy" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, 
       group: group)
@@ -661,6 +670,7 @@ class SportEntryTest < ActiveSupport::TestCase
     grade = FactoryBot.create(:grade, max_participants: 1)
     entry = FactoryBot.create(:sport_entry, grade: grade)
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     participant = FactoryBot.create(:participant, group: group)
     entry.participants << participant

@@ -48,6 +48,7 @@ class GradeTest < ActiveSupport::TestCase
     @setting = FactoryBot.create(:setting)
     @grade = FactoryBot.create(:grade, name: "Order1")
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
   end
 

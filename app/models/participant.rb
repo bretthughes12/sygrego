@@ -241,6 +241,7 @@ class Participant < ApplicationRecord
     before_destroy :remove_sport_entries!
     after_destroy :release_volunteers!
 
+    before_save :calculate_age
     before_save :normalize_phone_numbers!
     before_save :normalize_medical_info!
     before_save :normalize_medications!
@@ -1275,6 +1276,14 @@ private
       o.email = nil
       o.t_shirt_size = nil
       o.save(validate: false)
+    end
+  end
+
+  def calculate_age
+    if group.mysyg_setting.collect_age_by == "Date of Birth" && !date_of_birth.nil?
+      s = Setting.first
+      self.age = s.first_day_of_syg.year - date_of_birth.year
+      self.age -= 1 if s.first_day_of_syg < date_of_birth + self.age.years
     end
   end
 

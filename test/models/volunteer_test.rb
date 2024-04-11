@@ -47,6 +47,7 @@ class VolunteerTest < ActiveSupport::TestCase
     @volunteer_with_session = FactoryBot.create(:volunteer,
       session: FactoryBot.create(:session))
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
   end
 
@@ -127,6 +128,7 @@ class VolunteerTest < ActiveSupport::TestCase
   
   test "email recipients should include group email recipients when no volunteer email" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     user = FactoryBot.create(:user, :gc)
     group.users << user

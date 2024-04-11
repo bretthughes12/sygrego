@@ -64,6 +64,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     test "should send a welcome participant email" do
       group = FactoryBot.create(:group, lock_version: 0)
+      FactoryBot.create(:mysyg_setting, group: group)
       FactoryBot.create(:event_detail, group: group)
       participant = FactoryBot.create(:participant, group: group)
       user = FactoryBot.create(:user)
@@ -82,6 +83,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     test "should send a reject participant email" do
       group = FactoryBot.create(:group, lock_version: 0)
+      FactoryBot.create(:mysyg_setting, group: group)
       FactoryBot.create(:event_detail, group: group)
       participant = FactoryBot.create(:participant, group: group)
       user = FactoryBot.create(:user)
@@ -100,6 +102,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     test "should send an accept participant email" do
       group = FactoryBot.create(:group, lock_version: 0)
+      FactoryBot.create(:mysyg_setting, group: group)
       FactoryBot.create(:event_detail, group: group)
       participant = FactoryBot.create(:participant, group: group)
       user = FactoryBot.create(:user)
@@ -118,6 +121,7 @@ class UserMailerTest < ActionMailer::TestCase
     
     test "should send a new participant email" do
       group = FactoryBot.create(:group, lock_version: 0)
+      FactoryBot.create(:mysyg_setting, group: group)
       FactoryBot.create(:event_detail, group: group)
       gc = FactoryBot.create(:user)
       gc.roles << @gc_role

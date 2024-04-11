@@ -44,6 +44,7 @@ class Admin::ReportsControllerTest < ActionDispatch::IntegrationTest
   test "should get gender summary" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:event_detail, group: group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:participant, group: group, gender: "U")
 
     get gender_summary_admin_reports_url

@@ -26,6 +26,7 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
 
   test "should prepare admin participants chart" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     FactoryBot.create(:participant, group: group, spectator: false)
 
@@ -121,6 +122,7 @@ class ChartsControllerTest < ActionDispatch::IntegrationTest
 
   test "should prepare gc participants chart" do
     group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
     FactoryBot.create(:participant, group: group, spectator: false)
     gc = FactoryBot.create(:user, :gc)

@@ -45,7 +45,22 @@
 	<%= f.input :early_bird, label: "Early Bird Discount" %>
 
 	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
-	<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
+	<% if @participant.new_record? || @participant.group.mysyg_setting.collect_age_by == "Age" %>
+		<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
+	<% else %>
+		<%= f.input :date_of_birth, required: true, as: :date, start_year: Date.today.year - 80 %>
+		<br/>
+		<table class="table table-dark table-striped">
+			<tr>
+				<td> 
+					<strong>Age</strong>
+				</td>
+				<td> 
+					<%= @participant.age %>
+				</td>
+			</tr>
+		</table>
+	<% end %>
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number" %>
 

@@ -8,6 +8,7 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     @user = FactoryBot.create(:user)
     @setting = FactoryBot.create(:setting)
     @group = FactoryBot.create(:group)
+    FactoryBot.create(:mysyg_setting, group: @group)
     FactoryBot.create(:event_detail, group: @group)
     @participant = FactoryBot.create(:participant, group: @group)
   end
