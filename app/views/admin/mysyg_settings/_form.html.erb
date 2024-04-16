@@ -22,6 +22,24 @@
 				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br />
 
+	<%= f.input :allow_part_time, 
+				label: "Allow participants to come part-time" %>
+	<%= f.hint  "By default, SYG allows participants to specify which days they will be attending SYG. Untick this box if you only want to present a 'full time' option to your participants." %>
+	<br/>
+	<br/>
+	<% if @mysyg_setting.group.event_detail.onsite %>
+		<%= f.input :allow_offsite, 
+					label: "Allow participants to be Day Visitors" %>
+		<%= f.hint  "By default, SYG allows participants to specify if they are staying onsite with you or not. Unlick this box if you want to remove this as an option for your participants." %>
+		<br/>
+		<br/>
+	<% end %>
+	<%= f.input :collect_age_by, 
+	            as: :select,
+				collection: MysygSetting::AGE_OPTIONS,
+				label: "How to determine the age of your participants",
+				hint: "'Age' means your participants will enter the age they will be at the start of State Youth Games. 'Date of Birth' means they enter this instead and their age at the start of SYG iss calculated." %>
+	<br/>
 	<%= f.input :require_emerg_contact, 
 				label: "Require Emergency Contact for all participants" %>
 	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>

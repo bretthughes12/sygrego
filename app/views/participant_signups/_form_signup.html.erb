@@ -9,7 +9,11 @@
 
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
-	<%= f.input :onsite, as: :boolean, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
+	<% if @group.mysyg_setting.allow_offsite %>
+		<%= f.input :onsite, as: :boolean, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
+	<% else %>
+		<%= f.input :onsite, as: :hidden %>
+	<% end %>
 	<%= f.input :spectator, as: :boolean %>
 	<% if @group.mysyg_setting.collect_age_by == "Age" %>
 		<%= f.input :age, required: true, hint: "as at #{@settings.first_day_of_syg}" %>
@@ -23,11 +27,18 @@
 	<% end %>
 	<%= f.input :voucher_name, label: "Voucher" %>
 	<br/>
-	<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant_signup.participant) %>"><%= @participant_signup.participant.rego_type %></span></div>
-	<%= f.input :coming_friday, as: :boolean, label: "Friday" %>
-	<%= f.input :coming_saturday, as: :boolean, label: "Saturday" %>
-	<%= f.input :coming_sunday, as: :boolean, label: "Sunday" %>
-	<%= f.input :coming_monday, as: :boolean, label: "Monday" %>
+	<% if @group.mysyg_setting.allow_part_time %>
+		<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant_signup.participant) %>"><%= @participant_signup.participant.rego_type %></span></div>
+		<%= f.input :coming_friday, as: :boolean, label: "Friday" %>
+		<%= f.input :coming_saturday, as: :boolean, label: "Saturday" %>
+		<%= f.input :coming_sunday, as: :boolean, label: "Sunday" %>
+		<%= f.input :coming_monday, as: :boolean, label: "Monday" %>
+	<% else %>
+		<%= f.input :coming_friday, as: :hidden %>
+		<%= f.input :coming_saturday, as: :hidden %>
+		<%= f.input :coming_sunday, as: :hidden %>
+		<%= f.input :coming_monday, as: :hidden%>
+	<% end %>
 
 	<br/>
 

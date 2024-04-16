@@ -25,6 +25,18 @@
 				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br/>
 
+	<%= f.input :allow_part_time, 
+				label: "Allow participants to come part-time" %>
+	<%= f.hint  "By default, SYG allows participants to specify which days they will be attending SYG. Untick this box if you only want to present a 'full time' option to your participants." %>
+	<br/>
+	<br/>
+	<% if @group.event_detail.onsite %>
+		<%= f.input :allow_offsite, 
+					label: "Allow participants to be Day Visitors" %>
+		<%= f.hint  "By default, SYG allows participants to specify if they are staying onsite with you or not. Unlick this box if you want to remove this as an option for your participants." %>
+		<br/>
+		<br/>
+	<% end %>
 	<%= f.input :collect_age_by, 
 	            as: :select,
 				collection: MysygSetting::AGE_OPTIONS,

@@ -6,8 +6,11 @@ class Gc::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
   def setup
     FactoryBot.create(:setting)
     @user = FactoryBot.create(:user, :gc)
-    @mysyg_setting = FactoryBot.create(:mysyg_setting)
-    @user.groups << @mysyg_setting.group
+    @group = FactoryBot.create(:group)
+    @mysyg_setting = FactoryBot.create(:mysyg_setting, group: @group)
+    FactoryBot.create(:event_detail, 
+      group: @group)
+    @user.groups << @group
     
     sign_in @user
   end
