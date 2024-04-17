@@ -1,0 +1,20 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Sport Notes") do |sheet|
+	sheet.add_row ["Name","SportNotes"], 
+		style: header_border
+
+	@participants.each do |participant|
+		sheet.add_row [
+  		     participant.name,
+			 participant.sport_notes
+		   ],
+		style: row_border
+	end
+end

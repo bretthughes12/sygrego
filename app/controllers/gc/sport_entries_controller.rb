@@ -17,6 +17,7 @@ class Gc::SportEntriesController < GcController
           render layout: @current_role.name
         end
         format.csv  { render_csv "sport_entries", "sport_entries" }
+        format.xlsx { render xlsx: "sport_entries", filename: "sport_entries.xlsx" }
       end
     end
   

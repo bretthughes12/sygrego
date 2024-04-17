@@ -1,0 +1,41 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Sport Entries") do |sheet|
+	sheet.add_row ["Type","Session","Sport Grade",
+			"Venue", "Team", "Team Size",
+			"Number of Participants","Captain","Participants"], 
+		style: header_border
+
+	@sport_entries.each do |e|
+		participants = e.participants.clone
+		if e.captaincy.nil?
+			captain_name = nil
+		else
+			captain_name = e.captaincy.name
+			participants = participants.to_a.delete_if { |p| p == e.captaincy }
+		end
+
+		players = []
+		players = participants.collect do |p|
+			p.name
+		end
+
+		sheet.add_row [
+			 e.grade.sport.classification, 
+			 e.session_name, 
+			 e.section_name,  
+			 e.venue_name,
+			 e.name,
+			 e.grade.team_size,
+			 e.participants.size,
+			 captain_name
+			] + players,
+		style: row_border
+	end
+end

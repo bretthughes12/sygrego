@@ -7,7 +7,7 @@
 <br/>
 
 <% unless @sport_preferences.empty? %>
-    <%= link_to "Download", gc_sport_preferences_path(format: :csv),
+    <%= link_to "Download", gc_sport_preferences_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 
@@ -28,7 +28,7 @@
         <%= render @sport_preferences %>
     </table>
 
-    <%= link_to "Download", gc_sport_preferences_path(format: :csv),
+    <%= link_to "Download", gc_sport_preferences_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <% end %>

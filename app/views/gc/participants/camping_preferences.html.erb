@@ -3,7 +3,7 @@
 <h1><%= yield(:title) %></h1>
     
 <% if !@participants.empty? %>
-    <%= link_to "Download", camping_preferences_gc_participants_path(format: :csv),
+    <%= link_to "Download", camping_preferences_gc_participants_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
     
@@ -21,7 +21,7 @@
         <%= render partial: 'participant_camping_preferences', collection: @participants, as: :participant %>
     </table>
 
-    <%= link_to "Download", camping_preferences_gc_participants_path(format: :csv),
+    <%= link_to "Download", camping_preferences_gc_participants_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <% end %>
