@@ -2,7 +2,7 @@
 	<%= f.error_notification %>
 
 	<%= f.input :lock_version, as: :hidden %>
-	<% unless @group.group_fee_categories.empty? %>
+	<% unless @participant.fee_categories.empty? %>
 		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @participant.fee_categories, label_method: :description, include_blank: false %>
 	<% end %>
 	<%= f.input :amount_paid %>
