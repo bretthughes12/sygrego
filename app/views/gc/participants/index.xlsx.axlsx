@@ -16,7 +16,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
 				  "Suburb","Postcode","Phone","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
-				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate",
+				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate","EarlyBird",
 				  "DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
 				  "EmergEmail","WWCC","CampPrefs","Voucher"], 
 		style: header_border
@@ -60,6 +60,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.emergency_phone_number,
 			 participant.emergency_email,
 			 participant.camping_preferences,
+			 participant.wwcc_number,
 			 voucher
 		   ],
 		style: row_border
