@@ -10,6 +10,7 @@
 #  extra_fee_per_day          :decimal(8, 2)    default(0.0)
 #  extra_fee_total            :decimal(8, 2)    default(0.0)
 #  indiv_sport_view_strategy  :string           default("Show all")
+#  medicare_option            :string(10)       default("Show")
 #  mysyg_code                 :string(25)
 #  mysyg_enabled              :boolean          default(FALSE)
 #  mysyg_name                 :string(50)

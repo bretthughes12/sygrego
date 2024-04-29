@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_06_014218) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_29_095403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -293,6 +293,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_06_014218) do
     t.boolean "allow_part_time", default: true
     t.boolean "allow_offsite", default: true
     t.boolean "require_medical", default: false
+    t.string "medicare_option", limit: 10, default: "Show"
     t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
   end
 
