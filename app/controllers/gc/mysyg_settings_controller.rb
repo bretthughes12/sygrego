@@ -91,7 +91,7 @@ class Gc::MysygSettingsController < GcController
         :allow_offsite,
         :collect_age_by,
         :require_emerg_contact,
-        :require_medical,
+        :medicare_option,
         :show_sports_on_signup,
         :show_sports_in_mysyg,
         :show_volunteers_in_mysyg,

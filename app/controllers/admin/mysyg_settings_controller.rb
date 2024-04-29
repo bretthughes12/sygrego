@@ -87,7 +87,7 @@ class Admin::MysygSettingsController < AdminController
                                     :allow_offsite,
                                     :collect_age_by,
                                     :require_emerg_contact,
-                                    :require_medical,
+                                    :medicare_option,
                                     :approve_option,
                                     :team_sport_view_strategy,
                                     :indiv_sport_view_strategy,

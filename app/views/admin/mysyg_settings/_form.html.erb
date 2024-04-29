@@ -45,9 +45,12 @@
 	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
 	<br/>
 	<br/>
-	<%= f.input :require_medical, 
-				label: "Require Medicare Card number and Expiry for all participants" %>
-	<%= f.hint  "By default, SYG does not require the Medicare Card number or expiry date. Tick this box if you want to enforce the entry of Medicare Card details for your participants." %>
+	<%= f.input :medicare_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Medicare Card number and Expiry",
+	            hint: "By default, SYG shows and does not require the Medicare Card number or expiry date. 'Show' is the default as described. 'Hide' will hide these two fields from your participants. Select 'Require' if you want to enforce the entry of Medicare Card details for your participants." %>
 
 	<br/>
 	<br/>

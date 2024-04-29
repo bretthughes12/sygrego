@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "MySYG") do |sheet|
-	sheet.add_row ["RowID","Abbr","Enabled","Open","Instr","ExtraFee","ExtraFeePerDay","ShowSportsOnSignup","ShowSportsInMySYG","ShowVol","ShowFinance","ShowExtras","AllowOffsite","AllowPartTime","AgeOption","RequireEmerg","RequireMedical","ApproveOption","TeamView","IndivView"], 
+	sheet.add_row ["RowID","Abbr","Enabled","Open","Instr","ExtraFee","ExtraFeePerDay","ShowSportsOnSignup","ShowSportsInMySYG","ShowVol","ShowFinance","ShowExtras","AllowOffsite","AllowPartTime","AgeOption","RequireEmerg","MedicareOption","ApproveOption","TeamView","IndivView"], 
 		style: header_border
 
 	@mysyg_settings.each do |mysyg_setting|
@@ -28,7 +28,7 @@ wb.add_worksheet(name: "MySYG") do |sheet|
   		    mysyg_setting.allow_part_time,
   		    mysyg_setting.collect_age_by,
   		    mysyg_setting.require_emerg_contact,
-  		    mysyg_setting.require_medical,
+  		    mysyg_setting.medicare_option,
   		    mysyg_setting.approve_option,
   		    mysyg_setting.team_sport_view_strategy,
   		    mysyg_setting.indiv_sport_view_strategy

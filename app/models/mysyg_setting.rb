@@ -53,6 +53,10 @@ class MysygSetting < ApplicationRecord
         Normal
         Strict].freeze
 
+    FIELD_OPTIONS = %w[Show
+        Hide
+        Require].freeze
+
     VIEW_STRATEGIES = ['Show all',
         'Show none',
         'Show sport entries only',
@@ -66,6 +70,9 @@ class MysygSetting < ApplicationRecord
     validates :approve_option,      
         length: { maximum: 10 },
         inclusion: { in: APPROVAL_OPTIONS }
+    validates :medicare_option,      
+        length: { maximum: 10 },
+        inclusion: { in: FIELD_OPTIONS }
     validates :collect_age_by,      
         length: { maximum: 20 },
         inclusion: { in: AGE_OPTIONS }
@@ -158,7 +165,7 @@ class MysygSetting < ApplicationRecord
                         mysyg_setting.allow_part_time            = row['AllowPartTime']
                         mysyg_setting.collect_age_by             = row['AgeOption']
                         mysyg_setting.require_emerg_contact      = row['RequireEmerg']
-                        mysyg_setting.require_medical            = row['RequireMedical']
+                        mysyg_setting.medicare_option            = row['MedicareOption']
                         mysyg_setting.approve_option             = row['ApproveOption']
                         mysyg_setting.team_sport_view_strategy   = row['TeamView']
                         mysyg_setting.indiv_sport_view_strategy  = row['IndivView']

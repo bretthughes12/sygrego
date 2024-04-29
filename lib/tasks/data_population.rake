@@ -6,7 +6,6 @@ namespace :syg do
     task initialise_groups: ['db:migrate'] do |t|
       puts 'Initialising groups for new year...'
 
-      user = User.first
       group_count = 0
 
       Group.order(:abbr).load.each do |group|
@@ -62,7 +61,6 @@ namespace :syg do
     task create_event_details: ['db:migrate'] do |t|
       puts 'Creating event details for all groups...'
 
-      user = User.first
       event_count = 0
 
       Group.all.each do |group|
@@ -99,5 +97,24 @@ namespace :syg do
       end
 
       puts "Volunteer sections updated - #{migrate_count}"
+    end
+
+    desc 'Update medicare option on Mysyg Settings'
+    task update_medicare_option: ['db:migrate'] do |t|
+      puts 'Updating medicare options...'
+
+      count = 0
+
+      MysygSetting.all.each do |ms|
+        if ms.require_medical
+          ms.medicare_option = 'Require'
+          ms.save
+          count += 1
+
+          puts ">>> #{ms.group.short_name} set to Require"
+        end
+      end
+
+      puts "Options updated - #{count}"
     end
 end
