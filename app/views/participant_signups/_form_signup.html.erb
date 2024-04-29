@@ -85,11 +85,13 @@
 
 	<br/>
 
-	<h2>Camping</h2>
+	<% if can_display_onsite_flag %>
+		<h2>Camping</h2>
 
-	<%= f.input :camping_preferences, hint: "for example, if you want to be put in a tent with a particular friend, mention that here" %>
+		<%= f.input :camping_preferences, hint: "for example, if you want to be put in a tent with a particular friend, mention that here" %>
 
-	<br/>
+		<br/>
+	<% end %>
 
 	<h2>Sports</h2>
 
