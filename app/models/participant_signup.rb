@@ -166,6 +166,7 @@ class ParticipantSignup
     validates :medicare_number,        length: { maximum: 50 }
     validates :medical_info,           length: { maximum: 255 }
     validates :medications,            length: { maximum: 255 }
+    validates :camping_preferences,    length: { maximum: 100 }
     validates :years_attended,         numericality: { only_integer: true },
                                        allow_blank: true
     validates :dietary_requirements,   presence: true,
