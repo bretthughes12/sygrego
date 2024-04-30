@@ -42,6 +42,17 @@
 </table>
 
 
+<% if @group.invoice2_file.attached? %>
+    <h2>Invoice2</h2>
+    <% if @group.invoice2_file.representable? %>
+        <%= link_to(image_tag(@group.invoice2_file.representation(resize_to_limit: [80, 100])), rails_blob_path(@group.invoice2_file, disposition: "attachment")) %>
+    <% else %>
+        <%= link_to "Invoice2", rails_blob_path(@group.invoice2_file, disposition: "attachment") %>
+    <% end %>
+    <br/>
+    <br/>
+<% end %>
+
 <% if @group.results_file.attached? %>
     <h2>Results</h2>
     <p>Thanks for another fantastic SYG weekend. Here is a summary of your team results.<p>

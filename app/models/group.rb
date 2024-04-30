@@ -88,6 +88,9 @@ class Group < ApplicationRecord
 
     has_one_attached :booklet_file
     has_one_attached :results_file
+    has_one_attached :invoice1_file
+    has_one_attached :invoice2_file
+    has_one_attached :invoice3_file
 
     delegate :estimated_numbers,
       :warden_zone,

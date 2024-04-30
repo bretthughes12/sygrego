@@ -18,7 +18,16 @@ class FinanceReport < Prawn::Document
         render
     end
     
-    private
+    def to_file
+      @settings = Setting.first
+  
+      report_header("Tax Invoice")
+      report_content
+  
+      render_file("file.pdf")
+    end
+  
+  private
     
     def report_content
         include_summary_table
