@@ -1,10 +1,10 @@
 class TaxInvoice < Prawn::Document
     include ReportLayout
   
-    def add_data(group, payments)
+    def add_data(group, payments, suffix = "")
         @group = group
         @payments = payments
-#        @charges = charges
+        @suffix = suffix
       
         self
     end
@@ -22,7 +22,6 @@ class TaxInvoice < Prawn::Document
     
     def report_content
         include_summary_table
-#        include_charges_table
         include_payment_table
         show_total_owing
         show_payment_options
@@ -37,7 +36,6 @@ class TaxInvoice < Prawn::Document
         ]
       
       summary << [ "Late fees", helpers.number_to_currency(@group.late_fees) ] if @group.late_fees
-#      summary << [ "Other charges", helpers.number_to_currency(@group.other_charges) ] 
       
       table(summary, :column_widths => [450, 85]) do
         columns(1).align = :right
@@ -65,36 +63,6 @@ class TaxInvoice < Prawn::Document
           
       move_down(10)
     end
-  
-#    def include_charges_table
-#      heading2 "Other Charges"
-      
-#      charges = [["Date Paid", "Reason", "Amount"]]
-#      charges += @charges.map do |p|
-#        [
-#          p.paid_at ? p.paid_at.in_time_zone.strftime("%d/%m/%Y") : "",
-#          p.description,
-#          helpers.number_to_currency(p.relative_amount)
-#        ]
-#      end
-      
-#      unless @charges.empty? 
-#        table(charges, :column_widths => [100, 350, 85]) do 
-#          row(0).background_color = 'AAAAAA' 
-#          columns(2).align = :right
-#        end
-#      end
-      
-#      charge = [
-#        [ "Total other charges", helpers.number_to_currency(@group.other_charges) ]
-#        ]
-      
-#      table charge, :column_widths => [450, 85], :row_colors => ['DDDDDD'] do
-#        columns(1).align = :right
-#      end
-      
-#      move_down(10)
-#    end
   
     def include_payment_table
       heading2 "Payments Recorded"
@@ -151,7 +119,7 @@ class TaxInvoice < Prawn::Document
         text "Account Name: #{APP_CONFIG[:cheque_payable]}"
         text "BSB: #{Rails.application.credentials.account_bsb}"
         text "Account: #{Rails.application.credentials.account_number}"
-        text "Reference: SYG#{@settings.this_year.to_s + @group.abbr}"
+        text "Reference: SYG#{@settings.this_year.to_s + @group.abbr + @suffix}"
       end
     end
   end
