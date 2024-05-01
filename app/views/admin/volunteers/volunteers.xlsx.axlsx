@@ -17,8 +17,8 @@ wb.add_worksheet(name: "Volunteers") do |sheet|
 		participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
 		participant_id = volunteer.participant.nil? ? nil : volunteer.participant.id
 		group = volunteer.participant.nil? ? nil : volunteer.participant.group.abbr
-		email = volunteer.email.blank? ? nil : volunteer.email
-		mobile = volunteer.mobile_number.blank? ? nil : volunteer.mobile_number
+		email = volunteer.email_recipients
+		mobile = volunteer.mobile_phone_number
 		t_shirt = volunteer.t_shirt_size.blank? ? nil : volunteer.t_shirt_size
 
 		sheet.add_row [
