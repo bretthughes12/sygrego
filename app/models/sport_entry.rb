@@ -239,8 +239,8 @@ class SportEntry < ApplicationRecord
         participants.include?(p.participant) ||
         p.group != group ||
         !p.participant.coming ||
-        p.participant.spectator ||
-        !p.participant.can_play_grade(cached_grade)
+        !p.participant.can_play_grade(cached_grade) ||
+        !cached_grade.eligible_to_participate?(p.participant)
     end
   end
 
