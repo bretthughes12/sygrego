@@ -9,7 +9,7 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 wb.add_worksheet(name: "Venues") do |sheet|
 	sheet.add_row ["RowID","Sport","Name","Active","Type","Status","MaxAge","MinAge",
 	              "GenderType","MaxPart","MinPart","MinMales","MinFemales","MinU18","TeamSize", 
-	              "Limit","StartLimit"], 
+	              "Limit","StartLimit","Sections","Entered","Requested","ToBeConfirmed","Waiting"], 
 		style: header_border
 
 	@grades.each do |grade|
@@ -30,7 +30,12 @@ wb.add_worksheet(name: "Venues") do |sheet|
   		     grade.min_under_18s,
   		     grade.team_size,
   		     grade.entry_limit,
-  		     grade.starting_entry_limit
+  		     grade.starting_entry_limit,
+			 grade.sections.count,
+			 grade.sport_entries.entered.count,
+			 grade.sport_entries.requested.count,
+			 grade.sport_entries.to_be_confirmed.count,
+			 grade.sport_entries.waiting_list.count
 			],
 		style: row_border
 	end
