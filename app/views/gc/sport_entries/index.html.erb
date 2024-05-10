@@ -58,7 +58,7 @@
 					{:name => "Requiring Confirmation", :class => "table-danger"},
 					{:name => "Waiting List", :class => "table-dark"}] %>
 
-<% if @settings.restricted_sports_allocated && !@settings.syg_is_happening && !@settings.syg_is_over %>
+<% if @settings.restricted_sports_allocated && !@settings.syg_is_happening && !@settings.syg_is_finished %>
   <% content_for :sidebar do -%>
     <div id="sidebar">
       <h2>Required Participants</h2>
