@@ -33,7 +33,7 @@ class GroupFeeCategory < ApplicationRecord
 
   validates :description,
     presence: true,
-    length: { maximum: 440 }
+    length: { maximum: 40 }
   validates :amount,                 
     presence: true,
     numericality: true,
