@@ -44,6 +44,10 @@ module Admin::GroupsHelper
     def sport_oversubscribed_class(group, session_id)
       group.number_playing_sport >= group.participants_needed_for_session(session_id) ? 'table-primary' : 'table-danger'
     end
+ 
+    def u18_oversubscribed_class(group, session_id)
+      group.under_18s_playing_sport >= group.under_18s_needed_for_session(session_id) ? 'table-primary' : 'table-danger'
+    end
   
     def group_short_name_hint(group)
         "Warning: changing this field will change your custom registration link"

@@ -560,6 +560,10 @@ class Group < ApplicationRecord
       @number_playing_sport ||= participants.playing_sport.coming.accepted.size
     end
   
+    def under_18s_playing_sport
+      @under_18s_playing_sport ||= participants.under_18s.playing_sport.coming.accepted.size
+    end
+  
     def participants_needed_for_session(session)
       number_of_participants = 0
       cached_sport_entries.entered.includes(:section).each do |e|
