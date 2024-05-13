@@ -568,6 +568,14 @@ class Group < ApplicationRecord
       number_of_participants
     end
   
+    def under_18s_needed_for_session(session)
+      number_of_participants = 0
+      cached_sport_entries.entered.includes(:section).each do |e|
+        number_of_participants += e.min_under_18s if e.section && e.section.session.id == session
+      end
+      number_of_participants
+    end
+  
     def coordinators_allowed
       2
     end

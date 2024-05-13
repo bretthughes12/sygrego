@@ -53,7 +53,8 @@ class SportEntry < ApplicationRecord
            :sport,
            :eligible_to_participate?,
            :sport_preferences,
-           :team_size, to: :grade
+           :team_size,
+           :min_under_18s, to: :grade
 
   before_validation :validate_number_of_entries_in_sport, on: :create
   after_create :update_team_numbers
