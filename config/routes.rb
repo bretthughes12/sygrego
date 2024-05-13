@@ -104,6 +104,7 @@ Rails.application.routes.draw do
         get :service_preferences
         get :fees
         get :gender_summary
+        get :sport_integrity
       end
     end
 

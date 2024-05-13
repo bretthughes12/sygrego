@@ -59,4 +59,10 @@ class Admin::ReportsController < AdminController
     def gender_summary
         @groups = Group.coming.not_admin.order(:abbr).load
     end
+
+    # GET /admin/reports/sport_integrity
+    def sport_integrity
+        @sections_wo_sc = Section.without_sc
+        @sections_too_many = Section.too_many_entries_same_group
+    end
 end

@@ -273,6 +273,26 @@ class Section < ApplicationRecord
         sections
     end
 
+    def self.without_sc
+        sections = []
+        Section.active.order(:name).each do |section|
+            sections << section if section.sport_coords.empty?
+        end
+        sections
+    end
+
+    def self.too_many_entries_same_group
+        sections = []
+        Section.active.order(:name).each do |section|
+            if section.grade.sections.count > 1
+                section.sport_entries.select(:group_id).group(:group_id).count.each do |key,value|
+                    sections << section if value > 3
+                end
+            end
+        end
+        sections.uniq
+    end
+
     def self.import(file, user)
         creates = 0
         updates = 0

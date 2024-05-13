@@ -1,0 +1,38 @@
+<% title "Sports Integrity Reports" %>
+
+<h1><%= yield(:title) %></h1>
+
+<h2>Sections with no Sport Coordinator</h2>
+
+<% if @sections_wo_sc.empty? %>
+	<p>None</p>
+
+<% else %>
+	<table class="table table-dark table-striped">
+		<% @sections_wo_sc.each do |s| %>
+			<tr valign="top">
+				<td>
+					<%= s.name %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+
+<h2>Sections with more than three from same group</h2>
+
+<% if @sections_too_many.empty? %>
+	<p>None</p>
+
+<% else %>
+	<table class="table table-dark table-striped">
+		<% @sections_too_many.each do |s| %>
+			<tr valign="top">
+				<td>
+					<%= s.name %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+<% end %>
+
