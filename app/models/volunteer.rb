@@ -173,6 +173,24 @@ class Volunteer < ApplicationRecord
         volunteers.sort_by(&:name)
     end
     
+    def self.section_conflicts
+        volunteers = []
+        sport_coords.each do |v|
+          if v.sections.count > 1
+            sport = v.sections.first.sport
+            session = v.sections.first.session
+            venue = v.sections.first.venue
+
+            v.sections.each do |s|
+              volunteers << v if s.sport != sport
+              volunteers << v if s.session != session
+              volunteers << v if s.venue != venue
+            end
+          end
+        end
+        volunteers.uniq.sort_by(&:name)
+    end
+    
     def number_of_teams
         if sections.empty?
           nil
