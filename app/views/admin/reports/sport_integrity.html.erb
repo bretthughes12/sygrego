@@ -2,37 +2,66 @@
 
 <h1><%= yield(:title) %></h1>
 
-<h2>Sections with no Sport Coordinator</h2>
+<h3>Sections with no Sport Coordinator (<%= @sections_wo_sc.size %>)</h3>
 
 <% if @sections_wo_sc.empty? %>
 	<p>None</p>
 
 <% else %>
-	<table class="table table-dark table-striped">
-		<% @sections_wo_sc.each do |s| %>
-			<tr valign="top">
-				<td>
-					<%= s.name %>
-				</td>
-			</tr>
-		<% end %>
-	</table>
+	<div class="accordion" id="wo_sc_accordion">
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="wo_sc_heading">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#wo_sc_collapse" aria-expanded="false" aria-controls="wo_sc_collapse">
+					Show sections (click to expand)
+				</button>
+			</h3>
+			<div id="wo_sc_collapse" class="accordion-collapse collapse" aria-labelledby="wo_sc_heading" data-bs-parent="#wo_sc_accordion">
+				<div class="accordion-body">
+					<table class="table table-dark table-striped">
+						<% @sections_wo_sc.each do |s| %>
+							<tr valign="top">
+								<td>
+									<%= s.name %>
+								</td>
+							</tr>
+						<% end %>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 <% end %>
 
-<h2>Sections with more than three from same group</h2>
+<br/>
+<br/>
+
+<h3>Sections with more than three from same group (<%= @sections_too_many.size %>)</h3>
 
 <% if @sections_too_many.empty? %>
 	<p>None</p>
 
 <% else %>
-	<table class="table table-dark table-striped">
-		<% @sections_too_many.each do |s| %>
-			<tr valign="top">
-				<td>
-					<%= s.name %>
-				</td>
-			</tr>
-		<% end %>
-	</table>
+	<div class="accordion" id="too_many_accordion">
+		<div class="accordion-item">
+			<h3 class="accordion-header" id="too_many_heading">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#too_many_collapse" aria-expanded="false" aria-controls="too_many_collapse">
+					Show sections (click to expand)
+				</button>
+			</h3>
+			<div id="too_many_collapse" class="accordion-collapse collapse" aria-labelledby="too_many_heading" data-bs-parent="#too_many_accordion">
+				<div class="accordion-body">
+					<table class="table table-dark table-striped">
+						<% @sections_too_many.each do |s| %>
+							<tr valign="top">
+								<td>
+									<%= s.name %>
+								</td>
+							</tr>
+						<% end %>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 <% end %>
 
