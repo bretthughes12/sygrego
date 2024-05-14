@@ -69,7 +69,7 @@
 	<% if @group.mysyg_setting.collect_age_by == "Age" %>
 		<%= f.input :age, hint: "as at #{@settings.first_day_of_syg}" %>
 	<% else %>
-		<%= f.input :date_of_birth, required: true, as: :date, start_year: Date.today.year - 80 %>
+		<%= f.input :date_of_birth, required: true, as: :date, start_year: Date.today.year - 80, end_year: Date.today.year %>
 		<br/>
 		<table class="table table-dark table-striped">
 			<tr>
