@@ -542,10 +542,33 @@ class Participant < ApplicationRecord
     sports
   end
 
+  def entries_in_session(session)
+    entries = []
+
+    sport_entries.each do |entry|
+      entries << entry if entry.session_name == session
+    end
+
+    entries
+  end
+
   def available_sport_entries
     entries = []
     (group.sport_entries - sport_entries).sort.each do |entry|
       next unless can_play_sport(entry.sport) &&
+                  can_play_grade(entry.grade) &&
+                  entry.can_take_participants? &&
+                  entry.eligible_to_participate?(self)
+      entries << entry
+    end
+    entries
+  end
+
+  def available_sport_entries_in_session(session)
+    entries = []
+    (group.sport_entries - sport_entries).sort.each do |entry|
+      next unless entry.session_name == session &&
+                  can_play_sport(entry.sport) &&
                   can_play_grade(entry.grade) &&
                   entry.can_take_participants? &&
                   entry.eligible_to_participate?(self)

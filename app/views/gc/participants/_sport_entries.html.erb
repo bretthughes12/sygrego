@@ -1,50 +1,220 @@
 <h2>Sport Entries</h2>
 
-<% unless @participant.sport_entries.empty? %>
-    <table class="table table-dark table-striped">
-        <thead>
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Session</th>
+            <th>Sport / Grade</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% sat_am_entries = @participant.entries_in_session("Saturday Morning") %>
+        <% if sat_am_entries.empty? %>
             <tr>
-                <th>Session</th>
-                <th>Sport / Grade</th>
-                <th>&nbsp;</th>
-	        </tr>
-        </thead>
-
-	<% for entry in @participant.sport_entries %>
-	  	<tr valign="top">
-	        <td> 
-		        <%= entry.session_name %>
-	    	</td>
-	        <td> 
-		        <%= entry.section_name %>
-	    	</td>
-			
-            <td class="list-actions">
-                <%= link_to 'X', gc_sport_entry_participant_path(
-                        id: @participant.id, 
-                        sport_entry_id: entry.id,
-                        return: 'edit_sports'),
-                        class: danger_button_class,
-                        role: :button,
-                        data: { confirm: "Are you sure?" },
-					    method: :delete %>
-            </td>
-	    </tr>
-	<% end %>
-	</table>
-	
-<% else %>
-	<p>This participant is not entered in any sports</p>
-<% end %>
-
-<% unless @participant.available_sport_entries.empty? %>
-	<h3>Add to existing Sport Entry</h3>
-
-    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
-        <td><%= f.collection_select :id, @participant.available_sport_entries, :id, :section_name %></td>
-        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
-    <% end %>	
-<% end %>
+                <td>Saturday Morning</td>
+                <% unless @participant.available_sport_entries_in_session("Saturday Morning").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Saturday Morning"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sat_am_entries.each do |entry| %>
+                <tr>
+                    <td>Saturday Morning</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% sat_pm_entries = @participant.entries_in_session("Saturday Afternoon") %>
+        <% if sat_pm_entries.empty? %>
+            <tr>
+                <td>Saturday Afternoon</td>
+                <% unless @participant.available_sport_entries_in_session("Saturday Afternoon").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Saturday Afternoon"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sat_pm_entries.each do |entry| %>
+                <tr>
+                    <td>Saturday Afternoon</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% sat_eve_entries = @participant.entries_in_session("Saturday Evening") %>
+        <% if sat_eve_entries.empty? %>
+            <tr>
+                <td>Saturday Evening</td>
+                <% unless @participant.available_sport_entries_in_session("Saturday Evening").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Saturday Evening"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sat_eve_entries.each do |entry| %>
+                <tr>
+                    <td>Saturday Evening</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% sun_am_entries = @participant.entries_in_session("Sunday Morning") %>
+        <% if sun_am_entries.empty? %>
+            <tr>
+                <td>Saturday Morning</td>
+                <% unless @participant.available_sport_entries_in_session("Sunday Morning").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Sunday Morning"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sun_am_entries.each do |entry| %>
+                <tr>
+                    <td>Sunday Morning</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% sun_pm_entries = @participant.entries_in_session("Sunday Afternoon") %>
+        <% if sun_pm_entries.empty? %>
+            <tr>
+                <td>Sunday Afternoon</td>
+                <% unless @participant.available_sport_entries_in_session("Sunday Afternoon").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Sunday Afternoon"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sun_pm_entries.each do |entry| %>
+                <tr>
+                    <td>Sunday Afternoon</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+        <% sun_eve_entries = @participant.entries_in_session("Sunday Evening") %>
+        <% if sun_eve_entries.empty? %>
+            <tr>
+                <td>Sunday Evening</td>
+                <% unless @participant.available_sport_entries_in_session("Sunday Evening").empty? %>
+                    <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
+                        <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Sunday Evening"), :id, :section_name %></td>
+                        <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+                    <% end %>	
+                <% else %>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                <% end %>
+            </tr>
+        <% else %>
+            <% sun_eve_entries.each do |entry| %>
+                <tr>
+                    <td>Sunday Evening</td>
+                    <td> 
+                        <%= entry.section_name %>
+                    </td>
+                    <td class="list-actions">
+                        <%= link_to 'X', gc_sport_entry_participant_path(
+                                id: @participant.id, 
+                                sport_entry_id: entry.id,
+                                return: 'edit_sports'),
+                                class: danger_button_class,
+                                role: :button,
+                                data: { confirm: "Are you sure?" },
+                                method: :delete %>
+                    </td>
+                </tr>
+            <% end %>
+        <% end %>
+    </tbody>
+</table>
 
 <br/>
 
