@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_29_095403) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_17_134251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -717,7 +717,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_095403) do
 
   create_table "volunteers", force: :cascade do |t|
     t.string "description", limit: 100, null: false
-    t.string "email", limit: 40
+    t.string "email", limit: 100
     t.string "mobile_number", limit: 20
     t.string "t_shirt_size", limit: 10
     t.boolean "mobile_confirmed", default: false

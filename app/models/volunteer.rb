@@ -6,7 +6,7 @@
 #  collected         :boolean          default(FALSE)
 #  description       :string(100)      not null
 #  details_confirmed :boolean          default(FALSE)
-#  email             :string(40)
+#  email             :string(100)
 #  equipment_in      :string
 #  equipment_out     :string
 #  lock_version      :integer          default(0)
