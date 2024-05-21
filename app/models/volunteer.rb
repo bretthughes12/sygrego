@@ -72,7 +72,7 @@ class Volunteer < ApplicationRecord
   
     validates :description,            presence: true,
                                        length: { maximum: 100 }
-    validates :email,                  length: { maximum: 40 }
+    validates :email,                  length: { maximum: 100 }
     validates :email,                  format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
                                        allow_blank: true,
                                        unless: proc { |o| o.email.blank? }
