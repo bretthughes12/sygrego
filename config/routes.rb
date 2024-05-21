@@ -252,6 +252,7 @@ Rails.application.routes.draw do
         get :ticket_full_extract
         get :search
         get :participant_audit
+        get :participant_integrity
         get :wwccs
         get :day_visitors
         get :new_day_visitor

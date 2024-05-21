@@ -149,6 +149,17 @@ class Admin::ParticipantsController < AdminController
     end
   end
 
+  # GET /admin/participants/participant_integrity
+  def participant_integrity
+    @participants = Participant.coming.accepted.
+      where('age = 0 or age is NULL').
+      order('surname, first_name').load
+
+    respond_to do |format|
+      format.html # tickets.html.erb
+    end
+  end
+
   # GET /admin/participants/day_visitors
   def day_visitors
     @group = Group.find_by_abbr('DAY')
