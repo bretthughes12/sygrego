@@ -189,6 +189,11 @@ class Admin::ParticipantsController < AdminController
 
   # GET /admin/participants/1/edit
   def edit
+    if @participant.date_of_birth.nil? && @participant.age
+      @participant.date_of_birth = Date.today - @participant.age.years 
+    elsif @participant.date_of_birth.nil?
+      @participant.date_of_birth = Date.today - 30.years 
+    end
   end
 
   # GET /admin/participants/1/edit_day_visitor

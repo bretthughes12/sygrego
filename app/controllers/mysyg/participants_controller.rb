@@ -7,6 +7,11 @@ class Mysyg::ParticipantsController < MysygController
     
     # GET /mysyg/:group/participants/1/edit
     def edit
+      if @participant.date_of_birth.nil? && @participant.age
+        @participant.date_of_birth = Date.today - @participant.age.years 
+      elsif @participant.date_of_birth.nil?
+        @participant.date_of_birth = Date.today - 30.years 
+      end
     end
   
     # GET /mysyg/:group/drivers
