@@ -223,6 +223,7 @@ class Participant < ApplicationRecord
     validates :vaccination_sighted_by, 
         length: { maximum: 20 }
 
+    before_validation :calculate_age
     before_validation :validate_eligibility_for_team_helper
     before_validation :validate_eligibility_for_group_coordinator
     before_validation :validate_years_attended
@@ -241,7 +242,6 @@ class Participant < ApplicationRecord
     before_destroy :remove_sport_entries!
     after_destroy :release_volunteers!
 
-    before_save :calculate_age
     before_save :normalize_phone_numbers!
     before_save :normalize_medical_info!
     before_save :normalize_medications!

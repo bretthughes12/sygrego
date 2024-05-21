@@ -195,6 +195,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference('Participant.count') do
       post admin_participants_path, params: { 
         participant: FactoryBot.attributes_for(:participant,
+          group_id: @group.id,
           age: "a") }
     end
 
