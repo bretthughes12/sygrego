@@ -7,6 +7,9 @@
 <%= link_to "Vacancies", available_gc_volunteers_path,
                   class: primary_button_class,
                   role: "button" %>
+<%= link_to "Download", gc_volunteers_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
 
 <br/>
 <br/>
@@ -27,6 +30,9 @@
 </table>
 
 <%= link_to "Vacancies", available_gc_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download", gc_volunteers_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <% else %>

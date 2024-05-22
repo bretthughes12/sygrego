@@ -1,0 +1,37 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Volunteers") do |sheet|
+	sheet.add_row ["Type","Description","Session","Name","Email","Mobile"], 
+		style: header_border
+
+	@volunteers.each do |volunteer|
+		if volunteer.session.nil? 
+			if volunteer.sections.empty?
+				session = nil
+			else
+				session = volunteer.sections.first.session.name
+			end
+		else
+			session = volunteer.session.name
+		end
+		participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
+		email = volunteer.email_recipients
+		mobile = volunteer.mobile_phone_number
+
+		sheet.add_row [
+		    volunteer.volunteer_type.name,
+            volunteer.description,
+            session,
+            participant_name,
+            email,
+            mobile
+		   ],
+		style: row_border
+	end
+end
