@@ -65,6 +65,15 @@ class Admin::GroupsController < AdminController
       end
     end
 
+    # GET /admin/groups/volunteer_summary
+    def volunteer_summary
+      @groups = Group.coming.not_admin.order(:name).load
+
+      respond_to do |format|
+        format.html # volunteer_summary.html.erb
+      end
+    end
+
     # GET /admin/groups/search
     def search
       @groups = Group.search(params[:search]).order("abbr")

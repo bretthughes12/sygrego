@@ -189,6 +189,7 @@ Rails.application.routes.draw do
         get :summary
         get :sport_summary
         get :payments
+        get :volunteer_summary
       end
       member do
         post :invoice        

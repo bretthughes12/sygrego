@@ -349,6 +349,10 @@ class Group < ApplicationRecord
     this_group_volunteers
   end
 
+  def volunteers_required
+    (participants.accepted.coming.count / 5).to_i
+  end
+
   def drivers_all_electronic?
     participants.coming.accepted.drivers.each do |p|
       return false if !p.driver_signature || p.number_plate.blank?

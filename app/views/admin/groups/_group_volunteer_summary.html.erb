@@ -1,0 +1,22 @@
+<tr valign="top">
+
+    <td width="30%">
+        <%= h(group.name) %>
+    </td>
+
+    <td align="center">
+        <%= h(group.abbr) %>
+    </td>
+
+    <td align="center">
+        <%= group.participants.accepted.coming.count %>
+    </td>
+
+    <td align="center">
+        <%= group.volunteers_required %>
+    </td>
+
+    <td align="center">
+        <%= group.volunteers.size %>
+    </td>
+</tr>
