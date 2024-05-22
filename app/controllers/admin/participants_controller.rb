@@ -155,6 +155,8 @@ class Admin::ParticipantsController < AdminController
       where('age = 0 or age is NULL').
       order('surname, first_name').load
 
+    @user_integrity = User.participant_integrity_list
+
     respond_to do |format|
       format.html # tickets.html.erb
     end

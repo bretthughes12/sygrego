@@ -121,6 +121,16 @@ class User < ApplicationRecord
     set_reset_password_token
   end
 
+  def self.participant_integrity_list
+    users = []
+
+    User.all.each do |user|
+      users << user if user.participants.accepted.coming.count > 3
+    end
+
+    users
+  end
+
   protected
 
   def self.random_password
