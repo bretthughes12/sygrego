@@ -302,14 +302,18 @@ class Participant < ApplicationRecord
       coming_days.join(" / ")
     end
 
-    def wwcc_text
+    def ticket_notes
+      notes =  self.age && self.age < 18 ? "Under18 - " : "Adult - "
+
       if !self.wwcc_number.blank?
-        "WWCC: #{wwcc_number}"
+        notes += "WWCC: #{wwcc_number}"
       elsif self.age && self.age < 18
-        "WWCC: not required"
+        notes += "WWCC: not required"
       else
-        "WWCC: missing"
+        notes += "WWCC: missing"
       end
+
+      notes
     end
 
     def days

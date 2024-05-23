@@ -466,13 +466,13 @@ class ParticipantTest < ActiveSupport::TestCase
   
   test "should show WWCC text" do
     @participant.wwcc_number = "A12345-BC"
-    assert_equal "WWCC: A12345-BC", @participant.wwcc_text
+    assert_equal "Adult - WWCC: A12345-BC", @participant.ticket_notes
 
     @participant.age = 17
-    assert_equal "WWCC: A12345-BC", @participant.wwcc_text
+    assert_equal "Under18 - WWCC: A12345-BC", @participant.ticket_notes
 
     @participant.wwcc_number = nil
-    assert_equal "WWCC: not required", @participant.wwcc_text
+    assert_equal "Under18 - WWCC: not required", @participant.ticket_notes
   end
   
   test "should import participants from file" do

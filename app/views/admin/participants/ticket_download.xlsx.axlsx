@@ -24,7 +24,7 @@ wb.add_worksheet(name: "Tickets") do |sheet|
 			 "",
 			 participant.updated_at.in_time_zone.strftime("%d/%m/%Y %I:%M:%S %p"),
 			 "",
-			 participant.wwcc_text,
+			 participant.ticket_notes,
 			 participant.coming_monday,
 			 participant.number_plate,
 			 participant.group.abbr,
