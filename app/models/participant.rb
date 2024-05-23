@@ -1136,7 +1136,7 @@ def self.import_gc(file, group, user)
           end
         else
           if !row['Ticket Type'].nil?
-            if row['Question 13'].blank?
+            if row['Question 2'].blank?
               licence_type = nil
               driver_signature = false
             else
@@ -1160,12 +1160,12 @@ def self.import_gc(file, group, user)
               allergies:               'Unknown',
               spectator:               true,
               onsite:                  false,
-              driver:                  !row['Question 13'].blank?,
-              number_plate:            row['Question 13'],
+              driver:                  !row['Question 2'].blank?,
+              number_plate:            row['Question 2'],
               licence_type:            licence_type,
               driver_signature:        driver_signature,
               dietary_requirements:    'Unknown',
-              wwcc_number:             row['Question 14'],
+              wwcc_number:             row['Question 11'],
               registration_nbr:        row['Ticket Number'],
               booking_nbr:             row['Booking Number'],
               exported:                true,
