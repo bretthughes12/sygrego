@@ -4,11 +4,6 @@
 	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
-	<%= f.input :coming if registrations_open %>
-	<% if @group.mysyg_setting.allow_offsite %>
-		<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
-	<% end %>
-	<%= f.input :spectator %>
 
 	<% unless @group.group_fee_categories.empty? %>
 		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @participant.fee_categories, label_method: :description, include_blank: false %>
@@ -16,31 +11,77 @@
 
 	<br/>
 
-	<% if @participant.voucher %>
-		<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
-			<%= link_to "X", delete_voucher_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id),
-				method: :patch,
-				data: { confirm: "Are you sure?" },
-				class: danger_button_class,
-				role: "button" %>
-		</div>
-	<% else %>
-		<div><label class="string">Voucher</label> 
-			<%= link_to "Add", new_voucher_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id),
-				method: :get,
-				class: primary_button_class,
-				role: "button" %>
-		</div>
-	<% end %>
-	<br/>
-
-	<% if registrations_open && @group.mysyg_setting.allow_part_time %>
-		<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
-		<%= f.input :coming_friday, label: "Friday" %>
-		<%= f.input :coming_saturday, label: "Saturday" %>
-		<%= f.input :coming_sunday, label: "Sunday" %>
-		<%= f.input :coming_monday, label: "Monday" %>
+	<% if registrations_open %>
+		<%= f.input :coming %>
+		<% if @group.mysyg_setting.allow_offsite %>
+			<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
+		<% end %>
+		<%= f.input :spectator %>
+		<% if @participant.voucher %>
+			<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
+				<%= link_to "X", delete_voucher_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id),
+					method: :patch,
+					data: { confirm: "Are you sure?" },
+					class: danger_button_class,
+					role: "button" %>
+			</div>
+		<% else %>
+			<div><label class="string">Voucher</label> 
+				<%= link_to "Add", new_voucher_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name, id: @participant.id),
+					method: :get,
+					class: primary_button_class,
+					role: "button" %>
+			</div>
+		<% end %>
 		<br/>
+
+		<% if @group.mysyg_setting.allow_part_time %>
+			<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
+			<%= f.input :coming_friday, label: "Friday" %>
+			<%= f.input :coming_saturday, label: "Saturday" %>
+			<%= f.input :coming_sunday, label: "Sunday" %>
+			<%= f.input :coming_monday, label: "Monday" %>
+			<br/>
+		<% end %>
+	<% else %>
+		<table class="table table-dark table-striped">
+			<tr>
+				<td> 
+					<strong>Coming</strong>
+				</td>
+				<td> 
+					<%= @participant.coming ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% if can_display_onsite_flag %>
+			<tr>
+				<td> 
+					<strong>Staying onsite at Lardner Park</strong>
+				</td>
+				<td> 
+					<%= @participant.coming ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% end %>
+			<tr>
+				<td> 
+					<strong>Spectator</strong>
+				</td>
+				<td> 
+					<%= @participant.spectator ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% if @participant.voucher %>
+			<tr>
+				<td> 
+					<strong>Voucher</strong>
+				</td>
+				<td> 
+					<span class="badge bg-success"><%= @participant.voucher.name %></span>
+				</td>
+			</tr>
+			<% end %>
+		</table>
 	<% end %>
 
 	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>

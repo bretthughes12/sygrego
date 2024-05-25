@@ -30,39 +30,90 @@
 		<%= f.input :coming %>
 	<% end %>
 
-	<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
-	<%= f.input :spectator %>
-	<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
-	<%= f.hint "must also be a spectator" if can_display_helper_flag %>
-	<%= f.input :group_coord, label: "Group Coordinator" if can_display_group_coord_flag %>
-	<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
-	<% unless @participant.new_record? %>
-		<% if @participant.voucher %>
-			<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
-				<%= link_to "X", delete_voucher_gc_participant_path(@participant),
-					method: :patch,
-					data: { confirm: "Are you sure?" },
-					class: danger_button_class,
-					role: "button" %>
-			</div>
-		<% else %>
-			<div><label class="string">Voucher</label> 
-				<%= link_to "Add", new_voucher_gc_participant_path(@participant),
-					method: :get,
-					class: primary_button_class,
-					role: "button" %>
-			</div>
-		<% end %>
-	<% end %>
-	<br/>
-
 	<% if registrations_open %>
+		<%= f.input :onsite, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
+		<%= f.input :spectator %>
+		<%= f.input :helper, label: "Team Helper" if can_display_helper_flag %>
+		<%= f.hint "must also be a spectator" if can_display_helper_flag %>
+		<%= f.input :group_coord, label: "Group Coordinator" if can_display_group_coord_flag %>
+		<%= f.hint "maximum of two per group" if can_display_group_coord_flag %>
+		<% unless @participant.new_record? %>
+			<% if @participant.voucher %>
+				<div><label class="string">Voucher</label> <span class="badge bg-success"><%= @participant.voucher.name %></span>
+					<%= link_to "X", delete_voucher_gc_participant_path(@participant),
+						method: :patch,
+						data: { confirm: "Are you sure?" },
+						class: danger_button_class,
+						role: "button" %>
+				</div>
+			<% else %>
+				<div><label class="string">Voucher</label> 
+					<%= link_to "Add", new_voucher_gc_participant_path(@participant),
+						method: :get,
+						class: primary_button_class,
+						role: "button" %>
+				</div>
+			<% end %>
+		<% end %>
+		<br/>
+
 		<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant) %>"><%= @participant.rego_type %></span></div>
 		<%= f.input :coming_friday, label: "Friday" %>
 		<%= f.input :coming_saturday, label: "Saturday" %>
 		<%= f.input :coming_sunday, label: "Sunday" %>
 		<%= f.input :coming_monday, label: "Monday" %>
 		<br/>
+	<% else %>
+		<table class="table table-dark table-striped">
+			<% if can_display_onsite_flag %>
+			<tr>
+				<td> 
+					<strong>Staying onsite at Lardner Park</strong>
+				</td>
+				<td> 
+					<%= @participant.coming ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% end %>
+			<tr>
+				<td> 
+					<strong>Spectator</strong>
+				</td>
+				<td> 
+					<%= @participant.spectator ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% if can_display_helper_flag %>
+			<tr>
+				<td> 
+					<strong>Team Helper?</strong>
+				</td>
+				<td> 
+					<%= @participant.helper ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% end %>
+			<% if can_display_group_coord_flag %>
+			<tr>
+				<td> 
+					<strong>Group Coordinator?</strong>
+				</td>
+				<td> 
+					<%= @participant.coming ? 'Yes' : 'No' %>
+				</td>
+			</tr>
+			<% end %>
+			<% if @participant.voucher %>
+			<tr>
+				<td> 
+					<strong>Voucher</strong>
+				</td>
+				<td> 
+					<span class="badge bg-success"><%= @participant.voucher.name %></span>
+				</td>
+			</tr>
+			<% end %>
+		</table>
 	<% end %>
 
 	<%= f.input :years_attended, label: "Years attended SYG", hint: "including this year" %>
