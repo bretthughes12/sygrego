@@ -135,6 +135,11 @@ class ParticipantSignup
                                        allow_blank: true,
                                        unless: proc { |o| o.login_email.blank? },
                                        message: 'invalid format' }
+    validates :emergency_email,        length: { maximum: 100 },
+                                       format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                                       allow_blank: true,
+                                       unless: proc { |o| o.emergency_email.blank? },
+                                       message: 'invalid format' }
     validates :group_id,               presence: true
     validates :first_name,             presence: true,
                                        length: { maximum: 20 }
@@ -334,7 +339,7 @@ class ParticipantSignup
 
       validate_voucher_name
       if @voucher && @voucher.valid_for?(@participant)
-        @participant.voucher = @voucher 
+        @participant.voucher = @voucher
       end
     end
   
