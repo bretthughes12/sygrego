@@ -53,6 +53,14 @@
 					<%= @participant.coming ? 'Yes' : 'No' %>
 				</td>
 			</tr>
+			<tr>
+				<td> 
+					<strong>Ticket type</strong>
+				</td>
+				<td> 
+					<%= @participant.ticket_type %>
+				</td>
+			</tr>
 			<% if can_display_onsite_flag %>
 			<tr>
 				<td> 
