@@ -1504,7 +1504,8 @@ private
       'coming_sunday',
       'coming_monday',
       'wwcc_number',
-      'email'
+      'email',
+      'age'
     ]
   end
 end
