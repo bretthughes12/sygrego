@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_17_134251) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_27_104708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -385,10 +385,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_17_134251) do
     t.bigint "group_fee_category_id"
     t.date "date_of_birth"
     t.date "medicare_expiry"
+    t.string "transfer_email", limit: 100
+    t.string "transfer_token"
     t.index ["coming"], name: "index_participants_on_coming"
     t.index ["group_fee_category_id"], name: "index_participants_on_group_fee_category_id"
     t.index ["group_id", "surname", "first_name"], name: "index_participants_on_group_id_and_surname_and_first_name", unique: true
     t.index ["surname", "first_name"], name: "index_participants_on_surname_and_first_name"
+    t.index ["transfer_token"], name: "index_participants_on_transfer_token"
     t.index ["voucher_id"], name: "index_participants_on_voucher_id"
   end
 

@@ -56,6 +56,8 @@
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null
+#  transfer_email         :string(100)
+#  transfer_token         :string
 #  updated_by             :bigint
 #  vaccinated             :boolean          default(FALSE)
 #  vaccination_document   :string(40)
@@ -75,6 +77,7 @@
 #  index_participants_on_group_fee_category_id                (group_fee_category_id)
 #  index_participants_on_group_id_and_surname_and_first_name  (group_id,surname,first_name) UNIQUE
 #  index_participants_on_surname_and_first_name               (surname,first_name)
+#  index_participants_on_transfer_token                       (transfer_token)
 #  index_participants_on_voucher_id                           (voucher_id)
 #
 # Foreign Keys
