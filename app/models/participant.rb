@@ -192,12 +192,12 @@ class Participant < ApplicationRecord
         format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
         allow_blank: true,
         unless: proc { |o| o.email.blank? }
-    validates :transfer_email,                  
-        length: { maximum: 100 }
-    validates :transfer_email,                  
-        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
-        allow_blank: true,
-        unless: proc { |o| o.transfer_email.blank? }
+#    validates :transfer_email,                  
+#        length: { maximum: 100 }
+#    validates :transfer_email,                  
+#        format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
+#        allow_blank: true,
+#        unless: proc { |o| o.transfer_email.blank? }
     validates :medical_info,           
         length: { maximum: 255 }
     validates :medications,            
