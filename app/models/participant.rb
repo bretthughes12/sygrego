@@ -358,7 +358,6 @@ class Participant < ApplicationRecord
       return 0 if status == 'Requiring Approval'
       return 0 if age && (age < 6)
       return 0 if guest
-      return 10 if !onsite && helper
       return 0 if chargeable_days == 0
   
       # other set-price conditions
@@ -372,6 +371,8 @@ class Participant < ApplicationRecord
         if fee && voucher
           fee = voucher.apply(fee)
         end
+
+        fee = 10 if helper && fee > 10
 
         return fee if fee
       end
