@@ -1135,7 +1135,7 @@ def self.import_gc(file, group, user)
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['Name'] == 'Name'
         unless row['Question 16'].blank?
-          participant = Participant.where(id: row['Question 16'].to_i).first
+          participant = Participant.where(id: row['Question 16']).first
         
           if participant
             participant.registration_nbr        = row['Registration#']
@@ -1149,7 +1149,7 @@ def self.import_gc(file, group, user)
             misses += 1
           end
         else
-          if !row['Ticket Type'].nil?
+          if !row['Registration Type'].nil?
             if row['Question 2'].blank?
               licence_type = nil
               driver_signature = false
@@ -1165,10 +1165,10 @@ def self.import_gc(file, group, user)
               coming:                  true,
               age:                     30,
               gender:                  'U',
-              coming_friday:           row['Registration Type'].include?('FRI') || row['Ticket Type'] == 'All Days',
-              coming_saturday:         row['Registration Type'].include?('SAT') || row['Ticket Type'] == 'All Days',
-              coming_sunday:           row['Registration Type'].include?('SUN') || row['Ticket Type'] == 'All Days',
-              coming_monday:           row['Registration Type'].include?('MON') || row['Ticket Type'] == 'All Days',
+              coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days',
+              coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days',
+              coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days',
+              coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days',
               mobile_phone_number:     row['Phone'],
               email:                   row['Email'],
               allergies:               'Unknown',
