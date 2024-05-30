@@ -1135,7 +1135,7 @@ def self.import_gc(file, group, user)
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['First Name'] == 'First Name'
         unless row['Question 16'].blank?
-          participant = Participant.where(id: row['Question 16']).first
+          participant = Participant.where(id: row['Question 16'].to_i).first
         
           if participant
             participant.registration_nbr        = row['Ticket Number']
