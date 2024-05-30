@@ -1133,13 +1133,13 @@ def self.import_gc(file, group, user)
     xlsx = Roo::Spreadsheet.open(file)
 
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
-      unless row['First Name'] == 'First Name'
+      unless row['Name'] == 'Name'
         unless row['Question 16'].blank?
           participant = Participant.where(id: row['Question 16'].to_i).first
         
           if participant
-            participant.registration_nbr        = row['Ticket Number']
-            participant.booking_nbr             = row['Booking Number']
+            participant.registration_nbr        = row['Registration#']
+            participant.booking_nbr             = row['Booking#']
             participant.updated_by = user.id
 
             participant.save(validate: false)
@@ -1160,15 +1160,15 @@ def self.import_gc(file, group, user)
   
             participant = Participant.create(
               group_id:                day_group.id,
-              first_name:              row['First Name'],
+              first_name:              row['Name'],
               surname:                 row['Last Name'],
               coming:                  true,
               age:                     30,
               gender:                  'U',
-              coming_friday:           row['Ticket Type'].include?('FRI') || row['Ticket Type'] == 'All Days',
-              coming_saturday:         row['Ticket Type'].include?('SAT') || row['Ticket Type'] == 'All Days',
-              coming_sunday:           row['Ticket Type'].include?('SUN') || row['Ticket Type'] == 'All Days',
-              coming_monday:           row['Ticket Type'].include?('MON') || row['Ticket Type'] == 'All Days',
+              coming_friday:           row['Registration Type'].include?('FRI') || row['Ticket Type'] == 'All Days',
+              coming_saturday:         row['Registration Type'].include?('SAT') || row['Ticket Type'] == 'All Days',
+              coming_sunday:           row['Registration Type'].include?('SUN') || row['Ticket Type'] == 'All Days',
+              coming_monday:           row['Registration Type'].include?('MON') || row['Ticket Type'] == 'All Days',
               mobile_phone_number:     row['Phone'],
               email:                   row['Email'],
               allergies:               'Unknown',
@@ -1180,8 +1180,8 @@ def self.import_gc(file, group, user)
               driver_signature:        driver_signature,
               dietary_requirements:    'Unknown',
               wwcc_number:             row['Question 11'],
-              registration_nbr:        row['Ticket Number'],
-              booking_nbr:             row['Booking Number'],
+              registration_nbr:        row['Registration#'],
+              booking_nbr:             row['Booking#'],
               exported:                true,
               updated_by:              user.id)
 
