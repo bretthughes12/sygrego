@@ -56,6 +56,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :participant_signups, only: [:new, :create] do
+    collection do
+      get :transfer
+      post :create_transfer
+    end
+  end
+
   resources :group_signups, :only => [:new, :create]
 
   resources :sports_evaluations, :only => [:new, :create]
