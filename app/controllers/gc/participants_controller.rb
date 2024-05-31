@@ -332,6 +332,8 @@ class Gc::ParticipantsController < GcController
           @participant.transfer_token = hashed
           @participant.save
 
+          ParticipantMailer.transfer(@participant, hashed).deliver_now
+
           flash[:notice] = 'Participant transferred.'
           format.html { redirect_to gc_participants_url }
         else
