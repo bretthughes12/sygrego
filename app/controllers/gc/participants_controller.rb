@@ -201,6 +201,11 @@ class Gc::ParticipantsController < GcController
       render layout: @current_role.name
     end
   
+    # GET /gc/participants/1/edit_transfer
+    def edit_transfer
+      render layout: @current_role.name
+    end
+  
     # POST /admin/participants
     def create
       @participant = Participant.new(participant_params)
@@ -312,6 +317,25 @@ class Gc::ParticipantsController < GcController
           format.html { redirect_to sport_notes_gc_participants_url }
         else
           format.html { render action: "edit_sport_notes", layout: @current_role.name }
+        end
+      end
+    end
+
+    # PATCH /gc/participants/1/update_transfer
+    def update_transfer
+      @participant.updated_by = current_user.id
+
+      respond_to do |format|
+        if @participant.update(participant_transfer_params)
+          @participant.status = 'Transfer pending'
+          raw, hashed = Devise.token_generator.generate(Participant, :transfer_token)
+          @participant.transfer_token = hashed
+          @participant.save
+
+          flash[:notice] = 'Participant transferred.'
+          format.html { redirect_to gc_participants_url }
+        else
+          format.html { render action: "edit_transfer", layout: @current_role.name }
         end
       end
     end
@@ -533,6 +557,13 @@ class Gc::ParticipantsController < GcController
       params.require(:participant).permit(
         :lock_version,
         :sport_notes
+      )
+    end
+  
+    def participant_transfer_params
+      params.require(:participant).permit(
+        :lock_version,
+        :transfer_email
       )
     end
   end

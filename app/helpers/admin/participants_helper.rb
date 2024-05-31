@@ -3,6 +3,10 @@ module Admin::ParticipantsHelper
         case
         when participant.status == "Requiring Approval"
             "table-secondary"
+        when participant.status == "Transfer pending"
+            "table-danger"
+        when participant.status == "Transferred"
+            "table-dark"
         when participant.coming && participant.spectator
             "table-warning"
         when participant.coming
