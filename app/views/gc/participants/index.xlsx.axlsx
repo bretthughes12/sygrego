@@ -59,8 +59,8 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.emergency_relationship,
 			 participant.emergency_phone_number,
 			 participant.emergency_email,
-			 participant.camping_preferences,
 			 participant.wwcc_number,
+			 participant.camping_preferences,
 			 voucher
 		   ],
 		style: row_border
