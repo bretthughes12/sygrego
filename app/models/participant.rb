@@ -110,7 +110,7 @@ class Participant < ApplicationRecord
     scope :coming, -> { where(coming: true) }
     scope :not_coming, -> { where(coming: false) }
     scope :requiring_approval, -> { where(status: 'Requiring Approval') }
-    scope :accepted, -> { where(status: 'Accepted') }
+    scope :accepted, -> { where("status = 'Accepted' OR status = 'Transfer pending'") }
     scope :spectators, -> { where(spectator: true) }
     scope :playing_sport, -> { where(spectator: false) }
     scope :campers, -> { where(onsite: true) }
@@ -122,7 +122,7 @@ class Participant < ApplicationRecord
     scope :under_18s, -> { where('age < 18') }
     scope :volunteer_age, -> { where('age > 15') }
     scope :children, -> { where('age < 12') }
-    scope :to_be_charged, -> { where("(coming = true OR withdrawn = true) AND status = 'Accepted'") }
+    scope :to_be_charged, -> { where("(coming = true OR withdrawn = true) AND (status = 'Accepted' OR status = 'Transfer pending')") }
     scope :drivers, -> { where(driver: true) }
     scope :males, -> { where("gender IN ('M', 'm', 'U', 'u')") }
     scope :females, -> { where("gender IN ('F', 'f', 'U', 'u')") }

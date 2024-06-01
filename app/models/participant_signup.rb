@@ -119,6 +119,8 @@ class ParticipantSignup
     }.freeze
   
     STATUSES = ['Requiring Approval',
+                'Transfer pending',
+                'Transferred',
                 'Accepted'].freeze
   
     validates :password,               confirmation: true,

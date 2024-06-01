@@ -59,10 +59,13 @@ module Admin::ParticipantsHelper
     end
 
     def participant_status_class(participant)
-        if participant.status == "Accepted"
+        case
+        when participant.status == "Accepted"
             "badge bg-success"
-        else
+        when participant.status == "Transfer pending"
             "badge bg-danger"
+        else
+            "badge bg-warning"
         end
     end
 end
