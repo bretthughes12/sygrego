@@ -40,11 +40,9 @@ class ParticipantSignupsController < ApplicationController
         @participant_signup.early_bird = @transferred_participant.early_bird
 
       else
+        @group = Group.find_by_abbr("DFLT").first
         flash[:notice] = "Unable to locate transferred participant"
-        format.html do 
-          redirect_to mysyg_signup_url(group: @group.mysyg_name)
-        end
-
+        redirect_to mysyg_signup_url(group: @group.mysyg_name)
       end
     end
     

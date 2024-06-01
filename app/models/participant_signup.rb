@@ -58,7 +58,10 @@ class ParticipantSignup
                   :new_user,
                   :login_name,
                   :login_email,
-                  :disclaimer
+                  :disclaimer,
+                  :booking_nbr,
+                  :registration_nbr,
+                  :early_bird
   
     INTEGER_FIELDS = %w[age].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
@@ -109,6 +112,12 @@ class ParticipantSignup
       :sport_notes
     ].compact
   
+    TRANSFER_ATTRIBUTES = [
+      :booking_nbr,
+      :registration_nbr,
+      :early_bird
+    ]
+
     USER_ATTRIBUTES = {
       user_name: :name,
       address: :address,
