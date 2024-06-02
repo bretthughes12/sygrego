@@ -26,6 +26,7 @@ class ParticipantSignup
                   :coming_monday,
                   :group_coord,
                   :helper,
+                  :guest,
                   :address,
                   :suburb,
                   :postcode,
@@ -61,7 +62,8 @@ class ParticipantSignup
                   :disclaimer,
                   :booking_nbr,
                   :registration_nbr,
-                  :early_bird
+                  :early_bird,
+                  :transfer_token
   
     INTEGER_FIELDS = %w[age].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
@@ -85,6 +87,7 @@ class ParticipantSignup
       :spectator,
       :group_coord,
       :helper,
+      :guest,
       :address,
       :suburb,
       :postcode,

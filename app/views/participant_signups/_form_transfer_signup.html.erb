@@ -1,53 +1,91 @@
-<%= simple_form_for @participant_signup, url: mysyg_participant_signups_url(group: @group.mysyg_setting.mysyg_name) do |f| %> 
+<%= simple_form_for @participant_signup, url: create_transfer_participant_signups_url do |f| %> 
 	<%= f.error_notification %>
-
-    <% if @group.abbr == "DFLT" %>
-        <%= f.input :group_id, as: :select, collection: @groups, selected: @participant_signup.group_id, include_blank: true %>
-    <% else %>
-        <%= f.input :group_id, as: :hidden %>
-    <% end %>
 
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
-	<% if @group.mysyg_setting.allow_offsite %>
-		<%= f.input :onsite, as: :boolean, label: "Staying onsite at Lardner Park" if can_display_onsite_flag %>
-	<% else %>
-		<%= f.input :onsite, as: :hidden %>
-	<% end %>
-	<%= f.input :spectator, as: :boolean %>
+
+	<%= f.input :group_id, as: :hidden %>
+	<%= f.input :booking_nbr, as: :hidden %>
+	<%= f.input :registration_nbr, as: :hidden %>
+	<%= f.input :transfer_token, as: :hidden %>
+	<%= f.input :onsite, as: :hidden %>
+	<%= f.input :group_coord, as: :hidden %>
+	<%= f.input :guest, as: :hidden %>
+	<%= f.input :early_bird, as: :hidden %>
+	<%= f.input :spectator, as: :hidden %>
+	<%= f.input :helper, as: :hidden %>
+	<%= f.input :coming_friday, as: :hidden %>
+	<%= f.input :coming_saturday, as: :hidden %>
+	<%= f.input :coming_sunday, as: :hidden %>
+	<%= f.input :coming_monday, as: :hidden %>
+	<%= f.input :email, as: :hidden %>
+
+	<br/>
+
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Email</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.email %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Ticket type</strong>
+			</td>
+			<td> 
+				<%= @transferred_participant.ticket_type %>
+			</td>
+		</tr>
+		<% if can_display_onsite_flag %>
+		<tr>
+			<td> 
+				<strong>Staying onsite at Lardner Park</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.onsite ? 'Yes' : 'No' %>
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td> 
+				<strong>Spectator</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.spectator ? 'Yes' : 'No' %>
+			</td>
+		</tr>
+		<% if @transferred_participant.voucher %>
+		<tr>
+			<td> 
+				<strong>Voucher</strong>
+			</td>
+			<td> 
+				<span class="badge bg-success"><%= @transferred_participant.voucher.name %></span>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+
 	<% if @group.mysyg_setting.collect_age_by == "Age" %>
 		<%= f.input :age, required: true, hint: "as at #{@settings.first_day_of_syg}" %>
 	<% else %>
 		<%= f.input :date_of_birth, required: true, as: :date, selected: Date.today.year - 30, start_year: Date.today.year - 80, end_year: Date.today.year %>
 	<% end %>
+
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number (required for participants 18 and over)" %>
 	<% unless @group.group_fee_categories.empty? %>
 		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @group.group_fee_categories.current.order(:description), label_method: :description, include_blank: false %>
 	<% end %>
-	<%= f.input :voucher_name, label: "Voucher" %>
-	<br/>
-	<% if @group.mysyg_setting.allow_part_time %>
-		<div><label class="string">Participation  (days are only relevant if part time)</label> <span class="<%= participant_type_class(@participant_signup.participant) %>"><%= @participant_signup.participant.rego_type %></span></div>
-		<%= f.input :coming_friday, as: :boolean, label: "Friday" %>
-		<%= f.input :coming_saturday, as: :boolean, label: "Saturday" %>
-		<%= f.input :coming_sunday, as: :boolean, label: "Sunday" %>
-		<%= f.input :coming_monday, as: :boolean, label: "Monday" %>
-	<% else %>
-		<%= f.input :coming_friday, as: :hidden %>
-		<%= f.input :coming_saturday, as: :hidden %>
-		<%= f.input :coming_sunday, as: :hidden %>
-		<%= f.input :coming_monday, as: :hidden%>
-	<% end %>
-
-	<br/>
 
 	<%= f.input :address %>
 	<%= f.input :suburb %>
 	<%= f.input :postcode %>
 	<%= f.input :phone_number, label: "Home phone number"  %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
-	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
 
 	<br/>
 
@@ -84,18 +122,6 @@
 	<% end %>
 
 	<br/>
-
-	<% if can_display_onsite_flag %>
-		<h2>Camping</h2>
-
-		<%= f.input :camping_preferences, hint: "for example, if you want to be put in a tent with a particular friend, mention that here" %>
-
-		<br/>
-	<% end %>
-
-	<h2>Sports</h2>
-
-	<%= f.input :sport_notes, hint: "let us know if you want to be put in teams with a particular friend, or if there is anything else we should know about you and sports" %>
 
 	<h2>Driving (only relevant if over 18)</h2>
 

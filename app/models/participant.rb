@@ -110,7 +110,7 @@ class Participant < ApplicationRecord
     scope :coming, -> { where(coming: true) }
     scope :not_coming, -> { where(coming: false) }
     scope :requiring_approval, -> { where(status: 'Requiring Approval') }
-    scope :accepted, -> { where("status = 'Accepted' OR status = 'Transfer pending'") }
+    scope :accepted, -> { where("status in ('Accepted', 'Transfer pending', 'Transferred')") }
     scope :spectators, -> { where(spectator: true) }
     scope :playing_sport, -> { where(spectator: false) }
     scope :campers, -> { where(onsite: true) }

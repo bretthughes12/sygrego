@@ -79,7 +79,7 @@
 					<strong>Staying onsite at Lardner Park</strong>
 				</td>
 				<td> 
-					<%= @participant.coming ? 'Yes' : 'No' %>
+					<%= @participant.onsite ? 'Yes' : 'No' %>
 				</td>
 			</tr>
 			<% end %>
@@ -107,7 +107,7 @@
 					<strong>Group Coordinator?</strong>
 				</td>
 				<td> 
-					<%= @participant.coming ? 'Yes' : 'No' %>
+					<%= @participant.group_coord ? 'Yes' : 'No' %>
 				</td>
 			</tr>
 			<% end %>
