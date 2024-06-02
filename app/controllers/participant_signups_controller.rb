@@ -35,9 +35,7 @@ class ParticipantSignupsController < ApplicationController
         @participant_signup.coming_monday = @transferred_participant.coming_monday
         @participant_signup.spectator = @transferred_participant.spectator
         @participant_signup.onsite = @transferred_participant.onsite
-        @participant_signup.early_bird = @transferred_participant.early_bird
         @participant_signup.group_coord = @transferred_participant.group_coord
-        @participant_signup.early_bird = @transferred_participant.early_bird
         @participant_signup.helper = @transferred_participant.helper
         @participant_signup.group_id = @transferred_participant.group_id
         @participant_signup.booking_nbr = @transferred_participant.booking_nbr

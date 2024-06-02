@@ -62,7 +62,6 @@ class ParticipantSignup
                   :disclaimer,
                   :booking_nbr,
                   :registration_nbr,
-                  :early_bird,
                   :transfer_token
   
     INTEGER_FIELDS = %w[age].freeze
@@ -115,12 +114,6 @@ class ParticipantSignup
       :sport_notes
     ].compact
   
-    TRANSFER_ATTRIBUTES = [
-      :booking_nbr,
-      :registration_nbr,
-      :early_bird
-    ]
-
     USER_ATTRIBUTES = {
       user_name: :name,
       address: :address,
