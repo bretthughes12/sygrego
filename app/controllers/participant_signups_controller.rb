@@ -45,7 +45,7 @@ class ParticipantSignupsController < ApplicationController
 
       else
         @group = Group.find_by_abbr("DFLT").first
-        flash[:notice] = "Unable to locate transferred participant"
+        flash[:notice] = "This replacement link has already been used"
         redirect_to mysyg_signup_url(group: @group.mysyg_name)
       end
     end
@@ -130,7 +130,6 @@ class ParticipantSignupsController < ApplicationController
             @transferred_participant.status = 'Transferred'
             @transferred_participant.booking_nbr = nil
             @transferred_participant.registration_nbr = nil
-            @transferred_participant.transfer_email = nil
             @transferred_participant.transfer_token = nil
             @transferred_participant.voucher_id = nil
             @transferred_participant.coming = false
@@ -166,7 +165,7 @@ class ParticipantSignupsController < ApplicationController
         end
       else
         @group = Group.find_by_abbr("DFLT").first
-        flash[:notice] = "Unable to locate transferred participant"
+        flash[:notice] = "This replacement link has already been used"
         redirect_to mysyg_signup_url(group: @group.mysyg_name)
       end
     end
