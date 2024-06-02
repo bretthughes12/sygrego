@@ -17,4 +17,8 @@
                     data: { confirm: "Are you sure?" },
                     class: danger_button_class,
                     role: "button" %>
+<% elsif @participant.coming %>
+    <%= link_to "Replace", edit_transfer_gc_participant_path(@participant),
+                    class: danger_button_class,
+                    role: "button" %>
 <% end %>

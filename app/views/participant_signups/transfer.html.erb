@@ -1,0 +1,11 @@
+<% name = @group.abbr == "DFLT" ? "State Youth Games" : @group.short_name %>
+
+<% title "Signup for #{name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>
+	Please complete the form below to register as a participant for <%= name %> for <%= @settings.this_year %>. 
+</p> 
+
+<%= render :partial => 'form_transfer_signup' %>

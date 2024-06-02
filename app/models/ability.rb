@@ -104,7 +104,9 @@ class Ability
             :update_camping_preferences,
             :edit_sport_notes,
             :update_sport_notes,
-            :edit_sports], Participant do |participant|
+            :edit_sports,
+            :edit_transfer,
+            :update_transfer], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry
@@ -219,7 +221,9 @@ class Ability
           :update_camping_preferences,
           :edit_sport_notes,
           :update_sport_notes,
-          :edit_sports], Participant do |participant|
+          :edit_sports,
+          :edit_transfer,
+          :update_transfer], Participant do |participant|
              user.groups.include?(participant.group) || user.role?(:admin)
           end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry

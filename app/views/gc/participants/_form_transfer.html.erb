@@ -1,0 +1,10 @@
+<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :lock_version, as: :hidden %>
+	<%= f.input :transfer_email, hint: 'Enter the email address of the person you would like to transfer this registration / ticket to. They will receive a link via email to complete their registration as a substitute for this participant' %>
+
+	<br/>
+
+	<%= f.button :submit,'Replace' %>
+<% end %>	

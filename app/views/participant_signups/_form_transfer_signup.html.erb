@@ -1,0 +1,253 @@
+<%= simple_form_for @participant_signup, url: create_transfer_participant_signups_url do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :first_name %>
+	<%= f.input :surname %>
+
+	<%= f.input :group_id, as: :hidden %>
+	<%= f.input :booking_nbr, as: :hidden %>
+	<%= f.input :registration_nbr, as: :hidden %>
+	<%= f.input :transfer_token, as: :hidden %>
+	<%= f.input :onsite, as: :hidden %>
+	<%= f.input :group_coord, as: :hidden %>
+	<%= f.input :guest, as: :hidden %>
+	<%= f.input :spectator, as: :hidden %>
+	<%= f.input :helper, as: :hidden %>
+	<%= f.input :coming_friday, as: :hidden %>
+	<%= f.input :coming_saturday, as: :hidden %>
+	<%= f.input :coming_sunday, as: :hidden %>
+	<%= f.input :coming_monday, as: :hidden %>
+	<%= f.input :email, as: :hidden %>
+
+	<br/>
+
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Email</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.email %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Ticket type</strong>
+			</td>
+			<td> 
+				<%= @transferred_participant.ticket_type %>
+			</td>
+		</tr>
+		<% if can_display_onsite_flag %>
+		<tr>
+			<td> 
+				<strong>Staying onsite at Lardner Park</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.onsite ? 'Yes' : 'No' %>
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td> 
+				<strong>Spectator</strong>
+			</td>
+			<td> 
+				<%= @participant_signup.spectator ? 'Yes' : 'No' %>
+			</td>
+		</tr>
+		<% if @transferred_participant.voucher %>
+		<tr>
+			<td> 
+				<strong>Voucher</strong>
+			</td>
+			<td> 
+				<span class="badge bg-success"><%= @transferred_participant.voucher.name %></span>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+
+	<% if @group.mysyg_setting.collect_age_by == "Age" %>
+		<%= f.input :age, required: true, hint: "as at #{@settings.first_day_of_syg}" %>
+	<% else %>
+		<%= f.input :date_of_birth, required: true, as: :date, selected: Date.today.year - 30, start_year: Date.today.year - 80, end_year: Date.today.year %>
+	<% end %>
+
+	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
+	<%= f.input :wwcc_number, label: "WWCC Number (required for participants 18 and over)" %>
+	<% unless @group.group_fee_categories.empty? %>
+		<%= f.input :group_fee_category_id, as: :select, label: "Fee category", collection: @group.group_fee_categories.current.order(:description), label_method: :description, include_blank: false %>
+	<% end %>
+
+	<%= f.input :address %>
+	<%= f.input :suburb %>
+	<%= f.input :postcode %>
+	<%= f.input :phone_number, label: "Home phone number"  %>
+	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
+
+	<br/>
+
+	<h2>Login details (if different from the above)</h2>
+
+	<%= f.input :login_email, hint: "this may be different to the above (for example, if you a parent signing up your children). This is the email you should use to log back on with" %>
+	<%= f.input :login_name %>
+
+	<br/>
+
+	<h2>Medical</h2>
+
+	<% if @group.mysyg_setting.medicare_option == 'Require' %>
+		<%= f.input :medicare_number, required: true %>
+		<%= f.input :medicare_expiry, required: true, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<% elsif @group.mysyg_setting.medicare_option == 'Show' %>
+		<%= f.input :medicare_number %>
+		<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<% end %>
+	<%= f.input :medical_info, label: "Medical information" %>
+	<%= f.input :medications %>
+	<%= f.input :allergies %>
+	<%= f.input :dietary_requirements %>
+	<% if @group.mysyg_setting.require_emerg_contact %>
+		<%= f.input :emergency_contact, required: true, label: "Emergency contact (required for all participants)" %>
+		<%= f.input :emergency_relationship, required: true, label: "Relationship to participant" %>
+		<%= f.input :emergency_phone_number, required: true, label: "Emergency contact phone number" %>
+		<%= f.input :emergency_email, required: true, label: "Emergency contact email" %>
+	<% else %>
+		<%= f.input :emergency_contact, label: "Emergency contact (required for participants under 18)" %>
+		<%= f.input :emergency_relationship, label: "Relationship to participant" %>
+		<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
+		<%= f.input :emergency_email, label: "Emergency contact email" %>
+	<% end %>
+
+	<br/>
+
+	<h2>Driving (only relevant if over 18)</h2>
+
+    <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
+    <%= f.input :driving_to_syg, :as => :boolean, :label => "I will be driving to SYG"  %>
+    <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true, :label => "Licence Type (required for drivers)" %>
+    <%= f.input :number_plate, :label => "Number Plate (required for drivers)" %>
+
+	<br/>
+
+	<div class="accordion" id="driving_accordion">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="driving_heading">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#driving_collapse" aria-expanded="false" aria-controls="driving_collapse">
+					Nominated Driver Declaration (click to expand)
+				</button>
+			</h2>
+			<div id="driving_collapse" class="accordion-collapse collapse" aria-labelledby="driving_heading" data-bs-parent="#driving_accordion">
+				<div class="accordion-body">
+					<p>Over the duration of the weekend, the State Youth Games committee is extremely concerned about the safety of people on the roads while travelling to and from State Youth Games, and to the various sporting venues. We would like to bring to the attention of Group Coordinators and all drivers the following information.</p>
+					<p>The <%= APP_CONFIG[:conference_name] %>, in their CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES, states the following concerning safe care in private motor vehicles:</p>
+
+					<h3>1-2-11 PRIVATE MOTOR VEHICLES</h3>
+					<p>All passengers including the driver must wear their seat belts. Leaders should make it their responsibility to determine, to the best of their ability, that the vehicle used is registered, the driver holds a current driver's license and is a sound driver, and that the vehicle is roadworthy. If a child is to be transported by a person other than a recognised leader, that person should have been, wherever possible, known to a leader for a reasonable period of time.</p>
+					
+					<h3>1-2-15 INSURANCE CONDITIONS OF VEHICLE</h3>
+					<p>The leader will need to satisfy themselves that the vehicle to be driven has correct current minimum third party insurance and property insurance.</p>
+					<p>Following on from this, we would ask all drivers that will be driving over the weekend to agree to the following statement. Only those drivers that do this will be able to drive over the weekend of the Games.</p>
+
+					<h3>STATEMENT</h3>
+					<p>I will be driving a car which will be in a roadworthy condition, and have current registration. This vehicle has current minimum third party insurance and property insurance.</p>
+					<p>I will ensure that both myself and all my passengers will be wearing seatbelts, and I will drive in a safe manner according to the local road conditions and traffic laws. I have read and understand the excerpts from the CODE OF PRACTICE FOR THE PROTECTION OF CHILDREN WITHIN OUR CHURCHES.</p>
+					<p>In the event of a motor vehicle accident occurring, I will not hold the State Youth Games Committee, or Youth Vision <%= APP_CONFIG[:state_name] %> responsible for any injury or damage that may result, either to myself, to other people, or to any property.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br/>
+
+    <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration (required for drivers)" %> 
+
+	<br/>
+
+	<h2>Disclaimer</h2>
+
+	<div class="accordion" id="accordionExample">
+		<div class="accordion-item">
+			<h2 class="accordion-header" id="headingOne">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+					Code of Conduct (click to expand)
+				</button>
+			</h2>
+			<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+				<div class="accordion-body">
+					SYG is a space for young people to spend time playing sport, camping, experiencing community, growing friendships, and meeting or reconnecting with Jesus. We hope to send you home from SYG having made some amazing and positive life-impacting memories, in one piece, and with a few dirty clothes from all that mud. So, to make sure that happens, here’s what we need you to commit to:
+					<ul>
+						<li>SYG is a Christian event, and people come to worship and engage with God. People will do that in different ways, and everyone needs to be respectful of that, even if it’s not your thing.</li>
+						<li>Everyone must also be respectful that not everyone is at SYG to worship God, and nobody will be forced to participate in anything that they are not comfortable doing.</li>
+						<li>SYG is an alcohol, drug, and smoke free event.</li>
+						<li>Medications must be given to your group’s First Aider; they’ll know what to do and give you instructions.</li>
+						<li>All participants must be under the supervision of a group leader at all times, and must not be left at venues alone.</li>
+						<li>Abide to all safety instructions and emergency evacuation plans and seek to practice sport, camping, and all activities in the safest manner possible.</li>
+						<li>Participate in sport in a manner which is respectful and encouraging of others.</li>
+						<li>No swearing or slander on the sporting fields… or anywhere.</li>
+						<li>Show respect to all the venues we are a part of throughout the weekend, leaving them in condition than when you first arrived (or even better).</li>
+						<li>Adhere to curfew; all participants must be back at their group campsite by 11:45pm each night of the event. Lights out at midnight.</li>
+						<li>No mixed gendered camping.</li>
+						<li>Listen to the instruction of SYG leaders when asked.</li>
+						<li>All drivers must be registered with the SYG Admin office and adhere to the requirements of the SYG Driving Policy.</li>
+						<li>SYG involves participants of all ages. Participants who are 18 or older are expected to act in ways that are respectful and inclusive towards younger participants, particularly on the sporting field.</li>
+						<li>All persons at SYG who are 18 years old or older are required to hold a current Victorian Working With Children Check.</li>
+					</ul>
+					Failure to adhere to this Code of Conduct may result in you being removed from the event.
+					<br/>
+					<br/>
+					<h3>In summary</h3>
+					Be respectful...
+					<ul>
+						<li>Towards your team: You may be best friends, or getting to know one another—either way, be kind. Cheer one another on, thank your team helpers and leaders for making this weekend happen, and seek to make others feel welcomed.</li>
+						<li>Towards your opponents: They are just like you, here to play sport and enjoy an awesome day. Some will be sporting champions, and others are learning as they go. So play fair and play kind.</li>
+						<li>Towards the referees: Some are professionals, others are volunteers lending a hand, some may even be you! Play the whistle and have fun. If they slip up, chat to them after the game or during a break, and have a kind conversation that helps them understand, and then let it go. They might not be able to change a call they made fifteen minutes ago, and that’s okay, but you can help the sport session run smoothly in the future.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br/>
+
+    <h3>State Youth Games Disclaimer</h3>
+
+	<ul>
+		<li>This is to acknowledge and confirm the Liability Waiver for Churches of Christ VIC/TAS and the State Youth Games Victoria in relation to my participation in all activities/games associated with State Youth Games Victoria.</li>
+		<li>I fully understand the terms and conditions outlined in the Liability Waiver, and I willingly agree to abide by them. I acknowledge the risks involved in participating in the activities/games associated with the State Youth Games Victoria and release Churches of Christ VIC/TAS and the State Youth Games Victoria from any liability concerns associated with property damage, incident, accident, or illness that may arise as a result of my participation.</li>
+		<li>I acknowledge that in the event of any incident, accident, or illness at the State Youth Games, the organizers have my consent to secure necessary medical assistance, and I understand and agree that any expenses related to such medical assistance will be covered by either myself or the participating church I am representing.</li>
+		<li>I understand that the insurance policies in place for State Youth Games Victoria specifically cover public liability and professional indemnity for the event itself and its event organizers. However, understand this coverage does not extend to the registered participants and the representing Church in the case of any personal injury, whether pre-existing or new.</li>
+		<li>I confirm that the details provided during the registration submission are true and correct.</li>
+	</ul>
+
+	<p style="font-size: 8pt">* To ensure State Youth Games Victoria participants are adequately covered in the event of a personal or sporting related accident, it is strongly recommended that participating groups or individual participants arrange personal accident insurance, It is the responsibility of the group co-ordinator to ensure this is communicated to all State Youth Games Victoria participants associate with their group.</p>
+
+	<% if !@group.mysyg_setting.policy_text.blank? || @group.mysyg_setting.policy.attached? %>
+		<h3>Your Group Disclaimer</h3>
+		<p><%= @group.mysyg_setting.policy_text %></p>
+
+		<% if @group.mysyg_setting.policy.attached? %>
+			<% if @group.mysyg_setting.policy.representable? %>
+				<%= link_to(image_tag(@group.mysyg_setting.policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@group.mysyg_setting.policy, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Policy", rails_blob_path(@group.mysyg_setting.policy, disposition: "attachment") %>
+			<% end %>
+
+			<br/>
+			<br/>
+		<% end %>
+	<% end %>
+
+	By ticking this box, you confirm that you have read and accepted the above Code of Conduct and Disclaimer, and that either you are over the age of 18 and will be an attendee of State Youth Games, or that you are the parent or guardian of the participant who will be an attendee of State Youth Games.
+
+	<br/>
+	<br/>
+
+    <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
+
+	<br/>
+	<br/>
+
+    <%= f.button :submit, "Sign up" %>
+<% end %>	

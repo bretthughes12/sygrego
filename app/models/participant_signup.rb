@@ -26,6 +26,7 @@ class ParticipantSignup
                   :coming_monday,
                   :group_coord,
                   :helper,
+                  :guest,
                   :address,
                   :suburb,
                   :postcode,
@@ -58,7 +59,10 @@ class ParticipantSignup
                   :new_user,
                   :login_name,
                   :login_email,
-                  :disclaimer
+                  :disclaimer,
+                  :booking_nbr,
+                  :registration_nbr,
+                  :transfer_token
   
     INTEGER_FIELDS = %w[age].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
@@ -82,6 +86,7 @@ class ParticipantSignup
       :spectator,
       :group_coord,
       :helper,
+      :guest,
       :address,
       :suburb,
       :postcode,
@@ -119,6 +124,8 @@ class ParticipantSignup
     }.freeze
   
     STATUSES = ['Requiring Approval',
+                'Transfer pending',
+                'Transferred',
                 'Accepted'].freeze
   
     validates :password,               confirmation: true,

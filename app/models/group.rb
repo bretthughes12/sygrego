@@ -95,7 +95,8 @@ class Group < ApplicationRecord
     delegate :estimated_numbers,
       :warden_zone,
       :onsite, to: :event_detail
-    delegate :show_group_extras_in_mysyg,
+    delegate :mysyg_name,
+      :show_group_extras_in_mysyg,
       :show_finance_in_mysyg,
       :show_sports_in_mysyg,
       :show_volunteers_in_mysyg,

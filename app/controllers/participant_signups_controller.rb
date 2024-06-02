@@ -1,6 +1,6 @@
 class ParticipantSignupsController < ApplicationController
 
-    before_action :find_group
+    before_action :find_group, only: [:new, :create]
 
     layout 'users'
   
@@ -18,6 +18,36 @@ class ParticipantSignupsController < ApplicationController
       @participant_signup.sport_preferences = SportPreference.prepare_for_group(@group)
 
       @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
+    end
+    
+    # GET /participant_signups/transfer
+    def transfer
+      @transferred_participant = Participant.where(transfer_token: params[:token]).first
+
+      if @transferred_participant
+        @group = @transferred_participant.group
+
+        @participant_signup = ParticipantSignup.new
+        @participant_signup.age = 30
+        @participant_signup.coming_friday = @transferred_participant.coming_friday
+        @participant_signup.coming_saturday = @transferred_participant.coming_saturday
+        @participant_signup.coming_sunday = @transferred_participant.coming_sunday
+        @participant_signup.coming_monday = @transferred_participant.coming_monday
+        @participant_signup.spectator = @transferred_participant.spectator
+        @participant_signup.onsite = @transferred_participant.onsite
+        @participant_signup.group_coord = @transferred_participant.group_coord
+        @participant_signup.helper = @transferred_participant.helper
+        @participant_signup.group_id = @transferred_participant.group_id
+        @participant_signup.booking_nbr = @transferred_participant.booking_nbr
+        @participant_signup.registration_nbr = @transferred_participant.registration_nbr
+        @participant_signup.transfer_token = @transferred_participant.transfer_token
+        @participant_signup.email = @transferred_participant.transfer_email
+
+      else
+        @group = Group.find_by_abbr("DFLT").first
+        flash[:notice] = "This replacement link has already been used"
+        redirect_to mysyg_signup_url(group: @group.mysyg_name)
+      end
     end
     
     # POST /participant_signups
@@ -78,6 +108,65 @@ class ParticipantSignupsController < ApplicationController
             render "new"
           end
         end
+      end
+    end
+
+    # POST /participant_signups/create_transfer
+    def create_transfer
+      @transferred_participant = Participant.where(transfer_token: params[:participant_signup][:transfer_token]).first
+
+      if @transferred_participant
+        @participant_signup = ParticipantSignup.new(params[:participant_signup])
+        @participant_signup.coming = true
+        @group = @participant_signup.group || Group.find_by_abbr("DFLT")
+        @participant = @participant_signup.participant
+        @participant_signup.status = "Accepted"
+
+        respond_to do |format|
+          if @participant_signup.save
+            @user = @participant_signup.user 
+            voucher = @transferred_participant.voucher
+
+            @transferred_participant.status = 'Transferred'
+            @transferred_participant.booking_nbr = nil
+            @transferred_participant.registration_nbr = nil
+            @transferred_participant.transfer_token = nil
+            @transferred_participant.voucher_id = nil
+            @transferred_participant.coming = false
+            @transferred_participant.save(validate: false)
+
+            @participant.voucher = voucher
+            @participant.early_bird = @transferred_participant.early_bird
+            @participant.save(validate: false)
+
+            UserMailer.welcome_participant(@user, @participant).deliver_now
+
+            flash[:notice] = "Thank you for registering for State Youth Games"
+            bypass_sign_in @user
+            session["current_role"] = "participant"
+            session["current_group"] = @group.id
+            session["current_participant"] = @participant.id
+            format.html do
+              if @participant_signup.new_user
+                redirect_to edit_password_mysyg_user_path(@user)
+              else
+                redirect_to root_url(current_user)
+              end
+            end
+            
+            UserMailer.new_participant(@user, @participant).deliver_now if @participant_signup.participant.group.active
+    
+          else
+            format.html do
+              flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
+              render "transfer", token: @transferred_participant.transfer_token
+            end
+          end
+        end
+      else
+        @group = Group.find_by_abbr("DFLT").first
+        flash[:notice] = "This replacement link has already been used"
+        redirect_to mysyg_signup_url(group: @group.mysyg_name)
       end
     end
 

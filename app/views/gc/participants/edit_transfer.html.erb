@@ -1,0 +1,13 @@
+<% title "Replace #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_transfer", locals: { 
+                              url: update_transfer_gc_participant_path(@participant), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", edit_gc_participant_path(@participant),
+                  class: primary_button_class,
+                  role: "button" %>

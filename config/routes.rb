@@ -56,6 +56,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :participant_signups, only: [:new, :create] do
+    collection do
+      get :transfer
+      post :create_transfer
+    end
+  end
+
   resources :group_signups, :only => [:new, :create]
 
   resources :sports_evaluations, :only => [:new, :create]
@@ -536,6 +543,7 @@ Rails.application.routes.draw do
         get :edit_sports
         get :edit_camping_preferences
         get :edit_sport_notes
+        get :edit_transfer
         post :add_voucher
         patch :delete_voucher
         patch :accept
@@ -547,6 +555,7 @@ Rails.application.routes.draw do
         patch :update_fees
         patch :update_camping_preferences
         patch :update_sport_notes
+        patch :update_transfer
       end
     end
     resources :volunteers, only: [:index, :show, :edit, :update] do

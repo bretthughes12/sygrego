@@ -1,0 +1,8 @@
+Hi
+
+You have an opportunity to be a late registration for State Youth Games <%= @settings.this_year %>.
+
+To complete the registration process and set your password please use <%= link_to 'this link', transfer_participant_signups_url(token: @token, protocol: "https", host: @settings.website_host) %> to the signup page for <%= @participant.group.short_name %> 
+Kind regards,
+
+The SYG Committee Team

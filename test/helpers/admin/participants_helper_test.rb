@@ -32,7 +32,13 @@ class Admin::ParticipantsHelperTest < ActionView::TestCase
     assert_equal "badge bg-success", participant_status_class(@participant)
 
     @participant.status = "Requiring Approval"
+    assert_equal "badge bg-warning", participant_status_class(@participant)
+
+    @participant.status = "Transfer pending"
     assert_equal "badge bg-danger", participant_status_class(@participant)
+
+    @participant.status = "Transferred"
+    assert_equal "badge bg-warning", participant_status_class(@participant)
   end
 
   test "participant type display classes" do

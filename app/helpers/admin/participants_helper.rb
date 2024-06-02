@@ -3,6 +3,10 @@ module Admin::ParticipantsHelper
         case
         when participant.status == "Requiring Approval"
             "table-secondary"
+        when participant.status == "Transfer pending"
+            "table-danger"
+        when participant.status == "Transferred"
+            "table-dark"
         when participant.coming && participant.spectator
             "table-warning"
         when participant.coming
@@ -55,10 +59,13 @@ module Admin::ParticipantsHelper
     end
 
     def participant_status_class(participant)
-        if participant.status == "Accepted"
+        case
+        when participant.status == "Accepted"
             "badge bg-success"
-        else
+        when participant.status == "Transfer pending"
             "badge bg-danger"
+        else
+            "badge bg-warning"
         end
     end
 end
