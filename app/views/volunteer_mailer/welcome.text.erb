@@ -13,10 +13,10 @@ Please follow these links to download some crucial documents that will help you 
 <% if @settings.sports_reference.attached? %>
 - Sports Information and Rules Booklet (<%= rails_blob_url(@settings.sports_reference) %>)
 <% end %>
-<% if @sport && @sport.draw_type == "Knockout" && @settings.knockout_reference.attached? %>
+<% if @draw_types.include?("Knockout") && @settings.knockout_reference.attached? %>
 - How to Complete a Knockout draw (<%= rails_blob_url(@settings.knockout_reference) %>)
 <% end %>
-<% if @sport && (@sport.draw_type == "Round Robin" || @sport.draw_type == "Quad Round Robin") && @settings.ladder_reference.attached? %>
+<% if (@draw_types.include?("Round Robin") || @draw_types.include?("Quad Round Robin") || @draw_types.include?("5 x Round Robin")) && @settings.ladder_reference.attached? %>
 - How to Complete the Ladder Worksheet (<%= rails_blob_url(@settings.ladder_reference) %>)
 <% end %>
 <% if @sport.rules_file.attached? %>

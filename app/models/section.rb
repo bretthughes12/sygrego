@@ -57,6 +57,13 @@ class Section < ApplicationRecord
     delegate :name, to: :session, prefix: 'session'
     delegate :sport_name, :sport, :draw_type, to: :grade
   
+    DRAW_TYPES = ['Knockout',
+                  'Open',
+                  'Round Robin',
+                  'Quad Round Robin',
+                  '5 x Round Robin'
+    ]
+
     FINALS_FORMATS = [
         'Top 2',
         'Top 2 in Group',
@@ -76,7 +83,10 @@ class Section < ApplicationRecord
                                        allow_blank: true
     validates :year_introduced,        numericality: true,
                                        allow_blank: true
-  
+    validates :draw_type,              presence: true,
+                                       length: { maximum: 20 },
+                                       inclusion: { in: DRAW_TYPES }
+ 
     def <=>(other)
       name <=> other.name if other
     end

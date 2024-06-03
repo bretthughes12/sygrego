@@ -117,4 +117,20 @@ namespace :syg do
 
       puts "Options updated - #{count}"
     end
+
+    desc 'Populate draw_type in sections from sports'
+    task populate_section_draw_types: ['db:migrate'] do |t|
+      puts 'Updating draw types...'
+
+      count = 0
+
+      Section.all.each do |s|
+        s.draw_type = s.sport.draw_type
+        s.save
+
+        count += 1
+      end
+
+      puts "Sections updated - #{count}"
+    end
 end
