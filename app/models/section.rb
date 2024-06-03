@@ -5,6 +5,7 @@
 #  id               :bigint           not null, primary key
 #  active           :boolean
 #  database_rowid   :integer
+#  draw_type        :string(20)       default("Round Robin"), not null
 #  finals_format    :string(20)
 #  name             :string(50)       not null
 #  number_in_draw   :integer

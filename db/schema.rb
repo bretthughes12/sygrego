@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_27_104708) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_03_084219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -501,6 +501,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_27_104708) do
     t.string "finals_format", limit: 20
     t.integer "number_of_groups", default: 1
     t.integer "start_court", default: 1
+    t.string "draw_type", limit: 20, default: "Round Robin", null: false
     t.index ["name"], name: "index_sections_on_name", unique: true
   end
 
