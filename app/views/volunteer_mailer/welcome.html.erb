@@ -10,23 +10,20 @@
 <ul>
 	<% @sections.each do |section| %>
 		<% if section.draw_file.attached? %>
-			<li><%= link_to "Fixture for #{section.name}", rails_blob_url(section.draw_file) %></li>
+			<li><%= link_to "Fixture for #{section.name}", draw_file_section_url(section) %></li>
 		<% end %>
 	<% end %>
-	<% if @settings.sports_reference.attached? %>
-		<li><%= link_to "Sports Information & Rules Booklet", rails_blob_url(@settings.sports_reference) %></li>
-	<% end %>
 	<% if @draw_types.include?("Knockout") && @settings.knockout_reference.attached? %>
-		<li><%= link_to "How to Complete a Knockout draw", rails_blob_url(@settings.knockout_reference) %></li>
+		<li><%= link_to "How to Complete a Knockout draw", knockout_reference_url %></li>
 	<% end %>
 	<% if (@draw_types.include?("Round Robin") || @draw_types.include?("Quad Round Robin") || @draw_types.include?("5 x Round Robin")) && @settings.ladder_reference.attached? %>
-		<li><%= link_to "How to Complete the Ladder Worksheet", rails_blob_url(@settings.ladder_reference) %></li>
+		<li><%= link_to "How to Complete the Ladder Worksheet", ladder_reference_url %></li>
 	<% end %>
 	<% if @sport.rules_file.attached? %>
-		<li><%= link_to "Rules for your Sport", rails_blob_url(@sport.rules_file) %></li>
+		<li><%= link_to "Rules for your Sport", rules_file_sport_url(@sport) %></li>
 	<% end %>
 	<% if @settings.sports_maps.attached? %>
-		<li><%= link_to "Maps of the Sport Venues", rails_blob_url(@settings.sports_maps) %></li>
+		<li><%= link_to "Maps of the Sport Venues", sports_maps_url %></li>
 	<% end %>
 </ul>
 
@@ -41,10 +38,10 @@
 
 <p>These packs will include the rules for your sport, scoresheets, score pads, stationery, calculator, whistle, timer, stopwatch, your FREE SYG shirt, sports equipment and venue keys, if applicable.</p>
 
-<% if @sport && (@sport.draw_type == "Round Robin" || @sport.draw_type == "Quad Round Robin") %>
+<% if @draw_types.include?("Round Robin") %>
 	<p>For the results from your section, you can enter them online for easy tracking, and to also calculate your finalists for you. The website is <%= link_to "here", new_user_session_url %> and user name is sygresults@gmail.com with password syg2024.</p>
 
-	<p>For information on how to enter results online, see <%= link_to "this reference", rails_blob_url(@settings.results_reference) %></p>
+	<p>For information on how to enter results online, see <%= link_to "this reference", results_reference_url %></p>
 
 	<p>OR</p>
 
@@ -59,7 +56,19 @@
 
 <p>At the end of the session, can you please make a detailed effort to ensure your venue is left clean and tidy. This is very important!</p>
 
-<p>If First Aid is required on the day, please advise the participants of the nearest SYG First Aid crews, who will be based at Lardner Park, Warragul Regional College Stadium, Drouin Secondary College Stadium, Warragul Netball Courts and Bellbird Park Volleyball Stadium.</p>
+<p>If First Aid is required on the day, please advise the participants of the nearest SYG First Aid crews, who will be based at:</p>
+<ul>
+	<li>Lardner Park</li>
+	<li>Bellbird Park Stadium</li>
+	<li>Drouin Secondary College Stadium</li>
+	<li>Logan Park</li>
+	<li>Marist Sion College</li>
+	<li>Stadium 34 Moe</li>
+	<li>St Pauls Anglican Grammar Stadium</li>
+	<li>Warragul Netball Courts</li>
+	<li>Warragul Regional College Stadium</li>
+	<li>Warragul Leisure Centre</li>
+</ul>
 
 <p>If you have any problems at your sport or have any questions please contact us, our mobiles are:  Jarrod: 0413 703 106 or Glenn: 0438 534 512.</p>
 

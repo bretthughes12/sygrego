@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   get '/incident' => 'incident_reports#new', as: :incident
   get '/spirit' => 'awards#new_spirit', as: :spirit
   get '/legend' => 'awards#new_volunteer', as: :legend
-  get '/knockout_reference' => 'admin/info#knockout_reference', controller: "admin/info", as: :knockout_reference
-  get '/ladder_reference' => 'admin/info#ladder_reference', controller: "admin/info", as: :ladder_reference
-  get '/results_reference' => 'admin/info#results_reference', controller: "admin/info", as: :results_reference
+  get '/knockout_reference' => 'info#knockout_reference', as: :knockout_reference
+  get '/ladder_reference' => 'info#ladder_reference', as: :ladder_reference
+  get '/results_reference' => 'info#results_reference', as: :results_reference
+  get '/sports_maps' => 'info#sports_maps', as: :sports_maps
   get 'static/:permalink' => 'pages#show', as: :static
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -75,6 +76,18 @@ Rails.application.routes.draw do
       post :create_good_sports
       post :create_spirit
       post :create_volunteer
+    end
+  end
+
+  resources :sports, only: [] do
+    member do
+      get :rules_file
+    end
+  end
+
+  resources :sections, only: [] do
+    member do
+      get :draw_file
     end
   end
 
