@@ -152,6 +152,7 @@ private
                                     :number_of_courts,
                                     :year_introduced,
                                     :draw_file,
+                                    :draw_type,
                                     :finals_format,
                                     :number_of_groups,
                                     :start_court,

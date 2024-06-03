@@ -4,6 +4,7 @@
 	<%= f.input :name, label: "Sports section" %>
 	<%= f.input :grade_id, as: :select, collection: Grade.order(:name).load %>
 	<%= f.input :active %>
+	<%= f.input :draw_type, as: :select, collection: Section::DRAW_TYPES, include_blank: false %>
 	<%= f.input :results_locked %>
 	<%= f.input :venue_id, as: :select, collection: Venue.order(:name).load %>
 	<%= f.input :session_id, as: :select, collection: Session.order(:database_rowid).load %>
