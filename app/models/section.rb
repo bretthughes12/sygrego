@@ -55,7 +55,7 @@ class Section < ApplicationRecord
 
     delegate :name, to: :venue, prefix: 'venue'
     delegate :name, to: :session, prefix: 'session'
-    delegate :sport_name, :sport, :draw_type, to: :grade
+    delegate :sport_name, :sport, to: :grade
   
     DRAW_TYPES = ['Knockout',
                   'Open',
