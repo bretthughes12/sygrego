@@ -6,7 +6,7 @@ class Admin::RegoChecklistsController < AdminController
     
     # GET /admin/rego_checklists
     def index
-      @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+      @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true AND groups.admin_use = false").all.order("groups.abbr").load
   
       respond_to do |format|
         format.html # index.html.erb
@@ -16,7 +16,7 @@ class Admin::RegoChecklistsController < AdminController
 
     # GET /admin/rego_checklists/site_checks
     def site_checks
-      @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true").all.order("groups.abbr").load
+      @rego_checklists = RegoChecklist.includes(:group).where("groups.coming = true AND groups.admin_use = false").all.order("groups.abbr").load
   
       respond_to do |format|
         format.html # index.html.erb
