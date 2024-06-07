@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_030919) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_074252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -616,6 +616,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_030919) do
     t.datetime "updated_at", null: false
     t.boolean "participant_registrations_closed", default: false
     t.boolean "allow_gc_to_add_participants", default: false
+    t.string "incident_link", default: ""
   end
 
   create_table "sport_entries", force: :cascade do |t|

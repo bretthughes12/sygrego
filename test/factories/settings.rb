@@ -20,6 +20,7 @@
 #  generate_stats                       :boolean          default(FALSE)
 #  group_registrations_closed           :boolean          default(FALSE)
 #  helper_adjustment                    :decimal(8, 2)    default(0.55), not null
+#  incident_link                        :string           default("")
 #  indiv_draws_complete                 :boolean          default(FALSE)
 #  info_email                           :string(100)      default("")
 #  lost_property_email                  :string(100)      default("")
