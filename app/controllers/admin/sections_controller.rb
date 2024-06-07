@@ -19,7 +19,7 @@ class Admin::SectionsController < AdminController
   
     # GET /admin/sections/results
     def results
-      @sections = Section.round_robin
+      @sections = Section.round_robin.order(:name).all
   
       respond_to do |format|
         format.html # index.html.erb

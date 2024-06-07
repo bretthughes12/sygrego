@@ -4,6 +4,6 @@ class Sc::SectionsController < ScController
 
   # GET /sc/section
   def index
-      @sections = Section.round_robin
+      @sections = Section.round_robin.order(:name).all
   end
 end  

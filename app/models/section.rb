@@ -50,6 +50,7 @@ class Section < ApplicationRecord
     belongs_to :session
   
     scope :active, -> { where(active: true) }
+    scope :round_robin, -> { where(draw_type: "Round Robin") }
   
     has_one_attached :draw_file
 
@@ -276,15 +277,15 @@ class Section < ApplicationRecord
         self.save(validate: false)
     end
 
-    def self.round_robin
-        sections = []
+#    def self.round_robin
+#        sections = []
 
-        Section.active.order(:name).includes(:grade).all.each do |section|
-            sections << section if section.grade.sport.draw_type == 'Round Robin'
-        end
+#        Section.active.order(:name).includes(:grade).all.each do |section|
+#            sections << section if section.grade.sport.draw_type == 'Round Robin'
+#        end
 
-        sections
-    end
+#        sections
+#    end
 
     def self.without_sc
         sections = []
