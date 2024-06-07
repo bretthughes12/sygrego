@@ -55,14 +55,34 @@
 
 	<h2>Camping</h2>
 	<table class="table table-dark table-striped">
+		<% if @rego_checklist.site_check_status == "Not completed" %>
 		<tr>
 			<td> 
 				<strong>Safety</strong>
 			</td>
 			<td> 
-				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved.
+				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved. Please provide a time that they can check your site.
 			</td>
 		</tr>
+		<% elsif @rego_checklist.site_check_status == "Recheck required" %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers have visited your site and need to recheck some things. Please provide a time that they can recheck your site.
+			</td>
+		</tr>
+		<% else %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Your site check is already complete. Congratulations!
+			</td>
+		</tr>
+		<% end %>
 		<tr>
 			<td> 
 				<strong>Evacuation</strong>
@@ -72,6 +92,9 @@
 			</td>
 		</tr>
 	</table>
+	<% unless @rego_checklist.site_check_status == "Passed" %>
+		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
+	<% end %>
 
 	<br/>
 

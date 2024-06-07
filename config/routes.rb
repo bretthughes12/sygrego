@@ -250,6 +250,11 @@ Rails.application.routes.draw do
     resources :rego_checklists, only: [:index, :show, :edit, :update] do
       collection do
         get :search
+        get :site_checks
+      end
+      member do
+        get :edit_site_check
+        patch :update_site_check
       end
     end
 

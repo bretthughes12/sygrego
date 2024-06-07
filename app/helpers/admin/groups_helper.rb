@@ -41,6 +41,17 @@ module Admin::GroupsHelper
       end
     end
  
+    def rego_site_display_class(rc)
+      case
+      when rc.site_check_status == "Passed"
+        "table-primary"
+      when rc.site_check_status == "Recheck required"
+        "table-warning"
+      else
+        "table-dark"
+      end
+    end
+ 
     def sport_oversubscribed_class(group, session_id)
       group.number_playing_sport >= group.participants_needed_for_session(session_id) ? 'table-primary' : 'table-danger'
     end

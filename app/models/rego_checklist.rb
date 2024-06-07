@@ -80,6 +80,10 @@ class RegoChecklist < ApplicationRecord
   
     belongs_to :group
 
+    SITE_CHECK_STATUSES = ['Not completed',
+                           'Recheck required',
+                           'Passed'].freeze
+
     validates :rego_rep,            length: { maximum: 40 }
     validates :rego_mobile,         length: { maximum: 30 }
     validates :admin_rep,           length: { maximum: 40 }

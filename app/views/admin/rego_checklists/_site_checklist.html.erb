@@ -1,0 +1,17 @@
+<tr valign="top" class="<%= rego_site_display_class(rego_checklist) %>">
+	<td> 
+		<%= h(rego_checklist.group.abbr) %>
+	</td>
+
+	<td> 
+        <%= link_to rego_checklist.group.short_name, edit_site_check_admin_rego_checklist_path(rego_checklist) %>
+	</td>
+	
+	<td> 
+		<%= truncate(rego_checklist.site_check_notes, limit: 20) %>
+	</td>
+	
+	<td> 
+		<%= rego_checklist.site_check_completed_by %>
+	</td>
+</tr>
