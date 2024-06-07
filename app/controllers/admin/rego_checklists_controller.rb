@@ -20,7 +20,6 @@ class Admin::RegoChecklistsController < AdminController
   
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "rego_checklist", "rego_checklist" }
       end
     end
 
