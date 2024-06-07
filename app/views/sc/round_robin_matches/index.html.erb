@@ -24,6 +24,10 @@
         </h2>
         <div id="results_collapse" class="accordion-collapse collapse" aria-labelledby="results_heading" data-bs-parent="#results_accordion">
           <div class="accordion-body">
+            <% if @section.sport.classification == 'Individual' %>
+              <strong>Who is Who</strong>
+              <p>If you are unsure who is who, scroll down for a list of the abbreviations and the corresponding participant names</p>
+            <% end %>
             <strong>Forfeits</strong>
             <p>To indicate a forfeit, mark the forfeiting team by selecting 'Forfeit' as their score.</p>
             <p>The forfeit score will be calculated as <%= @section.sport.forfeit_score %>-0.</p>
@@ -71,6 +75,13 @@
 
 <% content_for :sidebar do -%>
 	<div id="sidebar">
+    <% if @section.sport.classification == 'Individual' %>
+      <h2>Who is Who</h2>
+      <table class="table table-dark table-striped">
+        <%= render partial: 'participant_list', collection: @section.sport_entries, as: :sport_entry %>
+      </table>
+    <% end %>
+
     <h2>Ladder</h2>
 
     <% if @section.number_of_groups > 1 %>
