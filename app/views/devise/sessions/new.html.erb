@@ -18,3 +18,25 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+
+<% if @settings.syg_is_happening %>
+    <br />
+    <br />
+
+    <h2>Quick Links</h2>
+
+    <%= link_to "Good Sports", new_good_sports_awards_path,
+            class: primary_button_class,
+            role: "button" %>
+    <%= link_to "Spirit Awards", new_spirit_awards_url,
+            class: primary_button_class,
+            role: "button" %>
+    <%= link_to "Volunteer Awards", new_volunteer_awards_path,
+            class: primary_button_class,
+            role: "button" %>
+    <br/>
+    <br/>
+    <%= link_to "Incident Reports", @settings.incident_link,
+            class: primary_button_class,
+            role: "button" unless @settings.incident_link.nil? %>
+<% end %>
