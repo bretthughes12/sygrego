@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_03_084219) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_07_030919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -441,6 +441,47 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_03_084219) do
     t.boolean "insurance_sighted", default: false
     t.text "upload_notes"
     t.text "driving_notes"
+    t.string "site_check_notes"
+    t.string "site_check_completed_by"
+    t.string "site_check_church_contact"
+    t.string "site_check_status", limit: 20, default: "Not completed"
+    t.datetime "site_check_completed_at"
+    t.boolean "site_check_safety_1", default: false
+    t.boolean "site_check_safety_2", default: false
+    t.boolean "site_check_safety_3", default: false
+    t.boolean "site_check_safety_4", default: false
+    t.boolean "site_check_safety_5", default: false
+    t.boolean "site_check_electrical_1", default: false
+    t.boolean "site_check_electrical_2", default: false
+    t.boolean "site_check_electrical_3", default: false
+    t.boolean "site_check_electrical_4", default: false
+    t.boolean "site_check_electrical_5", default: false
+    t.boolean "site_check_electrical_6", default: false
+    t.boolean "site_check_electrical_7", default: false
+    t.boolean "site_check_electrical_8", default: false
+    t.boolean "site_check_gas_1", default: false
+    t.boolean "site_check_gas_2", default: false
+    t.boolean "site_check_fire_1", default: false
+    t.boolean "site_check_fire_2", default: false
+    t.boolean "site_check_fire_3", default: false
+    t.boolean "site_check_fire_4", default: false
+    t.boolean "site_check_flames_1", default: false
+    t.boolean "site_check_flames_2", default: false
+    t.boolean "site_check_flames_3", default: false
+    t.boolean "site_check_flames_4", default: false
+    t.boolean "site_check_flames_5", default: false
+    t.boolean "site_check_flames_6", default: false
+    t.boolean "site_check_food_1", default: false
+    t.boolean "site_check_food_2", default: false
+    t.boolean "site_check_food_3", default: false
+    t.boolean "site_check_site_1", default: false
+    t.boolean "site_check_site_2", default: false
+    t.boolean "site_check_medical_1", default: false
+    t.boolean "site_check_medical_2", default: false
+    t.boolean "site_check_medical_3", default: false
+    t.boolean "site_check_medical_4", default: false
+    t.boolean "site_check_medical_5", default: false
+    t.boolean "site_check_medical_6", default: false
     t.index ["group_id"], name: "index_rego_checklists_on_group_id"
   end
 
