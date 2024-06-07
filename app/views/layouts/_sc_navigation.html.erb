@@ -14,7 +14,7 @@
                             <li class='dropdown-item'><%= link_to 'Volunteer Awards', new_volunteer_sc_awards_path %></li>
                         </ul>
                     </li>
-                    <li class='nav-item'><%= link_to 'Incident Reports', new_sc_incident_report_path, class: 'nav-link' %></li>
+                    <li class='nav-item'><%= link_to 'Incident Reports', @settings.incident_link, class: 'nav-link' unless @settings.incident_link.nil? %></li>
                     <li class='nav-item'><%= link_to 'Sports Evaluation', new_sc_sports_evaluation_path, class: 'nav-link' %></li>
                 <% end %>
                 <li class='nav-item dropdown'>

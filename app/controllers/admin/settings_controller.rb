@@ -305,6 +305,7 @@ class Admin::SettingsController < AdminController
                                       :public_website,
                                       :rego_website,
                                       :website_host,
+                                      :incident_link,
                                       :knockout_reference,
                                       :ladder_reference,
                                       :results_reference,
