@@ -1178,7 +1178,7 @@ def self.import_gc(file, group, user)
               participant.licence_type = licence_type
               participant.driver_signature = driver_signature
               participant.dietary_requirements = 'Unknown'
-              participant.wwcc_number = row['Question 11']
+              participant.wwcc_number = row['Question 11'].blank? ? "Unknown" : row['Question 11']
               participant.registration_nbr = row['Registration#']
               participant.booking_nbr = row['Booking#'] 
               participant.exported = true
@@ -1207,7 +1207,7 @@ def self.import_gc(file, group, user)
                 licence_type:            licence_type,
                 driver_signature:        driver_signature,
                 dietary_requirements:    'Unknown',
-                wwcc_number:             row['Question 11'],
+                wwcc_number:             row['Question 11'].blank? ? "Unknown" : row['Question 11'],
                 registration_nbr:        row['Registration#'],
                 booking_nbr:             row['Booking#'],
                 exported:                true,
