@@ -1152,6 +1152,14 @@ def self.import_gc(file, group, user)
           if !row['Registration Type'].nil?
             participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'], row['Last Name'], day_group.id)
 
+            if row['Question 2'].blank?
+              licence_type = nil
+              driver_signature = false
+            else
+              licence_type = "Unknown"
+              driver_signature = true
+            end
+
             if participant
               participant.coming = true
               participant.age = 30
@@ -1178,14 +1186,6 @@ def self.import_gc(file, group, user)
               participant.save
 
             else
-              if row['Question 2'].blank?
-                licence_type = nil
-                driver_signature = false
-              else
-                licence_type = "Unknown"
-                driver_signature = true
-              end
-  
               participant = Participant.create(
                 group_id:                day_group.id,
                 first_name:              row['Name'],
