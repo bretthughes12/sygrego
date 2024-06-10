@@ -1150,40 +1150,69 @@ def self.import_gc(file, group, user)
           end
         else
           if !row['Registration Type'].nil?
-            if row['Question 2'].blank?
-              licence_type = nil
-              driver_signature = false
+            participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'], row['Last Name'], day_group.id)
+
+            if participant
+              participant.coming = true
+              participant.age = 30
+              participant.gender = 'U'
+              participant.coming_friday = row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days'
+              participant.coming_saturday = row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days'
+              participant.coming_sunday = row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days'
+              participant.coming_monday = row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days'
+              participant.mobile_phone_number = row['Phone']
+              participant.email = row['Email']
+              participant.allergies = 'Unknown'
+              participant.spectator = true
+              participant.onsite = false
+              participant.driver = !row['Question 2'].blank?
+              participant.number_plate = row['Question 2']
+              participant.licence_type = licence_type
+              participant.driver_signature = driver_signature
+              participant.dietary_requirements = 'Unknown'
+              participant.wwcc_number = row['Question 11']
+              participant.registration_nbr = row['Registration#']
+              participant.booking_nbr = row['Booking#'] 
+              participant.exported = true
+              participant.updated_by = user.id
+              participant.save
+
             else
-              licence_type = "Unknown"
-              driver_signature = true
-            end
+              if row['Question 2'].blank?
+                licence_type = nil
+                driver_signature = false
+              else
+                licence_type = "Unknown"
+                driver_signature = true
+              end
   
-            participant = Participant.create(
-              group_id:                day_group.id,
-              first_name:              row['Name'],
-              surname:                 row['Last Name'],
-              coming:                  true,
-              age:                     30,
-              gender:                  'U',
-              coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days',
-              coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days',
-              coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days',
-              coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days',
-              mobile_phone_number:     row['Phone'],
-              email:                   row['Email'],
-              allergies:               'Unknown',
-              spectator:               true,
-              onsite:                  false,
-              driver:                  !row['Question 2'].blank?,
-              number_plate:            row['Question 2'],
-              licence_type:            licence_type,
-              driver_signature:        driver_signature,
-              dietary_requirements:    'Unknown',
-              wwcc_number:             row['Question 11'],
-              registration_nbr:        row['Registration#'],
-              booking_nbr:             row['Booking#'],
-              exported:                true,
-              updated_by:              user.id)
+              participant = Participant.create(
+                group_id:                day_group.id,
+                first_name:              row['Name'],
+                surname:                 row['Last Name'],
+                coming:                  true,
+                age:                     30,
+                gender:                  'U',
+                coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days',
+                coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days',
+                coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days',
+                coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days',
+                mobile_phone_number:     row['Phone'],
+                email:                   row['Email'],
+                allergies:               'Unknown',
+                spectator:               true,
+                onsite:                  false,
+                driver:                  !row['Question 2'].blank?,
+                number_plate:            row['Question 2'],
+                licence_type:            licence_type,
+                driver_signature:        driver_signature,
+                dietary_requirements:    'Unknown',
+                wwcc_number:             row['Question 11'],
+                registration_nbr:        row['Registration#'],
+                booking_nbr:             row['Booking#'],
+                exported:                true,
+                updated_by:              user.id)
+            end
 
             if participant.errors.empty?
               day_visitors += 1

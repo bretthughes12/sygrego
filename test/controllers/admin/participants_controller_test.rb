@@ -350,7 +350,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     group = FactoryBot.create(:group, abbr: "DAY")
     FactoryBot.create(:mysyg_setting, group: group)
     FactoryBot.create(:event_detail, group: group)
-    participant = FactoryBot.create(:participant, group: @group, id: 1234)
+    FactoryBot.create(:participant, group: @group, id: 1234)
     file = fixture_file_upload('tickets.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Participant.count') do
