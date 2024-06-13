@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_07_074252) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_13_085929) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -617,6 +617,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_07_074252) do
     t.boolean "participant_registrations_closed", default: false
     t.boolean "allow_gc_to_add_participants", default: false
     t.string "incident_link", default: ""
+    t.string "gc_feedback_url"
+    t.string "participant_feedback_url"
   end
 
   create_table "sport_entries", force: :cascade do |t|
