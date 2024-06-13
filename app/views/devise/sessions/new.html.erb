@@ -39,4 +39,22 @@
     <%= link_to "Incident Reports", @settings.incident_link,
             class: primary_button_class,
             role: "button" unless @settings.incident_link.nil? %>
+
+<% elsif @settings.syg_is_finished %>
+    <br />
+    <br />
+
+    <h2>Quick Links</h2>
+
+    <%= link_to "Participant Feedback", @settings.participant_feedback_url,
+            class: primary_button_class,
+            role: "button" unless @settings.participant_feedback_url.nil? %>
+    <%= link_to "GC Feedback", @settings.gc_feedback_url,
+            class: primary_button_class,
+            role: "button" unless @settings.gc_feedback_url.nil? %>
+    <br/>
+    <br/>
+    <%= link_to "Lost Property", lost_items_url,
+            class: primary_button_class,
+            role: "button" %>
 <% end %>

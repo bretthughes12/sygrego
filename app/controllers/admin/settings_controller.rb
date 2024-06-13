@@ -306,6 +306,8 @@ class Admin::SettingsController < AdminController
                                       :rego_website,
                                       :website_host,
                                       :incident_link,
+                                      :participant_feedback_url,
+                                      :gc_feedback_url,
                                       :knockout_reference,
                                       :ladder_reference,
                                       :results_reference,
