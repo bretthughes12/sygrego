@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.0'
+ruby '3.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 7.1.0'
@@ -80,7 +80,6 @@ end
 gem 'capybara', '>= 3.26'
 
 group :test do
-  gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
   gem 'simplecov', require: false
