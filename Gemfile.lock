@@ -408,6 +408,7 @@ DEPENDENCIES
   rails (~> 7.1.0)
   roo (~> 2.10.0)
   sass-rails (>= 6)
+  selenium-webdriver
   simple_form
   simplecov
   spring
