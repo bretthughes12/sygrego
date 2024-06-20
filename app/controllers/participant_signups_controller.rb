@@ -74,8 +74,12 @@ class ParticipantSignupsController < ApplicationController
       respond_to do |format|
         if @participant_signup.save
           @user = @participant_signup.user 
-          SportPreference.create_for_participant(@participant, params[:sport_preferences]) if params[:sport_preferences]
+          if @participant.driver_signature 
+            @participant.driver_signature_date = Time.now
+            @participant.save
+          end
 
+          SportPreference.create_for_participant(@participant, params[:sport_preferences]) if params[:sport_preferences]
           UserMailer.welcome_participant(@user, @participant).deliver_now
 
           if @participant.status == "Requiring Approval"
