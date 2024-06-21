@@ -396,6 +396,8 @@ class Section < ApplicationRecord
                     section.finals_format           = row['FinalsFormat']
                     section.number_of_groups        = row['Groups'].to_i
                     section.start_court             = row['StartCourt'].to_i
+                    section.number_in_draw          = row['NbrInDraw'].to_i
+                    section.draw_type               = row['DrawType']
                     section.updated_by              = user.id
      
                     if section.save
@@ -417,6 +419,8 @@ class Section < ApplicationRecord
                        finals_format:           row['FinalsFormat'],
                        number_of_groups:        row['Groups'].to_i,
                        start_court:             row['StartCourt'].to_i,
+                       number_in_draw:          row['NbrInDraw'].to_i,
+                       draw_type:               row['DrawType'],
                        updated_by:              user.id)
     
                     if section.errors.empty?
