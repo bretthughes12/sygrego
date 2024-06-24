@@ -826,6 +826,10 @@ class Participant < ApplicationRecord
           participant.coming_saturday         = row["Saturday"]
           participant.coming_sunday           = row["Sunday"]
           participant.coming_monday           = row["Monday"]
+          participant.booking_nbr             = row["BookingNbr"]
+          participant.registration_nbr        = row["RegistrationNbr"]
+          participant.transfer_token          = row["TransferToken"]
+          participant.transfer_email          = row["TransferEmail"]
           participant.address                 = row["Address"]
           participant.suburb                  = row["Suburb"]
           participant.postcode                = row["Postcode"].to_i
@@ -845,6 +849,9 @@ class Participant < ApplicationRecord
           participant.guest                   = row["Guest"]
           participant.driver                  = row["Driver"]
           participant.number_plate            = row["NumberPlate"]
+          participant.licence_type            = row["LicenceType"]
+          participant.driver_signature        = row["DriverSign"]
+          participant.driver_signature_date   = row["DriverDate"]
           participant.early_bird              = row["EarlyBird"]
           participant.dietary_requirements    = row["DietaryRqmts"]
           participant.allergies               = row["Allergies"]
@@ -888,6 +895,10 @@ class Participant < ApplicationRecord
               coming_saturday:         row["Saturday"],
               coming_sunday:           row["Sunday"],
               coming_monday:           row["Monday"],
+              booking_nbr:             row["BookingNbr"],
+              registration_nbr:        row["RegistrationNbr"],
+              transfer_token:          row["TransferToken"],
+              transfer_email:          row["TransferEmail"],
               address:                 row["Address"],
               suburb:                  row["Suburb"],
               postcode:                row["Postcode"].to_i,
@@ -907,6 +918,9 @@ class Participant < ApplicationRecord
               guest:                   row["Guest"],
               driver:                  row["Driver"],
               number_plate:            row["NumberPlate"],
+              licence_type:            row["LicenceType"],
+              driver_signature:        row["DriverSign"],
+              driver_signature_date:   row["DriverDate"],
               early_bird:              row["EarlyBird"],
               dietary_requirements:    row["DietaryRqmts"],
               allergies:               row["Allergies"],

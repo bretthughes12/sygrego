@@ -9,7 +9,8 @@ date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "00
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
 dob_col = 6
-medicare_exp_col = 21
+medicare_exp_col = 25
+driver_date_col = 39
 
 wb.add_worksheet(name: "Participants") do |sheet|
 	sheet.add_row ["RowID","Group","FirstName","Surname","Coming","Status","DOB","Age",
@@ -17,7 +18,8 @@ wb.add_worksheet(name: "Participants") do |sheet|
 				  "BookingNbr","RegistrationNbr","TransferToken","TransferEmail","Address", 
 				  "Suburb","Postcode","Phone","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","YearsAttended",
-				  "Spectator","Onsite","Helper","GC","SC","Guest","Driver","NumberPlate",
+				  "Spectator","Onsite","Helper","GC","SC","Guest",
+				  "Driver","NumberPlate","LicenceType","DriverSign","DriverDate",
 				  "EarlyBird","DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
 				  "WWCC","Voucher","Allergies","EmergEmail","CampPrefs","SportNotes"], 
 		style: header_border
@@ -61,6 +63,9 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.guest,
 			 participant.driver,
 			 participant.number_plate,
+			 participant.licence_type,
+			 participant.driver_signature,
+			 participant.driver_signature_date,
 			 participant.early_bird,
 			 participant.dietary_requirements,
 			 participant.emergency_contact,
@@ -78,4 +83,5 @@ wb.add_worksheet(name: "Participants") do |sheet|
 
 	sheet.col_style dob_col, date, row_offset: 1
 	sheet.col_style medicare_exp_col, date, row_offset: 1
+	sheet.col_style driver_date_col, date, row_offset: 1
 end
