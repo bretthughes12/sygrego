@@ -9,7 +9,6 @@
 #  bonus_for_officials     :boolean          default(FALSE)
 #  classification          :string(10)       not null
 #  court_name              :string(20)       default("Court")
-#  draw_type               :string(20)       not null
 #  forfeit_score           :integer          default(0)
 #  ladder_tie_break        :string(20)       default("Percentage")
 #  max_entries_indiv       :integer          default(0), not null
@@ -31,7 +30,6 @@ FactoryBot.define do
         sequence(:name)             { |n| "Sport#{n}"}
         active                      {true}
         classification              {"Team"}
-        draw_type                   {"Open"}
         max_indiv_entries_group     {99}
         max_team_entries_group      {99}
         max_entries_indiv           {1}

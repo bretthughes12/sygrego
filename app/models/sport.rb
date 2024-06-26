@@ -9,7 +9,6 @@
 #  bonus_for_officials     :boolean          default(FALSE)
 #  classification          :string(10)       not null
 #  court_name              :string(20)       default("Court")
-#  draw_type               :string(20)       not null
 #  forfeit_score           :integer          default(0)
 #  ladder_tie_break        :string(20)       default("Percentage")
 #  max_entries_indiv       :integer          default(0), not null
@@ -47,11 +46,6 @@ class Sport < ApplicationRecord
     CLASSIFICATIONS = %w[Individual
                          Team]
 
-    DRAW_TYPES = ['Knockout',
-                  'Open',
-                  'Round Robin',
-                  'Quad Round Robin']
-
     TIE_TYPES = ['Percentage',
                  'Point Difference',
                  'Points For']
@@ -69,9 +63,6 @@ class Sport < ApplicationRecord
     validates :classification,          presence: true,
                                         length: { maximum: 10 },
                                         inclusion: { in: CLASSIFICATIONS }
-    validates :draw_type,               presence: true,
-                                        length: { maximum: 20 },
-                                        inclusion: { in: DRAW_TYPES }
     validates :ladder_tie_break,        presence: true,
                                         length: { maximum: 20 },
                                         inclusion: { in: TIE_TYPES }
@@ -148,7 +139,6 @@ class Sport < ApplicationRecord
                 sport.max_entries_indiv = fields[5].to_i
                 sport.bonus_for_officials = fields[6]
                 sport.court_name = fields[7]
-                sport.draw_type = fields[8]
                 sport.blowout_rule = fields[9]
                 sport.forfeit_score = fields[10].to_i
                 sport.ladder_tie_break = fields[11]
@@ -166,7 +156,6 @@ class Sport < ApplicationRecord
                     name:                      fields[0],
                     active:                    fields[1],
                     classification:            fields[2],
-                    draw_type:                 fields[8],
                     max_indiv_entries_group:   fields[3].to_i,
                     max_team_entries_group:    fields[4].to_i,
                     max_entries_indiv:         fields[5].to_i,
@@ -211,7 +200,6 @@ class Sport < ApplicationRecord
                     sport.max_entries_indiv = row['MaxIndiv'].to_i
                     sport.bonus_for_officials = row['Bonus']
                     sport.court_name = row['CourtName']
-                    sport.draw_type = row['DrawType']
                     sport.blowout_rule = row['BlowoutRule']
                     sport.forfeit_score = row['ForfeitScore'].to_i
                     sport.ladder_tie_break = row['TieBreak']
@@ -229,7 +217,6 @@ class Sport < ApplicationRecord
                         name:                      row['Name'],
                         active:                    row['Active'],
                         classification:            row['Classification'],
-                        draw_type:                 row['DrawType'],
                         max_indiv_entries_group:   row['MaxIndivGrp'].to_i,
                         max_team_entries_group:    row['MaxTeamGrp'].to_i,
                         max_entries_indiv:         row['MaxIndiv'].to_i,

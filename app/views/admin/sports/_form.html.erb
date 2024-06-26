@@ -4,7 +4,6 @@
 	<%= f.input :name, label: "Sport" %>
 	<%= f.input :active %>
 	<%= f.input :classification, as: :select, collection: Sport::CLASSIFICATIONS, include_blank: false %>
-	<%= f.input :draw_type, as: :select, collection: Sport::DRAW_TYPES, include_blank: false %>
 	<%= f.input :ladder_tie_break, as: :select, collection: Sport::TIE_TYPES, include_blank: false %>
 	<%= f.input :allow_negative_score, label: "Are negative scores possible?" %>
 	<%= f.input :blowout_rule, label: "Is the blowout rule in effect?" %>

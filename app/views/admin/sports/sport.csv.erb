@@ -1,4 +1,4 @@
-<%- headings = %w{Name Active Classification MaxIndivGrp MaxTeamGrp MaxIndiv Bonus CourtName DrawType BlowoutRule ForfeitScore TieBreak AllowNeg PointName } -%>
+<%- headings = %w{Name Active Classification MaxIndivGrp MaxTeamGrp MaxIndiv Bonus CourtName BlowoutRule ForfeitScore TieBreak AllowNeg PointName } -%>
 <%= headings.join(',') %>
 <%= CSV.generate do |csv|
     @sports.each do |sport|
@@ -11,8 +11,7 @@
 		          sport.max_entries_indiv,
 		          sport.bonus_for_officials,
 		          sport.court_name,
-				  sport.draw_type,
-				  sport.blowout_rule,
+     			  sport.blowout_rule,
 				  sport.forfeit_score,
 				  sport.ladder_tie_break,
 				  sport.allow_negative_score,

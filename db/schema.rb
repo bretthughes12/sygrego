@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_13_085929) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_114926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -656,7 +656,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_085929) do
     t.integer "max_indiv_entries_group", default: 0, null: false
     t.integer "max_team_entries_group", default: 0, null: false
     t.integer "max_entries_indiv", default: 0, null: false
-    t.string "draw_type", limit: 20, null: false
     t.boolean "bonus_for_officials", default: false
     t.string "court_name", limit: 20, default: "Court"
     t.bigint "updated_by"

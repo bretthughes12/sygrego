@@ -100,13 +100,13 @@ class Admin::SportsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not update sport with errors" do
-    patch admin_sport_url(@sport), params: { sport: { draw_type: "Invalid" } }
+    patch admin_sport_url(@sport), params: { sport: { ladder_tie_break: "Invalid" } }
 
     assert_response :success
     # Reload association to fetch updated data and assert that title is updated.
     @sport.reload
 
-    assert_not_equal "Invalid", @sport.draw_type
+    assert_not_equal "Invalid", @sport.ladder_tie_break
   end
 
   test "should get new import" do
