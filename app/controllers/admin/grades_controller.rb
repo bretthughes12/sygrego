@@ -13,7 +13,6 @@ class Admin::GradesController < AdminController
 
       respond_to do |format|
         format.html { @grades = @grades.paginate(page: params[:page], per_page: 50) }
-        format.csv  { render_csv "sport_grade", "sport_grade" }
         format.xlsx { render xlsx: "index", filename: "grades.xlsx" }
       end
     end

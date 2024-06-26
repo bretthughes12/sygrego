@@ -18,10 +18,10 @@ class Admin::GradesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download grade data" do
-    get admin_grades_url(format: :csv)
+    get admin_grades_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show grade" do
