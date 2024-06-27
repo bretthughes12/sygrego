@@ -1,0 +1,26 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "VolunteerTypes") do |sheet|
+	sheet.add_row ["RowID","Active","Name","SportRelated",
+				   "T-Shirt","Description","AgeCategory"], 
+		style: header_border
+
+    @volunteer_types.each do |volunteer_type|
+		sheet.add_row [
+			volunteer_type.database_code,
+			volunteer_type.active,
+			volunteer_type.name,
+			volunteer_type.sport_related,
+			volunteer_type.t_shirt,
+			volunteer_type.description,
+			volunteer_type.age_category
+		   ],
+		style: row_border
+	end
+end

@@ -11,6 +11,7 @@ class Admin::VolunteerTypesController < AdminController
       respond_to do |format|
         format.html {  }
         format.csv  { render_csv "volunteer_type" }
+        format.xlsx { render xlsx: "index", filename: "volunteer_types.xlsx" }
       end
     end
   
@@ -76,16 +77,16 @@ class Admin::VolunteerTypesController < AdminController
   
     # POST /admin/volunteer_types/import
     def import
-      if params[:volunteer_type] && params[:volunteer_type][:file].path =~ %r{\.csv$}i
-        result = VolunteerType.import(params[:volunteer_type][:file], current_user)
+      if params[:volunteer_type] && params[:volunteer_type][:file].path =~ %r{\.xlsx$}i
+        result = VolunteerType.import_excel(params[:volunteer_type][:file], current_user)
 
-        flash[:notice] = "Volunteer types upload complete: #{result[:creates]} volunteer_types created; #{result[:updates]} updates; #{result[:errors]} errors"
+        flash[:notice] = "Volunteer types upload complete: #{result[:creates]} volunteer types created; #{result[:updates]} updates; #{result[:errors]} errors"
 
         respond_to do |format|
           format.html { redirect_to admin_volunteer_types_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @volunteer_type = VolunteerType.new
 
         respond_to do |format|

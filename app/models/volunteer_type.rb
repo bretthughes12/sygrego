@@ -94,6 +94,55 @@ class VolunteerType < ApplicationRecord
         { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
     
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+    
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['RowID'] == 'RowID'
+
+                type = VolunteerType.find_by_name(row['Name'].to_s)
+                if type
+                    type.active = row['Active']
+                    type.database_code = row['RowID']
+                    type.sport_related = row['SportRelated']
+                    type.t_shirt = row['T-Shirt']
+                    type.description = row['Description']
+                    type.age_category = row['AgeCategory']
+                    type.updated_by = user.id
+                    if type.save
+                        updates += 1
+                    else
+                        errors += 1
+                        error_list << type
+                    end
+                else
+                    type = VolunteerType.create(
+                        name:                      row['Name'],
+                        active:                    row['Active'],
+                        database_code:             row['RowID'],
+                        sport_related:             row['SportRelated'],
+                        t_shirt:                   row['T-Shirt'],
+                        description:               row['Description'],
+                        age_category:              row['AgeCategory'],
+                        updated_by:                user.id)
+                    if type.errors.empty?
+                        creates += 1
+                    else
+                        errors += 1
+                        error_list << type
+                    end
+                end
+            end
+        end
+    
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+    
     private
 
     def self.sync_fields
