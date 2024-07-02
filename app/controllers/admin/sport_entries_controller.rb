@@ -12,6 +12,7 @@ class Admin::SportEntriesController < AdminController
       respond_to do |format|
         format.html { @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100) }
         format.csv  { render_csv "sport_entries", "sport_entries" }
+        format.xlsx { render xlsx: "index", filename: "sport_entries.xlsx" }
       end
     end
 
@@ -104,8 +105,8 @@ class Admin::SportEntriesController < AdminController
   
     # POST /admin/sport_entries/import
     def import
-      if params[:sport_entry] && params[:sport_entry][:file].path =~ %r{\.csv$}i
-        result = SportEntry.import(params[:sport_entry][:file], current_user)
+      if params[:sport_entry] && params[:sport_entry][:file].path =~ %r{\.xlsx$}i
+        result = SportEntry.import_excel(params[:sport_entry][:file], current_user)
 
         flash[:notice] = "Sport entries upload complete: #{result[:creates]} sport entries created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -113,7 +114,7 @@ class Admin::SportEntriesController < AdminController
           format.html { redirect_to admin_sport_entries_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @sport_entry = SportEntry.new
 
         respond_to do |format|

@@ -144,7 +144,7 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
   test "should import sport_entries" do
     group = FactoryBot.create(:group, abbr: "CAF", short_name: "Caffeine")
     grade = FactoryBot.create(:grade, name: "Kite Flying Open A")
-    file = fixture_file_upload('sport_entry.csv','application/csv')
+    file = fixture_file_upload('sport_entry.xlsx','application/test/controllers/admin/sports_controller_test.rb')
 
     assert_difference('SportEntry.count') do
       post import_admin_sport_entries_url, params: { sport_entry: { file: file }}
@@ -162,7 +162,7 @@ class Admin::SportEntriesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy sport_entry" do
