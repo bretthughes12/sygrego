@@ -41,10 +41,10 @@
                         <li class='dropdown-item'><%= link_to 'Sessions', admin_sessions_path %></li>
                         <li class='dropdown-item'><%= link_to 'Venues', admin_venues_path %></li>
                         <li class='dropdown-item'><%= link_to 'Sport Entries', admin_sport_entries_path %></li>
-                        <% unless @settings.syg_is_happening %>
+                        <% unless @settings.syg_is_happening || @settings.syg_is_finished %>
                             <li class='dropdown-item'><%= link_to 'Sports Allocation', summary_admin_ballot_results_path %></li>
                         <% end %>
-                        <% if @settings.restricted_sports_allocated && !@settings.syg_is_happening %>
+                        <% if @settings.restricted_sports_allocated && !(@settings.syg_is_happening || @settings.syg_is_finished) %>
                             <li class='dropdown-item'><%= link_to 'Sport / Participant Audit', session_participants_admin_groups_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sports Integrity', sport_integrity_admin_reports_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sport Draws', sports_draws_admin_tasks_path %></li>
@@ -53,6 +53,8 @@
                             <li class='dropdown-item'><%= link_to 'Sport Volunteers', sport_volunteers_admin_volunteers_path %></li>
                             <li class='dropdown-item'><%= link_to 'Saturday Coordinators', sat_coords_admin_volunteers_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sunday Coordinators', sun_coords_admin_volunteers_path %></li>
+                        <% end %>
+                        <% if @settings.syg_is_happening || @settings.syg_is_finished %>
                             <li class='dropdown-item'><%= link_to 'Sport Evaluations', admin_sports_evaluations_path %></li>
                             <li class='dropdown-item'><%= link_to 'Incident Reports', admin_incident_reports_path %></li>
                             <li class='dropdown-item'><%= link_to 'Sports Results', results_admin_sections_path %></li>
