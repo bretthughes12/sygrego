@@ -61,7 +61,7 @@ class Admin::RoundRobinMatchesControllerTest < ActionDispatch::IntegrationTest
     section = FactoryBot.create(:section, id: 1, finals_format: 'Top 4', start_court: 2, number_of_groups: 2)
     entry1 = FactoryBot.create(:sport_entry, id: 111, group_number: 2)
     entry2 = FactoryBot.create(:sport_entry, id: 222, group_number: 2)
-    file = fixture_file_upload('round_robin_match.csv','application/csv')
+    file = fixture_file_upload('round_robin_match.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('RoundRobinMatch.count') do
       post import_admin_round_robin_matches_url, params: { round_robin_match: { file: file }}
@@ -79,6 +79,6 @@ class Admin::RoundRobinMatchesControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 end

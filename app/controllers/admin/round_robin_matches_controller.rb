@@ -21,6 +21,7 @@ class Admin::RoundRobinMatchesController < AdminController
 
     respond_to do |format|
       format.csv  { render_csv "matches" }
+      format.xlsx { render xlsx: "matches", filename: "matches.xlsx" }
     end
   end
 
@@ -31,8 +32,8 @@ class Admin::RoundRobinMatchesController < AdminController
   
   # POST /admin/round_robin_matches/import
   def import
-    if params[:round_robin_match] && params[:round_robin_match][:file].path =~ %r{\.csv$}i
-      result = RoundRobinMatch.import(params[:round_robin_match][:file], current_user)
+    if params[:round_robin_match] && params[:round_robin_match][:file].path =~ %r{\.xlsx$}i
+      result = RoundRobinMatch.import_excel(params[:round_robin_match][:file], current_user)
 
       flash[:notice] = "Round Robin Draws upload complete: #{result[:creates]} matches created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -40,7 +41,7 @@ class Admin::RoundRobinMatchesController < AdminController
         format.html { redirect_to results_admin_sections_url }
       end
     else
-      flash[:notice] = "Upload file must be in '.csv' format"
+      flash[:notice] = "Upload file must be in '.xlsx' format"
       @round_robin_match = RoundRobinMatch.new
 
       respond_to do |format|

@@ -1,0 +1,35 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Matches") do |sheet|
+	sheet.add_row ["id","section_id","match","draw_number",
+			"complete","court","entry_a_id","score_a","forfeit_a",
+			"entry_b_id","score_b","forfeit_b","entry_umpire_id",
+			"forfeit_umpire"], 
+		style: header_border
+
+    @round_robin_matches.each do |r|
+		sheet.add_row [
+			r.id,
+			r.section_id, 
+			r.match,
+			r.draw_number,
+			r.complete,
+			r.court,
+			r.entry_a_id,
+			r.score_a,
+			r.forfeit_a,
+			r.entry_b_id,
+			r.score_b,
+			r.forfeit_b,
+			r.entry_umpire_id,
+			r.forfeit_umpire
+		   ],
+		style: row_border
+	end
+end

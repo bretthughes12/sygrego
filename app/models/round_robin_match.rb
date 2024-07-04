@@ -141,6 +141,90 @@ class RoundRobinMatch < ApplicationRecord
     { creates: creates, updates: updates, errors: errors, error_list: error_list }
   end
 
+  def self.import_excel(file, user)
+    creates = 0
+    updates = 0
+    errors = 0
+    error_list = []
+
+    xlsx = Roo::Spreadsheet.open(file)
+
+    xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+      unless row['nDraw'] == 'nDraw'
+
+        result = RoundRobinMatch.where(draw_number: row['nDraw'].to_i).first
+        group = row['SYG Sport Entries_1_nGroup'].to_i
+        section_id = row['idSection'].to_i
+
+        entry_a = SportEntry.where(id: row['idWebA'].to_i).first
+        if entry_a && entry_a.group_number != group
+          entry_a.group_number = group
+          entry_a.save(validate: false)
+        end
+
+        entry_b = SportEntry.where(id: row['idWebB'].to_i).first
+        if entry_b && entry_b.group_number != group
+          entry_b.group_number = group
+          entry_b.save(validate: false)
+        end
+
+        section = Section.where(id: section_id).first
+        if section
+          section.finals_format = row['cFinalsFormat']
+          section.number_of_groups = row['nGroups'].to_i
+          section.start_court = row['nStartCourt'].to_i
+          section.save(validate: false)
+        end
+
+        if result
+          result.court = row['nCourt'].to_i
+          result.complete = row['bComplete']
+          result.entry_a_id = row['idWebA'].to_i
+          result.score_a = row['nScoreA'].to_i
+          result.entry_b_id = row['idWebB'].to_i
+          result.score_b = row['nScoreB'].to_i
+          result.forfeit_a = row['bForfeitA']
+          result.forfeit_b = row['bForfeitB']
+          result.entry_umpire_id = row['idWebUmp'].to_i
+          result.forfeit_umpire = row['bForfeitUmpire']
+          result.updated_by = user.id
+
+          if result.save
+            updates += 1
+          else
+            errors += 1
+            error_list << result
+          end
+        else
+          result = RoundRobinMatch.create(
+            draw_number:          row['nDraw'].to_i,
+            section_id:           row['idSection'].to_i,
+            court:                row['nCourt'].to_i,
+            match:                row['nMatch'].to_i,
+            complete:             row['bComplete'],
+            entry_a_id:           row['idWebA'].to_i,
+            score_a:              row['nScoreA'].to_i,
+            entry_b_id:           row['idWebB'].to_i,
+            score_b:              row['nScoreB'].to_i,
+            forfeit_a:            row['bForfeitA'],
+            forfeit_b:            row['bForfeitB'],
+            entry_umpire_id:      row['idWebUmp'].to_i,
+            forfeit_umpire:       row['bForfeitUmpire'],
+            updated_by:           user.id)
+
+          if result.errors.empty?
+            creates += 1
+          else    
+            errors += 1
+            error_list << result
+          end
+        end
+      end
+    end
+
+    { creates: creates, updates: updates, errors: errors, error_list: error_list }
+  end
+
   def sync_create_action
     if match < 100
       nil
@@ -151,7 +235,7 @@ class RoundRobinMatch < ApplicationRecord
 
   private
   
-  def self.sync_fields
+  def self.sync_row
     [
       'court',
       'match',
