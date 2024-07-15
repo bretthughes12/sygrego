@@ -177,6 +177,58 @@ class EventDetail < ApplicationRecord
         { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
+    def self.import_excel(file, user)
+        creates = 0
+        updates = 0
+        errors = 0
+        error_list = []
+    
+        xlsx = Roo::Spreadsheet.open(file)
+
+        xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+            unless row['RowID'] == 'RowID'
+                group = Group.find_by_abbr(row['Abbr'].to_s)
+                if row['WardenZone'].blank?
+                    zone = nil
+                else
+                    zone = WardenZone.find_by_zone(row['WardenZone'].to_i)
+                end
+
+                if group
+                    event_detail = group.event_detail
+                    if event_detail
+                        event_detail.orientation_details = row['Orientation']
+                        event_detail.warden_zone         = zone
+                        event_detail.onsite              = row['Onsite']
+                        event_detail.fire_pit            = row['FirePit']
+                        event_detail.camping_rqmts       = row['CampingRqmts']
+                        event_detail.tents               = row['Tents'].to_i
+                        event_detail.caravans            = row['Caravans'].to_i
+                        event_detail.marquees            = row['Marquees'].to_i
+                        event_detail.marquee_sizes       = row['MarqueeSizes']
+                        event_detail.marquee_co          = row['MarqueeCo']  
+                        event_detail.buddy_interest      = row['BuddyInterest']
+                        event_detail.buddy_comments      = row['BuddyComments']
+                        event_detail.service_pref_sat    = row['ServiceSat']
+                        event_detail.service_pref_sun    = row['ServiceSun']
+                        event_detail.estimated_numbers   = row['EstNumbers'].to_i
+                        event_detail.number_of_vehicles  = row['Vehicles'].to_i
+                        event_detail.updated_by = user.id
+            
+                        if event_detail.save
+                            updates += 1
+                        else
+                            errors += 1
+                            error_list << event_detail
+                        end
+                    end
+                end
+            end
+        end
+    
+        { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+
     private
 
     def self.sync_fields

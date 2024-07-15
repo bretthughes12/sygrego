@@ -150,7 +150,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
 
   test "should import event details" do
     group = FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('event_detail.csv','application/csv')
+    file = fixture_file_upload('event_detail.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_no_difference('EventDetail.count') do
       post import_admin_event_details_url, params: { event_detail: { file: file }}
@@ -160,7 +160,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import event_details when the file is not csv" do
+  test "should not import event_details when the file is not excel" do
     group = FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('not_csv.txt','application/text')
 
@@ -169,7 +169,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should purge the food cert from event details" do

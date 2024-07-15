@@ -5,7 +5,7 @@
 <%= search_box search_admin_event_details_path, "Search" %>
 <%= yield(:search_box)%>
 
-<%= link_to "Download", admin_event_details_path(format: :csv),
+<%= link_to "Download", admin_event_details_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_event_details_path,
@@ -29,7 +29,7 @@
 	<%= render @event_details %>
 </table>
 
-<%= link_to "Download", admin_event_details_path(format: :csv),
+<%= link_to "Download", admin_event_details_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_event_details_path,

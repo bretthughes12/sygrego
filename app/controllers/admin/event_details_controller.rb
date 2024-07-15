@@ -11,6 +11,7 @@ class Admin::EventDetailsController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "event_detail", "event_detail" }
+        format.xlsx { render xlsx: "index", filename: "event_detailss.xlsx" }
       end
     end
 
@@ -132,8 +133,8 @@ class Admin::EventDetailsController < AdminController
   
     # POST /admin/event_details/import
     def import
-      if params[:event_detail] && params[:event_detail][:file].path =~ %r{\.csv$}i
-        result = EventDetail.import(params[:event_detail][:file], current_user)
+      if params[:event_detail] && params[:event_detail][:file].path =~ %r{\.xlsx$}i
+        result = EventDetail.import_excel(params[:event_detail][:file], current_user)
 
         flash[:notice] = "Event Details upload complete: #{result[:creates]} details created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -141,7 +142,7 @@ class Admin::EventDetailsController < AdminController
           format.html { redirect_to admin_event_details_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @event_detail = EventDetail.new
 
         respond_to do |format|

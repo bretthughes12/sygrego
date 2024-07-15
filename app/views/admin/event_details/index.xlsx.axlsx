@@ -1,0 +1,41 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Event Details") do |sheet|
+	sheet.add_row ["RowID","Abbr","Orientation",
+			"WardenZone","Onsite","FirePit",
+			"CampingRqmts","Tents","Caravans","Marquees",
+			"MarqueeSizes","MarqueeCo","BuddyInterest",
+			"BuddyComments","ServiceSat","ServiceSun",
+			"EstNumbers","Vehicles"], 
+		style: header_border
+
+	@event_details.each do |event_detail|
+		sheet.add_row [
+            event_detail.group.database_rowid,
+  		    event_detail.group.abbr,
+			event_detail.orientation_details,
+			event_detail.warden_zone.zone,
+  		    event_detail.onsite,
+			event_detail.fire_pit,
+  		    event_detail.camping_rqmts,
+  		    event_detail.tents,
+  		    event_detail.caravans,
+  		    event_detail.marquees,
+  		    event_detail.marquee_sizes,
+  		    event_detail.marquee_co,
+  		    event_detail.buddy_interest,
+  		    event_detail.buddy_comments,
+  		    event_detail.service_pref_sat,
+  		    event_detail.service_pref_sun,
+  		    event_detail.estimated_numbers,
+  		    event_detail.number_of_vehicles
+		   ],
+		style: row_border
+	end
+end
