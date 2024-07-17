@@ -1,0 +1,42 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Groups") do |sheet|
+	sheet.add_row ["RowID","Abbr","Name","ShortName",
+			"Coming","Status","NewGroup","LastYear","Admin",
+			"TradingName","Address","Suburb","Postcode","Phone",
+			"Email","Website","Denomination","TicketEmail",
+			"TicketPref","YearsAttended"], 
+		style: header_border
+
+	@groups.each do |g|
+		sheet.add_row [
+				g.database_rowid,
+				g.abbr,
+				g.name,
+				g.short_name,
+				g.coming,
+				g.status,
+				g.new_group,
+				g.last_year,
+				g.admin_use,
+				g.trading_name,
+				g.address,
+				g.suburb,
+				g.postcode,
+				g.phone_number,
+				g.email,
+				g.website,
+				g.denomination,
+				g.ticket_email,
+				g.ticket_preference,
+				g.years_attended
+		   ],
+		style: row_border
+	end
+end

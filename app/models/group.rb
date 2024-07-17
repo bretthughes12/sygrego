@@ -701,7 +701,84 @@ class Group < ApplicationRecord
   
         { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
-    
+  
+    def self.import_excel(file, user)
+      creates = 0
+      updates = 0
+      errors = 0
+      error_list = []
+
+      xlsx = Roo::Spreadsheet.open(file)
+
+      xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
+        unless row['RowID'] == 'RowID'
+
+          group = Group.find_by_abbr(row["Abbr"].to_s)
+          if group
+              group.database_rowid          = row['RowID'].to_i
+              group.name                    = row['Name']
+              group.short_name              = row['ShortName']
+              group.coming                  = row['Coming']
+              group.status                  = row['Status']
+              group.new_group               = row['NewGroup']
+              group.last_year               = row['LastYear']
+              group.admin_use               = row['Admin']
+              group.trading_name            = row['TradingName']  
+              group.address                 = row['Address']
+              group.suburb                  = row['Suburb']
+              group.postcode                = row['Postcode'].to_i
+              group.phone_number            = row['Phone']
+              group.email                   = row['Email']
+              group.website                 = row['Website']
+              group.denomination            = row['Denomination']
+              group.ticket_email            = row['TicketEmail']
+              group.ticket_preference       = row['TicketPref']
+              group.years_attended          = row['YearsAttended'].to_i
+              group.updated_by = user.id
+
+              if group.save
+                  updates += 1
+              else
+                  errors += 1
+                  error_list << group
+              end
+          else
+              group = Group.create(
+                 database_rowid:          row['RowID'],
+                 abbr:                    row['Abbr'],
+                 name:                    row['Name'],
+                 short_name:              row['ShortName'],
+                 coming:                  row['Coming'],
+                 status:                  row['Status'],
+                 new_group:               row['NewGroup'],
+                 last_year:               row['LastYear'],
+                 admin_use:               row['Admin'],
+                 trading_name:            row['TradingName'],
+                 address:                 row['Address'],
+                 suburb:                  row['Suburb'],
+                 postcode:                row['Postcode'].to_i,
+                 phone_number:            row['Phone'],
+                 email:                   row['Email'],
+                 website:                 row['Website'],
+                 denomination:            row['Denomination'],
+                 ticket_email:            row['TicketEmail'],
+                 ticket_preference:       row['TicketPref'],
+                 years_attended:          row['YearsAttended'],
+                 updated_by:              user.id)
+
+              if group.errors.empty?
+                  creates += 1
+              else
+                  errors += 1
+                  error_list << group
+              end
+          end
+        end
+      end
+
+      { creates: creates, updates: updates, errors: errors, error_list: error_list }
+    end
+  
     private
   
     def nz(amount)

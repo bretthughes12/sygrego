@@ -11,6 +11,7 @@ class Admin::GroupsController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "group", "group" }
+        format.xlsx { render xlsx: "index", filename: "groups.xlsx" }
       end
     end
 
@@ -194,8 +195,8 @@ class Admin::GroupsController < AdminController
   
     # POST /admin/groups/import
     def import
-      if params[:group] && params[:group][:file].path =~ %r{\.csv$}i
-        result = Group.import(params[:group][:file], current_user)
+      if params[:group] && params[:group][:file].path =~ %r{\.xlsx$}i
+        result = Group.import_excel(params[:group][:file], current_user)
 
         flash[:notice] = "Groups upload complete: #{result[:creates]} groups created; #{result[:updates]} updates; #{result[:errors]} errors"
 
@@ -203,7 +204,7 @@ class Admin::GroupsController < AdminController
           format.html { redirect_to admin_groups_url }
         end
       else
-        flash[:notice] = "Upload file must be in '.csv' format"
+        flash[:notice] = "Upload file must be in '.xlsx' format"
         @group = Group.new
 
         respond_to do |format|

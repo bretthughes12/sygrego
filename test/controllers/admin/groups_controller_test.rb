@@ -177,7 +177,7 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import groups" do
-    file = fixture_file_upload('group.csv','application/csv')
+    file = fixture_file_upload('group.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_difference('Group.count') do
       post import_admin_groups_url, params: { group: { file: file }}
@@ -187,7 +187,7 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import groups when the file is not csv" do
+  test "should not import groups when the file is not xlsx" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Group.count') do
@@ -195,7 +195,7 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :success
-    assert_match /must be in '\.csv' format/, flash[:notice]
+    assert_match /must be in '\.xlsx' format/, flash[:notice]
   end
 
   test "should destroy group" do
