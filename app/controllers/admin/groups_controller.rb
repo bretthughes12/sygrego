@@ -35,6 +35,7 @@ class Admin::GroupsController < AdminController
       respond_to do |format|
         format.html # approvals.html.erb
         format.csv  { render_csv "participant_audit", "participant_audit" }
+        format.xlsx { render xlsx: "participant_audit", filename: "participant_audit.xlsx" }
       end
     end
 
@@ -45,6 +46,7 @@ class Admin::GroupsController < AdminController
       respond_to do |format|
         format.html # approvals.html.erb
         format.csv  { render_csv "group_summary", "group_summary" }
+        format.xlsx { render xlsx: "group_summary", filename: "group_summary.xlsx" }
       end
     end
 

@@ -1,0 +1,31 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Groups") do |sheet|
+	sheet.add_row ["Church","Short Name","Abbr","Campers",
+			"Spectators","Playing Sport","Total Registered",
+			"Fees","Paid","Owing"], 
+		style: header_border
+
+	@groups.each do |g|
+	    late_fees = g.late_fees.nil? ? 0 : g.late_fees
+		sheet.add_row [
+				g.name,
+				g.short_name,
+				g.abbr,
+				g.participants.coming.accepted.campers.size,
+				g.participants.coming.accepted.spectators.size,
+				g.participants.coming.accepted.playing_sport.size,
+				g.participants.coming.accepted.size,
+				number_to_currency(g.fees + g.deposit + late_fees),
+				number_to_currency(g.amount_paid),
+				number_to_currency(g.fees + g.deposit + late_fees - g.amount_paid)
+		   ],
+		style: row_border
+	end
+end

@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Groups") do |sheet|
+	sheet.add_row ["Sport","Grade","Section","Pref Section",
+			"Limit","Over Limit?","One Per Group?","Group",
+			"New Group?","Entry","Status","Factor"],
+		style: header_border
+
+	@ballot_results.each do |r|
+		sheet.add_row [
+				r.sport_name,
+				r.grade_name,
+				r.section_name,
+                r.preferred_section_name,
+				r.entry_limit,
+				r.over_limit,
+				r.one_entry_per_group,
+				r.group_name,
+				r.new_group,
+				r.sport_entry_name,
+				r.sport_entry_status,
+				r.factor
+		   ],
+		style: row_border
+	end
+end

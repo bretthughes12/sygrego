@@ -2,7 +2,7 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= link_to "Download", summary_admin_groups_path(format: :csv),
+<%= link_to "Download", summary_admin_groups_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 
@@ -55,7 +55,7 @@
         
 </table>
 
-<%= link_to "Download", summary_admin_groups_path(format: :csv),
+<%= link_to "Download", summary_admin_groups_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 

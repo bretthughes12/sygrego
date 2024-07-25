@@ -8,6 +8,7 @@ class Admin::BallotResultsController < AdminController
 
         respond_to do |format|
             format.csv  { render_csv "restricted_sports_allocation" }
+            format.xlsx { render xlsx: "index", filename: "restricted_sports_allocation.xlsx" }
         end
     end
 

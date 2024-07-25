@@ -1,0 +1,24 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Groups") do |sheet|
+	sheet.add_row ["Flagged","Name","SubmittedBy",
+			"SubmittedGroup","Reason"], 
+		style: header_border
+
+	@awards.each do |award|
+		sheet.add_row [
+			award.flagged,
+  		    award.name,
+			award.submitted_by,
+			award.submitted_group,
+  		    award.description
+		   ],
+		style: row_border
+	end
+end

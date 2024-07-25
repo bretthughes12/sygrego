@@ -2,7 +2,7 @@
 
 <h1><%= yield(:title) %></h1>
 
-<%= link_to "Download", session_participants_admin_groups_path(format: :csv),
+<%= link_to "Download", session_participants_admin_groups_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 
@@ -27,6 +27,6 @@
     </thead>
 </table>
 
-<%= link_to "Download", session_participants_admin_groups_path(format: :csv),
+<%= link_to "Download", session_participants_admin_groups_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>

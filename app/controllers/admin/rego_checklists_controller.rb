@@ -11,6 +11,7 @@ class Admin::RegoChecklistsController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "rego_checklist", "rego_checklist" }
+        format.xlsx { render xlsx: "index", filename: "rego_checklist.xlsx" }
       end
     end
 
