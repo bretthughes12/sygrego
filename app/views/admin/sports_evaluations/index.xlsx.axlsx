@@ -1,0 +1,36 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Evaluations") do |sheet|
+	sheet.add_row ["Sport","Section","Session","Venue",
+			"Equipment","Length","Umpiring","Scoring",
+			"Time","Support","Safety","Results","WorkedWell",
+			"DidntWork","Suggestions"],
+		style: header_border
+
+	@sports_evaluations.each do |sports_evaluation|
+		sheet.add_row [
+			sports_evaluation.sport,
+  		    sports_evaluation.section,
+			sports_evaluation.session,
+			sports_evaluation.venue_rating,
+			sports_evaluation.equipment_rating,
+			sports_evaluation.length_rating,
+			sports_evaluation.umpiring_rating,
+			sports_evaluation.scoring_rating,
+			sports_evaluation.time_rating,
+			sports_evaluation.support_rating,
+			sports_evaluation.safety_rating,
+			sports_evaluation.results_rating,
+			sports_evaluation.worked_well,
+			sports_evaluation.to_improve,
+  		    sports_evaluation.suggestions
+		   ],
+		style: row_border
+	end
+end

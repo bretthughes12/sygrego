@@ -10,6 +10,7 @@ class Admin::VouchersController < AdminController
       respond_to do |format|
         format.html # index.html.erb
         format.csv  { render_csv "voucher", "voucher" }
+        format.xlsx { render xlsx: "index", filename: "vouchers.xlsx" }
       end
     end
   

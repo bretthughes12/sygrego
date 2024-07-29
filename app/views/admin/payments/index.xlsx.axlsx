@@ -1,0 +1,36 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+amount = s.add_style num_fmt: 2, border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+# NOTE: If you add any fields to this, adjust the column fields appropriately
+date_col = 1
+amount_col = 3
+
+wb.add_worksheet(name: "Payments") do |sheet|
+	sheet.add_row ["ID","Date","Group","Amount","Reconciled",
+			"Type","Name","Reference"], 
+		style: header_border
+
+	@payments.each do |payment|
+		sheet.add_row [
+            payment.id,
+		  	payment.date_paid,
+  		    payment.group.short_name,
+  		    payment.amount,
+			payment.reconciled,
+  		    payment.payment_type,
+  		    payment.name,
+  		    payment.reference
+		   ],
+		style: row_border
+	end
+
+	sheet.col_style date_col, date, row_offset: 1
+	sheet.col_style amount_col, amount, row_offset: 1
+end

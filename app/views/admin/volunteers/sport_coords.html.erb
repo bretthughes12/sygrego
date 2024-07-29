@@ -2,6 +2,19 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= link_to "Saturday", sat_coords_admin_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Sunday", sun_coords_admin_volunteers_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Download Notes", coord_notes_admin_volunteers_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <tr>
@@ -22,7 +35,7 @@
 <%= link_to "Sunday", sun_coords_admin_volunteers_path,
                   class: primary_button_class,
                   role: "button" %>
-<%= link_to "Download Notes", coord_notes_admin_volunteers_path(format: :csv),
+<%= link_to "Download Notes", coord_notes_admin_volunteers_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
 

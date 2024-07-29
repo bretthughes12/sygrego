@@ -39,6 +39,7 @@ class Admin::VolunteersController < AdminController
   
       respond_to do |format|
         format.csv  { render_csv "sports_notes", "sports_notes" }
+        format.xlsx { render xlsx: "sports_notes" }
       end
     end
 
@@ -49,6 +50,7 @@ class Admin::VolunteersController < AdminController
       respond_to do |format|
         format.html 
         format.csv  { render_csv "sports_volunteers", "sport_volunteers" }
+        format.xlsx { render xlsx: "sports_volunteers" }
       end
     end
 

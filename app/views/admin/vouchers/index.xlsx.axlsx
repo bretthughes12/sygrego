@@ -1,0 +1,35 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+# NOTE: If you add any fields to this, adjust the column fields appropriately
+date_col = 4
+
+wb.add_worksheet(name: "Vouchers") do |sheet|
+	sheet.add_row ["Name","Group","Limit","Used",
+			"Expiry","Type","Adjustment"],
+		style: header_border
+
+	@vouchers.each do |voucher|
+		g = voucher.group.nil? ? '' : voucher.group.abbr
+		e = voucher.expiry.nil? ? '' : voucher.expiry.in_time_zone.strftime('%d/%m/%Y')
+
+		sheet.add_row [
+			voucher.name,
+		  	g,
+  		    voucher.limit,
+  		    voucher.participants.count,
+  		    e,
+			voucher.voucher_type,
+  		    voucher.adjustment
+		   ],
+		style: row_border
+	end
+
+	sheet.col_style date_col, date, row_offset: 1
+end

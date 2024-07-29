@@ -20,6 +20,7 @@ class Admin::ReportsController < AdminController
         respond_to do |format|
             format.html { render layout: 'admin' }
             format.csv { render_csv "service_preferences" }
+            format.xlsx { render xlsx: "service_preferences" }
         end
     end
 
