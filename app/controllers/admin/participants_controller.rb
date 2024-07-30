@@ -38,6 +38,7 @@ class Admin::ParticipantsController < AdminController
     respond_to do |format|
       format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
       format.csv  { render_csv "wwccs", "wwccs" }
+      format.xlsx { render xlsx: "wwccs" }
     end
   end
 
@@ -146,6 +147,7 @@ class Admin::ParticipantsController < AdminController
 
     respond_to do |format|
       format.csv  { render_csv "syg_participants", "participant_audit" }
+      format.xlsx { render xlsx: "participant_audit" }
     end
   end
 
@@ -171,6 +173,7 @@ class Admin::ParticipantsController < AdminController
     respond_to do |format|
       format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
       format.csv  { render_csv "day_visitors", "day_visitors" }
+      format.xlsx { render xlsx: "day_visitors" }
     end
   end
   

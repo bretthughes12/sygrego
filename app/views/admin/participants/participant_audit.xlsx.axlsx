@@ -1,0 +1,35 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+amount = s.add_style num_fmt: 2, border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+# NOTE: If you add any fields to this, adjust the column fields appropriately
+amount_col = 9
+
+wb.add_worksheet(name: "Participants") do |sheet|
+	sheet.add_row ["Group","Coming","Surname","FirstName","Age",
+	              "Gender","Category","Voucher","#Days","Cost"],
+		style: header_border
+
+	@participants.each do |participant|
+		sheet.add_row [
+ 		     participant.group.short_name,
+  		     participant.coming,
+			 participant.surname,
+  		     participant.first_name,
+  		     participant.age,
+  		     participant.gender,
+  		     participant.category,
+			 participant.voucher_code,
+			 participant.chargeable_days,
+			 participant.fee
+		   ],
+		style: row_border
+	end
+
+	sheet.col_style amount_col, amount, row_offset: 1
+end
