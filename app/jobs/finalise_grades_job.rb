@@ -23,7 +23,7 @@ class FinaliseGradesJob < ApplicationJob
 
     def balance_sections_in_grade(grade)
         grade.possible_sessions.each do |session|
-            sections = session.sections.where(grade_id: grade.id).load
+            sections = session.sections.where(grade_id: grade.id).order(:name).load
             courts_remaining = sections.active.sum(&:number_of_courts)
             entries_remaining = sections.sum(&:number_of_teams)
             from_sections = []
@@ -36,7 +36,7 @@ class FinaliseGradesJob < ApplicationJob
                 when courts_remaining == section.number_of_courts
                     should_have = entries_remaining
                 else
-                    should_have = (((entries_remaining.to_f / courts_remaining * section.number_of_courts) + 1)  / 2).to_i * 2
+                    should_have = (((entries_remaining.to_f / courts_remaining * section.number_of_courts) + 1) / 2).to_i * 2
                 end
 
                 section.number_in_draw = should_have
