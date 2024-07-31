@@ -15,7 +15,6 @@ class Ability
            :create_spirit,
            :create_volunteer], Award
       can :create, SportsEvaluation
-      can :create, IncidentReport
       can [:index, :update, :show, :search], LostItem
 
     elsif session["current_role"] == "admin"
@@ -32,7 +31,6 @@ class Ability
       can :index, Section
       can [:index, :reset, :update_multiple], RoundRobinMatch
       can :create, SportsEvaluation
-      can :create, IncidentReport
       can [:available_roles, :switch], Role if user.roles.count > 1
       can [:available_groups, :switch], Group if user.groups.count > 1 || user.role?(:admin)
       can [:available_participants, :switch], Participant if user.participants.count > 1 || user.role?(:admin)
@@ -157,7 +155,6 @@ class Ability
         :create_spirit,
         :create_volunteer], Award
       can :create, SportsEvaluation
-      can :create, IncidentReport
       can [:index, :update, :show, :search], LostItem
 
     elsif session["current_role"] == "gc"
@@ -270,7 +267,6 @@ class Ability
         :create_spirit,
         :create_volunteer], Award
       can :create, SportsEvaluation
-      can :create, IncidentReport
       can [:index, :update, :show, :search], LostItem
 
     elsif session["current_role"] == "participant"
@@ -304,7 +300,6 @@ class Ability
         :create_spirit,
         :create_volunteer], Award
       can :create, SportsEvaluation
-      can :create, IncidentReport
       can [:index, :update, :show, :search], LostItem
     end
     

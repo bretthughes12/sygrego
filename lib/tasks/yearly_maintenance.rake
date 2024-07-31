@@ -374,12 +374,6 @@ namespace :syg do
             SportsEvaluation.destroy_all
         end
     
-        desc 'Clear all incident reports'
-        task destroy_incident_reports: ['db:migrate'] do |_t|
-            puts "Deleting last year's incident reports..."
-            IncidentReport.destroy_all
-        end
-    
         desc 'Clear all groups grades filters'
         task destroy_groups_grades_filters: ['db:migrate'] do |_t|
             puts "Deleting last year's group / grade filters..."
@@ -392,8 +386,7 @@ namespace :syg do
                                         'destroy_lost_property',
                                         'destroy_ballot_results',
                                         'destroy_awards',
-                                        'destroy_sports_evaluations',
-                                        'destroy_incident_reports']
+                                        'destroy_sports_evaluations']
 
         desc 'Clear all audit trails'
         task destroy_audit_trails: ['db:migrate'] do |_t|
