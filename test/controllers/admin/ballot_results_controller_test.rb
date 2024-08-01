@@ -12,10 +12,10 @@ class Admin::BallotResultsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download ballot data" do
-    get admin_ballot_results_url(format: :csv)
+    get admin_ballot_results_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get summary" do

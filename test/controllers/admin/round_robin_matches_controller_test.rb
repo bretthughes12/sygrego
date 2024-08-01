@@ -45,10 +45,10 @@ class Admin::RoundRobinMatchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download round robin matches" do
-    get matches_admin_round_robin_matches_url(section_id: @section.id, format: :csv)
+    get matches_admin_round_robin_matches_url(section_id: @section.id, format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get new import" do
@@ -71,7 +71,7 @@ class Admin::RoundRobinMatchesControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import round robin matches when the file is not csv" do
+  test "should not import round robin matches when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('RoundRobinMatch.count') do

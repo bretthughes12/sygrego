@@ -550,10 +550,10 @@ class SportEntryTest < ActiveSupport::TestCase
   test "should import sport entries from file" do
     FactoryBot.create(:group, short_name: "Caffeine")
     FactoryBot.create(:grade, name: "Kite Flying Open A")
-    file = fixture_file_upload('sport_entry.csv','application/csv')
+    file = fixture_file_upload('sport_entry.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('SportEntry.count') do
-      @result = SportEntry.import(file, @user)
+      @result = SportEntry.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -564,10 +564,10 @@ class SportEntryTest < ActiveSupport::TestCase
   test "should assign sport entries to default group if group not found" do
     group = FactoryBot.create(:group, short_name: "No group")
     FactoryBot.create(:grade, name: "Kite Flying Open A")
-    file = fixture_file_upload('sport_entry.csv','application/csv')
+    file = fixture_file_upload('sport_entry.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('SportEntry.count') do
-      @result = SportEntry.import(file, @user)
+      @result = SportEntry.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -585,10 +585,10 @@ class SportEntryTest < ActiveSupport::TestCase
       group: group,
       grade: grade,
       status: "Requested")
-    file = fixture_file_upload('sport_entry.csv','application/csv')
+    file = fixture_file_upload('sport_entry.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('SportEntry.count') do
-      @result = SportEntry.import(file, @user)
+      @result = SportEntry.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -602,10 +602,10 @@ class SportEntryTest < ActiveSupport::TestCase
   test "should not import sport_entries with errors from file" do
     FactoryBot.create(:group, short_name: "Caffeine")
     FactoryBot.create(:grade, name: "Kite Flying Open A")
-    file = fixture_file_upload('invalid_sport_entry.csv','application/csv')
+    file = fixture_file_upload('invalid_sport_entry.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('SportEntry.count') do
-      @result = SportEntry.import(file, @user)
+      @result = SportEntry.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -620,10 +620,10 @@ class SportEntryTest < ActiveSupport::TestCase
       group: group,
       grade: grade,
       status: "Requested")
-    file = fixture_file_upload('invalid_sport_entry.csv','application/csv')
+    file = fixture_file_upload('invalid_sport_entry.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('SportEntry.count') do
-      @result = SportEntry.import(file, @user)
+      @result = SportEntry.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

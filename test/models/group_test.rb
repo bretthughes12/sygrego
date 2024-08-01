@@ -1127,10 +1127,10 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "should import groups from file" do
-    file = fixture_file_upload('group.csv','application/csv')
+    file = fixture_file_upload('group.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Group.count') do
-      @result = Group.import(file, @user)
+      @result = Group.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -1140,10 +1140,10 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should update exiting groups from file" do
     group = FactoryBot.create(:group, abbr: 'CAF')
-    file = fixture_file_upload('group.csv','application/csv')
+    file = fixture_file_upload('group.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Group.count') do
-      @result = Group.import(file, @user)
+      @result = Group.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -1155,10 +1155,10 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "should not import groups with errors from file" do
-    file = fixture_file_upload('invalid_group.csv','application/csv')
+    file = fixture_file_upload('invalid_group.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Group.count') do
-      @result = Group.import(file, @user)
+      @result = Group.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -1168,10 +1168,10 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should not update groups with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
-    file = fixture_file_upload('invalid_group.csv','application/csv')
+    file = fixture_file_upload('invalid_group.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Group.count') do
-      @result = Group.import(file, @user)
+      @result = Group.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

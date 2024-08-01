@@ -1,2 +1,0 @@
-RowID,Sport,Name,Active,Type,Status,MaxAge,MinAge,GenderType,MaxPart,MinPart,MinMales,MinFemales,TeamSize,Limit,StartLimit
--2004596727,Hockey,Hockey Open B,true,Team,Closed,200,11,Mixed,999,0,0,3,8,12,12

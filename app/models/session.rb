@@ -20,7 +20,6 @@ class Session < ApplicationRecord
     include Comparable
     include Auditable
 
-    require 'csv'
     require 'roo'
   
     attr_reader :file
@@ -47,44 +46,6 @@ class Session < ApplicationRecord
   
     def self.total_sessions
       Session.active.count
-    end
-
-    def self.import(file, user)
-      creates = 0
-      updates = 0
-      errors = 0
-      error_list = []
-
-      CSV.foreach(file.path, headers: true) do |fields|
-        session = Session.find_by_database_rowid(fields[0].to_i)
-        if session
-          session.database_rowid = fields[0]
-          session.active = fields[1]
-          session.name = fields[2]
-          session.updated_by = user.id
-          
-          if session.save
-            updates += 1
-          else
-            errors += 1
-            error_list << session
-          end
-        else
-          session = Session.create(database_rowid: fields[0],
-                                   active:         fields[1],
-                                   name:           fields[2],
-                                   updated_by:     user.id)
-
-          if session.errors.empty?
-            creates += 1
-          else
-            errors += 1
-            error_list << session
-          end
-        end
-      end
-
-      { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
     def self.import_excel(file, user)

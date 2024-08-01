@@ -11,7 +11,6 @@ class Gc::ParticipantsController < GcController
           @participants = @participants.paginate(page: params[:page], per_page: 100)
           render layout: @current_role.name
         end
-        format.csv  { render_csv "participant", "participant" }
         format.xlsx { render xlsx: "index", filename: "participants.xlsx" }
       end
     end
@@ -105,7 +104,6 @@ class Gc::ParticipantsController < GcController
         format.html do
           render layout: @current_role.name
         end
-        format.csv  { render_csv "sports_plan", "sports_plan" }
         format.xlsx { render xlsx: "sports_plan", filename: "sports_plan.xlsx" }
       end
     end
@@ -119,7 +117,6 @@ class Gc::ParticipantsController < GcController
         format.html do
           render layout: @current_role.name
         end
-        format.csv  { render_csv "camping_preferences", "camping_preferences" }
         format.xlsx { render xlsx: "camping_preferences", filename: "camping_preferences.xlsx" }
       end
     end
@@ -133,7 +130,6 @@ class Gc::ParticipantsController < GcController
         format.html do
           render layout: @current_role.name
         end
-        format.csv  { render_csv "sport_notes", "sport_notes" }
         format.xlsx { render xlsx: "sport_notes", filename: "sport_notes.xlsx" }
       end
     end

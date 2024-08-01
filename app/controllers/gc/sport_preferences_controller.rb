@@ -31,10 +31,6 @@ class Gc::SportPreferencesController < GcController
       
           @sport_preferences = SportPreference.locate_for_group(@group, options)
         end
-        format.csv do
-          @sport_preferences = SportPreference.locate_for_group(@group, {entered: true, in_sport: true})
-          render_csv "sport_prefs"
-        end
         format.xlsx do 
           @sport_preferences = SportPreference.locate_for_group(@group, {entered: true, in_sport: true})
           render xlsx: "sport_prefs", filename: "sport_preferences.xlsx" 

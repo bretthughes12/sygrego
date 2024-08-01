@@ -47,10 +47,10 @@ class EventDetailTest < ActiveSupport::TestCase
   test "should update exiting event details from file" do
     group = FactoryBot.create(:group, abbr: 'CAF')
     
-    file = fixture_file_upload('event_detail.csv','application/csv')
+    file = fixture_file_upload('event_detail.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('EventDetail.count') do
-      @result = EventDetail.import(file, @user)
+      @result = EventDetail.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -65,10 +65,10 @@ class EventDetailTest < ActiveSupport::TestCase
   test "should not update event details with errors from file" do
     group = FactoryBot.create(:group, abbr: "CAF")
     event_detail = FactoryBot.create(:event_detail, group: group)
-    file = fixture_file_upload('invalid_event_detail.csv','application/csv')
+    file = fixture_file_upload('invalid_event_detail.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('EventDetail.count') do
-      @result = EventDetail.import(file, @user)
+      @result = EventDetail.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

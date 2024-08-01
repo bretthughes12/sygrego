@@ -8,7 +8,6 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # good_sports.html.erb
-      format.csv  { render_csv "good_sports", "awards" }
       format.xlsx { render xlsx: "awards", filename: "good_sports.xlsx" }
     end
   end
@@ -19,7 +18,6 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # spirit.html.erb
-      format.csv  { render_csv "spirit", "awards" }
       format.xlsx { render xlsx: "awards", filename: "spirit.xlsx" }
     end
   end
@@ -30,7 +28,6 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # volunteer_awards.html.erb
-      format.csv  { render_csv "volunteer_awards", "awards" }
       format.xlsx { render xlsx: "awards", filename: "volunteer_awards.xlsx" }
     end
   end

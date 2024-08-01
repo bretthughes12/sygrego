@@ -1,5 +1,4 @@
 class Admin::MysygSettingsController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::MysygSettingsController < AdminController
   
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "mysyg_setting", "mysyg_setting" }
         format.xlsx { render xlsx: "index", filename: "mysyg_settings.xlsx" }
       end
     end

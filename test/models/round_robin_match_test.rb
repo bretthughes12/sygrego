@@ -71,10 +71,10 @@ class RoundRobinMatchTest < ActiveSupport::TestCase
     section = FactoryBot.create(:section, id: 1, finals_format: 'Top 4', start_court: 2, number_of_groups: 2)
     entry1 = FactoryBot.create(:sport_entry, id: 111, group_number: 2)
     entry2 = FactoryBot.create(:sport_entry, id: 222, group_number: 2)
-    file = fixture_file_upload('round_robin_match.csv','application/csv')
+    file = fixture_file_upload('round_robin_match.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('RoundRobinMatch.count') do
-      @result = RoundRobinMatch.import(file, @user)
+      @result = RoundRobinMatch.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -98,10 +98,10 @@ class RoundRobinMatchTest < ActiveSupport::TestCase
     section = FactoryBot.create(:section, id: 1, finals_format: 'Top 4', start_court: 2, number_of_groups: 2)
     entry1 = FactoryBot.create(:sport_entry, id: 111, group_number: 2)
     entry2 = FactoryBot.create(:sport_entry, id: 222, group_number: 2)
-    file = fixture_file_upload('round_robin_match.csv','application/csv')
+    file = fixture_file_upload('round_robin_match.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('RoundRobinMatch.count') do
-      @result = RoundRobinMatch.import(file, @user)
+      @result = RoundRobinMatch.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -124,10 +124,10 @@ class RoundRobinMatchTest < ActiveSupport::TestCase
   end
 
   test "should not import round robin match with errors" do
-    file = fixture_file_upload('invalid_round_robin_match.csv','application/csv')
+    file = fixture_file_upload('invalid_round_robin_match.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('RoundRobinMatch.count') do
-      @result = RoundRobinMatch.import(file, @user)
+      @result = RoundRobinMatch.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -139,11 +139,11 @@ class RoundRobinMatchTest < ActiveSupport::TestCase
   #       Mocha used to simulate a failure
   test "should not update round robin match with errors" do
     match = FactoryBot.create(:round_robin_match, draw_number: 1322, complete: false)
-    file = fixture_file_upload('invalid_round_robin_match.csv','application/csv')
+    file = fixture_file_upload('invalid_round_robin_match.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     RoundRobinMatch.any_instance.stubs(:save).returns(false)
     
     assert_no_difference('RoundRobinMatch.count') do
-      @result = RoundRobinMatch.import(file, @user)
+      @result = RoundRobinMatch.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

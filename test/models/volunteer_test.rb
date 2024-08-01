@@ -208,10 +208,10 @@ class VolunteerTest < ActiveSupport::TestCase
 
   test "should import volunteer from file" do
     FactoryBot.create(:volunteer_type, database_code: "SPTC")
-    file = fixture_file_upload('volunteer.csv','application/csv')
+    file = fixture_file_upload('volunteer.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('Volunteer.count') do
-      @result = Volunteer.import(file, @user)
+      @result = Volunteer.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -222,10 +222,10 @@ class VolunteerTest < ActiveSupport::TestCase
   test "should update exiting volunteer from file" do
     FactoryBot.create(:volunteer_type, database_code: "SPTC")
     volunteer = FactoryBot.create(:volunteer, id: 123456, description: "Child Minding")
-    file = fixture_file_upload('volunteer.csv','application/csv')
+    file = fixture_file_upload('volunteer.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Volunteer.count') do
-      @result = Volunteer.import(file, @user)
+      @result = Volunteer.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -238,10 +238,10 @@ class VolunteerTest < ActiveSupport::TestCase
 
   test "should not import volunteers with errors from file" do
     FactoryBot.create(:volunteer_type, database_code: "SPTC")
-    file = fixture_file_upload('invalid_volunteer.csv','application/csv')
+    file = fixture_file_upload('invalid_volunteer.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Volunteer.count') do
-      @result = Volunteer.import(file, @user)
+      @result = Volunteer.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -252,10 +252,10 @@ class VolunteerTest < ActiveSupport::TestCase
   test "should not update volunteers with errors from file" do
     FactoryBot.create(:volunteer_type, database_code: "SPTC")
     volunteer = FactoryBot.create(:volunteer, id: 123456, t_shirt_size: "M")
-    file = fixture_file_upload('invalid_volunteer.csv','application/csv')
+    file = fixture_file_upload('invalid_volunteer.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('Volunteer.count') do
-      @result = Volunteer.import(file, @user)
+      @result = Volunteer.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

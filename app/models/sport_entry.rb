@@ -304,65 +304,6 @@ class SportEntry < ApplicationRecord
     end
   end
 
-  def self.import(file, user)
-    creates = 0
-    updates = 0
-    errors = 0
-    error_list = []
-
-    CSV.foreach(file.path, headers: true) do |fields|
-      group = Group.find_by_short_name(fields[5].to_s)
-      if group.nil?
-        group = Group.find_by_short_name("No group")
-      end
-
-      grade = Grade.find_by_name(fields[2].to_s)
-      grade_id = grade.id if grade
-      section = Section.find_by_name(fields[3].to_s)
-      section_id = section.id if section
-      preferred_section = Section.find_by_name(fields[4].to_s)
-      preferred_section_id = preferred_section.id if preferred_section
-
-      if grade
-        sport_entry = SportEntry.where(grade_id: grade.id, team_number: fields[9].to_i).first
-      end
-
-      if sport_entry
-        sport_entry.section_id                = section_id
-        sport_entry.preferred_section_id      = preferred_section_id
-        sport_entry.group_id                  = group.id 
-        sport_entry.status                    = fields[7]
-        sport_entry.group_number              = fields[10].to_i
-
-        if sport_entry.save
-          updates += 1
-        else
-          errors += 1
-          error_list << sport_entry
-        end
-      else
-        sport_entry = SportEntry.create(
-          grade_id:                grade_id,
-          section_id:              section_id,
-          preferred_section_id:    preferred_section_id,
-          group_id:                group.id,
-          status:                  fields[7],
-          team_number:             fields[9].to_i,
-          group_number:            fields[10].to_i,
-          updated_by:              user.id)
-
-        if sport_entry.errors.empty?
-            creates += 1
-        else
-            errors += 1
-            error_list << sport_entry
-        end
-      end
-    end
-
-    { creates: creates, updates: updates, errors: errors, error_list: error_list }
-  end
-
   def self.import_excel(file, user)
     creates = 0
     updates = 0

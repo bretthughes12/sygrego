@@ -24,10 +24,10 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download group approvals" do
-    get approvals_admin_groups_url(format: :csv)
+    get approvals_admin_groups_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get group session participants" do
@@ -37,10 +37,10 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download group session participants" do
-    get session_participants_admin_groups_url(format: :csv)
+    get session_participants_admin_groups_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get group summary" do
@@ -50,10 +50,10 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download group summary" do
-    get summary_admin_groups_url(format: :csv)
+    get summary_admin_groups_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get group payments" do
@@ -75,10 +75,10 @@ class Admin::GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download group data" do
-    get admin_groups_url(format: :csv)
+    get admin_groups_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show group" do

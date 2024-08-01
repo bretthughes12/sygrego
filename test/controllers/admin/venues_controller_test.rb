@@ -18,10 +18,10 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download venue data" do
-    get admin_venues_url(format: :csv)
+    get admin_venues_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show venue" do
@@ -106,7 +106,7 @@ class Admin::VenuesControllerTest < ActionDispatch::IntegrationTest
     assert_match(/upload complete/, flash[:notice])
   end
 
-  test "should not import venues when the file is not csv" do
+  test "should not import venues when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Venue.count') do

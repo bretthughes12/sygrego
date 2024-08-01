@@ -36,8 +36,6 @@
 class EventDetail < ApplicationRecord
     include Auditable
 
-    require 'csv'
-  
     attr_reader :file
 
     belongs_to :group
@@ -136,47 +134,6 @@ class EventDetail < ApplicationRecord
         warden_zone.nil? ? '' : warden_zone.warden_info
     end
     
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-    
-        CSV.foreach(file.path, headers: true) do |fields|
-            group = Group.find_by_abbr(fields[1].to_s)
-
-            if group
-                event_detail = group.event_detail
-                if event_detail
-                    event_detail.onsite             = fields[2]
-                    event_detail.fire_pit           = fields[3]
-                    event_detail.camping_rqmts      = fields[4]
-                    event_detail.tents              = fields[5].to_i
-                    event_detail.caravans           = fields[6].to_i
-                    event_detail.marquees           = fields[7].to_i
-                    event_detail.marquee_sizes      = fields[8]
-                    event_detail.marquee_co         = fields[9]  
-                    event_detail.buddy_interest     = fields[10]
-                    event_detail.buddy_comments     = fields[11]
-                    event_detail.service_pref_sat   = fields[12]
-                    event_detail.service_pref_sun   = fields[13]
-                    event_detail.estimated_numbers  = fields[14].to_i
-                    event_detail.number_of_vehicles = fields[15].to_i
-                    event_detail.updated_by = user.id
-        
-                    if event_detail.save
-                        updates += 1
-                    else
-                        errors += 1
-                        error_list << event_detail
-                    end
-                end
-            end
-        end
-    
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
-    end
-
     def self.import_excel(file, user)
         creates = 0
         updates = 0

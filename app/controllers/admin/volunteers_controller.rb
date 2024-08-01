@@ -1,5 +1,4 @@
 class Admin::VolunteersController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::VolunteersController < AdminController
   
       respond_to do |format|
         format.html {  }
-        format.csv  { render_csv "volunteer" }
         format.xlsx { render xlsx: "volunteers" }
       end
     end
@@ -38,7 +36,6 @@ class Admin::VolunteersController < AdminController
       @volunteers = Volunteer.sport_coords.order(:description).all
   
       respond_to do |format|
-        format.csv  { render_csv "sports_notes", "sports_notes" }
         format.xlsx { render xlsx: "sports_notes" }
       end
     end
@@ -49,7 +46,6 @@ class Admin::VolunteersController < AdminController
   
       respond_to do |format|
         format.html 
-        format.csv  { render_csv "sports_volunteers", "sport_volunteers" }
         format.xlsx { render xlsx: "sports_volunteers" }
       end
     end

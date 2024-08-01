@@ -35,7 +35,6 @@ class Volunteer < ApplicationRecord
     include Auditable
     include Searchable
 
-    require 'csv'
     require 'roo'
 
     has_and_belongs_to_many :sections
@@ -241,71 +240,6 @@ class Volunteer < ApplicationRecord
       end
     end
 
-    def self.import(file, user)
-      creates = 0
-      updates = 0
-      errors = 0
-      error_list = []
-
-      CSV.foreach(file.path, headers: true) do |fields|
-        volunteer = fields[0].nil? ? nil : Volunteer.find_by_id(fields[0].to_i)
-        type = fields[1].nil? ? nil : VolunteerType.find_by_database_code(fields[1])
-        section_names = fields[3].nil? ? [] : fields[3].split(', ')
-        session = fields[4].nil? ? nil : Session.find_by_name(fields[4])
-        participant = fields[5].nil? ? nil : Participant.find_by_id(fields[5].to_i)
-
-        if volunteer
-
-          volunteer.volunteer_type = type
-          volunteer.session = session
-          volunteer.participant = participant
-          volunteer.description = fields[2]
-          volunteer.email = fields[8]
-          volunteer.mobile_number = fields[9]
-          volunteer.t_shirt_size = fields[10]
-          volunteer.updated_by = user.id
-          
-          if volunteer.save
-            volunteer.sections.delete_all
-            section_names.each do |s|
-              section = Section.find_by_name(s)
-              volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
-            end
-
-            updates += 1
-          else
-            errors += 1
-            error_list << volunteer
-          end
-        else
-          volunteer = Volunteer.create(
-              volunteer_type: type,
-              session:        session,
-              participant:    participant,
-              description:    fields[2],
-              email:          fields[8],
-              mobile_number:  fields[9],
-              t_shirt_size:   fields[10],
-              updated_by:     user.id
-          )
-          volunteer.sections.delete_all
-          section_names.each do |s|
-            section = Section.find_by_name(s)
-            volunteer.sections << section unless section.nil? || volunteer.sections.include?(section)
-          end
-
-          if volunteer.errors.empty?
-            creates += 1
-          else
-            errors += 1
-            error_list << session
-          end
-        end
-      end
-  
-      { creates: creates, updates: updates, errors: errors, error_list: error_list }
-    end
-  
     def self.import_excel(file, user)
       creates = 0
       updates = 0

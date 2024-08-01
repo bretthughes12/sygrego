@@ -36,7 +36,6 @@ class Section < ApplicationRecord
     include Comparable
     include Auditable
 
-    require 'csv'
     require 'pp'
   
     attr_reader :file
@@ -305,65 +304,6 @@ class Section < ApplicationRecord
             end
         end
         sections.uniq
-    end
-
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-  
-        CSV.foreach(file.path, headers: true) do |fields|
-            grade = Grade.where(name: fields[1]).first
-            venue = Venue.where(database_code: fields[4]).first
-            session = Session.where(database_rowid: fields[7].to_i).first
-    
-            section = Section.find_by_name(fields[2].to_s)
-            if section
-                section.database_rowid          = fields[0].to_i
-                section.grade                   = grade
-                section.name                    = fields[2]
-                section.active                  = fields[3]
-                section.venue                   = venue
-                section.year_introduced         = fields[5].to_i
-                section.number_of_courts        = fields[6].to_i
-                section.session                 = session
-                section.finals_format           = fields[8]
-                section.number_of_groups        = fields[9].to_i
-                section.start_court             = fields[10].to_i
-                section.updated_by              = user.id
- 
-                if section.save
-                    updates += 1
-                else
-                    errors += 1
-                    error_list << section
-                end
-            else
-                section = Section.create(
-                   database_rowid:          fields[0],
-                   grade:                   grade,
-                   name:                    fields[2],
-                   active:                  fields[3],
-                   venue:                   venue,
-                   year_introduced:         fields[5].to_i,
-                   number_of_courts:        fields[6].to_i,
-                   session:                 session,
-                   finals_format:           fields[8],
-                   number_of_groups:        fields[9].to_i,
-                   start_court:             fields[10].to_i,
-                   updated_by:              user.id)
-
-                if section.errors.empty?
-                    creates += 1
-                else
-                    errors += 1
-                    error_list << section
-                end
-            end
-        end
-  
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
     def self.import_excel(file, user)

@@ -40,10 +40,10 @@ class VolunteerTypeTest < ActiveSupport::TestCase
   end
 
   test "should import volunteer_types from file" do
-    file = fixture_file_upload('volunteer_type.csv','application/csv')
+    file = fixture_file_upload('volunteer_type.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_difference('VolunteerType.count') do
-      @result = VolunteerType.import(file, @user)
+      @result = VolunteerType.import_excel(file, @user)
     end
 
     assert_equal 1, @result[:creates]
@@ -53,10 +53,10 @@ class VolunteerTypeTest < ActiveSupport::TestCase
 
   test "should update exiting volunteer_types from file" do
     volunteer_type = FactoryBot.create(:volunteer_type, name: 'Caffeine Gopher')
-    file = fixture_file_upload('volunteer_type.csv','application/csv')
+    file = fixture_file_upload('volunteer_type.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('VolunteerType.count') do
-      @result = VolunteerType.import(file, @user)
+      @result = VolunteerType.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -68,10 +68,10 @@ class VolunteerTypeTest < ActiveSupport::TestCase
   end
 
   test "should not import volunteer_types with errors from file" do
-    file = fixture_file_upload('invalid_volunteer_type.csv','application/csv')
+    file = fixture_file_upload('invalid_volunteer_type.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('VolunteerType.count') do
-      @result = VolunteerType.import(file, @user)
+      @result = VolunteerType.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]
@@ -81,10 +81,10 @@ class VolunteerTypeTest < ActiveSupport::TestCase
 
   test "should not update volunteer_types with errors from file" do
     volunteer_type = FactoryBot.create(:volunteer_type, name: 'Caffeine Gopher')
-    file = fixture_file_upload('invalid_volunteer_type.csv','application/csv')
+    file = fixture_file_upload('invalid_volunteer_type.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     
     assert_no_difference('VolunteerType.count') do
-      @result = VolunteerType.import(file, @user)
+      @result = VolunteerType.import_excel(file, @user)
     end
 
     assert_equal 0, @result[:creates]

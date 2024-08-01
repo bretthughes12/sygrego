@@ -1,5 +1,4 @@
 class Admin::GroupsController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::GroupsController < AdminController
   
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "group", "group" }
         format.xlsx { render xlsx: "index", filename: "groups.xlsx" }
       end
     end
@@ -21,7 +19,6 @@ class Admin::GroupsController < AdminController
   
       respond_to do |format|
         format.html # approvals.html.erb
-        format.csv  { render_csv "submissions", "submissions" }
         format.xlsx do
           render xlsx: "submissions", filename: "Reference Checklist.xlsx"
         end
@@ -34,7 +31,6 @@ class Admin::GroupsController < AdminController
   
       respond_to do |format|
         format.html # approvals.html.erb
-        format.csv  { render_csv "participant_audit", "participant_audit" }
         format.xlsx { render xlsx: "participant_audit", filename: "participant_audit.xlsx" }
       end
     end
@@ -45,7 +41,6 @@ class Admin::GroupsController < AdminController
 
       respond_to do |format|
         format.html # approvals.html.erb
-        format.csv  { render_csv "group_summary", "group_summary" }
         format.xlsx { render xlsx: "group_summary", filename: "group_summary.xlsx" }
       end
     end

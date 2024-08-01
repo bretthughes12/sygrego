@@ -1,5 +1,4 @@
 class Admin::VolunteerTypesController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::VolunteerTypesController < AdminController
   
       respond_to do |format|
         format.html {  }
-        format.csv  { render_csv "volunteer_type" }
         format.xlsx { render xlsx: "index", filename: "volunteer_types.xlsx" }
       end
     end

@@ -9,7 +9,6 @@ class Admin::SportsEvaluationsController < AdminController
 
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "sports_evaluations", "sports_evaluations" }
         format.xlsx { render xlsx: "index", filename: "sports_evaluations.xlsx" }
         format.pdf  # index.pdf.prawn
       end

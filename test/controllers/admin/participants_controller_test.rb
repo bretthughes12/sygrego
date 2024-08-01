@@ -27,10 +27,10 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download participant data" do
-    get admin_participants_url(format: :csv)
+    get admin_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get wwccs" do
@@ -40,10 +40,10 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download wwcc data" do
-    get wwccs_admin_participants_url(format: :csv)
+    get wwccs_admin_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get drivers for a group" do
@@ -65,13 +65,6 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should download new tickets in CSV" do
-    post ticket_download_admin_participants_url(format: :csv)
-
-    assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
-  end
-
   test "should download new tickets" do
     post ticket_download_admin_participants_url(format: :xlsx)
 
@@ -79,25 +72,11 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
-  test "should download updated tickets in CSV" do
-    post ticket_updates_admin_participants_url(format: :csv)
-
-    assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
-  end
-
   test "should download updated tickets" do
     post ticket_updates_admin_participants_url(format: :xlsx)
 
     assert_response :success
     assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
-  end
-
-  test "should download full ticket extract in CSV" do
-    get ticket_full_extract_admin_participants_url(format: :csv)
-
-    assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
   end
 
   test "should download full ticket extract" do
@@ -122,10 +101,10 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download participant audit" do
-    get participant_audit_admin_participants_url(format: :csv)
+    get participant_audit_admin_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should get day visitors" do
@@ -145,10 +124,10 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     FactoryBot.create(:event_detail, group: group)
     day_vis = FactoryBot.create(:participant, group: @group, id: 1234)
 
-    get day_visitors_admin_participants_url(format: :csv)
+    get day_visitors_admin_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show participant" do
@@ -329,7 +308,7 @@ class Admin::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import participants when the file is not csv" do
+  test "should not import participants when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('Participant.count') do

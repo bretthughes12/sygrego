@@ -17,11 +17,11 @@ class Admin::SportsEvaluationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should download sports_evaluation data as csv" do
-    get admin_sports_evaluations_url(format: :csv)
+  test "should download sports_evaluation data as excel" do
+    get admin_sports_evaluations_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should download sports_evaluation data as pdf" do

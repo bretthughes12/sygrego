@@ -1,5 +1,4 @@
 class Admin::EventDetailsController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::EventDetailsController < AdminController
   
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "event_detail", "event_detail" }
         format.xlsx { render xlsx: "index", filename: "event_detailss.xlsx" }
       end
     end

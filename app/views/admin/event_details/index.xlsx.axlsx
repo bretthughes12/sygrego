@@ -16,11 +16,13 @@ wb.add_worksheet(name: "Event Details") do |sheet|
 		style: header_border
 
 	@event_details.each do |event_detail|
+		zone = event_detail.warden_zone.nil? ? nil : event_detail.warden_zone.zone
+
 		sheet.add_row [
             event_detail.group.database_rowid,
   		    event_detail.group.abbr,
 			event_detail.orientation_details,
-			event_detail.warden_zone.zone,
+			zone,
   		    event_detail.onsite,
 			event_detail.fire_pit,
   		    event_detail.camping_rqmts,

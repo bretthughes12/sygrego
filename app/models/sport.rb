@@ -29,7 +29,6 @@ class Sport < ApplicationRecord
     include Comparable
     include Auditable
 
-    require 'csv'
     require 'roo'
 
     attr_reader :file
@@ -121,62 +120,6 @@ class Sport < ApplicationRecord
         grades.each.collect do |grade|
           @grades_as_limited << grade if grade.sport == self
         end
-    end
-        
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-  
-        CSV.foreach(file.path, headers: true) do |fields|
-            sport = Sport.find_by_name(fields[0].to_s)
-            if sport
-                sport.active = fields[1]
-                sport.classification = fields[2].to_s
-                sport.max_indiv_entries_group = fields[3].to_i
-                sport.max_team_entries_group = fields[4].to_i
-                sport.max_entries_indiv = fields[5].to_i
-                sport.bonus_for_officials = fields[6]
-                sport.court_name = fields[7]
-                sport.blowout_rule = fields[9]
-                sport.forfeit_score = fields[10].to_i
-                sport.ladder_tie_break = fields[11]
-                sport.allow_negative_score = fields[12]
-                sport.point_name = fields[13]
-                sport.updated_by = user.id
-                if sport.save
-                    updates += 1
-                else
-                    errors += 1
-                    error_list << sport
-                end
-            else
-                sport = Sport.create(
-                    name:                      fields[0],
-                    active:                    fields[1],
-                    classification:            fields[2],
-                    max_indiv_entries_group:   fields[3].to_i,
-                    max_team_entries_group:    fields[4].to_i,
-                    max_entries_indiv:         fields[5].to_i,
-                    bonus_for_officials:       fields[6],
-                    court_name:                fields[7],
-                    blowout_rule:              fields[9],
-                    forfeit_score:             fields[10].to_i,
-                    ladder_tie_break:          fields[11],
-                    allow_negative_score:      fields[12],
-                    point_name:                fields[13],
-                    updated_by:                user.id)
-                if sport.errors.empty?
-                    creates += 1
-                else
-                    errors += 1
-                    error_list << sport
-                end
-            end
-        end
-  
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
         
     def self.import_excel(file, user)

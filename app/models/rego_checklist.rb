@@ -74,8 +74,6 @@
 #
 
 class RegoChecklist < ApplicationRecord
-    require 'csv'
-  
     attr_reader :file
   
     belongs_to :group

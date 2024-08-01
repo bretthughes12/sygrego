@@ -26,10 +26,10 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download participant data" do
-    get gc_participants_url(format: :csv)
+    get gc_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should search participants" do
@@ -82,10 +82,10 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download sports plan" do
-    get sports_plan_gc_participants_url(format: :csv)
+    get sports_plan_gc_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should list camping preferences" do
@@ -95,10 +95,10 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download camping preferences" do
-    get camping_preferences_gc_participants_url(format: :csv)
+    get camping_preferences_gc_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should list sport notes" do
@@ -108,10 +108,10 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download sport notes" do
-    get sport_notes_gc_participants_url(format: :csv)
+    get sport_notes_gc_participants_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show participant" do

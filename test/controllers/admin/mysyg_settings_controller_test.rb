@@ -27,10 +27,10 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download mysyg settings data" do
-    get admin_mysyg_settings_url(format: :csv)
+    get admin_mysyg_settings_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show mysyg setting" do
@@ -91,7 +91,7 @@ class Admin::MysygSettingsControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import mysyg settings when the file is not csv" do
+  test "should not import mysyg settings when the file is not excel" do
     group = FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('not_csv.txt','application/text')
 

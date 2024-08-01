@@ -24,10 +24,10 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download event detail data" do
-    get admin_event_details_url(format: :csv)
+    get admin_event_details_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should list group uploads" do

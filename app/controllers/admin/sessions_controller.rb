@@ -1,5 +1,4 @@
 class Admin::SessionsController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::SessionsController < AdminController
   
       respond_to do |format|
         format.html # index.html.erb
-        format.csv  { render_csv "sport_session" }
         format.xlsx { render xlsx: "index", filename: "sessions.xlsx" }
       end
     end

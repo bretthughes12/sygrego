@@ -41,8 +41,6 @@ class Grade < ApplicationRecord
     include Comparable
     include Auditable
 
-    require 'csv'
-  
     attr_reader :file
 
     has_many :sport_entries, dependent: :destroy
@@ -364,75 +362,6 @@ class Grade < ApplicationRecord
         else
             (entry_limit / total_courts_available).ceil
         end
-    end
-
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-  
-        CSV.foreach(file.path, headers: true) do |fields|
-            limit = fields[14].to_i == 0 ? nil : fields[14].to_i
-            start_limit = fields[15].to_i == 0 ? nil : fields[15].to_i
-            sport = Sport.where(name: fields[1]).first
-
-            grade = Grade.find_by_name(fields[2].to_s)
-            if grade
-                grade.database_rowid          = fields[0].to_i
-                grade.sport                   = sport
-                grade.name                    = fields[2]
-                grade.active                  = true
-                grade.grade_type              = fields[4]
-                grade.status                  = fields[5]
-                grade.max_age                 = fields[6].to_i
-                grade.min_age                 = fields[7].to_i
-                grade.gender_type             = fields[8]
-                grade.max_participants        = fields[9].to_i
-                grade.min_participants        = fields[10].to_i
-                grade.min_males               = fields[11].to_i
-                grade.min_females             = fields[12].to_i
-                grade.team_size               = fields[13].to_i
-                grade.entry_limit             = limit
-                grade.starting_entry_limit    = start_limit
-                grade.updated_by = user.id
- 
-                if grade.save
-                    updates += 1
-                else
-                    errors += 1
-                    error_list << grade
-                end
-            else
-                grade = Grade.create(
-                   database_rowid:          fields[0],
-                   sport:                   sport,
-                   name:                    fields[2],
-                   active:                  true,
-                   grade_type:              fields[4],
-                   status:                  fields[5],
-                   max_age:                 fields[6].to_i,
-                   min_age:                 fields[7].to_i,
-                   gender_type:             fields[8],
-                   max_participants:        fields[9].to_i,
-                   min_participants:        fields[10].to_i,
-                   min_males:               fields[11].to_i,
-                   min_females:             fields[12].to_i,
-                   team_size:               fields[13].to_i,
-                   entry_limit:             limit,
-                   starting_entry_limit:    start_limit,
-                   updated_by:              user.id)
-
-                if grade.errors.empty?
-                    creates += 1
-                else
-                    errors += 1
-                    error_list << grade
-                end
-            end
-        end
-  
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
     def self.import_excel(file, user)

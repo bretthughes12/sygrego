@@ -1,5 +1,4 @@
 class Admin::VenuesController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -10,7 +9,6 @@ class Admin::VenuesController < AdminController
   
       respond_to do |format|
         format.html {  }
-        format.csv  { render_csv "sport_venue" }
         format.xlsx { render xlsx: "index", filename: "venues.xlsx" }
       end
     end

@@ -53,8 +53,6 @@ class Group < ApplicationRecord
     include Auditable
     include Searchable
 
-    require 'csv'
-  
     attr_reader :file
 
     has_many :participants
@@ -634,72 +632,6 @@ class Group < ApplicationRecord
   
         team_number += 1
       end
-    end
-  
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-  
-        CSV.foreach(file.path, headers: true) do |fields|
-            group = Group.find_by_abbr(fields[1].to_s)
-            if group
-                group.database_rowid          = fields[0].to_i
-                group.name                    = fields[2]
-                group.short_name              = fields[3]
-                group.coming                  = fields[4]
-                group.status                  = fields[5]
-                group.new_group               = fields[6]
-                group.last_year               = fields[7]
-                group.admin_use               = fields[8]
-                group.trading_name            = fields[9]  
-                group.address                 = fields[10]
-                group.suburb                  = fields[11]
-                group.postcode                = fields[12].to_i
-                group.phone_number            = fields[13]
-                group.email                   = fields[14]
-                group.website                 = fields[15]
-                group.denomination            = fields[16]
-                group.updated_by = user.id
- 
-                if group.save
-                    updates += 1
-                else
-                    errors += 1
-                    error_list << group
-                end
-            else
-                group = Group.create(
-                   database_rowid:          fields[0],
-                   abbr:                    fields[1],
-                   name:                    fields[2],
-                   short_name:              fields[3],
-                   coming:                  fields[4],
-                   status:                  fields[5],
-                   new_group:               fields[6],
-                   last_year:               fields[7],
-                   admin_use:               fields[8],
-                   trading_name:            fields[9],
-                   address:                 fields[10],
-                   suburb:                  fields[11],
-                   postcode:                fields[12].to_i,
-                   phone_number:            fields[13],
-                   email:                   fields[14],
-                   website:                 fields[15],
-                   denomination:            fields[16],
-                   updated_by:              user.id)
-
-                if group.errors.empty?
-                    creates += 1
-                else
-                    errors += 1
-                    error_list << group
-                end
-            end
-        end
-  
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
   
     def self.import_excel(file, user)

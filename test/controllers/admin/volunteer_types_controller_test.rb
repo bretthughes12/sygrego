@@ -18,10 +18,10 @@ class Admin::VolunteerTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download volunteer_type data" do
-    get admin_volunteer_types_url(format: :csv)
+    get admin_volunteer_types_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show volunteer_type" do
@@ -106,7 +106,7 @@ class Admin::VolunteerTypesControllerTest < ActionDispatch::IntegrationTest
     assert_match /upload complete/, flash[:notice]
   end
 
-  test "should not import volunteer_types when the file is not csv" do
+  test "should not import volunteer_types when the file is not excel" do
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('VolunteerType.count') do

@@ -19,10 +19,10 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download volunteer data" do
-    get admin_volunteers_url(format: :csv)
+    get admin_volunteers_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should list saturday sport coordinators" do
@@ -44,10 +44,10 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should download sport coordinator notes" do
-    get coord_notes_admin_volunteers_url(format: :csv)
+    get coord_notes_admin_volunteers_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should list all sport volunteers" do
@@ -69,10 +69,10 @@ class Admin::VolunteersControllerTest < ActionDispatch::IntegrationTest
     sun = FactoryBot.create(:session, :sunday)
     volunteer = FactoryBot.create(:volunteer, volunteer_type: @type, session: sun)
 
-    get sport_volunteers_admin_volunteers_url(format: :csv)
+    get sport_volunteers_admin_volunteers_url(format: :xlsx)
 
     assert_response :success
-    assert_match %r{text\/csv}, @response.content_type
+    assert_match %r{application\/vnd.openxmlformats-officedocument.spreadsheetml.sheet}, @response.content_type
   end
 
   test "should show volunteer" do

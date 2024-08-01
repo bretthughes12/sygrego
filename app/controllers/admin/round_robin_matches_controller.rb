@@ -20,7 +20,6 @@ class Admin::RoundRobinMatchesController < AdminController
     @round_robin_matches = RoundRobinMatch.order(:section_id, :match).load
 
     respond_to do |format|
-      format.csv  { render_csv "matches" }
       format.xlsx { render xlsx: "matches", filename: "matches.xlsx" }
     end
   end

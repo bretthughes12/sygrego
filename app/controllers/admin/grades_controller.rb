@@ -1,5 +1,4 @@
 class Admin::GradesController < AdminController
-    require 'csv'
 
     load_and_authorize_resource except: [:index]
     before_action :authenticate_user!

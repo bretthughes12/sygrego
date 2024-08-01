@@ -38,7 +38,6 @@
 #
 
 class MysygSetting < ApplicationRecord
-    require 'csv'
     require 'roo'
   
     attr_reader :file
@@ -92,46 +91,6 @@ class MysygSetting < ApplicationRecord
     def update_name!(name)
         self.mysyg_name = name.downcase.gsub(/[\[\] ,\.\/\']/,'')
         self.save
-    end
-
-    def self.import(file, user)
-        creates = 0
-        updates = 0
-        errors = 0
-        error_list = []
-    
-        CSV.foreach(file.path, headers: true) do |fields|
-            group = Group.find_by_abbr(fields[1].to_s)
-
-            if group
-                mysyg_setting = group.mysyg_setting
-                if mysyg_setting
-                    mysyg_setting.mysyg_name                 = group.short_name.downcase
-                    mysyg_setting.mysyg_enabled              = fields[2]
-                    mysyg_setting.mysyg_open                 = fields[3]
-                    mysyg_setting.participant_instructions   = fields[4]
-                    mysyg_setting.extra_fee_total            = fields[5]
-                    mysyg_setting.extra_fee_per_day          = fields[6]
-                    mysyg_setting.show_sports_in_mysyg       = fields[7]
-                    mysyg_setting.show_volunteers_in_mysyg   = fields[8]
-                    mysyg_setting.show_finance_in_mysyg      = fields[9]  
-                    mysyg_setting.show_group_extras_in_mysyg = fields[10]
-                    mysyg_setting.approve_option             = fields[11]
-                    mysyg_setting.team_sport_view_strategy   = fields[12]
-                    mysyg_setting.indiv_sport_view_strategy  = fields[13]
-                    mysyg_setting.mysyg_code                 = fields[14]
-        
-                    if mysyg_setting.save
-                        updates += 1
-                    else
-                        errors += 1
-                        error_list << mysyg_setting
-                    end
-                end
-            end
-        end
-    
-        { creates: creates, updates: updates, errors: errors, error_list: error_list }
     end
 
     def self.import_excel(file, user)

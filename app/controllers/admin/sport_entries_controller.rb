@@ -1,5 +1,4 @@
 class Admin::SportEntriesController < AdminController
-    require 'csv'
 
     load_and_authorize_resource
     before_action :authenticate_user!
@@ -11,7 +10,6 @@ class Admin::SportEntriesController < AdminController
   
       respond_to do |format|
         format.html { @sport_entries = @sport_entries.paginate(page: params[:page], per_page: 100) }
-        format.csv  { render_csv "sport_entries", "sport_entries" }
         format.xlsx { render xlsx: "index", filename: "sport_entries.xlsx" }
       end
     end
