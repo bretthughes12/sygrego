@@ -75,6 +75,14 @@ class SportPreference < ApplicationRecord
     prefs
   end
 
+  def self.retain_from_signup(params)
+    prefs = []
+    prefs = params.collect do |p|
+      SignupSportPreference.new(p)
+    end
+    prefs
+  end
+
   def self.store(participant_id, grade_id, preference)
     pref = SportPreference.find_by_participant_id_and_grade_id(participant_id, grade_id) || SportPreference.new(participant_id: participant_id, grade_id: grade_id)
 
@@ -83,19 +91,10 @@ class SportPreference < ApplicationRecord
   end
 
   def self.create_for_participant(participant, params)
-    pp participant 
     params.each do |param|
       unless param[:preference] == ""
-#        pp param
         pref = SportPreference.new(participant_id: participant.id, grade_id: param[:grade_id].to_i, preference: param[:preference].to_i) 
-        if pref.save
-          puts 'Created SP'
-          pp pref
-        else
-          puts 'Save failed'
-          pp pref
-          pp pref.errors
-        end
+        pref.save
       end
     end
   end
