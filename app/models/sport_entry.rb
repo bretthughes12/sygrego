@@ -107,7 +107,7 @@ class SportEntry < ApplicationRecord
   end
 
   def cached_participants
-    @participants ||= participants
+    @participants ||= participants.order(:surname, :first_name)
   end
 
   def name

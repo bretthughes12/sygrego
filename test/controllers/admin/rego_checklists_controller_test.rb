@@ -42,6 +42,12 @@ class Admin::RegoChecklistsControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
+  test "should get site_checks" do
+    get site_checks_admin_rego_checklists_url
+
+    assert_response :success
+  end
+
   test "should get edit" do
     get edit_admin_rego_checklist_url(@rego_checklist)
 
@@ -62,7 +68,7 @@ class Admin::RegoChecklistsControllerTest < ActionDispatch::IntegrationTest
     patch admin_rego_checklist_url(@rego_checklist), params: { rego_checklist: { registered: true } }
 
     assert_redirected_to admin_rego_checklists_path
-    assert_match /successfully updated/, flash[:notice]
+    assert_match 'successfully updated', flash[:notice]
 
     # Reload association to fetch updated data and assert that title is updated.
     @rego_checklist.reload
