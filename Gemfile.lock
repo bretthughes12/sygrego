@@ -138,6 +138,7 @@ GEM
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.2)
     daemons (1.4.1)
     date (3.4.1)
     delayed_job (4.1.13)
@@ -220,7 +221,6 @@ GEM
     net-protocol (0.2.2)
       timeout
     net-smtp (0.5.0)
-      net-protocol
     newrelic_rpm (9.16.1)
     nio4r (2.7.4)
     nokogiri (1.18.1-x86_64-linux-gnu)
@@ -397,6 +397,7 @@ DEPENDENCIES
   caxlsx
   caxlsx_rails
   chartkick
+  csv
   daemons
   delayed_job_active_record
   devise
@@ -430,7 +431,7 @@ DEPENDENCIES
   will_paginate-bootstrap-style
 
 RUBY VERSION
-   ruby 3.3.3p89
+   ruby 3.4.1p0
 
 BUNDLED WITH
    2.3.26

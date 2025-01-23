@@ -724,7 +724,7 @@ class Participant < ApplicationRecord
 
           if participant.save
             name = row["Voucher"].nil? ? "" : row["Voucher"].strip
-            name.upcase!
+            name.upcase! unless name == ""
             voucher = Voucher.find_by_name(name)
       
             if voucher && voucher.valid_for?(participant)
@@ -793,7 +793,7 @@ class Participant < ApplicationRecord
 
           if participant.errors.empty?
             name = row["Voucher"].nil? ? "" : row["Voucher"].strip
-            name.upcase!
+            name.upcase! unless name == ""
             voucher = Voucher.find_by_name(name)
 
             if voucher && voucher.valid_for?(participant)
