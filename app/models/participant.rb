@@ -811,9 +811,9 @@ class Participant < ApplicationRecord
     end
 
     { creates: creates, updates: updates, errors: errors, error_list: error_list }
-end
+  end
 
-def self.import_gc(file, group, user)
+  def self.import_gc(file, group, user)
     creates = 0
     updates = 0
     errors = 0
