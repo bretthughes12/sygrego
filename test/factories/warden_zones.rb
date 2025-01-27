@@ -2,12 +2,13 @@
 #
 # Table name: warden_zones
 #
-#  id          :bigint           not null, primary key
-#  warden_info :text
+#  id          :integer          not null, primary key
 #  zone        :integer
+#  warden_info :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+
 FactoryBot.define do
   factory :warden_zone do
     zone { 1 }

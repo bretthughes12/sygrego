@@ -47,7 +47,7 @@ class User < ApplicationRecord
   scope :stale, -> { where(status: "Stale") }
   scope :not_stale, -> { where("status != 'Stale'") }
 
-  encrypts :wwcc_number
+#  encrypts :wwcc_number
 
   STATUS = ['Stale',
     'Verified',

@@ -2,22 +2,23 @@
 #
 # Table name: ballot_results
 #
-#  id                     :bigint           not null, primary key
-#  entry_limit            :integer
-#  factor                 :integer
+#  id                     :integer          not null, primary key
+#  sport_name             :string(20)       not null
 #  grade_name             :string(50)       not null
+#  section_name           :string(50)
+#  preferred_section_name :string(50)
+#  entry_limit            :integer
+#  over_limit             :boolean
+#  one_entry_per_group    :boolean
 #  group_name             :string(50)       not null
 #  new_group              :boolean
-#  one_entry_per_group    :boolean
-#  over_limit             :boolean
-#  preferred_section_name :string(50)
-#  section_name           :string(50)
 #  sport_entry_name       :string
 #  sport_entry_status     :string(20)       not null
-#  sport_name             :string(20)       not null
+#  factor                 :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #
+
 require "test_helper"
 
 class BallotResultTest < ActiveSupport::TestCase

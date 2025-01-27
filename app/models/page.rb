@@ -2,10 +2,10 @@
 #
 # Table name: pages
 #
-#  id         :bigint           not null, primary key
-#  admin_use  :boolean
+#  id         :integer          not null, primary key
 #  name       :string(50)
 #  permalink  :string(20)
+#  admin_use  :boolean
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

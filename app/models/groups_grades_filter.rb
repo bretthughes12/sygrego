@@ -2,21 +2,16 @@
 #
 # Table name: groups_grades_filters
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
+#  grade_id   :integer          not null
+#  group_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  grade_id   :bigint           not null
-#  group_id   :bigint           not null
 #
 # Indexes
 #
 #  index_groups_grades_filters_on_grade_id  (grade_id)
 #  index_groups_grades_filters_on_group_id  (group_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (grade_id => grades.id)
-#  fk_rails_...  (group_id => groups.id)
 #
 
 # This model represents a Blacklist of Sport Grades that groups

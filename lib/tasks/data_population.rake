@@ -118,6 +118,37 @@ namespace :syg do
       puts "Options updated - #{count}"
     end
 
+    desc 'Blank out encrypted fields in users'
+    task blank_encrypted_users_fields: ['db:migrate'] do |t|
+      puts 'Setting WWCC number to nil for Users...'
+
+      count = 0
+
+      User.all.each do |u|
+        u.wwcc_number = nil
+        u.save
+        count += 1
+      end
+
+      puts "Users updated - #{count}"
+    end
+
+    desc 'Blank out encrypted fields in participants'
+    task blank_encrypted_participants_fields: ['db:migrate'] do |t|
+      puts 'Setting WWCC number and Medicare number to nil for Participants...'
+
+      count = 0
+
+      Participant.all.each do |p|
+        p.wwcc_number = nil
+        p.medicare_number = nil
+        p.save
+        count += 1
+      end
+
+      puts "Participants updated - #{count}"
+    end
+
     desc 'Populate draw_type in sections from sports'
     task populate_section_draw_types: ['db:migrate'] do |t|
       puts 'Updating draw types...'
