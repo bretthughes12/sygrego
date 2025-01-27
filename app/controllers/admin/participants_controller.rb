@@ -91,7 +91,7 @@ class Admin::ParticipantsController < AdminController
 
     respond_to do |format|
       format.xlsx do
-        render xlsx: "ticket_download", filename: "syg_ticket_updates_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
+        render xlsx: "ticket_download", template: "admin/participants/ticket_download", filename: "syg_ticket_updates_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
         @participants.update_all(dirty: false)
       end
     end
@@ -104,7 +104,7 @@ class Admin::ParticipantsController < AdminController
 
     respond_to do |format|
       format.xlsx do
-        render xlsx: "ticket_download", filename: "syg_ticket_extract_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
+        render xlsx: "ticket_download", template: "admin/participants/ticket_download", filename: "syg_ticket_extract_#{Time.now.in_time_zone.strftime('%Y%m%d')}.xlsx"
       end
     end
   end

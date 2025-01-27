@@ -20,7 +20,7 @@ class Admin::GroupsController < AdminController
       respond_to do |format|
         format.html # approvals.html.erb
         format.xlsx do
-          render xlsx: "submissions", filename: "Reference Checklist.xlsx"
+          render xlsx: "submissions", template: "admin/groups/submissions", filename: "Reference Checklist.xlsx"
         end
       end
     end
@@ -31,7 +31,7 @@ class Admin::GroupsController < AdminController
   
       respond_to do |format|
         format.html # approvals.html.erb
-        format.xlsx { render xlsx: "participant_audit", filename: "participant_audit.xlsx" }
+        format.xlsx { render xlsx: "participant_audit", template: "admin/groups/participant_audit", filename: "participant_audit.xlsx" }
       end
     end
 
@@ -41,7 +41,7 @@ class Admin::GroupsController < AdminController
 
       respond_to do |format|
         format.html # approvals.html.erb
-        format.xlsx { render xlsx: "group_summary", filename: "group_summary.xlsx" }
+        format.xlsx { render xlsx: "group_summary", template: "admin/groups/group_summary", filename: "group_summary.xlsx" }
       end
     end
 

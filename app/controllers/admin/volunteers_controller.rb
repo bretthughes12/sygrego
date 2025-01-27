@@ -9,7 +9,7 @@ class Admin::VolunteersController < AdminController
   
       respond_to do |format|
         format.html {  }
-        format.xlsx { render xlsx: "volunteers" }
+        format.xlsx { render xlsx: "volunteers", template: "admin/volunteers/volunteers" }
       end
     end
 
@@ -36,7 +36,7 @@ class Admin::VolunteersController < AdminController
       @volunteers = Volunteer.sport_coords.order(:description).all
   
       respond_to do |format|
-        format.xlsx { render xlsx: "sports_notes" }
+        format.xlsx { render xlsx: "sports_notes", template: "admin/volunteers/sports_notes" }
       end
     end
 
@@ -46,7 +46,7 @@ class Admin::VolunteersController < AdminController
   
       respond_to do |format|
         format.html 
-        format.xlsx { render xlsx: "sports_volunteers" }
+        format.xlsx { render xlsx: "sports_volunteers", template: "admin/volunteers/sports_volunteers" }
       end
     end
 

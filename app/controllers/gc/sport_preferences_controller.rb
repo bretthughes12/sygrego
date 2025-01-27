@@ -33,7 +33,7 @@ class Gc::SportPreferencesController < GcController
         end
         format.xlsx do 
           @sport_preferences = SportPreference.locate_for_group(@group, {entered: true, in_sport: true})
-          render xlsx: "sport_prefs", filename: "sport_preferences.xlsx" 
+          render xlsx: "sport_prefs", template: "gc/sport_preferences/sport_prefs", filename: "sport_preferences.xlsx" 
         end
       end
     end
