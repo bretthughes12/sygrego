@@ -244,7 +244,7 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
-    rack-mini-profiler (2.3.4)
+    rack-mini-profiler (3.3.1)
       rack (>= 1.2.0)
     rack-proxy (0.7.7)
       rack
@@ -413,7 +413,7 @@ DEPENDENCIES
   pg (= 1.4.1)
   prawn-rails
   puma (>= 5.0)
-  rack-mini-profiler (~> 2.0)
+  rack-mini-profiler
   rails (~> 8.0.0)
   roo (~> 2.10.0)
   sass-rails (>= 6)
