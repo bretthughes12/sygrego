@@ -8,7 +8,7 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # good_sports.html.erb
-      format.xlsx { render xlsx: "awards", filename: "good_sports.xlsx" }
+      format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "good_sports.xlsx" }
     end
   end
   
@@ -18,7 +18,7 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # spirit.html.erb
-      format.xlsx { render xlsx: "awards", filename: "spirit.xlsx" }
+      format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "spirit.xlsx" }
     end
   end
   
@@ -28,7 +28,7 @@ class Admin::AwardsController < AdminController
 
     respond_to do |format|
       format.html # volunteer_awards.html.erb
-      format.xlsx { render xlsx: "awards", filename: "volunteer_awards.xlsx" }
+      format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "volunteer_awards.xlsx" }
     end
   end
   

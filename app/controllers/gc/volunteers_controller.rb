@@ -9,7 +9,7 @@ class Gc::VolunteersController < GcController
         format.html do
           render layout: @current_role.name
         end
-        format.xlsx { render xlsx: "volunteers" }
+        format.xlsx { render xlsx: "volunteers", template: "gc/volunteers/volunteers" }
       end
     end
 

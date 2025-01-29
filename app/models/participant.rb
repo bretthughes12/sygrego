@@ -133,7 +133,7 @@ class Participant < ApplicationRecord
     delegate :group_extras,
              :gc_email, to: :group
 
-    encrypts :wwcc_number, :medicare_number
+    # encrypts :wwcc_number, :medicare_number
 
     SEX = [['Male', 'M'],
            ['Female', 'F'],

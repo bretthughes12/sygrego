@@ -138,15 +138,25 @@ namespace :syg do
       puts 'Setting WWCC number and Medicare number to nil for Participants...'
 
       count = 0
+      errors = 0
 
       Participant.all.each do |p|
-        p.wwcc_number = nil
+        if p.age > 17
+          p.wwcc_number = nil # 'TBC'
+        else
+          p.wwcc_number = nil
+        end
         p.medicare_number = nil
-        p.save
-        count += 1
+        if p.save(validate: false)
+          count += 1
+        else
+          errors += 1
+          pp p.errors
+        end
       end
 
       puts "Participants updated - #{count}"
+      puts "Participants not updated - #{errors}"
     end
 
     desc 'Populate draw_type in sections from sports'

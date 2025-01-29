@@ -35,7 +35,7 @@ class Admin::ParticipantsController < AdminController
 
     respond_to do |format|
       format.html { @participants = @participants.paginate(page: params[:page], per_page: 100) }
-      format.xlsx { render xlsx: "wwccs" }
+      format.xlsx { render xlsx: "wwccs", template: "admin/participants/wwccs" }
     end
   end
 
