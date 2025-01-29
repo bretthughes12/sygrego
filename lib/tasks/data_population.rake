@@ -142,7 +142,7 @@ namespace :syg do
 
       Participant.all.each do |p|
         if p.age > 17
-          p.wwcc_number = nil # 'TBC'
+          p.wwcc_number = 'TBC'
         else
           p.wwcc_number = nil
         end
