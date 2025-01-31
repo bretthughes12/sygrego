@@ -34,7 +34,21 @@ class GroupSignupsController < ApplicationController
           @group.mysyg_setting.mysyg_enabled = @settings.mysyg_default_enabled
           @group.mysyg_setting.mysyg_open = @settings.mysyg_default_open
           @group.mysyg_setting.save
-  
+
+          payments = @group.payments.order(:paid_at).load
+          pdf = TaxInvoice.new.add_data(@group, payments, "1").to_pdf
+          file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
+          file.binmode
+          file.write(pdf)
+          file.rewind
+          file.close
+    
+          @group.invoice1_file.purge if @group.invoice1_file.attached?
+          @group.invoice1_file.attach(io: File.open(file.path), 
+            filename: "Invoice1.pdf",
+            content_type: 'application/pdf',
+            identify: false)
+
           flash[:notice] = "Thank you for registering your group. You are signed in as #{@church_rep.name}. Please set your password."
           bypass_sign_in @church_rep
           session["current_role"] = "church_rep"
