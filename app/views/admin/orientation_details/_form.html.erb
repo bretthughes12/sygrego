@@ -1,0 +1,12 @@
+<%= simple_form_for(@orientation_detail, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :name %>
+	<%= f.input :venue_name %>
+	<%= f.input :venue_address, label: "Address" %>
+	<%= f.input :event_date_time, label: "Date and Time" %>
+
+	<br/>
+
+	<%= f.button :submit %>
+<% end %>	

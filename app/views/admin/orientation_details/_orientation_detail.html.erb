@@ -1,0 +1,9 @@
+<tr valign="top">
+	<td> 
+		<%= link_to h(orientation_detail.name), edit_admin_orientation_detail_path(orientation_detail)  %></span></br>
+	</td>
+
+	<td> 
+		<%= h(orientation_detail.event_date_time.in_time_zone.strftime("%d/%m/%Y %I:%M %p")) %></br>
+	</td>
+</tr>

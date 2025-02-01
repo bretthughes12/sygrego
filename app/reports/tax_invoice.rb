@@ -122,4 +122,4 @@ class TaxInvoice < Prawn::Document
         text "Reference: SYG#{@settings.this_year.to_s + @group.abbr + @suffix}"
       end
     end
-  end
+end

@@ -245,6 +245,7 @@ Rails.application.routes.draw do
         get :search
       end
     end
+    resources :orientation_details
     resources :rego_checklists, only: [:index, :show, :edit, :update] do
       collection do
         get :search

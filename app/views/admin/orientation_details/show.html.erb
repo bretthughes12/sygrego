@@ -1,0 +1,12 @@
+<% title "Orientation details: #{@orientation_detail.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @orientation_detail %>
+
+<%= link_to "Back", admin_orientation_details_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_admin_orientation_detail_path(@orientation_detail),
+                  class: primary_button_class,
+                  role: "button" %>

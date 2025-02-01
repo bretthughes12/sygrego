@@ -1,0 +1,13 @@
+<% title "New orientation detail" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_orientation_details_path(@orientation_detail), 
+                              method: :post } %>
+
+<br/>
+
+<%= link_to "Back", admin_orientation_details_path,
+                  class: primary_button_class,
+                  role: "button" %>

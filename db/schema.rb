@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_07_31_102307) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_01_085129) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -282,6 +282,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_07_31_102307) do
     t.boolean "require_medical", default: false
     t.string "medicare_option", limit: 10, default: "Show"
     t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
+  end
+
+  create_table "orientation_details", force: :cascade do |t|
+    t.string "name", limit: 20
+    t.string "venue_name"
+    t.string "venue_address"
+    t.datetime "event_date_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pages", force: :cascade do |t|
