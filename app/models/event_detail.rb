@@ -40,6 +40,7 @@ class EventDetail < ApplicationRecord
 
     belongs_to :group
     belongs_to :warden_zone, optional: true
+    belongs_to :orientation_detail, optional: true
 
     has_one_attached :food_cert
     has_one_attached :covid_plan

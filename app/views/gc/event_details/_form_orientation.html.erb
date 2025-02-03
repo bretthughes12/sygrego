@@ -1,0 +1,9 @@
+<%= simple_form_for(@event_detail, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+	<%= f.input :orientation_detail_id, as: :select, collection: @orientations, include_blank: true, label: "GC Orientation", label_method: :description %>
+
+	<br/>
+
+	<%= f.button :submit, "Update" %>
+<% end %>	

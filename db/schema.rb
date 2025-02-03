@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_01_085129) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_03_092459) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -125,7 +125,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_01_085129) do
     t.datetime "updated_at", null: false
     t.bigint "warden_zone_id"
     t.string "orientation_details", limit: 100
+    t.bigint "orientation_detail_id"
     t.index ["group_id"], name: "index_event_details_on_group_id"
+    t.index ["orientation_detail_id"], name: "index_event_details_on_orientation_detail_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -804,6 +806,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_01_085129) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "event_details", "groups"
+  add_foreign_key "event_details", "orientation_details"
   add_foreign_key "grades", "sports"
   add_foreign_key "group_extras", "groups"
   add_foreign_key "group_fee_categories", "groups"

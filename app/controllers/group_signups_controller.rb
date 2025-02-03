@@ -60,5 +60,5 @@ class GroupSignupsController < ApplicationController
         end
       end
     end
-  end
+end
   

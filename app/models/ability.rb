@@ -141,7 +141,9 @@ class Ability
            :purge_covid_plan,
            :new_insurance,
            :update_insurance,
-           :purge_insurance], EventDetail do |ev|
+           :purge_insurance,
+           :edit_orientation,
+           :update_orientation], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
@@ -253,7 +255,9 @@ class Ability
            :purge_covid_plan,
            :new_insurance,
            :update_insurance,
-           :purge_insurance], EventDetail do |ev|
+           :purge_insurance,
+           :edit_orientation,
+           :update_orientation], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page

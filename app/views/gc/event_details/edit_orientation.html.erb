@@ -1,0 +1,7 @@
+<% title "Orientation Details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form_orientation", locals: { 
+                              url: update_orientation_gc_event_detail_path(@event_detail), 
+                              method: :patch } %>

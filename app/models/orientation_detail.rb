@@ -14,6 +14,10 @@
 class OrientationDetail < ApplicationRecord
   has_many :event_details
 
-  validates :name,                   presence: true,
-  length: { maximum: 20 }
+  validates :name,                  presence: true,
+                                    length: { maximum: 20 }
+
+  def description
+    "#{name} - #{venue_name} - #{event_date_time.strftime("%d/%m/%Y %I:%M %p")}"
+  end
 end

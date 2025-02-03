@@ -512,9 +512,11 @@ Rails.application.routes.draw do
         get :new_food_certificate
         get :new_covid_plan
         get :new_insurance
+        get :edit_orientation
         patch :update_food_certificate
         patch :update_covid_plan
         patch :update_insurance
+        patch :update_orientation
         patch :purge_food_certificate
         patch :purge_covid_plan
         patch :purge_insurance

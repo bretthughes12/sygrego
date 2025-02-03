@@ -6,6 +6,12 @@ class Gc::EventDetailsController < GcController
       render layout: @current_role.name
     end
   
+    # GET /gc/event_details/1/edit_orientation
+    def edit_orientation
+      @orientations = OrientationDetail.all.order(:name).load
+      render layout: @current_role.name
+    end
+  
     # GET /gc/event_details/1/new_food_certificate
     def new_food_certificate
       render layout: @current_role.name
@@ -31,6 +37,23 @@ class Gc::EventDetailsController < GcController
           format.html { redirect_to home_gc_info_path }
         else
           format.html { render action: "edit", layout: @current_role.name }
+        end
+      end
+    end
+  
+    # PATCH /gc/event_details/1/udpate_orientation
+    def update_orientation
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_orientation_params)
+          flash[:notice] = 'Orientation was successfully updated.'
+          format.html { redirect_to home_gc_info_path }
+        else
+          format.html do
+            @orientations = OrientationDetail.all.order(:name).load
+            render action: "edit_orientation", layout: @current_role.name
+          end
         end
       end
     end
@@ -127,6 +150,12 @@ class Gc::EventDetailsController < GcController
                                     :service_pref_sun,
                                     :estimated_numbers,
                                     :number_of_vehicles
+                                )
+    end
+  
+    def event_detail_orientation_params
+      params.require(:event_detail).permit(
+                                    :orientation_detail_id
                                 )
     end
   
