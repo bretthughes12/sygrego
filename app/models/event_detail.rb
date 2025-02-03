@@ -127,6 +127,10 @@ class EventDetail < ApplicationRecord
         groups
     end
 
+    def orientation_name
+        orientation_detail.nil? ? '' : orientation_detail.name
+    end
+    
     def warden_zone_name
         warden_zone.nil? ? '' : warden_zone.name
     end
