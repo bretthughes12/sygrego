@@ -159,6 +159,7 @@
 
 	<%= f.input :medicare_number %>
 	<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
+	<%= f.input :medical_injuries, label: "Current or Pre-existing Injuries", hint: "Could you please confirm whether you have any pre-existing or current injuries? If so, kindly clarify if you have obtained the necessary medical clearance that authorises your participation in the SYG's program. It is imperative that you answer these questions truthfully, as any untoward incident during the SYG's event that results in a claim being made will be subject to investigation by your insurer. We are committed to ensuring the safety and well-being of all participants, and providing accurate information is crucial in upholding this commitment." %>
 	<%= f.input :medical_info, label: "Medical information" %>
 	<%= f.input :medications %>
 	<%= f.input :allergies %>

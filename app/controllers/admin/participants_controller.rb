@@ -422,6 +422,7 @@ private
       :phone_number,
       :medicare_number,
       :medicare_expiry,
+      :medical_injuries,
       :medical_info,
       :medications,
       :allergies,
