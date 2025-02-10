@@ -2,10 +2,10 @@
 #
 # Table name: timelines
 #
-#  id          :integer          not null, primary key
+#  id          :bigint           not null, primary key
+#  description :string(255)
 #  key_date    :date             not null
 #  name        :string(50)
-#  description :string(255)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

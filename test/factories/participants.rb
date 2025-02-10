@@ -39,6 +39,7 @@
 #  licence_type           :string(15)
 #  lock_version           :integer          default(0)
 #  medical_info           :string(255)
+#  medical_injuries       :text
 #  medicare_expiry        :date
 #  medicare_number        :string
 #  medications            :string(255)

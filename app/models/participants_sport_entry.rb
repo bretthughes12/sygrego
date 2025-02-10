@@ -2,8 +2,8 @@
 #
 # Table name: participants_sport_entries
 #
-#  participant_id :integer          not null
-#  sport_entry_id :integer          not null
+#  participant_id :bigint           not null
+#  sport_entry_id :bigint           not null
 #
 
 class ParticipantsSportEntry < ApplicationRecord

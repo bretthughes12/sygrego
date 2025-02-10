@@ -2,9 +2,9 @@
 #
 # Table name: warden_zones
 #
-#  id          :integer          not null, primary key
-#  zone        :integer
+#  id          :bigint           not null, primary key
 #  warden_info :text
+#  zone        :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

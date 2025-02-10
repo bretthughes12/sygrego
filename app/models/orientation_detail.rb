@@ -2,11 +2,11 @@
 #
 # Table name: orientation_details
 #
-#  id              :integer          not null, primary key
-#  name            :string(20)
-#  venue_name      :string
-#  venue_address   :string
+#  id              :bigint           not null, primary key
 #  event_date_time :datetime
+#  name            :string(20)
+#  venue_address   :string
+#  venue_name      :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
