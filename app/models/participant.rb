@@ -203,13 +203,11 @@ class Participant < ApplicationRecord
     validates :medications,            
         length: { maximum: 255 }
     validates :allergies,            
-        presence: true,
         length: { maximum: 255 }
     validates :years_attended,         
         numericality: { only_integer: true },
         allow_blank: true
     validates :dietary_requirements,   
-        presence: true,
         length: { maximum: 255 }
     validates :emergency_contact,      
         length: { maximum: 40 }

@@ -167,12 +167,9 @@ class ParticipantSignup
     validates :licence_type,           length: { maximum: 15 },
                                        inclusion: { in: Participant::LICENCE_TYPES }, 
                                        allow_blank: true
-    validates :address,                presence: true,
-                                       length: { maximum: 200 }
-    validates :suburb,                 presence: true,
-                                       length: { maximum: 40 }
-    validates :postcode,               presence: true,
-                                       numericality: { only_integer: true }
+    validates :address,                length: { maximum: 200 }
+    validates :suburb,                 length: { maximum: 40 }
+    validates :postcode,               numericality: { only_integer: true }
     validates :phone_number,           length: { maximum: 20 }
     validates :mobile_phone_number,    presence: true,
                                        length: { maximum: 20 }
@@ -183,10 +180,8 @@ class ParticipantSignup
     validates :camping_preferences,    length: { maximum: 100 }
     validates :years_attended,         numericality: { only_integer: true },
                                        allow_blank: true
-    validates :dietary_requirements,   presence: true,
-                                       length: { maximum: 255 }
-    validates :allergies,              presence: true,
-                                       length: { maximum: 255 }
+    validates :dietary_requirements,   length: { maximum: 255 }
+    validates :allergies,              length: { maximum: 255 }
     validates :emergency_contact,      length: { maximum: 40 }
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
