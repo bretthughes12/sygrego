@@ -138,7 +138,6 @@ FactoryBot.define do
       suburb              { nil }
       postcode            { nil }
       email               { nil }
-      phone_number        { nil }
       dietary_requirements  { nil }
       allergies           { nil }
     end

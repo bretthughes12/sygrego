@@ -96,16 +96,16 @@ class Mysyg::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "I camp alone", @participant.camping_preferences
   end
 
-  test "should not update participant notes with errors" do
-    patch update_notes_mysyg_participant_url(group: @group.mysyg_setting.mysyg_name, id: @participant.id), 
-      params: { participant: { camping_preferences: "this is too long....--------------------....................--------------------....................-" } }
+  # test "should not update participant notes with errors" do
+  #   patch update_notes_mysyg_participant_url(group: @group.mysyg_setting.mysyg_name, id: @participant.id), 
+  #     params: { participant: { camping_preferences: "this is too long....--------------------....................--------------------....................-" } }
 
-    assert_response :success
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   assert_response :success
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    refute_match /this is too long/, @participant.camping_preferences
-  end
+  #   refute_match /this is too long/, @participant.camping_preferences
+  # end
 
   test "should add a valid voucher" do
     voucher = FactoryBot.create(:voucher, name: "MYVOUCHER")

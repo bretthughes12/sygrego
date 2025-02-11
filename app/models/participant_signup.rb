@@ -30,7 +30,6 @@ class ParticipantSignup
                   :address,
                   :suburb,
                   :postcode,
-                  :phone_number,
                   :mobile_phone_number,
                   :email,
                   :years_attended,
@@ -47,12 +46,9 @@ class ParticipantSignup
                   :emergency_phone_number,
                   :emergency_email,
                   :driver,
-                  :driving_to_syg,
                   :licence_type,
                   :number_plate,
                   :driver_signature,
-                  :camping_preferences,
-                  :sport_notes,
                   :participant,
                   :user,
                   :group,
@@ -91,7 +87,6 @@ class ParticipantSignup
       :address,
       :suburb,
       :postcode,
-      :phone_number,
       :mobile_phone_number,
       :email,
       :years_attended,
@@ -108,12 +103,9 @@ class ParticipantSignup
       :emergency_phone_number,
       :emergency_email,
       :driver,
-      :driving_to_syg,
       :licence_type,
       :number_plate,
-      :driver_signature,
-      :camping_preferences,
-      :sport_notes
+      :driver_signature
     ].compact
   
     USER_ATTRIBUTES = {
@@ -121,7 +113,7 @@ class ParticipantSignup
       address: :address,
       suburb: :suburb,
       postcode: :postcode,
-      phone_number: :phone_number,
+      mobile_phone_number: :phone_number,
       user_email: :email
     }.freeze
   
@@ -170,14 +162,12 @@ class ParticipantSignup
     validates :address,                length: { maximum: 200 }
     validates :suburb,                 length: { maximum: 40 }
     validates :postcode,               numericality: { only_integer: true }
-    validates :phone_number,           length: { maximum: 20 }
     validates :mobile_phone_number,    presence: true,
                                        length: { maximum: 20 }
     validates :wwcc_number,            length: { maximum: 20 }
     validates :medicare_number,        length: { maximum: 50 }
     validates :medical_info,           length: { maximum: 255 }
     validates :medications,            length: { maximum: 255 }
-    validates :camping_preferences,    length: { maximum: 100 }
     validates :years_attended,         numericality: { only_integer: true },
                                        allow_blank: true
     validates :dietary_requirements,   length: { maximum: 255 }
