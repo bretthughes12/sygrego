@@ -13,7 +13,7 @@ wb.add_worksheet(name: "Sport Notes") do |sheet|
 	@participants.each do |participant|
 		sheet.add_row [
   		     participant.name,
-			 participant.sport_notes
+			 ""
 		   ],
 		style: row_border
 	end

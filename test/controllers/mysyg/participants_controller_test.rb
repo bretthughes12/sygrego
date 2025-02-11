@@ -83,18 +83,18 @@ class Mysyg::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update participant notes" do
-    patch update_notes_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name), 
-      params: { participant: { camping_preferences: "I camp alone" } }
+  # test "should update participant notes" do
+  #   patch update_notes_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name), 
+  #     params: { participant: { camping_preferences: "I camp alone" } }
 
-    assert_redirected_to home_mysyg_info_url(group: @participant.group.mysyg_setting.mysyg_name)
-    assert_match /successfully updated/, flash[:notice]
+  #   assert_redirected_to home_mysyg_info_url(group: @participant.group.mysyg_setting.mysyg_name)
+  #   assert_match /successfully updated/, flash[:notice]
 
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    assert_equal "I camp alone", @participant.camping_preferences
-  end
+  #   assert_equal "I camp alone", @participant.camping_preferences
+  # end
 
   # test "should not update participant notes with errors" do
   #   patch update_notes_mysyg_participant_url(group: @group.mysyg_setting.mysyg_name, id: @participant.id), 

@@ -332,18 +332,18 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "NAN", @participant.amount_paid
   end
 
-  test "should update camping preferences" do
-    patch update_camping_preferences_gc_participant_url(@participant), 
-      params: { participant: { camping_preferences: "Sleep on my own" } }
+  # test "should update camping preferences" do
+  #   patch update_camping_preferences_gc_participant_url(@participant), 
+  #     params: { participant: { camping_preferences: "Sleep on my own" } }
 
-    assert_redirected_to camping_preferences_gc_participants_path
-    assert_match /successfully updated/, flash[:notice]
+  #   assert_redirected_to camping_preferences_gc_participants_path
+  #   assert_match /successfully updated/, flash[:notice]
 
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    assert_equal "Sleep on my own", @participant.camping_preferences
-  end
+  #   assert_equal "Sleep on my own", @participant.camping_preferences
+  # end
 
   test "should not update camping preferences with errors" do
     Participant.any_instance.stubs(:update).returns(false)
@@ -358,18 +358,18 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "Invalid", @participant.camping_preferences
   end
 
-  test "should update sport notes" do
-    patch update_sport_notes_gc_participant_url(@participant), 
-      params: { participant: { sport_notes: "Must play basketball" } }
+  # test "should update sport notes" do
+  #   patch update_sport_notes_gc_participant_url(@participant), 
+  #     params: { participant: { sport_notes: "Must play basketball" } }
 
-    assert_redirected_to sport_notes_gc_participants_path
-    assert_match /successfully updated/, flash[:notice]
+  #   assert_redirected_to sport_notes_gc_participants_path
+  #   assert_match /successfully updated/, flash[:notice]
 
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    assert_equal "Must play basketball", @participant.sport_notes
-  end
+  #   assert_equal "Must play basketball", @participant.sport_notes
+  # end
 
   test "should not update sport notes with errors" do
     Participant.any_instance.stubs(:update).returns(false)

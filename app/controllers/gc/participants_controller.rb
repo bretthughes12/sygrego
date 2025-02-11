@@ -485,7 +485,6 @@ class Gc::ParticipantsController < GcController
         :address,
         :suburb,
         :postcode,
-        :phone_number,
         :medicare_number,
         :medicare_expiry,
         :medical_injuries,
@@ -506,7 +505,6 @@ class Gc::ParticipantsController < GcController
         :emergency_phone_number,
         :emergency_email,
         :amount_paid,
-        :camping_preferences,
         :wwcc_number
       )
     end
@@ -515,7 +513,6 @@ class Gc::ParticipantsController < GcController
       params.require(:participant).permit(
         :lock_version,
         :driver,
-        :driving_to_syg,
         :licence_type,
         :number_plate
       )
@@ -547,15 +544,13 @@ class Gc::ParticipantsController < GcController
   
     def participant_camping_preferences_params
       params.require(:participant).permit(
-        :lock_version,
-        :camping_preferences
+        :lock_version
       )
     end
   
     def participant_sport_notes_params
       params.require(:participant).permit(
-        :lock_version,
-        :sport_notes
+        :lock_version
       )
     end
   

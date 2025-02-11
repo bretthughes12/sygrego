@@ -137,7 +137,6 @@ class Mysyg::ParticipantsController < MysygController
         :address,
         :suburb,
         :postcode,
-        :phone_number,
         :medicare_number,
         :medicare_expiry,
         :medical_injuries,
@@ -165,7 +164,6 @@ class Mysyg::ParticipantsController < MysygController
       params.require(:participant).permit( 
         :lock_version,
         :driver,
-        :driving_to_syg,
         :licence_type,
         :number_plate,
         :driver_signature
@@ -174,9 +172,7 @@ class Mysyg::ParticipantsController < MysygController
     
     def participant_notes_params
       params.require(:participant).permit( 
-        :lock_version,
-        :camping_preferences,
-        :sport_notes
+        :lock_version
       )
     end
 end
