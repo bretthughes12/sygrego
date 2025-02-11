@@ -104,7 +104,7 @@ FactoryBot.define do
     suburb                {"Disneyland"}
     postcode              {"3333"}
     email                 {"blah@blah.com"}
-    phone_number          {"9555-5555"}
+    mobile_phone_number   {"0444-555-555"}
     dietary_requirements  {"None"}
     allergies             {"None"}
     wwcc_number           {"9876543-C"}

@@ -173,9 +173,9 @@ class ParticipantSignup
                                        length: { maximum: 40 }
     validates :postcode,               presence: true,
                                        numericality: { only_integer: true }
-    validates :phone_number,           presence: true,
+    validates :phone_number,           length: { maximum: 20 }
+    validates :mobile_phone_number,    presence: true,
                                        length: { maximum: 20 }
-    validates :mobile_phone_number,    length: { maximum: 20 }
     validates :wwcc_number,            length: { maximum: 20 }
     validates :medicare_number,        length: { maximum: 50 }
     validates :medical_info,           length: { maximum: 255 }
