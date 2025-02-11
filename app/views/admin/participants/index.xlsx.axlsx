@@ -9,14 +9,14 @@ date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "00
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
 dob_col = 6
-medicare_exp_col = 25
-driver_date_col = 39
+medicare_exp_col = 24
+driver_date_col = 38
 
 wb.add_worksheet(name: "Participants") do |sheet|
 	sheet.add_row ["RowID","Group","FirstName","Surname","Coming","Status","DOB","Age",
 	              "Gender","Type","Friday","Saturday","Sunday","Monday",
 				  "BookingNbr","RegistrationNbr","TransferToken","TransferEmail","Address", 
-				  "Suburb","Postcode","Phone","Mobile",
+				  "Suburb","Postcode","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","YearsAttended",
 				  "Spectator","Onsite","Helper","GC","SC","Guest",
 				  "Driver","NumberPlate","LicenceType","DriverSign","DriverDate",
@@ -47,7 +47,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
   		     participant.address,
   		     participant.suburb,
   		     participant.postcode,
-  		     participant.phone_number,
   		     participant.mobile_phone_number,
   		     participant.email,
   		     participant.medicare_number,
