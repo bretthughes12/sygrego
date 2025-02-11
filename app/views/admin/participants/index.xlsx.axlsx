@@ -21,7 +21,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 				  "Spectator","Onsite","Helper","GC","SC","Guest",
 				  "Driver","NumberPlate","LicenceType","DriverSign","DriverDate",
 				  "EarlyBird","DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
-				  "WWCC","Voucher","Allergies","EmergEmail","CampPrefs","SportNotes"], 
+				  "WWCC","Voucher","Allergies","EmergEmail","Injuries"], 
 		style: header_border
 
 	@participants.each do |participant|
@@ -75,8 +75,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.voucher_code,
 			 participant.allergies,
 			 participant.emergency_email,
-			 participant.camping_preferences,
-			 participant.sport_notes
+			 participant.medical_injuries
 		   ],
 		style: row_border
 	end

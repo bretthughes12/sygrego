@@ -719,8 +719,7 @@ class Participant < ApplicationRecord
           participant.emergency_phone_number  = row["EmergPhone"]
           participant.emergency_email         = row["EmergEmail"]
           participant.wwcc_number             = row["WWCC"]
-          participant.camping_preferences     = row["CampPrefs"]
-          participant.sport_notes             = row["SportNotes"]
+          participant.medical_injuries        = row["Injuries"]
           participant.updated_by = user.id
 
           if participant.save
@@ -788,8 +787,7 @@ class Participant < ApplicationRecord
               emergency_phone_number:  row["EmergPhone"],
               emergency_email:         row["EmergEmail"],
               wwcc_number:             row["WWCC"],
-              camping_preferences:     row["CampPrefs"],
-              sport_notes:             row["SportNotes"],
+              medical_injuries:        row["Injuries"],
               updated_by:              user.id)
 
           if participant.errors.empty?
