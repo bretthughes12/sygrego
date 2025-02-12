@@ -281,7 +281,7 @@ class ParticipantSignup
     end
   
     def validate_medicare_details
-      if @group.mysyg_setting.require_medical
+      if @group.mysyg_setting.medicare_option == "Require"
         errors.add(:medicare_number, "can't be blank") if medicare_number.blank?
         errors.add(:medicare_expiry, "can't be blank") if medicare_expiry.blank?
       end

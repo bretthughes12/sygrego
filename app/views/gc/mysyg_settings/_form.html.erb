@@ -44,6 +44,15 @@
 				label: "How to determine the age of your participants",
 				hint: "'Age' means your participants will enter the age they will be at the start of State Youth Games. 'Date of Birth' means they enter this instead and their age at the start of SYG is calculated." %>
 	<br/>
+	<%= f.input :address_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Address field",
+	            hint: "By default, SYG shows and does not require participant address details. 'Show' is the default as described. 'Hide' will hide these fields from your participants. Select 'Require' if you want to enforce the entry of Address details for your participants." %>
+
+	<br/>
+	<br/>
 	<%= f.input :require_emerg_contact, 
 				label: "Require Emergency Contact for all participants" %>
 	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
@@ -58,7 +67,34 @@
 
 	<br/>
 	<br/>
+	<%= f.input :medical_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Medical Information and Medications fields",
+	            hint: "By default, SYG shows and does not require the Medical Information and Medications fields. 'Show' is the default as described. 'Hide' will hide these two fields from your participants. Select 'Require' if you want to enforce the entry of Medical Information and Medications for your participants." %>
 
+	<br/>
+	<br/>
+	<%= f.input :allergy_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require the participant's Allergies field",
+	            hint: "By default, SYG shows and does not require information about a participant's allergies. 'Show' is the default as described. 'Hide' will hide this field from your participants. Select 'Require' if you want to enforce the entry of Allergy details for your participants." %>
+
+	<br/>
+	<br/>
+	<%= f.input :dietary_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Dietary Requirements field",
+	            hint: "By default, SYG shows and does not require the Dietary Requirements field. 'Show' is the default as described. 'Hide' will hide this field from your participants. Select 'Require' if you want to enforce the entry of Dietary Requirements for your participants." %>
+
+	<br/>
+	<br/>
+	
 	<h2>Extras</h2>
 
 	<p>Use 'Custom Extras' to allow your participants to be able to select things like team uniforms, transport costs, food costs, etc. To set these up for your MySYG site, use the menu option "MySYG > Custom extra costs"</p>

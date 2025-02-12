@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_10_082758) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_12_082902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -283,6 +283,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_10_082758) do
     t.boolean "allow_offsite", default: true
     t.boolean "require_medical", default: false
     t.string "medicare_option", limit: 10, default: "Show"
+    t.string "address_option", limit: 10, default: "Show"
+    t.string "medical_option", limit: 10, default: "Show"
+    t.string "allergy_option", limit: 10, default: "Show"
+    t.string "dietary_option", limit: 10, default: "Show"
     t.index ["group_id"], name: "index_mysyg_settings_on_group_id"
   end
 
