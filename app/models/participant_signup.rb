@@ -178,7 +178,11 @@ class ParticipantSignup
   
     before_validation :calculate_age
     before_validation :validate_age_or_dob
+    before_validation :validate_address
     before_validation :validate_medicare_details
+    before_validation :validate_medical_details
+    before_validation :validate_allergies
+    before_validation :validate_dietary_requirements
     before_validation :validate_emergency_contact_details
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
@@ -271,6 +275,14 @@ class ParticipantSignup
       end
     end
   
+    def validate_address
+      if @group.mysyg_setting.address_option == "Require"
+        errors.add(:address, "can't be blank") if address.blank?
+        errors.add(:suburb, "can't be blank") if suburb.blank?
+        errors.add(:postcode, "can't be blank") if postcode.blank?
+      end
+    end
+  
     def validate_emergency_contact_details
       if (age && age.to_i < 18) || @group.mysyg_setting.require_emerg_contact
         errors.add(:emergency_contact, "can't be blank") if emergency_contact.blank?
@@ -284,6 +296,25 @@ class ParticipantSignup
       if @group.mysyg_setting.medicare_option == "Require"
         errors.add(:medicare_number, "can't be blank") if medicare_number.blank?
         errors.add(:medicare_expiry, "can't be blank") if medicare_expiry.blank?
+      end
+    end
+  
+    def validate_medical_details
+      if @group.mysyg_setting.medical_option == "Require"
+        errors.add(:medical_info, "can't be blank") if medical_info.blank?
+        errors.add(:medications, "can't be blank") if medications.blank?
+      end
+    end
+  
+    def validate_allergies
+      if @group.mysyg_setting.allergy_option == "Require"
+        errors.add(:allergies, "can't be blank") if allergies.blank?
+      end
+    end
+  
+    def validate_dietary_requirements
+      if @group.mysyg_setting.dietary_option == "Require"
+        errors.add(:dietary_requirements, "can't be blank") if dietary_requirements.blank?
       end
     end
   
