@@ -1,0 +1,14 @@
+<% title "Editing question" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:url => gc_question_path(@question), :method => 'patch'} %>
+
+<br/>
+
+<%= link_to "New question", new_gc_question_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Back", gc_questions_path,
+                  class: primary_button_class,
+                  role: "button" %>

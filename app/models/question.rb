@@ -63,7 +63,31 @@ class Question < ApplicationRecord
     length: { maximum: 20 }
   validates :section,                    
     presence: true,
-    inclusion: { in: SECTIONS }, 
-    numericality: { only_integer: true }
+    inclusion: { in: SECTIONS }
 
+  before_create :default_order!
+
+  def move_up!
+    prev = Question.where(group_id: self.group_id, section: self.section).where('order_number < ?', self.order_number).order(:order_number).last
+    return unless prev
+
+    prev.order_number, self.order_number = self.order_number, prev.order_number
+    prev.save
+    self.save
+  end
+
+  def move_down!
+    next_question = Question.where(group_id: self.group_id, section: self.section).where('order_number > ?', self.order_number).order(:order_number).first
+    return unless next_question
+
+    next_question.order_number, self.order_number = self.order_number, next_question.order_number
+    next_question.save
+    self.save
+  end
+
+private
+
+  def default_order! 
+    self.order_number = Question.where(group_id: self.group_id, section: self.section).maximum(:order_number).to_i + 1
+  end
 end

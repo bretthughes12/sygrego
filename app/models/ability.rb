@@ -107,6 +107,14 @@ class Ability
             :update_transfer], Participant do |participant|
           user.groups.include?(participant.group) || user.role?(:admin)
         end
+        can :create, Question
+        can [:show, :index, :update, :destroy, :move_up, :move_down], Question do |question|
+          user.groups.include?(question.try(:group)) || user.role?(:admin)
+        end
+        can :create, QuestionOption
+        can [:show, :index, :update, :destroy], QuestionOption do |qopt|
+          user.groups.include?(qopt.question.try(:group)) || user.role?(:admin)
+        end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry
         can [:show, :update, :destroy, :confirm], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)
@@ -225,6 +233,14 @@ class Ability
           :update_transfer], Participant do |participant|
              user.groups.include?(participant.group) || user.role?(:admin)
           end
+        can :create, Question
+        can [:show, :index, :update, :destroy, :move_up, :move_down], Question do |question|
+          user.groups.include?(question.try(:group)) || user.role?(:admin)
+        end
+        can :create, QuestionOption
+        can [:show, :index, :update, :destroy], QuestionOption do |qopt|
+          user.groups.include?(qopt.question.try(:group)) || user.role?(:admin)
+        end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry
         can [:show, :update, :destroy, :confirm], SportEntry do |entry|
           user.groups.include?(entry.group) || user.role?(:admin)

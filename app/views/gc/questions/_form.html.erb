@@ -1,0 +1,25 @@
+<%= simple_form_for(@question, url: url, html: { method: method }) do |f| %> 
+	<%= f.error_notification %>
+
+    <%= f.input :section, as: :select, collection: Question::SECTIONS, include_blank: false %>
+    <%= f.input :question_type, as: :select, collection: Question::QUESTION_TYPES, include_blank: false %>
+    <%= f.input :name, hint: "Short name for your reference only. This will NOT appear on your participants' signup form" %>
+    <%= f.input :title, label: "Question", hint: "The main prompt for your signup form" %>
+    <%= f.input :description, hint: "Add more detail here if the question needs more direction or clarification." %>
+    <%= f.input :required %>
+
+    <br/>
+
+	<%= f.button :submit %>
+<% end %>	
+
+<% if @question.question_type == 'Multiple Choice' || @question.question_type == 'Checkboxes' || @question.question_type == 'Dropdown' %>
+    <h2>Options</h2>
+
+    <%= render partial: "question_options" %>
+
+    <%= form_with(model: @question_option, url: gc_question_question_options_path(@question), method: :post) do |f| %> 
+        <td><%= f.text_field :name %></td>
+        <td><%= f.submit "+", role: :button, class: primary_button_class %></td>
+    <% end %>	
+<% end %>	

@@ -1,0 +1,16 @@
+<table class="table table-dark table-striped">
+	<% for option in @question.question_options %>
+      	<tr valign="top">
+            <td> 
+				<%= option.name %>
+            </td>
+    
+            <td>
+                <%= link_to 'X', gc_question_question_option_path(question_id: @question.id, id: option.id), 
+                    class: danger_button_class,
+                    role: :button,
+                    method: :delete %>
+            </td>
+        </tr>
+    <% end %>
+</table>
