@@ -93,7 +93,6 @@ class Gc::QuestionsController < GcController
       params.require(:question).permit(
         :name,
         :required,
-        :title, 
         :description, 
         :question_type,
         :section

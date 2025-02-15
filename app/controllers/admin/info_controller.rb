@@ -42,6 +42,8 @@ class Admin::InfoController < AdminController
         @other_stats << model_stats(SportPreference)    
         @other_stats << model_stats(GroupExtra)    
         @other_stats << model_stats(GroupFeeCategory)    
+        @other_stats << model_stats(Question)    
+        @other_stats << model_stats(QuestionOption)    
         @other_stats << model_stats(ParticipantExtra)    
         @other_stats << model_stats(Award)    
         @other_stats << model_stats(SportsEvaluation)    

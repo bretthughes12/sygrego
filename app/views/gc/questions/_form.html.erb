@@ -3,8 +3,7 @@
 
     <%= f.input :section, as: :select, collection: Question::SECTIONS, include_blank: false %>
     <%= f.input :question_type, as: :select, collection: Question::QUESTION_TYPES, include_blank: false %>
-    <%= f.input :name, hint: "Short name for your reference only. This will NOT appear on your participants' signup form" %>
-    <%= f.input :title, label: "Question", hint: "The main prompt for your signup form" %>
+    <%= f.input :name, label: "Question", hint: "The main prompt for this question on your signup form" %>
     <%= f.input :description, hint: "Add more detail here if the question needs more direction or clarification." %>
     <%= f.input :required %>
 

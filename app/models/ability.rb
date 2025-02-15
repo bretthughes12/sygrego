@@ -112,7 +112,7 @@ class Ability
           user.groups.include?(question.try(:group)) || user.role?(:admin)
         end
         can :create, QuestionOption
-        can [:show, :index, :update, :destroy], QuestionOption do |qopt|
+        can [:destroy, :move_up, :move_down], QuestionOption do |qopt|
           user.groups.include?(qopt.question.try(:group)) || user.role?(:admin)
         end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry
@@ -238,7 +238,7 @@ class Ability
           user.groups.include?(question.try(:group)) || user.role?(:admin)
         end
         can :create, QuestionOption
-        can [:show, :index, :update, :destroy], QuestionOption do |qopt|
+        can [:destroy, :move_up, :move_down], QuestionOption do |qopt|
           user.groups.include?(qopt.question.try(:group)) || user.role?(:admin)
         end
         can [:index, :create, :sports_rules, :sports_draws], SportEntry

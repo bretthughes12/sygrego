@@ -438,12 +438,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_092356) do
     t.string "name", limit: 50, null: false
     t.string "section", limit: 20, null: false
     t.string "question_type", limit: 20, null: false
-    t.string "title"
     t.text "description"
     t.integer "order_number", default: 1
     t.boolean "required", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "section", "order_number"], name: "index_questions_on_group_id_and_section_and_order_number"
     t.index ["group_id"], name: "index_questions_on_group_id"
   end
 
