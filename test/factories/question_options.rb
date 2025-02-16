@@ -19,7 +19,8 @@
 #
 FactoryBot.define do
   factory :question_option do
-    question { nil }
+    question 
+    
     order_number { 1 }
     name { "MyString" }
   end

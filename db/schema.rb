@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_13_092356) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_221346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -433,6 +433,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_092356) do
     t.index ["question_id"], name: "index_question_options_on_question_id"
   end
 
+  create_table "question_responses", force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "question_id", null: false
+    t.text "answer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_question_responses_on_participant_id"
+    t.index ["question_id"], name: "index_question_responses_on_question_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.string "name", limit: 50, null: false
@@ -850,6 +860,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_092356) do
   add_foreign_key "participants_users", "users"
   add_foreign_key "payments", "groups"
   add_foreign_key "question_options", "questions"
+  add_foreign_key "question_responses", "participants"
+  add_foreign_key "question_responses", "questions"
   add_foreign_key "questions", "groups"
   add_foreign_key "rego_checklists", "groups"
   add_foreign_key "roles_users", "roles"

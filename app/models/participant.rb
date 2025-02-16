@@ -104,6 +104,7 @@ class Participant < ApplicationRecord
     has_many   :sport_entries, through: :participants_sport_entries
     has_many   :sport_preferences, dependent: :destroy
     has_many   :participant_extras, dependent: :destroy
+    has_many   :question_responses, dependent: :destroy
     has_many   :captaincies, class_name: 'SportEntry'
     has_and_belongs_to_many :users
 

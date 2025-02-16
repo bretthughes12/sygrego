@@ -25,7 +25,9 @@
 class Question < ApplicationRecord
   belongs_to :group
   has_many :question_options, dependent: :destroy
+  has_many :question_responses, dependent: :destroy
 
+  scope :beginning, -> { where(section: 'Start') }
   scope :personal, -> { where(section: 'Personal') }
   scope :medical, -> { where(section: 'Medical') }
   scope :camping, -> { where(section: 'Camping') }

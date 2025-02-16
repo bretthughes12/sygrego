@@ -24,10 +24,11 @@
 #
 FactoryBot.define do
   factory :question do
-    group { nil }
+    group
+    
     name { "MyString" }
-    section { "MyString" }
-    question_type { "MyString" }
+    section { "Personal" }
+    question_type { "Paragraph" }
     title { "MyString" }
     description { "MyText" }
     order_number { 1 }
