@@ -64,6 +64,7 @@ class Question < ApplicationRecord
     inclusion: { in: SECTIONS }
 
   before_create :default_order!
+  before_update :check_if_section_changed
 
   def move_up!
     prev = Question.where(group_id: self.group_id, section: self.section).where('order_number < ?', self.order_number).order(:order_number).last
@@ -88,4 +89,12 @@ private
   def default_order! 
     self.order_number = Question.where(group_id: self.group_id, section: self.section).maximum(:order_number).to_i + 1
   end
+
+  def check_if_section_changed
+    if section_changed? 
+      default_order!
+    end
+  end
+
+
 end
