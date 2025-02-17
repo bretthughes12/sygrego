@@ -108,6 +108,18 @@ namespace :syg do
                     g.results_file.purge 
                     puts '--  results purged'
                 end
+                if g.invoice1_file.attached? && Rails.env.production?
+                    g.invoice1_file.purge 
+                    puts '--  invoice 1 purged'
+                end
+                if g.invoice2_file.attached? && Rails.env.production?
+                    g.invoice2_file.purge 
+                    puts '--  invoice 2 purged'
+                end
+                if g.invoice3_file.attached? && Rails.env.production?
+                    g.invoice3_file.purge 
+                    puts '--  invoice 3 purged'
+                end
             end
         end
     
@@ -194,6 +206,11 @@ namespace :syg do
                 g.mysyg_open = g.group.admin_use
     
                 g.save(validate: false)
+
+                if g.policy.attached? && Rails.env.production?
+                    g.policy.purge
+                    puts '--  group policy purged'
+                end
             end
         end
     
