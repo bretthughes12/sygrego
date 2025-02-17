@@ -356,9 +356,9 @@ class Participant < ApplicationRecord
       # other set-price conditions
       if !onsite && spectator
         if chargeable_days == 1 && age && age >= 14
-          fee = 30
+          fee = 35
         elsif age && age >= 14
-          fee = 60
+          fee = 70
         end
 
         if fee && voucher
