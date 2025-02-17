@@ -9,7 +9,7 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 wb.add_worksheet(name: "Participants") do |sheet|
 	sheet.add_row ["Group","FirstName","Surname","Age",
 	              "Gender","Type","Address", 
-				  "Suburb","Postcode","Phone","Mobile",
+				  "Suburb","Postcode","Mobile",
 	              "Email","Spectator","Onsite","Helper","WWCC"], 
 		style: header_border
 
@@ -24,7 +24,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.address,
   		     participant.suburb,
   		     participant.postcode,
-  		     participant.phone_number,
   		     participant.mobile_phone_number,
   		     participant.email,
   		     participant.spectator,

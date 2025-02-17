@@ -1,0 +1,12 @@
+<% title "Question details" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render 'show', model: @question %>
+
+<%= link_to "Back", gc_questions_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Edit", edit_gc_question_path(@question),
+                  class: primary_button_class,
+                  role: "button" %>

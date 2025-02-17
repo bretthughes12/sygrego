@@ -3,7 +3,6 @@
 
 	<%= f.input :lock_version, as: :hidden %>
    	<%= f.input :driver, label: "Nominated Driver"  %>
-    <%= f.input :driving_to_syg, :as => :boolean %>
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
    	<%= f.input :number_plate, label: "Number Plate" %>
 

@@ -533,6 +533,19 @@ Rails.application.routes.draw do
         patch :purge_policy
       end
     end
+    resources :questions do
+      resources :question_options, only: [:create, :update] do
+        member do
+          patch :move_up
+          patch :move_down
+        end
+      end
+      resources :question_responses
+      member do
+        patch :move_up
+        patch :move_down
+      end
+    end
     resources :payments
     resources :group_extras
     resources :participant_extras

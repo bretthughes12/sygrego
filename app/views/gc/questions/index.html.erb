@@ -1,0 +1,28 @@
+<% title "Listing signup questions" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>Use this page to customise the signup experience for your participants.</p>
+<p>You may add your own signup questions to your signup page in any of the major sections of the form.</p>
+<p>You have the flexibility to add questions for short answers, paragraph answers, multiple choice, multiple options and a dropdown choice.</p>
+
+<% unless @questions.empty? %>
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Section</th>
+                <th>Required</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+    
+        <%= render @questions %>
+    </table>
+<% else %>
+    <p>There are no fee categories recorded yet for your group.</p>
+<% end %>
+
+<%= link_to "New question", new_gc_question_path,
+                  class: primary_button_class,
+                  role: "button" %>

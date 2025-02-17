@@ -419,7 +419,6 @@ private
       :address,
       :suburb,
       :postcode,
-      :phone_number,
       :medicare_number,
       :medicare_expiry,
       :medical_injuries,
@@ -438,7 +437,6 @@ private
       :fee_when_withdrawn,
       :late_fee_charged,
       :driver,
-      :driving_to_syg,
       :licence_type,
       :number_plate,
       :early_bird,
@@ -453,9 +451,7 @@ private
       :status,
       :wwcc_number,
       :driver_signature,
-      :driver_signature_date,
-      :camping_preferences,
-      :sport_notes
+      :driver_signature_date
     )
   end
 

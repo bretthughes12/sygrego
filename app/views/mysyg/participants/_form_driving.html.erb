@@ -5,7 +5,6 @@
     <%= f.input :status, :as => :hidden %>
 
     <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
-    <%= f.input :driving_to_syg, :as => :boolean, :label => "I will be driving to SYG"  %>
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
     <%= f.input :number_plate %>
     

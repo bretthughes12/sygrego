@@ -42,10 +42,15 @@
 
 	<br/>
 
-	<%= f.input :address %>
-	<%= f.input :suburb %>
-	<%= f.input :postcode %>
-	<%= f.input :phone_number, label: "Home phone number"  %>
+	<% if @group.mysyg_setting.address_option == 'Require' %>
+		<%= f.input :address, required: true %>
+		<%= f.input :suburb, required: true %>
+		<%= f.input :postcode, required: true %>
+	<% elsif @group.mysyg_setting.address_option == 'Show' %>
+		<%= f.input :address %>
+		<%= f.input :suburb %>
+		<%= f.input :postcode %>
+	<% end %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
 	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
 
@@ -67,10 +72,24 @@
 		<%= f.input :medicare_number %>
 		<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
 	<% end %>
-	<%= f.input :medical_info, label: "Medical information" %>
-	<%= f.input :medications %>
-	<%= f.input :allergies %>
-	<%= f.input :dietary_requirements %>
+	<%= f.input :medical_injuries, label: "Current or Pre-existing Injuries", hint: "Could you please confirm whether you have any pre-existing or current injuries? If so, kindly clarify if you have obtained the necessary medical clearance that authorises your participation in the SYG's program. It is imperative that you answer these questions truthfully, as any untoward incident during the SYG's event that results in a claim being made will be subject to investigation by your insurer. We are committed to ensuring the safety and well-being of all participants, and providing accurate information is crucial in upholding this commitment." %>
+	<% if @group.mysyg_setting.medical_option == 'Require' %>
+		<%= f.input :medical_info, required: true, label: "Medical information" %>
+		<%= f.input :medications, required: true %>
+	<% elsif @group.mysyg_setting.medical_option == 'Show' %>
+		<%= f.input :medical_info, label: "Medical information" %>
+		<%= f.input :medications %>
+	<% end %>
+	<% if @group.mysyg_setting.allergy_option == 'Require' %>
+		<%= f.input :allergies, required: true %>
+	<% elsif @group.mysyg_setting.allergy_option == 'Show' %>
+		<%= f.input :allergies %>
+	<% end %>
+	<% if @group.mysyg_setting.dietary_option == 'Require' %>
+		<%= f.input :dietary_requirements, required: true %>
+	<% elsif @group.mysyg_setting.dietary_option == 'Show' %>
+		<%= f.input :dietary_requirements %>
+	<% end %>
 	<% if @group.mysyg_setting.require_emerg_contact %>
 		<%= f.input :emergency_contact, required: true, label: "Emergency contact (required for all participants)" %>
 		<%= f.input :emergency_relationship, required: true, label: "Relationship to participant" %>
@@ -88,14 +107,12 @@
 	<% if can_display_onsite_flag %>
 		<h2>Camping</h2>
 
-		<%= f.input :camping_preferences, hint: "for example, if you want to be put in a tent with a particular friend, mention that here" %>
 
 		<br/>
 	<% end %>
 
 	<h2>Sports</h2>
 
-	<%= f.input :sport_notes, hint: "let us know if you want to be put in teams with a particular friend, or if there is anything else we should know about you and sports" %>
 
 	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup %>
 		<% if @participant_signup.sport_preferences.empty? %>
@@ -127,7 +144,6 @@
 	<h2>Driving (only relevant if over 18)</h2>
 
     <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
-    <%= f.input :driving_to_syg, :as => :boolean, :label => "I will be driving to SYG"  %>
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true, :label => "Licence Type (required for drivers)" %>
     <%= f.input :number_plate, :label => "Number Plate (required for drivers)" %>
 

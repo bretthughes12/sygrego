@@ -101,10 +101,15 @@
 	<%= f.input :gender, as: :select, collection: Participant::SEX, include_blank: false %>
 	<%= f.input :wwcc_number, label: "WWCC Number" %>
 
-	<%= f.input :address %>
-	<%= f.input :suburb %>
-	<%= f.input :postcode %>
-	<%= f.input :phone_number, label: "Home phone number"  %>
+	<% if @group.mysyg_setting.address_option == 'Require' %>
+		<%= f.input :address, required: true %>
+		<%= f.input :suburb, required: true %>
+		<%= f.input :postcode, required: true %>
+	<% elsif @group.mysyg_setting.address_option == 'Show' %>
+		<%= f.input :address %>
+		<%= f.input :suburb %>
+		<%= f.input :postcode %>
+	<% end %>
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
 	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
 
@@ -120,10 +125,23 @@
 		<%= f.input :medicare_expiry, as: :date, start_year: Date.today.year, discard_day: true, include_blank: true %>
 	<% end %>
 	<%= f.input :medical_injuries, label: "Current or Pre-existing Injuries", hint: "Could you please confirm whether you have any pre-existing or current injuries? If so, kindly clarify if you have obtained the necessary medical clearance that authorises your participation in the SYG's program. It is imperative that you answer these questions truthfully, as any untoward incident during the SYG's event that results in a claim being made will be subject to investigation by your insurer. We are committed to ensuring the safety and well-being of all participants, and providing accurate information is crucial in upholding this commitment." %>
-	<%= f.input :medical_info, label: "Medical information" %>
-	<%= f.input :medications %>
-	<%= f.input :allergies %>
-	<%= f.input :dietary_requirements %>
+	<% if @group.mysyg_setting.medical_option == 'Require' %>
+		<%= f.input :medical_info, required: true, label: "Medical information" %>
+		<%= f.input :medications, required: true %>
+	<% elsif @group.mysyg_setting.medical_option == 'Show' %>
+		<%= f.input :medical_info, label: "Medical information" %>
+		<%= f.input :medications %>
+	<% end %>
+	<% if @group.mysyg_setting.allergy_option == 'Require' %>
+		<%= f.input :allergies, required: true %>
+	<% elsif @group.mysyg_setting.allergy_option == 'Show' %>
+		<%= f.input :allergies %>
+	<% end %>
+	<% if @group.mysyg_setting.dietary_option == 'Require' %>
+		<%= f.input :dietary_requirements, required: true %>
+	<% elsif @group.mysyg_setting.dietary_option == 'Show' %>
+		<%= f.input :dietary_requirements %>
+	<% end %>
 	<%= f.input :emergency_contact %>
 	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
 	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>

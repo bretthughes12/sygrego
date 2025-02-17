@@ -104,6 +104,7 @@ class Participant < ApplicationRecord
     has_many   :sport_entries, through: :participants_sport_entries
     has_many   :sport_preferences, dependent: :destroy
     has_many   :participant_extras, dependent: :destroy
+    has_many   :question_responses, dependent: :destroy
     has_many   :captaincies, class_name: 'SportEntry'
     has_and_belongs_to_many :users
 
@@ -181,8 +182,6 @@ class Participant < ApplicationRecord
     validates :postcode,               
         numericality: { only_integer: true },
         allow_blank: true
-    validates :phone_number,           
-        length: { maximum: 20 }
     validates :mobile_phone_number,    
         length: { maximum: 20 }
     validates :email,                  
@@ -203,13 +202,11 @@ class Participant < ApplicationRecord
     validates :medications,            
         length: { maximum: 255 }
     validates :allergies,            
-        presence: true,
         length: { maximum: 255 }
     validates :years_attended,         
         numericality: { only_integer: true },
         allow_blank: true
     validates :dietary_requirements,   
-        presence: true,
         length: { maximum: 255 }
     validates :emergency_contact,      
         length: { maximum: 40 }
@@ -223,10 +220,6 @@ class Participant < ApplicationRecord
         format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, message: 'invalid format' },
         allow_blank: true,
         unless: proc { |o| o.emergency_email.blank? }
-    validates :camping_preferences, 
-        length: { maximum: 100 }
-    validates :sport_notes, 
-        length: { maximum: 255 }
     validates :vaccination_document, 
         length: { maximum: 40 }
     validates :vaccination_sighted_by, 
@@ -692,7 +685,6 @@ class Participant < ApplicationRecord
           participant.address                 = row["Address"]
           participant.suburb                  = row["Suburb"]
           participant.postcode                = row["Postcode"].to_i
-          participant.phone_number            = row["Phone"]
           participant.mobile_phone_number     = row["Mobile"]
           participant.email                   = row["Email"]
           participant.medicare_number         = row["Medicare"]
@@ -760,7 +752,6 @@ class Participant < ApplicationRecord
               address:                 row["Address"],
               suburb:                  row["Suburb"],
               postcode:                row["Postcode"].to_i,
-              phone_number:            row["Phone"],
               mobile_phone_number:     row["Mobile"],
               email:                   row["Email"],
               medicare_number:         row["Medicare"],
@@ -838,7 +829,6 @@ class Participant < ApplicationRecord
             participant.address                 = fields[10]
             participant.suburb                  = fields[11]
             participant.postcode                = fields[12].to_i
-            participant.phone_number            = fields[13]
             participant.mobile_phone_number     = fields[14]
             participant.email                   = fields[15]
             participant.medicare_number         = fields[16]
@@ -858,7 +848,6 @@ class Participant < ApplicationRecord
             participant.emergency_phone_number  = fields[30]
             participant.emergency_email         = fields[31]
             participant.wwcc_number             = fields[32]
-            participant.camping_preferences     = fields[33]
             participant.updated_by = user.id
 
             if participant.save
@@ -883,7 +872,6 @@ class Participant < ApplicationRecord
                address:                 fields[10],
                suburb:                  fields[11],
                postcode:                fields[12].to_i,
-               phone_number:            fields[13],
                mobile_phone_number:     fields[14],
                email:                   fields[15],
                medicare_number:         fields[16],
@@ -903,7 +891,6 @@ class Participant < ApplicationRecord
                emergency_phone_number:  fields[30],
                emergency_email:         fields[31],
                wwcc_number:             fields[32],
-               camping_preferences:     fields[33],
                updated_by:              user.id)
 
             if participant.errors.empty?
@@ -1165,7 +1152,6 @@ private
   end
 
   def normalize_phone_numbers!
-    self.phone_number = Participant.normalize_phone_number(phone_number) if phone_number
     self.mobile_phone_number = Participant.normalize_phone_number(mobile_phone_number) if mobile_phone_number
   end
 
@@ -1320,7 +1306,6 @@ private
       'address',
       'suburb',
       'postcode',
-      'phone_number',
       'mobile_phone_number',
       'spectator',
       'helper',

@@ -5,7 +5,6 @@
 	            label: "MySYG Open" %>
 	<%= f.hint  "tick this box to allow your participants to sign up for SYG using to your customised MySYG site." %>
 	<br/>
-	<br/>
 
 	<% if @group.mysyg_setting.mysyg_open %>
 		<p>You are good to go!</p>
@@ -25,16 +24,18 @@
 				hint: "'Strict' means you have to approve all of your team members that sign up via your MySYG site. 'Tolerant' means anybody who signs up is automatically approved. 'Normal' means automatic approval if the person is still on your participant list from past years." %>
 	<br/>
 
+	<h2>Personal Details</h2>
+
+	<p>You may add your own questions to this section of the signup form. To set these up for your MySYG site, use the menu option "MySYG > Signup questions" and set the section to "Personal"</p>
+
 	<%= f.input :allow_part_time, 
 				label: "Allow participants to come part-time" %>
 	<%= f.hint  "By default, SYG allows participants to specify which days they will be attending SYG. Untick this box if you only want to present a 'full time' option to your participants." %>
-	<br/>
 	<br/>
 	<% if @group.event_detail.onsite %>
 		<%= f.input :allow_offsite, 
 					label: "Allow participants to be Day Visitors" %>
 		<%= f.hint  "By default, SYG allows participants to specify if they are staying onsite with you or not. Unlick this box if you want to remove this as an option for your participants." %>
-		<br/>
 		<br/>
 	<% end %>
 	<%= f.input :collect_age_by, 
@@ -44,11 +45,19 @@
 				label: "How to determine the age of your participants",
 				hint: "'Age' means your participants will enter the age they will be at the start of State Youth Games. 'Date of Birth' means they enter this instead and their age at the start of SYG is calculated." %>
 	<br/>
-	<%= f.input :require_emerg_contact, 
-				label: "Require Emergency Contact for all participants" %>
-	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
+	<%= f.input :address_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Address field",
+	            hint: "By default, SYG shows and does not require participant address details. 'Show' is the default as described. 'Hide' will hide these fields from your participants. Select 'Require' if you want to enforce the entry of Address details for your participants." %>
+
 	<br/>
-	<br/>
+
+	<h2>Medical Details</h2>
+
+	<p>You may add your own questions to this section of the signup form. To set these up for your MySYG site, use the menu option "MySYG > Signup questions" and set the section to "Medical"</p>
+
 	<%= f.input :medicare_option, 
 	            as: :select,
 				collection: MysygSetting::FIELD_OPTIONS,
@@ -57,7 +66,53 @@
 	            hint: "By default, SYG shows and does not require the Medicare Card number or expiry date. 'Show' is the default as described. 'Hide' will hide these two fields from your participants. Select 'Require' if you want to enforce the entry of Medicare Card details for your participants." %>
 
 	<br/>
+	<%= f.input :medical_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Medical Information and Medications fields",
+	            hint: "By default, SYG shows and does not require the Medical Information and Medications fields. 'Show' is the default as described. 'Hide' will hide these two fields from your participants. Select 'Require' if you want to enforce the entry of Medical Information and Medications for your participants." %>
+
 	<br/>
+	<%= f.input :allergy_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require the participant's Allergies field",
+	            hint: "By default, SYG shows and does not require information about a participant's allergies. 'Show' is the default as described. 'Hide' will hide this field from your participants. Select 'Require' if you want to enforce the entry of Allergy details for your participants." %>
+
+	<br/>
+	<%= f.input :dietary_option, 
+	            as: :select,
+				collection: MysygSetting::FIELD_OPTIONS,
+				include_blank: false,
+				label: "Show, hide or require Dietary Requirements field",
+	            hint: "By default, SYG shows and does not require the Dietary Requirements field. 'Show' is the default as described. 'Hide' will hide this field from your participants. Select 'Require' if you want to enforce the entry of Dietary Requirements for your participants." %>
+
+	<br/>
+
+	<%= f.input :require_emerg_contact, 
+				label: "Require Emergency Contact for all participants" %>
+	<%= f.hint  "By default, SYG requires emergency contact details for Under-18's only. Tick this box if you want to enforce the entry of Emergency Contact details for all of your participants." %>
+	<br/>
+	
+	<h2>Sports</h2>
+
+	<p>You may add your own questions to this section of the signup form. To set these up for your MySYG site, use the menu option "MySYG > Signup questions" and set the section to "Sports"</p>
+
+	<p>Your participants will also be able to select their sports preferences either during signup or on their Sports tab. You will then be able to see these and use them when you are determining which sports to enter.
+	To customise which sports your participants will be able to see and not see, use the menu options "MySYG > Filter [type] Sports for Participants".</p>
+
+	<%= f.input :show_sports_on_signup, label: "Show Sports Preferences on Signup" %>
+	<%= f.hint  "tick this box if you want your participants to be able to provide their Sports Preferences when they sign up to your MySYG site." %>
+	<br/>
+	<%= f.input :show_sports_in_mysyg, label: "Show Sports Preferences in MySYG" %>
+	<%= f.hint  "untick this box if you do not want your participants to see any information about Sports when they log in to your MySYG site." %>
+	<br/>
+
+	<h2>Camping</h2>
+
+	<p>You may add your own questions to this section of the signup form. To set these up for your MySYG site, use the menu option "MySYG > Signup questions" and set the section to "Camping"</p>
 
 	<h2>Extras</h2>
 
@@ -66,21 +121,6 @@
 	<%= f.input :show_group_extras_in_mysyg, 
 				label: "Show Custom Extras in MySYG" %>
 	<%= f.hint  "untick this box if you do not want your participants to see any information about your Customer / Extra Costs when they log in to your MySYG site." %>
-	<br/>
-	<br/>
-
-	<h2>Sports</h2>
-
-	<p>Your participants will be able to use their sports tab to select their sports preferences. You will then be able to see these and use them when you are determining which sports to enter.
-	To customise which sports your participants will be able to see and not see, use the menu options "MySYG > Filter [type] Sports for Participants".</p>
-
-	<%= f.input :show_sports_on_signup, label: "Show Sports Preferences on Signup" %>
-	<%= f.hint  "tick this box if you want your participants to be able to provide their Sports Preferences when they sign up to your MySYG site." %>
-	<br/>
-	<br/>
-	<%= f.input :show_sports_in_mysyg, label: "Show Sports Preferences in MySYG" %>
-	<%= f.hint  "untick this box if you do not want your participants to see any information about Sports when they log in to your MySYG site." %>
-	<br/>
 	<br/>
 
 	<h2>Volunteers</h2>
@@ -91,7 +131,6 @@
 	<%= f.input :show_volunteers_in_mysyg, 
 				label: "Show Volunteer Positions in MySYG" %>
 	<%= f.hint  "untick this box if you do not want your participants to see any information about Volunteer positions when they log in to your MySYG site." %>
-	<br/>
 	<br/>
 
 	<h2>Finances</h2>
@@ -104,7 +143,7 @@
 				hint: "your participants will see this on their Finances page when they log on. Example: 'Make cheques payable to Springfield Church of Christ'" %>
 
 	<br/>	
-	<p>Use the following fields if basic additions is all you need. For more flexibility, use the menu option 'MySYG' > 'Fee categories'</p>
+	<p>Use the following fields if basic additions is all you need. For more flexibility, use the menu option "MySYG > Fee categories"</p>
 
 	<%= f.input :extra_fee_total, 
 				label: "Additional Costs (full weekend)", 

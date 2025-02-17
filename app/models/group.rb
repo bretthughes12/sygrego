@@ -62,6 +62,7 @@ class Group < ApplicationRecord
     has_many :group_extras
     has_many :groups_grades_filters
     has_many :group_fee_categories
+    has_many :questions
     has_and_belongs_to_many :users
     has_one :event_detail, dependent: :destroy
     has_one :mysyg_setting, dependent: :destroy

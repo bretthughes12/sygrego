@@ -8,17 +8,17 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
-medicare_exp_col = 18
+medicare_exp_col = 17
 dob_col = 3
 
 wb.add_worksheet(name: "Participants") do |sheet|
 	sheet.add_row ["FirstName","Surname","Coming","DOB","Age",
 	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
-				  "Suburb","Postcode","Phone","Mobile",
+				  "Suburb","Postcode","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
 				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate","EarlyBird",
 				  "DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
-				  "EmergEmail","WWCC","CampPrefs","Voucher"], 
+				  "EmergEmail","WWCC","Voucher"], 
 		style: header_border
 
 	@participants.each do |participant|
@@ -38,7 +38,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
   		     participant.address,
   		     participant.suburb,
   		     participant.postcode,
-  		     participant.phone_number,
   		     participant.mobile_phone_number,
   		     participant.email,
   		     participant.medicare_number,
@@ -60,7 +59,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.emergency_phone_number,
 			 participant.emergency_email,
 			 participant.wwcc_number,
-			 participant.camping_preferences,
 			 voucher
 		   ],
 		style: row_border

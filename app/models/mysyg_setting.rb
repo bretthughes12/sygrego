@@ -3,13 +3,17 @@
 # Table name: mysyg_settings
 #
 #  id                         :bigint           not null, primary key
+#  address_option             :string(10)       default("Show")
+#  allergy_option             :string(10)       default("Show")
 #  allow_offsite              :boolean          default(TRUE)
 #  allow_part_time            :boolean          default(TRUE)
 #  approve_option             :string           default("Normal")
 #  collect_age_by             :string(20)       default("Age")
+#  dietary_option             :string(10)       default("Show")
 #  extra_fee_per_day          :decimal(8, 2)    default(0.0)
 #  extra_fee_total            :decimal(8, 2)    default(0.0)
 #  indiv_sport_view_strategy  :string           default("Show all")
+#  medical_option             :string(10)       default("Show")
 #  medicare_option            :string(10)       default("Show")
 #  mysyg_code                 :string(25)
 #  mysyg_enabled              :boolean          default(FALSE)
@@ -69,6 +73,18 @@ class MysygSetting < ApplicationRecord
     validates :approve_option,      
         length: { maximum: 10 },
         inclusion: { in: APPROVAL_OPTIONS }
+    validates :address_option,      
+        length: { maximum: 10 },
+        inclusion: { in: FIELD_OPTIONS }
+    validates :allergy_option,      
+        length: { maximum: 10 },
+        inclusion: { in: FIELD_OPTIONS }
+    validates :dietary_option,      
+        length: { maximum: 10 },
+        inclusion: { in: FIELD_OPTIONS }
+    validates :medical_option,      
+        length: { maximum: 10 },
+        inclusion: { in: FIELD_OPTIONS }
     validates :medicare_option,      
         length: { maximum: 10 },
         inclusion: { in: FIELD_OPTIONS }
@@ -124,6 +140,10 @@ class MysygSetting < ApplicationRecord
                         mysyg_setting.allow_part_time            = row['AllowPartTime']
                         mysyg_setting.collect_age_by             = row['AgeOption']
                         mysyg_setting.require_emerg_contact      = row['RequireEmerg']
+                        mysyg_setting.address_option             = row['AddressOption']
+                        mysyg_setting.allergy_option             = row['AllergyOption']
+                        mysyg_setting.dietary_option             = row['DietaryOption']
+                        mysyg_setting.medical_option            = row['MedicalOption']
                         mysyg_setting.medicare_option            = row['MedicareOption']
                         mysyg_setting.approve_option             = row['ApproveOption']
                         mysyg_setting.team_sport_view_strategy   = row['TeamView']

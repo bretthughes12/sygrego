@@ -1,0 +1,11 @@
+<% title "New question" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render :partial => 'form', :locals => {:url => gc_questions_path, :method => 'post'} %>
+
+<br/>
+
+<%= link_to "Back", gc_questions_path,
+                  class: primary_button_class,
+                  role: "button" %>

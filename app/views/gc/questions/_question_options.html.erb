@@ -1,0 +1,24 @@
+<table class="table table-dark table-striped">
+	<% for option in @question.question_options.order(:order_number) %>
+      	<tr valign="top">
+            <td> 
+				<%= option.name %>
+            </td>
+    
+            <td>
+                <%= link_to "^", move_up_gc_question_question_option_path(question_id: @question.id, id: option.id),
+                        method: :patch,
+                        class: primary_button_class,
+                        role: "button" %>
+                <%= link_to "v", move_down_gc_question_question_option_path(question_id: @question.id, id: option.id),
+                        method: :patch,
+                        class: primary_button_class,
+                        role: "button" %>
+                <%= link_to 'X', gc_question_question_option_path(question_id: @question.id, id: option.id), 
+                    class: danger_button_class,
+                    role: :button,
+                    method: :delete %>
+            </td>
+        </tr>
+    <% end %>
+</table>

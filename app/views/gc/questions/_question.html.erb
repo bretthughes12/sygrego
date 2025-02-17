@@ -1,0 +1,29 @@
+<tr valign="top">
+	<td>
+        <%= link_to (question.name), edit_gc_question_path(question) %>
+	</td>
+	
+	<td>
+	    <%= question.section %>
+	</td>
+	
+	<td>
+	    <%= question.required? ? "Yes" : "No" %>
+	</td>
+	
+	<td>
+        <%= link_to "^", move_up_gc_question_path(question),
+                method: :patch,
+                class: primary_button_class,
+                role: "button" %>
+        <%= link_to "v", move_down_gc_question_path(question),
+                method: :patch,
+                class: primary_button_class,
+                role: "button" %>
+        <%= link_to "X", gc_question_path(question),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: danger_button_class,
+                role: "button" %>
+	</td>
+</tr>

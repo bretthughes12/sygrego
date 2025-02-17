@@ -30,7 +30,6 @@ class ParticipantSignup
                   :address,
                   :suburb,
                   :postcode,
-                  :phone_number,
                   :mobile_phone_number,
                   :email,
                   :years_attended,
@@ -47,12 +46,9 @@ class ParticipantSignup
                   :emergency_phone_number,
                   :emergency_email,
                   :driver,
-                  :driving_to_syg,
                   :licence_type,
                   :number_plate,
                   :driver_signature,
-                  :camping_preferences,
-                  :sport_notes,
                   :participant,
                   :user,
                   :group,
@@ -91,7 +87,6 @@ class ParticipantSignup
       :address,
       :suburb,
       :postcode,
-      :phone_number,
       :mobile_phone_number,
       :email,
       :years_attended,
@@ -108,12 +103,9 @@ class ParticipantSignup
       :emergency_phone_number,
       :emergency_email,
       :driver,
-      :driving_to_syg,
       :licence_type,
       :number_plate,
-      :driver_signature,
-      :camping_preferences,
-      :sport_notes
+      :driver_signature
     ].compact
   
     USER_ATTRIBUTES = {
@@ -121,7 +113,7 @@ class ParticipantSignup
       address: :address,
       suburb: :suburb,
       postcode: :postcode,
-      phone_number: :phone_number,
+      mobile_phone_number: :phone_number,
       user_email: :email
     }.freeze
   
@@ -167,33 +159,30 @@ class ParticipantSignup
     validates :licence_type,           length: { maximum: 15 },
                                        inclusion: { in: Participant::LICENCE_TYPES }, 
                                        allow_blank: true
-    validates :address,                presence: true,
-                                       length: { maximum: 200 }
-    validates :suburb,                 presence: true,
-                                       length: { maximum: 40 }
-    validates :postcode,               presence: true,
-                                       numericality: { only_integer: true }
-    validates :phone_number,           presence: true,
+    validates :address,                length: { maximum: 200 }
+    validates :suburb,                 length: { maximum: 40 }
+    validates :postcode,               numericality: { only_integer: true }
+    validates :mobile_phone_number,    presence: true,
                                        length: { maximum: 20 }
-    validates :mobile_phone_number,    length: { maximum: 20 }
     validates :wwcc_number,            length: { maximum: 20 }
     validates :medicare_number,        length: { maximum: 50 }
     validates :medical_info,           length: { maximum: 255 }
     validates :medications,            length: { maximum: 255 }
-    validates :camping_preferences,    length: { maximum: 100 }
     validates :years_attended,         numericality: { only_integer: true },
                                        allow_blank: true
-    validates :dietary_requirements,   presence: true,
-                                       length: { maximum: 255 }
-    validates :allergies,              presence: true,
-                                       length: { maximum: 255 }
+    validates :dietary_requirements,   length: { maximum: 255 }
+    validates :allergies,              length: { maximum: 255 }
     validates :emergency_contact,      length: { maximum: 40 }
     validates :emergency_relationship, length: { maximum: 20 }
     validates :emergency_phone_number, length: { maximum: 20 }
   
     before_validation :calculate_age
     before_validation :validate_age_or_dob
+    before_validation :validate_address
     before_validation :validate_medicare_details
+    before_validation :validate_medical_details
+    before_validation :validate_allergies
+    before_validation :validate_dietary_requirements
     before_validation :validate_emergency_contact_details
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
@@ -286,6 +275,14 @@ class ParticipantSignup
       end
     end
   
+    def validate_address
+      if @group.mysyg_setting.address_option == "Require"
+        errors.add(:address, "can't be blank") if address.blank?
+        errors.add(:suburb, "can't be blank") if suburb.blank?
+        errors.add(:postcode, "can't be blank") if postcode.blank?
+      end
+    end
+  
     def validate_emergency_contact_details
       if (age && age.to_i < 18) || @group.mysyg_setting.require_emerg_contact
         errors.add(:emergency_contact, "can't be blank") if emergency_contact.blank?
@@ -296,9 +293,28 @@ class ParticipantSignup
     end
   
     def validate_medicare_details
-      if @group.mysyg_setting.require_medical
+      if @group.mysyg_setting.medicare_option == "Require"
         errors.add(:medicare_number, "can't be blank") if medicare_number.blank?
         errors.add(:medicare_expiry, "can't be blank") if medicare_expiry.blank?
+      end
+    end
+  
+    def validate_medical_details
+      if @group.mysyg_setting.medical_option == "Require"
+        errors.add(:medical_info, "can't be blank") if medical_info.blank?
+        errors.add(:medications, "can't be blank") if medications.blank?
+      end
+    end
+  
+    def validate_allergies
+      if @group.mysyg_setting.allergy_option == "Require"
+        errors.add(:allergies, "can't be blank") if allergies.blank?
+      end
+    end
+  
+    def validate_dietary_requirements
+      if @group.mysyg_setting.dietary_option == "Require"
+        errors.add(:dietary_requirements, "can't be blank") if dietary_requirements.blank?
       end
     end
   
