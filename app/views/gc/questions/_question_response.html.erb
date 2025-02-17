@@ -1,0 +1,22 @@
+<%= simple_form_for(@question_response, url: gc_question_question_response_path(question_id: @question.id), html: { method: :post }) do |f| %> 
+    <% if @question.question_type == 'Text' %>
+        <p><%= @question.name %></p>
+        <%= f.hint @question.description %>
+    <% elsif @question.question_type == 'Short Answer' %>
+        <%= f.input :answer, as: :string, label: @question.name, hint: @question.description, required: @question.required %>
+    <% elsif @question.question_type == 'Paragraph' %>
+        <%= f.input :answer, as: :text, label: @question.name, hint: @question.description, required: @question.required %>
+    <% elsif @question.question_type == 'Multiple Choice' %>
+        <%= f.label @question.name, required: @question.required %>
+        <%= f.input :answer, as: :radio_buttons, label: '', collection: @question.question_options.order(:order_number) %>
+        <%= f.hint @question.description %>
+    <% elsif @question.question_type == 'Checkboxes' %>
+        <%= f.input :answer, as: :check_boxes, label: @question.name, hint: @question.description, collection: @question.question_options.order(:order_number), required: @question.required %>
+    <% elsif @question.question_type == 'Checkbox' %>
+        <%= f.input :answer, as: :boolean, label: @question.name, hint: @question.description, required: @question.required %>
+    <% elsif @question.question_type == 'Dropdown' %>
+        <%= f.input :answer, as: :select, label: @question.name, hint: @question.description, collection: @question.question_options.order(:order_number), include_blank: !@question.required %>
+    <% else %>
+        <p>Type not defined yet</p>
+    <% end %>
+<% end %>	

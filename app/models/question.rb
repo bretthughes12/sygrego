@@ -35,12 +35,13 @@ class Question < ApplicationRecord
   scope :driving, -> { where(section: 'Driving') }
   scope :disclaimer, -> { where(section: 'Disclaimer') }
 
+
+  # TODO: Sort out css around checkboxes and radio buttons and enable 'Multiple Choice' and 'Checkboxes' question types
   QUESTION_TYPES = [
     'Text',
     'Short Answer',
     'Paragraph',
-    'Multiple Choice',
-    'Checkboxes',
+    'Checkbox',
     'Dropdown'
   ].freeze
 

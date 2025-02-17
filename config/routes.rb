@@ -540,6 +540,7 @@ Rails.application.routes.draw do
           patch :move_down
         end
       end
+      resources :question_responses
       member do
         patch :move_up
         patch :move_down

@@ -28,6 +28,7 @@ class Gc::QuestionsController < GcController
     # GET /gc/questions/1/edit
     def edit
       @question_option = QuestionOption.new
+      @question_response = QuestionResponse.new(question: @question)
 
       render layout: @current_role.name
     end
@@ -41,6 +42,7 @@ class Gc::QuestionsController < GcController
           if @question.save
               flash[:notice] = 'Question was successfully created.'
               @question_option = QuestionOption.new
+              @question_response = QuestionResponse.new(question: @question)
               format.html { render action: "edit", layout: @current_role.name }
           else
               format.html { render action: "new", layout: @current_role.name }
@@ -53,11 +55,11 @@ class Gc::QuestionsController < GcController
         respond_to do |format|
           if @question.update(question_params)
             flash[:notice] = 'Question was successfully updated.'
-            format.html { redirect_to gc_questions_url }
-          else
-            @question_option = QuestionOption.new
-            format.html { render action: "edit", layout: @current_role.name }
           end
+
+          @question_option = QuestionOption.new
+          @question_response = QuestionResponse.new(question: @question)
+          format.html { render action: "edit", layout: @current_role.name }
         end
     end
   
