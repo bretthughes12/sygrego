@@ -344,7 +344,7 @@ class Participant < ApplicationRecord
       # special 2019 hack due to spectator fee and early bird fee not 
       # being a multiple of 5
       base_fee -= 35 if spectator
-      base_fee = 75 if spectator && chargeable_days == 1
+      base_fee = 80 if spectator && chargeable_days == 1
   
       # check for conditions requiring no charge
       return 0 unless coming
@@ -365,7 +365,7 @@ class Participant < ApplicationRecord
           fee = voucher.apply(fee)
         end
 
-        fee = 10 if helper && fee > 10
+        fee = 15 if helper && fee > 15
 
         return fee if fee
       end
