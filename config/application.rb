@@ -48,7 +48,7 @@ module Sygrego
     # Exception Handler config hash (no initializer required)
     config.exception_handler = {
       dev:        false,
-      email:      "ticket@stateyouthgames.com",
+      email:      "registrations@stateyouthgames.com",
 
       # On default 5xx error page, social media links included
       # social: {        

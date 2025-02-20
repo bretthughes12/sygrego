@@ -87,6 +87,15 @@ namespace :syg do
                 g.late_fees = 0
                 g.allocation_bonus = 0
                 g.years_attended = 0
+                g.reference_caller = nil
+                g.group_changes = nil
+                g.ministry_goal = nil
+                g.attendee_profile = nil
+                g.gc_role = nil
+                g.gc_decision = nil
+                g.gc_years_attended_church = nil
+                g.gc_thoughts = nil
+                g.reference_notes = nil
                 g.status = 'Stale' unless g.admin_use
         
                 g.save(validate: false)
@@ -98,6 +107,18 @@ namespace :syg do
                 if g.results_file.attached? && Rails.env.production?
                     g.results_file.purge 
                     puts '--  results purged'
+                end
+                if g.invoice1_file.attached? && Rails.env.production?
+                    g.invoice1_file.purge 
+                    puts '--  invoice 1 purged'
+                end
+                if g.invoice2_file.attached? && Rails.env.production?
+                    g.invoice2_file.purge 
+                    puts '--  invoice 2 purged'
+                end
+                if g.invoice3_file.attached? && Rails.env.production?
+                    g.invoice3_file.purge 
+                    puts '--  invoice 3 purged'
                 end
             end
         end
@@ -138,6 +159,7 @@ namespace :syg do
                 g.service_pref_sun = 'No preference'
                 g.warden_zone_id = nil
                 g.orientation_details = nil
+                g.orientation_detail = nil
     
                 g.save(validate: false)
 
@@ -176,24 +198,19 @@ namespace :syg do
             end
         end
     
-        desc 'Reset group mysyg settings fields to pristine state'
+        desc 'Reset group mysyg settings fields for new year'
         task update_mysyg_settings: ['db:migrate'] do |_t|
             puts 'Updating group mysyg settings...'
             MysygSetting.all.each do |g|
                 g.mysyg_enabled = APP_CONFIG[:mysyg_default_enabled]
                 g.mysyg_open = g.group.admin_use
-                g.approve_option = "Normal"
-                g.indiv_sport_view_strategy = "Show all"
-                g.team_sport_view_strategy = "Show all"
-                g.participant_instructions = nil
-                g.extra_fee_total = 0.0
-                g.extra_fee_per_day = 0.0
-                g.show_finance_in_mysyg = true
-                g.show_group_extras_in_mysyg = true
-                g.show_sports_in_mysyg = true
-                g.show_volunteers_in_mysyg = true
     
                 g.save(validate: false)
+
+                if g.policy.attached? && Rails.env.production?
+                    g.policy.purge
+                    puts '--  group policy purged'
+                end
             end
         end
     
@@ -217,6 +234,47 @@ namespace :syg do
                 g.food_cert_sighted = false
                 g.insurance_sighted = false
                 g.covid_plan_sighted = false
+                g.site_check_notes = nil
+                g.site_check_completed_by = nil
+                g.site_check_church_contact = nil
+                g.site_check_status = 'Not completed'
+                g.site_check_completed_at = nil
+                g.site_check_safety_1 = false
+                g.site_check_safety_2 = false
+                g.site_check_safety_3 = false
+                g.site_check_safety_4 = false
+                g.site_check_safety_5 = false
+                g.site_check_electrical_1 = false
+                g.site_check_electrical_2 = false
+                g.site_check_electrical_3 = false
+                g.site_check_electrical_4 = false
+                g.site_check_electrical_5 = false
+                g.site_check_electrical_6 = false
+                g.site_check_electrical_7 = false
+                g.site_check_electrical_8 = false
+                g.site_check_gas_1 = false
+                g.site_check_gas_2 = false
+                g.site_check_fire_1 = false
+                g.site_check_fire_2 = false
+                g.site_check_fire_3 = false
+                g.site_check_fire_4 = false
+                g.site_check_flames_1 = false
+                g.site_check_flames_2 = false
+                g.site_check_flames_3 = false
+                g.site_check_flames_4 = false
+                g.site_check_flames_5 = false
+                g.site_check_flames_6 = false
+                g.site_check_food_1 = false
+                g.site_check_food_2 = false
+                g.site_check_food_3 = false
+                g.site_check_site_1 = false
+                g.site_check_site_2 = false
+                g.site_check_medical_1 = false
+                g.site_check_medical_2 = false
+                g.site_check_medical_3 = false
+                g.site_check_medical_4 = false
+                g.site_check_medical_5 = false
+                g.site_check_medical_6 = false
     
                 g.save(validate: false)
             end
@@ -294,7 +352,11 @@ namespace :syg do
                 p.emergency_email = nil
                 p.camping_preferences = nil
                 p.sport_notes = nil
-        
+                p.medical_injuries = nil
+                p.group_fee_category = nil
+                p.transfer_email = nil
+                p.transfer_token = nil
+                        
                 p.save(validate: false)
             end
         end
@@ -310,7 +372,9 @@ namespace :syg do
         end
     
         desc 'Refresh Participants for new year'
-        task refresh_participants: %i[destroy_volunteers 
+        task refresh_participants: %i[destroy_sections_volunteers
+                                    destroy_volunteers 
+                                    destroy_participants_question_responses
                                     remove_non_attending_participants
                                     update_remaining_participants 
                                     clean_up_vouchers]
@@ -328,10 +392,22 @@ namespace :syg do
     #            ActiveRecord::Base.connection.delete('DELETE FROM participants_sport_entries')
         end
     
+        desc 'Clear all participant responses'
+        task destroy_participants_question_responses: ['environment'] do |_t|
+            puts "Deleting last year's participant question responses..."
+                QuestionResponse.delete_all
+        end
+    
         desc 'Clear all sport entries'
         task destroy_sport_entries: ['destroy_participants_sport_entries'] do |_t|
             puts "Deleting last year's sport entries..."
             SportEntry.destroy_all
+        end
+    
+        desc 'Clear all volunteer sections'
+        task destroy_sections_volunteers: ['db:migrate'] do |_t|
+            puts "Deleting last year's volunteer sections..."
+            SectionsVolunteer.delete_all
         end
     
         desc 'Clear all volunteers'

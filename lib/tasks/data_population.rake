@@ -159,6 +159,37 @@ namespace :syg do
       puts "Participants not updated - #{errors}"
     end
 
+    desc 'Populate mobile phone number in participants'
+    task populate_mobile_phone: ['db:migrate'] do |t|
+      puts 'Populating mobile number for Participants...'
+
+      count = 0
+      errors = 0
+      skips = 0
+
+      Participant.all.each do |p|
+        if p.mobile_phone_number.nil?
+          unless p.phone_number.nil?
+            p.mobile_phone_number = p.phone_number
+          else
+            p.mobile_phone_number = 'Unknown'
+          end
+          if p.save(validate: false)
+            count += 1
+          else
+            errors += 1
+            pp p.errors
+          end
+        else
+          skips += 1
+        end
+      end
+
+      puts "Participants updated - #{count}"
+      puts "Participants not updated - #{errors}"
+      puts "Participants skipped - #{skips}"
+    end
+
     desc 'Populate draw_type in sections from sports'
     task populate_section_draw_types: ['db:migrate'] do |t|
       puts 'Updating draw types...'

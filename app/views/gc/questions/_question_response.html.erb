@@ -1,4 +1,4 @@
-<%= simple_form_for(@question_response, url: gc_question_question_response_path(question_id: @question.id), html: { method: :post }) do |f| %> 
+<%= simple_form_for(@question_response, url: gc_question_question_responses_path(question_id: @question.id), html: { method: :post }) do |f| %> 
     <% if @question.question_type == 'Text' %>
         <p><%= @question.name %></p>
         <%= f.hint @question.description %>
