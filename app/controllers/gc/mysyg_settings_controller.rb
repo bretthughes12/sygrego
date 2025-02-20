@@ -23,6 +23,32 @@ class Gc::MysygSettingsController < GcController
       render layout: @current_role.name
     end
   
+    # GET /gc/mysyg_settings/1/preview_signup
+    def preview_signup
+      @group = @mysyg_setting.group
+
+      @participant_signup = ParticipantSignup.new
+      @participant_signup.age = 30
+      @participant_signup.coming_friday = true
+      @participant_signup.coming_saturday = true
+      @participant_signup.coming_sunday = true
+      @participant_signup.coming_monday = true
+      @participant_signup.onsite = @group.event_detail.onsite
+      @participant_signup.group_id = @group.id
+      
+      @participant_signup.sport_preferences = SportPreference.prepare_for_group(@group)
+
+      @start_questions = @group.questions.beginning
+      @personal_questions = @group.questions.personal
+      @medical_questions = @group.questions.medical
+      @camping_questions = @group.questions.camping
+      @sports_questions = @group.questions.sports
+      @driving_questions = @group.questions.driving
+      @disclaimer_questions = @group.questions.disclaimer
+
+      render layout: @current_role.name
+    end
+
     # PATCH /gc/mysyg_settings/1
     def update
       respond_to do |format|

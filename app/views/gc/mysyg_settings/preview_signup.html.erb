@@ -1,0 +1,9 @@
+<% title "Signup for #{@group.short_name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<p>
+    Please complete the form below to register as a participant for <%= @group.short_name %> for <%= @settings.this_year %>. 
+</p> 
+
+<%= render :partial => 'form_signup' %>

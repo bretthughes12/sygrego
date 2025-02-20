@@ -50,7 +50,8 @@ class Ability
              :update_team_sports,
              :update_indiv_sports,
              :update_policy,
-             :purge_policy], MysygSetting do |ms|
+             :purge_policy,
+             :preview_signup], MysygSetting do |ms|
           user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment
@@ -176,8 +177,9 @@ class Ability
             :update_team_sports,
             :update_indiv_sports,
             :update_policy,
-            :purge_policy], MysygSetting do |ms|
-          user.groups.include?(ms.group) || user.role?(:admin)
+            :purge_policy,
+            :preview_signup], MysygSetting do |ms|
+         user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment
         can [:show, :update, :destroy], Payment do |payment|
