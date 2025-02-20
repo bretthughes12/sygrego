@@ -33,14 +33,14 @@
 		<%= f.input :coming_saturday, as: :boolean, label: "Saturday" %>
 		<%= f.input :coming_sunday, as: :boolean, label: "Sunday" %>
 		<%= f.input :coming_monday, as: :boolean, label: "Monday" %>
+
+		<br/>
 	<% else %>
 		<%= f.input :coming_friday, as: :hidden %>
 		<%= f.input :coming_saturday, as: :hidden %>
 		<%= f.input :coming_sunday, as: :hidden %>
 		<%= f.input :coming_monday, as: :hidden%>
 	<% end %>
-
-	<br/>
 
 	<% if @group.mysyg_setting.address_option == 'Require' %>
 		<%= f.input :address, required: true %>
@@ -237,7 +237,6 @@
 						<li>All persons at SYG who are 18 years old or older are required to hold a current Victorian Working With Children Check.</li>
 					</ul>
 					Failure to adhere to this Code of Conduct may result in you being removed from the event.
-					<br/>
 					<br/>
 					<h3>In summary</h3>
 					Be respectful...

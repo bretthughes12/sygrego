@@ -33,14 +33,14 @@
 		<%= f.input :coming_saturday, as: :boolean, label: "Saturday" %>
 		<%= f.input :coming_sunday, as: :boolean, label: "Sunday" %>
 		<%= f.input :coming_monday, as: :boolean, label: "Monday" %>
+
+		<br/>
 	<% else %>
 		<%= f.input :coming_friday, as: :hidden %>
 		<%= f.input :coming_saturday, as: :hidden %>
 		<%= f.input :coming_sunday, as: :hidden %>
 		<%= f.input :coming_monday, as: :hidden%>
 	<% end %>
-
-	<br/>
 
 	<% if @group.mysyg_setting.address_option == 'Require' %>
 		<%= f.input :address, required: true %>
@@ -107,12 +107,10 @@
 	<% if can_display_onsite_flag %>
 		<h2>Camping</h2>
 
-
 		<br/>
 	<% end %>
 
 	<h2>Sports</h2>
-
 
 	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup %>
 		<% if @participant_signup.sport_preferences.empty? %>
@@ -214,7 +212,6 @@
 					</ul>
 					Failure to adhere to this Code of Conduct may result in you being removed from the event.
 					<br/>
-					<br/>
 					<h3>In summary</h3>
 					Be respectful...
 					<ul>
@@ -253,18 +250,15 @@
 			<% end %>
 
 			<br/>
-			<br/>
 		<% end %>
 	<% end %>
 
 	By ticking this box, you confirm that you have read and accepted the above Code of Conduct and Disclaimer, and that either you are over the age of 18 and will be an attendee of State Youth Games, or that you are the parent or guardian of the participant who will be an attendee of State Youth Games.
 
 	<br/>
-	<br/>
 
     <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
 
-	<br/>
 	<br/>
 
     <%= f.button :submit, "Sign up" %>
