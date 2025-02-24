@@ -22,4 +22,16 @@
 class QuestionResponse < ApplicationRecord
   belongs_to :participant
   belongs_to :question
+
+  def self.create_responses(questions)
+    responses = []
+
+    questions.each do |question|
+      response = QuestionResponse.new
+      response.question = question
+      responses << response
+    end
+
+    responses
+  end
 end

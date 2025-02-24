@@ -7,6 +7,11 @@
         <%= f.input :group_id, as: :hidden %>
     <% end %>
 
+	<% @question_number = 0 %>
+	<% unless @participant_signup.start_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.start_answers, as: :answer, locals: {f: f} %>
+    <% end %>
+
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
 	<% if @group.mysyg_setting.allow_offsite %>
