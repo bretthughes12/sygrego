@@ -38,6 +38,7 @@ class Question < ApplicationRecord
 
   # TODO: Sort out css around checkboxes and radio buttons and enable 'Multiple Choice' and 'Checkboxes' question types
   QUESTION_TYPES = [
+    'Heading',
     'Text',
     'Short Answer',
     'Paragraph',

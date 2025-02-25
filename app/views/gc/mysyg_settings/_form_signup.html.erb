@@ -1,16 +1,11 @@
 <%= simple_form_for @participant_signup, url: mysyg_participant_signups_url(group: @group.mysyg_setting.mysyg_name) do |f| %> 
 	<%= f.error_notification %>
 
-    <% if @group.abbr == "DFLT" %>
-        <%= f.input :group_id, as: :select, collection: @groups, selected: @participant_signup.group_id, include_blank: true %>
-    <% else %>
-        <%= f.input :group_id, as: :hidden %>
-    <% end %>
+	<% unless @start_questions.empty? %>
+		<%= render partial: 'question', collection: @start_questions, as: :question %>
 
-	<% @question_number = 0 %>
-	<% unless @participant_signup.start_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.start_answers, as: :answer, locals: {f: f} %>
-    <% end %>
+		<br/>
+	<% end %>
 
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
@@ -66,11 +61,13 @@
 	<%= f.input :login_email, hint: "this may be different to the above (for example, if you a parent signing up your children). This is the email you should use to log back on with" %>
 	<%= f.input :login_name %>
 
-	<% unless @participant_signup.personal_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.personal_answers, as: :answer, locals: {f: f} %>
-    <% end %>
-
 	<br/>
+
+	<% unless @personal_questions.empty? %>
+		<%= render partial: 'question', collection: @personal_questions, as: :question %>
+
+		<br/>
+	<% end %>
 
 	<h2>Medical</h2>
 
@@ -111,14 +108,18 @@
 		<%= f.input :emergency_email, label: "Emergency contact email" %>
 	<% end %>
 
-	<% unless @participant_signup.medical_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.medical_answers, as: :answer, locals: {f: f} %>
-    <% end %>
-
 	<br/>
 
-	<% if can_display_onsite_flag %>
+	<% unless @medical_questions.empty? %>
+		<%= render partial: 'question', collection: @medical_questions, as: :question %>
+
+		<br/>
+	<% end %>
+
+	<% if can_display_onsite_flag && !@camping_questions.empty? %>
 		<h2>Camping</h2>
+
+		<%= render partial: 'question', collection: @camping_questions, as: :question %>
 
 		<br/>
 	<% end %>
@@ -150,9 +151,11 @@
 		<% end %>
 	<% end %>
 
-	<% unless @participant_signup.sports_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.sports_answers, as: :answer, locals: {f: f} %>
-    <% end %>
+	<% unless @sports_questions.empty? %>
+		<%= render partial: 'question', collection: @sports_questions, as: :question %>
+
+		<br/>
+	<% end %>
 
 	<br/>
 
@@ -196,11 +199,13 @@
 
     <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration (required for drivers)" %> 
 
-	<% unless @participant_signup.driving_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.driving_answers, as: :answer, locals: {f: f} %>
-    <% end %>
-
 	<br/>
+
+	<% unless @driving_questions.empty? %>
+		<%= render partial: 'question', collection: @driving_questions, as: :question %>
+
+		<br/>
+	<% end %>
 
 	<h2>Disclaimer</h2>
 
@@ -277,15 +282,13 @@
 	By ticking this box, you confirm that you have read and accepted the above Code of Conduct and Disclaimer, and that either you are over the age of 18 and will be an attendee of State Youth Games, or that you are the parent or guardian of the participant who will be an attendee of State Youth Games.
 
 	<br/>
-	<br/>
 
     <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
 
-	<% unless @participant_signup.disclaimer_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.disclaimer_answers, as: :answer, locals: {f: f} %>
-    <% end %>
+	<% unless @disclaimer_questions.empty? %>
+		<%= render partial: 'question', collection: @disclaimer_questions, as: :question %>
 
-	<br/>
+		<br/>
+	<% end %>
 
-    <%= f.button :submit, "Sign up" %>
 <% end %>	

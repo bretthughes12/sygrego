@@ -59,7 +59,19 @@ class ParticipantSignup
                   :disclaimer,
                   :booking_nbr,
                   :registration_nbr,
-                  :transfer_token
+                  :transfer_token,
+                  :start_answers,
+                  :personal_answers,
+                  :medical_answers,
+                  :camping_answers,
+                  :sports_answers,
+                  :driving_answers,
+                  :disclaimer_answers
+
+    for i in 1..50
+      attr_accessor "answer_#{i}",
+                    "question_id_#{i}"
+    end
   
     INTEGER_FIELDS = %w[age].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze

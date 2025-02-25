@@ -1,5 +1,7 @@
 <%= simple_form_for(@question_response, url: gc_question_question_responses_path(question_id: @question.id), html: { method: :post }) do |f| %> 
-    <% if @question.question_type == 'Text' %>
+    <% if @question.question_type == 'Heading' %>
+        <h2><%= @question.name %></h2>
+    <% elsif @question.question_type == 'Text' %>
         <p><%= @question.name %></p>
         <%= f.hint @question.description %>
     <% elsif @question.question_type == 'Short Answer' %>

@@ -1,0 +1,29 @@
+    <% @question_number += 1 %>
+    <% if answer.question.question_type == 'Heading' %>
+        <h2><%= answer.question.name %></h2>
+    <% elsif answer.question.question_type == 'Text' %>
+        <p><%= answer.question.name %></p>
+        <%= f.hint answer.question.description %>
+    <% elsif answer.question.question_type == 'Short Answer' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.input "answer_#{@question_number}", as: :string, label: answer.question.name, hint: answer.question.description, required: answer.question.required %>
+    <% elsif answer.question.question_type == 'Paragraph' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.input "answer_#{@question_number}", as: :text, label: answer.question.name, hint: answer.question.description, required: answer.question.required %>
+    <% elsif answer.question.question_type == 'Multiple Choice' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.label answer.question.name, required: answer.question.required %>
+        <%= f.input "answer_#{@question_number}", as: :radio_buttons, label: '', collection: answer.question.question_options.order(:order_number) %>
+        <%= f.hint answer.question.description %>
+    <% elsif answer.question.question_type == 'Checkboxes' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.input "answer_#{@question_number}", as: :check_boxes, label: answer.question.name, hint: answer.question.description, collection: answer.question.question_options.order(:order_number), required: answer.question.required %>
+    <% elsif answer.question.question_type == 'Checkbox' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.input "answer_#{@question_number}", as: :boolean, label: answer.question.name, hint: answer.question.description, required: answer.question.required %>
+    <% elsif answer.question.question_type == 'Dropdown' %>
+        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
+        <%= f.input "answer_#{@question_number}", as: :select, label: answer.question.name, hint: answer.question.description, collection: answer.question.question_options.order(:order_number), include_blank: !answer.question.required %>
+    <% else %>
+        <p>Type not defined yet</p>
+    <% end %>

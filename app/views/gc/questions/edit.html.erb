@@ -18,3 +18,28 @@
 <%= link_to "Back", gc_questions_path,
                   class: primary_button_class,
                   role: "button" %>
+
+<% content_for :sidebar do -%>
+	<div id="sidebar">
+        <h2>Question types</h2>
+
+        <h3>Heading</h3>
+        <p>Only the 'Question' text displays. Use this to separate sections of your form.</p>
+
+        <h3>Text</h3>
+        <p>The question text displays as a normal paragraph of text. Any text in the description will display in the style of help / guidance text.</p>
+        <p>Use this for instructions or guidance.</p>
+
+        <h3>Short Answer</h3>
+        <p>Use this for short text answers. Any text in the description will display in the style of help / guidance text.</p>
+
+        <h3>Paragraph</h3>
+        <p>Use this for longer text answers. Any text in the description will display in the style of help / guidance text.</p>
+
+        <h3>Checkbox</h3>
+        <p>Use this for a single checkbox / Yes / No question. Any text in the description will display in the style of help / guidance text.</p>
+
+        <h3>Dropdown</h3>
+        <p>Use this for multiple choice questions in the form of a dropdown box. Options for the dropdown can be added below. Any text in the description will display in the style of help / guidance text.</p>
+	</div>
+<% end -%>
