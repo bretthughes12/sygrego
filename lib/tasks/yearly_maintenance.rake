@@ -456,6 +456,12 @@ namespace :syg do
             GroupsGradesFilter.destroy_all
         end
 
+        desc 'Delete statistics more than 3 years old'
+        task destroy_oldest_statistics: ['db:migrate'] do |_t|
+            puts "Deleting statistics more than 3 years old..."
+            Statistic.where('year < ?',Time.now.year - 3).destroy_all
+        end
+
         desc 'Destroy all models that are transient between SYG years'
         task destroy_transient_models: ['destroy_payments',
                                         'destroy_sport_entries',
@@ -510,6 +516,7 @@ namespace :syg do
                     :refresh_groups,
                     :refresh_participants,
                     :update_sport_models,
+                    :destroy_oldest_statistics,
                     :destroy_transient_models,
                     :reset_settings]
 
@@ -518,7 +525,5 @@ namespace :syg do
                     :delete_group_attachments,
                     :delete_event_detail_attachments]
     end
-
-    # TODO: Delete statistics more than x years old
 end
   
