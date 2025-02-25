@@ -60,7 +60,13 @@ class ParticipantSignup
                   :booking_nbr,
                   :registration_nbr,
                   :transfer_token,
-                  :start_answers
+                  :start_answers,
+                  :personal_answers,
+                  :medical_answers,
+                  :camping_answers,
+                  :sports_answers,
+                  :driving_answers,
+                  :disclaimer_answers
 
     for i in 1..50
       attr_accessor "answer_#{i}",

@@ -24,13 +24,6 @@
     <% elsif answer.question.question_type == 'Dropdown' %>
         <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
         <%= f.input "answer_#{@question_number}", as: :select, label: answer.question.name, hint: answer.question.description, collection: answer.question.question_options.order(:order_number), include_blank: !answer.question.required %>
-    <% elsif answer.question.question_type == 'Dropdown_' %>
-        <%= f.input "question_id_#{@question_number}", as: :hidden, input_html: { value: answer.question_id } %>
-        <%= f.label answer.question.name, required: answer.question.required %>
-        <br/>
-        <%= f.collection_select "answer_#{@question_number}", answer.question.question_options.order(:order_number), :id, :name, {include_blank: answer.question.required} %>
-        <br/>
-        <p class="form-text text-white-50"><%= f.label answer.question.description %></p>
     <% else %>
         <p>Type not defined yet</p>
     <% end %>

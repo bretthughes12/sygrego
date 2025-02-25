@@ -17,6 +17,12 @@ class ParticipantSignupsController < ApplicationController
       
       @participant_signup.sport_preferences = SportPreference.prepare_for_group(@group)
       @participant_signup.start_answers = QuestionResponse.create_responses(@group.questions.beginning.order(:order_number))
+      @participant_signup.personal_answers = QuestionResponse.create_responses(@group.questions.personal.order(:order_number))
+      @participant_signup.medical_answers = QuestionResponse.create_responses(@group.questions.medical.order(:order_number))
+      @participant_signup.camping_answers = QuestionResponse.create_responses(@group.questions.camping.order(:order_number))
+      @participant_signup.sports_answers = QuestionResponse.create_responses(@group.questions.sports.order(:order_number))
+      @participant_signup.driving_answers = QuestionResponse.create_responses(@group.questions.driving.order(:order_number))
+      @participant_signup.disclaimer_answers = QuestionResponse.create_responses(@group.questions.disclaimer.order(:order_number))
 
       @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
     end
@@ -53,7 +59,7 @@ class ParticipantSignupsController < ApplicationController
     
     # POST /participant_signups
     def create
-      pp params
+      # pp params
 
       group_name = params[:group]
       @participant_signup = ParticipantSignup.new(params[:participant_signup])
@@ -113,6 +119,13 @@ class ParticipantSignupsController < ApplicationController
             @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
             @participant_signup.sport_preferences = SportPreference.retain_from_signup(params[:sport_preferences]) if params[:sport_preferences]
             @participant_signup.start_answers = QuestionResponse.create_responses(@group.questions.beginning.order(:order_number))
+            @participant_signup.personal_answers = QuestionResponse.create_responses(@group.questions.personal.order(:order_number))
+            @participant_signup.medical_answers = QuestionResponse.create_responses(@group.questions.medical.order(:order_number))
+            @participant_signup.camping_answers = QuestionResponse.create_responses(@group.questions.camping.order(:order_number))
+            @participant_signup.sports_answers = QuestionResponse.create_responses(@group.questions.sports.order(:order_number))
+            @participant_signup.driving_answers = QuestionResponse.create_responses(@group.questions.driving.order(:order_number))
+            @participant_signup.disclaimer_answers = QuestionResponse.create_responses(@group.questions.disclaimer.order(:order_number))
+
             render "new"
           end
         end
