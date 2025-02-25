@@ -60,7 +60,7 @@ class ParticipantSignupsController < ApplicationController
     # POST /participant_signups
     def create
       # pp params
-
+      
       group_name = params[:group]
       @participant_signup = ParticipantSignup.new(params[:participant_signup])
       @participant_signup.coming = true
@@ -89,6 +89,7 @@ class ParticipantSignupsController < ApplicationController
           end
 
           SportPreference.create_for_participant(@participant, params[:sport_preferences]) if params[:sport_preferences]
+          QuestionResponse.save_responses(@participant, params[:participant_signup])
           UserMailer.welcome_participant(@user, @participant).deliver_now
 
           if @participant.status == "Requiring Approval"
@@ -114,6 +115,7 @@ class ParticipantSignupsController < ApplicationController
           UserMailer.new_participant(@user, @participant).deliver_now if @participant_signup.participant.group.active
   
         else(:name)
+          # pp @participant_signup.errors
           format.html do
             flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
             @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}

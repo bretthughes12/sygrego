@@ -73,7 +73,7 @@ class ParticipantSignup
                     "question_id_#{i}"
     end
   
-    INTEGER_FIELDS = %w[age].freeze
+    INTEGER_FIELDS = %w[age postcode years_attended].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
     DATE_IGNORE = %w[medicare_expiry(2i) medicare_expiry(3i) date_of_birth(2i) date_of_birth(3i)].freeze
   
@@ -173,7 +173,8 @@ class ParticipantSignup
                                        allow_blank: true
     validates :address,                length: { maximum: 200 }
     validates :suburb,                 length: { maximum: 40 }
-    validates :postcode,               numericality: { only_integer: true }
+    validates :postcode,               numericality: { only_integer: true },
+                                       allow_blank: true
     validates :mobile_phone_number,    presence: true,
                                        length: { maximum: 20 }
     validates :wwcc_number,            length: { maximum: 20 }
