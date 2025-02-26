@@ -141,6 +141,7 @@ class Group < ApplicationRecord
     validates :postcode,            presence: true,
                                     numericality: { only_integer: true }
     validates :phone_number,        length: { maximum: 20 }
+    validates :reference_caller,    length: { maximum: 20 }
     validates :status,              length: { maximum: 12 },
                                     inclusion: { in: STATUS }
     validates :ticket_preference,   length: { maximum: 20 },
@@ -155,6 +156,9 @@ class Group < ApplicationRecord
                                     allow_blank: true
     validates :late_fees,           numericality: true,
                                     allow_blank: true
+    validates :reference_caller,    length: { maximum: 20 }
+    validates :group_focus,        length: { maximum: 100 }
+    validates :website,             length: { maximum: 100 }
 
     searchable_by :abbr, :name, :short_name, :trading_name
 
