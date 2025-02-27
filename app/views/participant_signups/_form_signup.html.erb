@@ -117,13 +117,19 @@
 
 	<br/>
 
-	<% if can_display_onsite_flag %>
+	<% if can_display_onsite_flag && !@participant_signup.camping_answers.empty? %>
 		<h2>Camping</h2>
+
+		<% unless @participant_signup.camping_answers.empty? %>
+			<%= render partial: 'questions', collection: @participant_signup.camping_answers, as: :answer, locals: {f: f} %>
+		<% end %>
 
 		<br/>
 	<% end %>
 
-	<h2>Sports</h2>
+	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup || !@participant_signup.sports_answers.empty? %>
+		<h2>Sports</h2>
+	<% end %>
 
 	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup %>
 		<% if @participant_signup.sport_preferences.empty? %>

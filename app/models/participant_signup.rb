@@ -201,6 +201,7 @@ class ParticipantSignup
     before_validation :validate_driver_fields_if_driving
     before_validation :validate_email_provided
     before_validation :validate_disclaimer_ticked
+    before_validation :validate_custom_responses
   
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -336,7 +337,26 @@ class ParticipantSignup
         errors.add(:wwcc_number, "can't be blank for over 18's") if wwcc_number.blank?
       end
     end
-  
+
+    def validate_custom_responses
+      for i in 1..50
+        question_id = self.send("question_id_#{i}").to_i
+        answer = self.send("answer_#{i}")
+        if question_id > 0
+          question = Question.find(question_id)
+          if question.required?
+            if question.question_type == "Checkbox"
+              errors.add("answer_#{i}", "must be ticked") if answer == "0"
+            elsif question.question_type == "Heading" || question.question_type == "Text"
+              # do nothing
+            else
+              errors.add("answer_#{i}", "can't be blank") if answer.blank?
+            end
+          end
+        end
+      end
+    end
+
     def validate_driver_fields_if_driving
       if driver == "1"
         errors.add(:licence_type, "can't be blank for drivers") if licence_type.blank?
