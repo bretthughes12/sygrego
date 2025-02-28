@@ -410,6 +410,8 @@ class Grade < ApplicationRecord
             unless row['RowID'] == 'RowID'
 
                 limit = row['Limit'].to_i == 0 ? nil : row['Limit'].to_i
+                max_indiv = row['MaxIndivGrp'].to_i == 0 ? nil : row['MaxIndivGrp'].to_i
+                max_team = row['MaxTeamGrp'].to_i == 0 ? nil : row['MaxTeamGrp'].to_i
                 start_limit = row['StartLimit'].to_i == 0 ? nil : row['StartLimit'].to_i
                 sport = Sport.where(name: row['Sport']).first
 
@@ -426,8 +428,8 @@ class Grade < ApplicationRecord
                     grade.max_age                 = row['MaxAge'].to_i
                     grade.min_age                 = row['MinAge'].to_i
                     grade.gender_type             = row['GenderType']
-                    grade.max_indiv_entries_group = row['MaxIndivGrp'].to_i
-                    grade.max_team_entries_group  = row['MaxTeamGrp'].to_i
+                    grade.max_indiv_entries_group = max_indiv
+                    grade.max_team_entries_group  = max_team
                     grade.max_participants        = row['MaxPart'].to_i
                     grade.min_participants        = row['MinPart'].to_i
                     grade.min_males               = row['MinMales'].to_i
@@ -455,8 +457,8 @@ class Grade < ApplicationRecord
                     max_age:                 row['MaxAge'].to_i,
                     min_age:                 row['MinAge'].to_i,
                     gender_type:             row['GenderType'],
-                    max_indiv_entries_group: row['MaxIndivGrp'].to_i,
-                    max_team_entries_group:  row['MaxTeamGrp'].to_i,
+                    max_indiv_entries_group: max_indiv,
+                    max_team_entries_group:  max_team,
                     max_participants:        row['MaxPart'].to_i,
                     min_participants:        row['MinPart'].to_i,
                     min_males:               row['MinMales'].to_i,
