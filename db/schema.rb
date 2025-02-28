@@ -156,7 +156,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
     t.datetime "updated_at", null: false
     t.integer "min_under_18s", default: 0, null: false
     t.integer "max_indiv_entries_group"
-    t.integer "maax_team_entries_group"
+    t.integer "max_team_entries_group"
     t.index ["name"], name: "index_grades_on_name", unique: true
   end
 

@@ -9,10 +9,10 @@
 #  entry_limit             :integer
 #  gender_type             :string(10)       default("Open"), not null
 #  grade_type              :string(10)       default("Team"), not null
-#  maax_team_entries_group :integer
 #  max_age                 :integer          default(29), not null
 #  max_indiv_entries_group :integer
 #  max_participants        :integer          default(0), not null
+#  max_team_entries_group  :integer
 #  min_age                 :integer          default(11), not null
 #  min_females             :integer          default(0), not null
 #  min_males               :integer          default(0), not null
