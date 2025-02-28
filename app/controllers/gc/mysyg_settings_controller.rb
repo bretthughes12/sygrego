@@ -111,6 +111,7 @@ class Gc::MysygSettingsController < GcController
     def mysyg_setting_params
       params.require(:mysyg_setting).permit(:mysyg_open,
         :instructions,
+        :email_text,
         :extra_fee_total,
         :extra_fee_per_day,
         :allow_part_time,

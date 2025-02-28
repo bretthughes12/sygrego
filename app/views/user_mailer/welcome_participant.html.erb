@@ -33,4 +33,9 @@
 
 <p>SYG Team</p>
 
+<% unless @group.mysyg_setting.email_text.blank? %>
+	<h2>A Message from your Group</h2>
+	<p><%= @group.mysyg_setting.email_text %></p>
+<% end %>
+
 <p style="font-size: smaller">You have received this email because you have agreed to the terms and conditions listed during the online registration process. If you should have not received this email please contact <%= APP_CONFIG[:admin_email] %></p>

@@ -123,6 +123,12 @@
 	<%= f.hint  "untick this box if you do not want your participants to see any information about your Customer / Extra Costs when they log in to your MySYG site." %>
 	<br/>
 
+	<h2>Signup Email</h2>
+
+	<%= f.input :email_text, as: :rich_text_area,
+				label: "Email instructions",
+				hint: "use this area to add innstructions / links, etc that will be sent to your participants in their welcome when they sign  up for your group" %>
+
 	<h2>Volunteers</h2>
 
 	<p>Your participants will be able to sign up for Volunteer positions when they log on to your MySYG site.</p>

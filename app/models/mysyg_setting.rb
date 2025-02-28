@@ -51,6 +51,7 @@ class MysygSetting < ApplicationRecord
     has_one_attached :policy
     has_rich_text :instructions
     has_rich_text :policy_text
+    has_rich_text :email_text
 
     APPROVAL_OPTIONS = %w[Tolerant
         Normal
