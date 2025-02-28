@@ -491,6 +491,8 @@ class Group < ApplicationRecord
         next unless include_all || grade.can_accept_entries
         next unless grade_type_entries(grade.sport, grade.grade_type) <
                     grade.max_entries_group
+        next unless grade_type_entries_in_grade(grade, grade.grade_type) <
+                    grade.max_entries_group_in_grade
         grades_available << grade
       end
   
@@ -505,6 +507,8 @@ class Group < ApplicationRecord
         next unless grade.can_accept_entries
         next unless grade_type_entries(grade.sport, grade.grade_type) <
                     grade.max_entries_group
+        next unless grade_type_entries_in_grade(grade, grade.grade_type) <
+                    grade.max_entries_group_in_grade
 
         grade.sections.active.each do |section|
           next unless section.can_take_more_entries?
@@ -782,6 +786,16 @@ class Group < ApplicationRecord
       cached_sport_entries.collect do |entry|
         if type_hash[entry.grade_type] == type_hash[type] &&
            entry.sport.id == sport.id
+          entry_count += 1
+        end
+      end
+      entry_count
+    end
+  
+    def grade_type_entries_in_grade(grade, type)
+      entry_count = 0
+      cached_sport_entries.collect do |entry|
+        if entry.grade.id == grade.id
           entry_count += 1
         end
       end

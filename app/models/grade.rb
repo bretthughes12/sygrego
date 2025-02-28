@@ -81,41 +81,45 @@ class Grade < ApplicationRecord
         Closed
         Allocated].freeze
 
-    validates :sport_id,               presence: true
-    validates :name,                   presence: true,
-                                       uniqueness: { case_sensitive: false },
-                                       length: { maximum: 50 }
-    validates :grade_type,             presence: true,
-                                       length: { maximum: 10 },
-                                       inclusion: { in: GRADE_TYPES,
-                                       message: "should be one of: 'Singles'; 'Doubles'; and 'Team'" }
-    validates :max_age,                presence: true,
-                                       numericality: { only_integer: true },
-                                       inclusion: { in: 0..130,
-                                       message: 'should be between 0 and 130' }
-    validates :min_age,                presence: true,
-                                       numericality: { only_integer: true },
-                                       inclusion: { in: 0..130,
-                                       message: 'should be between 0 and 130' }
-    validates :gender_type,            presence: true,
-                                       length: { maximum: 10 },
-                                       inclusion: { in: GENDER_TYPES,
-                                       message: "should be one of: 'Open'; 'Mens'; 'Ladies'; and 'Mixed'" }
-    validates :max_participants,       presence: true,
-                                       numericality: { only_integer: true }
-    validates :min_participants,       presence: true,
-                                       numericality: { only_integer: true }
-    validates :min_males,              presence: true,
-                                       numericality: { only_integer: true }
-    validates :min_females,            presence: true,
-                                       numericality: { only_integer: true }
-    validates :entry_limit,            numericality: { only_integer: true },
-                                       allow_blank: true
-    validates :starting_entry_limit,   numericality: { only_integer: true },
-                                       allow_blank: true
-    validates :status,                 presence: true,
-                                       length: { maximum: 20 },
-                                       inclusion: { in: STATUSES }
+    validates :sport_id,                presence: true
+    validates :name,                    presence: true,
+                                        uniqueness: { case_sensitive: false },
+                                        length: { maximum: 50 }
+    validates :grade_type,              presence: true,
+                                        length: { maximum: 10 },
+                                        inclusion: { in: GRADE_TYPES,
+                                        message: "should be one of: 'Singles'; 'Doubles'; and 'Team'" }
+    validates :max_age,                 presence: true,
+                                        numericality: { only_integer: true },
+                                        inclusion: { in: 0..130,
+                                        message: 'should be between 0 and 130' }
+    validates :min_age,                 presence: true,
+                                        numericality: { only_integer: true },
+                                        inclusion: { in: 0..130,
+                                        message: 'should be between 0 and 130' }
+    validates :gender_type,             presence: true,
+                                        length: { maximum: 10 },
+                                        inclusion: { in: GENDER_TYPES,
+                                        message: "should be one of: 'Open'; 'Mens'; 'Ladies'; and 'Mixed'" }
+    validates :max_indiv_entries_group, numericality: { only_integer: true },
+                                        allow_blank: true
+    validates :max_team_entries_group,  numericality: { only_integer: true },
+                                        allow_blank: true
+    validates :max_participants,        presence: true,
+                                        numericality: { only_integer: true }
+    validates :min_participants,        presence: true,
+                                        numericality: { only_integer: true }
+    validates :min_males,               presence: true,
+                                        numericality: { only_integer: true }
+    validates :min_females,             presence: true,
+                                        numericality: { only_integer: true }
+    validates :entry_limit,             numericality: { only_integer: true },
+                                        allow_blank: true
+    validates :starting_entry_limit,    numericality: { only_integer: true },
+                                        allow_blank: true
+    validates :status,                  presence: true,
+                                        length: { maximum: 20 },
+                                        inclusion: { in: STATUSES }
 
     def <=>(other)
         name <=> other.name
@@ -208,14 +212,42 @@ class Grade < ApplicationRecord
           start_section
         end
     end
-            
+
+    def max_indiv_entries
+        sport.max_indiv_entries_group 
+    end
+
+    def max_team_entries
+        sport.max_team_entries_group 
+    end
+
     def max_entries_group
         if grade_type == 'Singles'
-            sport.max_indiv_entries_group
+            max_indiv_entries
         elsif grade_type == 'Doubles'
-            sport.max_indiv_entries_group
+            max_indiv_entries
         elsif grade_type == 'Team'
-            sport.max_team_entries_group
+            max_team_entries
+        else
+            0
+        end
+    end
+
+    def max_indiv_entries_in_grade
+        max_indiv_entries_group.nil? ? sport.max_indiv_entries_group : max_indiv_entries_group
+    end
+
+    def max_team_entries_in_grade
+        max_team_entries_group.nil? ? sport.max_team_entries_group : max_team_entries_group
+    end
+
+    def max_entries_group_in_grade
+        if grade_type == 'Singles'
+            max_indiv_entries_in_grade
+        elsif grade_type == 'Doubles'
+            max_indiv_entries_in_grade
+        elsif grade_type == 'Team'
+            max_team_entries_in_grade
         else
             0
         end
@@ -394,6 +426,8 @@ class Grade < ApplicationRecord
                     grade.max_age                 = row['MaxAge'].to_i
                     grade.min_age                 = row['MinAge'].to_i
                     grade.gender_type             = row['GenderType']
+                    grade.max_indiv_entries_group = row['MaxIndivGrp'].to_i
+                    grade.max_team_entries_group  = row['MaxTeamGrp'].to_i
                     grade.max_participants        = row['MaxPart'].to_i
                     grade.min_participants        = row['MinPart'].to_i
                     grade.min_males               = row['MinMales'].to_i
@@ -421,6 +455,8 @@ class Grade < ApplicationRecord
                     max_age:                 row['MaxAge'].to_i,
                     min_age:                 row['MinAge'].to_i,
                     gender_type:             row['GenderType'],
+                    max_indiv_entries_group: row['MaxIndivGrp'].to_i,
+                    max_team_entries_group:  row['MaxTeamGrp'].to_i,
                     max_participants:        row['MaxPart'].to_i,
                     min_participants:        row['MinPart'].to_i,
                     min_males:               row['MinMales'].to_i,

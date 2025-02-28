@@ -106,6 +106,8 @@ private
                                     :gender_type,
                                     :max_age,
                                     :min_age,
+                                    :max_indiv_entries_group,
+                                    :max_team_entries_group,
                                     :max_participants,
                                     :min_participants,
                                     :min_males,

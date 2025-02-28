@@ -8,6 +8,8 @@
 	<%= f.input :gender_type, as: :select, collection: Grade::GENDER_TYPES %>
 	<%= f.input :max_age %>
 	<%= f.input :min_age %>
+    <%= f.input :max_indiv_entries_group, label: "Max times each group may enter singles / doubles grades" %>
+	<%= f.input :max_team_entries_group, label: "Max times each group may enter team grades" %>
 	<%= f.input :max_participants %>
 	<%= f.input :min_participants %>
 	<%= f.input :min_males %>

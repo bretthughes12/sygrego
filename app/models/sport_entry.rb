@@ -57,6 +57,7 @@ class SportEntry < ApplicationRecord
            :min_under_18s, to: :grade
 
   before_validation :validate_number_of_entries_in_sport, on: :create
+  before_validation :validate_number_of_entries_in_grade, on: :create
   after_create :update_team_numbers
   after_create :update_grade_flags
   after_create :check_waiting_list
@@ -373,6 +374,12 @@ private
   def validate_number_of_entries_in_sport
     if cached_grade && cached_grade.sport.group_entries(group) >= cached_grade.sport.max_entries_group
       errors.add(:grade_id, 'too many entries in this sport')
+    end
+  end
+
+  def validate_number_of_entries_in_grade
+    if cached_grade && cached_grade.sport.group_entries(group) >= cached_grade.max_entries_group
+      errors.add(:grade_id, 'too many entries in this grade')
     end
   end
 
