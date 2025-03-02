@@ -35,15 +35,25 @@ class QuestionResponse < ApplicationRecord
     responses
   end
   
+  def self.find_or_create_responses(participant, questions)
+    responses = []
+
+    questions.each do |question|
+      response = QuestionResponse.find_or_create_by(participant: participant, question: question)
+      responses << response
+    end
+
+    responses
+  end
+  
   def self.save_responses(participant, params)
     params.each do |key, value|
       if key.start_with?("question_id_")
         key_id = key.split("_").last.to_i
         answer_value = params["answer_#{key_id}"]
-        response = QuestionResponse.new
-        response.question = Question.find(value.to_i)
+        question = Question.find(value.to_i)
+        response = find_or_create_by(participant: participant, question: question)
         response.answer = answer_value
-        response.participant = participant
 
         # pp response
         response.save

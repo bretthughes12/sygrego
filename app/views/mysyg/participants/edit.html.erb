@@ -2,6 +2,8 @@
 
 <h1><%= yield(:title) %></h1>
 
+<% @question_number = 0 %>
+
 <%= render partial: "form", locals: { 
                               url: mysyg_participant_path(group: @group.mysyg_setting.mysyg_name), 
                               method: :patch } %>

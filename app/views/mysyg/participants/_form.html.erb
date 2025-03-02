@@ -113,6 +113,10 @@
 	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
 	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
 
+	<% unless @personal_answers.empty? %>
+		<%= render partial: 'questions', collection: @personal_answers, as: :answer, locals: {f: f} %>
+    <% end %>
+
 	<br/>
 
 	<h2>Medical</h2>

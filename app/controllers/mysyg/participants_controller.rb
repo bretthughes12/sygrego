@@ -12,6 +12,8 @@ class Mysyg::ParticipantsController < MysygController
       elsif @participant.date_of_birth.nil?
         @participant.date_of_birth = Date.today - 30.years 
       end
+
+      @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
     end
   
     # GET /mysyg/:group/drivers
@@ -25,11 +27,19 @@ class Mysyg::ParticipantsController < MysygController
     # PATCH /mysyg/:group/participants/1
     def update
       respond_to do |format|
+        @participant.load_custom_answers(params[:participant]) 
+
         if @participant.update(participant_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details successfully updated.'
           format.html { redirect_to home_url(current_user) }
         else
-          format.html { render action: "edit" }
+          format.html do
+            @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+            
+            render action: "edit"
+          end
         end
       end
     end

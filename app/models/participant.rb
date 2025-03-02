@@ -94,6 +94,11 @@ class Participant < ApplicationRecord
     require 'pp'
     require 'roo'
 
+    for i in 1..50
+      attr_accessor "answer_#{i}",
+                    "question_id_#{i}"
+    end
+  
     attr_reader :voucher_name
 
     belongs_to :group
@@ -233,6 +238,7 @@ class Participant < ApplicationRecord
     before_validation :validate_emergency_contact_details_if_under_18
     before_validation :validate_wwcc_if_over_18
     before_validation :validate_driver_fields_if_driving
+    before_validation :validate_custom_responses
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
     before_validation :normalize_gender!
@@ -643,6 +649,13 @@ class Participant < ApplicationRecord
       self.driver_signature_date.nil? ? '' : driver_signature_date.in_time_zone.strftime('%d/%m/%Y')
     end
   
+    def load_custom_answers(params)
+      for i in 1..50
+        self.send("answer_#{i}=", params["answer_#{i}"])
+        self.send("question_id_#{i}=", params["question_id_#{i}"])
+      end
+    end
+
   def self.import_excel(file, user)
     creates = 0
     updates = 0
@@ -1064,6 +1077,25 @@ private
     unless years_attended.nil?
       max_year = setting.this_year - APP_CONFIG[:first_year] + 1
       errors.add('years_attended', "should be between 1 and #{max_year}") unless years_attended >= 1 && years_attended <= max_year
+    end
+  end
+
+  def validate_custom_responses
+    for i in 1..50
+      question_id = self.send("question_id_#{i}").to_i
+      answer = self.send("answer_#{i}")
+      if question_id > 0
+        question = Question.find(question_id)
+        if question.required?
+          if question.question_type == "Checkbox"
+            errors.add("answer_#{i}", "must be ticked") if answer == "0"
+          elsif question.question_type == "Heading" || question.question_type == "Text"
+            # do nothing
+          else
+            errors.add("answer_#{i}", "can't be blank") if answer.blank?
+          end
+        end
+      end
     end
   end
 
