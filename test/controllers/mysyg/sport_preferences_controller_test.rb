@@ -36,7 +36,7 @@ class Mysyg::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
       }
     )
 
-    assert_redirected_to mysyg_sports_url(group: @group.mysyg_setting.mysyg_name)
+    assert_redirected_to mysyg_sports_prefs_url(group: @group.mysyg_setting.mysyg_name)
     assert_match /updated/, flash[:notice]
 
     pref1.reload

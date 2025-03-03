@@ -1,0 +1,10 @@
+<% title "Camping for #{@participant.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<% @question_number = 0 %>
+
+<%= render partial: "form_camping", locals: { 
+                              url: update_camping_mysyg_participant_path(group: @group.mysyg_setting.mysyg_name), 
+                              method: :patch } %>
+

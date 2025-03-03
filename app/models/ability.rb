@@ -301,8 +301,10 @@ class Ability
         :delete_voucher, 
         :drivers, 
         :update_drivers, 
-        :edit_notes, 
-        :update_notes], Participant do |participant|
+        :edit_camping, 
+        :update_camping,
+        :edit_sports,
+        :update_sports], Participant do |participant|
           user.participants.include?(participant) || user.role?(:admin)
       end
       can [:index, :update_multiple], ParticipantExtra
