@@ -13,15 +13,20 @@ class Mysyg::ParticipantsController < MysygController
         @participant.date_of_birth = Date.today - 30.years 
       end
 
+      @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
       @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+      @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
     end
   
     # GET /mysyg/:group/drivers
     def drivers
+      @driving_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.driving.order(:order_number))
     end
   
     # GET /mysyg/:group/notes
     def edit_notes
+      @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
+      @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
     end
   
     # PATCH /mysyg/:group/participants/1
@@ -36,8 +41,10 @@ class Mysyg::ParticipantsController < MysygController
           format.html { redirect_to home_url(current_user) }
         else
           format.html do
+            @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
             @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
-            
+            @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+                  
             render action: "edit"
           end
         end
@@ -48,6 +55,8 @@ class Mysyg::ParticipantsController < MysygController
     def update_drivers
       respond_to do |format|
         if @participant.update(participant_driving_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           if @participant.driver_signature 
             @participant.driver_signature_date = Time.now
             @participant.save
@@ -56,6 +65,8 @@ class Mysyg::ParticipantsController < MysygController
           format.html { redirect_to home_url(current_user) }
         else
           format.html do
+            @driving_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.driving.order(:order_number))
+
             flash[:notice] = 'Update failed. See below for the reasons.'
             render action: "drivers"
           end
@@ -67,10 +78,15 @@ class Mysyg::ParticipantsController < MysygController
     def update_notes
       respond_to do |format|
         if @participant.update(participant_notes_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details successfully updated.'
           format.html { redirect_to home_url(current_user) }
         else
           format.html do
+            @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
+            @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
+
             flash[:notice] = 'Update failed. See below for the reasons.'
             render action: "edit_notes"
           end

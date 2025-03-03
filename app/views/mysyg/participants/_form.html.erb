@@ -1,6 +1,10 @@
 <%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
+	<% unless @start_answers.empty? %>
+		<%= render partial: 'questions', collection: @start_answers, as: :answer, locals: {f: f} %>
+    <% end %>
+
 	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
@@ -150,6 +154,12 @@
 	<%= f.input :emergency_relationship, label: "Relationship to participant" %>
 	<%= f.input :emergency_phone_number, label: "Emergency contact phone number" %>
 	<%= f.input :emergency_email, label: "Emergency contact email" %>
+
+	<br/>
+
+	<% unless @medical_answers.empty? %>
+		<%= render partial: 'questions', collection: @medical_answers, as: :answer, locals: {f: f} %>
+    <% end %>
 
 	<br/>
 

@@ -6,12 +6,21 @@
 	<% if can_display_onsite_flag %>
 		<h2>Camping</h2>
 
+		<br/>
+
+		<% unless @camping_answers.empty? %>
+			<%= render partial: 'questions', collection: @camping_answers, as: :answer, locals: {f: f} %>
+		<% end %>
 
 		<br/>
+
 	<% end %>
 
 	<h2>Sport Notes</h2>
 
+	<% unless @sports_answers.empty? %>
+		<%= render partial: 'questions', collection: @sports_answers, as: :answer, locals: {f: f} %>
+    <% end %>
 
 	<br/>
 
