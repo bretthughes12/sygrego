@@ -23,10 +23,14 @@ class Mysyg::ParticipantsController < MysygController
       @driving_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.driving.order(:order_number))
     end
   
-    # GET /mysyg/:group/notes
-    def edit_notes
-      @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
+    # GET /mysyg/:group/edit_camping
+    def edit_camping
       @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
+    end
+  
+    # GET /mysyg/:group/edit_sports
+    def edit_sports
+      @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
     end
   
     # PATCH /mysyg/:group/participants/1
@@ -53,6 +57,8 @@ class Mysyg::ParticipantsController < MysygController
   
     # PATCH /mysyg/:group/participants/1/update_drivers
     def update_drivers
+      @participant.load_custom_answers(params[:participant]) 
+
       respond_to do |format|
         if @participant.update(participant_driving_params)
           QuestionResponse.save_responses(@participant, params[:participant])
@@ -74,10 +80,33 @@ class Mysyg::ParticipantsController < MysygController
       end
     end
   
-    # PATCH /mysyg/:group/participants/1/update_notes
-    def update_notes
+    # PATCH /mysyg/:group/participants/1/update_camping
+    def update_camping
+      @participant.load_custom_answers(params[:participant]) 
+
       respond_to do |format|
-        if @participant.update(participant_notes_params)
+        if @participant.update(participant_camping_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
+          flash[:notice] = 'Details successfully updated.'
+          format.html { redirect_to home_url(current_user) }
+        else
+          format.html do
+            @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
+
+            flash[:notice] = 'Update failed. See below for the reasons.'
+            render action: "edit_camping"
+          end
+        end
+      end
+    end
+  
+    # PATCH /mysyg/:group/participants/1/update_sports
+    def update_sports
+      @participant.load_custom_answers(params[:participant]) 
+
+      respond_to do |format|
+        if @participant.update(participant_sports_params)
           QuestionResponse.save_responses(@participant, params[:participant])
 
           flash[:notice] = 'Details successfully updated.'
@@ -85,10 +114,9 @@ class Mysyg::ParticipantsController < MysygController
         else
           format.html do
             @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
-            @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
 
             flash[:notice] = 'Update failed. See below for the reasons.'
-            render action: "edit_notes"
+            render action: "edit_sports"
           end
         end
       end
@@ -196,7 +224,13 @@ class Mysyg::ParticipantsController < MysygController
       )
     end
     
-    def participant_notes_params
+    def participant_camping_params
+      params.require(:participant).permit( 
+        :lock_version
+      )
+    end
+    
+    def participant_sports_params
       params.require(:participant).permit( 
         :lock_version
       )

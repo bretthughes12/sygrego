@@ -1,0 +1,24 @@
+<% unless @camping_answers.empty? %>
+	<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+		<%= f.error_notification %>
+
+		<%= f.input :lock_version, as: :hidden %>
+
+		<% if can_display_onsite_flag %>
+			<h2>Camping</h2>
+
+			<br/>
+
+			<%= render partial: 'questions', collection: @camping_answers, as: :answer, locals: {f: f} %>
+
+			<br/>
+
+		<% end %>
+
+		<%= f.button :submit %>
+	<% end %>	
+
+<% else %>
+	<p>Your group has no camping questions for you.</p>
+
+<% end %>

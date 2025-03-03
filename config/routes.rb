@@ -637,9 +637,10 @@ Rails.application.routes.draw do
       get '/home' => 'mysyg/info#home', :as => :home
       get '/details' => 'mysyg/participants#edit', :as => :details
       get '/drivers' => 'mysyg/participants#drivers', as: :drivers
-      get '/notes' => 'mysyg/participants#edit_notes', as: :notes
+      get '/camping' => 'mysyg/participants#edit_camping', as: :camping
+      get '/sports' => 'mysyg/participants#edit_sports', as: :sports
       get '/extras' => 'mysyg/participant_extras#index', :as => :extras
-      get '/sports' => 'mysyg/sport_preferences#index', :as => :sports
+      get '/sports_prefs' => 'mysyg/sport_preferences#index', :as => :sports_prefs
       get '/volunteering' => 'mysyg/volunteers#index', :as => :volunteering
       get '/finance' => 'mysyg/info#finance', :as => :finance
  
@@ -653,12 +654,14 @@ Rails.application.routes.draw do
       resources :participants, :controller => "mysyg/participants", :only => [:edit, :update] do
         member do
           get :new_voucher
-          get :edit_notes
+          get :edit_camping
+          get :edit_sports
           get :drivers
           post :add_voucher
           patch :delete_voucher
           patch :update_drivers
-          patch :update_notes
+          patch :update_camping
+          patch :update_sports
         end
       end
       resources :volunteers, :controller => "mysyg/volunteers", :only => [:index, :edit, :update]

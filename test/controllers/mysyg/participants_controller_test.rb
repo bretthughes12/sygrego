@@ -77,8 +77,14 @@ class Mysyg::ParticipantsControllerTest < ActionDispatch::IntegrationTest
     assert_not_equal "invalid", @participant.licence_type
   end
 
-  test "should get notes" do
-    get edit_notes_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name)
+  test "should get camping" do
+    get edit_camping_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name)
+
+    assert_response :success
+  end
+
+  test "should get sports" do
+    get edit_sports_mysyg_participant_url(@participant, group: @group.mysyg_setting.mysyg_name)
 
     assert_response :success
   end

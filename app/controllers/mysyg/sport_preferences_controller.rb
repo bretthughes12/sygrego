@@ -17,7 +17,7 @@ class Mysyg::SportPreferencesController < MysygController
         preference.update(sport_preference_params(id))
       end
       flash[:notice] = "Preferences updated"
-      redirect_to mysyg_sports_path
+      redirect_to mysyg_sports_prefs_path
     end
   
   private

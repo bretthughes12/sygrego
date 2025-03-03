@@ -1,0 +1,17 @@
+<% unless @sports_answers.empty? %>
+	<%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
+		<%= f.error_notification %>
+
+		<%= f.input :lock_version, as: :hidden %>
+
+			<h2>Sport Notes</h2>
+
+			<%= render partial: 'questions', collection: @sports_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+
+		<%= f.button :submit %>
+	<% end %>	
+<% else %>
+	<p>Your group has no sports questions for you.</p>
+<% end %>
