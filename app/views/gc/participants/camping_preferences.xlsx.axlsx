@@ -7,14 +7,15 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Camping Preferences") do |sheet|
-	sheet.add_row ["Name","CampPrefs"], 
+	questions = @group.questions.camping.with_answer.order(:order_number)
+	heading = ["Name"] + questions.collect(&:name)
+	sheet.add_row heading, 
 		style: header_border
 
 	@participants.each do |participant|
-		sheet.add_row [
-  		     participant.name,
-			 ""
-		   ],
-		style: row_border
+		answers = QuestionResponse.find_or_create_responses(participant, questions).collect(&:full_answer)
+		row = [participant.name] + answers
+		sheet.add_row row, 
+			style: row_border
 	end
 end

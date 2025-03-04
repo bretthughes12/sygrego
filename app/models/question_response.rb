@@ -23,6 +23,18 @@ class QuestionResponse < ApplicationRecord
   belongs_to :participant
   belongs_to :question
 
+  def full_answer
+    if question.question_type == "Dropdown"
+      if answer == nil || answer == "" || answer == "0"
+        answer 
+      else
+        QuestionOption.find(answer.to_i).name
+      end
+    else
+      answer
+    end
+  end
+
   def self.create_responses(questions)
     responses = []
 

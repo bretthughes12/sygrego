@@ -34,6 +34,7 @@ class Question < ApplicationRecord
   scope :sports, -> { where(section: 'Sports') }
   scope :driving, -> { where(section: 'Driving') }
   scope :disclaimer, -> { where(section: 'Disclaimer') }
+  scope :with_answer, -> { where("question_type not in ('Heading', 'Text')") }
 
 
   # TODO: Sort out css around checkboxes and radio buttons and enable 'Multiple Choice' and 'Checkboxes' question types

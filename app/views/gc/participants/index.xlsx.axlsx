@@ -12,18 +12,32 @@ medicare_exp_col = 17
 dob_col = 3
 
 wb.add_worksheet(name: "Participants") do |sheet|
-	sheet.add_row ["FirstName","Surname","Coming","DOB","Age",
+	start_questions = @group.questions.beginning.with_answer.order(:order_number)
+	personal_questions = @group.questions.personal.with_answer.order(:order_number)
+	medical_questions = @group.questions.medical.with_answer.order(:order_number)
+	disclaimer_questions = @group.questions.disclaimer.with_answer.order(:order_number)
+	heading = ["FirstName","Surname","Coming","DOB","Age",
 	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
 				  "Suburb","Postcode","Mobile",
 	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
 				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate","EarlyBird",
 				  "DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
-				  "EmergEmail","WWCC","Voucher"], 
+				  "EmergEmail","WWCC","Voucher"] + 
+				  start_questions.collect(&:name) +
+				  personal_questions.collect(&:name) +
+				  medical_questions.collect(&:name) +
+				  disclaimer_questions.collect(&:name)
+	sheet.add_row heading, 
 		style: header_border
 
 	@participants.each do |participant|
 	    voucher = participant.voucher.nil? ? '' : participant.voucher.name
-		sheet.add_row [
+		start_answers = QuestionResponse.find_or_create_responses(participant, start_questions).collect(&:full_answer)
+		personal_answers = QuestionResponse.find_or_create_responses(participant, personal_questions).collect(&:full_answer)
+		medical_answers = QuestionResponse.find_or_create_responses(participant, medical_questions).collect(&:full_answer)
+		disclaimer_answers = QuestionResponse.find_or_create_responses(participant, disclaimer_questions).collect(&:full_answer)
+
+		row = [
   		     participant.first_name,
 			 participant.surname,
   		     participant.coming,
@@ -60,8 +74,13 @@ wb.add_worksheet(name: "Participants") do |sheet|
 			 participant.emergency_email,
 			 participant.wwcc_number,
 			 voucher
-		   ],
-		style: row_border
+		   ] +
+		   start_answers +
+		   personal_answers +
+		   medical_answers +
+		   disclaimer_answers
+		sheet.add_row row, 
+			style: row_border
 	end
 
 	sheet.col_style dob_col, date, row_offset: 1
