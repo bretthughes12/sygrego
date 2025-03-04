@@ -46,9 +46,9 @@
 
 	<% unless @driving_answers.empty? %>
 		<%= render partial: 'questions', collection: @driving_answers, as: :answer, locals: {f: f} %>
-    <% end %>
 
-	<br/>
+		<br/>
+    <% end %>
 
     <%= f.button :submit, button_text %>
 <% end %>	

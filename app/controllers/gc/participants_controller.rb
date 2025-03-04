@@ -141,7 +141,13 @@ class Gc::ParticipantsController < GcController
   
     # GET /gc/participants/new
     def new
+      @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
+      @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+      @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+      @disclaimer_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.disclaimer.order(:order_number))
+
       @participant.date_of_birth = Date.today - 30.years
+
       respond_to do |format|
         format.html { render layout: @current_role.name }
       end
@@ -155,11 +161,18 @@ class Gc::ParticipantsController < GcController
         @participant.date_of_birth = Date.today - 30.years 
       end
 
+      @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
+      @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+      @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+      @disclaimer_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.disclaimer.order(:order_number))
+
       render layout: @current_role.name
     end
   
     # GET /gc/participants/1/edit_driver
     def edit_driver
+      @driving_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.driving.order(:order_number))
+
       render layout: @current_role.name
     end
   
@@ -180,11 +193,15 @@ class Gc::ParticipantsController < GcController
   
     # GET /gc/participants/1/edit_camping_preferences
     def edit_camping_preferences
+      @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
+
       render layout: @current_role.name
     end
   
     # GET /gc/participants/1/edit_sport_notes
     def edit_sport_notes
+      @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
+
       render layout: @current_role.name
     end
   
@@ -210,39 +227,68 @@ class Gc::ParticipantsController < GcController
       @participant.updated_by = current_user.id
 
       respond_to do |format|
-          if @participant.save
-              flash[:notice] = 'Participant was successfully created.'
-              format.html { render action: "edit", layout: @current_role.name }
-          else
-              format.html { render action: "new", layout: @current_role.name }
-          end
+        if @participant.save
+          QuestionResponse.save_responses(@participant, params[:participant])
+
+          @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
+          @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+          @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+          @disclaimer_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.disclaimer.order(:order_number))
+
+          flash[:notice] = 'Participant was successfully created.'
+          format.html { render action: "edit", layout: @current_role.name }
+        else
+          @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
+          @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+          @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+          @disclaimer_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.disclaimer.order(:order_number))
+
+          format.html { render action: "new", layout: @current_role.name }
+        end
       end
     end
 
     # PATCH /gc/participants/1
     def update
+      @participant.load_custom_answers(params[:participant]) 
       @participant.updated_by = current_user.id
 
       respond_to do |format|
         if @participant.update(participant_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to gc_participants_url }
         else
-          format.html { render action: "edit", layout: @current_role.name }
+          format.html do
+            @start_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.beginning.order(:order_number))
+            @personal_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.personal.order(:order_number))
+            @medical_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.medical.order(:order_number))
+            @disclaimer_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.disclaimer.order(:order_number))
+
+            render action: "edit", layout: @current_role.name
+          end
         end
       end
     end
 
     # PATCH /gc/participants/1/update_driver
     def update_driver
+      @participant.load_custom_answers(params[:participant]) 
       @participant.updated_by = current_user.id
 
       respond_to do |format|
         if @participant.update(participant_driver_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to drivers_gc_participants_url }
         else
-          format.html { render action: "edit_driver", layout: @current_role.name }
+          format.html do 
+            @driving_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.driving.order(:order_number))
+    
+            render action: "edit_driver", layout: @current_role.name
+          end
         end
       end
     end
@@ -291,28 +337,42 @@ class Gc::ParticipantsController < GcController
 
     # PATCH /gc/participants/1/update_camping_preferences
     def update_camping_preferences
+      @participant.load_custom_answers(params[:participant]) 
       @participant.updated_by = current_user.id
 
       respond_to do |format|
         if @participant.update(participant_camping_preferences_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to camping_preferences_gc_participants_url }
         else
-          format.html { render action: "edit_camping_preferences", layout: @current_role.name }
+          format.html do 
+            @camping_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.camping.order(:order_number))
+
+            render action: "edit_camping_preferences", layout: @current_role.name
+          end
         end
       end
     end
 
     # PATCH /gc/participants/1/update_sport_notes
     def update_sport_notes
+      @participant.load_custom_answers(params[:participant]) 
       @participant.updated_by = current_user.id
 
       respond_to do |format|
         if @participant.update(participant_sport_notes_params)
+          QuestionResponse.save_responses(@participant, params[:participant])
+
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to sport_notes_gc_participants_url }
         else
-          format.html { render action: "edit_sport_notes", layout: @current_role.name }
+          format.html do 
+            @sports_answers = QuestionResponse.find_or_create_responses(@participant, @group.questions.sports.order(:order_number))
+
+            render action: "edit_sport_notes", layout: @current_role.name
+          end
         end
       end
     end

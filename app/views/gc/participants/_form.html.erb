@@ -1,6 +1,12 @@
 <%= simple_form_for(@participant, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
+	<% unless @start_answers.empty? %>
+		<%= render partial: 'questions', collection: @start_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
 	<%= f.input :lock_version, as: :hidden %>
 	<% if gc_can_add_participants %>
 		<%= f.input :first_name %>
@@ -154,6 +160,12 @@
 
 	<br/>
 
+	<% unless @personal_answers.empty? %>
+		<%= render partial: 'questions', collection: @personal_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
 	<h2>Medical</h2>
 
 	<%= f.input :medicare_number %>
@@ -170,10 +182,17 @@
 
 	<br/>
 
-	<h2>Camping</h2>
+	<% unless @medical_answers.empty? %>
+		<%= render partial: 'questions', collection: @medical_answers, as: :answer, locals: {f: f} %>
 
+		<br/>
+    <% end %>
 
-	<br/>
+	<% unless @disclaimer_answers.empty? %>
+		<%= render partial: 'questions', collection: @disclaimer_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
 
 	<%= f.button :submit %>
 <% end %>	

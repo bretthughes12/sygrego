@@ -6,5 +6,11 @@
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
    	<%= f.input :number_plate, label: "Number Plate" %>
 
+	<% unless @driving_answers.empty? %>
+		<%= render partial: 'questions', collection: @driving_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
 	<%= f.button :submit %>
 <% end %>	

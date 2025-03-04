@@ -2,6 +2,8 @@
 
 <h1><%= yield(:title) %></h1>
 
+<% @question_number = 0 %>
+
 <%= render partial: "form", locals: { 
                               url: gc_participant_path(@participant), 
                               method: :patch } %>

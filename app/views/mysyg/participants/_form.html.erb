@@ -5,6 +5,8 @@
 		<%= render partial: 'questions', collection: @start_answers, as: :answer, locals: {f: f} %>
     <% end %>
 
+	<br/>
+
 	<%= f.input :lock_version, as: :hidden %>
 	<%= f.input :first_name %>
 	<%= f.input :surname %>

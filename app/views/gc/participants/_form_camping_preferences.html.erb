@@ -3,7 +3,13 @@
 
 	<%= f.input :lock_version, as: :hidden %>
 
-	<br/>
+	<% unless @camping_answers.empty? %>
+		<%= render partial: 'questions', collection: @camping_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% else %>
+		<p>Your group has no camping questions for your participants.</p>
+    <% end %>
 
 	<%= f.button :submit %>
 <% end %>	
