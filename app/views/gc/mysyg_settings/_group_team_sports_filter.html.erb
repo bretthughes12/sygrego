@@ -1,0 +1,24 @@
+<tr valign="top" class="<%= sport_filtered(sport, @group) %>">
+
+    <td width="55%">
+        <%= sport.name %>
+    </td>
+
+    <td class="list-actions">
+	    <% if GroupsSportsFilter.exists?(sport_id: sport.id, group_id: @group.id) %>
+	        <%= link_to 'Show', show_team_gc_groups_sports_filter_path(id: @mysyg_setting.id, 
+                group_id: @group.id, 
+                sport_id: sport.id), 
+                method: :delete, 
+    			class: primary_button_class,
+	    		role: "button" %>
+	    <% else %>
+	        <%= link_to 'Hide', hide_team_gc_groups_sports_filter_path(id: @mysyg_setting.id, 
+                group_id: @group.id, 
+                sport_id: sport.id), 
+                method: :post,
+                class: primary_button_class,
+                role: "button" %>
+	    <% end %>
+    </td>
+</tr>
