@@ -498,7 +498,7 @@ Rails.application.routes.draw do
         delete :show_indiv
       end
     end
-    resources :groups_grades_filters, only: [:show] do
+    resources :groups_sports_filters, only: [:show] do
       member do
         post :hide_team
         post :hide_indiv
