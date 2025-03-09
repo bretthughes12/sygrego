@@ -35,6 +35,7 @@ class Sport < ApplicationRecord
     attr_reader :grades_as_limited
 
     has_many :grades
+    has_many :groups_sports_filters, dependent: :destroy
 
     scope :individual, -> { where(classification: 'Individual') }
     scope :team, -> { where(classification: 'Team') }
