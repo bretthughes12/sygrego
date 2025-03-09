@@ -3,25 +3,28 @@
 # Table name: sport_preferences
 #
 #  id             :bigint           not null, primary key
+#  level          :string(100)
 #  preference     :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  grade_id       :bigint           not null
+#  grade_id       :bigint
 #  participant_id :bigint           not null
+#  sport_id       :bigint
 #
 # Indexes
 #
 #  index_sport_preferences_on_grade_id        (grade_id)
 #  index_sport_preferences_on_participant_id  (participant_id)
+#  index_sport_preferences_on_sport_id        (sport_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (grade_id => grades.id)
 #  fk_rails_...  (participant_id => participants.id)
 #
 
 class SportPreference < ApplicationRecord
   belongs_to :grade
+  belongs_to :sport
   belongs_to :participant
 
   scope :entered, -> { where('preference is not null') }
@@ -31,6 +34,7 @@ class SportPreference < ApplicationRecord
   validates :preference, 
     numericality: { only_integer: true },
     allow_blank: true
+  validates :sport_id, uniqueness: { scope: [:participant_id] }
 
   def <=>(other)
     cached_grade.name <=> other.cached_grade.name

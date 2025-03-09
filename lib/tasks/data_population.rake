@@ -236,4 +236,26 @@ namespace :syg do
     puts "Records not created - #{errors}"
     puts "Records ignored - #{ignored}"
   end
+
+  desc 'Change sport preferences to use populate sports'
+  task convert_sport_prefs_to_sports: ['db:migrate'] do |t|
+    puts 'Converting sport preferences to sports...'
+
+    count = 0
+    errors = 0
+
+    SportPreference.all.each do |sp|
+      sp.sport = sp.grade.sport
+
+      if sp.save
+        count += 1
+      else
+        sp.destroy
+        errors += 1
+      end
+    end
+
+    puts "Records updated - #{count}"
+    puts "Duplicates deleted - #{errors}"
+  end
 end
