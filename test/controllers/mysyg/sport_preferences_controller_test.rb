@@ -25,8 +25,8 @@ class Mysyg::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update multiple sport preferences" do
-    pref1 = FactoryBot.create(:sport_preference, participant: @participant, grade: @grade1)
-    pref2 = FactoryBot.create(:sport_preference, participant: @participant, grade: @grade2)
+    pref1 = FactoryBot.create(:sport_preference, participant: @participant, sport: @grade1.sport)
+    pref2 = FactoryBot.create(:sport_preference, participant: @participant, sport: @grade2.sport)
 
     patch update_multiple_mysyg_sport_preferences_url(
       group: @group.mysyg_setting.mysyg_name,

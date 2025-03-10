@@ -32,6 +32,8 @@ class SportPreference < ApplicationRecord
     numericality: { only_integer: true },
     allow_blank: true
   validates :sport_id, uniqueness: { scope: [:participant_id] }
+  validates :level,             
+    length: { maximum: 100 }
 
   def <=>(other)
     cached_sport.name <=> other.cached_sport.name
@@ -98,7 +100,7 @@ class SportPreference < ApplicationRecord
   def self.create_for_participant(participant, params)
     params.each do |param|
       unless param[:preference] == ""
-        pref = SportPreference.new(participant_id: participant.id, sport_id: param[:sport_id].to_i, preference: param[:preference].to_i) 
+        pref = SportPreference.new(participant_id: participant.id, sport_id: param[:sport_id].to_i, preference: param[:preference].to_i, level: param[:level])   
         pref.save
       end
     end

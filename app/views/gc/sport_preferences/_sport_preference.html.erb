@@ -1,9 +1,5 @@
 <tr valign="top" class="<%= sport_pref_class(sport_preference) %>">
 	<td>
-	    &nbsp;
-	</td>
-	
-	<td>
 		<% case %>
 			<% when sport_preference.is_entered_this_sport?  %>
 			    <%= link_to sport_preference.cached_sport.name, edit_gc_sport_entry_path(sport_preference.sport_entry) %>
@@ -20,6 +16,10 @@
 	
 	<td align="center">
 	    <%= h(sport_preference.preference) %>
+	</td>
+	
+	<td>
+	    <%= h(sport_preference.level) %>
 	</td>
 	
 	<td class="list-actions">

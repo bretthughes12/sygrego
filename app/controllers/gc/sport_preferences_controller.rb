@@ -53,27 +53,27 @@ class Gc::SportPreferencesController < GcController
     end
   
     # POST gc/sport_preferences/1/create_sport_entry
-    def create_sport_entry
-      @sport_preference = SportPreference.find(params[:id])
+    # def create_sport_entry
+    #   @sport_preference = SportPreference.find(params[:id])
   
-      sport_entry = SportEntry.new
-      sport_entry.group = @group
-      sport_entry.grade = @sport_preference.grade
-      sport_entry.status = sport_entry.grade.starting_status
-      sport_entry.section = sport_entry.grade.starting_section
+    #   sport_entry = SportEntry.new
+    #   sport_entry.group = @group
+    #   sport_entry.grade = @sport_preference.grade
+    #   sport_entry.status = sport_entry.grade.starting_status
+    #   sport_entry.section = sport_entry.grade.starting_section
   
-      sport_entry.participants << @sport_preference.participant
+    #   sport_entry.participants << @sport_preference.participant
   
-      if sport_entry.save
-        flash[:notice] = "New sport entry created"
-      else
-        flash[:notice] = "There was a problem creating the sport entry"
-      end
+    #   if sport_entry.save
+    #     flash[:notice] = "New sport entry created"
+    #   else
+    #     flash[:notice] = "There was a problem creating the sport entry"
+    #   end
   
-      respond_to do |format|
-        format.html { redirect_to gc_sport_preferences_path } 
-      end
-    end
+    #   respond_to do |format|
+    #     format.html { redirect_to gc_sport_preferences_path } 
+    #   end
+    # end
   
     # DELETE gc/sport_preferences/1/remove_from_sport_entry
     def remove_from_sport_entry

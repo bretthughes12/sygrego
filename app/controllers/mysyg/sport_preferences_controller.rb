@@ -10,7 +10,7 @@ class Mysyg::SportPreferencesController < MysygController
       @sport_preferences = SportPreference.prepare_for_participant(@participant)
     end
   
-    # PUT mysyg/:group/sport_preferences/update_multiple?session=1
+    # PUT mysyg/:group/sport_preferences/update_multiple
     def update_multiple
       params[:sport_preferences].keys.each do |id|
         preference = SportPreference.find(id.to_i)
@@ -25,8 +25,9 @@ class Mysyg::SportPreferencesController < MysygController
     def sport_preference_params(id)
       params.require(:sport_preferences)
             .fetch(id)
-            .permit(:grade_id, 
-                    :preference)
+            .permit(:sport_id, 
+                    :preference,
+                    :level)
     end
   end
   

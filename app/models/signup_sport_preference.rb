@@ -7,7 +7,8 @@ class SignupSportPreference
 
   attr_accessor :sport_id,
                 :sport,
-                :preference
+                :preference,
+                :level
 
   INTEGER_FIELDS = %w[sport_id preference].freeze
 
