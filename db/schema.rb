@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_231240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -235,6 +235,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
     t.datetime "updated_at", null: false
     t.index ["grade_id"], name: "index_groups_grades_filters_on_grade_id"
     t.index ["group_id"], name: "index_groups_grades_filters_on_group_id"
+  end
+
+  create_table "groups_sports_filters", force: :cascade do |t|
+    t.bigint "sport_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_groups_sports_filters_on_group_id"
+    t.index ["sport_id"], name: "index_groups_sports_filters_on_sport_id"
   end
 
   create_table "groups_users", id: false, force: :cascade do |t|
@@ -678,13 +687,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
   end
 
   create_table "sport_preferences", force: :cascade do |t|
-    t.bigint "grade_id", null: false
+    t.bigint "grade_id"
     t.bigint "participant_id", null: false
     t.integer "preference"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "sport_id"
+    t.string "level", limit: 100
     t.index ["grade_id"], name: "index_sport_preferences_on_grade_id"
     t.index ["participant_id"], name: "index_sport_preferences_on_participant_id"
+    t.index ["sport_id"], name: "index_sport_preferences_on_sport_id"
   end
 
   create_table "sports", force: :cascade do |t|
@@ -852,6 +864,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
   add_foreign_key "group_fee_categories", "groups"
   add_foreign_key "groups_grades_filters", "grades"
   add_foreign_key "groups_grades_filters", "groups"
+  add_foreign_key "groups_sports_filters", "groups"
+  add_foreign_key "groups_sports_filters", "sports"
   add_foreign_key "groups_users", "groups"
   add_foreign_key "groups_users", "users"
   add_foreign_key "mysyg_settings", "groups"
@@ -875,7 +889,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_28_073011) do
   add_foreign_key "sections_volunteers", "volunteers"
   add_foreign_key "sport_entries", "grades"
   add_foreign_key "sport_entries", "groups"
-  add_foreign_key "sport_preferences", "grades"
   add_foreign_key "sport_preferences", "participants"
   add_foreign_key "volunteers", "volunteer_types"
 end

@@ -35,6 +35,8 @@ class Sport < ApplicationRecord
     attr_reader :grades_as_limited
 
     has_many :grades
+    has_many :groups_sports_filters, dependent: :destroy
+    has_many :sport_preferences, dependent: :destroy
 
     scope :individual, -> { where(classification: 'Individual') }
     scope :team, -> { where(classification: 'Team') }
@@ -86,7 +88,7 @@ class Sport < ApplicationRecord
         end
     end
 
-    def sport_preferences(group)
+    def sport_preferences_for_group(group)
         prefs = []
         group.participants.coming.accepted.playing_sport.each do |participant|
             participant.sport_preferences.entered.each do |pref|

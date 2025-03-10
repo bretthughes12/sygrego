@@ -3,42 +3,45 @@
 # Table name: sport_preferences
 #
 #  id             :bigint           not null, primary key
+#  level          :string(100)
 #  preference     :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  grade_id       :bigint           not null
+#  grade_id       :bigint
 #  participant_id :bigint           not null
+#  sport_id       :bigint
 #
 # Indexes
 #
 #  index_sport_preferences_on_grade_id        (grade_id)
 #  index_sport_preferences_on_participant_id  (participant_id)
+#  index_sport_preferences_on_sport_id        (sport_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (grade_id => grades.id)
 #  fk_rails_...  (participant_id => participants.id)
 #
 
 class SportPreference < ApplicationRecord
-  belongs_to :grade
+  belongs_to :sport
   belongs_to :participant
 
   scope :entered, -> { where('preference is not null') }
 
-  delegate :sport, to: :grade
-
   validates :preference, 
     numericality: { only_integer: true },
     allow_blank: true
+  validates :sport_id, uniqueness: { scope: [:participant_id] }
+  validates :level,             
+    length: { maximum: 100 }
 
   def <=>(other)
-    cached_grade.name <=> other.cached_grade.name
+    cached_sport.name <=> other.cached_sport.name
   end
 
   def self.locate_for_participant(participant)
     SportPreference
-      .joins(:grade, :participant)
+      .joins(:sport, :participant)
       .entered
       .where(participant_id: participant.id)
       .sort
@@ -50,28 +53,34 @@ class SportPreference < ApplicationRecord
                 participant.group_grades_i_can_join +
                 participant.grades)
                  .uniq
-                 .sort &
-                participant.group.filtered_grades
+                 .sort 
              else
                []
              end
 
+    if grades.empty?
+      sports = []
+    else
+      sports = grades.collect(&:sport).uniq.sort &
+        participant.group.filtered_sports
+    end
+
     prefs = []
-    prefs = grades.collect do |g|
-      SportPreference.find_or_create_by(participant_id: participant.id, grade_id: g.id) do |sp|
+    prefs = sports.collect do |s|
+      SportPreference.find_or_create_by(participant_id: participant.id, sport_id: s.id) do |sp|
         sp.participant_id = participant.id
-        sp.grade_id = g.id
+        sp.sport_id = s.id
       end
     end
     prefs
   end
 
   def self.prepare_for_group(group)
-    grades = group.filtered_grades.sort
+    sports = group.filtered_sports.sort
 
     prefs = []
-    prefs = grades.collect do |g|
-      SignupSportPreference.new(grade_id: g.id)
+    prefs = sports.collect do |s|
+      SignupSportPreference.new(sport_id: s.id)
     end
     prefs
   end
@@ -84,8 +93,8 @@ class SportPreference < ApplicationRecord
     prefs
   end
 
-  def self.store(participant_id, grade_id, preference)
-    pref = SportPreference.find_by_participant_id_and_grade_id(participant_id, grade_id) || SportPreference.new(participant_id: participant_id, grade_id: grade_id)
+  def self.store(participant_id, sport_id, preference)
+    pref = SportPreference.find_by_participant_id_and_sport_id(participant_id, sport_id) || SportPreference.new(participant_id: participant_id, sport_id: sport_id)
 
     pref.preference = preference
     pref.save
@@ -94,7 +103,7 @@ class SportPreference < ApplicationRecord
   def self.create_for_participant(participant, params)
     params.each do |param|
       unless param[:preference] == ""
-        pref = SportPreference.new(participant_id: participant.id, grade_id: param[:grade_id].to_i, preference: param[:preference].to_i) 
+        pref = SportPreference.new(participant_id: participant.id, sport_id: param[:sport_id].to_i, preference: param[:preference].to_i, level: param[:level])   
         pref.save
       end
     end
@@ -102,24 +111,23 @@ class SportPreference < ApplicationRecord
 
   def self.locate_for_group(group, options = {})
     prefs = SportPreference
-            .joins([:grade, { participant: :group }])
+            .joins([:sport, { participant: :group }])
             .entered
             .where(participants: { group_id: group.id })
             .where(participants: { coming: true })
-            .includes({ participant: %i[group sport_entries] }, grade: %i[sport sport_entries])
-            .order('grades.name')
+            .includes({ participant: %i[group sport_entries] }, :sport)
+            .order('sports.name')
             .sort
 
-    prefs = prefs.reject { |p| (options[:entered].nil? || !options[:entered]) && p.is_entered? }
-    prefs = prefs.reject { |p| (options[:in_sport].nil? || !options[:in_sport]) && !p.is_entered? && p.is_entered_this_sport? }
+    prefs = prefs.reject { |p| (options[:entered].nil? || !options[:entered]) && p.is_entered_this_sport? }
   end
 
   def cached_participant
     @participant ||= participant
   end
 
-  def cached_grade
-    @grade ||= grade
+  def cached_sport
+    @sport ||= sport
   end
 
   def group
@@ -127,19 +135,15 @@ class SportPreference < ApplicationRecord
   end
 
   def sport_entry
-    @sport_entry ||= cached_participant.first_entry_in_grade(cached_grade)
+    @sport_entry ||= cached_participant.first_entry_in_sport(cached_sport)
   end
 
   def available_sport_entry
-    @available_sport_entry ||= group.first_entry_in_grade(cached_grade)
-  end
-
-  def is_entered?
-    @is_entered ||= cached_participant.is_entered_in?(cached_grade)
+    @available_sport_entry ||= group.first_available_entry_in_sport(cached_sport, cached_participant)
   end
 
   def is_entered_this_sport?
-    @is_entered_this_sport ||= cached_participant.is_entered_in_sport?(cached_grade.sport)
+    @is_entered_this_sport ||= cached_participant.is_entered_in_sport?(cached_sport)
   end
 
   def is_sport_entry_available?
@@ -149,8 +153,6 @@ class SportPreference < ApplicationRecord
   def entry_comment(entry)
     if is_entered_this_sport?
       'Sport clash (not allowed)'
-    elsif self.grade != entry.grade
-      'Different grade'
     else
       ''
     end

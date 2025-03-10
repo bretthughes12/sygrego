@@ -8,13 +8,13 @@ class Gc::MysygSettingsController < GcController
   
     # GET /gc/mysyg_settings/1/edit_team_sports
     def edit_team_sports
-      @team_grades = Grade.team.order('grades.name').load
+      @team_sports = Sport.team.order('name').load
       render layout: @current_role.name
     end
   
     # GET /gc/mysyg_settings/1/edit_indiv_sports
     def edit_indiv_sports
-      @indiv_grades = Grade.individual.order('grades.name').load
+      @indiv_sports = Sport.individual.order('name').load
       render layout: @current_role.name
     end
   
@@ -68,7 +68,10 @@ class Gc::MysygSettingsController < GcController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to home_gc_info_path }
         else
-          format.html { render action: "edit_team_sports", layout: @current_role.name }
+          format.html do
+            @team_sports = Sport.team.order('name').load
+            render action: "edit_team_sports", layout: @current_role.name
+          end
         end
       end
     end
@@ -80,7 +83,10 @@ class Gc::MysygSettingsController < GcController
           flash[:notice] = 'Details were successfully updated.'
           format.html { redirect_to home_gc_info_path }
         else
-          format.html { render action: "edit_indiv_sports", layout: @current_role.name }
+          format.html do
+            @indiv_sports = Sport.individual.order('name').load
+            render action: "edit_indiv_sports", layout: @current_role.name
+          end
         end
       end
     end

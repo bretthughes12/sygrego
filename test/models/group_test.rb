@@ -540,7 +540,7 @@ class GroupTest < ActiveSupport::TestCase
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
   
-    assert_equal 0, @group.filtered_team_grades.size
+    assert_equal 0, @group.filtered_team_sports.size
   end
 
   test "should filter in all team sports" do
@@ -553,7 +553,7 @@ class GroupTest < ActiveSupport::TestCase
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
   
-    assert_equal 2, @group.filtered_team_grades.size
+    assert_equal 1, @group.filtered_team_sports.size
   end
 
   test "should filter in team sports entered" do
@@ -569,8 +569,8 @@ class GroupTest < ActiveSupport::TestCase
       grade: grade2,
       group: @group)
   
-    assert_equal 1, @group.filtered_team_grades.size
-    assert_equal grade2, @group.filtered_team_grades.first
+    assert_equal 1, @group.filtered_team_sports.size
+    assert_equal sport, @group.filtered_team_sports.first
   end
 
   test "should filter out listed team sports" do
@@ -582,12 +582,11 @@ class GroupTest < ActiveSupport::TestCase
       sport: sport)
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
-    FactoryBot.create(:groups_grades_filter, 
-      grade: grade1,
+    FactoryBot.create(:groups_sports_filter, 
+      sport: sport,
       group: @group)
   
-    assert_equal 1, @group.filtered_team_grades.size
-    assert_equal grade2, @group.filtered_team_grades.first
+    assert_equal 0, @group.filtered_team_sports.size
   end
 
   test "should filter out all individual sports" do
@@ -600,7 +599,7 @@ class GroupTest < ActiveSupport::TestCase
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
   
-    assert_equal 0, @group.filtered_indiv_grades.size
+    assert_equal 0, @group.filtered_indiv_sports.size
   end
 
   test "should filter in all individual sports" do
@@ -613,7 +612,7 @@ class GroupTest < ActiveSupport::TestCase
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
   
-    assert_equal 2, @group.filtered_indiv_grades.size
+    assert_equal 1, @group.filtered_indiv_sports.size
   end
 
   test "should filter in individual sports entered" do
@@ -629,8 +628,8 @@ class GroupTest < ActiveSupport::TestCase
       grade: grade2,
       group: @group)
   
-    assert_equal 1, @group.filtered_indiv_grades.size
-    assert_equal grade2, @group.filtered_indiv_grades.first
+    assert_equal 1, @group.filtered_indiv_sports.size
+    assert_equal sport, @group.filtered_indiv_sports.first
   end
 
   test "should filter out listed individual sports" do
@@ -642,12 +641,11 @@ class GroupTest < ActiveSupport::TestCase
       sport: sport)
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
-    FactoryBot.create(:groups_grades_filter, 
-      grade: grade1,
+    FactoryBot.create(:groups_sports_filter, 
+      sport: sport,
       group: @group)
   
-    assert_equal 1, @group.filtered_indiv_grades.size
-    assert_equal grade2, @group.filtered_indiv_grades.first
+    assert_equal 0, @group.filtered_indiv_sports.size
   end
 
   def test_should_be_active_with_a_non_stale_user

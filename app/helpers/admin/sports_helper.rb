@@ -27,4 +27,12 @@ module Admin::SportsHelper
             "Teams on equal points are separated by total #{sport.point_name.downcase.pluralize} scored."
         end
     end
+
+    def sport_filtered(sport, group)
+        if GroupsSportsFilter.exists?(sport_id: sport.id, group_id: group.id)
+          'table-dark'
+        else
+          'table-primary'
+        end
+    end
 end

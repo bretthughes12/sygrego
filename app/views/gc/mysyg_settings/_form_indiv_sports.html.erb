@@ -20,13 +20,12 @@
         <table class="table table-dark">
             <thead>
                 <tr>
-                    <th align="left">Session</th>
-                    <th align="left">Sport Grade</th>
+                    <th align="left">Sport</th>
                     <th align="right">Actions</th>
                 </tr>
             </thead>
     
-            <%= render :partial => 'group_indiv_grades_filter', :collection => @indiv_grades, :as => :grade %>
+            <%= render :partial => 'group_indiv_sports_filter', :collection => @indiv_sports, :as => :sport %>
         </table>
     <% end %>
 <% end %>

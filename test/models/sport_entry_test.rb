@@ -371,7 +371,7 @@ class SportEntryTest < ActiveSupport::TestCase
     entry = FactoryBot.create(:sport_entry,
       group: group)
     pref = FactoryBot.create(:sport_preference,
-      grade: entry.grade,
+      sport: entry.sport,
       participant: participant)
     
     assert_equal true, entry.available_sport_preferences.include?(pref)

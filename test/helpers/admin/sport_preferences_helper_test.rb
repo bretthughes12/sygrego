@@ -17,16 +17,12 @@ class Admin::SportPreferencesHelperTest < ActionView::TestCase
   test "sport preference display classes" do
     sport = FactoryBot.create(:sport)
     grade1 = FactoryBot.create(:grade, sport: sport)
-    grade2 = FactoryBot.create(:grade, sport: sport)
     entry = FactoryBot.create(:sport_entry, group: @group, grade: grade1)
     entry.participants << @player
 
     assert_equal "table-secondary", sport_pref_class(@pref)
 
-    pref2 = FactoryBot.create(:sport_preference, grade: grade1, participant: @player)
+    pref2 = FactoryBot.create(:sport_preference, sport: sport, participant: @player)
     assert_equal "table-primary", sport_pref_class(pref2)
-
-    pref3 = FactoryBot.create(:sport_preference, grade: grade2, participant: @player)
-    assert_equal "table-warning", sport_pref_class(pref3)
   end
 end

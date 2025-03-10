@@ -4,22 +4,22 @@
     <table class="table table-dark table-striped">
         <thead>
             <tr>
-                <th>Session</th>
-                <th>Sport / Grade</th>
+                <th>Sport</th>
                 <th>Preference</th>
+                <th>Experience</th>
             </tr>
         </thead>
 
 	<% for pref in @participant.sport_preferences.entered %>
 	  	<tr valign="top">
 	        <td> 
-		        <%= pref.grade.session_name %>
-	    	</td>
-	        <td> 
-		        <%= pref.grade.name %>
+		        <%= pref.sport.name %>
 	    	</td>
 	        <td> 
 		        <%= pref.preference %>
+	    	</td>
+	        <td> 
+		        <%= pref.level %>
 	    	</td>
 	    </tr>
 	<% end %>
