@@ -236,7 +236,7 @@ class SportEntry < ApplicationRecord
   end
 
   def available_sport_preferences
-    sport.sport_preferences(group).reject do |p|
+    sport.sport_preferences_for_group(group).reject do |p|
       p.preference.nil? ||
         participants.include?(p.participant) ||
         p.group != group ||

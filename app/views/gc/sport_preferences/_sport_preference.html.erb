@@ -1,16 +1,16 @@
 <tr valign="top" class="<%= sport_pref_class(sport_preference) %>">
 	<td>
-	    <%= h(sport_preference.cached_grade.session_name) %>
+	    &nbsp;
 	</td>
 	
 	<td>
 		<% case %>
-			<% when sport_preference.is_entered?  %>
-			    <%= link_to sport_preference.cached_grade.name, edit_gc_sport_entry_path(sport_preference.sport_entry) %>
+			<% when sport_preference.is_entered_this_sport?  %>
+			    <%= link_to sport_preference.cached_sport.name, edit_gc_sport_entry_path(sport_preference.sport_entry) %>
 			<% when sport_preference.is_sport_entry_available? %>
-			    <%= link_to sport_preference.cached_grade.name, edit_gc_sport_entry_path(sport_preference.available_sport_entry) %>
+			    <%= link_to sport_preference.cached_sport.name, edit_gc_sport_entry_path(sport_preference.available_sport_entry) %>
 			<% else %>
-			    <%= h(sport_preference.cached_grade.name) %>
+			    <%= h(sport_preference.cached_sport.name) %>
 		<% end %>
 	</td>
 	

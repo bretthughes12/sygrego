@@ -523,6 +523,10 @@ class Participant < ApplicationRecord
       sport_entries.select { |entry| entry.grade == grade }.first
     end
 
+    def first_entry_in_sport(sport)
+      sport_entries.select { |entry| entry.sport == sport }.first
+    end
+
     def is_entered_in?(grade)
       sport_entries.collect(&:grade).include?(grade)
     end

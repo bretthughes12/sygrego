@@ -401,6 +401,10 @@ class Group < ApplicationRecord
     cached_sport_entries.select { |entry| entry.grade == grade }.first
   end
 
+  def first_entry_in_sport(sport)
+    cached_sport_entries.select { |entry| entry.sport == sport }.first
+  end
+
   def participant_extras
     participants.coming.accepted.order(:surname, :first_name).collect do |p|
       p.participant_extras

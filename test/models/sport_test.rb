@@ -150,9 +150,9 @@ class SportTest < ActiveSupport::TestCase
     entry.participants << participant
     sport_preference = FactoryBot.create(:sport_preference, 
       participant: participant, 
-      grade: grade)
+      sport: @sport)
 
-    prefs = @sport.sport_preferences(group)
+    prefs = @sport.sport_preferences_for_group(group)
 
     assert_equal 1, prefs.size
     assert_equal sport_preference, prefs[0]

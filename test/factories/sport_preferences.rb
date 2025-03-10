@@ -24,7 +24,7 @@
 
 FactoryBot.define do
   factory :sport_preference do
-    grade 
+    sport
     participant 
     preference { 1 }
   end

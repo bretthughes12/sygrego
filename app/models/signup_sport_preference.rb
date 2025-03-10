@@ -5,11 +5,11 @@ class SignupSportPreference
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :grade_id,
-                :grade,
+  attr_accessor :sport_id,
+                :sport,
                 :preference
 
-  INTEGER_FIELDS = %w[grade_id preference].freeze
+  INTEGER_FIELDS = %w[sport_id preference].freeze
 
   validates :preference, 
     numericality: { only_integer: true },
@@ -17,7 +17,7 @@ class SignupSportPreference
 
   def initialize(attributes = {})
     send_attributes(attributes)
-    @grade = find_grade
+    @sport = find_sport
   end
   
   def persisted?
@@ -38,7 +38,7 @@ class SignupSportPreference
 
   private
 
-  def find_grade
-    Grade.where(id: @grade_id).first
+  def find_sport
+    Sport.where(id: @sport_id).first
   end
 end
