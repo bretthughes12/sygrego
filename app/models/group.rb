@@ -401,8 +401,13 @@ class Group < ApplicationRecord
     cached_sport_entries.select { |entry| entry.grade == grade }.first
   end
 
-  def first_entry_in_sport(sport)
-    cached_sport_entries.select { |entry| entry.sport == sport }.first
+  def first_available_entry_in_sport(sport, participant)
+    cached_sport_entries.each do |entry| 
+      if entry.sport == sport && participant.available_sport_entries.include?(entry)
+        return entry
+      end
+    end
+    return nil
   end
 
   def participant_extras
@@ -541,36 +546,36 @@ class Group < ApplicationRecord
       grades_available(include_all).collect(&:sport).uniq
     end
   
-    def filtered_grades
-      filtered_team_grades + filtered_indiv_grades
+    def filtered_sports
+      filtered_team_sports + filtered_indiv_sports
     end
   
-    def filtered_team_grades
+    def filtered_team_sports
       if mysyg_setting.team_sport_view_strategy == 'Show none'
         []
       elsif mysyg_setting.team_sport_view_strategy == 'Show sport entries only'
-        grades & Grade.team.load
+        sports & Sport.team.load
       elsif mysyg_setting.team_sport_view_strategy == 'Show listed'
-        Grade.team.load - grade_filters
+        Sport.team.load - sport_filters
       else
-        Grade.team.load
+        Sport.team.load
       end
     end
   
-    def filtered_indiv_grades
+    def filtered_indiv_sports
       if mysyg_setting.indiv_sport_view_strategy == 'Show none'
         []
       elsif mysyg_setting.indiv_sport_view_strategy == 'Show sport entries only'
-        grades & Grade.individual.load
+        sports & Sport.individual.load
       elsif mysyg_setting.indiv_sport_view_strategy == 'Show listed'
-        Grade.individual.load - grade_filters
+        Sport.individual.load - sport_filters
       else
-        Grade.individual.load
+        Sport.individual.load
       end
     end
   
-    def grade_filters
-      groups_grades_filters.each.collect(&:grade)
+    def sport_filters
+      groups_sports_filters.each.collect(&:sport)
     end
   
     def number_playing_sport

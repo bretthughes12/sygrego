@@ -41,12 +41,6 @@ class Gc::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should list sport preferences with in sport option" do
-    get gc_sport_preferences_path(in_sport: 'on')
-
-    assert_response :success
-  end
-
   test "should list sport preferences with no option" do
     get gc_sport_preferences_path(commit: 'Filter')
 
@@ -54,7 +48,7 @@ class Gc::SportPreferencesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should list sport preferences with session-stored options" do
-    get gc_sport_preferences_path(in_sport: 'on')
+    get gc_sport_preferences_path(entered: 'on')
     get gc_sport_preferences_path
 
     assert_response :success

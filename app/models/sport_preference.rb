@@ -53,13 +53,17 @@ class SportPreference < ApplicationRecord
                 participant.group_grades_i_can_join +
                 participant.grades)
                  .uniq
-                 .sort &
-                participant.group.filtered_grades
+                 .sort 
              else
                []
              end
 
-    sports = grades.collect(&:sport).uniq.sort
+    if grades.empty?
+      sports = []
+    else
+      sports = grades.collect(&:sport).uniq.sort &
+        participant.group.filtered_sports
+    end
 
     prefs = []
     prefs = sports.collect do |s|
@@ -72,8 +76,7 @@ class SportPreference < ApplicationRecord
   end
 
   def self.prepare_for_group(group)
-    grades = group.filtered_grades.sort
-    sports = grades.collect(&:sport).uniq.sort
+    sports = group.filtered_sports.sort
 
     prefs = []
     prefs = sports.collect do |s|
@@ -136,7 +139,7 @@ class SportPreference < ApplicationRecord
   end
 
   def available_sport_entry
-    @available_sport_entry ||= group.first_entry_in_sport(cached_sport)
+    @available_sport_entry ||= group.first_available_entry_in_sport(cached_sport, cached_participant)
   end
 
   def is_entered_this_sport?

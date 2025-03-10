@@ -6,11 +6,11 @@ class Gc::SportPreferencesController < GcController
       respond_to do |format|
         format.html do
           if session[:sport_pref_filter].nil?
-            session[:sport_pref_filter] = {entered: true, in_sport: true}
+            session[:sport_pref_filter] = {entered: true}
           end
       
           options = {}
-          [:entered, :in_sport].each do |o|
+          [:entered].each do |o|
             case 
               when params[o]
                 options[o] = session[:sport_pref_filter][o] = true 
@@ -27,12 +27,11 @@ class Gc::SportPreferencesController < GcController
           end
           
           @entered = session[:sport_pref_filter][:entered]
-          @in_sport = session[:sport_pref_filter][:in_sport]
       
           @sport_preferences = SportPreference.locate_for_group(@group, options)
         end
         format.xlsx do 
-          @sport_preferences = SportPreference.locate_for_group(@group, {entered: true, in_sport: true})
+          @sport_preferences = SportPreference.locate_for_group(@group, {entered: true})
           render xlsx: "sport_prefs", template: "gc/sport_preferences/sport_prefs", filename: "sport_preferences.xlsx" 
         end
       end
