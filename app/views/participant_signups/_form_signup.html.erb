@@ -132,7 +132,7 @@
 	<% end %>
 
 	<% if @settings.sports_loaded && @group.mysyg_setting.show_sports_on_signup %>
-		<% if @participant_signup.sport_preferences.empty? %>
+		<% if @participant_signup.sport_preferences.nil? || @participant_signup.sport_preferences.empty? %>
 			<p>There are no eligible sport grades available for you </p>
 	
 		<% else %>

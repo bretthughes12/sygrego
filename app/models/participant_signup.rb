@@ -202,6 +202,7 @@ class ParticipantSignup
     before_validation :validate_email_provided
     before_validation :validate_disclaimer_ticked
     before_validation :validate_custom_responses
+    before_validation :validate_voucher
   
     before_validation :normalize_first_name!
     before_validation :normalize_surname!
@@ -378,6 +379,15 @@ class ParticipantSignup
         name = voucher_name
         name.upcase!
         @voucher = Voucher.find_by_name(name)
+      end
+    end
+
+    def validate_voucher
+      unless voucher_name.blank?
+        validate_voucher_name
+        unless @voucher && @voucher.valid_for?(@participant)
+          errors.add(:voucher_name, "is not valid")
+        end
       end
     end
 
