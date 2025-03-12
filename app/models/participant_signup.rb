@@ -477,5 +477,5 @@ class ParticipantSignup
     def normalize_gender!
       self.gender = gender.upcase if gender
     end
-  end
+end
   

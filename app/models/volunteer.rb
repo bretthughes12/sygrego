@@ -113,7 +113,7 @@ class Volunteer < ApplicationRecord
     end
     
     def section_names
-      names = sections.collect(&:name)
+      sections.collect(&:name)
     end
 
     def participant_name

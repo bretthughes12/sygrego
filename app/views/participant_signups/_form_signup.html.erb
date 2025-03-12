@@ -66,11 +66,12 @@
 	<%= f.input :login_email, hint: "this may be different to the above (for example, if you a parent signing up your children). This is the email you should use to log back on with" %>
 	<%= f.input :login_name %>
 
-	<% unless @participant_signup.personal_answers.empty? %>
-		<%= render partial: 'questions', collection: @participant_signup.personal_answers, as: :answer, locals: {f: f} %>
-    <% end %>
-
 	<br/>
+
+<% unless @participant_signup.personal_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.personal_answers, as: :answer, locals: {f: f} %>
+		<br/>
+    <% end %>
 
 	<h2>Medical</h2>
 
@@ -111,18 +112,18 @@
 		<%= f.input :emergency_email, label: "Emergency contact email" %>
 	<% end %>
 
+	<br/>
+
 	<% unless @participant_signup.medical_answers.empty? %>
 		<%= render partial: 'questions', collection: @participant_signup.medical_answers, as: :answer, locals: {f: f} %>
-    <% end %>
 
-	<br/>
+		<br/>
+    <% end %>
 
 	<% if can_display_onsite_flag && !@participant_signup.camping_answers.empty? %>
 		<h2>Camping</h2>
 
-		<% unless @participant_signup.camping_answers.empty? %>
-			<%= render partial: 'questions', collection: @participant_signup.camping_answers, as: :answer, locals: {f: f} %>
-		<% end %>
+		<%= render partial: 'questions', collection: @participant_signup.camping_answers, as: :answer, locals: {f: f} %>
 
 		<br/>
 	<% end %>
@@ -157,11 +158,13 @@
 		<% end %>
 	<% end %>
 
+	<br/>
+
 	<% unless @participant_signup.sports_answers.empty? %>
 		<%= render partial: 'questions', collection: @participant_signup.sports_answers, as: :answer, locals: {f: f} %>
-    <% end %>
 
-	<br/>
+		<br/>
+    <% end %>
 
 	<h2>Driving (only relevant if over 18)</h2>
 
@@ -203,11 +206,13 @@
 
     <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration (required for drivers)" %> 
 
+	<br/>
+
 	<% unless @participant_signup.driving_answers.empty? %>
 		<%= render partial: 'questions', collection: @participant_signup.driving_answers, as: :answer, locals: {f: f} %>
-    <% end %>
 
-	<br/>
+		<br/>
+    <% end %>
 
 	<h2>Disclaimer</h2>
 
@@ -290,9 +295,9 @@
 
 	<% unless @participant_signup.disclaimer_answers.empty? %>
 		<%= render partial: 'questions', collection: @participant_signup.disclaimer_answers, as: :answer, locals: {f: f} %>
-    <% end %>
 
-	<br/>
+		<br/>
+    <% end %>
 
     <%= f.button :submit, "Sign up" %>
 <% end %>	

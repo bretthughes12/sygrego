@@ -152,13 +152,13 @@
 		<% end %>
 	<% end %>
 
+	<br/>
+
 	<% unless @sports_questions.empty? %>
 		<%= render partial: 'question', collection: @sports_questions, as: :question %>
 
 		<br/>
 	<% end %>
-
-	<br/>
 
 	<h2>Driving (only relevant if over 18)</h2>
 

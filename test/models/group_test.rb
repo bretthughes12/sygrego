@@ -90,31 +90,31 @@ class GroupTest < ActiveSupport::TestCase
   def test_group_deposit
     # group expects fewer than 20 (small group)
     group = FactoryBot.create(:group)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 19, 
       group: group)
     assert_equal 150, group.deposit
 
     # group expects no one coming
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 0, 
       group: group)
     assert_equal 150, group.deposit
     
     # medium group 
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
     assert_equal 300, group.deposit
     
     # medium group (upper boundary)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 39, 
       group: group)
     assert_equal 300, group.deposit
     
     # large
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 40, 
       group: group)
     assert_equal 600, group.deposit
@@ -128,7 +128,7 @@ class GroupTest < ActiveSupport::TestCase
     #group has people registered
     group = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group: group)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
     5.times do
@@ -143,7 +143,7 @@ class GroupTest < ActiveSupport::TestCase
     #group has one participant, who is not coming
     group_with_noone_coming = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group: group_with_noone_coming)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group_with_noone_coming)
     FactoryBot.create(:participant, 
@@ -156,7 +156,7 @@ class GroupTest < ActiveSupport::TestCase
     #group has one normal camper - fees is not greater than deposit
     group_with_one_coming = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group: group_with_one_coming)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group_with_one_coming)
     FactoryBot.create(:participant, 
@@ -168,7 +168,7 @@ class GroupTest < ActiveSupport::TestCase
     
     #group with no participants
     group_with_no_participants = FactoryBot.create(:group)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group_with_no_participants)
 
@@ -186,7 +186,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should calculate the amount payable" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group: group)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
     5.times do
@@ -202,7 +202,7 @@ class GroupTest < ActiveSupport::TestCase
   test "should calculate the amount outstanding" do
     group = FactoryBot.create(:group)
     FactoryBot.create(:mysyg_setting, group: group)
-    event_detail = FactoryBot.create(:event_detail, 
+    FactoryBot.create(:event_detail, 
       estimated_numbers: 20, 
       group: group)
     5.times do
@@ -489,7 +489,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "should identify all electronic drivers" do
-    participant = FactoryBot.create(:participant, 
+    FactoryBot.create(:participant, 
       group: @group,
       driver: true,
       driver_signature: true,
@@ -504,7 +504,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "should identify not all electronic drivers" do
-    participant = FactoryBot.create(:participant, 
+    FactoryBot.create(:participant, 
       group: @group,
       driver: true,
       driver_signature: false,
@@ -535,9 +535,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       team_sport_view_strategy: 'Show none')
     sport = FactoryBot.create(:sport, :team)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
   
     assert_equal 0, @group.filtered_team_sports.size
@@ -548,9 +548,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       team_sport_view_strategy: 'Show all')
     sport = FactoryBot.create(:sport, :team)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
   
     assert_equal 1, @group.filtered_team_sports.size
@@ -561,7 +561,7 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       team_sport_view_strategy: 'Show sport entries only')
     sport = FactoryBot.create(:sport, :team)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
@@ -578,9 +578,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       team_sport_view_strategy: 'Show listed')
     sport = FactoryBot.create(:sport, :team)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
     FactoryBot.create(:groups_sports_filter, 
       sport: sport,
@@ -594,9 +594,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       indiv_sport_view_strategy: 'Show none')
     sport = FactoryBot.create(:sport, :individual)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
   
     assert_equal 0, @group.filtered_indiv_sports.size
@@ -607,9 +607,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       indiv_sport_view_strategy: 'Show all')
     sport = FactoryBot.create(:sport, :individual)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
   
     assert_equal 1, @group.filtered_indiv_sports.size
@@ -620,7 +620,7 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       indiv_sport_view_strategy: 'Show sport entries only')
     sport = FactoryBot.create(:sport, :individual)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
     grade2 = FactoryBot.create(:grade, 
       sport: sport)
@@ -637,9 +637,9 @@ class GroupTest < ActiveSupport::TestCase
       group: @group,
       indiv_sport_view_strategy: 'Show listed')
     sport = FactoryBot.create(:sport, :individual)
-    grade1 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
-    grade2 = FactoryBot.create(:grade, 
+    FactoryBot.create(:grade, 
       sport: sport)
     FactoryBot.create(:groups_sports_filter, 
       sport: sport,
