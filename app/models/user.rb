@@ -63,7 +63,8 @@ class User < ApplicationRecord
                             inclusion: { in: STATUS }
   validates :address,       length: { maximum: 200 }
   validates :suburb,        length: { maximum: 40 }
-  validates :postcode,      numericality: { only_integer: true }
+  validates :postcode,      numericality: { only_integer: true },
+                            allow_blank: true
   validates :phone_number,  length: { maximum: 30 }
   validates :gc_reference,  length: { maximum: 40 }
   validates :gc_reference_phone,
