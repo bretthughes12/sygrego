@@ -68,7 +68,7 @@
 
 	<br/>
 
-<% unless @participant_signup.personal_answers.empty? %>
+	<% unless @participant_signup.personal_answers.empty? %>
 		<%= render partial: 'questions', collection: @participant_signup.personal_answers, as: :answer, locals: {f: f} %>
 		<br/>
     <% end %>

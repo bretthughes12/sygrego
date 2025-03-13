@@ -50,6 +50,13 @@ class ParticipantSignupsController < ApplicationController
         @participant_signup.transfer_token = @transferred_participant.transfer_token
         @participant_signup.email = @transferred_participant.transfer_email
 
+        @participant_signup.start_answers = QuestionResponse.create_responses(@group.questions.beginning.order(:order_number))
+        @participant_signup.personal_answers = QuestionResponse.create_responses(@group.questions.personal.order(:order_number))
+        @participant_signup.medical_answers = QuestionResponse.create_responses(@group.questions.medical.order(:order_number))
+        @participant_signup.camping_answers = QuestionResponse.create_responses(@group.questions.camping.order(:order_number))
+        @participant_signup.sports_answers = QuestionResponse.create_responses(@group.questions.sports.order(:order_number))
+        @participant_signup.driving_answers = QuestionResponse.create_responses(@group.questions.driving.order(:order_number))
+        @participant_signup.disclaimer_answers = QuestionResponse.create_responses(@group.questions.disclaimer.order(:order_number))
       else
         @group = Group.find_by_abbr("DFLT")
         flash[:notice] = "This replacement link has already been used"
@@ -149,7 +156,11 @@ class ParticipantSignupsController < ApplicationController
           if @participant_signup.save
             @user = @participant_signup.user 
             voucher = @transferred_participant.voucher
-
+            if @participant.driver_signature 
+              @participant.driver_signature_date = Time.now
+              @participant.save
+            end
+  
             @transferred_participant.status = 'Transferred'
             @transferred_participant.booking_nbr = nil
             @transferred_participant.registration_nbr = nil
@@ -162,6 +173,7 @@ class ParticipantSignupsController < ApplicationController
             @participant.early_bird = @transferred_participant.early_bird
             @participant.save(validate: false)
 
+            QuestionResponse.save_responses(@participant, params[:participant_signup])
             UserMailer.welcome_participant(@user, @participant).deliver_now
 
             flash[:notice] = "Thank you for registering for State Youth Games"
@@ -182,6 +194,14 @@ class ParticipantSignupsController < ApplicationController
           else
             format.html do
               flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
+              @participant_signup.start_answers = QuestionResponse.create_responses(@group.questions.beginning.order(:order_number))
+              @participant_signup.personal_answers = QuestionResponse.create_responses(@group.questions.personal.order(:order_number))
+              @participant_signup.medical_answers = QuestionResponse.create_responses(@group.questions.medical.order(:order_number))
+              @participant_signup.camping_answers = QuestionResponse.create_responses(@group.questions.camping.order(:order_number))
+              @participant_signup.sports_answers = QuestionResponse.create_responses(@group.questions.sports.order(:order_number))
+              @participant_signup.driving_answers = QuestionResponse.create_responses(@group.questions.driving.order(:order_number))
+              @participant_signup.disclaimer_answers = QuestionResponse.create_responses(@group.questions.disclaimer.order(:order_number))
+
               render "transfer", token: @transferred_participant.transfer_token
             end
           end

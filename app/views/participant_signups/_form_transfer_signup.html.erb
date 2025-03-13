@@ -1,6 +1,8 @@
 <%= simple_form_for @participant_signup, url: create_transfer_participant_signups_url do |f| %> 
 	<%= f.error_notification %>
 
+	<% @question_number = 0 %>
+
 	<%= f.input :first_name %>
 	<%= f.input :surname %>
 
@@ -100,6 +102,11 @@
 
 	<br/>
 
+	<% unless @participant_signup.personal_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.personal_answers, as: :answer, locals: {f: f} %>
+		<br/>
+    <% end %>
+
 	<h2>Medical</h2>
 
 	<% if @group.mysyg_setting.medicare_option == 'Require' %>
@@ -141,6 +148,28 @@
 
 	<br/>
 
+	<% unless @participant_signup.medical_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.medical_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
+	<% if can_display_onsite_flag && !@participant_signup.camping_answers.empty? %>
+		<h2>Camping</h2>
+
+		<%= render partial: 'questions', collection: @participant_signup.camping_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+	<% end %>
+
+	<% unless @participant_signup.sports_answers.empty? %>
+		<h2>Sports</h2>
+
+		<%= render partial: 'questions', collection: @participant_signup.sports_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
 	<h2>Driving (only relevant if over 18)</h2>
 
     <%= f.input :driver, :as => :boolean, :label => "I am available to drive at SYG"  %>
@@ -180,6 +209,12 @@
 	<br/>
 
     <%= f.input :driver_signature, :as => :boolean, :label => "I agree to the driver declaration (required for drivers)" %> 
+
+	<% unless @participant_signup.driving_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.driving_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
 
 	<br/>
 
@@ -253,7 +288,6 @@
 			<% end %>
 
 			<br/>
-			<br/>
 		<% end %>
 	<% end %>
 
@@ -264,7 +298,12 @@
 
     <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
 
-	<br/>
+	<% unless @participant_signup.disclaimer_answers.empty? %>
+		<%= render partial: 'questions', collection: @participant_signup.disclaimer_answers, as: :answer, locals: {f: f} %>
+
+		<br/>
+    <% end %>
+
 	<br/>
 
     <%= f.button :submit, "Sign up" %>
