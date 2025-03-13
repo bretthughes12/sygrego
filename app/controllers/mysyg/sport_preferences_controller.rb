@@ -29,5 +29,5 @@ class Mysyg::SportPreferencesController < MysygController
                     :preference,
                     :level)
     end
-  end
+end
   

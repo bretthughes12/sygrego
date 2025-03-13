@@ -535,7 +535,7 @@ Rails.application.routes.draw do
       end
     end
     resources :questions do
-      resources :question_options, only: [:create, :update] do
+      resources :question_options, only: [:create, :update, :destroy] do
         member do
           patch :move_up
           patch :move_down

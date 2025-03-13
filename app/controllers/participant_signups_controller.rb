@@ -207,5 +207,5 @@ class ParticipantSignupsController < ApplicationController
         raise ActiveRecord::RecordNotFound.new('Could not find your group. Please check the link with your group coordinator.')
       end
     end
-  end
+end
   
