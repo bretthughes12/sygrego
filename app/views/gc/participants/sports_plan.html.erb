@@ -1,7 +1,11 @@
 <% title "Sports Planner for #{h(@group.short_name)}" %>
 
 <h1><%= yield(:title) %></h1>
-    
+
+<% if !@settings.restricted_sports_allocated %>
+    <p>Please note: some sports will not show in this table before the restricted sports have been allocated.</p>
+<% end %>
+
 <% if !@participants.empty? %>
     <%= link_to "Download", sports_plan_gc_participants_path(format: :xlsx),
                   class: primary_button_class,
