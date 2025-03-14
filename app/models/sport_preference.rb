@@ -7,19 +7,18 @@
 #  preference     :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  grade_id       :bigint
 #  participant_id :bigint           not null
 #  sport_id       :bigint
 #
 # Indexes
 #
-#  index_sport_preferences_on_grade_id        (grade_id)
 #  index_sport_preferences_on_participant_id  (participant_id)
 #  index_sport_preferences_on_sport_id        (sport_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (participant_id => participants.id)
+#  fk_rails_...  (sport_id => sports.id)
 #
 
 class SportPreference < ApplicationRecord

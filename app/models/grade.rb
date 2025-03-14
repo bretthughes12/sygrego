@@ -46,7 +46,6 @@ class Grade < ApplicationRecord
     attr_reader :file
 
     has_many :sport_entries, dependent: :destroy
-    has_many :sport_preferences, dependent: :destroy
     has_many :sections, dependent: :destroy
     belongs_to :sport
 

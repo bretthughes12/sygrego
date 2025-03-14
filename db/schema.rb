@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_091601) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_14_095140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -674,14 +674,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_091601) do
   end
 
   create_table "sport_preferences", force: :cascade do |t|
-    t.bigint "grade_id"
     t.bigint "participant_id", null: false
     t.integer "preference"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "sport_id"
     t.string "level", limit: 100
-    t.index ["grade_id"], name: "index_sport_preferences_on_grade_id"
     t.index ["participant_id"], name: "index_sport_preferences_on_participant_id"
     t.index ["sport_id"], name: "index_sport_preferences_on_sport_id"
   end
@@ -875,5 +873,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_091601) do
   add_foreign_key "sport_entries", "grades"
   add_foreign_key "sport_entries", "groups"
   add_foreign_key "sport_preferences", "participants"
+  add_foreign_key "sport_preferences", "sports"
   add_foreign_key "volunteers", "volunteer_types"
 end
