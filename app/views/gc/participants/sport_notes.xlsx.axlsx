@@ -13,7 +13,7 @@ wb.add_worksheet(name: "Sport Notes") do |sheet|
 		style: header_border
 
 	@participants.each do |participant|
-		answers = QuestionResponse.find_or_create_responses(participant, questions).collect(&:full_answeranswer)
+		answers = QuestionResponse.find_or_create_responses(participant, questions).collect(&:full_answer)
 		row = [participant.name] + answers
 		sheet.add_row row, 
 			style: row_border
