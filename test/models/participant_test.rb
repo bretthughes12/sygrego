@@ -8,7 +8,6 @@
 #  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  booking_nbr            :string(10)
-#  camping_preferences    :string(100)
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
 #  coming_monday          :boolean          default(TRUE)
@@ -21,7 +20,6 @@
 #  driver                 :boolean          default(FALSE)
 #  driver_signature       :boolean          default(FALSE)
 #  driver_signature_date  :datetime
-#  driving_to_syg         :boolean          default(FALSE)
 #  early_bird             :boolean          default(FALSE)
 #  email                  :string(100)
 #  emergency_contact      :string(40)
@@ -47,13 +45,11 @@
 #  number_plate           :string(10)
 #  onsite                 :boolean          default(TRUE)
 #  paid                   :boolean          default(FALSE)
-#  phone_number           :string(20)
 #  postcode               :integer
 #  registration_nbr       :string(24)
 #  rego_type              :string(10)       default("Full Time")
 #  spectator              :boolean          default(FALSE)
 #  sport_coord            :boolean          default(FALSE)
-#  sport_notes            :string
 #  status                 :string(20)       default("Accepted")
 #  suburb                 :string(40)
 #  surname                :string(20)       not null

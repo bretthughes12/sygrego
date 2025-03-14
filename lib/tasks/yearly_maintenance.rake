@@ -339,7 +339,7 @@ namespace :syg do
                 p.fee_when_withdrawn = 0
                 p.late_fee_charged = false
                 p.driver = false
-                p.driving_to_syg = false
+                # p.driving_to_syg = false
                 p.number_plate = nil
                 p.driver_signature = false
                 p.driver_signature_date = nil
@@ -350,8 +350,8 @@ namespace :syg do
                 p.exported = false
                 p.dirty = false
                 p.emergency_email = nil
-                p.camping_preferences = nil
-                p.sport_notes = nil
+                # p.camping_preferences = nil
+                # p.sport_notes = nil
                 p.medical_injuries = nil
                 p.group_fee_category = nil
                 p.transfer_email = nil

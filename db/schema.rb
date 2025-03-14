@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_09_231240) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_14_090257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -342,7 +342,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_231240) do
     t.string "address", limit: 200
     t.string "suburb", limit: 40
     t.integer "postcode"
-    t.string "phone_number", limit: 20
     t.string "medical_info", limit: 255
     t.string "medications", limit: 255
     t.integer "years_attended"
@@ -387,9 +386,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_09_231240) do
     t.boolean "paid", default: false
     t.string "allergies", limit: 255
     t.string "emergency_email", limit: 100
-    t.string "camping_preferences", limit: 100
-    t.string "sport_notes"
-    t.boolean "driving_to_syg", default: false
     t.string "licence_type", limit: 15
     t.string "registration_nbr", limit: 24
     t.string "booking_nbr", limit: 10

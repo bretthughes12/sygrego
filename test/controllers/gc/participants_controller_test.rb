@@ -345,18 +345,18 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   #   assert_equal "Sleep on my own", @participant.camping_preferences
   # end
 
-  test "should not update camping preferences with errors" do
-    Participant.any_instance.stubs(:update).returns(false)
+  # test "should not update camping preferences with errors" do
+  #   Participant.any_instance.stubs(:update).returns(false)
 
-    patch update_camping_preferences_gc_participant_url(@participant), 
-      params: { participant: { camping_preferences: "Invalid" } }
+  #   patch update_camping_preferences_gc_participant_url(@participant), 
+  #     params: { participant: { camping_preferences: "Invalid" } }
 
-    assert_response :success
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   assert_response :success
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    assert_not_equal "Invalid", @participant.camping_preferences
-  end
+  #   assert_not_equal "Invalid", @participant.camping_preferences
+  # end
 
   # test "should update sport notes" do
   #   patch update_sport_notes_gc_participant_url(@participant), 
@@ -371,18 +371,18 @@ class Gc::ParticipantsControllerTest < ActionDispatch::IntegrationTest
   #   assert_equal "Must play basketball", @participant.sport_notes
   # end
 
-  test "should not update sport notes with errors" do
-    Participant.any_instance.stubs(:update).returns(false)
+  # test "should not update sport notes with errors" do
+  #   Participant.any_instance.stubs(:update).returns(false)
 
-    patch update_sport_notes_gc_participant_url(@participant), 
-      params: { participant: { sport_notes: "Invalid" } }
+  #   patch update_sport_notes_gc_participant_url(@participant), 
+  #     params: { participant: { sport_notes: "Invalid" } }
 
-    assert_response :success
-    # Reload association to fetch updated data and assert that title is updated.
-    @participant.reload
+  #   assert_response :success
+  #   # Reload association to fetch updated data and assert that title is updated.
+  #   @participant.reload
 
-    assert_not_equal "Invalid", @participant.sport_notes
-  end
+  #   assert_not_equal "Invalid", @participant.sport_notes
+  # end
 
   test "should accept a participant" do
     participant_role = FactoryBot.create(:role, name: 'participant', participant_related: true)
