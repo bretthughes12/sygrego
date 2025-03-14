@@ -125,7 +125,6 @@ class Admin::SportsController < AdminController
                                     :max_entries_indiv, 
                                     :classification,
                                     :active,
-                                    :bonus_for_officials,
                                     :court_name,
                                     :point_name,
                                     :draw_type,

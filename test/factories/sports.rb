@@ -6,7 +6,6 @@
 #  active                  :boolean          default(TRUE)
 #  allow_negative_score    :boolean          default(FALSE)
 #  blowout_rule            :boolean          default(FALSE)
-#  bonus_for_officials     :boolean          default(FALSE)
 #  classification          :string(10)       not null
 #  court_name              :string(20)       default("Court")
 #  forfeit_score           :integer          default(0)

@@ -6,7 +6,6 @@
 #  active                  :boolean          default(TRUE)
 #  allow_negative_score    :boolean          default(FALSE)
 #  blowout_rule            :boolean          default(FALSE)
-#  bonus_for_officials     :boolean          default(FALSE)
 #  classification          :string(10)       not null
 #  court_name              :string(20)       default("Court")
 #  forfeit_score           :integer          default(0)
@@ -143,7 +142,6 @@ class Sport < ApplicationRecord
                     sport.max_indiv_entries_group = row['MaxIndivGrp'].to_i
                     sport.max_team_entries_group = row['MaxTeamGrp'].to_i
                     sport.max_entries_indiv = row['MaxIndiv'].to_i
-                    sport.bonus_for_officials = row['Bonus']
                     sport.court_name = row['CourtName']
                     sport.blowout_rule = row['BlowoutRule']
                     sport.forfeit_score = row['ForfeitScore'].to_i
@@ -165,7 +163,6 @@ class Sport < ApplicationRecord
                         max_indiv_entries_group:   row['MaxIndivGrp'].to_i,
                         max_team_entries_group:    row['MaxTeamGrp'].to_i,
                         max_entries_indiv:         row['MaxIndiv'].to_i,
-                        bonus_for_officials:       row['Bonus'],
                         court_name:                row['CourtName'],
                         blowout_rule:              row['BlowoutRule'],
                         forfeit_score:             row['ForfeitScore'].to_i,
