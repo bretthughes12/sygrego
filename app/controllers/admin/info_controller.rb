@@ -38,7 +38,6 @@ class Admin::InfoController < AdminController
         @other_stats << model_stats(RegoChecklist)    
         @other_stats << model_stats(Voucher)    
         @other_stats << model_stats(Payment)    
-        @other_stats << model_stats(GroupsGradesFilter)    
         @other_stats << model_stats(GroupsSportsFilter)    
         @other_stats << model_stats(SportPreference)    
         @other_stats << model_stats(GroupExtra)    

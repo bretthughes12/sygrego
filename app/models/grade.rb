@@ -47,7 +47,6 @@ class Grade < ApplicationRecord
 
     has_many :sport_entries, dependent: :destroy
     has_many :sport_preferences, dependent: :destroy
-    has_many :groups_grades_filters, dependent: :destroy
     has_many :sections, dependent: :destroy
     belongs_to :sport
 

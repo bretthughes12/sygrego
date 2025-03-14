@@ -19,13 +19,4 @@ class Admin::GradesHelperTest < ActionView::TestCase
     @grade.one_entry_per_group = true
     assert_equal "table-warning", grade_display_class(@grade)
   end
-  
-  test "group grades filter classes" do
-    group = FactoryBot.create(:group)
-    grade2 = FactoryBot.create(:grade)
-    FactoryBot.create(:groups_grades_filter, group: group, grade: grade2)
-
-    assert_equal "table-primary", grade_filtered(@grade, group)
-    assert_equal "table-dark", grade_filtered(grade2, group)
-  end
 end

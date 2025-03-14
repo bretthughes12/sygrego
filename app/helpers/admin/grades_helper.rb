@@ -9,12 +9,4 @@ module Admin::GradesHelper
         'table-primary'
       end
     end
-
-    def grade_filtered(grade, group)
-        if GroupsGradesFilter.exists?(grade_id: grade.id, group_id: group.id)
-          'table-dark'
-        else
-          'table-primary'
-        end
-    end
 end

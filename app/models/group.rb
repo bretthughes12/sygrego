@@ -60,7 +60,6 @@ class Group < ApplicationRecord
     has_many :sport_entries
     has_many :vouchers
     has_many :group_extras
-    has_many :groups_grades_filters
     has_many :groups_sports_filters, dependent: :destroy
     has_many :group_fee_categories
     has_many :questions

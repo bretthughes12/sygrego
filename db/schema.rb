@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_14_090257) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_14_091601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -226,15 +226,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_090257) do
     t.index ["name"], name: "index_groups_on_name", unique: true
     t.index ["short_name"], name: "index_groups_on_short_name", unique: true
     t.index ["trading_name"], name: "index_groups_on_trading_name", unique: true
-  end
-
-  create_table "groups_grades_filters", force: :cascade do |t|
-    t.bigint "grade_id", null: false
-    t.bigint "group_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["grade_id"], name: "index_groups_grades_filters_on_grade_id"
-    t.index ["group_id"], name: "index_groups_grades_filters_on_group_id"
   end
 
   create_table "groups_sports_filters", force: :cascade do |t|
@@ -858,8 +849,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_14_090257) do
   add_foreign_key "grades", "sports"
   add_foreign_key "group_extras", "groups"
   add_foreign_key "group_fee_categories", "groups"
-  add_foreign_key "groups_grades_filters", "grades"
-  add_foreign_key "groups_grades_filters", "groups"
   add_foreign_key "groups_sports_filters", "groups"
   add_foreign_key "groups_sports_filters", "sports"
   add_foreign_key "groups_users", "groups"

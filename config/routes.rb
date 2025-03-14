@@ -490,14 +490,6 @@ Rails.application.routes.draw do
     end
 
     resources :groups, only: [:edit, :update]
-    resources :groups_grades_filters, only: [:show] do
-      member do
-        post :hide_team
-        post :hide_indiv
-        delete :show_team
-        delete :show_indiv
-      end
-    end
     resources :groups_sports_filters, only: [:show] do
       member do
         post :hide_team
