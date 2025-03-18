@@ -56,6 +56,12 @@ class Gc::ParticipantsController < GcController
           
           render_pdf output, 'drivers'
         end
+        format.xlsx do 
+          @participants = @group.participants.accepted.coming.drivers.
+            order("first_name, surname").load
+
+          render xlsx: "drivers", filename: "drivers.xlsx"
+        end
       end
     end
     
