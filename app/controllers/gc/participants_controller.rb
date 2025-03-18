@@ -104,6 +104,9 @@ class Gc::ParticipantsController < GcController
         format.html do
           render layout: @current_role.name
         end
+        format.xlsx do 
+          render xlsx: "participant_fees", filename: "participant_fees.xlsx"
+        end
       end
     end
     

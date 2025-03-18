@@ -3,6 +3,13 @@
 <h1><%= yield(:title) %></h1>
     
 <% if !@participants.empty? %>
+    <%= link_to "Download", group_fees_gc_participants_path(format: :xlsx),
+        class: primary_button_class,
+        role: "button" %>
+
+    <br/>
+    <br/>
+
     <table class="table table-dark">
         <thead>
             <tr>
@@ -36,6 +43,10 @@
             </tr>
 		</tfoot>
     </table>
+
+    <%= link_to "Download", group_fees_gc_participants_path(format: :xlsx),
+        class: primary_button_class,
+        role: "button" %>
 <% end %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
