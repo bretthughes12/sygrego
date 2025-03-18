@@ -74,6 +74,12 @@ class Gc::ParticipantsController < GcController
         format.html do
           render layout: @current_role.name
         end
+        format.xlsx do 
+          @participants = @group.participants.coming.accepted.
+            open_age.order("coming desc, first_name, surname").load
+
+          render xlsx: "wwccs", filename: "wwccs.xlsx"
+        end
       end
     end
     

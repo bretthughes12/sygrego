@@ -3,6 +3,13 @@
 <h1><%= yield(:title) %></h1>
     
 <% if !@participants.empty? %>
+    <%= link_to "Download", wwccs_gc_participants_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
+
+    <br/>
+    <br/>
+
     <table class="table table-dark">
         <thead>
             <tr>
@@ -13,6 +20,10 @@
 
         <%= render partial: 'participant_wwcc', collection: @participants, as: :participant %>
     </table>
+
+    <%= link_to "Download", wwccs_gc_participants_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
 <% end %>
 
 <%= legend_box [{:name => "Sports Participant", :class => "table-primary"},
