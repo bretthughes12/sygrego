@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Sports Plan") do |sheet|
-	sheet.add_row ["Name","Saturday Morning","Saturday Afternoon",
+	sheet.add_row ["Name","Email","Saturday Morning","Saturday Afternoon",
 			"Saturday Evening", "Sunday Morning", "Sunday Afternoon",
 			"Sunday Evening"], 
 		style: header_border
@@ -15,6 +15,7 @@ wb.add_worksheet(name: "Sports Plan") do |sheet|
 	@participants.each do |participant|
 		sheet.add_row [
   		     participant.name,
+  		     participant.email,
 			 participant.sports_in_session("Saturday Morning").uniq.join("\n"),
 			 participant.sports_in_session("Saturday Afternoon").uniq.join("\n"),
 			 participant.sports_in_session("Saturday Evening").uniq.join("\n"),

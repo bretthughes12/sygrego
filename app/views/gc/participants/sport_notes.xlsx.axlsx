@@ -8,13 +8,14 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 
 wb.add_worksheet(name: "Sport Notes") do |sheet|
 	questions = @group.questions.sports.with_answer.order(:order_number)
-	heading = ["Name"] + questions.collect(&:name)
+	heading = ["Name","Email"] + questions.collect(&:name)
 	sheet.add_row heading, 
 		style: header_border
 
 	@participants.each do |participant|
 		answers = QuestionResponse.find_or_create_responses(participant, questions).collect(&:full_answer)
-		row = [participant.name] + answers
+		row = [participant.name,
+		       participant.email] + answers
 		sheet.add_row row, 
 			style: row_border
 	end

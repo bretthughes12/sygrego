@@ -9,17 +9,17 @@ date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "00
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
 medicare_exp_col = 17
-dob_col = 3
+dob_col = 4
 
 wb.add_worksheet(name: "Participants") do |sheet|
 	start_questions = @group.questions.beginning.with_answer.order(:order_number)
 	personal_questions = @group.questions.personal.with_answer.order(:order_number)
 	medical_questions = @group.questions.medical.with_answer.order(:order_number)
 	disclaimer_questions = @group.questions.disclaimer.with_answer.order(:order_number)
-	heading = ["FirstName","Surname","Coming","DOB","Age",
+	heading = ["FirstName","Surname","Email","Coming","DOB","Age",
 	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
 				  "Suburb","Postcode","Mobile",
-	              "Email","Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
+	              "Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
 				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate","EarlyBird",
 				  "DietaryRqmts","EmergContact","EmergRel","EmergPhone", 
 				  "EmergEmail","WWCC","Voucher"] + 
@@ -40,6 +40,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 		row = [
   		     participant.first_name,
 			 participant.surname,
+  		     participant.email,
   		     participant.coming,
   		     participant.date_of_birth,
   		     participant.age,
@@ -53,7 +54,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
   		     participant.suburb,
   		     participant.postcode,
   		     participant.mobile_phone_number,
-  		     participant.email,
   		     participant.medicare_number,
   		     participant.medicare_expiry,
 			 participant.medical_info,
