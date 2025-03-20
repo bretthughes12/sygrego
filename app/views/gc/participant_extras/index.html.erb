@@ -6,6 +6,13 @@
 	<p>Your group does not have any optional extras</p>
 
 <% else %>
+	<%= link_to "Download", gc_participant_extras_path(format: :xlsx),
+					class: primary_button_class,
+					role: "button" %>
+
+	<br/>
+	<br/>
+
     <table class="table table-dark table-striped">
 		<thead>
 		    <tr>
@@ -18,4 +25,8 @@
 
         <%= render @participant_extras %>
     </table>
+
+	<%= link_to "Download", gc_participant_extras_path(format: :xlsx),
+					class: primary_button_class,
+					role: "button" %>
 <% end %>

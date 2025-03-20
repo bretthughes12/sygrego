@@ -42,7 +42,7 @@
                             <% if can_display_onsite_flag %>
                                 <li class='dropdown-item'><%= link_to "Camping Preferences", camping_preferences_gc_participants_path %></li>
                             <% end %>
-                            <li class='dropdown-item'><%= link_to "Participant Sport Notes", sport_notes_gc_participants_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Wanted extras', gc_participant_extras_path %></li>
                         </ul>
                     </li>
                 <%- end %>
@@ -59,6 +59,7 @@
                             <%- if @settings.team_draws_complete || @settings.indiv_draws_complete %>
                                 <li class='dropdown-item'><%= link_to 'Sports Draws', sports_draws_gc_sport_entries_path %></li>
                             <%- end %>
+                            <li class='dropdown-item'><%= link_to "Participant Sport Notes", sport_notes_gc_participants_path %></li>
                         </ul>
                     </li>
                 <%- end %>
@@ -87,7 +88,6 @@
                             <%- end %>
                             <li class='dropdown-item'><%= link_to 'Fee categories', gc_group_fee_categories_path %></li>
                             <li class='dropdown-item'><%= link_to 'Custom / extra costs', gc_group_extras_path %></li>
-                            <li class='dropdown-item'><%= link_to 'Wanted extras', gc_participant_extras_path %></li>
                         </ul>
                     </li>
                 <%- end %>

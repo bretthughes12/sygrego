@@ -6,6 +6,9 @@ class Gc::ParticipantExtrasController < GcController
       
       respond_to do |format|
         format.html # index.html.erb
+        format.xlsx do 
+          render xlsx: "index", filename: "wanted_extras.xlsx"
+        end
       end
     end
 end

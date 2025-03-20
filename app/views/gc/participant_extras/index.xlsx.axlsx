@@ -1,0 +1,29 @@
+wb = xlsx_package.workbook
+s = wb.styles
+
+header_border = s.add_style border: [ 
+	{ style: :thick, color: "000000", edges: [:bottom]},
+	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
+row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
+
+wb.add_worksheet(name: "Wanted Extra") do |sheet|
+	heading = ["Name","Email","Item","Size","Comment"]
+	sheet.add_row heading, 
+		style: header_border
+
+	@participant_extras.each do |participant_extra|
+	    size = participant_extra.needs_size ? participant_extra.size : '' 
+	    comment = participant_extra.show_comment ? participant_extra.comment : '' 
+
+		row = [
+  		     participant_extra.participant.name,
+  		     participant_extra.participant.email,
+			 participant_extra.name,
+  		     size,
+  		     comment
+		   ] 
+		sheet.add_row row, 
+			style: row_border
+	end
+end
