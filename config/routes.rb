@@ -590,6 +590,7 @@ Rails.application.routes.draw do
         patch :release
       end
     end
+    resources :sections, only: [:index]
     resources :sport_entries do
       resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do
         member do
