@@ -7,12 +7,13 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Sections") do |sheet|
-	sheet.add_row ["Sport","Name","Venue","Session"], 
+	sheet.add_row ["Sport","Grade","Section","Venue","Session"], 
 		style: header_border
 
 	@sections.each do |section|
 		sheet.add_row [
              section.sport.name,
+  		     section.grade.name,
   		     section.name,
   		     section.venue.name,
 			 section.session.name
