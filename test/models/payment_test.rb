@@ -5,6 +5,7 @@
 #  id           :bigint           not null, primary key
 #  amount       :decimal(8, 2)    default(0.0), not null
 #  name         :string(50)
+#  paid         :boolean          default(FALSE)
 #  paid_at      :datetime
 #  payment_type :string(20)       not null
 #  reconciled   :boolean          default(FALSE)

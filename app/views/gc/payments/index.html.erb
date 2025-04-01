@@ -94,10 +94,6 @@
     <tr><td><b>Reference:</b></td><td>SYG<%= @settings.this_year.to_s + @group.abbr %></td></tr>
   </table>
   
-  <%= link_to "New payment", new_gc_payment_path,
-                    class: primary_button_class,
-                    role: "button" %>
-
 <% end %>
 
 <%= legend_box [{:name => "Reconciled", :class => "table-primary"},

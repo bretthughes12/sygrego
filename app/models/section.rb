@@ -392,4 +392,4 @@ class Section < ApplicationRecord
          'venue_id'
         ]
     end
-  end
+end
