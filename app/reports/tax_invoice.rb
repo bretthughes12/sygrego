@@ -1,9 +1,10 @@
 class TaxInvoice < Prawn::Document
     include ReportLayout
   
-    def add_data(group, payments, suffix = "")
+    def add_data(group, payments, invoice, suffix = "")
         @group = group
         @payments = payments
+        @invoice = invoice
         @suffix = suffix
       
         self
@@ -12,7 +13,7 @@ class TaxInvoice < Prawn::Document
     def to_pdf
         @settings = Setting.first
     
-        report_header("Tax Invoice")
+        report_header("Tax Invoice", @invoice)
         report_content
     
         render
@@ -119,7 +120,7 @@ class TaxInvoice < Prawn::Document
         text "Account Name: #{APP_CONFIG[:cheque_payable]}"
         text "BSB: #{Rails.application.credentials.account_bsb}"
         text "Account: #{Rails.application.credentials.account_number}"
-        text "Reference: SYG#{@settings.this_year.to_s + @group.abbr + @suffix}"
+        text "Reference: #{@invoice.invoice_number}"
       end
     end
 end

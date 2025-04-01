@@ -51,6 +51,10 @@ class Payment < ApplicationRecord
     paid_at.nil? ? '' : paid_at.in_time_zone.strftime('%d/%m/%Y')
   end
 
+  def invoice_number
+    return 'INV' + id.to_s.rjust(6, '0') if id
+  end
+
 private
 
   def check_for_valid_amount
