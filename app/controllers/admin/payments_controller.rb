@@ -93,9 +93,8 @@ class Admin::PaymentsController < AdminController
         :amount, 
         :group_id,
         :reconciled,
+        :paid,
         :paid_at,
-        :payment_type,
-        :name,
         :reference
       )
     end
