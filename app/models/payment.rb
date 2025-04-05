@@ -28,10 +28,13 @@ class Payment < ApplicationRecord
 
   scope :reconciled, -> { where(reconciled: true) }
   scope :unreconciled, -> { where(reconciled: false) }
+  scope :paid, -> { where(paid: true) }
+  scope :unpaid, -> { where(paid: false) }
 
   PAYMENT_TYPES = ['Bank Cheque',
     'Cheque',
-    'Direct Deposit'].freeze
+    'Direct Deposit',
+    'Invoice'].freeze
 
   validates :amount,                 
     presence: true,

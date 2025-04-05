@@ -68,7 +68,7 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal 0, @group <=> @group 
     #different name
     other_group = FactoryBot.create(:group, name: "Order2")
-    assert_equal -1, @group <=> other_group
+    assert_equal (-1), @group <=> other_group
   end
 
   test "should show status with short_name" do
@@ -177,7 +177,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test "should calculate the amount paid" do
     3.times do
-      FactoryBot.create(:payment, group: @group, amount: 10.0)
+      FactoryBot.create(:payment, group: @group, amount: 10.0, paid: true)
     end
 
     assert_equal 30.0, @group.amount_paid
@@ -211,7 +211,7 @@ class GroupTest < ActiveSupport::TestCase
                      coming: true)
     end
     3.times do
-      FactoryBot.create(:payment, group: group, amount: 10.0)
+      FactoryBot.create(:payment, group: group, amount: 10.0, paid: true)
     end
     group.reload
 

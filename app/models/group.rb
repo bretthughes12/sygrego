@@ -465,7 +465,7 @@ class Group < ApplicationRecord
     end
   
     def calculated_amount_paid
-      payments.to_a.sum(&:amount)
+      payments.paid.to_a.sum(&:amount)
     end
   
     def total_amount_payable

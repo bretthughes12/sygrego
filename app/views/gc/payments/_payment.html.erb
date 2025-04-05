@@ -1,27 +1,41 @@
 <tr valign="top" class="<%= payment_display_class(payment) %>">
-	<td> 
-		<%= payment.date_paid %>
-	</td>
+	<% if payment.reconciled %>
+		<td> 
+			<%= payment.invoice_number %>
+		</td>
 
-	<td> 
-		<%= payment.payment_type %>
-	</td>
+		<td> 
+			<%= number_to_currency(payment.amount) %>
+		</td>
 
-	<td> 
-		<% if payment.reconciled %>
-	        <%= number_to_currency(payment.amount) %>
-		<% else %>
-    	    <%= link_to number_to_currency(payment.amount), edit_gc_payment_path(payment) %>
+		<td> 
+			<%= payment.reference %>
+		</td>
+
+		<td> 
+			&nbsp;
+		</td>
+	<% else %>
+		<%= simple_form_for(payment, url: paid_gc_payment_path(payment)) do |f| %> 
+			<td> 
+				<%= payment.invoice_number %>
+			</td>
+
+			<td> 
+				<%= f.input_field :amount %>
+			</td>
+
+			<td> 
+				<%= f.input_field :reference %>
+			</td>
+
+			<td> 
+				<% if payment.paid %>
+					<%= f.button :submit, "Update", class: primary_button_class %>
+				<% else %>
+					<%= f.button :submit, "Paid", class: primary_button_class %>
+				<% end %>
+			</td>
 		<% end %>
-	</td>
-
-	<td> 
-		<% unless payment.reconciled %>
-			<%= link_to "X", gc_payment_path(payment),
-					method: :delete,
-					data: { confirm: "Are you sure?" },
-					class: danger_button_class,
-					role: "button" %>
-		<% end %>
-	</td>
+	<% end %>
 </tr>
