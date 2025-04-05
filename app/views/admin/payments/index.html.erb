@@ -18,7 +18,8 @@
       <th>Date</th>
       <th>Group</th>
       <th>Amount</th>
-      <th>Reconciled</th>
+      <th>Reference</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -33,4 +34,5 @@
                   role: "button" %>
 
 <%= legend_box [{:name => "Reconciled", :class => "table-primary"},
-					{:name => "Unreconciled", :class => "table-warning"}] %>
+					{:name => "Paid", :class => "table-warning"},
+					{:name => "Invoiced", :class => "table-dark"}] %>

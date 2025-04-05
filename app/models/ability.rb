@@ -55,7 +55,7 @@ class Ability
           user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment
-        can [:show, :update, :destroy], Payment do |payment|
+        can [:show, :update, :destroy, :paid], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
         end
         can :create, GroupExtra
@@ -183,7 +183,7 @@ class Ability
          user.groups.include?(ms.group) || user.role?(:admin)
         end
         can [:index, :create], Payment
-        can [:show, :update, :destroy], Payment do |payment|
+        can [:show, :update, :destroy, :paid], Payment do |payment|
           user.groups.include?(payment.group) || user.role?(:admin)
         end
         can :create, GroupExtra

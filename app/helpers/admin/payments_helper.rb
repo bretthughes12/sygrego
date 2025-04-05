@@ -3,8 +3,10 @@ module Admin::PaymentsHelper
         case
         when payment.reconciled
             "table-primary"
-        else
+        when payment.paid
             "table-warning"
+        else
+            "table-dark"
         end
     end
 end

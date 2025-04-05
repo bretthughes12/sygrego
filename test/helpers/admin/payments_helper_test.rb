@@ -15,6 +15,10 @@ class Admin::PaymentsHelperTest < ActionView::TestCase
     assert_equal "table-primary", payment_display_class(@payment)
 
     @payment.reconciled = false
+    @payment.paid = true
     assert_equal "table-warning", payment_display_class(@payment)
+
+    @payment.paid = false
+    assert_equal "table-dark", payment_display_class(@payment)
   end
 end

@@ -539,7 +539,11 @@ Rails.application.routes.draw do
         patch :move_down
       end
     end
-    resources :payments
+    resources :payments do
+      member do
+        patch :paid
+      end
+    end
     resources :group_extras
     resources :participant_extras
     resources :participants do
