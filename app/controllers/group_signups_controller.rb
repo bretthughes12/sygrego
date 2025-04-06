@@ -39,7 +39,7 @@ class GroupSignupsController < ApplicationController
           invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice")
           invoice.save(validate: false)
 
-          payments = @group.payments.order(:paid_at).load
+          payments = @group.payments.paid.order(:paid_at).load
           pdf = TaxInvoice.new.add_data(@group, payments, invoice, "1").to_pdf
           file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
           file.binmode

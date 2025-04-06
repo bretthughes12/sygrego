@@ -6,7 +6,7 @@ namespace :syg do
     puts 'Generating 2nd invoices...'
 
     Group.coming.each do |group|
-      payments = group.payments.order(:paid_at).load
+      payments = group.payments.paid.order(:paid_at).load
       invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
       invoice.save(validate: false)
       pdf = TaxInvoice.new.add_data(group, payments, invoice, "2").to_pdf
@@ -31,7 +31,7 @@ namespace :syg do
     puts 'Generating final invoices...'
     
     Group.coming.each do |group|
-      payments = group.payments.order(:paid_at).load
+      payments = group.payments.paid.order(:paid_at).load
       invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
       invoice.save(validate: false)
       pdf = TaxInvoice.new.add_data(group, payments, invoice, "3").to_pdf
@@ -54,7 +54,7 @@ namespace :syg do
   desc 'Generate and attach an invoice'
   task generate_test_invoice: ['db:migrate'] do |_t|
     group = Group.where(abbr: "ADM").first
-    payments = group.payments.order(:paid_at).load
+    payments = group.payments.paid.order(:paid_at).load
     invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
     invoice.save(validate: false)
     pdf = TaxInvoice.new.add_data(group, payments, invoice, "2").to_pdf

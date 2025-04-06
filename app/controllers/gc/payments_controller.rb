@@ -3,7 +3,7 @@ class Gc::PaymentsController < GcController
   
     # GET /gc/payments
     def index
-      @payments = @group.payments.
+      @payments = @group.payments.paid.
         order(:paid_at).load
   
       respond_to do |format|

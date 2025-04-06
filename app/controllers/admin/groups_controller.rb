@@ -145,7 +145,7 @@ class Admin::GroupsController < AdminController
   
     # POST /admin/groups/1/invoice
     def invoice
-      @payments = @group.payments.
+      @payments = @group.payments.paid.
         order(:paid_at).load
       invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice")
       invoice.save(validate: false)
