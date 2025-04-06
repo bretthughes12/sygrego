@@ -258,4 +258,25 @@ namespace :syg do
     puts "Records updated - #{count}"
     puts "Duplicates deleted - #{errors}"
   end
+
+  desc 'Update reconciled payments to also be paid'
+  task update_reconciled_payments: ['db:migrate'] do |t|
+    puts 'Updating reconciled payments to paid...'
+
+    count = 0
+    errors = 0
+
+    Payment.all.each do |p|
+      p.paid = p.reconciled
+
+      if p.save
+        count += 1
+      else
+        errors += 1
+      end
+    end
+
+    puts "Records updated - #{count}"
+    puts "Errors - #{errors}"
+  end
 end

@@ -67,12 +67,12 @@ class FinanceReport < Prawn::Document
     def include_payment_table
       heading2 "Payments Recorded"
       
-      payments = [["Type", "Date Paid", "Name", "Amount"]]
+      payments = [["Invoice", "Date Paid", "Reference", "Amount"]]
       payments += @payments.map do |p|
         [
-          p.payment_type,
+          p.invoice_number,
           p.paid_at ? p.paid_at.in_time_zone.strftime("%d/%m/%Y") : "",
-          p.name,
+          p.reference,
           helpers.number_to_currency(p.amount)
         ]
       end
