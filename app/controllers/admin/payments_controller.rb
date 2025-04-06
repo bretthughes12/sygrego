@@ -36,6 +36,7 @@ class Admin::PaymentsController < AdminController
     # POST /admin/payments
     def create
       @payment = Payment.new(payment_params)
+      @payment.payment_type = 'Invoice'
       @payment.updated_by = current_user.id
 
       respond_to do |format|
