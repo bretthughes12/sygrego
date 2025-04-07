@@ -91,6 +91,34 @@ class Section < ApplicationRecord
       name <=> other.name if other
     end
 
+    def level
+        match = name.match(/Level (\d)/)
+        if match
+            "Level #{match[1].to_i}"
+        else
+            ""
+        end
+    end
+
+    def competitiveness
+        if name.match(/Competitive/)
+            "Competitive"
+        elsif name.match(/Social/)
+            "Social"
+        else
+            ""
+        end
+    end
+
+    def section
+        match = name.match(/Section (\d)/)
+        if match
+            "Section #{match[1].to_i}"
+        else
+            ""
+        end
+    end
+
     def sport_coords
         volunteers.sport_coords
     end
