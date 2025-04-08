@@ -3,14 +3,15 @@ class Gc::PaymentsController < GcController
   
     # GET /gc/payments
     def index
-      @payments = @group.payments.paid.
-        order(:paid_at).load
-  
       respond_to do |format|
         format.html do
+          @payments = @group.payments.
+              order(:paid_at).load
           render layout: @current_role.name
         end
         format.pdf  do
+          @payments = @group.payments.paid.
+              order(:paid_at).load
           output = FinanceReport.new.add_data(@group, @payments).to_pdf
           
           render_pdf output, 'account-summary'
