@@ -35,8 +35,12 @@ class GroupSignupsController < ApplicationController
           @group.mysyg_setting.mysyg_open = @settings.mysyg_default_open
           @group.mysyg_setting.save
 
-          payments = @group.payments.order(:paid_at).load
-          pdf = TaxInvoice.new.add_data(@group, payments, "1").to_pdf
+          # TODO: create the invoice properly
+          invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice")
+          invoice.save(validate: false)
+
+          payments = @group.payments.paid.order(:paid_at).load
+          pdf = TaxInvoice.new.add_data(@group, payments, invoice, "1").to_pdf
           file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
           file.binmode
           file.write(pdf)

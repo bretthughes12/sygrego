@@ -5,7 +5,7 @@ class Admin::PaymentsController < AdminController
     
     # GET /admin/payments
     def index
-      @payments = Payment.order(:paid_at).load
+      @payments = Payment.order(:paid_at, :amount, :id).load
 
       respond_to do |format|
         format.html # index.html.erb
@@ -36,6 +36,7 @@ class Admin::PaymentsController < AdminController
     # POST /admin/payments
     def create
       @payment = Payment.new(payment_params)
+      @payment.payment_type = 'Invoice'
       @payment.updated_by = current_user.id
 
       respond_to do |format|
@@ -65,6 +66,7 @@ class Admin::PaymentsController < AdminController
     # PATCH /admin/payments/1/reconcile
     def reconcile
       @payment.reconciled = true
+      @payment.paid = true
       @payment.updated_by = current_user.id
 
       respond_to do |format|
@@ -92,11 +94,10 @@ class Admin::PaymentsController < AdminController
         :amount, 
         :group_id,
         :reconciled,
+        :paid,
         :paid_at,
-        :payment_type,
-        :name,
         :reference
       )
     end
-  end
+end
   

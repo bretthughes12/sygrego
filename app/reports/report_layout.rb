@@ -1,11 +1,12 @@
 module ReportLayout
 
-    def report_header(title)
+    def report_header(title, invoice = nil)
         image "#{Rails.root.join('app/assets/images/syg.jpg')}", :position => :center, :scale => 0.75
         image "#{Rails.root.join('app/assets/images/youth_vision.jpg')}", :position => :right, :vposition => 0, :scale => 0.13
         draw_text "A.B.N. #{APP_CONFIG[:abn]}", :size => 6, :at => [478,665] unless APP_CONFIG[:abn].nil?
         draw_text title, :size => 16, :style => :bold, :at => [0,640]
         draw_text "Date: #{Time.now.in_time_zone.strftime("%d/%m/%Y")}", :size => 16, :style => :bold, :at => [415,640]
+        draw_text "Invoice: #{invoice.invoice_number}", :size => 16, :style => :bold, :at => [395,620] if invoice
         
         heading1 "State Youth Games #{APP_CONFIG[:this_year]}", 30
         heading1 "#{@group.name}"
@@ -49,4 +50,4 @@ module ReportLayout
     def helpers
       ActionController::Base.helpers
     end
-  end
+end

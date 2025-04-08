@@ -75,4 +75,4 @@ class DriverReport < Prawn::Document
       form_field "Date:"
       form_field "Signed:"
     end
-  end
+end

@@ -71,7 +71,7 @@ class Admin::PaymentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should update payment" do
     patch admin_payment_url(@payment), 
-      params: { payment: { name: "Elvis" } }
+      params: { payment: { amount: 150.0 } }
 
     assert_redirected_to admin_payments_path
     assert_match /successfully updated/, flash[:notice]
@@ -79,7 +79,7 @@ class Admin::PaymentsControllerTest < ActionDispatch::IntegrationTest
     # Reload association to fetch updated data and assert that title is updated.
     @payment.reload
 
-    assert_equal "Elvis", @payment.name
+    assert_equal 150.0, @payment.amount
   end
 
   test "should not update payment with errors" do

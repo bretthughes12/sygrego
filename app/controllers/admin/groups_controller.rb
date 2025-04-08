@@ -145,12 +145,14 @@ class Admin::GroupsController < AdminController
   
     # POST /admin/groups/1/invoice
     def invoice
-      @payments = @group.payments.
+      @payments = @group.payments.paid.
         order(:paid_at).load
+      invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice")
+      invoice.save(validate: false)
 
       respond_to do |format|
         format.pdf  do
-          output = TaxInvoice.new.add_data(@group, @payments).to_pdf
+          output = TaxInvoice.new.add_data(@group, @payments, invoice).to_pdf
           
           render_pdf output, 'tax-invoice'
         end

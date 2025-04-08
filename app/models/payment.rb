@@ -28,10 +28,13 @@ class Payment < ApplicationRecord
 
   scope :reconciled, -> { where(reconciled: true) }
   scope :unreconciled, -> { where(reconciled: false) }
+  scope :paid, -> { where(paid: true) }
+  scope :unpaid, -> { where(paid: false) }
 
   PAYMENT_TYPES = ['Bank Cheque',
     'Cheque',
-    'Direct Deposit'].freeze
+    'Direct Deposit',
+    'Invoice'].freeze
 
   validates :amount,                 
     presence: true,
@@ -49,6 +52,10 @@ class Payment < ApplicationRecord
 
   def date_paid
     paid_at.nil? ? '' : paid_at.in_time_zone.strftime('%d/%m/%Y')
+  end
+
+  def invoice_number
+    return 'INV' + id.to_s.rjust(6, '0') if id
   end
 
 private

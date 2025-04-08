@@ -6,8 +6,12 @@ namespace :syg do
     puts 'Generating 2nd invoices...'
 
     Group.coming.each do |group|
-      payments = group.payments.order(:paid_at).load
-      pdf = TaxInvoice.new.add_data(group, payments, "2").to_pdf
+      payments = group.payments.paid.order(:paid_at).load
+      unless group.amount_outstanding.zero? 
+        invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
+        invoice.save(validate: false)
+      end
+      pdf = TaxInvoice.new.add_data(group, payments, invoice, "2").to_pdf
       file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
       file.binmode
       file.write(pdf)
@@ -29,8 +33,12 @@ namespace :syg do
     puts 'Generating final invoices...'
     
     Group.coming.each do |group|
-      payments = group.payments.order(:paid_at).load
-      pdf = TaxInvoice.new.add_data(group, payments, "3").to_pdf
+      payments = group.payments.paid.order(:paid_at).load
+      unless group.amount_outstanding.zero? 
+        invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
+        invoice.save(validate: false)
+      end
+      pdf = TaxInvoice.new.add_data(group, payments, invoice, "3").to_pdf
       file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
       file.binmode
       file.write(pdf)
@@ -50,8 +58,10 @@ namespace :syg do
   desc 'Generate and attach an invoice'
   task generate_test_invoice: ['db:migrate'] do |_t|
     group = Group.where(abbr: "ADM").first
-    payments = group.payments.order(:paid_at).load
-    pdf = TaxInvoice.new.add_data(group, payments, "2").to_pdf
+    payments = group.payments.paid.order(:paid_at).load
+    invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
+    invoice.save(validate: false)
+    pdf = TaxInvoice.new.add_data(group, payments, invoice, "2").to_pdf
     file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
     file.binmode
     file.write(pdf)

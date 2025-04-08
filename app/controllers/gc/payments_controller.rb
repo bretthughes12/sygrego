@@ -3,14 +3,15 @@ class Gc::PaymentsController < GcController
   
     # GET /gc/payments
     def index
-      @payments = @group.payments.
-        order(:paid_at).load
-  
       respond_to do |format|
         format.html do
+          @payments = @group.payments.
+              order(:paid_at).load
           render layout: @current_role.name
         end
         format.pdf  do
+          @payments = @group.payments.paid.
+              order(:paid_at).load
           output = FinanceReport.new.add_data(@group, @payments).to_pdf
           
           render_pdf output, 'account-summary'
@@ -77,6 +78,19 @@ class Gc::PaymentsController < GcController
       end
     end
   
+    # PATCH /gc/payments/1/paid
+    def paid
+      @payment.paid = true
+      @payment.paid_at = Date.today
+      @payment.updated_by = current_user.id
+
+      respond_to do |format|
+        @payment.update(paid_payment_params)
+
+        format.html { redirect_to gc_payments_url }
+      end
+    end
+  
     # DELETE /admin/payments/1
     def destroy
       case 
@@ -100,6 +114,13 @@ class Gc::PaymentsController < GcController
         :paid_at,
         :payment_type,
         :name,
+        :reference
+      )
+    end
+  
+    def paid_payment_params
+      params.require(:payment).permit(
+        :amount, 
         :reference
       )
     end
