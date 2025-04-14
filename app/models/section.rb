@@ -95,8 +95,12 @@ class Section < ApplicationRecord
         match = name.match(/Level (\d)/)
         if match
             "Level #{match[1].to_i}"
+        elsif name.match(/Under 18/)
+            "Level 4"
+        elsif name.match(/Under 15/)
+            "Level 5"
         else
-            ""
+            "Open"
         end
     end
 
