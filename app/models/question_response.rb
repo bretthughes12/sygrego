@@ -26,12 +26,21 @@ class QuestionResponse < ApplicationRecord
   def full_answer
     if question.question_type == "Dropdown"
       if answer == nil || answer == "" || answer == "0"
-        answer 
+        answer
       else
-        QuestionOption.find(answer.to_i).name
+        option = QuestionOption.where(id: answer.to_i).first
+        if option.nil?
+          return nil
+        else
+          option.name.html_safe
+        end
       end
     else
-      answer
+      if answer == nil
+        answer
+      else
+        answer.html_safe
+      end
     end
   end
 
