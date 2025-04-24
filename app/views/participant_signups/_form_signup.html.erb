@@ -2,7 +2,7 @@
 	<%= f.error_notification %>
 
     <% if @group.abbr == "DFLT" %>
-        <%= f.input :group_id, as: :select, collection: @groups, selected: @participant_signup.group_id, include_blank: true %>
+        <%= f.input :group_id, as: :select, collection: @groups, selected: @participant_signup.group_id %>
     <% else %>
         <%= f.input :group_id, as: :hidden %>
     <% end %>
