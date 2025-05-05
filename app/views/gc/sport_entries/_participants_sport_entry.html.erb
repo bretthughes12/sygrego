@@ -1,0 +1,11 @@
+<%= fields_for "participants[]", participant do |f| %>
+<tr valign="top">
+	<td> 
+		<%= f.hidden_field :id %>
+		<%= f.check_box :selected %>
+	</td>
+	<td> 
+		<%= h(participant.name) %>
+	</td>
+</tr>
+<% end %>
