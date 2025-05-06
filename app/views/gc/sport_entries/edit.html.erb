@@ -70,14 +70,39 @@
 
 <table class="table table-dark">
     <%= render partial: "participants" %>
+</table>
 
     <% unless @eligible_participants.empty? %>
-        <tr>
-            <%= form_with(url: gc_sport_entry_participants_path(@sport_entry), method: :post) do |f| %> 
-                <td><%= f.collection_select :id, @eligible_participants, :id, :name %></td>
-                <td><%= f.submit "Add", role: :button, class: primary_button_class %></td>
+        <h3>Eligible participants</h3>
+        <p>This sport entry may have a maximum of <%= @sport_entry.grade.max_participants %> participants.</p>
+        <p>Check the boxes next to the participants you want to add to this sport entry.</p>
+
+            <%= form_with(url: create_multiple_gc_sport_entry_participant_path(@sport_entry), method: :post) do |f| %> 
+                <table class="table table-dark table-striped">
+                <%= f.hidden_field :sport_entry_id, value: @sport_entry.id %>
+                <% count = 0 %>
+
+                <% for participant in @eligible_participants %>
+                    <% if count.even? %>
+                        <tr valign="top">
+                    <% end %>	
+
+                    <td> 
+                        <%= f.check_box "participants[]", {multiple: true}, participant.id, nil %>
+                        &nbsp;
+                        <%= h(participant.name) %>
+                        <br/>
+                    </td>
+
+                    <% count += 1 %>
+
+                    <% if count.even? %>
+                        </tr>
+                    <% end %>	
+                <% end %>	
+                </table>
+                <%= f.submit "Add", class: primary_button_class, role: "button" %>
             <% end %>	
-        </tr>
     <% else %> 
         <% if @participants.empty? %>
             <tr>
@@ -93,7 +118,6 @@
             </tr>
         <% end %>
     <% end %>
-</table>
 
 <br/>
 

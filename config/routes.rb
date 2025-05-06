@@ -599,6 +599,7 @@ Rails.application.routes.draw do
       resources :participants, controller: "participants_sport_entries", only: [:create, :destroy] do
         member do
           patch :make_captain
+          post :create_multiple
         end
       end
       member do

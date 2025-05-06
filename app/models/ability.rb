@@ -125,7 +125,7 @@ class Ability
         can [:add_to_sport_entry, :create_sport_entry, :remove_from_sport_entry], SportPreference do |pref|
           user.groups.include?(pref.group)
         end
-        can [:create, :destroy, :make_captain], ParticipantsSportEntry
+        can [:create, :destroy, :make_captain, :create_multiple], ParticipantsSportEntry
         can [:update, :index, :show, :destroy], User do |u|
           !(u.groups & user.groups).empty?
         end
@@ -253,7 +253,7 @@ class Ability
         can [:add_to_sport_entry, :create_sport_entry, :remove_from_sport_entry], SportPreference do |pref|
           user.groups.include?(pref.group)
         end
-        can [:create, :destroy, :make_captain], ParticipantsSportEntry
+        can [:create, :destroy, :make_captain, :create_multiple], ParticipantsSportEntry
         can [:index, :available, :search], Volunteer
         can [:edit, :update, :release, :show], Volunteer do |volunteer|
           volunteer.participant.nil? || user.groups.include?(volunteer.try(:participant).group) || user.role?(:admin)
