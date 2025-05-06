@@ -331,7 +331,7 @@ class Section < ApplicationRecord
         Section.active.order(:name).each do |section|
             if section.grade.sections.count > 1
                 section.sport_entries.select(:group_id).group(:group_id).count.each do |key,value|
-                    sections << section if value > 3
+                    sections << section if value > 2
                 end
             end
         end
