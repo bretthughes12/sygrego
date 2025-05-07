@@ -28,7 +28,7 @@ class Gc::SportPreferencesController < GcController
           
           @entered = session[:sport_pref_filter][:entered]
       
-          @sport_preferences = SportPreference.locate_for_group(@group, options)
+          @sport_preferences = SportPreference.locate_for_group(@group, options).paginate(page: params[:page], per_page: 50)
         end
         format.xlsx do 
           @sport_preferences = SportPreference.locate_for_group(@group, {entered: true})

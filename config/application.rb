@@ -3,6 +3,7 @@ require_relative "boot"
 raw_config = File.read(File.expand_path("../app_config.yml", __FILE__))  
 
 require "rails/all"
+require 'will_paginate/array' # WillPaginate::Collection#total_pages
 
 begin
   APP_CONFIG = YAML.load(raw_config, aliases: true)[Rails.env].symbolize_keys

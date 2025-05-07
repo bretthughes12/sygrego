@@ -7,6 +7,7 @@
 <br/>
 
 <% unless @sport_preferences.empty? %>
+    <%= will_paginate @sport_preferences, :container => false %>
     <%= link_to "Download", gc_sport_preferences_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
@@ -28,6 +29,7 @@
         <%= render @sport_preferences %>
     </table>
 
+    <%= will_paginate @sport_preferences, :container => false %>
     <%= link_to "Download", gc_sport_preferences_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
