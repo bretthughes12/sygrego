@@ -126,7 +126,7 @@ private
     def render_for_edit
       @return_path = params[:return]
       @participant = Participant.new
-      @sections = @sport_entry.grade.sections
+      @sections = @sport_entry.grade.sections.order(:name).all
       @groups = Group.coming.order(:short_name).all
       @participants = @sport_entry.participants
             

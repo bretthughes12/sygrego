@@ -35,7 +35,9 @@
     <%= f.input :group_id, as: :select, collection: @groups, label_method: :short_name %>
     <%= f.input :status, as: :select, collection: SportEntry::STATUSES %>
     <%= f.input :section_id, as: :select, collection: @sections, label_method: :name_with_session, include_blank: true %>
-    <% unless @settings.restricted_sports_allocated %>
+    <% if @settings.restricted_sports_allocated %>
+        <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :name_with_session, include_blank: true %>
+    <% else %>
         <%= f.input :preferred_section_id, as: :select, collection: @sections, label_method: :session_and_venue, include_blank: true %>
     <% end %>
 
