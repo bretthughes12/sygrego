@@ -9,6 +9,13 @@
 
 	<td> 
 		<%= h(sport_entry.allocated_section_name) %>
+		<% if @settings.restricted_sports_allocated %>
+			<% if sport_entry.allocated_section_name == sport_entry.preferred_section_name %>
+				<span class="badge bg-success">pref</span>
+			<% elsif !sport_entry.preferred_section_name.blank? %>
+				<span class="badge bg-danger">not pref</span>
+			<% end %>
+		<% end %>
 	</td>
 
 	<% unless @settings.restricted_sports_allocated %>
