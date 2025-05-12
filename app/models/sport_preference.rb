@@ -142,7 +142,11 @@ class SportPreference < ApplicationRecord
   end
 
   def is_entered_this_sport?
-    @is_entered_this_sport ||= cached_participant.is_entered_in_sport?(cached_sport)
+    @is_entered_this_sport ||= begin
+      participant = cached_participant
+      sport = cached_sport
+      participant.is_entered_in_sport?(sport)
+    end
   end
 
   def is_sport_entry_available?
