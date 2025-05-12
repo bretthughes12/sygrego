@@ -338,6 +338,22 @@ class Section < ApplicationRecord
         sections.uniq
     end
 
+    def self.over_limit
+        sections = []
+        Section.active.order(:name).each do |section|
+            sections << section if section.sport_entries.count > section.teams_allowed
+        end
+        sections
+    end
+
+    def self.low_numbers
+        sections = []
+        Section.active.order(:name).each do |section|
+            sections << section if section.sport_entries.count < 4
+        end
+        sections
+    end
+
     def self.import_excel(file, user)
         creates = 0
         updates = 0

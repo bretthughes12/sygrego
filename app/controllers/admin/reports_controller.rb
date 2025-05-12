@@ -64,6 +64,8 @@ class Admin::ReportsController < AdminController
     def sport_integrity
         @sections_wo_sc = Section.without_sc
         @sections_too_many = Section.too_many_entries_same_group
+        @sections_over_limit = Section.over_limit
+        @sections_under_subscribed = Section.low_numbers
         @section_conflicts = Volunteer.section_conflicts
     end
 end
