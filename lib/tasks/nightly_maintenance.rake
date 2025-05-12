@@ -208,6 +208,20 @@ namespace :syg do
     puts "Worked: #{worked}; Failed: #{failed}"
   end
 
+  desc 'Clear sports preferences that have no preference'
+  task clear_empty_sport_preferences: ['environment'] do |_t|
+    puts "Clearing sport preferences that have no value..."
+    deleted = 0
+
+    SportPreference.all.each do |p| 
+      if p.preference.blank?
+        p.destroy
+        deleted += 1
+      end
+    end
+    puts "Deleted: #{deleted}"
+  end
+
   desc 'Nightly maintenance tasks'
   task nightly_maintenance: [
     'update_mysyg_names',
