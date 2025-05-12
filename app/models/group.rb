@@ -587,7 +587,7 @@ class Group < ApplicationRecord
   
     def participants_needed_for_session(session)
       number_of_participants = 0
-      cached_sport_entries.entered.includes(:section).each do |e|
+      cached_sport_entries.not_waiting.includes(:section).each do |e|
         number_of_participants += e.team_size if e.section && e.section.session.id == session
       end
       number_of_participants
@@ -595,7 +595,7 @@ class Group < ApplicationRecord
   
     def under_18s_needed_for_session(session)
       number_of_participants = 0
-      cached_sport_entries.entered.includes(:section).each do |e|
+      cached_sport_entries.not_waiting.includes(:section).each do |e|
         number_of_participants += e.min_under_18s if e.section && e.section.session.id == session
       end
       number_of_participants

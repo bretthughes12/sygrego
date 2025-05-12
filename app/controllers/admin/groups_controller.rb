@@ -30,7 +30,7 @@ class Admin::GroupsController < AdminController
       @groups = Group.not_admin.coming.order(:abbr).load
   
       respond_to do |format|
-        format.html # approvals.html.erb
+        format.html # session_participants.html.erb
         format.xlsx { render xlsx: "participant_audit", template: "admin/groups/participant_audit", filename: "participant_audit.xlsx" }
       end
     end
@@ -40,7 +40,7 @@ class Admin::GroupsController < AdminController
       @groups = Group.coming.order(:name).load
 
       respond_to do |format|
-        format.html # approvals.html.erb
+        format.html # summary.html.erb
         format.xlsx { render xlsx: "group_summary", template: "admin/groups/group_summary", filename: "group_summary.xlsx" }
       end
     end
