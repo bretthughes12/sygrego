@@ -354,6 +354,7 @@ class Group < ApplicationRecord
   end
 
   def volunteers_required
+    return 0 if new_group
     (participants.accepted.coming.count / 5).to_i
   end
 
