@@ -176,7 +176,9 @@ class Section < ApplicationRecord
     end
 
     def teams_allowed
-        if grade.sections.count == 1 && !grade.entry_limit.nil?
+        if grade.status == 'Allocated'
+            number_in_draw
+        elsif grade.sections.count == 1 && !grade.entry_limit.nil?
             grade.entry_limit
         elsif number_of_courts.blank? || number_of_courts == 0
             grade.teams_per_court
