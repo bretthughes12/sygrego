@@ -185,6 +185,10 @@ class Section < ApplicationRecord
         end
     end
 
+    def access_draw_type
+        self.draw_type[0]
+    end
+    
     def add_finals_from_ladder(ladder)
         # 1 v 2 straight to grand final (only 1 group)
         if finals_format == 'Top 2'
@@ -435,6 +439,7 @@ class Section < ApplicationRecord
          'number_in_draw',
          'number_of_groups',
          'start_court',
+         'draw_type',
          'grade_id',
          'session_id',
          'venue_id'

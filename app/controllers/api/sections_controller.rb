@@ -5,7 +5,7 @@ class Api::SectionsController < ApiController
       @section = Section.find(params[:id])
       
       respond_to do |format|
-        format.xml  { render xml: @section }
+        format.xml  { render xml: @section.to_xml(methods: [:access_draw_type]) }
       end
       
     rescue ActiveRecord::RecordNotFound 
