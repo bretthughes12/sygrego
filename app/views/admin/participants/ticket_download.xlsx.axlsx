@@ -7,13 +7,14 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Tickets") do |sheet|
-	sheet.add_row ["Name","Last Name","Email","Registration Type","Booking Type","Registration#","Booking#","Purchased By","Purchaser Email","Phone","Booking Date","Wearable ID","Notes","Question 1","Question 2","Question 3","Question 4","Question 5","Question 6","Question 7","Question 8","Question 9","Question 10","Question 11","Question 12","Question 13","Question 14","Question 15","Question 16"], 
+	sheet.add_row ["Name","Last Name","Company Name","Email","Registration Type","Booking Type","Registration#","Booking#","Purchased By","Purchaser Email","Phone","Booking Date","Notes","Wristband ID","Question 1","Question 2","Question 3","Question 4","Question 5","Question 6","Question 7","Question 8","Question 9","Question 10","Question 11","Question 12","Question 13","Question 14","Question 15","Question 16"], 
 		style: header_border
 
 	@participants.each do |participant|
 		sheet.add_row [
 		     participant.first_name,
 			 participant.surname,
+			 "",
   		     participant.ticket_email,
 			 participant.ticket_type,
 			 "Registering for Someone Else",
@@ -23,24 +24,24 @@ wb.add_worksheet(name: "Tickets") do |sheet|
 			 "stateyouthgames@crowdflo.com.au",
 			 "",
 			 participant.updated_at.in_time_zone.strftime("%d/%m/%Y %I:%M:%S %p"),
-			 "",
 			 participant.ticket_notes,
-			 participant.coming_monday,
+			 "",
+			 participant.id,
+			 participant.spectator,
+			 participant.helper,
+  		     participant.gender,
+			 participant.coming_saturday,
+			 participant.onsite,
+			 participant.coming_sunday,
+  		     participant.wwcc_number,
+  		     participant.rego_type,
 			 participant.number_plate,
 			 participant.group.abbr,
-  		     participant.gc_email,
-			 participant.onsite,
-  		     participant.gender,
-			 participant.helper,
-			 participant.age,
-			 participant.coming_saturday,
 			 participant.driver,
-  		     participant.wwcc_number,
-			 participant.spectator,
-			 participant.coming_friday,
-			 participant.coming_sunday,
-  		     participant.rego_type,
-			 participant.id
+  		     participant.gc_email,
+			 participant.age,
+			 participant.coming_monday,
+			 participant.coming_friday
 		   ],
 		style: row_border
 	end
