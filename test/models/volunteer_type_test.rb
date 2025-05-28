@@ -2,17 +2,20 @@
 #
 # Table name: volunteer_types
 #
-#  id            :bigint           not null, primary key
-#  active        :boolean          default(TRUE)
-#  age_category  :string(20)       default("Over 18")
-#  database_code :string(4)
-#  description   :text
-#  name          :string(100)      not null
-#  sport_related :boolean          default(FALSE)
-#  t_shirt       :boolean          default(FALSE)
-#  updated_by    :bigint
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id                   :bigint           not null, primary key
+#  active               :boolean          default(TRUE)
+#  age_category         :string(20)       default("Over 18")
+#  cc_email             :string(100)
+#  database_code        :string(4)
+#  description          :text
+#  email_template       :string(20)       default("Default")
+#  name                 :string(100)      not null
+#  send_volunteer_email :boolean          default(FALSE)
+#  sport_related        :boolean          default(FALSE)
+#  t_shirt              :boolean          default(FALSE)
+#  updated_by           :bigint
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
 #
 # Indexes
 #

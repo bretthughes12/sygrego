@@ -2,25 +2,29 @@
 #
 # Table name: volunteers
 #
-#  id                :bigint           not null, primary key
-#  collected         :boolean          default(FALSE)
-#  description       :string(100)      not null
-#  details_confirmed :boolean          default(FALSE)
-#  email             :string(100)
-#  equipment_in      :string
-#  equipment_out     :string
-#  lock_version      :integer          default(0)
-#  mobile_confirmed  :boolean          default(FALSE)
-#  mobile_number     :string(20)
-#  notes             :text
-#  returned          :boolean          default(FALSE)
-#  t_shirt_size      :string(10)
-#  updated_by        :bigint
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  participant_id    :bigint
-#  session_id        :bigint
-#  volunteer_type_id :bigint
+#  id                   :bigint           not null, primary key
+#  cc_email             :string(100)
+#  collected            :boolean          default(FALSE)
+#  description          :string(100)      not null
+#  details_confirmed    :boolean          default(FALSE)
+#  email                :string(100)
+#  email_strategy       :string(20)       default("As defined in type")
+#  email_template       :string(20)       default("Default")
+#  equipment_in         :string
+#  equipment_out        :string
+#  lock_version         :integer          default(0)
+#  mobile_confirmed     :boolean          default(FALSE)
+#  mobile_number        :string(20)
+#  notes                :text
+#  returned             :boolean          default(FALSE)
+#  send_volunteer_email :boolean          default(FALSE)
+#  t_shirt_size         :string(10)
+#  updated_by           :bigint
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  participant_id       :bigint
+#  session_id           :bigint
+#  volunteer_type_id    :bigint
 #
 # Indexes
 #

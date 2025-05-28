@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_01_090535) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_28_104234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -794,6 +794,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_090535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "age_category", limit: 20, default: "Over 18"
+    t.boolean "send_volunteer_email", default: false
+    t.string "cc_email", limit: 100
+    t.string "email_template", limit: 20, default: "Default"
     t.index ["name"], name: "index_volunteer_types_on_name", unique: true
   end
 
@@ -816,6 +819,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_090535) do
     t.bigint "volunteer_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email_strategy", limit: 20, default: "As defined in type"
+    t.boolean "send_volunteer_email", default: false
+    t.string "cc_email", limit: 100
+    t.string "email_template", limit: 20, default: "Default"
     t.index ["participant_id"], name: "index_volunteers_on_participant_id"
     t.index ["volunteer_type_id"], name: "index_volunteers_on_volunteer_type_id"
   end
