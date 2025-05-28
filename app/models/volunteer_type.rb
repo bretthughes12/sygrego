@@ -28,12 +28,17 @@ class VolunteerType < ApplicationRecord
 
     has_many :volunteers
 
+    has_rich_text :instructions
+
     scope :sport_related, -> { where(sport_related: true) }
     scope :non_sport_related, -> { where(sport_related: false) }
     scope :active, -> { where(active: true) }
+    scope :to_be_emailed, -> { where(send_volunteer_email: true) }
 
     AGE_CATEGORIES = ['Over 18',
                       'Over 16'].freeze
+    EMAIL_TEMPLATES = ['Default',
+                       'Sport Coordinator'].freeze
 
     validates :name, presence: true, uniqueness: true,
         length: { maximum: 100 }
@@ -42,6 +47,11 @@ class VolunteerType < ApplicationRecord
     validates :age_category,           
         length: { maximum: 20 },
         inclusion: { in: AGE_CATEGORIES }
+    validates :cc_email, 
+        length: { maximum: 100 }
+    validates :email_template,           
+        length: { maximum: 20 },
+        inclusion: { in: EMAIL_TEMPLATES }
         
     def min_age
         if age_category == 'Over 16'
@@ -70,6 +80,9 @@ class VolunteerType < ApplicationRecord
                     type.t_shirt = row['T-Shirt']
                     type.description = row['Description']
                     type.age_category = row['AgeCategory']
+                    type.send_volunteer_email = row['SendEmail']
+                    type.cc_email = row['CC']
+                    type.email_template = row['Template']
                     type.updated_by = user.id
                     if type.save
                         updates += 1
@@ -86,6 +99,9 @@ class VolunteerType < ApplicationRecord
                         t_shirt:                   row['T-Shirt'],
                         description:               row['Description'],
                         age_category:              row['AgeCategory'],
+                        send_volunteer_email:      row['SendEmail'],
+                        cc_email:                  row['CC'],
+                        email_template:            row['Template'],
                         updated_by:                user.id)
                     if type.errors.empty?
                         creates += 1
