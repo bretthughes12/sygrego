@@ -57,20 +57,20 @@ namespace :syg do
 
   desc 'Generate and attach an invoice'
   task generate_test_invoice: ['db:migrate'] do |_t|
-    group = Group.where(abbr: "ADM").first
+    group = Group.where(abbr: "RNG").first
     payments = group.payments.paid.order(:paid_at).load
     invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
     invoice.save(validate: false)
-    pdf = TaxInvoice.new.add_data(group, payments, invoice, "2").to_pdf
+    pdf = TaxInvoice.new.add_data(group, payments, invoice, "3").to_pdf
     file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
     file.binmode
     file.write(pdf)
     file.rewind
     file.close
 
-    group.invoice2_file.purge if group.invoice2_file.attached?
-    group.invoice2_file.attach(io: File.open(file.path), 
-      filename: "Invoice2.pdf",
+    group.invoice3_file.purge if group.invoice3_file.attached?
+    group.invoice3_file.attach(io: File.open(file.path), 
+      filename: "Invoice3.pdf",
       content_type: 'application/pdf',
       identify: false)
   end
