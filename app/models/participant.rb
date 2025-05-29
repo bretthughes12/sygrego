@@ -931,8 +931,8 @@ class Participant < ApplicationRecord
 
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['Name'] == 'Name'
-        unless row['Question 16'].blank?
-          participant = Participant.where(id: row['Question 16']).first
+        unless row['Question 1'].blank?
+          participant = Participant.where(id: row['Question 1']).first
         
           if participant
             participant.registration_nbr        = row['Registration#']
