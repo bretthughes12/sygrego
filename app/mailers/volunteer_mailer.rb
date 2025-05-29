@@ -14,6 +14,7 @@ class VolunteerMailer < ApplicationMailer
     end
     
     def default_instructions(volunteer, test_run: false)
+      @volunteer = volunteer
       recipients = test_run ? 'registrations@stateyouthgames.com' : volunteer.email_recipients
 
       mail(to:      recipients,

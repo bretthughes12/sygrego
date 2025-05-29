@@ -161,6 +161,22 @@ class Volunteer < ApplicationRecord
       session_name =~ /^Sunday.*/
     end
 
+    def to_receive_emails?
+      if email_strategy == 'Volunteer specific'
+        send_volunteer_email 
+      else
+        volunteer_type.send_volunteer_email 
+      end
+    end
+
+    def email_template_to_use
+      if email_strategy == 'Volunteer specific'
+        email_template 
+      else
+        volunteer_type.email_template 
+      end
+    end
+
     def self.sport_coords_saturday
         coords = []
         sport_coords.order('volunteers.description').each do |o|

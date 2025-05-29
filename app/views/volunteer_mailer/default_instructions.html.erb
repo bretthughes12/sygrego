@@ -1,0 +1,17 @@
+<% content_for(:title) { "Volunteer Instructions" } %>
+
+<h2><%= yield(:title) %></h2>
+
+<h3>Role: <%= @volunteer.description %></h3>
+
+<p>Hi SYG volunteer!</p>
+
+<i>Note: You may be receiving this as a Group Co-ordinator of the intended volunteer, if the volunteer does not have an email address recorded in the SYG Registrations system. If that is the case, please pass this email on to the actual volunteer.</i>
+
+<% unless @volunteer.instructions.blank? %>
+	<p><%= @volunteer.instructions %></p>
+<% else %>
+	<% unless @volunteer.volunteer_type.instructions.blank? %>
+		<p><%= @volunteer.volunteer_type.instructions %></p>
+	<% end %>
+<% end %>

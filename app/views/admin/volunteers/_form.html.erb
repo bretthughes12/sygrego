@@ -15,7 +15,7 @@
 	<h3>Volunteer Email</h3>
 
 	<%= f.input :email_strategy, as: :select, collection: Volunteer::EMAIL_STRATEGIES, include_blank: false %>
-	<%= f.input :send_volunteer_email, label: "Does this volunteer type get a volunteer email?" %>
+	<%= f.input :send_volunteer_email, label: "Does this volunteer get a volunteer email?" %>
 	<%= f.input :cc_email, label: "Email address of committee member to be cc'ed" %>
 	<%= f.input :email_template, as: :select, collection: VolunteerType::EMAIL_TEMPLATES, include_blank: false %>
 
