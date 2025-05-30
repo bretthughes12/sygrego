@@ -1,6 +1,12 @@
 Volunteer Instructions
 
 Role: <%= @volunteer.description %>
+<% unless @volunteer.session_name == '(not session-specific)'%>
+	Session: <%= @volunteer.session_name %>
+<% end %>
+<% unless @volunteer.venue_name == '(not venue-specific)'%>
+	Venue: <%= @volunteer.venue_name %>
+<% end %>
 
 Hi SYG volunteer!
 

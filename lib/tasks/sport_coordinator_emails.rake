@@ -24,8 +24,8 @@ namespace :syg do
   
     desc 'Send test volunteer email'
     task send_test_volunteer_email: ['db:migrate'] do |_t|
-      [1164].each do |id|
-      # [1429, 1164, 1672].each do |id|
+      # [1164].each do |id|
+      [1429, 1164, 1672].each do |id|
         volunteer = Volunteer.find(id)
         
         if volunteer.to_receive_emails?
