@@ -4,6 +4,14 @@
 
 <br/>
 
+<h2>Finalising Draws</h2>
+<p>
+  Use these buttons to finalise the draws for each type of sport. This will balance the numbers any sections that are in the same session, update entry limit to the number of entries, and set the status of each grade to 'Allocated'. 
+</p>
+<p>
+  Nothing will happen for grades that have no entry limit.
+</p>
+
 <%= link_to "Finalise Team Sports", finalise_team_sports_admin_tasks_path,
                   method: :post,
                   class: primary_button_class,
@@ -13,6 +21,21 @@
 <br/>
 
 <%= link_to "Finalise Individual Sports", finalise_individual_sports_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
+<h2>Reset Entry Limits</h2>
+
+<p>
+  This will update the grade limits for all sports. Do this after draws have been affected by either adding or removing sport entries.
+</p>
+<br/>
+
+<%= link_to "Update grade limits", update_grade_limits_admin_tasks_path,
                   method: :post,
                   class: primary_button_class,
                   role: "button" %>

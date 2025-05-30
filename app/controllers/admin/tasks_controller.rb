@@ -43,6 +43,20 @@ class Admin::TasksController < AdminController
     
     redirect_to sports_draws_admin_tasks_path
   end
+    
+  # POST /admin/tasks/update_grade_limits
+  def update_grade_limits
+    if @settings.indiv_draws_complete
+      UpdateGradeLimitsJob.perform_later(:individual)
+    end
+    if @settings.team_draws_complete
+      UpdateGradeLimitsJob.perform_later(:team)
+    end
+
+    flash[:notice] = 'Draw limits have been updated'
+    
+    redirect_to sports_draws_admin_tasks_path
+  end
   
   private
   

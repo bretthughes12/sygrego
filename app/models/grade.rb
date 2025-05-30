@@ -53,6 +53,7 @@ class Grade < ApplicationRecord
     scope :active, -> { where(active: true) }
     scope :accepting, -> { where(status: 'Open') }
     scope :closed, -> { where(status: 'Closed') }
+    scope :allocated, -> { where(status: 'Allocated') }
     scope :restricted, -> { where('entry_limit is not NULL') }
     scope :over_limit, -> { where(over_limit: true) }
     scope :not_over_limit, -> { where(over_limit: false) }

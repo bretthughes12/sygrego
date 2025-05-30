@@ -132,6 +132,7 @@ Rails.application.routes.draw do
         post :allocate_restricted
         post :finalise_team_sports
         post :finalise_individual_sports
+        post :update_grade_limits
       end
     end
 
