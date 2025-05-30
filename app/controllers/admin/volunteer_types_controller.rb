@@ -102,6 +102,10 @@ class Admin::VolunteerTypesController < AdminController
                                     :sport_related,
                                     :t_shirt,
                                     :description,
-                                    :age_category)
+                                    :age_category,
+                                    :send_volunteer_email,
+                                    :cc_email,
+                                    :email_template,
+                                    :instructions)
     end
-  end
+end

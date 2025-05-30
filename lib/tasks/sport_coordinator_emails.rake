@@ -1,6 +1,51 @@
 # frozen_string_literal: true
 
 namespace :syg do
+    desc 'Send emails to all applicable volunteers'
+    task send_volunteer_emails: ['db:migrate'] do |_t|
+      Volunteer.each do |volunteer|
+        if volunteer.to_receive_emails?
+          if volunteer.participant.nil?
+            puts "Email skipped for #{volunteer.description}"
+          elsif volunteer.email_template_to_use == 'Sport Coordinator'
+            VolunteerMailer.welcome(volunteer).deliver
+            puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+          elsif volunteer.email_template_to_use == 'Default'
+            VolunteerMailer.default_instructions(volunteer).deliver
+            puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+          else
+            puts "Email template not supported for #{volunteer.description}"
+          end
+        else
+          puts "Email not defined for #{volunteer.description}"
+        end
+      end
+    end
+  
+    desc 'Send test volunteer email'
+    task send_test_volunteer_email: ['db:migrate'] do |_t|
+      [1164].each do |id|
+      # [1429, 1164, 1672].each do |id|
+        volunteer = Volunteer.find(id)
+        
+        if volunteer.to_receive_emails?
+          if volunteer.participant.nil?
+            puts "Email skipped for #{volunteer.description}"
+          elsif volunteer.email_template_to_use == 'Sport Coordinator'
+            VolunteerMailer.welcome(volunteer, test_run: true).deliver
+            puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+          elsif volunteer.email_template_to_use == 'Default'
+            VolunteerMailer.default_instructions(volunteer, test_run: true).deliver
+            puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+          else
+            puts "Email template not supported for #{volunteer.description}"
+          end
+        else
+          puts "Email not defined for #{volunteer.description}"
+        end
+      end
+    end
+  
     desc 'Send emails to all sport coordinators'
     task send_sport_coordinator_emails: ['db:migrate'] do |_t|
       Volunteer.sport_coords.each do |volunteer|

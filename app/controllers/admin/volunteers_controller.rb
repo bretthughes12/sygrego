@@ -222,7 +222,13 @@ class Admin::VolunteersController < AdminController
                                     :notes,
                                     :session_id,
                                     :participant_id,
-                                    :volunteer_type_id)
+                                    :volunteer_type_id,
+                                    :email_strategy,
+                                    :send_volunteer_email,
+                                    :cc_email,
+                                    :email_template,
+                                    :instructions)
+                                  
     end
 
     def get_volunteer_types
@@ -253,4 +259,4 @@ class Admin::VolunteersController < AdminController
         sun_coords_admin_volunteers_url
       end
     end
-  end
+end

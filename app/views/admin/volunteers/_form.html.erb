@@ -12,5 +12,16 @@
 	<%= f.input :mobile_number %>
 	<%= f.input :t_shirt_size, :as => :select, :collection => Volunteer::T_SHIRT_SIZES, :include_blank => true if should_display_t_shirt_flag %>
 
+	<h3>Volunteer Email</h3>
+
+	<%= f.input :email_strategy, as: :select, collection: Volunteer::EMAIL_STRATEGIES, include_blank: false %>
+	<%= f.input :send_volunteer_email, label: "Does this volunteer get a volunteer email?" %>
+	<%= f.input :cc_email, label: "Email address of committee member to be cc'ed" %>
+	<%= f.input :email_template, as: :select, collection: VolunteerType::EMAIL_TEMPLATES, include_blank: false %>
+
+	<%= f.input :instructions, as: :rich_text_area,
+				label: "Volunteer instructions",
+				hint: "Instructions to be sent to volunteers by email prior to the event" %>
+
 	<%= f.button :submit %>
 <% end %>	

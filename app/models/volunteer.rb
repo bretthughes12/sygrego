@@ -46,6 +46,8 @@ class Volunteer < ApplicationRecord
     belongs_to :session, optional: true
     belongs_to :participant, optional: true
   
+    has_rich_text :instructions
+
     scope :filled, -> { where('participant_id is not null') }
     scope :unfilled, -> { where('participant_id is null') }
     scope :sport_related, -> { where('volunteer_types.sport_related' => true).includes(:volunteer_type).references(:volunteer_type) }
@@ -72,6 +74,8 @@ class Volunteer < ApplicationRecord
                              'Equipment to be collected at venue'].freeze
     EQUIPMENT_IN_OPTIONS  = ['Equipment returned',
                              'Equipment left at venue'].freeze
+    EMAIL_STRATEGIES  = ['As defined in type',
+                         'Volunteer specific'].freeze
   
     validates :description,            presence: true,
                                        length: { maximum: 100 }
@@ -91,6 +95,11 @@ class Volunteer < ApplicationRecord
     validates :equipment_in,           length: { maximum: 255 },
                                        inclusion: { in: EQUIPMENT_IN_OPTIONS },
                                        allow_blank: true
+    validates :email_strategy,         length: { maximum: 20 },
+                                       inclusion: { in: EMAIL_STRATEGIES }
+    validates :cc_email,               length: { maximum: 100 }
+    validates :email_template,         length: { maximum: 20 },
+                                       inclusion: { in: VolunteerType::EMAIL_TEMPLATES }
   
     after_create :check_participant_on_create
     after_update :check_participants_on_update
@@ -150,6 +159,22 @@ class Volunteer < ApplicationRecord
     
     def sunday?
       session_name =~ /^Sunday.*/
+    end
+
+    def to_receive_emails?
+      if email_strategy == 'Volunteer specific'
+        send_volunteer_email 
+      else
+        volunteer_type.send_volunteer_email 
+      end
+    end
+
+    def email_template_to_use
+      if email_strategy == 'Volunteer specific'
+        email_template 
+      else
+        volunteer_type.email_template 
+      end
     end
 
     def self.sport_coords_saturday
@@ -269,6 +294,10 @@ class Volunteer < ApplicationRecord
             volunteer.email = row['Email']
             volunteer.mobile_number = row['Mobile']
             volunteer.t_shirt_size = row['T-Shirt']
+            volunteer.email_strategy = row['EmailStrategy']
+            volunteer.send_volunteer_email = row['SendEmail']
+            volunteer.cc_email = row['CC']
+            volunteer.email_template = row['Template']
             volunteer.updated_by = user.id
   
             if volunteer.save
@@ -292,6 +321,10 @@ class Volunteer < ApplicationRecord
                 email:          row['Email'],
                 mobile_number:  row['Mobile'],
                 t_shirt_size:   row['T-Shirt'],
+                email_strategy: row['EmailStrategy'],
+                send_volunteer_email: row['SendEmail'],
+                cc_email:       row['CC'],
+                email_template: row['Template'],
                 updated_by:     user.id
             )
             volunteer.sections.delete_all
