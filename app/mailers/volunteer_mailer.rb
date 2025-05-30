@@ -19,7 +19,7 @@ class VolunteerMailer < ApplicationMailer
 
       mail(to:      recipients,
            cc:      [volunteer.email_who_to_cc, 'registrations@stateyouthgames.com'],
-           from:    volunteer.email_who_to_cc,
+           from:    'registrations@stateyouthgames.com',
            subject: "#{APP_CONFIG[:email_subject]} SYG #{APP_CONFIG[:this_year]} - Volunteer Instructions - #{volunteer.description}")
     end
 end
