@@ -177,6 +177,14 @@ class Volunteer < ApplicationRecord
       end
     end
 
+    def email_who_to_cc
+      if email_strategy == 'Volunteer specific'
+        cc_email.blank? ? 'registrations@stateyouthgames.com' : cc_email
+      else
+        volunteer_type.cc_email.blank? ? 'registrations@stateyouthgames.com' : volunteer_type.cc_email
+      end
+    end
+
     def self.sport_coords_saturday
         coords = []
         sport_coords.order('volunteers.description').each do |o|
