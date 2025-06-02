@@ -57,7 +57,7 @@ namespace :syg do
 
   desc 'Generate and attach an invoice'
   task generate_test_invoice: ['db:migrate'] do |_t|
-    group = Group.where(abbr: "121").first
+    group = Group.where(abbr: "RNG").first
     payments = group.payments.paid.order(:paid_at).load
     invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice")
     invoice.save(validate: false)
