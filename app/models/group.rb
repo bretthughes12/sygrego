@@ -615,9 +615,9 @@ class Group < ApplicationRecord
     end
 
     def free_helpers
-      if division == 'Small Churches'
+      if participants.coming.accepted.playing_sport.size <= 20
         2
-      elsif division == 'Medium Churches'
+      elsif participants.coming.accepted.playing_sport.size <= 40
         4
       elsif participants.coming.accepted.playing_sport.size <= 80
         6
