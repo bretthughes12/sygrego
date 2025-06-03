@@ -16,12 +16,10 @@
 
 <i>Note: You may be receiving this as a Group Co-ordinator of the intended volunteer, if the volunteer does not have an email address recorded in the SYG Registrations system. If that is the case, please pass this email on to the actual volunteer.</i>
 
-<% unless @volunteer.volunteer_type.instructions.blank? %>
-	<p><%= @volunteer.volunteer_type.instructions %></p>
-<% end %>
 <% unless @volunteer.instructions.blank? %>
 	<p><%= @volunteer.instructions %></p>
-<% end %>
-<% unless @volunteer.volunteer_type.signature.blank? %>
-	<p><%= @volunteer.volunteer_type.signature %></p>
+<% else %>
+	<% unless @volunteer.volunteer_type.instructions.blank? %>
+		<p><%= @volunteer.volunteer_type.instructions %></p>
+	<% end %>
 <% end %>

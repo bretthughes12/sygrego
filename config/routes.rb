@@ -358,6 +358,9 @@ Rails.application.routes.draw do
         get :new_import
         post :import
       end
+      member do
+        post :send_emails
+      end
     end
     resources :volunteers do
       collection do
@@ -374,6 +377,8 @@ Rails.application.routes.draw do
         get :return
         patch :update_collect
         patch :update_return
+        post :send_email
+        post :send_test_email
       end
       resources :sections, only: [:index] do
         collection do

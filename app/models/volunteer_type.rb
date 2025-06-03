@@ -29,6 +29,7 @@ class VolunteerType < ApplicationRecord
     has_many :volunteers
 
     has_rich_text :instructions
+    has_rich_text :signature
 
     scope :sport_related, -> { where(sport_related: true) }
     scope :non_sport_related, -> { where(sport_related: false) }
@@ -38,6 +39,7 @@ class VolunteerType < ApplicationRecord
     AGE_CATEGORIES = ['Over 18',
                       'Over 16'].freeze
     EMAIL_TEMPLATES = ['Default',
+                       'Override',
                        'Sport Coordinator'].freeze
 
     validates :name, presence: true, uniqueness: true,

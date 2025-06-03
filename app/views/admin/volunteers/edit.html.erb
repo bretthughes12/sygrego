@@ -36,3 +36,13 @@
                   data: { confirm: "Are you sure?" },
                   class: danger_button_class,
                   role: "button" %>
+<%= link_to "Send Email", send_email_admin_volunteer_path(@volunteer),
+                  method: :post,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>
+<%= link_to "Send Test Email", send_test_email_admin_volunteer_path(@volunteer),
+                  method: :post,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

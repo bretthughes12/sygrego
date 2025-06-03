@@ -17,7 +17,11 @@
 
 	<%= f.input :instructions, as: :rich_text_area,
 				label: "Volunteer instructions",
-				hint: "Instructions to be sent to volunteers by email prior to the event" %>
+				hint: "Instructions to be sent to volunteers by email prior to the event - for the 'Default' email type, this block will be included BEFORE any volunteer-specific content." %>
+
+	<%= f.input :signature, as: :rich_text_area,
+				label: "Email signature",
+				hint: "Instructions to be sent to volunteers by email prior to the event - for the 'Default' email type, this block will be included AFTER any volunteer-specific content." %>
 
 	<%= f.button :submit %>
 <% end %>	

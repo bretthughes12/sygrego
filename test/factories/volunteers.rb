@@ -8,6 +8,7 @@
 #  description          :string(100)      not null
 #  details_confirmed    :boolean          default(FALSE)
 #  email                :string(100)
+#  email_sent           :boolean          default(FALSE)
 #  email_strategy       :string(20)       default("As defined in type")
 #  email_template       :string(20)       default("Default")
 #  equipment_in         :string

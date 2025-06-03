@@ -43,6 +43,41 @@ class Admin::VolunteerTypesController < AdminController
         end
     end
   
+    # POST /admin/volunteer_types/1/send_emails
+    def send_emails
+      emails_sent = 0
+
+      @volunteer_type.volunteers.each do |volunteer|
+        if volunteer.to_receive_emails? && !volunteer.email_sent? && !volunteer.participant.nil?
+          if volunteer.email_template_to_use == 'Sport Coordinator'
+            VolunteerMailer.welcome(volunteer).deliver
+            flash[:notice] = "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+            volunteer.email_sent!
+            emails_sent += 1
+          elsif volunteer.email_template_to_use == 'Default'
+            VolunteerMailer.default_instructions(volunteer).deliver
+            flash[:notice] = "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+            volunteer.email_sent!
+            emails_sent += 1
+          elsif volunteer.email_template_to_use == 'Override'
+            VolunteerMailer.override(volunteer, test_run: true).deliver
+            flash[:notice] = "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
+            volunteer.email_sent!
+            emails_sent += 1
+          end
+        end
+      end
+
+      respond_to do |format|
+        if emails_sent > 0
+          flash[:notice] = "#{emails_sent} emails sent successfully."
+        else
+          flash[:notice] = "No emails were sent."
+        end
+        format.html { render action: "edit" }
+      end
+    end
+
     # PATCH /admin/volunteer_types/1
     def update
         @volunteer_type.updated_by = current_user.id
@@ -106,6 +141,7 @@ class Admin::VolunteerTypesController < AdminController
                                     :send_volunteer_email,
                                     :cc_email,
                                     :email_template,
-                                    :instructions)
+                                    :instructions,
+                                    :signature)
     end
 end

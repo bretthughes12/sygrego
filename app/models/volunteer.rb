@@ -8,6 +8,7 @@
 #  description          :string(100)      not null
 #  details_confirmed    :boolean          default(FALSE)
 #  email                :string(100)
+#  email_sent           :boolean          default(FALSE)
 #  email_strategy       :string(20)       default("As defined in type")
 #  email_template       :string(20)       default("Default")
 #  equipment_in         :string
@@ -185,6 +186,11 @@ class Volunteer < ApplicationRecord
       end
     end
 
+    def email_sent!
+      self.email_sent = true
+      save(validate: false)
+    end
+
     def self.sport_coords_saturday
         coords = []
         sport_coords.order('volunteers.description').each do |o|
@@ -306,6 +312,7 @@ class Volunteer < ApplicationRecord
             volunteer.send_volunteer_email = row['SendEmail']
             volunteer.cc_email = row['CC']
             volunteer.email_template = row['Template']
+            volunteer.email_sent = row['EmailSent']
             volunteer.updated_by = user.id
   
             if volunteer.save
@@ -333,6 +340,7 @@ class Volunteer < ApplicationRecord
                 send_volunteer_email: row['SendEmail'],
                 cc_email:       row['CC'],
                 email_template: row['Template'],
+                email_sent:     row['EmailSent'],
                 updated_by:     user.id
             )
             volunteer.sections.delete_all

@@ -22,5 +22,15 @@ class VolunteerMailer < ApplicationMailer
            from:    'registrations@stateyouthgames.com',
            subject: "#{APP_CONFIG[:email_subject]} SYG #{APP_CONFIG[:this_year]} - Volunteer Instructions - #{volunteer.description}")
     end
+    
+    def override(volunteer, test_run: false)
+      @volunteer = volunteer
+      recipients = test_run ? 'registrations@stateyouthgames.com' : volunteer.email_recipients
+
+      mail(to:      recipients,
+           cc:      [volunteer.email_who_to_cc, 'registrations@stateyouthgames.com'],
+           from:    'registrations@stateyouthgames.com',
+           subject: "#{APP_CONFIG[:email_subject]} SYG #{APP_CONFIG[:this_year]} - Volunteer Instructions - #{volunteer.description}")
+    end
 end
   

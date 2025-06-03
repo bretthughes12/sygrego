@@ -18,6 +18,7 @@
 	<%= f.input :send_volunteer_email, label: "Does this volunteer get a volunteer email?" %>
 	<%= f.input :cc_email, label: "Email address of committee member to be cc'ed" %>
 	<%= f.input :email_template, as: :select, collection: VolunteerType::EMAIL_TEMPLATES, include_blank: false %>
+	<%= f.input :email_sent, label: "Has an email already been sent for this volunteer?" %>
 
 	<%= f.input :instructions, as: :rich_text_area,
 				label: "Volunteer instructions",

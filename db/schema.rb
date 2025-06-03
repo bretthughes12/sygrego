@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_28_104234) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_03_092817) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -823,6 +823,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_28_104234) do
     t.boolean "send_volunteer_email", default: false
     t.string "cc_email", limit: 100
     t.string "email_template", limit: 20, default: "Default"
+    t.boolean "email_sent", default: false
     t.index ["participant_id"], name: "index_volunteers_on_participant_id"
     t.index ["volunteer_type_id"], name: "index_volunteers_on_volunteer_type_id"
   end

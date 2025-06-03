@@ -120,6 +120,77 @@ class Admin::VolunteersController < AdminController
       end
     end
   
+    # POST /admin/volunteers/1/send_email
+    def send_email
+      @volunteer.updated_by = current_user.id
+        
+      respond_to do |format|
+        if @volunteer.to_receive_emails?
+          if @volunteer.participant.nil?
+            flash[:notice] = "Email not sent - no participant associated"
+          elsif @volunteer.email_template_to_use == 'Sport Coordinator'
+            VolunteerMailer.welcome(@volunteer).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            @volunteer.email_sent!
+          elsif @volunteer.email_template_to_use == 'Default'
+            VolunteerMailer.default_instructions(@volunteer).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            @volunteer.email_sent!
+          elsif @volunteer.email_template_to_use == 'Override'
+            VolunteerMailer.override(@volunteer).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            @volunteer.email_sent!
+          else
+            flash[:notice] = "Email template not supported"
+          end
+        else
+          flash[:notice] = "Email not sent - not required for this type"
+        end
+
+        @participants = Participant.volunteer_age.order("first_name, surname").load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+        @volunteer_types = get_volunteer_types 
+        @sessions = Session.order(:name).load
+        @sections = Section.order(:name).load
+
+        format.html { render action: "edit" }
+      end
+    end
+
+    # POST /admin/volunteers/1/send_test_email
+    def send_test_email
+      @volunteer.updated_by = current_user.id
+        
+      respond_to do |format|
+        if @volunteer.to_receive_emails?
+          if @volunteer.participant.nil?
+            flash[:notice] = "Email not sent - no participant associated"
+          elsif @volunteer.email_template_to_use == 'Sport Coordinator'
+            VolunteerMailer.welcome(@volunteer, test_run: true).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+          elsif @volunteer.email_template_to_use == 'Default'
+            VolunteerMailer.default_instructions(@volunteer, test_run: true).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+          elsif @volunteer.email_template_to_use == 'Override'
+            VolunteerMailer.override(@volunteer, test_run: true).deliver
+            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+          else
+            flash[:notice] = "Email template not supported"
+          end
+        else
+          flash[:notice] = "Email not sent - not required for this type"
+        end
+
+        @participants = Participant.volunteer_age.order("first_name, surname").load
+        @participants_with_group_name = @participants.map {|p| [p.name_with_group_name, p.id] }
+        @volunteer_types = get_volunteer_types 
+        @sessions = Session.order(:name).load
+        @sections = Section.order(:name).load
+
+        format.html { render action: "edit" }
+      end
+    end
+
     # PATCH /admin/volunteers/1
     def update
       @volunteer.updated_by = current_user.id
@@ -227,6 +298,7 @@ class Admin::VolunteersController < AdminController
                                     :send_volunteer_email,
                                     :cc_email,
                                     :email_template,
+                                    :email_sent,
                                     :instructions)
                                   
     end
