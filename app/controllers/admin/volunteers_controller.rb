@@ -167,13 +167,13 @@ class Admin::VolunteersController < AdminController
             flash[:notice] = "Email not sent - no participant associated"
           elsif @volunteer.email_template_to_use == 'Sport Coordinator'
             VolunteerMailer.welcome(@volunteer, test_run: true).deliver
-            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            flash[:notice] = "Test email sent"
           elsif @volunteer.email_template_to_use == 'Default'
             VolunteerMailer.default_instructions(@volunteer, test_run: true).deliver
-            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            flash[:notice] = "Test email sent"
           elsif @volunteer.email_template_to_use == 'Override'
             VolunteerMailer.override(@volunteer, test_run: true).deliver
-            flash[:notice] = "Email sent to #{@volunteer.email_recipients}"
+            flash[:notice] = "Test email sent"
           else
             flash[:notice] = "Email template not supported"
           end
