@@ -1164,7 +1164,7 @@ private
   end
 
   def calculate_age
-    if group.mysyg_setting.collect_age_by == "Date of Birth" && !date_of_birth.nil?
+    if group && group.mysyg_setting.collect_age_by == "Date of Birth" && !date_of_birth.nil?
       s = Setting.first
       self.age = s.first_day_of_syg.year - date_of_birth.year
       self.age -= 1 if s.first_day_of_syg < date_of_birth + self.age.years
