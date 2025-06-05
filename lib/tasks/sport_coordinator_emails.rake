@@ -3,7 +3,7 @@
 namespace :syg do
     desc 'Send emails to all applicable volunteers'
     task send_volunteer_emails: ['db:migrate'] do |_t|
-      Volunteer.each do |volunteer|
+      Volunteer.all.each do |volunteer|
         if volunteer.to_receive_emails? && !volunteer.email_sent?
           if volunteer.participant.nil?
             puts "Email skipped for #{volunteer.description}"
