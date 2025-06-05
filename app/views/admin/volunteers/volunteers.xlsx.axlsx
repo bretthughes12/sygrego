@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Volunteers") do |sheet|
-	sheet.add_row ["ID","Type","Volunteer Type","Description","Sections","VolunteerSession","ParticipantID","Name","Group","Email","Mobile","T-Shirt","SectionSession","EmailStrategy","SendEmail","CC","Template","EmailSent"], 
+	sheet.add_row ["ID","Type","Volunteer Type","Description","Sections","VolunteerSession","ParticipantID","Name","Group","Email","Mobile","T-Shirt","SectionSession","EmailStrategy","SendEmail","CC","Template","EmailSent","HasInstructions"], 
 		style: header_border
 
 	@volunteers.each do |volunteer|
@@ -20,6 +20,7 @@ wb.add_worksheet(name: "Volunteers") do |sheet|
 		email = volunteer.email_recipients
 		mobile = volunteer.mobile_phone_number
 		t_shirt = volunteer.t_shirt_size.blank? ? nil : volunteer.t_shirt_size
+		instructions_loaded = volunteer.instructions.blank? ? false : true
 
 		sheet.add_row [
 		    volunteer.id,
@@ -39,7 +40,8 @@ wb.add_worksheet(name: "Volunteers") do |sheet|
 			volunteer.send_volunteer_email,
 			volunteer.cc_email,
 			volunteer.email_template,
-			volunteer.email_sent
+			volunteer.email_sent,
+			instructions_loaded
 		   ],
 		style: row_border
 	end
