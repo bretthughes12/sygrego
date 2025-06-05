@@ -60,7 +60,7 @@ class Admin::VolunteerTypesController < AdminController
             volunteer.email_sent!
             emails_sent += 1
           elsif volunteer.email_template_to_use == 'Override'
-            VolunteerMailer.override(volunteer, test_run: true).deliver
+            VolunteerMailer.override(volunteer).deliver
             flash[:notice] = "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
             volunteer.email_sent!
             emails_sent += 1

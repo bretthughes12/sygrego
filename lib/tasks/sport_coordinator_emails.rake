@@ -16,7 +16,7 @@ namespace :syg do
             puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
             volunteer.email_sent!
           elsif volunteer.email_template_to_use == 'Override'
-            VolunteerMailer.override(volunteer, test_run: true).deliver
+            VolunteerMailer.override(volunteer).deliver
             puts "Email sent to #{volunteer.email_recipients} for #{volunteer.description}"
             volunteer.email_sent!
           else
