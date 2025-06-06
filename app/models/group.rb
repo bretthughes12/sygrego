@@ -274,7 +274,11 @@ class Group < ApplicationRecord
     end
 
     def gc_name
-      gc.nil? ? '' : gc.name
+      if self.users.primary.empty?
+        gc.nil? ? '' : gc.name
+      else
+        self.users.primary.first.name
+      end
     end
 
     def gc_email
@@ -286,11 +290,19 @@ class Group < ApplicationRecord
     end
 
     def gc_phone_number
-      gc.nil? ? '' : gc.phone_number
+      if self.users.primary.empty?
+        gc.nil? ? '' : gc.phone_number
+      else
+        self.users.primary.first.phone_number
+      end
     end
 
     def gc_wwcc
-      gc.nil? ? '' : gc.wwcc_number
+      if self.users.primary.empty?
+        gc.nil? ? '' : gc.wwcc_number
+      else
+        self.users.primary.first.wwcc_number
+      end
     end
 
     def ticket_recipient_text
