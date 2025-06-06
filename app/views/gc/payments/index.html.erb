@@ -77,25 +77,6 @@
   </table>
 <% end %>
 
-<% if @group.amount_outstanding > 0 %>
-  <h2>Payment options</h2>
-
-  <h3>Direct Deposit</h3>
-  <p>To pay by direct deposit, please:</p>
-  <ol>
-    <li>Transfer funds to the account details listed below</li>
-    <li>Mark the applicable invoice as paid on this page. Update the amount and reference if applicable.</li>
-  </ol>
-  
-  <table>
-    <tr><td><b>Account Name:</b></td><td>&nbsp;</td><td><%= @settings.cheque_payable %></td></tr>
-    <tr><td><b>BSB:</b></td><td>&nbsp;</td><td><%= Rails.application.credentials.account_bsb %></td></tr>
-    <tr><td><b>Account:</b></td><td>&nbsp;</td><td><%= Rails.application.credentials.account_number %></td></tr>
-    <tr><td><b>Reference:</b></td><td>&nbsp;</td><td>Invoice number</td></tr>
-  </table>
-  
-<% end %>
-
 <%= legend_box [{:name => "Reconciled", :class => "table-primary"},
 					{:name => "Paid", :class => "table-warning"},
 					{:name => "Invoiced", :class => "table-dark"}] %>
