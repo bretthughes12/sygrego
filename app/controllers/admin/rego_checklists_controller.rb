@@ -141,9 +141,11 @@ class Admin::RegoChecklistsController < AdminController
                                     :site_check_flames_4,
                                     :site_check_flames_5,
                                     :site_check_flames_6,
+                                    :site_check_flames_7,
                                     :site_check_food_1,
                                     :site_check_food_2,
                                     :site_check_food_3,
+                                    :site_check_food_4,
                                     :site_check_gas_1,
                                     :site_check_gas_2,
                                     :site_check_medical_1,
@@ -152,13 +154,16 @@ class Admin::RegoChecklistsController < AdminController
                                     :site_check_medical_4,
                                     :site_check_medical_5,
                                     :site_check_medical_6,
+                                    :site_check_medical_7,
                                     :site_check_safety_1,
                                     :site_check_safety_2,
                                     :site_check_safety_3,
                                     :site_check_safety_4,
                                     :site_check_safety_5,
+                                    :site_check_safety_6,
                                     :site_check_site_1,
-                                    :site_check_site_2
+                                    :site_check_site_2,
+                                    :site_check_onsite_notes
                                 )
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_03_092817) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_06_022927) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -517,6 +517,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_03_092817) do
     t.boolean "site_check_medical_4", default: false
     t.boolean "site_check_medical_5", default: false
     t.boolean "site_check_medical_6", default: false
+    t.boolean "site_check_flames_7"
+    t.boolean "site_check_food_4"
+    t.boolean "site_check_medical_7"
+    t.boolean "site_check_safety_6"
+    t.text "site_check_onsite_notes"
     t.index ["group_id"], name: "index_rego_checklists_on_group_id"
   end
 
