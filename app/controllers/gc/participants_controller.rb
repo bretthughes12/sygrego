@@ -635,4 +635,4 @@ class Gc::ParticipantsController < GcController
         :transfer_email
       )
     end
-  end
+end

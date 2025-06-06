@@ -10,7 +10,91 @@
 
 	<br/>
 
-	<h2>Finances</h2>
+	<h2>Camping
+	<% if @rego_checklist.site_check_status == "Not completed" %>
+		<span class="badge bg-danger">Pending</span>
+	<% elsif @rego_checklist.site_check_status == "Recheck required" %>
+		<span class="badge bg-warning">Recheck</span>
+	<% else %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
+	<table class="table table-dark table-striped">
+		<% if @rego_checklist.site_check_status == "Not completed" %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved. Please provide a time that they can check your site.
+			</td>
+		</tr>
+		<% elsif @rego_checklist.site_check_status == "Recheck required" %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers have visited your site and need to recheck some things. Please provide a time that they can recheck your site.
+			</td>
+		</tr>
+		<% else %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Your site check is already complete. Congratulations!
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td> 
+				<strong>Evacuation</strong>
+			</td>
+			<td> 
+				Please listen out for the instructions of your Zone Warden.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Zone</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_zone_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Info</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_info %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Rubbish</strong>
+			</td>
+			<td> 
+				Please use the bins provided around Lardner Park. General Waste (Red Lid), Mixed Recycling (Yellow Lid), Container Deposit Scheme (Orange Lids) and Organics Bins (Green Lid - Limited, but you can also drop off organic waste by the lake). Ash can also be dropped off by the lake.
+				<br/>
+				<br/>
+				Please ask your group to use the correct bins and not contaminate the waste with incorrect rubbish.
+			</td>
+		</tr>
+	</table>
+	<% unless @rego_checklist.site_check_status == "Passed" %>
+		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
+	<% end %>
+
+	<br/>
+
+	<h2>Finances
+	<% if @rego_checklist.group.amount_outstanding == 0 %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<table class="table table-dark table-striped">
 		<tr>
 			<td> 
@@ -53,62 +137,6 @@
 		</tr>
 	</table>
 
-	<h2>Camping</h2>
-	<table class="table table-dark table-striped">
-		<% if @rego_checklist.site_check_status == "Not completed" %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved. Please provide a time that they can check your site.
-			</td>
-		</tr>
-		<% elsif @rego_checklist.site_check_status == "Recheck required" %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Safety officers have visited your site and need to recheck some things. Please provide a time that they can recheck your site.
-			</td>
-		</tr>
-		<% else %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Your site check is already complete. Congratulations!
-			</td>
-		</tr>
-		<% end %>
-		<tr>
-			<td> 
-				<strong>Evacuation</strong>
-			</td>
-			<td> 
-				Please listen out for the instructions of your Zone Warden. (See Warden info below)
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Rubbish</strong>
-			</td>
-			<td> 
-				Please use the bins provided around Lardner Park. General Waste (Red Lid), Mixed Recycling (Yellow Lid), Container Deposit Scheme (Orange Lids) and Organics Bins (Green Lid - Limited, but you can also drop off organic waste by the lake). Ash can also be dropped off by the lake.
-				<br/>
-				<br/>
-				Please ask your group to use the correct bins and not contaminate the waste with incorrect rubbish.
-			</td>
-		</tr>
-	</table>
-	<% unless @rego_checklist.site_check_status == "Passed" %>
-		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
-	<% end %>
-
-	<br/>
-
 	<h2>Emergency</h2>
 	<table class="table table-dark table-striped">
 	<% if @rego_checklist.group.event_detail.onsite %>
@@ -147,22 +175,6 @@
 				Please also report any incident using the QR code found on group booklets, or using the link from the SYGrego.com website.
 			</td>
 		</tr>
-		<tr>
-			<td> 
-				<strong>Warden Zone</strong>
-			</td>
-			<td> 
-				<%= @rego_checklist.group.event_detail.warden_zone_name %>
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Warden Info</strong>
-			</td>
-			<td> 
-				<%= @rego_checklist.group.event_detail.warden_info %>
-			</td>
-		</tr>
 	</table> 
 
 	<%= f.input :disabled_participants, :label => "Do you have any participants with special needs that would be unable to easily participate in an emergency evacuation? You will need to allocate a person to be with them." %>
@@ -170,7 +182,11 @@
 
 	<br/>
 
-	<h2>Uploads</h2>
+	<h2>Uploads
+	<% if @rego_checklist.group.event_detail.food_cert.attached? && @rego_checklist.group.event_detail.covid_plan.attached? && @rego_checklist.group.event_detail.insurance.attached? %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<table class="table table-dark table-striped">
 		<thead>
 			<tr>
@@ -222,7 +238,11 @@
 
 	<br/>
 
-	<h2>Driving</h2>
+	<h2>Driving
+	<% if @rego_checklist.group.drivers_all_electronic? %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<% if @rego_checklist.group.drivers_all_electronic? %>
 		<p>Physical copy of driver's nomination form is not required. All drivers' information and signatures have been entered online.</p>
 	<% else %>
