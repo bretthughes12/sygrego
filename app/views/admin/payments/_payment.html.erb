@@ -12,7 +12,11 @@
 	</td>
 	
 	<td> 
-		<%= payment.reference %>
+		<% unless payment.reference.blank? %>
+			<%= payment.reference %>
+		<% else %>
+			<i><%= payment.invoice_number %></i>
+		<% end %>
 	</td>
 
 	<td>

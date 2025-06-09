@@ -38,9 +38,11 @@
 #  site_check_flames_4       :boolean          default(FALSE)
 #  site_check_flames_5       :boolean          default(FALSE)
 #  site_check_flames_6       :boolean          default(FALSE)
+#  site_check_flames_7       :boolean
 #  site_check_food_1         :boolean          default(FALSE)
 #  site_check_food_2         :boolean          default(FALSE)
 #  site_check_food_3         :boolean          default(FALSE)
+#  site_check_food_4         :boolean
 #  site_check_gas_1          :boolean          default(FALSE)
 #  site_check_gas_2          :boolean          default(FALSE)
 #  site_check_medical_1      :boolean          default(FALSE)
@@ -49,12 +51,15 @@
 #  site_check_medical_4      :boolean          default(FALSE)
 #  site_check_medical_5      :boolean          default(FALSE)
 #  site_check_medical_6      :boolean          default(FALSE)
+#  site_check_medical_7      :boolean
 #  site_check_notes          :string
+#  site_check_onsite_notes   :text
 #  site_check_safety_1       :boolean          default(FALSE)
 #  site_check_safety_2       :boolean          default(FALSE)
 #  site_check_safety_3       :boolean          default(FALSE)
 #  site_check_safety_4       :boolean          default(FALSE)
 #  site_check_safety_5       :boolean          default(FALSE)
+#  site_check_safety_6       :boolean
 #  site_check_site_1         :boolean          default(FALSE)
 #  site_check_site_2         :boolean          default(FALSE)
 #  site_check_status         :string(20)       default("Not completed")

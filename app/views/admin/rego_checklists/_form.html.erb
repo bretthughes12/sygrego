@@ -10,7 +10,91 @@
 
 	<br/>
 
-	<h2>Finances</h2>
+	<h2>Camping
+	<% if @rego_checklist.site_check_status == "Not completed" %>
+		<span class="badge bg-danger">Pending</span>
+	<% elsif @rego_checklist.site_check_status == "Recheck required" %>
+		<span class="badge bg-warning">Recheck</span>
+	<% else %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
+	<table class="table table-dark table-striped">
+		<% if @rego_checklist.site_check_status == "Not completed" %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved. Please provide a time that they can check your site.
+			</td>
+		</tr>
+		<% elsif @rego_checklist.site_check_status == "Recheck required" %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Safety officers have visited your site and need to recheck some things. Please provide a time that they can recheck your site.
+			</td>
+		</tr>
+		<% else %>
+		<tr>
+			<td> 
+				<strong>Safety</strong>
+			</td>
+			<td> 
+				Your site check is already complete. Congratulations!
+			</td>
+		</tr>
+		<% end %>
+		<tr>
+			<td> 
+				<strong>Evacuation</strong>
+			</td>
+			<td> 
+				Please listen out for the instructions of your Zone Warden.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Zone</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_zone_name %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Warden Info</strong>
+			</td>
+			<td> 
+				<%= @rego_checklist.group.event_detail.warden_info %>
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Rubbish</strong>
+			</td>
+			<td> 
+				Please use the bins provided around Lardner Park. General Waste (Red Lid), Mixed Recycling (Yellow Lid), Container Deposit Scheme (Orange Lids) and Organics Bins (Green Lid - Limited, but you can also drop off organic waste by the lake). Ash can also be dropped off by the lake.
+				<br/>
+				<br/>
+				Please ask your group to use the correct bins and not contaminate the waste with incorrect rubbish.
+			</td>
+		</tr>
+	</table>
+	<% unless @rego_checklist.site_check_status == "Passed" %>
+		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
+	<% end %>
+
+	<br/>
+
+	<h2>Finances
+	<% if @rego_checklist.group.amount_outstanding == 0 %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<table class="table table-dark table-striped">
 		<tr>
 			<td> 
@@ -48,55 +132,10 @@
 				<strong>Registration</strong>
 			</td>
 			<td> 
-				Day Visitors can register at Warragul Leisure Centre from 7:45am so they do not need to drive out to Lardner Park to collect their Wristbands to be able to play sport.
+				Day Visitors can register at Warragul Leisure Centre from 7:45am on Saturday only so they do not need to drive out to Lardner Park to collect their Wristbands to be able to play sport. Sunday day visitors need to drive to Lardner park to collect their wristbands.
 			</td>
 		</tr>
 	</table>
-
-	<h2>Camping</h2>
-	<table class="table table-dark table-striped">
-		<% if @rego_checklist.site_check_status == "Not completed" %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Safety officers will visit your campsite to check your safety compliance and you will need to pass before camping is approved. Please provide a time that they can check your site.
-			</td>
-		</tr>
-		<% elsif @rego_checklist.site_check_status == "Recheck required" %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Safety officers have visited your site and need to recheck some things. Please provide a time that they can recheck your site.
-			</td>
-		</tr>
-		<% else %>
-		<tr>
-			<td> 
-				<strong>Safety</strong>
-			</td>
-			<td> 
-				Your site check is already complete. Congratulations!
-			</td>
-		</tr>
-		<% end %>
-		<tr>
-			<td> 
-				<strong>Evacuation</strong>
-			</td>
-			<td> 
-				Have you read the Emergency Procedures manual (SYG Emergency Plan)?
-			</td>
-		</tr>
-	</table>
-	<% unless @rego_checklist.site_check_status == "Passed" %>
-		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
-	<% end %>
-
-	<br/>
 
 	<h2>Emergency</h2>
 	<table class="table table-dark table-striped">
@@ -124,26 +163,16 @@
 				<strong>Accidents</strong>
 			</td>
 			<td> 
-				If an accident/incident occurs please contact 000 and inform SYG admin. Please advise emergency services to enter Lardner Park via Gate 4 and send a representative of your group to Gate 4 to meet them and guide them to your site.
+				If a non-emergency accident/incident occurs during the day, please call VFAST if you need a first aid crew (0488 405 605) and inform SYG Admin (0484 003 382).
+				<br/>
+				<br/>
+				In the event of an Emergency, call the Admin Office on 0484 003 382. We have a direct line of communication with Emergency Services.
+				<br/>
+				<br/>
+				If you are unable to reach the Admin Office please call 000, and advise emergency services to enter Lardner Park via Gate 4 and send a representative of your group to Gate 4 to meet them and guide them to your site.
 				<br/>
 				<br/>
 				Please also report any incident using the QR code found on group booklets, or using the link from the SYGrego.com website.
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Warden Zone</strong>
-			</td>
-			<td> 
-				<%= @rego_checklist.group.event_detail.warden_zone_name %>
-			</td>
-		</tr>
-		<tr>
-			<td> 
-				<strong>Warden Info</strong>
-			</td>
-			<td> 
-				<%= @rego_checklist.group.event_detail.warden_info %>
 			</td>
 		</tr>
 	</table> 
@@ -153,7 +182,11 @@
 
 	<br/>
 
-	<h2>Uploads</h2>
+	<h2>Uploads
+	<% if @rego_checklist.group.event_detail.food_cert.attached? && @rego_checklist.group.event_detail.covid_plan.attached? && @rego_checklist.group.event_detail.insurance.attached? %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<table class="table table-dark table-striped">
 		<thead>
 			<tr>
@@ -205,7 +238,11 @@
 
 	<br/>
 
-	<h2>Driving</h2>
+	<h2>Driving
+	<% if @rego_checklist.group.drivers_all_electronic? %>
+		<span class="badge bg-success">All Good</span>
+	<% end %>
+	</h2>
 	<% if @rego_checklist.group.drivers_all_electronic? %>
 		<p>Physical copy of driver's nomination form is not required. All drivers' information and signatures have been entered online.</p>
 	<% else %>
@@ -282,7 +319,7 @@
 				<strong>Wrist Bands</strong>
 			</td>
 			<td> 
-				To play sport everyone must wear a wrist band.  We will be asking people to display their wristband before they play sport.
+				To play sport everyone must wear a wrist band.  We will be asking people to display their wristband before they play sport. No under 18’s playing Level 1 sport, they will not allowed to play.
 			</td>
 		</tr>
 	</table>

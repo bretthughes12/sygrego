@@ -3,18 +3,19 @@
 
 	<h2>Safety Discussions</h2>
 	<%= f.input :site_check_safety_1, :label => "Child Protection & Responsibilities" %>
-	<%= f.input :site_check_safety_2, :label => "Your Site/ Your Participants is the Church Responsibility" %>
+	<%= f.input :site_check_safety_2, :label => "Your Site / Your Participants is your Church's Responsibility" %>
 	<%= f.input :site_check_safety_3, :label => "Shower Plan/Supervision" %>
 	<%= f.input :site_check_safety_4, :label => "Sleeping Arrangements (Under 18 & Over 18, and Genders to be Separated)" %>
 	<%= f.input :site_check_safety_5, :label => "Driving requirements as per policies, and speed limits around Lardner park" %>
+	<%= f.input :site_check_safety_6, :label => "Waste management policy and process" %>
 
 	<br/>
 
 	<h2>Electrical Safety</h2>
-	<%= f.input :site_check_electrical_1, :label => "All Electrical Appliances and Leads have been tested and tagged by a qualified electrician as stated by WorkSafe Victoria? (Including New out the the box items)" %>
+	<%= f.input :site_check_electrical_1, :label => "All Electrical Appliances and Leads have been tested and tagged by a qualified electrician as stated by WorkSafe Victoria (Including New out the the box items)?" %>
 	<%= f.input :site_check_electrical_2, :label => "An orange box or apporiate RCD is required between Lardner Park power and your group's SYG appliance?" %>
 	<%= f.input :site_check_electrical_3, :label => "All power boards have a breaker and safety switch? NO double adapters" %>
-	<%= f.input :site_check_electrical_4, :label => "Leads do not exceed maxium lengths" %>
+	<%= f.input :site_check_electrical_4, :label => "Leads do not exceed maxium lengths, as stated in Electrical safety and compliance handbook" %>
 	<%= f.input :site_check_electrical_5, :label => "All leads have a minimum 1.5mm core wire. Can have 10amp plug" %>
 	<%= f.input :site_check_electrical_6, :label => "Power cords are elevated where possible? If cords are on the ground are they covered by mat to prevent injury?" %>
 	<%= f.input :site_check_electrical_7, :label => "No pegs or holes are dug into the ground without express permission from Lardner park due to underground power?" %>
@@ -23,21 +24,22 @@
 	<br/>
 
 	<h2>Gas Safety</h2>
-	<%= f.input :site_check_gas_1, :label => "All gas cylinders are chained or staked to a stationary item and away from fire or the risk of being knocked over?  If in milk creates they must still be attached to something" %>
+	<%= f.input :site_check_gas_1, :label => "All gas cylinders are chained or staked to a stationary item and away from fire or the risk of being knocked over?  If in milk crates they must still be attached to something" %>
 	<%= f.input :site_check_gas_2, :label => "All gas cylinders are in date and in good condition" %>
 
 	<br/>
 
 	<h2>Fire Safety</h2>
-	<%= f.input :site_check_fire_1, :label => "When camping, There is a two metre gap between camping and cooking areas?" %>
-	<%= f.input :site_check_fire_2, :label => "Cooking areas in central marquees have a minimum 1kg of dry chemical fire extinguisher within access?" %>
-	<%= f.input :site_check_fire_3, :label => "Fire blanket in present in cooking areas" %>
-	<%= f.input :site_check_fire_4, :label => "Each group attending games has a fire extinguisher on site it MUST have been tagged and tested within the past 6 months? Date will be on tag" %>
+	<%= f.input :site_check_fire_1, :label => "There is a two metre gap between camping and cooking areas?" %>
+	<%= f.input :site_check_fire_2, :label => "Cooking areas in central marquees have a minimum 1kg of dry chemical fire extinguisher within access? Must be tested and tagged" %>
+	<%= f.input :site_check_fire_3, :label => "Fire blanket in present in cooking areas, and attached to a solid item, must be tested and tagged" %>
+	<%= f.input :site_check_fire_4, :label => "Each group must have fire extinguishers on site it MUST have been tagged and tested within the past 6 months? This includes fire blackets. Date will be on tag" %>
 
 	<br/>
 
 	<h2>Naked flames</h2>
-	<%= f.input :site_check_flames_1, :label => "A Fire extinguisher is kept in a 2 metre vicinity of fire?" %>
+	<%= f.input :site_check_flames_1, :label => "A Fire extinguisher (must be a water extinguisher) is kept within a 4 metre vicinity of your fire drum/pit? Recommended 4.5kg extinguisher or bigger." %>
+	<%= f.input :site_check_flames_7, :label => "A large bucket of water for each addition fire your group has must be kept within 4 meters of your fires" %>
 	<%= f.input :site_check_flames_2, :label => "All campfires must be properly contained. We recommend a washing machine drum, half a metal barrel/drum." %>
 	<%= f.input :site_check_flames_3, :label => "The ground and airspace within a distance of 3 meters from the outer perimeter and upper most point of the fire is clear of flammable material?" %>
 	<%= f.input :site_check_flames_4, :label => "An adult is present at all times when the fire is alight who has the capacity and means to extinguish the fire?" %>
@@ -49,13 +51,13 @@
 	<h2>Food safety</h2>
 	<%= f.input :site_check_food_1, :label => "All food safety protocols are to be met, clean work benches, non slip flooring has been laid in food preparation area, different cutting boards for meats and vegetables etc.?" %>
 	<%= f.input :site_check_food_2, :label => "Two separate sinks are present, one for hand washing and one for food preparation?" %>
-	<%= f.input :site_check_food_3, :label => "Your head cook's Food Handling Certificate is uploaded on the registration site or handed to Admin?" %>
+	<%= f.input :site_check_food_3, :label => "Your hand washing sink is easily accessible by everyone (Not within your cooking space) and must be clearly signed" %>
 
 	<br/>
 
 	<h2>Site</h2>
-	<%= f.input :site_check_site_1, :label => "Self supplied marquees are installed and securred correctly" %>
-	<%= f.input :site_check_site_2, :label => "All marquees are at least 1m apart and under 100Sqm" %>
+	<%= f.input :site_check_site_1, :label => "Self supplied marquees have been pre-approved. They have been installed and secured correctly. Must have guide ropes/straps" %>
+	<%= f.input :site_check_site_2, :label => "All marquees are at least 1m apart (this includes popup gazebo's) and they are all under 100 Sqm" %>
 
 	<br/>
 
@@ -65,11 +67,14 @@
 	<%= f.input :site_check_medical_3, :label => "Safety plan uploaded" %>
 	<%= f.input :site_check_medical_4, :label => "Hand Sanitiser avalible" %>
 	<%= f.input :site_check_medical_5, :label => "RATS avalible" %>
-	<%= f.input :site_check_medical_6, :label => "Hand washing station separate to cooking" %>
+	<%= f.input :site_check_medical_6, :label => "In an emergency everyone to return to their sites" %>
+	<%= f.input :site_check_medical_7, :label => "All incidents need to be record via the SYG QR code, we need to know what has happened" %>
 
 	<br/>
 
 	<%= f.input :site_check_status, :label => "Status", as: :select, collection: RegoChecklist::SITE_CHECK_STATUSES, include_blank: false %>
+
+	<%= f.input :site_check_onsite_notes, label: "Additional Notes" %>
 
 	<br/>
 

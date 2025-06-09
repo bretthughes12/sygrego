@@ -9,6 +9,10 @@ class Admin::AwardsController < AdminController
     respond_to do |format|
       format.html # good_sports.html.erb
       format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "good_sports.xlsx" }
+      format.text do
+        flagged = @awards.select { |a| a.flagged }
+        render plain: flagged.map { |a| "Good Sports Award;#{a.name};#{a.description};#{a.submitted_by};" }.join("\n")
+      end
     end
   end
   
@@ -19,6 +23,10 @@ class Admin::AwardsController < AdminController
     respond_to do |format|
       format.html # spirit.html.erb
       format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "spirit.xlsx" }
+      format.text do
+        flagged = @awards.select { |a| a.flagged }
+        render plain: flagged.map { |a| "Spirit Award;#{a.name};#{a.description};#{a.submitted_by};" }.join("\n")
+      end
     end
   end
   
@@ -29,6 +37,10 @@ class Admin::AwardsController < AdminController
     respond_to do |format|
       format.html # volunteer_awards.html.erb
       format.xlsx { render xlsx: "awards", template: "admin/awards/awards", filename: "volunteer_awards.xlsx" }
+      format.text do
+        flagged = @awards.select { |a| a.flagged }
+        render plain: flagged.map { |a| "Volunteer Award;#{a.name};#{a.description};#{a.submitted_by};" }.join("\n")
+      end
     end
   end
   
