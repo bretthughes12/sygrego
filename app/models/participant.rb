@@ -961,10 +961,10 @@ class Participant < ApplicationRecord
               participant.coming = true
               participant.age = 30
               participant.gender = 'U'
-              participant.coming_friday = row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration'
-              participant.coming_saturday = row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration'
-              participant.coming_sunday = row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration'
-              participant.coming_monday = row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration'
+              participant.coming_friday = row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days'
+              participant.coming_saturday = row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days'
+              participant.coming_sunday = row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days'
+              participant.coming_monday = row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days'
               participant.mobile_phone_number = row['Phone']
               participant.email = row['Email']
               participant.allergies = 'Unknown'
@@ -990,17 +990,17 @@ class Participant < ApplicationRecord
                 coming:                  true,
                 age:                     30,
                 gender:                  'U',
-                coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days',
-                coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days',
-                coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days',
-                coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days',
+                coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
+                coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
+                coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
+                coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
                 mobile_phone_number:     row['Phone'],
                 email:                   row['Email'],
                 allergies:               'Unknown',
                 spectator:               true,
                 onsite:                  false,
-                driver:                  !row['Question 10'].blank?,
-                number_plate:            row['Question 10'],
+                driver:                  !row['Question 9'].blank?,
+                number_plate:            row['Question 9'],
                 licence_type:            licence_type,
                 driver_signature:        driver_signature,
                 dietary_requirements:    'Unknown',
@@ -1016,6 +1016,7 @@ class Participant < ApplicationRecord
             else
               errors += 1
               error_list << participant
+              pp participant.errors.full_messages
             end
           end
         end
