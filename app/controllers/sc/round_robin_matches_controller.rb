@@ -20,39 +20,41 @@ class Sc::RoundRobinMatchesController < ScController
     @round_robin_matches = []
     @section = Section.find(params[:section_id])
     
-    params[:round_robin_matches].keys.each do |id|
-      sre = RoundRobinMatch.find(id.to_i)
+    if params[:round_robin_matches]
+      params[:round_robin_matches].keys.each do |id|
+        sre = RoundRobinMatch.find(id.to_i)
 
-      if params[:round_robin_matches][id][:score_a] == 'Forfeit' && params[:round_robin_matches][id][:score_b] == 'Forfeit'
-        sre.forfeit_a = true
-        sre.forfeit_b = true
-        sre.complete = true
-        params[:round_robin_matches][id][:score_a] = 0
-        params[:round_robin_matches][id][:score_b] = 0
-      elsif params[:round_robin_matches][id][:score_a] == 'Forfeit'
-        sre.forfeit_a = true
-        sre.forfeit_b = false
-        sre.complete = true
-        params[:round_robin_matches][id][:score_a] = 0
-        params[:round_robin_matches][id][:score_b] = @section.sport.forfeit_score
-      elsif params[:round_robin_matches][id][:score_b] == 'Forfeit'
-        sre.forfeit_b = true
-        sre.forfeit_a = false
-        sre.complete = true
-        params[:round_robin_matches][id][:score_b] = 0
-        params[:round_robin_matches][id][:score_a] = @section.sport.forfeit_score
-      elsif params[:commit] == "Calculate Finalists"
-        sre.complete = true
-      elsif params[:round_robin_matches][id][:score_a] == '0' && params[:round_robin_matches][id][:score_b] == '0'
-        sre.forfeit_b = false
-        sre.forfeit_a = false
-        sre.complete = false
-      else
-        sre.complete = true
+        if params[:round_robin_matches][id][:score_a] == 'Forfeit' && params[:round_robin_matches][id][:score_b] == 'Forfeit'
+          sre.forfeit_a = true
+          sre.forfeit_b = true
+          sre.complete = true
+          params[:round_robin_matches][id][:score_a] = 0
+          params[:round_robin_matches][id][:score_b] = 0
+        elsif params[:round_robin_matches][id][:score_a] == 'Forfeit'
+          sre.forfeit_a = true
+          sre.forfeit_b = false
+          sre.complete = true
+          params[:round_robin_matches][id][:score_a] = 0
+          params[:round_robin_matches][id][:score_b] = @section.sport.forfeit_score
+        elsif params[:round_robin_matches][id][:score_b] == 'Forfeit'
+          sre.forfeit_b = true
+          sre.forfeit_a = false
+          sre.complete = true
+          params[:round_robin_matches][id][:score_b] = 0
+          params[:round_robin_matches][id][:score_a] = @section.sport.forfeit_score
+        elsif params[:commit] == "Calculate Finalists"
+          sre.complete = true
+        elsif params[:round_robin_matches][id][:score_a] == '0' && params[:round_robin_matches][id][:score_b] == '0'
+          sre.forfeit_b = false
+          sre.forfeit_a = false
+          sre.complete = false
+        else
+          sre.complete = true
+        end
+
+        sre.update(round_robin_match_params(id))
+        @round_robin_matches << sre unless sre.errors.empty?
       end
-
-      sre.update(round_robin_match_params(id))
-      @round_robin_matches << sre unless sre.errors.empty?
     end
 
     @ladder = RoundRobinLadder.new(@section)

@@ -1016,7 +1016,7 @@ class Participant < ApplicationRecord
             else
               errors += 1
               error_list << participant
-              pp participant.errors.full_messages
+              # pp participant.errors.full_messages
             end
           end
         end
