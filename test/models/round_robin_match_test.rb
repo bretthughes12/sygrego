@@ -94,7 +94,7 @@ class RoundRobinMatchTest < ActiveSupport::TestCase
   end
 
   test "should update existing round robin match from file" do
-    match = FactoryBot.create(:round_robin_match, draw_number: 1322, complete: false)
+    match = FactoryBot.create(:round_robin_match, draw_number: 10322, complete: false)
     section = FactoryBot.create(:section, id: 1, finals_format: 'Top 4', start_court: 2, number_of_groups: 2)
     entry1 = FactoryBot.create(:sport_entry, id: 111, group_number: 2)
     entry2 = FactoryBot.create(:sport_entry, id: 222, group_number: 2)
