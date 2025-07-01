@@ -284,10 +284,6 @@ class SportEntry < ApplicationRecord
   end
 
   def check_and_assign_preferred_section!
-    unless self.preferred_section_id.nil?
-      s = Section.where(id: self.preferred_section_id).first
-    end
-    
     if preferred_section && preferred_section.can_take_more_entries?
       self.section = preferred_section
       save
@@ -433,8 +429,8 @@ private
       self.section.number_in_draw &&
       self.section.number_in_draw > 0
      SportEntryMailer.draw_entry_addition(self).deliver_now
-   end
- end
+    end
+  end
 
   def remove_participants_from_entry!
     participants.each do |p|
