@@ -4,6 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  amount       :decimal(8, 2)    default(0.0), not null
+#  invoice_type :string(20)       default("Unspecified"), not null
 #  name         :string(50)
 #  paid         :boolean          default(FALSE)
 #  paid_at      :datetime
