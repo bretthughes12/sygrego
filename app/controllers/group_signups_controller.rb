@@ -36,7 +36,7 @@ class GroupSignupsController < ApplicationController
           @group.mysyg_setting.save
 
           # TODO: create the invoice properly
-          invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice")
+          invoice = Payment.new(group: @group, amount: @group.amount_outstanding, payment_type: "Invoice", invoice_type: "Initial")
           invoice.save(validate: false)
 
           payments = @group.payments.paid.order(:paid_at).load
