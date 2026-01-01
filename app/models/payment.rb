@@ -37,6 +37,11 @@ class Payment < ApplicationRecord
     'Direct Deposit',
     'Invoice'].freeze
 
+  INVOICE_TYPES = ['Unspecified',
+    'Initial',
+    'Second',
+    'Final'].freeze
+
   validates :amount,                 
     presence: true,
     numericality: true,

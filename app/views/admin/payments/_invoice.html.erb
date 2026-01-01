@@ -1,0 +1,30 @@
+<tr valign="top" class="<%= payment_display_class(payment) %>">
+	<td> 
+		<%= payment.group.short_name %>
+	</td>
+	
+	<td> 
+		<%= payment.invoice_number %>
+	</td>
+
+	<td> 
+        <%= link_to number_to_currency(payment.amount), edit_admin_payment_path(payment) %>
+	</td>
+	
+	<td> 
+		<%= payment.reference %>
+	</td>
+
+	<td>
+
+	</td>
+
+	<td>
+		<% unless payment.reconciled %>
+			<%= link_to "Reconcile", reconcile_admin_payment_path(payment.id),
+					method: :patch,
+					class: primary_button_class,
+					role: "button" %>
+		<% end %>
+	</td>
+</tr>

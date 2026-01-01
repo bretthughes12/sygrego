@@ -259,6 +259,9 @@ Rails.application.routes.draw do
     end
 
     resources :payments do
+      collection do
+        get :invoices
+      end
       member do
         patch :reconcile
       end

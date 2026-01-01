@@ -13,6 +13,15 @@ class Admin::PaymentsController < AdminController
       end
     end
   
+    # GET /admin/payments/invoices
+    def invoices
+      @payments = Payment.unreconciled.includes(:group).order('groups.short_name', :id).load
+
+      respond_to do |format|
+        format.html # invoices.html.erb
+      end
+    end
+  
     # GET /admin/payments/1
     def show
       respond_to do |format|
@@ -93,6 +102,7 @@ class Admin::PaymentsController < AdminController
       params.require(:payment).permit(
         :amount, 
         :group_id,
+        :invoice_type,
         :reconciled,
         :paid,
         :paid_at,

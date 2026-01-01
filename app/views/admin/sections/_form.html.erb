@@ -11,7 +11,7 @@
 	<%= f.input :number_of_courts %>
 	<%= f.input :start_court %>
 	<%= f.input :number_of_groups %>
-	<%= f.input :finals_format, as: :select, collection: Section::FINALS_FORMATS, allow_blank: true %>
+	<%= f.input :finals_format, as: :select, collection: Section::FINALS_FORMATS, include_blank: true %>
 	<%= f.input :year_introduced %>
 	<%= f.input :number_in_draw %>
 
