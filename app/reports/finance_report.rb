@@ -119,7 +119,7 @@ class FinanceReport < Prawn::Document
         text "Account Name: #{APP_CONFIG[:cheque_payable]}"
         text "BSB: #{Rails.application.credentials.account_bsb}"
         text "Account: #{Rails.application.credentials.account_number}"
-        text "Reference: SYG#{@settings.this_year.to_s + @group.abbr + @suffix}"
+        text "Reference: reference your invoice number (e.g., INV000123)"
       end
     end
 end
