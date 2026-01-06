@@ -16,11 +16,11 @@
 	</td>
 
 	<td>
-		<% if payment.invoice_type == "Deposit" && payment.group.invoice1_file.attached? %>
+		<% if payment.invoice_type == "Initial" && payment.group.invoice1_file.attached? %>
 			<% if payment.group.invoice1_file.representable? %>
 				<%= link_to(image_tag(payment.group.invoice1_file.representation(resize_to_limit: [80, 100])), rails_blob_path(payment.group.invoice1_file, disposition: "attachment")) %>
 			<% else %>
-				<%= link_to "Deposit", rails_blob_path(payment.group.invoice1_file, disposition: "attachment") %>
+				<%= link_to "Initial", rails_blob_path(payment.group.invoice1_file, disposition: "attachment") %>
 			<% end %>
 		<% elsif payment.invoice_type == "Second" && payment.group.invoice2_file.attached? %>
 			<% if payment.group.invoice2_file.representable? %>

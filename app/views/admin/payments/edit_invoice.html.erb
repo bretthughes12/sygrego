@@ -3,7 +3,7 @@
 <h1><%= yield(:title) %></h1>
 
 <%= render partial: "form", locals: { 
-                              url: admin_payment_path(@payment), 
+                              url: update_invoice_admin_payment_path(@payment), 
                               method: :patch } %>
 
 <br/>
