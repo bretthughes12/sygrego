@@ -42,6 +42,10 @@ class Admin::PaymentsController < AdminController
     def edit
     end
   
+    # GET /admin/payments/1/edit_invoice
+    def edit_invoice
+    end
+  
     # POST /admin/payments
     def create
       @payment = Payment.new(payment_params)
@@ -72,6 +76,20 @@ class Admin::PaymentsController < AdminController
       end
     end
   
+    # PATCH /admin/payments/1/update_invoice
+    def update_invoice
+      @payment.updated_by = current_user.id
+
+      respond_to do |format|
+        if @payment.update(payment_params)
+          flash[:notice] = 'Payment was successfully updated.'
+          format.html { redirect_to invoices_admin_payments_url }
+        else
+          format.html { render action: "edit_invoice" }
+        end
+      end
+    end
+  
     # PATCH /admin/payments/1/reconcile
     def reconcile
       @payment.reconciled = true
@@ -86,6 +104,20 @@ class Admin::PaymentsController < AdminController
       end
     end
   
+    # PATCH /admin/payments/1/reconcile_invoice
+    def reconcile_invoice
+      @payment.reconciled = true
+      @payment.paid = true
+      @payment.updated_by = current_user.id
+
+      respond_to do |format|
+        if @payment.save
+          flash[:notice] = 'Payment reconciled.'
+          format.html { redirect_to invoices_admin_payments_url }
+        end
+      end
+    end
+  
     # DELETE /admin/payments/1
     def destroy
       flash[:notice] = 'Payment deleted.'
@@ -93,6 +125,16 @@ class Admin::PaymentsController < AdminController
   
       respond_to do |format|
         format.html { redirect_to admin_payments_url }
+      end
+    end
+  
+    # DELETE /admin/payments/1/destroy_invoice
+    def destroy_invoice
+      flash[:notice] = 'Payment deleted.'
+      @payment.destroy
+  
+      respond_to do |format|
+        format.html { redirect_to invoices_admin_payments_url }
       end
     end
   

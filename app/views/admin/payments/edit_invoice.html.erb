@@ -1,0 +1,18 @@
+<% title "Editing #{@payment.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= render partial: "form", locals: { 
+                              url: admin_payment_path(@payment), 
+                              method: :patch } %>
+
+<br/>
+
+<%= link_to "Back", invoices_admin_payments_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Destroy", destroy_invoice_admin_payment_path(@payment),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" },
+                  class: danger_button_class,
+                  role: "button" %>

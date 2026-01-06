@@ -264,6 +264,10 @@ Rails.application.routes.draw do
       end
       member do
         patch :reconcile
+        get :edit_invoice
+        patch :update_invoice
+        patch :reconcile_invoice
+        delete :destroy_invoice
       end
     end
     resources :vouchers

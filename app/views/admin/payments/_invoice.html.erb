@@ -8,7 +8,7 @@
 	</td>
 
 	<td> 
-        <%= link_to number_to_currency(payment.amount), edit_admin_payment_path(payment) %>
+        <%= link_to number_to_currency(payment.amount), edit_invoice_admin_payment_path(payment) %>
 	</td>
 	
 	<td> 
@@ -16,12 +16,30 @@
 	</td>
 
 	<td>
-
+		<% if payment.invoice_type == "Deposit" && payment.group.invoice1_file.attached? %>
+			<% if payment.group.invoice1_file.representable? %>
+				<%= link_to(image_tag(payment.group.invoice1_file.representation(resize_to_limit: [80, 100])), rails_blob_path(payment.group.invoice1_file, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Deposit", rails_blob_path(payment.group.invoice1_file, disposition: "attachment") %>
+			<% end %>
+		<% elsif payment.invoice_type == "Second" && payment.group.invoice2_file.attached? %>
+			<% if payment.group.invoice2_file.representable? %>
+				<%= link_to(image_tag(payment.group.invoice2_file.representation(resize_to_limit: [80, 100])), rails_blob_path(payment.group.invoice2_file, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Second", rails_blob_path(payment.group.invoice2_file, disposition: "attachment") %>
+			<% end %>
+		<% elsif payment.invoice_type == "Final" && payment.group.invoice3_file.attached? %>
+			<% if payment.group.invoice3_file.representable? %>
+				<%= link_to(image_tag(payment.group.invoice3_file.representation(resize_to_limit: [80, 100])), rails_blob_path(payment.group.invoice3_file, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Final", rails_blob_path(payment.group.invoice3_file, disposition: "attachment") %>
+			<% end %>
+		<% end %>
 	</td>
 
 	<td>
 		<% unless payment.reconciled %>
-			<%= link_to "Reconcile", reconcile_admin_payment_path(payment.id),
+			<%= link_to "Reconcile", reconcile_invoice_admin_payment_path(payment.id),
 					method: :patch,
 					class: primary_button_class,
 					role: "button" %>
