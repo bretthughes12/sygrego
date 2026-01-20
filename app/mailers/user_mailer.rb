@@ -15,9 +15,10 @@ class UserMailer < ApplicationMailer
              subject: "#{APP_CONFIG[:email_subject]} SYG Group Coordinator Nomination")
     end
 
-    def gc_approval(user)
+    def gc_approval(user, group)
         @user = user
-    
+        @group = group
+        
         mail(to:      user.email, 
              subject: "#{APP_CONFIG[:email_subject]} Welcome Group Coordinator")
     end

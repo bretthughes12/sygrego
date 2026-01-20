@@ -1,8 +1,8 @@
 class GroupsController < ApplicationController
     load_and_authorize_resource
-    before_action :authenticate_user!
-    before_action :find_group
-    before_action :find_participant
+    before_action :authenticate_user!, except: [:invoice1, :invoice2, :invoice3]
+    before_action :find_group, except: [:invoice1, :invoice2, :invoice3]
+    before_action :find_participant, except: [:invoice1, :invoice2, :invoice3]
     
     # GET /gc/groups/available_groups
     def available_groups
@@ -26,6 +26,21 @@ class GroupsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to home_url(current_user) }
       end
+    end
+
+    # GET /groups/:id/invoice1
+    def invoice1
+        redirect_to rails_blob_path(@group.invoice1_file)
+    end
+
+    # GET /groups/:id/invoice2
+    def invoice2
+        redirect_to rails_blob_path(@group.invoice2_file)
+    end
+
+    # GET /groups/:id/invoice3
+    def invoice3
+        redirect_to rails_blob_path(@group.invoice3_file)
     end
 
     private

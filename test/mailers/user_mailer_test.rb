@@ -54,7 +54,7 @@ class UserMailerTest < ActionMailer::TestCase
       gc.roles << @gc_role
       gc.groups << group
 
-      email = UserMailer.gc_approval(gc)
+      email = UserMailer.gc_approval(gc, group)
       
       assert_match /Welcome Group Coordinator/, email.subject  
       assert_equal gc.email, email.to[0]

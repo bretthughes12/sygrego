@@ -169,7 +169,7 @@ class Admin::GroupsController < AdminController
         u.status = "Verified"
         u.save(validate: false)
         
-        UserMailer.gc_approval(u).deliver_now if u.role?(:gc) || u.role?(:church_rep)
+        UserMailer.gc_approval(u, @group).deliver_now if u.role?(:gc) || u.role?(:church_rep)
       end
 
       flash[:notice] = 'Group approved'

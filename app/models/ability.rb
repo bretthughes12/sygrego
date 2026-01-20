@@ -16,6 +16,7 @@ class Ability
            :create_volunteer], Award
       can :create, SportsEvaluation
       can [:index, :update, :show, :search], LostItem
+      can [:invoice1, :invoice2, :invoice3], Group
 
     elsif session["current_role"] == "admin"
       can :manage, :all
@@ -139,7 +140,7 @@ class Ability
       can [:update, :edit_password, :update_password], User do |u|
         user == u
       end
-      can :update, Group do |group|
+      can [:update, :invoice1, :invoice2, :invoice3], Group do |group|
         user.groups.include?(group) || user.role?(:admin)
       end
       can [:update, 

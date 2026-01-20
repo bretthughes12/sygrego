@@ -45,6 +45,9 @@ Rails.application.routes.draw do
     end
     member do
       patch :switch
+      get :invoice1
+      get :invoice2
+      get :invoice3
     end
   end
   resources :participants do
@@ -502,7 +505,13 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :groups, only: [:edit, :update]
+    resources :groups, only: [:edit, :update] do
+      member do
+        get :invoice1
+        get :invoice2
+        get :invoice3
+      end
+    end
     resources :groups_sports_filters, only: [:show] do
       member do
         post :hide_team

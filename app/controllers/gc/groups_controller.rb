@@ -20,6 +20,21 @@ class Gc::GroupsController < GcController
       end
     end
 
+    # GET /gc/groups/:id/invoice1
+    def invoice1
+        redirect_to rails_blob_path(@group.invoice1_file)
+    end
+
+    # GET /gc/groups/:id/invoice2
+    def invoice2
+        redirect_to rails_blob_path(@group.invoice2_file)
+    end
+
+    # GET /gc/groups/:id/invoice3
+    def invoice3
+        redirect_to rails_blob_path(@group.invoice3_file)
+    end
+
 private
   
     def group_params
