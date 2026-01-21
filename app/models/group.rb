@@ -12,13 +12,16 @@
 #  coming                   :boolean          default(TRUE)
 #  database_rowid           :integer
 #  denomination             :string(40)       not null
+#  disclaimer               :boolean          default(FALSE)
 #  email                    :string(100)
+#  followup_requested       :boolean          default(FALSE)
 #  gc_decision              :text
 #  gc_role                  :text
 #  gc_thoughts              :text
 #  gc_years_attended_church :integer
 #  group_changes            :text
 #  group_focus              :string(100)
+#  info_acknowledgement     :boolean          default(FALSE)
 #  last_year                :boolean          default(FALSE)
 #  late_fees                :decimal(8, 2)    default(0.0)
 #  lock_version             :integer          default(0)
@@ -156,8 +159,10 @@ class Group < ApplicationRecord
                                     allow_blank: true
     validates :late_fees,           numericality: true,
                                     allow_blank: true
-    validates :reference_caller,    length: { maximum: 20 }
-    validates :group_focus,        length: { maximum: 100 }
+    validates :group_focus,         length: { maximum: 100 }
+    validates :gc_years_attended_church,
+                                    numericality: { only_integer: true },
+                                    allow_blank: true
     validates :website,             length: { maximum: 100 }
 
     searchable_by :abbr, :name, :short_name, :trading_name

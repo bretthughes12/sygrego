@@ -1,6 +1,8 @@
 module Admin::GroupsHelper
     def group_submission_class(group)
       case
+      when group.followup_requested == true
+        "table-danger"
       when group.status == "Submitted"
         "table-warning"
       else

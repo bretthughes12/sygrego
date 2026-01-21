@@ -38,9 +38,24 @@ class GroupSignup
                   :years_as_gc,
                   :group,
                   :gc,
-                  :church_rep
+                  :church_rep,
+                  :years_attended,
+                  :group_changes,
+                  :ministry_goal,
+                  :attendee_profile,
+                  :gc_role,     
+                  :gc_decision,      
+                  :gc_years_attended_church,  
+                  :gc_thoughts,
+                  :disclaimer,
+                  :info_acknowledgement,
+                  :followup_requested
   
-    INTEGER_FIELDS = %w[years_as_gc id].freeze
+    INTEGER_FIELDS = %w[years_as_gc 
+      id 
+      years_attended
+      gc_years_attended_church
+    ].freeze
   
     GROUP_ATTRIBUTES = %i[
       name
@@ -51,6 +66,17 @@ class GroupSignup
       email
       website
       denomination
+      years_attended
+      group_changes
+      ministry_goal
+      attendee_profile
+      gc_role
+      gc_decision
+      gc_years_attended_church
+      gc_thoughts
+      disclaimer
+      info_acknowledgement
+      followup_requested
     ].freeze
   
     CHURCH_REP_ATTRIBUTES = {
@@ -95,6 +121,8 @@ class GroupSignup
     validates :website,                length: { maximum: 100 }
     validates :denomination,           presence: true,
                                        length: { maximum: 40 }
+    validates :years_attended,         numericality: { only_integer: true },
+                                       allow_blank: true
     validates :church_rep_name,        presence: true,
                                        length: { maximum: 40 }
     validates :church_rep_role,        presence: true,
@@ -132,16 +160,20 @@ class GroupSignup
                                        length: { maximum: 20 }
     validates :gc_reference,           presence: true,
                                        length: { maximum: 40 }
-    validates :gc_reference_phone,
-              presence: true,
-              length: { maximum: 30 }
+    validates :gc_reference_phone,     presence: true,
+                                       length: { maximum: 30 }
     validates :years_as_gc,            numericality: { only_integer: true },
+                                       allow_blank: true
+    validates :gc_years_attended_church,
+                                       numericality: { only_integer: true },
                                        allow_blank: true
   
     before_validation :normalize_church_rep_name!
     before_validation :normalize_gc_name!
     before_validation :validate_group_has_not_registered
     before_validation :validate_different_email_for_church_rep_and_gc
+    before_validation :validate_disclaimer_ticked
+    before_validation :validate_info_acknowledgement_ticked
   
     def initialize(attributes = {})
       send_attributes(attributes)
@@ -213,6 +245,14 @@ class GroupSignup
       if @gc_email == @church_rep_email
         errors.add(:gc_name, '/ email cannot be the same as the Church Representative')
       end
+    end
+
+    def validate_disclaimer_ticked
+      errors.add(:disclaimer, "must be ticked") if disclaimer == "0"
+    end
+
+    def validate_info_acknowledgement_ticked
+      errors.add(:info_acknowledgement, "must be ticked") if info_acknowledgement == "0"
     end
 
     def find_or_create_group
@@ -298,5 +338,5 @@ class GroupSignup
     def normalize_gc_name!
       self.gc_name = gc_name.titleize if gc_name
     end
-  end
+end
   

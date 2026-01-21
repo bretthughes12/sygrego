@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_30_041329) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_21_095839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -195,13 +195,16 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_30_041329) do
     t.datetime "created_at", null: false
     t.integer "database_rowid"
     t.string "denomination", limit: 40, null: false
+    t.boolean "disclaimer", default: false
     t.string "email", limit: 100
+    t.boolean "followup_requested", default: false
     t.text "gc_decision"
     t.text "gc_role"
     t.text "gc_thoughts"
     t.integer "gc_years_attended_church"
     t.text "group_changes"
     t.string "group_focus", limit: 100
+    t.boolean "info_acknowledgement", default: false
     t.boolean "last_year", default: false
     t.decimal "late_fees", precision: 8, scale: 2, default: "0.0"
     t.integer "lock_version", default: 0

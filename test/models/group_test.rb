@@ -12,13 +12,16 @@
 #  coming                   :boolean          default(TRUE)
 #  database_rowid           :integer
 #  denomination             :string(40)       not null
+#  disclaimer               :boolean          default(FALSE)
 #  email                    :string(100)
+#  followup_requested       :boolean          default(FALSE)
 #  gc_decision              :text
 #  gc_role                  :text
 #  gc_thoughts              :text
 #  gc_years_attended_church :integer
 #  group_changes            :text
 #  group_focus              :string(100)
+#  info_acknowledgement     :boolean          default(FALSE)
 #  last_year                :boolean          default(FALSE)
 #  late_fees                :decimal(8, 2)    default(0.0)
 #  lock_version             :integer          default(0)

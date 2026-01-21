@@ -15,6 +15,10 @@
     <%= f.input :website %>
     <%= f.input :phone_number %>
     <%= f.input :denomination %>
+	<%= f.input :years_attended, label: "Years group has attended" %>
+	<%= f.input :group_changes, as: :text, label: "Any changes to previous years (if attended prior)", hint: "Any changes to previous years (if attended prior), church leadership, youth turn over etc - pastoral needs that will effect the young people" %>
+	<%= f.input :ministry_goal, as: :text, label: "Briefly describe ministry goal", hint: "Gives understanding to reason of attendance, helps to address cultural or pastoral care needs. What is the aim for your group - outreach, discipleship, team building" %>
+	<%= f.input :attendee_profile, as: :text, label: "Briefly describe those attending", hint: "Gives understanding to who we have at the event." %>
 
     <h2>Church, Agency or Organisation Representative</h2>
 
@@ -41,6 +45,94 @@
     <%= f.input :gc_reference, label: "Referee" %>
     <%= f.input :gc_reference_phone, label: "Referee contact number" %>
     <%= f.input :years_as_gc, label: "Years as GC", hint: "How many times has this individual been a GC before?" %>
+	<%= f.input :gc_role, as: :text, label: "GC's role at church", hint: "Besides GC, what is their role in your church? Are they doing this as a volunteer, or part of their church role. Who is keeping them accountable and supporting them?" %>
+	<%= f.input :gc_decision, as: :text, label: "How did you decide on this GC? What support structures are in place?" %>
+	<%= f.input :gc_years_attended_church, label: "Years attended church", hint: "GCs who have been at the church for under 1 year should also have a co-leader as it is difficult to take on this role without understanding your church culture and community" %>
+	<%= f.input :gc_thoughts, as: :text, label: "Additional thoughts or any concerns about this GC?" %>
+
+    <h2>Important Information</h2>
+
+	<table class="table table-dark table-striped">
+		<tr>
+			<td> 
+				<strong>Theme Brief</strong>
+			</td>
+			<td> 
+				Gather, Grow, Go - have you been given the theme brief, do you have an understanding of the resources available?
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Volunteers</strong>
+			</td>
+			<td> 
+				SYG runs on volunteers. Unless you are a first time group, are you aware your group will be called upon to supply volunteers to the running of the event, etc - marshals, sport coordinators, ushers...
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Insurance cover</strong>
+			</td>
+			<td> 
+				SYG has public indemnity cover, covering injury due to neglience of organisers. This does not cover sporting injuries. Claims must be made through the church. If not possible, your church must clearly communicate to participants to find cover or participate under their own risk.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>WWCC</strong>
+			</td>
+			<td> 
+				All participants over 18 must have a WWCC, including visitors, teachers and police officers. If there is a reason they don't, we need to discuss. Please tick the box below requesting a follow-up call with SYG organisers
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>Financial Liability</strong>
+			</td>
+			<td> 
+				By accepting a participant to attend with your group on the registration system you are liable for their place. It is your group's responsibility to cover their cost if they pull out.
+			</td>
+		</tr>
+		<tr>
+			<td> 
+				<strong>OHS Camping</strong>
+			</td>
+			<td> 
+				Are you staying onsite? Lardner Park requires you to follow all OHS procedures. Please make sure electrical items are tested and tagged and follow safety compliance rules - Please note 2019 Marquee & fire pit updates
+			</td>
+		</tr>
+	</table> 
+
+    <br/>
+
+  	By ticking this box, you confirm you have read and understood the above important information.
+
+	<br/>
+	<br/>
+
+    <%= f.input :info_acknowledgement, :as => :boolean, :label => "I have understood the above information"  %>
+
+    <h2>Follow Up</h2>
+
+	Please tick this box if you would like a member of the State Youth Games organising team to contact you to discuss any of the above information.
+
+	<br/>
+	<br/>
+
+    <%= f.input :followup_requested, :as => :boolean, :label => "I would like a follow-up call from SYG organisers"  %>
+
+    <h2>Disclaimer</h2>
+
+	<ul>
+		<li>Disclaimer text goes here...</li>
+	</ul>
+
+	By ticking this box, you confirm...
+
+	<br/>
+	<br/>
+
+    <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
 
     <%= f.button :submit, label: "Sign up" %>
 <% end %>	
