@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_21_095839) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -642,6 +642,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_095839) do
     t.string "rego_email", limit: 100, default: ""
     t.string "rego_website", default: ""
     t.boolean "restricted_sports_allocated", default: false
+    t.boolean "show_orientation_details", default: true
     t.integer "small_division_ceiling", default: 20
     t.string "social_facebook_gc_url", default: ""
     t.string "social_facebook_url", default: ""
