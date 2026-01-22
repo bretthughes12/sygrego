@@ -6,7 +6,11 @@
 
 <p>You have been nominated as the Group Coordinator for <%= @group.name %> by <%= @church_rep.name %> for State Youth Games <%= @settings.this_year %>.</p> 
 
-<p>Group Coordinators are the lead organisers for their team and the point person between the team and SYG. GCs are responsible for communicating to and from their team and will need to keep on top of email communication. GC’s are also required to attend a compulsory orientation evening, details are in the registration link below.</p>
+<% if @settings.show_orientation_details %>
+	<p>Group Coordinators are the lead organisers for their team and the point person between the team and SYG. GCs are responsible for communicating to and from their team and will need to keep on top of email communication. GC’s are also required to attend a compulsory orientation evening, details are in the registration link below.</p>
+<% else %>
+	<p>Group Coordinators are the lead organisers for their team and the point person between the team and SYG. GCs are responsible for communicating to and from their team and will need to keep on top of email communication.</p>
+<% end %>
 
 <p>To confirm yourself as GC for your team, please complete the registration process and set your password <%= link_to "here.", edit_password_url(@user, reset_password_token: @token) %> </p>
 
@@ -14,7 +18,11 @@
 
 <p>If you cannot GC for your team, please inform <%= @church_rep.name %> or email <%= @settings.info_email %> so we can pass this onto the correct person.</p>
 
-<p>Following the completion of your registration and having completed the correct checks, we look forward to seeing you at orientation and working with you to get your team to the <%= @settings.this_year %> event!</p>
+<% if @settings.show_orientation_details %>
+	<p>Following the completion of your registration and having completed the correct checks, we look forward to seeing you at orientation and working with you to get your team to the <%= @settings.this_year %> event!</p>
+<% else %>
+	<p>Following the completion of your registration and having completed the correct checks, we look forward to working with you to get your team to the <%= @settings.this_year %> event!</p>
+<% end %>
 
 <strong>Please retain this email as a reference of your login details:</strong>
 <table>

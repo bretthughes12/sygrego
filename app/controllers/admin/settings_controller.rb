@@ -99,7 +99,7 @@ class Admin::SettingsController < AdminController
           format.html { render action: "edit_functionality" }
         end
       end
-    end
+  end
   
   # PATCH /admin/settings/1/update_email
   def update_email
@@ -258,6 +258,7 @@ class Admin::SettingsController < AdminController
   
     def settings_params
       params.require(:setting).permit(:generate_stats,
+                                      :show_orientation_details,
                                       :early_bird,
                                       :sports_loaded,
                                       :volunteers_loaded,
@@ -316,4 +317,4 @@ class Admin::SettingsController < AdminController
                                     )
 
     end
-  end
+end

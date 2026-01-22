@@ -149,7 +149,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should import event details" do
-    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('event_detail.xlsx','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     assert_no_difference('EventDetail.count') do
@@ -161,7 +161,7 @@ class Admin::EventDetailsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should not import event_details when the file is not excel" do
-    group = FactoryBot.create(:group, abbr: "CAF")
+    FactoryBot.create(:group, abbr: "CAF")
     file = fixture_file_upload('not_csv.txt','application/text')
 
     assert_no_difference('EventDetail.count') do

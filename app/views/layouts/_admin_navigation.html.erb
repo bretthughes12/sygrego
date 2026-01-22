@@ -22,8 +22,10 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class='dropdown-item'><%= link_to 'Groups', admin_groups_path %></li>
                         <li class='dropdown-item'><%= link_to 'Group Submissions', approvals_admin_groups_path %></li>
-                        <li class='dropdown-item'><%= link_to 'Orientation Details', admin_orientation_details_path %></li>
-                        <li class='dropdown-item'><%= link_to 'Group Orientations', orientation_details_admin_event_details_path %></li>
+                        <% if @settings.show_orientation_details %>
+                            <li class='dropdown-item'><%= link_to 'Orientation Details', admin_orientation_details_path %></li>
+                            <li class='dropdown-item'><%= link_to 'Group Orientations', orientation_details_admin_event_details_path %></li>
+                        <% end %>
                         <li class='dropdown-item'><%= link_to 'Event Details', admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'Group Uploads', uploads_admin_event_details_path %></li>
                         <li class='dropdown-item'><%= link_to 'MySYG Settings', admin_mysyg_settings_path %></li>

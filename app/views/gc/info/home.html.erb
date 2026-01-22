@@ -3,52 +3,55 @@
 <h1><%= yield(:title) %></h1>
 
 <% if !@settings.group_registrations_closed %>
-<h2>GC Orientation</h2>
 
-    <% if @group.event_detail.orientation_detail.nil? %>
-        <p>Please register for a GC Orientation <%= link_to "here", edit_orientation_gc_event_detail_path(@group.event_detail) %> </p>
+    <% if @settings.show_orientation_details %>
+        <h2>GC Orientation</h2>
 
-    <% else %>
+        <% if @group.event_detail.orientation_detail.nil? %>
+            <p>Please register for a GC Orientation <%= link_to "here", edit_orientation_gc_event_detail_path(@group.event_detail) %> </p>
 
-        <table class="table table-dark table-striped">
-            <tr valign="top">
-                <td> 
-                    GC Orientation
-                </td>
+        <% else %>
 
-                <td> 
-                    <%= @group.event_detail.orientation_detail.name  %>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td> 
-                    Venue
-                </td>
+            <table class="table table-dark table-striped">
+                <tr valign="top">
+                    <td> 
+                        GC Orientation
+                    </td>
 
-                <td> 
-                    <%= @group.event_detail.orientation_detail.venue_name  %>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td> 
-                    Address
-                </td>
+                    <td> 
+                        <%= @group.event_detail.orientation_detail.name  %>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td> 
+                        Venue
+                    </td>
 
-                <td> 
-                    <%= @group.event_detail.orientation_detail.venue_address  %>
-                </td>
-            </tr>
-            <tr valign="top">
-                <td> 
-                    Date and Time
-                </td>
+                    <td> 
+                        <%= @group.event_detail.orientation_detail.venue_name  %>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td> 
+                        Address
+                    </td>
 
-                <td> 
-                    <%= @group.event_detail.orientation_detail.event_date_time.strftime("%d/%m/%Y %I:%M %p")  %>
-                </td>
-            </tr>
-        </table>
+                    <td> 
+                        <%= @group.event_detail.orientation_detail.venue_address  %>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td> 
+                        Date and Time
+                    </td>
 
+                    <td> 
+                        <%= @group.event_detail.orientation_detail.event_date_time.strftime("%d/%m/%Y %I:%M %p")  %>
+                    </td>
+                </tr>
+            </table>
+
+        <% end %>
     <% end %>
 <% end %>
 
