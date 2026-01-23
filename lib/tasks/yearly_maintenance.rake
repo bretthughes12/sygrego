@@ -504,12 +504,26 @@ namespace :syg do
         end
     
         desc 'Clean up all non-admin users'
-        task clean_up_users: ['db:migrate'] do |_t|
+        task clean_up_non_admin_users: ['db:migrate'] do |_t|
             puts "Cleaning up non-admin users..."
             User.all.each do |u|
-                u.destroy unless u.role?(:admin)
+                u.destroy unless u.role?(:admin) || u.role?(:sc)
             end
         end
+    
+        desc 'Clean up all admin users'
+        task clean_up_admin_users: ['db:migrate'] do |_t|
+            puts "Cleaning up admin users..."
+            User.all.each do |u|
+                if u.role?(:admin) 
+                    u.primary_gc = false
+                end
+            end
+        end
+    
+        desc 'Clean up all non-admin users'
+        task clean_up_users: [:clean_up_non_admin_users,
+                              :clean_up_admin_users]
     
         desc 'Roll State Youth Games models for a new year'
         task roll: [:clear_logs,
