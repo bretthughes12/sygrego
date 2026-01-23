@@ -122,18 +122,13 @@
 
     <%= f.input :followup_requested, :as => :boolean, :label => "I would like a follow-up call from SYG organisers"  %>
 
-    <h2>Disclaimer</h2>
+    <h2>Disclaimers</h2>
 
-	<ul>
-		<li>Disclaimer text goes here...</li>
-	</ul>
-
-	By ticking this box, you confirm...
 
 	<br/>
 	<br/>
 
-    <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge the above"  %>
+    <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge my responsibility as the church representative and the group coordinator to implement these policies and to ensure they are communicated to and followed by all participants, leaders, volunteers, and parents/guardians within my group."  %>
 
     <%= f.button :submit, label: "Sign up" %>
 <% end %>	

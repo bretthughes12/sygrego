@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_23_093819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -191,7 +191,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
     t.string "age_demographic", limit: 40
     t.integer "allocation_bonus", default: 0
     t.text "attendee_profile"
+    t.boolean "ccvt_child_safe_disclaimer", default: false
     t.boolean "coming", default: true
+    t.boolean "conduct_disclaimer", default: false
     t.datetime "created_at", null: false
     t.integer "database_rowid"
     t.string "denomination", limit: 40, null: false
@@ -203,6 +205,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
     t.text "gc_thoughts"
     t.integer "gc_years_attended_church"
     t.text "group_changes"
+    t.boolean "group_child_safe_disclaimer", default: false
     t.string "group_focus", limit: 100
     t.boolean "info_acknowledgement", default: false
     t.boolean "last_year", default: false
@@ -224,6 +227,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
     t.datetime "updated_at", null: false
     t.bigint "updated_by"
     t.string "website", limit: 100
+    t.boolean "wwcc_policy_disclaimer", default: false
     t.integer "years_attended", default: 0
     t.index ["abbr"], name: "index_groups_on_abbr", unique: true
     t.index ["name"], name: "index_groups_on_name", unique: true
@@ -637,6 +641,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_22_084105) do
     t.integer "new_group_sports_allocation_factor", default: 0
     t.string "participant_feedback_url"
     t.boolean "participant_registrations_closed", default: false
+    t.string "policy_child_safe_url"
+    t.string "policy_conduct_url"
+    t.string "policy_wwcc_url"
     t.decimal "primary_age_adjustment", precision: 8, scale: 2, default: "0.0", null: false
     t.string "public_website", default: ""
     t.string "rego_email", limit: 100, default: ""

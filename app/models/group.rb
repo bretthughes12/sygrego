@@ -2,47 +2,51 @@
 #
 # Table name: groups
 #
-#  id                       :bigint           not null, primary key
-#  abbr                     :string(4)        not null
-#  address                  :string(200)      not null
-#  admin_use                :boolean          default(FALSE)
-#  age_demographic          :string(40)
-#  allocation_bonus         :integer          default(0)
-#  attendee_profile         :text
-#  coming                   :boolean          default(TRUE)
-#  database_rowid           :integer
-#  denomination             :string(40)       not null
-#  disclaimer               :boolean          default(FALSE)
-#  email                    :string(100)
-#  followup_requested       :boolean          default(FALSE)
-#  gc_decision              :text
-#  gc_role                  :text
-#  gc_thoughts              :text
-#  gc_years_attended_church :integer
-#  group_changes            :text
-#  group_focus              :string(100)
-#  info_acknowledgement     :boolean          default(FALSE)
-#  last_year                :boolean          default(FALSE)
-#  late_fees                :decimal(8, 2)    default(0.0)
-#  lock_version             :integer          default(0)
-#  ministry_goal            :text
-#  name                     :string(100)      not null
-#  new_group                :boolean          default(TRUE)
-#  phone_number             :string(20)
-#  postcode                 :integer          not null
-#  reference_caller         :string(20)
-#  reference_notes          :text
-#  short_name               :string(50)       not null
-#  status                   :string(12)       default("Stale")
-#  suburb                   :string(40)       not null
-#  ticket_email             :string(100)
-#  ticket_preference        :string(20)       default("Send to GC")
-#  trading_name             :string(100)      not null
-#  updated_by               :bigint
-#  website                  :string(100)
-#  years_attended           :integer          default(0)
-#  created_at               :datetime         not null
-#  updated_at               :datetime         not null
+#  id                          :bigint           not null, primary key
+#  abbr                        :string(4)        not null
+#  address                     :string(200)      not null
+#  admin_use                   :boolean          default(FALSE)
+#  age_demographic             :string(40)
+#  allocation_bonus            :integer          default(0)
+#  attendee_profile            :text
+#  ccvt_child_safe_disclaimer  :boolean          default(FALSE)
+#  coming                      :boolean          default(TRUE)
+#  conduct_disclaimer          :boolean          default(FALSE)
+#  database_rowid              :integer
+#  denomination                :string(40)       not null
+#  disclaimer                  :boolean          default(FALSE)
+#  email                       :string(100)
+#  followup_requested          :boolean          default(FALSE)
+#  gc_decision                 :text
+#  gc_role                     :text
+#  gc_thoughts                 :text
+#  gc_years_attended_church    :integer
+#  group_changes               :text
+#  group_child_safe_disclaimer :boolean          default(FALSE)
+#  group_focus                 :string(100)
+#  info_acknowledgement        :boolean          default(FALSE)
+#  last_year                   :boolean          default(FALSE)
+#  late_fees                   :decimal(8, 2)    default(0.0)
+#  lock_version                :integer          default(0)
+#  ministry_goal               :text
+#  name                        :string(100)      not null
+#  new_group                   :boolean          default(TRUE)
+#  phone_number                :string(20)
+#  postcode                    :integer          not null
+#  reference_caller            :string(20)
+#  reference_notes             :text
+#  short_name                  :string(50)       not null
+#  status                      :string(12)       default("Stale")
+#  suburb                      :string(40)       not null
+#  ticket_email                :string(100)
+#  ticket_preference           :string(20)       default("Send to GC")
+#  trading_name                :string(100)      not null
+#  updated_by                  :bigint
+#  website                     :string(100)
+#  wwcc_policy_disclaimer      :boolean          default(FALSE)
+#  years_attended              :integer          default(0)
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
 #
 # Indexes
 #

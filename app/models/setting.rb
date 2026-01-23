@@ -30,6 +30,9 @@
 #  new_group_sports_allocation_factor   :integer          default(0)
 #  participant_feedback_url             :string
 #  participant_registrations_closed     :boolean          default(FALSE)
+#  policy_child_safe_url                :string
+#  policy_conduct_url                   :string
+#  policy_wwcc_url                      :string
 #  primary_age_adjustment               :decimal(8, 2)    default(0.0), not null
 #  public_website                       :string           default("")
 #  rego_email                           :string(100)      default("")
