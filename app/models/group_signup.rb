@@ -180,8 +180,12 @@ class GroupSignup
     before_validation :normalize_gc_name!
     before_validation :validate_group_has_not_registered
     before_validation :validate_different_email_for_church_rep_and_gc
-    before_validation :validate_disclaimer_ticked
     before_validation :validate_info_acknowledgement_ticked
+    before_validation :validate_ccvt_child_safe_disclaimer_ticked
+    before_validation :validate_wwcc_disclaimer_ticked
+    before_validation :validate_conduct_disclaimer_ticked
+    before_validation :validate_disclaimer_ticked
+    before_validation :validate_group_child_safe_disclaimer_ticked
   
     def initialize(attributes = {})
       send_attributes(attributes)
@@ -255,12 +259,28 @@ class GroupSignup
       end
     end
 
+    def validate_info_acknowledgement_ticked
+      errors.add(:info_acknowledgement, "must be ticked") if info_acknowledgement == "0"
+    end
+
+    def validate_ccvt_child_safe_disclaimer_ticked
+      errors.add(:ccvt_child_safe_disclaimer, "must be ticked") if ccvt_child_safe_disclaimer == "0"
+    end
+
+    def validate_wwcc_disclaimer_ticked
+      errors.add(:wwcc_policy_disclaimer, "must be ticked") if wwcc_policy_disclaimer == "0"
+    end
+
+    def validate_conduct_disclaimer_ticked
+      errors.add(:conduct_disclaimer, "must be ticked") if conduct_disclaimer == "0"
+    end
+
     def validate_disclaimer_ticked
       errors.add(:disclaimer, "must be ticked") if disclaimer == "0"
     end
 
-    def validate_info_acknowledgement_ticked
-      errors.add(:info_acknowledgement, "must be ticked") if info_acknowledgement == "0"
+    def validate_group_child_safe_disclaimer_ticked
+      errors.add(:group_child_safe_disclaimer, "must be ticked") if group_child_safe_disclaimer == "0"
     end
 
     def find_or_create_group
