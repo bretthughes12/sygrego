@@ -122,13 +122,25 @@
 
     <%= f.input :followup_requested, :as => :boolean, :label => "I would like a follow-up call from SYG organisers"  %>
 
-    <h2>Disclaimers</h2>
+    <h2>Policies and Disclaimers</h2>
 
+	<% unless @settings.policy_child_safe_url.blank? %>
+		<%= link_to "CCVT Safe Places Policy", @settings.policy_child_safe_url, target: "_blank" %>
+	<% end %>
+    <%= f.input :ccvt_child_safe_disclaimer, :as => :boolean, :label => "I have read, understood, and agree to comply with the CCVT Safe Places Policy."  %>
 
-	<br/>
-	<br/>
+	<% unless @settings.policy_wwcc_url.blank? %>
+		<%= link_to "SYG WWCC Policy", @settings.policy_wwcc_url, target: "_blank" %>
+	<% end %>
+    <%= f.input :wwcc_policy_disclaimer, :as => :boolean, :label => "I have read, understood, and agree to comply with the SYG WWCC Policy."  %>
+
+	<% unless @settings.policy_conduct_url.blank? %>		
+		<%= link_to "SYG Code of Conduct", @settings.policy_conduct_url, target: "_blank" %>
+	<% end %>
+    <%= f.input :conduct_disclaimer, :as => :boolean, :label => "I have read, understood, and agree to comply with the SYG Code of Conduct."  %>
 
     <%= f.input :disclaimer, :as => :boolean, :label => "I acknowledge my responsibility as the church representative and the group coordinator to implement these policies and to ensure they are communicated to and followed by all participants, leaders, volunteers, and parents/guardians within my group."  %>
+    <%= f.input :group_child_safe_disclaimer, :as => :boolean, :label => "I also confirm that my organisation has its own Child Safe Policies in place, which have been communicated to all participants aged 18 years and over and to parents/guardians, and that these policies will operate alongside and in support of the SYG policies."  %>
 
-    <%= f.button :submit, label: "Sign up" %>
+    <%= f.button :submit, "Sign up" %>
 <% end %>	

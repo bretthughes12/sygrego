@@ -48,6 +48,10 @@ class GroupSignup
                   :gc_years_attended_church,  
                   :gc_thoughts,
                   :disclaimer,
+                  :ccvt_child_safe_disclaimer,
+                  :wwcc_policy_disclaimer,
+                  :conduct_disclaimer,
+                  :group_child_safe_disclaimer,
                   :info_acknowledgement,
                   :followup_requested
   
@@ -75,6 +79,10 @@ class GroupSignup
       gc_years_attended_church
       gc_thoughts
       disclaimer
+      ccvt_child_safe_disclaimer
+      wwcc_policy_disclaimer
+      conduct_disclaimer
+      group_child_safe_disclaimer
       info_acknowledgement
       followup_requested
     ].freeze
