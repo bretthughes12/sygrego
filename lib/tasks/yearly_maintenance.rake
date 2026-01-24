@@ -235,6 +235,7 @@ namespace :syg do
                 g.insurance_sighted = false
                 g.covid_plan_sighted = false
                 g.site_check_notes = nil
+                g.site_check_onsite_notes = nil
                 g.site_check_completed_by = nil
                 g.site_check_church_contact = nil
                 g.site_check_status = 'Not completed'
@@ -244,6 +245,7 @@ namespace :syg do
                 g.site_check_safety_3 = false
                 g.site_check_safety_4 = false
                 g.site_check_safety_5 = false
+                g.site_check_safety_6 = false
                 g.site_check_electrical_1 = false
                 g.site_check_electrical_2 = false
                 g.site_check_electrical_3 = false
@@ -264,9 +266,11 @@ namespace :syg do
                 g.site_check_flames_4 = false
                 g.site_check_flames_5 = false
                 g.site_check_flames_6 = false
+                g.site_check_flames_7 = false
                 g.site_check_food_1 = false
                 g.site_check_food_2 = false
                 g.site_check_food_3 = false
+                g.site_check_food_4 = false
                 g.site_check_site_1 = false
                 g.site_check_site_2 = false
                 g.site_check_medical_1 = false
@@ -275,6 +279,7 @@ namespace :syg do
                 g.site_check_medical_4 = false
                 g.site_check_medical_5 = false
                 g.site_check_medical_6 = false
+                g.site_check_medical_7 = false
     
                 g.save(validate: false)
             end
