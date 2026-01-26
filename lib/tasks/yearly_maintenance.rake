@@ -163,6 +163,13 @@ namespace :syg do
                 g.gc_years_attended_church = nil
                 g.gc_thoughts = nil
                 g.reference_notes = nil
+                g.disclaimer = false
+                g.ccvt_child_safe_disclaimer = false
+                g.wwcc_policy_disclaimer = false
+                g.conduct_disclaimer = false
+                g.group_child_safe_disclaimer = false
+                g.info_acknowledgement = false
+                g.followup_requested = false
                 g.status = 'Stale' unless g.admin_use
         
                 g.save(validate: false)
@@ -424,7 +431,6 @@ namespace :syg do
                 p.fee_when_withdrawn = 0
                 p.late_fee_charged = false
                 p.driver = false
-                # p.driving_to_syg = false
                 p.number_plate = nil
                 p.driver_signature = false
                 p.driver_signature_date = nil
@@ -435,8 +441,6 @@ namespace :syg do
                 p.exported = false
                 p.dirty = false
                 p.emergency_email = nil
-                # p.camping_preferences = nil
-                # p.sport_notes = nil
                 p.medical_injuries = nil
                 p.group_fee_category = nil
                 p.transfer_email = nil
@@ -502,7 +506,7 @@ namespace :syg do
         task clean_up_volunteers: ['db:migrate'] do |_t|
             puts "Updating last year's volunteers..."
             Volunteer.all.each do |v|
-                if v.instructions.nil?
+                if v.instructions.nil? || v.instructions.blank?
                     v.destroy
                 else
                     puts "--> '#{v.description}' not deleted - has instructions"
