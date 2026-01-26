@@ -378,7 +378,7 @@ namespace :syg do
     
         desc 'Refresh Participants for new year'
         task refresh_participants: %i[destroy_sections_volunteers
-                                    destroy_volunteers 
+                                    clean_up_volunteers 
                                     destroy_participants_question_responses
                                     remove_non_attending_participants
                                     update_remaining_participants 
@@ -415,14 +415,27 @@ namespace :syg do
             SectionsVolunteer.delete_all
         end
     
-        desc 'Clear all volunteers'
-        task destroy_volunteers: ['db:migrate'] do |_t|
-            puts "Deleting last year's volunteers..."
+        desc 'Reset / delete volunteers for new year'
+        task clean_up_volunteers: ['db:migrate'] do |_t|
+            puts "Updating last year's volunteers..."
             Volunteer.all.each do |v|
                 if v.instructions.nil?
                     v.destroy
                 else
                     puts "--> #{v.description} not deleted - has instructions"
+                    v.collected = false
+                    v.returned = false
+                    v.equipment_in = false
+                    v.equipment_out = false
+                    v.details_confirmed = false
+                    v.mobile_confirmed = false
+                    v.email_sent = false
+                    v.email = nil
+                    v.mobile_number = nil
+                    v.notes = nil
+                    v.participant_id = nil
+
+                    v.save(validate: false)
                 end
             end
         end
