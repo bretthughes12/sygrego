@@ -418,7 +418,13 @@ namespace :syg do
         desc 'Clear all volunteers'
         task destroy_volunteers: ['db:migrate'] do |_t|
             puts "Deleting last year's volunteers..."
-            Volunteer.destroy_all
+            Volunteer.all.each do |v|
+                if v.instructions.nil?
+                    v.destroy
+                else
+                    puts "--> #{v.description} not deleted - has instructions"
+                end
+            end
         end
     
         desc 'Clear all lost property'
