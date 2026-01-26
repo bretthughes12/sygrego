@@ -75,7 +75,74 @@ namespace :syg do
             puts "Deleting last year's group extras..."
             GroupExtra.destroy_all
         end
-    
+
+        desc 'Delete stale groups (not coming this year or last year)'
+        task delete_stale_groups: ['db:migrate'] do |_t|
+            puts 'Deleting stale groups...'
+            Group.where(coming: false, last_year: false, admin_use: false).each do |g|
+                puts "--> #{g.abbr} being considered for deletion"
+                if g.participants.count > 0
+                    puts "-->   NOT deleted - has participants"
+                    next
+                end
+                if g.payments.count > 0
+                    puts "-->   NOT deleted - has payments"
+                    next
+                end
+                if g.sport_entries.count > 0
+                    puts "-->   NOT deleted - has sport entries"
+                    next
+                end
+                if g.vouchers.count > 0
+                    puts "-->   Deleted #{g.vouchers.count} vouchers first"
+                    g.vouchers.each do |v|
+                        v.destroy
+                    end
+                end
+                if g.group_extras.count > 0
+                    puts "-->   Deleted #{g.group_extras.count} group extras first"
+                    g.group_extras.each do |ge|
+                        ge.destroy
+                    end
+                end
+                if g.group_fee_categories.count > 0
+                    puts "-->   Deleted #{g.group_fee_categories.count} group fee categories first"
+                    g.group_fee_categories.each do |gfc|
+                        gfc.destroy
+                    end
+                end
+                if g.questions.count > 0
+                    puts "-->   Deleted #{g.questions.count} questions first"
+                    g.questions.each do |q|
+                        q.destroy
+                    end
+                end
+
+                if g.booklet_file.attached? && Rails.env.production?
+                    g.booklet_file.purge
+                    puts '--  booklet purged'
+                end
+                if g.results_file.attached? && Rails.env.production?
+                    g.results_file.purge 
+                    puts '--  results purged'
+                end
+                if g.invoice1_file.attached? && Rails.env.production?
+                    g.invoice1_file.purge 
+                    puts '--  invoice 1 purged'
+                end
+                if g.invoice2_file.attached? && Rails.env.production?
+                    g.invoice2_file.purge 
+                    puts '--  invoice 2 purged'
+                end
+                if g.invoice3_file.attached? && Rails.env.production?
+                    g.invoice3_file.purge 
+                    puts '--  invoice 3 purged'
+                end
+
+                g.destroy
+            end
+        end
+
         desc 'Reset group fields to pristine state'
         task update_groups: ['db:migrate'] do |_t|
             puts 'Updating groups...'
@@ -135,6 +202,18 @@ namespace :syg do
                 if g.results_file.attached? && Rails.env.production?
                     g.results_file.purge 
                     puts '--  results purged'
+                end
+                if g.invoice1_file.attached? && Rails.env.production?
+                    g.invoice1_file.purge 
+                    puts '--  invoice 1 purged'
+                end
+                if g.invoice2_file.attached? && Rails.env.production?
+                    g.invoice2_file.purge 
+                    puts '--  invoice 2 purged'
+                end
+                if g.invoice3_file.attached? && Rails.env.production?
+                    g.invoice3_file.purge 
+                    puts '--  invoice 3 purged'
                 end
             end
         end
@@ -287,6 +366,7 @@ namespace :syg do
     
         desc 'Refresh Groups for new year'
         task refresh_groups: [:destroy_group_extras,
+                            :delete_stale_groups,
                             :update_groups,
                             :update_event_details,
                             :update_mysyg_settings,
