@@ -415,6 +415,9 @@ namespace :syg do
             SectionsVolunteer.delete_all
         end
     
+        # If any volunteers have instructions, it represents additional customisation 
+        # that cannot be reproduced by a simple data load. 
+        # We keep them but reset their fields
         desc 'Reset / delete volunteers for new year'
         task clean_up_volunteers: ['db:migrate'] do |_t|
             puts "Updating last year's volunteers..."
@@ -422,7 +425,7 @@ namespace :syg do
                 if v.instructions.nil?
                     v.destroy
                 else
-                    puts "--> #{v.description} not deleted - has instructions"
+                    puts "--> '#{v.description}' not deleted - has instructions"
                     v.collected = false
                     v.returned = false
                     v.equipment_in = false
