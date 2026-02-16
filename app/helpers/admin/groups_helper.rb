@@ -1,6 +1,8 @@
 module Admin::GroupsHelper
     def group_submission_class(group)
       case
+      when group.gc && group.gc.years_as_gc == 1
+        "table-secondary"
       when group.followup_requested == true
         "table-danger"
       when group.status == "Submitted"
