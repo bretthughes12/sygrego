@@ -43,6 +43,8 @@ class GroupSignup
                   :group_changes,
                   :ministry_goal,
                   :attendee_profile,
+                  :buddy_interest,
+                  :buddy_comments,
                   :gc_role,     
                   :gc_decision,      
                   :gc_years_attended_church,  
@@ -86,6 +88,11 @@ class GroupSignup
       info_acknowledgement
       followup_requested
     ].freeze
+  
+    EVENT_DETAIL_ATTRIBUTES = %i[
+      buddy_interest
+      buddy_comments
+  ].freeze
   
     CHURCH_REP_ATTRIBUTES = {
       church_rep_name: :name,
@@ -175,6 +182,8 @@ class GroupSignup
     validates :gc_years_attended_church,
                                        numericality: { only_integer: true },
                                        allow_blank: true
+    validates :buddy_interest,         length: { maximum: 50 },
+                                       inclusion: { in: EventDetail::BUDDY_INTEREST }
   
     before_validation :normalize_church_rep_name!
     before_validation :normalize_gc_name!
@@ -190,6 +199,7 @@ class GroupSignup
     def initialize(attributes = {})
       send_attributes(attributes)
       @group = find_or_create_group
+      @event_detail = @group.event_detail || EventDetail.new(group: @group)
       @church_rep = find_or_create_church_rep
       @gc = find_or_create_gc
     end
@@ -205,14 +215,31 @@ class GroupSignup
           @group.errors.each do |key, value|
             errors.add key.to_s, value
           end
+          # puts 'Group errors:'
+          # pp @group.errors
           return false
         end
-  
+
+        update_event_detail
+
+        if @event_detail.valid?
+          @event_detail.save
+        else
+          @event_detail.errors.each do |key, value|
+            errors.add key.to_s, value
+          end
+          # puts 'Event Detail errors:'
+          # pp @event_detail.errors
+          return false
+        end
+
         update_church_rep
   
         if @church_rep.valid?
           @church_rep.save
         else
+          # puts 'Church Rep errors:'
+          # pp @church_rep.errors
           return false
         end
         @group.status = 'Submitted'
@@ -222,6 +249,8 @@ class GroupSignup
         if @gc.valid?
           @gc.save
         else
+          # puts 'GC errors:'
+          # pp @gc.errors
           return false
         end
       else
@@ -339,6 +368,12 @@ class GroupSignup
       end
     end
   
+    def update_event_detail
+      EVENT_DETAIL_ATTRIBUTES.each do |name|
+        @event_detail.send("#{name}=", send(name))
+      end
+    end
+  
     def update_church_rep
       CHURCH_REP_ATTRIBUTES.each do |name, model_name|
         @church_rep.send("#{model_name}=", send(name))
@@ -367,4 +402,3 @@ class GroupSignup
       self.gc_name = gc_name.titleize if gc_name
     end
 end
-  

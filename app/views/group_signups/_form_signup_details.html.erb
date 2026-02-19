@@ -20,6 +20,12 @@
 	<%= f.input :ministry_goal, as: :text, label: "Briefly describe ministry goal", hint: "Gives understanding to reason of attendance, helps to address cultural or pastoral care needs. What is the aim for your group - outreach, discipleship, team building" %>
 	<%= f.input :attendee_profile, as: :text, label: "Briefly describe those attending", hint: "Gives understanding to who we have at the event." %>
 
+    <h2>Buddy Groups</h2>
+
+	<p>SYG encourages buddy groups - where groups are paired up to encourage connection and support between groups, particularly for first time and smaller groups. Buddy groups can be a great way to connect with other churches, share resources and ideas, and create a more welcoming and inclusive environment for all attendees.</p>
+	<%= f.input :buddy_interest, label: "Is your group interested in being part of a buddy group?", as: :select, collection: EventDetail::BUDDY_INTEREST, include_blank: false %>	
+	<%= f.input :buddy_comments, as: :text, label: "Comments", hint: "If you are interested in being part of a buddy group, or have already made arrangements with any other groups, please let us know the details." %>		
+
     <h2>Church, Agency or Organisation Representative</h2>
 
     <%= f.input :church_rep_name, label: "Name" %>

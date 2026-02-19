@@ -8,6 +8,7 @@ FactoryBot.define do
     sequence(:email)      { |n| "group#{n}email@email.com" }
     sequence(:website)    { |n| "www.group#{n}.com" }      
     denomination          {"Baptist"}
+    buddy_interest        {"Not interested"}
     sequence(:church_rep_email)      { |n| "roy#{n}@orbison.com" }
     sequence(:church_rep_name)       { |n| "Roy Orbison #{n}" }
     church_rep_role       {"Pastor"}
