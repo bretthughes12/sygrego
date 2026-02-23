@@ -97,7 +97,7 @@ class Admin::PaymentsController < AdminController
       respond_to do |format|
         if @payment.save
           PaymentMailer.receipt(@payment).deliver_now
-          
+
           flash[:notice] = 'Payment reconciled.'
           format.html { redirect_to admin_payments_url }
         end
@@ -110,6 +110,8 @@ class Admin::PaymentsController < AdminController
 
       respond_to do |format|
         if @payment.save
+          PaymentMailer.receipt(@payment).deliver_now
+          
           flash[:notice] = 'Payment reconciled.'
           format.html { redirect_to invoices_admin_payments_url }
         end

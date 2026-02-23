@@ -22,7 +22,7 @@
 	<td>
 		<% if payment.receipt.attached? %>
 			<% if payment.receipt.representable? %>
-				<%= link_to image_tag(payment.receipt.representation(resize_to_limit: [80, 100]), rails_blob_path(payment.receipt, disposition: "attachment")) %>
+				<%= link_to(image_tag(payment.receipt.representation(resize_to_limit: [80, 100])), rails_blob_path(payment.receipt, disposition: "attachment")) %>
 			<% else %>
 				<%= link_to "Receipt", rails_blob_path(payment.receipt, disposition: "attachment") %>
 			<% end %>
