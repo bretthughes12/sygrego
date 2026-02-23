@@ -20,6 +20,19 @@
 	</td>
 
 	<td>
+		<% if payment.receipt.attached? %>
+			<% if payment.receipt.representable? %>
+				<%= link_to image_tag(payment.receipt.representation(resize_to_limit: [80, 100]), rails_blob_path(payment.receipt, disposition: "attachment")) %>
+			<% else %>
+				<%= link_to "Receipt", rails_blob_path(payment.receipt, disposition: "attachment") %>
+			<% end %>
+		<% else %>
+			<i>No receipt</i>
+		<% end %>
+	</td>
+
+
+	<td>
 		<% unless payment.reconciled %>
 			<%= link_to "Reconcile", reconcile_admin_payment_path(payment),
 					method: :patch,

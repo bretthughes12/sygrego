@@ -17,6 +17,7 @@ class Ability
       can :create, SportsEvaluation
       can [:index, :update, :show, :search], LostItem
       can [:invoice1, :invoice2, :invoice3], Group
+      can [:receipt], Payment
 
     elsif session["current_role"] == "admin"
       can :manage, :all

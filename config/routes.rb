@@ -58,6 +58,11 @@ Rails.application.routes.draw do
       patch :switch
     end
   end
+  resources :payments, only: [:index] do
+    member do
+      get :receipt
+    end
+  end
 
   resources :participant_signups, only: [:new, :create] do
     collection do

@@ -7,7 +7,7 @@ module ReportLayout
         draw_text title, :size => 16, :style => :bold, :at => [0,640]
         draw_text "Date: #{Time.now.in_time_zone.strftime("%d/%m/%Y")}", :size => 16, :style => :bold, :at => [415,640]
         draw_text "Invoice: #{invoice.invoice_number}", :size => 16, :style => :bold, :at => [395,620] if invoice
-        draw_text "Due: #{(Time.now + 1.week).in_time_zone.strftime("%d/%m/%Y")}", :size => 16, :style => :bold, :at => [418,600] if invoice
+        draw_text "Due: #{(Time.now + 1.week).in_time_zone.strftime("%d/%m/%Y")}", :size => 16, :style => :bold, :at => [418,600] if invoice && !invoice.paid
         
         heading1 "State Youth Games #{APP_CONFIG[:this_year]}", 30
         heading1 "#{@group.name}"

@@ -92,12 +92,12 @@ class Admin::PaymentsController < AdminController
   
     # PATCH /admin/payments/1/reconcile
     def reconcile
-      @payment.reconciled = true
-      @payment.paid = true
-      @payment.updated_by = current_user.id
+      reconcile_payment!
 
       respond_to do |format|
         if @payment.save
+          PaymentMailer.receipt(@payment).deliver_now
+          
           flash[:notice] = 'Payment reconciled.'
           format.html { redirect_to admin_payments_url }
         end
@@ -106,9 +106,7 @@ class Admin::PaymentsController < AdminController
   
     # PATCH /admin/payments/1/reconcile_invoice
     def reconcile_invoice
-      @payment.reconciled = true
-      @payment.paid = true
-      @payment.updated_by = current_user.id
+      reconcile_payment!
 
       respond_to do |format|
         if @payment.save
@@ -151,5 +149,25 @@ class Admin::PaymentsController < AdminController
         :reference
       )
     end
+
+    def reconcile_payment!
+      @payment.reconciled = true
+      @payment.paid = true
+      @payment.updated_by = current_user.id
+
+      pdf = TaxReceipt.new.add_data(@payment.group, @payment.group.payments, @payment).to_pdf
+      file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
+      file.binmode
+      file.write(pdf)
+      file.rewind
+      file.close
+
+      @payment.receipt.purge if @payment.receipt.attached?
+      @payment.receipt.attach(io: File.open(file.path), 
+        filename: "Receipt.pdf",
+        content_type: 'application/pdf',
+        identify: false)
+    end
+  
 end
   

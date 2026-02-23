@@ -32,6 +32,8 @@ class Payment < ApplicationRecord
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { where(paid: false) }
 
+  has_one_attached :receipt
+
   PAYMENT_TYPES = ['Bank Cheque',
     'Cheque',
     'Direct Deposit',
