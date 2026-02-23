@@ -80,6 +80,12 @@ class Gc::ParticipantsController < GcController
 
           render xlsx: "wwccs", filename: "wwccs.xlsx"
         end
+        format.csv do 
+          @participants = @group.participants.coming.accepted.
+            open_age.order("coming desc, first_name, surname").load
+
+          render_csv "wwcc_bulk_upload", "wwccs"
+        end
       end
     end
     

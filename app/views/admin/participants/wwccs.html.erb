@@ -5,7 +5,10 @@
 <% if !@participants.empty? %>
     <%= will_paginate @participants, :container => false %>
 
-    <%= link_to "Download", wwccs_admin_participants_path(format: :xlsx),
+    <%= link_to "Download (Excel)", wwccs_admin_participants_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
+    <%= link_to "Download (CSV)", wwccs_admin_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
 
@@ -26,7 +29,10 @@
 
     <%= will_paginate @participants, :container => false %>
 
-    <%= link_to "Download", wwccs_admin_participants_path(format: :xlsx),
+    <%= link_to "Download (Excel)", wwccs_admin_participants_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
+    <%= link_to "Download (CSV)", wwccs_admin_participants_path(format: :csv),
                   class: primary_button_class,
                   role: "button" %>
 <% end %>
