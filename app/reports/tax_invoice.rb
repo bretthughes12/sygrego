@@ -113,7 +113,7 @@ class TaxInvoice < Prawn::Document
         if @invoice.invoice_type == 'Final' || @invoice.invoice_type == 'Second'
           move_down(10)
         
-          text "This invoice replaces any unpaid invoices previously issued for this participant.", size: 10, style: :italic
+          text "This invoice replaces any unpaid invoices previously issued for this group.", size: 10, style: :italic
         end
 
         move_down(20)

@@ -157,7 +157,7 @@ class Admin::PaymentsController < AdminController
       @payment.paid = true
       @payment.updated_by = current_user.id
 
-      pdf = TaxReceipt.new.add_data(@payment.group, @payment.group.payments, @payment).to_pdf
+      pdf = TaxReceipt.new.add_data(@payment.group, @payment.group.payments.reconciled, @payment).to_pdf
       file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
       file.binmode
       file.write(pdf)

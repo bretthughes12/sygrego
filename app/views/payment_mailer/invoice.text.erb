@@ -1,0 +1,15 @@
+Hi GCs
+
+<% if @invoice.invoice_type == "Second" %>
+    <% invoice_url = invoice2_group_url(@invoice.group) %>
+<% elsif @invoice.invoice_type == "Final" %>
+    <% invoice_url = invoice3_group_url(@invoice.group) %>
+<% else %>
+    <% invoice_url = invoice1_group_url(@invoice.group) %>
+<% end %>
+
+A new SYG invoice has been generated for your group. Please find it here <%= invoice_url %>
+
+Kind regards,
+
+The SYG Team
