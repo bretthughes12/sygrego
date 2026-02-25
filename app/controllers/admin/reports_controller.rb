@@ -10,6 +10,9 @@ class Admin::ReportsController < AdminController
     def service_preferences
         @total_groups = Group.coming.not_admin.count
 
+        @fri_early = EventDetail.fri_early_service.sort
+        @fri_late = EventDetail.fri_late_service.sort
+        @fri_no_pref = EventDetail.fri_no_pref_service.sort
         @sat_early = EventDetail.sat_early_service.sort
         @sat_late = EventDetail.sat_late_service.sort
         @sat_no_pref = EventDetail.sat_no_pref_service.sort

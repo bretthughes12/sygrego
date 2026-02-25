@@ -58,6 +58,10 @@ class EventDetail < ApplicationRecord
         '8:45pm',
         'No preference'].freeze
 
+    OPENING_PREFERENCES = ['8:45pm',
+        '10:00pm',
+        'No preference'].freeze
+
     BUDDY_INTEREST = ['Not interested',
        'Interested in adopting a group',
        'Interested in being adopted by a group',
@@ -67,6 +71,8 @@ class EventDetail < ApplicationRecord
     validates :marquee_co,          length: { maximum: 50 }
     validates :buddy_interest,      length: { maximum: 50 },
                                     inclusion: { in: BUDDY_INTEREST }
+    validates :service_pref_fri,    length: { maximum: 20 },
+                                    inclusion: { in: OPENING_PREFERENCES }
     validates :service_pref_sat,    length: { maximum: 20 },
                                     inclusion: { in: SERVICE_PREFERENCES }
     validates :service_pref_sun,    length: { maximum: 20 },
@@ -82,6 +88,30 @@ class EventDetail < ApplicationRecord
     validates :number_of_vehicles,  presence: true,
                                     numericality: { only_integer: true }
     validates :orientation_details, length: { maximum: 100 }
+
+    def self.fri_early_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_fri == '8:45pm'
+        end
+        groups
+    end
+
+    def self.fri_late_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_fri == '10:00pm'
+        end
+        groups
+    end
+
+    def self.fri_no_pref_service
+        groups = []
+        EventDetail.all.each do |ed|
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_fri == 'No preference'
+        end
+        groups
+    end
 
     def self.sat_early_service
         groups = []

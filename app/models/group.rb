@@ -85,6 +85,9 @@ class Group < ApplicationRecord
     scope :new_group, -> { where(new_group: true) }
     scope :is_admin, -> { where(admin_use: true) }
     scope :not_admin, -> { where(admin_use: false) }
+    scope :fri_early_service, -> { where('event_details.service_pref_fri': '8:45pm').includes(:event_detail) }
+    scope :fri_late_service, -> { where('event_details.service_pref_fri': '10:00pm').includes(:event_detail) }
+    scope :fri_no_pref_service, -> { where('event_details.service_pref_fri': 'No preference').includes(:event_detail) }
     scope :sat_early_service, -> { where('event_details.service_pref_sat': '7:00pm').includes(:event_detail) }
     scope :sat_late_service, -> { where('event_details.service_pref_sat': '8:45pm').includes(:event_detail) }
     scope :sat_no_pref_service, -> { where('event_details.service_pref_sat': 'No preference').includes(:event_detail) }

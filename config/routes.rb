@@ -109,6 +109,7 @@ Rails.application.routes.draw do
       get :admin_volunteer_stats
       get :gc_participants
       get :gc_sport_entries
+      get :evening_opening_preferences
       get :evening_saturday_preferences
       get :evening_sunday_preferences
     end

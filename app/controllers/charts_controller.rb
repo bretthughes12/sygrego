@@ -95,6 +95,21 @@ class ChartsController < ApplicationController
         render json: entries_data
     end
 
+    def evening_opening_preferences
+        @total_groups = Group.coming.not_admin.count
+    
+        early = Group.coming.not_admin.fri_early_service.count
+        late = Group.coming.not_admin.fri_late_service.count
+        no_pref = @total_groups - early - late
+    
+        service_data = []
+        service_data << ["Early session", early]
+        service_data << ["Late session", late]
+        service_data << ["No preference", no_pref]
+    
+        render json: service_data
+    end
+
     def evening_saturday_preferences
         @total_groups = Group.coming.not_admin.count
     

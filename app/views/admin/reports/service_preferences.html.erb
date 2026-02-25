@@ -2,6 +2,10 @@
 
 <h1><%= yield(:title) %></h1>
 
+<%= pie_chart evening_opening_preferences_charts_path, title: "Opening Ceremony (#{@total_groups})" %>
+
+<br/><br/>
+
 <%= pie_chart evening_saturday_preferences_charts_path, title: "Saturday (#{@total_groups})" %>
 
 <br/><br/>
@@ -13,6 +17,56 @@
                   role: "button" %>
 
 <div id="basic-list">
+	<h2>Opening Ceremony</h2>
+
+	<h3>Early Session</h3>
+
+	<% unless @fri_early.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @fri_early.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>Late Session</h3>
+
+	<% unless @fri_late.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @fri_late.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
+	<h3>No Preference</h3>
+
+	<% unless @fri_no_pref.empty? %>
+	  <table class="table table-dark table-striped">
+		<% @fri_no_pref.each do |g| %>
+	      <tr valign="top">
+	        <td>
+		 	    <%= g.name %>
+	        </td>
+	      </tr>
+	    <% end %>
+	  </table>
+	<% else %>
+		<p>No groups have nominated for this session</p>
+	<% end %>
+
 	<h2>Saturday</h2>
 
 	<h3>Early Session</h3>

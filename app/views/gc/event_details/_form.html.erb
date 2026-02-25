@@ -26,6 +26,12 @@
 
 		<table class="table table-dark table-striped">
 			<tr valign="top">
+				<td> Opening Ceremony </td>
+				<td> 
+					<%= @event_detail.service_pref_fri  %>
+				</td>
+			</tr>
+			<tr valign="top">
 				<td> Saturday </td>
 				<td> 
 					<%= @event_detail.service_pref_sat  %>
@@ -42,6 +48,7 @@
 	<% else %>
 		<h2>Service Preferences</h2>
 
+		<%= f.input :service_pref_fri, as: :select, collection: EventDetail::OPENING_PREFERENCES, include_blank: false, label: "Opening Ceremony"  %>
 		<%= f.input :service_pref_sat, as: :select, collection: EventDetail::SERVICE_PREFERENCES, include_blank: false, label: "Saturday"  %>
 		<%= f.input :service_pref_sun, as: :select, collection: EventDetail::SERVICE_PREFERENCES, include_blank: false, label: "Sunday"  %>
 	<% end %>

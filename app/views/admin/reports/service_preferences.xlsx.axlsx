@@ -6,9 +6,39 @@ header_border = s.add_style border: [
 	{ style: :thin, color: "000000", edges: [:left, :right, :top]} ]
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
-wb.add_worksheet(name: "Evaluations") do |sheet|
+wb.add_worksheet(name: "Preferences") do |sheet|
 	sheet.add_row ["Day","Session","Church","Participants"],
 		style: header_border
+
+	@fri_early.each do |g|
+		sheet.add_row [
+				"Opening Ceremony",
+				"Early",
+				g.name,
+				g.participants.coming.accepted.size
+		   ],
+		style: row_border
+	end
+
+	@fri_late.each do |g|
+		sheet.add_row [
+				"Opening Ceremony",
+				"Late",
+				g.name,
+				g.participants.coming.accepted.size
+		   ],
+		style: row_border
+	end
+
+	@fri_no_pref.each do |g|
+		sheet.add_row [
+				"Opening Ceremony",
+				"No preference",
+				g.name,
+				g.participants.coming.accepted.size
+		   ],
+		style: row_border
+	end
 
 	@sat_early.each do |g|
 		sheet.add_row [
