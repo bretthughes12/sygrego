@@ -15,6 +15,7 @@
 #  number_of_vehicles    :integer          default(0)
 #  onsite                :boolean          default(TRUE)
 #  orientation_details   :string(100)
+#  service_pref_fri      :string(20)       default("No preference")
 #  service_pref_sat      :string(20)       default("No preference")
 #  service_pref_sun      :string(20)       default("No preference")
 #  tents                 :integer          default(0)
