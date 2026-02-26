@@ -15,6 +15,7 @@
 #  coming_sunday          :boolean          default(TRUE)
 #  database_rowid         :integer
 #  date_of_birth          :date
+#  date_signed_up         :date
 #  dietary_requirements   :string(255)
 #  dirty                  :boolean          default(FALSE)
 #  driver                 :boolean          default(FALSE)

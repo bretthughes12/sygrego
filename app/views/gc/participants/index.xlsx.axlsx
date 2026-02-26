@@ -8,8 +8,9 @@ row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left,
 date = s.add_style format_code: 'yyyy-mm-dd', border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 # NOTE: If you add any fields to this, adjust the column fields appropriately
-medicare_exp_col = 17
+medicare_exp_col = 18
 dob_col = 4
+date_signed_col = 8
 
 wb.add_worksheet(name: "Participants") do |sheet|
 	start_questions = @group.questions.beginning.with_answer.order(:order_number)
@@ -17,7 +18,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
 	medical_questions = @group.questions.medical.with_answer.order(:order_number)
 	disclaimer_questions = @group.questions.disclaimer.with_answer.order(:order_number)
 	heading = ["FirstName","Surname","Email","Coming","DOB","Age",
-	              "Gender","Type","Friday","Saturday","Sunday","Monday","Address", 
+	              "Gender","Type","DateSignedUp","Friday","Saturday","Sunday","Monday","Address", 
 				  "Suburb","Postcode","Mobile",
 	              "Medicare","MedicareExpiry","MedicalInfo","Medications","Allergies","YearsAttended",
 				  "Spectator","Onsite","Helper","GC","Driver","NumberPlate","EarlyBird",
@@ -46,6 +47,7 @@ wb.add_worksheet(name: "Participants") do |sheet|
   		     participant.age,
   		     participant.gender,
   		     participant.rego_type,
+			 participant.date_signed_up,
 			 participant.coming_friday,
 			 participant.coming_saturday,
 			 participant.coming_sunday,
@@ -84,5 +86,6 @@ wb.add_worksheet(name: "Participants") do |sheet|
 	end
 
 	sheet.col_style dob_col, date, row_offset: 1
+	sheet.col_style date_signed_col, date, row_offset: 1
 	sheet.col_style medicare_exp_col, date, row_offset: 1
 end

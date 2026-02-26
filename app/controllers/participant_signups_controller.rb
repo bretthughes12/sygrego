@@ -71,6 +71,7 @@ class ParticipantSignupsController < ApplicationController
       group_name = params[:group]
       @participant_signup = ParticipantSignup.new(params[:participant_signup])
       @participant_signup.coming = true
+      @participant_signup.date_signed_up = Time.now
       @group = @participant_signup.group || Group.find_by_abbr("DFLT")
       @participant = @participant_signup.participant
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_25_083121) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_26_082808) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -345,6 +345,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_25_083121) do
     t.datetime "created_at", null: false
     t.integer "database_rowid"
     t.date "date_of_birth"
+    t.date "date_signed_up"
     t.string "dietary_requirements", limit: 255
     t.boolean "dirty", default: false
     t.boolean "driver", default: false
