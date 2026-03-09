@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_26_082808) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_09_095704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -631,6 +631,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_082808) do
     t.date "first_day_of_syg"
     t.decimal "full_fee", precision: 8, scale: 2, default: "109.0", null: false
     t.string "gc_feedback_url"
+    t.string "gc_support_email", limit: 100, default: ""
     t.boolean "generate_stats", default: false
     t.boolean "group_registrations_closed", default: false
     t.decimal "helper_adjustment", precision: 8, scale: 2, default: "0.55", null: false

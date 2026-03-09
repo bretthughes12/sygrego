@@ -18,6 +18,7 @@
 #  first_day_of_syg                     :date
 #  full_fee                             :decimal(8, 2)    default(109.0), not null
 #  gc_feedback_url                      :string
+#  gc_support_email                     :string(100)      default("")
 #  generate_stats                       :boolean          default(FALSE)
 #  group_registrations_closed           :boolean          default(FALSE)
 #  helper_adjustment                    :decimal(8, 2)    default(0.55), not null

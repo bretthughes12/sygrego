@@ -13,5 +13,5 @@ class GroupMailer < ApplicationMailer
           format.text
         end
     end
-  end
+end
   
