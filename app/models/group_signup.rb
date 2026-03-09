@@ -324,7 +324,9 @@ class GroupSignup
     end
   
     def find_or_create_church_rep
-      church_rep = User.find_by_email(@church_rep_email)
+      unless @church_rep_email.blank?
+        church_rep = User.where('lower(email) = ?', @church_rep_email.downcase).first
+      end
   
       if church_rep.nil?
         church_rep = User.new
@@ -337,7 +339,9 @@ class GroupSignup
     end
   
     def find_or_create_gc
-      gc = User.find_by_email(@gc_email)
+      unless @gc_email.blank?
+        gc = User.where('lower(email) = ?', @gc_email.downcase).first
+      end
   
       if gc.nil?
         gc = User.new

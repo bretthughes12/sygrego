@@ -27,7 +27,7 @@ class Gc::UsersController < GcController
   
   # POST /gc/users
   def create
-    @user = User.find_by_email(params[:user][:email])
+    @user = User.where('lower(email) = ?', params[:user][:email].downcase).first
 
     if @user.nil?
       @user = User.new

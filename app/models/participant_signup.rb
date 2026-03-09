@@ -414,7 +414,9 @@ class ParticipantSignup
     end
   
     def find_or_create_user
-      user = User.find_by_email(user_email)
+      unless user_email.blank?
+        user = User.where('lower(email) = ?', user_email.downcase).first
+      end
   
       if user.nil?
         user = User.new
