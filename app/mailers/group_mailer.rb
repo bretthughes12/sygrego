@@ -7,7 +7,8 @@ class GroupMailer < ApplicationMailer
         mail(to:      [@settings.rego_email, 
                        @settings.admin_email, 
                        @settings.info_email,
-                       @settings.comms_email],
+                       @settings.comms_email,
+                       @settings.gc_support_email].uniq,
              subject: "#{APP_CONFIG[:email_subject]} New group signup details: #{group.name}",) do |format|
           format.html { render layout: 'mailer' }
           format.text

@@ -293,6 +293,7 @@ class Admin::SettingsController < AdminController
                                       :lost_property_email,
                                       :finance_email,
                                       :comms_email,
+                                      :gc_support_email,
                                       :this_year,
                                       :first_day_of_syg,
                                       :early_bird_cutoff,
