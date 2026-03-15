@@ -65,7 +65,7 @@ class Volunteer < ApplicationRecord
     scope :sunday, -> { where("sessions.name like 'Sunday%'").includes(:session).references(:session) }
   
     delegate :t_shirt,
-             :age_category,
+             :age_category, 
              :min_age, to: :volunteer_type
   
     T_SHIRT_SIZES = %w[XS S M L
