@@ -42,6 +42,13 @@ class VolunteerType < ApplicationRecord
     EMAIL_TEMPLATES = ['Default',
                        'Override',
                        'Sport Coordinator'].freeze
+    DEPARTMENTS = ['Administration',
+                   'Front Gate',
+                   'Grounds',
+                   'Evening',
+                   'Village',
+                   'Online',
+                   'Sports'].freeze
 
     validates :name, presence: true, uniqueness: true,
         length: { maximum: 100 }
@@ -55,7 +62,10 @@ class VolunteerType < ApplicationRecord
     validates :email_template,           
         length: { maximum: 20 },
         inclusion: { in: EMAIL_TEMPLATES }
-        
+    validates :department,
+        length: { maximum: 20 },
+        inclusion: { in: DEPARTMENTS }
+
     def min_age
         if age_category == 'Over 16'
             16
@@ -79,6 +89,7 @@ class VolunteerType < ApplicationRecord
                 if type
                     type.active = row['Active']
                     type.database_code = row['RowID']
+                    type.department = row['Department']
                     type.sport_related = row['SportRelated']
                     type.t_shirt = row['T-Shirt']
                     type.description = row['Description']
@@ -98,6 +109,7 @@ class VolunteerType < ApplicationRecord
                         name:                      row['Name'],
                         active:                    row['Active'],
                         database_code:             row['RowID'],
+                        department:                row['Department'],
                         sport_related:             row['SportRelated'],
                         t_shirt:                   row['T-Shirt'],
                         description:               row['Description'],

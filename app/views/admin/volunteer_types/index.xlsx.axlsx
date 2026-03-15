@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "VolunteerTypes") do |sheet|
-	sheet.add_row ["RowID","Active","Name","SportRelated",
+	sheet.add_row ["RowID","Active","Name","Department","SportRelated",
 				   "T-Shirt","Description","AgeCategory",
 				   "SendEmail","CC","Template"], 
 		style: header_border
@@ -17,6 +17,7 @@ wb.add_worksheet(name: "VolunteerTypes") do |sheet|
 			volunteer_type.database_code,
 			volunteer_type.active,
 			volunteer_type.name,
+			volunteer_type.department,
 			volunteer_type.sport_related,
 			volunteer_type.t_shirt,
 			volunteer_type.description,

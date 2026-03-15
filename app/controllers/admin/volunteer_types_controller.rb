@@ -134,6 +134,7 @@ class Admin::VolunteerTypesController < AdminController
       params.require(:volunteer_type).permit(:name, 
                                     :database_code, 
                                     :active,
+                                    :department,
                                     :sport_related,
                                     :t_shirt,
                                     :description,

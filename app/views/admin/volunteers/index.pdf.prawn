@@ -5,6 +5,7 @@ prawn_document(filename: "volunteers.pdf", disposition: "attachment", type: 'app
     report = [
       ["Title", volunteer.description ],
       ["Volunteer Type", volunteer.volunteer_type.name ],
+      ["Department", volunteer.volunteer_type.department ],
       ["Database Code", volunteer.volunteer_type.database_code ],
       ["Description", volunteer.volunteer_type.description ],
       ["T-Shirt", volunteer.t_shirt.to_s ],
