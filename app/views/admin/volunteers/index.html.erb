@@ -11,6 +11,9 @@
 <%= link_to "Download", admin_volunteers_path(format: :xlsx),
                   class: primary_button_class,
                   role: "button" %>
+<%= link_to "PDF Report", admin_volunteers_path(format: :pdf),
+                  class: primary_button_class,
+                  role: "button" %>
 <%= link_to "Upload", new_import_admin_volunteers_path,
                   class: danger_button_class,
                   role: "button" %>
@@ -35,6 +38,9 @@
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Download", admin_volunteers_path(format: :xlsx),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "PDF Report", admin_volunteers_path(format: :pdf),
                   class: primary_button_class,
                   role: "button" %>
 <%= link_to "Upload", new_import_admin_volunteers_path,
