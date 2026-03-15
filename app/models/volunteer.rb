@@ -313,6 +313,12 @@ class Volunteer < ApplicationRecord
             volunteer.cc_email = row['CC']
             volunteer.email_template = row['Template']
             volunteer.email_sent = row['EmailSent']
+            unless Volunteer::EQUIPMENT_IN_OPTIONS.include?(volunteer.equipment_in)
+              volunteer.equipment_in = nil
+            end
+            unless Volunteer::EQUIPMENT_OUT_OPTIONS.include?(volunteer.equipment_out)
+              volunteer.equipment_out = nil
+            end
             volunteer.updated_by = user.id
   
             if volunteer.save
