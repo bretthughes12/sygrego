@@ -65,7 +65,7 @@ class Volunteer < ApplicationRecord
     scope :sunday, -> { where("sessions.name like 'Sunday%'").includes(:session).references(:session) }
   
     delegate :t_shirt,
-             :age_category,
+             :age_category, 
              :min_age, to: :volunteer_type
   
     T_SHIRT_SIZES = %w[XS S M L
@@ -313,6 +313,12 @@ class Volunteer < ApplicationRecord
             volunteer.cc_email = row['CC']
             volunteer.email_template = row['Template']
             volunteer.email_sent = row['EmailSent']
+            unless Volunteer::EQUIPMENT_IN_OPTIONS.include?(volunteer.equipment_in)
+              volunteer.equipment_in = nil
+            end
+            unless Volunteer::EQUIPMENT_OUT_OPTIONS.include?(volunteer.equipment_out)
+              volunteer.equipment_out = nil
+            end
             volunteer.updated_by = user.id
   
             if volunteer.save

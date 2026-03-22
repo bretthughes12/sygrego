@@ -10,6 +10,7 @@ class Admin::VolunteersController < AdminController
       respond_to do |format|
         format.html {  }
         format.xlsx { render xlsx: "volunteers", template: "admin/volunteers/volunteers" }
+        format.pdf # index.pdf.prawn
       end
     end
 

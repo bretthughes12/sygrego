@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_09_095704) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -809,6 +809,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_09_095704) do
     t.string "cc_email", limit: 100
     t.datetime "created_at", null: false
     t.string "database_code", limit: 4
+    t.string "department", limit: 20, default: "Administration", null: false
     t.text "description"
     t.string "email_template", limit: 20, default: "Default"
     t.string "name", limit: 100, null: false

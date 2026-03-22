@@ -7,6 +7,7 @@
 #  age_category         :string(20)       default("Over 18")
 #  cc_email             :string(100)
 #  database_code        :string(4)
+#  department           :string(20)       default("Administration"), not null
 #  description          :text
 #  email_template       :string(20)       default("Default")
 #  name                 :string(100)      not null
