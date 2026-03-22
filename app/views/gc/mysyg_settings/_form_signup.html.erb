@@ -51,14 +51,14 @@
 		<%= f.input :suburb %>
 		<%= f.input :postcode %>
 	<% end %>
-	<%= f.input :mobile_phone_number, hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
-	<%= f.input :email, hint: "email address that your event ticket will be sent to" %>
+	<%= f.input :mobile_phone_number, label: "Participant Mobile Phone Number", hint: "enter a mobile number if you want to receive SMS updates and urgent messages from the SYG Admin team throughout the SYG weekend" %>
+	<%= f.input :email, label: "Participant Email", hint: "email address that your event ticket will be sent to" %>
 
 	<br/>
 
 	<h2>Login details (if different from the above)</h2>
 
-	<%= f.input :login_email, hint: "this may be different to the above (for example, if you a parent signing up your children). This is the email you should use to log back on with" %>
+	<%= f.input :login_email, hint: "this may be different to the above (for example, if you are a parent signing up your children). This is the email you should use to log back on with. You may leave this blank if you wish to log on with the Participant Email above." %>
 	<%= f.input :login_name %>
 
 	<br/>
