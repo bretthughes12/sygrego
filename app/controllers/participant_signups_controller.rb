@@ -8,6 +8,7 @@ class ParticipantSignupsController < ApplicationController
     def new
       @participant_signup = ParticipantSignup.new
       @participant_signup.age = 30
+      @participant_signup.date_of_birth = Date.today - 30.years
       @participant_signup.coming_friday = true
       @participant_signup.coming_saturday = true
       @participant_signup.coming_sunday = true
@@ -36,6 +37,7 @@ class ParticipantSignupsController < ApplicationController
 
         @participant_signup = ParticipantSignup.new
         @participant_signup.age = 30
+        @participant_signup.date_of_birth = Date.today - 30.years
         @participant_signup.coming_friday = @transferred_participant.coming_friday
         @participant_signup.coming_saturday = @transferred_participant.coming_saturday
         @participant_signup.coming_sunday = @transferred_participant.coming_sunday
@@ -124,6 +126,8 @@ class ParticipantSignupsController < ApplicationController
   
         else(:name)
           # pp @participant_signup.errors
+          pp @participant_signup.date_of_birth
+          pp @participant_signup.participant.date_of_birth
           format.html do
             flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
             @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
