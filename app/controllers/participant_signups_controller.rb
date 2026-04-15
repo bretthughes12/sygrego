@@ -126,8 +126,8 @@ class ParticipantSignupsController < ApplicationController
   
         else(:name)
           # pp @participant_signup.errors
-          pp @participant_signup.date_of_birth
-          pp @participant_signup.participant.date_of_birth
+          # pp @participant_signup.date_of_birth
+          # pp @participant_signup.participant.date_of_birth
           format.html do
             flash[:notice] = 'There was a problem with your signup. Please check below for specific error messages'
             @groups = Group.mysyg_actives.map { |g| [ g.mysyg_selection_name, g.id ]}
