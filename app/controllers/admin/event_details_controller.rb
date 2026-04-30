@@ -162,6 +162,7 @@ class Admin::EventDetailsController < AdminController
                                     :marquee_co,
                                     :buddy_interest,
                                     :buddy_comments,
+                                    :service_pref_fri,
                                     :service_pref_sat,
                                     :service_pref_sun,
                                     :estimated_numbers,
