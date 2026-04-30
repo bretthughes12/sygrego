@@ -68,6 +68,12 @@ class Admin::PaymentsController < AdminController
 
       respond_to do |format|
         if @payment.update(payment_params)
+          if @payment.reconciled && @payment.saved_change_to_reconciled?
+            unless @payment.group.email_recipients.empty?
+              PaymentMailer.receipt(@payment).deliver_now
+            end
+          end
+
           flash[:notice] = 'Payment was successfully updated.'
           format.html { redirect_to admin_payments_url }
         else
@@ -82,6 +88,12 @@ class Admin::PaymentsController < AdminController
 
       respond_to do |format|
         if @payment.update(payment_params)
+          if @payment.reconciled && @payment.saved_change_to_reconciled?
+            unless @payment.group.email_recipients.empty?
+              PaymentMailer.receipt(@payment).deliver_now
+            end
+          end
+
           flash[:notice] = 'Payment was successfully updated.'
           format.html { redirect_to invoices_admin_payments_url }
         else
