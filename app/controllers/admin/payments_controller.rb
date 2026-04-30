@@ -69,6 +69,7 @@ class Admin::PaymentsController < AdminController
       respond_to do |format|
         if @payment.update(payment_params)
           if @payment.reconciled && @payment.saved_change_to_reconciled?
+            generate_receipt!
             unless @payment.group.email_recipients.empty?
               PaymentMailer.receipt(@payment).deliver_now
             end
@@ -89,6 +90,7 @@ class Admin::PaymentsController < AdminController
       respond_to do |format|
         if @payment.update(payment_params)
           if @payment.reconciled && @payment.saved_change_to_reconciled?
+            generate_receipt!
             unless @payment.group.email_recipients.empty?
               PaymentMailer.receipt(@payment).deliver_now
             end
@@ -173,6 +175,10 @@ class Admin::PaymentsController < AdminController
       @payment.paid = true
       @payment.updated_by = current_user.id
 
+      generate_receipt!
+    end
+
+    def generate_receipt!
       pdf = TaxReceipt.new.add_data(@payment.group, @payment.group.payments.reconciled, @payment).to_pdf
       file = Tempfile.new(['file', '.pdf'], Rails.root.join('tmp'))
       file.binmode
@@ -186,6 +192,5 @@ class Admin::PaymentsController < AdminController
         content_type: 'application/pdf',
         identify: false)
     end
-  
 end
   
