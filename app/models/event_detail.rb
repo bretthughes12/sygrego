@@ -58,7 +58,7 @@ class EventDetail < ApplicationRecord
         '8:45pm',
         'No preference'].freeze
 
-    OPENING_PREFERENCES = ['8:45pm',
+    OPENING_PREFERENCES = ['8:30pm',
         '10:00pm',
         'No preference'].freeze
 
@@ -92,7 +92,7 @@ class EventDetail < ApplicationRecord
     def self.fri_early_service
         groups = []
         EventDetail.all.each do |ed|
-            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_fri == '8:45pm'
+            groups << ed.group if ed.group.coming && !ed.group.admin_use && ed.service_pref_fri == '8:30pm'
         end
         groups
     end
