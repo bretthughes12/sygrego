@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    session[:current_role] = current_user.default_role
+    session[:current_role] = current_user.default_role if current_user
   end
 
   # GET /resource/edit
