@@ -123,6 +123,16 @@ class Section < ApplicationRecord
         end
     end
 
+    def status
+        if can_take_more_entries?
+            "Open"
+        elsif number_of_teams == teams_allowed
+            "Full"
+        else
+            "Over limit"
+        end
+    end
+
     def sport_coords
         volunteers.sport_coords
     end
