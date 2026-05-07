@@ -124,7 +124,7 @@ class Section < ApplicationRecord
     end
 
     def status
-        if can_take_more_entries?
+        if can_take_more_entries? && grade.can_accept_entries
             "Open"
         elsif number_of_teams == teams_allowed
             "Full"
