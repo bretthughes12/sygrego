@@ -397,6 +397,20 @@ class Grade < ApplicationRecord
         end
     end
 
+    def self.sections_out_of_order
+        sections = []
+        Grade.active.each do |grade|
+            prev_session = 0
+            grade.sections.includes(:session).order(:name).each do |section|
+                if section.session.database_rowid < prev_session
+                    sections << section
+                end
+                prev_session = section.session.database_rowid
+            end
+        end
+        sections
+    end
+
     def self.import_excel(file, user)
         creates = 0
         updates = 0

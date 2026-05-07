@@ -71,5 +71,6 @@ class Admin::ReportsController < AdminController
         @sections_under_subscribed = Section.low_numbers
         @section_conflicts = Volunteer.section_conflicts
         @section_name_inconsistent = Volunteer.section_name_inconsistent
+        @sections_out_of_order = Grade.sections_out_of_order
     end
 end

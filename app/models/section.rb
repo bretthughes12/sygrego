@@ -357,7 +357,7 @@ class Section < ApplicationRecord
     def self.over_limit
         sections = []
         Section.active.order(:name).each do |section|
-            sections << section if section.sport_entries.count > section.teams_allowed
+            sections << section if section.sport_entries.not_waiting.count > section.teams_allowed
         end
         sections
     end
@@ -365,7 +365,7 @@ class Section < ApplicationRecord
     def self.low_numbers
         sections = []
         Section.active.order(:name).each do |section|
-            sections << section if section.sport_entries.count < 4
+            sections << section if section.sport_entries.not_waiting.count < 4
         end
         sections
     end
