@@ -416,11 +416,11 @@ class Grade < ApplicationRecord
         Grade.active.each do |grade|
             next if grade.sections.count < 2
             courts = grade.sections.sum(&:courts_available)
-            entries = grade.sport_entries.count
+            entries = grade.sport_entries.not_waiting.count
 
             grade.sections.each do |section|
-                if (section.sport_entries.count / section.courts_available.to_f).ceil > (entries / courts.to_f).ceil + 2 || 
-                   (section.sport_entries.count / section.courts_available.to_f).floor < (entries / courts.to_f).floor - 2
+                if (section.sport_entries.not_waiting.count / section.courts_available.to_f).ceil > (entries / courts.to_f).ceil + 2 || 
+                   (section.sport_entries.not_waiting.count / section.courts_available.to_f).floor < (entries / courts.to_f).floor - 2
                     grades << grade
                 end
             end
