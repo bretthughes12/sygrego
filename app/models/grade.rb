@@ -415,18 +415,17 @@ class Grade < ApplicationRecord
         grades = []
         Grade.active.each do |grade|
             next if grade.sections.count < 2
-            s_count = grade.sections.count
-            e_count = grade.sport_entries.count
+            courts = grade.sections.sum(&:courts_available)
+            entries = grade.sport_entries.count
 
             grade.sections.each do |section|
-                if section.sport_entries.count > (e_count / s_count.to_f).ceil + 2 || 
-                   section.sport_entries.count < (e_count / s_count.to_f).floor - 2
+                if (section.sport_entries.count / section.courts_available.to_f).ceil > (entries / courts.to_f).ceil + 2 || 
+                   (section.sport_entries.count / section.courts_available.to_f).floor < (entries / courts.to_f).floor - 2
                     grades << grade
-                    next
                 end
             end
         end
-        grades
+        grades.uniq
     end
 
     def self.import_excel(file, user)
