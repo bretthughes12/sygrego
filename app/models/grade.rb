@@ -411,6 +411,24 @@ class Grade < ApplicationRecord
         sections
     end
 
+    def self.sections_unbalanced
+        grades = []
+        Grade.active.each do |grade|
+            next if grade.sections.count < 2
+            s_count = grade.sections.count
+            e_count = grade.sport_entries.count
+
+            grade.sections.each do |section|
+                if section.sport_entries.count > (e_count / s_count.to_f).ceil + 2 || 
+                   section.sport_entries.count < (e_count / s_count.to_f).floor - 2
+                    grades << grade
+                    next
+                end
+            end
+        end
+        grades
+    end
+
     def self.import_excel(file, user)
         creates = 0
         updates = 0

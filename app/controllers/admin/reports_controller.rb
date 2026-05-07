@@ -72,5 +72,6 @@ class Admin::ReportsController < AdminController
         @section_conflicts = Volunteer.section_conflicts
         @section_name_inconsistent = Volunteer.section_name_inconsistent
         @sections_out_of_order = Grade.sections_out_of_order
+        @grades_unbalanced = Grade.sections_unbalanced
     end
 end
