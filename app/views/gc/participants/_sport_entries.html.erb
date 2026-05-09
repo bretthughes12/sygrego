@@ -114,7 +114,7 @@
         <% sun_am_entries = @participant.entries_in_session("Sunday Morning") %>
         <% if sun_am_entries.empty? %>
             <tr>
-                <td>Saturday Morning</td>
+                <td>Sunday Morning</td>
                 <% unless @participant.available_sport_entries_in_session("Sunday Morning").empty? %>
                     <%= form_with(url: gc_participant_sport_entries_path(@participant, return: 'edit_sports'), method: :post) do |f| %> 
                         <td><%= f.collection_select :id, @participant.available_sport_entries_in_session("Sunday Morning"), :id, :section_name %></td>
