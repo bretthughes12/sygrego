@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Sports") do |sheet|
-	sheet.add_row ["Name","Active","Classification","MaxIndivGrp","MaxTeamGrp","MaxIndiv","CourtName","BlowoutRule","ForfeitScore","TieBreak","AllowNeg","PointName"], 
+	sheet.add_row ["Name","Active","Classification","MaxIndivGrp","MaxTeamGrp","MaxIndiv","CourtName","BlowoutRule","ForfeitScore","TieBreak","AllowNeg","PointName","UmpireText"], 
 		style: header_border
 
 	@sports.each do |sport|
@@ -23,7 +23,8 @@ wb.add_worksheet(name: "Sports") do |sheet|
 			sport.forfeit_score,
 			sport.ladder_tie_break,
 			sport.allow_negative_score,
-            sport.point_name
+            sport.point_name,
+			sport.umpire_text
 		   ],
 		style: row_border
 	end

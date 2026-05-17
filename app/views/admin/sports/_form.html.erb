@@ -13,7 +13,8 @@
 	<%= f.input :max_entries_indiv, label: "Max times each open-age participant may enter" %>
 	<%= f.input :court_name, label: "What is a 'court' known as?" %>
 	<%= f.input :point_name, label: "What is a 'point' known as?" %>
-	
+	<%= f.input :umpire_text, label: "What is the teams roster for (umpires or scorers)" %>
+
 	<br/>
 
 	<% if @sport.rules_file.attached? %>

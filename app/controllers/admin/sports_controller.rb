@@ -127,6 +127,7 @@ class Admin::SportsController < AdminController
                                     :active,
                                     :court_name,
                                     :point_name,
+                                    :umpire_text,
                                     :draw_type,
                                     :ladder_tie_break,
                                     :allow_negative_score,

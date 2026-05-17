@@ -69,7 +69,7 @@ class Sport < ApplicationRecord
                                         inclusion: { in: TIE_TYPES }
     validates :court_name,              length: { maximum: 20 }
     validates :point_name,              length: { maximum: 20 }
-    # validates :umpire_text,             length: { maximum: 20 }
+    validates :umpire_text,             length: { maximum: 20 }
 
     def self.per_page
         15
@@ -150,6 +150,7 @@ class Sport < ApplicationRecord
                     sport.ladder_tie_break = row['TieBreak']
                     sport.allow_negative_score = row['AllowNeg']
                     sport.point_name = row['PointName']
+                    sport.umpire_text = row['UmpireText']
                     sport.updated_by = user.id
                     if sport.save
                         updates += 1
@@ -171,6 +172,7 @@ class Sport < ApplicationRecord
                         ladder_tie_break:          row['TieBreak'],
                         allow_negative_score:      row['AllowNeg'],
                         point_name:                row['PointName'],
+                        umpire_text:               row['UmpireText'],
                         updated_by:                user.id)
                     if sport.errors.empty?
                         creates += 1
@@ -198,6 +200,7 @@ class Sport < ApplicationRecord
          'forfeit_score',
          'allow_negative_score',
          'ladder_tie_break',
-         'point_name']
+         'point_name',
+         'umpire_text']
     end
 end
