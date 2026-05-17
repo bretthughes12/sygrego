@@ -8,6 +8,7 @@
 #  allergies              :string(255)
 #  amount_paid            :decimal(8, 2)    default(0.0)
 #  booking_nbr            :string(10)
+#  car_capacity           :integer
 #  coming                 :boolean          default(TRUE)
 #  coming_friday          :boolean          default(TRUE)
 #  coming_monday          :boolean          default(TRUE)

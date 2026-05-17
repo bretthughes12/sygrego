@@ -15,6 +15,7 @@
 #  max_team_entries_group  :integer          default(0), not null
 #  name                    :string(20)       not null
 #  point_name              :string(20)       default("Point")
+#  umpire_text             :string(20)       default("Umpire")
 #  updated_by              :bigint
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
@@ -68,6 +69,7 @@ class Sport < ApplicationRecord
                                         inclusion: { in: TIE_TYPES }
     validates :court_name,              length: { maximum: 20 }
     validates :point_name,              length: { maximum: 20 }
+    # validates :umpire_text,             length: { maximum: 20 }
 
     def self.per_page
         15

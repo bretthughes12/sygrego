@@ -6,6 +6,7 @@
 #  active        :boolean
 #  address       :string
 #  database_code :string(4)
+#  hub           :string(50)
 #  name          :string(50)       default(""), not null
 #  updated_by    :bigint
 #  created_at    :datetime         not null
@@ -32,6 +33,7 @@ class Venue < ApplicationRecord
     validates :database_code,           uniqueness: true,
                                         length: { maximum: 4 }
     validates :address,                 length: { maximum: 255 }
+    # validates :hub,                     length: { maximum: 50 }
   
     def self.import_excel(file, user)
         creates = 0

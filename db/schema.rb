@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_17_052322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -337,6 +337,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
     t.string "allergies", limit: 255
     t.decimal "amount_paid", precision: 8, scale: 2, default: "0.0"
     t.string "booking_nbr", limit: 10
+    t.integer "car_capacity"
     t.boolean "coming", default: true
     t.boolean "coming_friday", default: true
     t.boolean "coming_monday", default: true
@@ -646,6 +647,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
     t.boolean "participant_registrations_closed", default: false
     t.string "policy_child_safe_url"
     t.string "policy_conduct_url"
+    t.string "policy_day_visitor_url"
+    t.string "policy_driving_url"
+    t.string "policy_drone_use_url"
+    t.string "policy_image_use_url"
+    t.string "policy_medicine_url"
+    t.string "policy_refund_url"
     t.string "policy_wwcc_url"
     t.decimal "primary_age_adjustment", precision: 8, scale: 2, default: "0.0", null: false
     t.string "public_website", default: ""
@@ -719,6 +726,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
     t.integer "max_team_entries_group", default: 0, null: false
     t.string "name", limit: 20, null: false
     t.string "point_name", limit: 20, default: "Point"
+    t.string "umpire_text", limit: 20, default: "Umpire"
     t.datetime "updated_at", null: false
     t.bigint "updated_by"
     t.index ["name"], name: "index_sports_on_name", unique: true
@@ -796,6 +804,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
     t.string "address"
     t.datetime "created_at", null: false
     t.string "database_code", limit: 4
+    t.string "hub", limit: 50
     t.string "name", limit: 50, default: "", null: false
     t.datetime "updated_at", null: false
     t.bigint "updated_by"
@@ -844,6 +853,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_15_025207) do
     t.string "t_shirt_size", limit: 10
     t.datetime "updated_at", null: false
     t.bigint "updated_by"
+    t.bigint "venue_id"
     t.bigint "volunteer_type_id"
     t.index ["participant_id"], name: "index_volunteers_on_participant_id"
     t.index ["volunteer_type_id"], name: "index_volunteers_on_volunteer_type_id"

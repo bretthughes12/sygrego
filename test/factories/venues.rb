@@ -6,6 +6,7 @@
 #  active        :boolean
 #  address       :string
 #  database_code :string(4)
+#  hub           :string(50)
 #  name          :string(50)       default(""), not null
 #  updated_by    :bigint
 #  created_at    :datetime         not null

@@ -33,6 +33,12 @@
 #  participant_registrations_closed     :boolean          default(FALSE)
 #  policy_child_safe_url                :string
 #  policy_conduct_url                   :string
+#  policy_day_visitor_url               :string
+#  policy_driving_url                   :string
+#  policy_drone_use_url                 :string
+#  policy_image_use_url                 :string
+#  policy_medicine_url                  :string
+#  policy_refund_url                    :string
 #  policy_wwcc_url                      :string
 #  primary_age_adjustment               :decimal(8, 2)    default(0.0), not null
 #  public_website                       :string           default("")

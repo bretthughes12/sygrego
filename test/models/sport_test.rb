@@ -15,6 +15,7 @@
 #  max_team_entries_group  :integer          default(0), not null
 #  name                    :string(20)       not null
 #  point_name              :string(20)       default("Point")
+#  umpire_text             :string(20)       default("Umpire")
 #  updated_by              :bigint
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null

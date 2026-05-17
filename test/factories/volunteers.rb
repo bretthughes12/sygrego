@@ -25,6 +25,7 @@
 #  updated_at           :datetime         not null
 #  participant_id       :bigint
 #  session_id           :bigint
+#  venue_id             :bigint
 #  volunteer_type_id    :bigint
 #
 # Indexes
