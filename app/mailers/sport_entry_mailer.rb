@@ -6,7 +6,7 @@ class SportEntryMailer < ApplicationMailer
     def restricted_sport_withdrawal(entry)
       @entry = entry
   
-      mail(subject: "#{APP_CONFIG[:email_subject]} Withdrawal from #{entry.section_name}")
+      # mail(subject: "#{APP_CONFIG[:email_subject]} Withdrawal from #{entry.section_name}")
     end
   
     def restricted_sport_offer(entry)
@@ -16,12 +16,12 @@ class SportEntryMailer < ApplicationMailer
         e.group.email_recipients
       end.flatten.uniq
   
-      mail(from:    @settings.sports_email,
-           bcc:     notifies,
-           subject: "#{APP_CONFIG[:email_subject]} Restricted Sports Offer - #{entry.section_name}") do |format|
-        format.html { render layout: 'mailer' }
-        format.text
-      end
+      # mail(from:    @settings.sports_email,
+      #      bcc:     notifies,
+      #      subject: "#{APP_CONFIG[:email_subject]} Restricted Sports Offer - #{entry.section_name}") do |format|
+      #   format.html { render layout: 'mailer' }
+      #   format.text
+      # end
     end
   
     def draw_entry_withdrawal(entry)
