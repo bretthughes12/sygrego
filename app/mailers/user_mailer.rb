@@ -28,8 +28,8 @@ class UserMailer < ApplicationMailer
         @participant = participant
         @group = @participant.group
     
-        mail(to:      user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+        # mail(to:      user.email, 
+        #      subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
     end
     
     def reject_participant(participant, group)
@@ -37,8 +37,8 @@ class UserMailer < ApplicationMailer
         @user = participant.users.first
         @group = group
         
-        mail(to:      @settings.rego_email, 
-             subject: "#{APP_CONFIG[:email_subject]} Participant rejected by #{group.short_name}")
+        # mail(to:      @settings.rego_email, 
+        #      subject: "#{APP_CONFIG[:email_subject]} Participant rejected by #{group.short_name}")
     end
     
     def accept_participant(participant, group, token)
@@ -47,8 +47,8 @@ class UserMailer < ApplicationMailer
         @group = group
         @token = token
         
-        mail(to:      @user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Participant accepted by #{group.short_name}")
+        # mail(to:      @user.email, 
+        #      subject: "#{APP_CONFIG[:email_subject]} Participant accepted by #{group.short_name}")
     end
     
     def new_participant(user, participant)
@@ -57,8 +57,8 @@ class UserMailer < ApplicationMailer
         @group = @participant.group
         notifies = @participant.group.email_recipients
     
-        mail(to:      notifies,
-             subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
+        # mail(to:      notifies,
+        #      subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
     end
 end
   
