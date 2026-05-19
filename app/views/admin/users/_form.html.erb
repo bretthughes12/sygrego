@@ -3,6 +3,9 @@
 
 	<%= f.input :protect_password %>
 
+	<%= f.input :password, hint: "Encourage users to use the 'Forgot your password?' link before resorting to manually setting a new password for them" %>
+	<%= f.input :password_confirmation %>
+
 	<%= f.input :email %>
 	<%= f.input :name %>
 	<%= f.input :status, as: :select, collection: User::STATUS, include_blank: false %>
