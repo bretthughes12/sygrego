@@ -2,29 +2,41 @@
 #
 # Table name: event_details
 #
-#  id                    :bigint           not null, primary key
-#  buddy_comments        :text
-#  buddy_interest        :string(50)
-#  camping_rqmts         :text
-#  caravans              :integer          default(0)
-#  estimated_numbers     :integer          default(0)
-#  fire_pit              :boolean          default(TRUE)
-#  marquee_co            :string(50)
-#  marquee_sizes         :string(255)
-#  marquees              :integer          default(0)
-#  number_of_vehicles    :integer          default(0)
-#  onsite                :boolean          default(TRUE)
-#  orientation_details   :string(100)
-#  service_pref_fri      :string(20)       default("No preference")
-#  service_pref_sat      :string(20)       default("No preference")
-#  service_pref_sun      :string(20)       default("No preference")
-#  tents                 :integer          default(0)
-#  updated_by            :bigint
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  group_id              :bigint
-#  orientation_detail_id :bigint
-#  warden_zone_id        :bigint
+#  id                        :bigint           not null, primary key
+#  buddy_comments            :text
+#  buddy_interest            :string(50)
+#  camping_rqmts             :text
+#  caravans                  :integer          default(0)
+#  estimated_numbers         :integer          default(0)
+#  fire_pit                  :boolean          default(TRUE)
+#  marquee_co                :string(50)
+#  marquee_sizes             :string(255)
+#  marquees                  :integer          default(0)
+#  number_of_vehicles        :integer          default(0)
+#  onsite                    :boolean          default(TRUE)
+#  orientation_details       :string(100)
+#  policy_child_safe_checked :boolean          default(FALSE)
+#  policy_code_checked       :boolean          default(FALSE)
+#  policy_code_u18_checked   :boolean          default(FALSE)
+#  policy_day_vis_checked    :boolean          default(FALSE)
+#  policy_driving_checked    :boolean          default(FALSE)
+#  policy_drone_checked      :boolean          default(FALSE)
+#  policy_image_use_checked  :boolean          default(FALSE)
+#  policy_medicine_checked   :boolean          default(FALSE)
+#  policy_refund_checked     :boolean          default(FALSE)
+#  policy_shower_checked     :boolean          default(FALSE)
+#  policy_website_checked    :boolean          default(FALSE)
+#  policy_wwcc_checked       :boolean          default(FALSE)
+#  service_pref_fri          :string(20)       default("No preference")
+#  service_pref_sat          :string(20)       default("No preference")
+#  service_pref_sun          :string(20)       default("No preference")
+#  tents                     :integer          default(0)
+#  updated_by                :bigint
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  group_id                  :bigint
+#  orientation_detail_id     :bigint
+#  warden_zone_id            :bigint
 #
 # Indexes
 #
@@ -49,6 +61,18 @@ class EventDetail < ApplicationRecord
     has_one_attached :food_cert
     has_one_attached :covid_plan
     has_one_attached :insurance
+    has_one_attached :child_safe_policy
+    has_one_attached :code_of_conduct
+    has_one_attached :code_of_conduct_u18
+    has_one_attached :wwcc_policy
+    has_one_attached :day_visitor_policy
+    has_one_attached :driving_policy
+    has_one_attached :drone_policy
+    has_one_attached :medicine_policy
+    has_one_attached :image_use_policy
+    has_one_attached :refund_policy
+    has_one_attached :shower_policy
+    has_one_attached :website_policy
 
     scope :onsite, -> { where(onsite: true) }
     scope :offsite, -> { where(onsite: false) }

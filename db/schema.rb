@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_17_052322) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_21_095224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -120,6 +120,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_17_052322) do
     t.boolean "onsite", default: true
     t.bigint "orientation_detail_id"
     t.string "orientation_details", limit: 100
+    t.boolean "policy_child_safe_checked", default: false
+    t.boolean "policy_code_checked", default: false
+    t.boolean "policy_code_u18_checked", default: false
+    t.boolean "policy_day_vis_checked", default: false
+    t.boolean "policy_driving_checked", default: false
+    t.boolean "policy_drone_checked", default: false
+    t.boolean "policy_image_use_checked", default: false
+    t.boolean "policy_medicine_checked", default: false
+    t.boolean "policy_refund_checked", default: false
+    t.boolean "policy_shower_checked", default: false
+    t.boolean "policy_website_checked", default: false
+    t.boolean "policy_wwcc_checked", default: false
     t.string "service_pref_fri", limit: 20, default: "No preference"
     t.string "service_pref_sat", limit: 20, default: "No preference"
     t.string "service_pref_sun", limit: 20, default: "No preference"
