@@ -235,7 +235,9 @@ Rails.application.routes.draw do
       member do
         patch :purge_file
         get :edit_warden_zone
+        get :edit_policies
         patch :update_warden_zone
+        patch :update_policies
       end
       collection do
         get :new_import
@@ -533,13 +535,27 @@ Rails.application.routes.draw do
         get :new_covid_plan
         get :new_insurance
         get :edit_orientation
+        get :edit_policies
         patch :update_food_certificate
         patch :update_covid_plan
         patch :update_insurance
         patch :update_orientation
+        patch :update_policies
         patch :purge_food_certificate
         patch :purge_covid_plan
         patch :purge_insurance
+        patch :purge_child_safe_policy
+        patch :purge_code_of_conduct
+        patch :purge_code_of_conduct_u18
+        patch :purge_wwcc_policy
+        patch :purge_day_visitor_policy
+        patch :purge_driving_policy
+        patch :purge_drone_policy
+        patch :purge_medicine_policy
+        patch :purge_image_use_policy
+        patch :purge_refund_policy
+        patch :purge_shower_policy
+        patch :purge_website_policy
       end
     end
     resources :mysyg_settings, only: [:edit, :update] do

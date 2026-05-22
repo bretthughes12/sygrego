@@ -12,6 +12,11 @@ class Gc::EventDetailsController < GcController
       render layout: @current_role.name
     end
   
+    # GET /gc/event_details/1/edit_policies
+    def edit_policies
+      render layout: @current_role.name
+    end
+  
     # GET /gc/event_details/1/new_food_certificate
     def new_food_certificate
       render layout: @current_role.name
@@ -100,6 +105,20 @@ class Gc::EventDetailsController < GcController
       end
     end
   
+    # PATCH /gc/event_details/1/update_policies
+    def update_policies 
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_policies_params)
+          flash[:notice] = 'Policies were successfully uploaded.'
+          format.html { render action: "edit_policies", layout: @current_role.name }
+        else
+          format.html { render action: "edit_policies", layout: @current_role.name }
+        end
+      end
+    end
+  
     # PATCH /gc/event_details/1/purge_food_certificate
     def purge_food_certificate
       @event_detail.updated_by = current_user.id
@@ -130,6 +149,138 @@ class Gc::EventDetailsController < GcController
 
       respond_to do |format|
           format.html { render action: "new_insurance", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_child_safe_policy
+    def purge_child_safe_policy
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.child_safe_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_code_of_conduct
+    def purge_code_of_conduct
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.code_of_conduct.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_code_of_conduct_u18
+    def purge_code_of_conduct_u18
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.code_of_conduct_u18.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_wwcc_policy
+    def purge_wwcc_policy
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.wwcc_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_day_visitor_policy
+    def purge_day_visitor_policy
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.day_visitor_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_driving_policy
+    def purge_driving_policy
+      @event_detail.updated_by = current_user.id  
+
+      @event_detail.driving_policy.purge    
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end 
+
+    # PATCH /gc/event_details/1/purge_drone_policy
+    def purge_drone_policy
+      @event_detail.updated_by = current_user.id  
+
+      @event_detail.drone_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_medicine_policy
+    def purge_medicine_policy
+      @event_detail.updated_by = current_user.id  
+
+      @event_detail.medicine_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_image_use_policy
+    def purge_image_use_policy
+      @event_detail.updated_by = current_user.id  
+
+      @event_detail.image_use_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_refund_policy
+    def purge_refund_policy
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.refund_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end
+
+    # PATCH /gc/event_details/1/purge_shower_policy
+    def purge_shower_policy
+      @event_detail.updated_by = current_user.id
+
+      @event_detail.shower_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
+      end
+    end 
+
+    # PATCH /gc/event_details/1/purge_website_policy
+    def purge_website_policy
+      @event_detail.updated_by = current_user.id  
+
+      @event_detail.website_policy.purge
+
+      respond_to do |format|
+          format.html { render action: "edit_policies", layout: @current_role.name }
       end
     end
 
@@ -175,6 +326,24 @@ class Gc::EventDetailsController < GcController
     def event_detail_insurance_params
       params.require(:event_detail).permit( 
                                     :insurance
+                                )
+    end
+  
+    def event_detail_policies_params
+      params.require(:event_detail).permit( 
+                                    :id,                              
+                                    :child_safe_policy,
+                                    :code_of_conduct,
+                                    :code_of_conduct_u18,
+                                    :wwcc_policy,
+                                    :day_visitor_policy,
+                                    :driving_policy,
+                                    :drone_policy,
+                                    :medicine_policy,
+                                    :image_use_policy,
+                                    :refund_policy,
+                                    :shower_policy,
+                                    :website_policy
                                 )
     end
 end

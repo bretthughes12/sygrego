@@ -155,7 +155,22 @@ class Ability
            :update_insurance,
            :purge_insurance,
            :edit_orientation,
-           :update_orientation], EventDetail do |ev|
+           :update_orientation,
+           :edit_policies,
+           :update_policies,
+           :purge_child_safe_policy,
+           :purge_code_of_conduct,
+           :purge_code_of_conduct_u18,
+           :purge_wwcc_policy,
+           :purge_day_visitor_policy,
+           :purge_driving_policy,
+           :purge_drone_policy,
+           :purge_medicine_policy,
+           :purge_image_use_policy,
+           :purge_refund_policy,
+           :purge_shower_policy,
+           :purge_website_policy
+           ], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
@@ -279,7 +294,22 @@ class Ability
            :update_insurance,
            :purge_insurance,
            :edit_orientation,
-           :update_orientation], EventDetail do |ev|
+           :update_orientation,
+           :edit_policies,
+           :update_policies,
+           :purge_child_safe_policy,
+           :purge_code_of_conduct,
+           :purge_code_of_conduct_u18,
+           :purge_wwcc_policy,
+           :purge_day_visitor_policy,
+           :purge_driving_policy,
+           :purge_drone_policy,
+           :purge_medicine_policy,
+           :purge_image_use_policy,
+           :purge_refund_policy,
+           :purge_shower_policy,
+           :purge_website_policy
+           ], EventDetail do |ev|
         user.groups.include?(ev.group) || user.role?(:admin)
       end
       can :read, Page
