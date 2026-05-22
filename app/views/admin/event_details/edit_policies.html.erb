@@ -1,0 +1,161 @@
+<% title "Policy uploads for #{@event_detail.group.name}" %>
+
+<h1><%= yield(:title) %></h1>
+
+<%= simple_form_for(@event_detail, url: update_policies_admin_event_detail_path(@event_detail), html: { method: :patch }) do |f| %> 
+	<%= f.error_notification %>
+	
+	<%= f.hidden_field :id %>
+
+    <p>Child Safe Policy:</p>
+	<% if @event_detail.child_safe_policy.attached? %>
+		<% if @event_detail.child_safe_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.child_safe_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.child_safe_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.child_safe_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_child_safe_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Code of Conduct:</p>
+	<% if @event_detail.code_of_conduct.attached? %>
+		<% if @event_detail.code_of_conduct.representable? %>
+		    <%= link_to(image_tag(@event_detail.code_of_conduct.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.code_of_conduct, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.code_of_conduct, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_code_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Code of Conduct (Under 18):</p>
+	<% if @event_detail.code_of_conduct_u18.attached? %>
+		<% if @event_detail.code_of_conduct_u18.representable? %>
+		    <%= link_to(image_tag(@event_detail.code_of_conduct_u18.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.code_of_conduct_u18, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.code_of_conduct_u18, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_code_u18_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>WWCC Policy:</p>
+	<% if @event_detail.wwcc_policy.attached? %>
+		<% if @event_detail.wwcc_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.wwcc_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.wwcc_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.wwcc_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_wwcc_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Day Visitor Policy:</p>
+	<% if @event_detail.day_visitor_policy.attached? %>
+		<% if @event_detail.day_visitor_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.day_visitor_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.day_visitor_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.day_visitor_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_day_vis_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Driving Policy:</p>
+	<% if @event_detail.driving_policy.attached? %>
+		<% if @event_detail.driving_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.driving_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.driving_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.driving_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_driving_checked, label: "Checked?" %>   
+		<br/>
+		<br/>
+	<% end %>
+		
+    <p>Drone Use Policy:</p>
+	<% if @event_detail.drone_policy.attached? %>
+		<% if @event_detail.drone_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.drone_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.drone_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.drone_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_drone_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+
+    <p>Medicine Policy:</p>
+	<% if @event_detail.medicine_policy.attached? %>
+		<% if @event_detail.medicine_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.medicine_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.medicine_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.medicine_policy, disposition: "attachment") %>
+		<% end %>
+		<%= f.input :policy_medicine_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Image Use Policy:</p>
+	<% if @event_detail.image_use_policy.attached? %>
+		<% if @event_detail.image_use_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.image_use_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.image_use_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.image_use_policy, disposition: "attachment") %>
+		<% end %>
+		<%= f.input :policy_image_use_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Refund Policy:</p>
+	<% if @event_detail.refund_policy.attached? %>
+		<% if @event_detail.refund_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.refund_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.refund_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.refund_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_refund_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Shower Policy:</p>
+    <% if @event_detail.shower_policy.attached? %>
+		<% if @event_detail.shower_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.shower_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.shower_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.shower_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_shower_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+	
+    <p>Website Policy:</p>
+	<% if @event_detail.website_policy.attached? %>
+		<% if @event_detail.website_policy.representable? %>
+		    <%= link_to(image_tag(@event_detail.website_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@event_detail.website_policy, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(@event_detail.website_policy, disposition: "attachment") %>
+		<% end %>
+    	<%= f.input :policy_website_checked, label: "Checked?" %>
+		<br/>
+		<br/>
+	<% end %>
+
+    <%= f.button :submit, "Update" %>
+    <br/>
+    <br/>
+<% end %>
+
+<%= link_to "Back", uploads_admin_event_details_path,
+                  class: primary_button_class,
+                  role: "button" %>

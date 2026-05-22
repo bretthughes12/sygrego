@@ -71,6 +71,10 @@ class Admin::EventDetailsController < AdminController
     def edit_warden_zone
     end
   
+    # GET /admin/event_details/1/edit_policies
+    def edit_policies
+    end
+  
     # PATCH /admin/event_details/1
     def update
       @event_detail.updated_by = current_user.id
@@ -95,6 +99,20 @@ class Admin::EventDetailsController < AdminController
           format.html { redirect_to warden_zones_admin_event_details_url }
         else
           format.html { render action: "edit_warden_zone" }
+        end
+      end
+    end
+  
+    # PATCH /admin/event_details/1/update_policies
+    def update_policies
+      @event_detail.updated_by = current_user.id
+
+      respond_to do |format|
+        if @event_detail.update(event_detail_policies_params)
+          flash[:notice] = 'Details were successfully updated.'
+          format.html { redirect_to uploads_admin_event_details_url }
+        else
+          format.html { render action: "edit_policies" }
         end
       end
     end
@@ -177,6 +195,29 @@ class Admin::EventDetailsController < AdminController
       params.require(:event_detail).permit(
                                     :warden_zone_id
                                 )
+    end
+  
+    def event_detail_policies_params
+      params.require(:event_detail).permit(
+                                    :policy_child_safe_checked,
+                                    :policy_code_checked,
+                                    :policy_code_u18_checked,
+                                    :policy_day_vis_checked,
+                                    :policy_driving_checked,
+                                    :policy_drone_checked,
+                                    :policy_image_use_checked,
+                                    :policy_medicine_checked,
+                                    :policy_refund_checked,
+                                    :policy_shower_checked,
+                                    :policy_website_checked,
+                                    :policy_wwcc_checked
+                                )
+    end
+  
+    def event_details_orientation_params(id)
+      params.require(:event_details)
+            .fetch(id)
+            .permit(:orientation_details)
     end
   
     def event_details_orientation_params(id)

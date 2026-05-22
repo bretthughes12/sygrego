@@ -4,9 +4,15 @@
 	</td>
 
 	<td> 
-        <%= event_detail.group.short_name %>
+        <%= link_to event_detail.group.short_name, edit_policies_admin_event_detail_path(event_detail) %>
 	</td>
-	
+
+	<td align="center">
+        <%= event_detail.policies_uploaded %>
+		<span class="badge bg-success"><%= event_detail.policies_checked %></span>
+
+	</td>
+
 	<td> 
 		<% if event_detail.food_cert.attached? %>
 			<% if event_detail.food_cert.representable? %>

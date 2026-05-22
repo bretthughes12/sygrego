@@ -113,6 +113,44 @@ class EventDetail < ApplicationRecord
                                     numericality: { only_integer: true }
     validates :orientation_details, length: { maximum: 100 }
 
+    def policies_uploaded
+        policy_files = ['child_safe_policy',
+            'code_of_conduct',
+            'code_of_conduct_u18',
+            'day_visitor_policy',
+            'driving_policy',
+            'drone_policy',
+            'image_use_policy',
+            'medicine_policy',
+            'refund_policy',
+            'shower_policy',
+            'website_policy',
+            'wwcc_policy']
+        
+        uploads = 0
+        policy_files.each { |file| self.send(file).attached? ? uploads += 1 : nil }
+        uploads
+    end
+
+    def policies_checked
+        policy_fields = ['policy_child_safe_checked',
+            'policy_code_checked',
+            'policy_code_u18_checked',
+            'policy_day_vis_checked',
+            'policy_driving_checked',
+            'policy_drone_checked',
+            'policy_image_use_checked',
+            'policy_medicine_checked',
+            'policy_refund_checked',
+            'policy_shower_checked',
+            'policy_website_checked',
+            'policy_wwcc_checked'] 
+
+        checked = 0
+        policy_fields.each { |field| self.send(field)? checked += 1 : nil }
+        checked
+    end 
+
     def self.fri_early_service
         groups = []
         EventDetail.all.each do |ed|
