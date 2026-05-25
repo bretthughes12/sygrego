@@ -933,8 +933,8 @@ class Participant < ApplicationRecord
 
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['Name'] == 'Name'
-        unless row['Question 1'].blank?
-          participant = Participant.where(id: row['Question 1']).first
+        unless row['Question 12'].blank?
+          participant = Participant.where(id: row['Question 12']).first
         
           if participant
             participant.registration_nbr        = row['Registration#']
@@ -951,7 +951,7 @@ class Participant < ApplicationRecord
           if !row['Registration Type'].nil?
             participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'], row['Last Name'], day_group.id)
 
-            if row['Question 9'].blank?
+            if row['Question 11'].blank?
               licence_type = nil
               driver_signature = false
             else
@@ -972,8 +972,8 @@ class Participant < ApplicationRecord
               participant.allergies = 'Unknown'
               participant.spectator = true
               participant.onsite = false
-              participant.driver = !row['Question 9'].blank?
-              participant.number_plate = row['Question 9']
+              participant.driver = !row['Question 11'].blank?
+              participant.number_plate = row['Question 11']
               participant.licence_type = licence_type
               participant.driver_signature = driver_signature
               participant.dietary_requirements = 'Unknown'
@@ -1001,8 +1001,8 @@ class Participant < ApplicationRecord
                 allergies:               'Unknown',
                 spectator:               true,
                 onsite:                  false,
-                driver:                  !row['Question 9'].blank?,
-                number_plate:            row['Question 9'],
+                driver:                  !row['Question 11'].blank?,
+                number_plate:            row['Question 11'],
                 licence_type:            licence_type,
                 driver_signature:        driver_signature,
                 dietary_requirements:    'Unknown',
