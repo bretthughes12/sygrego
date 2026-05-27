@@ -56,7 +56,7 @@ namespace :syg do
           content_type: 'application/pdf',
           identify: false)
         
-        PaymentMailer.invoice(invoice).deliver_now
+#        PaymentMailer.invoice(invoice).deliver_now
       end
     end
   end
