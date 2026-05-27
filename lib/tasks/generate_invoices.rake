@@ -38,6 +38,8 @@ namespace :syg do
     Group.coming.each do |group|
       payments = group.payments.paid.order(:paid_at).load
       unless group.amount_outstanding.zero? 
+        puts ">>> Generating for #{group.short_name}..."
+
         invoice = Payment.new(group: group, amount: group.amount_outstanding, payment_type: "Invoice", invoice_type: "Final")
         invoice.save(validate: false)
 
@@ -55,8 +57,6 @@ namespace :syg do
           identify: false)
         
         PaymentMailer.invoice(invoice).deliver_now
-        
-        puts ">>> Generated for #{group.short_name}"
       end
     end
   end
