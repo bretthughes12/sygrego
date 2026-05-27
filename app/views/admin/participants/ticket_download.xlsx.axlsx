@@ -21,7 +21,7 @@ wb.add_worksheet(name: "Tickets") do |sheet|
 			 participant.registration_nbr,
 			 participant.booking_nbr,
 			 "SYG#{@settings.this_year.remainder(100)} System Admin",
-			 "stateyouthgames@crowdflo.com.au",
+			 participant.ticket_email,
 			 "",
 			 participant.updated_at.in_time_zone.strftime("%d/%m/%Y %I:%M:%S %p"),
 			 participant.ticket_notes,
