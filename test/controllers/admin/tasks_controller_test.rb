@@ -3,6 +3,8 @@ require "test_helper"
 class Admin::TasksControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers 
 
+  require 'aws-sdk-s3'
+
   def setup
     @setting = FactoryBot.create(:setting)
     FactoryBot.create(:audit_trail)
@@ -12,6 +14,9 @@ class Admin::TasksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get sports draws" do
+    Aws::S3::Resource.any_instance.stubs(:bucket).returns(Object.new)
+    Object.any_instance.stubs(:objects).returns([])
+
     get sports_draws_admin_tasks_url
 
     assert_response :success

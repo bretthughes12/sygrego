@@ -1,8 +1,24 @@
 class Admin::TasksController < AdminController
   before_action :authenticate_user!
 
+  require 'open-uri'
+  require 'aws-sdk-s3'
+
   # GET /admin/tasks/sports_draws
   def sports_draws
+    @draws_ready_for_upload = 0
+
+    s3 = Aws::S3::Resource.new(access_key_id: Rails.application.credentials.dig(:aws, :access_key_id), 
+                               secret_access_key: Rails.application.credentials.dig(:aws, :secret_access_key), 
+                               region: APP_CONFIG[:s3_region])
+    files = s3.bucket(APP_CONFIG[:s3_bucket]).objects(prefix: 'draw_files/')
+
+    files.each do |draw|
+        next if draw.key == 'draw_files/'
+        @draws_ready_for_upload += 1
+    end
+
+    @draws_ready_for_upload
   end
 
   # POST /admin/tasks/allocate_restricted
@@ -58,6 +74,14 @@ class Admin::TasksController < AdminController
     redirect_to sports_draws_admin_tasks_path
   end
   
+  # POST /admin/tasks/update_section_draws
+  def update_section_draws
+    UpdateSectionDrawsJob.perform_later
+    flash[:notice] = 'Section draws are being updated. Refresh the page to check when done'
+    
+    redirect_to sports_draws_admin_tasks_path
+  end
+
   private
   
   def set_restricted_sports_allocated_setting

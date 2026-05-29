@@ -28,6 +28,30 @@
 <br/>
 <br/>
 
+<h2>Uploading Draws</h2>
+<p>
+  Use this section to upload new draws for each type of sport. All draws should be uploaded to Amazon::S3 first.
+</p>
+
+<table class="table table-dark table-striped">
+	<tr>
+		<td> 
+			<strong>Draws in S3 ready for upload</strong>
+		</td>
+		<td> 
+				<%= @draws_ready_for_upload %>
+		</td>
+	</tr>
+</table>
+
+<%= link_to "Upload Draws", update_section_draws_admin_tasks_path,
+                  method: :post,
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <h2>Reset Entry Limits</h2>
 
 <p>
