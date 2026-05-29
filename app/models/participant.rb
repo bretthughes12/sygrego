@@ -937,7 +937,7 @@ class Participant < ApplicationRecord
           participant = Participant.where(id: row['Question 12']).first
         
           if participant
-            participant.registration_nbr        = row['Ticket#']
+            participant.registration_nbr        = row['Registration#']
             participant.booking_nbr             = row['Booking#']
             participant.updated_by = user.id
 
@@ -978,7 +978,7 @@ class Participant < ApplicationRecord
               participant.driver_signature = driver_signature
               participant.dietary_requirements = 'Unknown'
               participant.wwcc_number = row['Question 8'].blank? ? "Unknown" : row['Question 8']
-              participant.registration_nbr = row['Ticket#']
+              participant.registration_nbr = row['Registration#']
               participant.booking_nbr = row['Booking#'] 
               participant.exported = true
               participant.updated_by = user.id
@@ -1007,7 +1007,7 @@ class Participant < ApplicationRecord
                 driver_signature:        driver_signature,
                 dietary_requirements:    'Unknown',
                 wwcc_number:             row['Question 8'].blank? ? "Unknown" : row['Question 8'],
-                registration_nbr:        row['Ticket#'],
+                registration_nbr:        row['Registration#'],
                 booking_nbr:             row['Booking#'],
                 exported:                true,
                 updated_by:              user.id)
