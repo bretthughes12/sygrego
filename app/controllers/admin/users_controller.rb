@@ -70,6 +70,10 @@ class Admin::UsersController < AdminController
     # PATCH /admin/users/1
     def update
       respond_to do |format|
+        if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+          params[:user].delete(:password)
+          params[:user].delete(:password_confirmation)
+        end
         if @user.update(user_params)
           flash[:notice] = 'User was successfully updated.'
           format.html { redirect_to admin_users_url }
@@ -123,6 +127,21 @@ class Admin::UsersController < AdminController
       params.require(:user).permit(:email, 
                                    :password,
                                    :password_confirmation,
+                                   :protect_password,
+                                   :name,
+                                   :status,
+                                   :address,
+                                   :suburb,
+                                   :postcode,
+                                   :phone_number,
+                                   :wwcc_number,
+                                   :group_role,
+                                   :years_as_gc
+                                  )
+    end
+    
+    def user_params_no_password
+      params.require(:user).permit(:email, 
                                    :protect_password,
                                    :name,
                                    :status,
