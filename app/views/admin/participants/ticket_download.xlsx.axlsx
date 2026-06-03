@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Tickets") do |sheet|
-	sheet.add_row ["Name","Last Name","Company Name","Email","Registration Type","Booking Type","Ticket#","Booking#","Purchased By","Purchaser Email","Phone","Booking Date","Notes","Wristband ID","Question 1","Question 2","Question 3","Question 4","Question 5","Question 6","Question 7","Question 8","Question 9","Question 10","Question 11","Question 12","Question 13","Question 14","Question 15","Question 16","Question 17","Question 18"], 
+	sheet.add_row ["Name","Last Name","Company Name","Email","Registration Type","Ticket#","Booking#","Purchased By","Purchaser Email","Phone","Booking Date","Notes","Wristband ID","Question 1","Question 2","Question 3","Question 4","Question 5","Question 6","Question 7","Question 8","Question 9","Question 10","Question 11","Question 12","Question 13","Question 14","Question 15","Question 16","Question 17","Question 18"], 
 		style: header_border
 
 	@participants.each do |participant|
@@ -17,7 +17,6 @@ wb.add_worksheet(name: "Tickets") do |sheet|
 			 "",
   		     participant.ticket_email,
 			 participant.ticket_type,
-			 "Registering for Someone Else",
 			 participant.registration_nbr,
 			 participant.booking_nbr,
 			 "SYG#{@settings.this_year.remainder(100)} System Admin",
