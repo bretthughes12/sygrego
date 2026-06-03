@@ -254,6 +254,28 @@ class Admin::SettingsController < AdminController
     end
   end
 
+  # PATCH /admin/settings/1/purge_sports_setup_maps
+  def purge_sports_setup_maps
+    @setting = Setting.find(params[:id])  
+
+    @setting.sports_setup_maps.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
+
+  # PATCH /admin/settings/1/purge_disclaimer
+  def purge_disclaimer
+    @setting = Setting.find(params[:id])
+
+    @setting.disclaimer.purge
+
+    respond_to do |format|
+      format.html { render action: "edit_references" }
+    end
+  end
+
   private
   
     def settings_params
@@ -317,7 +339,9 @@ class Admin::SettingsController < AdminController
                                       :ladder_reference,
                                       :results_reference,
                                       :sports_reference,
-                                      :sports_maps
+                                      :sports_maps,
+                                      :sports_setup_maps,
+                                      :disclaimer
                                     )
 
     end

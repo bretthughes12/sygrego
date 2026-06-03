@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/ladder_reference' => 'info#ladder_reference', as: :ladder_reference
   get '/results_reference' => 'info#results_reference', as: :results_reference
   get '/sports_maps' => 'info#sports_maps', as: :sports_maps
+  get '/sports_setup_maps' => 'info#sports_setup_maps', as: :sports_setup_maps
+  get '/disclaimer' => 'info#disclaimer', as: :disclaimer
   get 'static/:permalink' => 'pages#show', as: :static
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -171,6 +173,8 @@ Rails.application.routes.draw do
         patch :purge_results_reference
         patch :purge_sports_reference
         patch :purge_sports_maps
+        patch :purge_sports_setup_maps
+        patch :purge_disclaimer
       end
     end
     resources :pages

@@ -18,4 +18,14 @@ class InfoController < ApplicationController
     def sports_maps
         redirect_to rails_blob_path(@settings.sports_maps)
     end
+
+    # GET /info/sports_setup_maps
+    def sports_setup_maps
+        redirect_to rails_blob_path(@settings.sports_setup_maps)
+    end
+
+    # GET /info/disclaimer
+    def disclaimer
+        redirect_to rails_blob_path(@settings.disclaimer)
+    end
 end

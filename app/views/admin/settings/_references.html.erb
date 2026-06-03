@@ -1,6 +1,30 @@
 <%= simple_form_for(setting, url: url) do |f| %> 
 	<%= f.error_notification %>
 
+	<h3>Participant Disclaimer</h3>
+	<% if setting.disclaimer.attached? %>
+		<% if setting.disclaimer.representable? %>
+		    <%= link_to(image_tag(setting.disclaimer.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.disclaimer, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.disclaimer, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_disclaimer_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :disclaimer, as: :file, label: 'Participant Disclaimer: ' %>
+	
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+
+	<br/>
+
 	<h3>SYG Sport Information Guide</h3>
 	<% if setting.sports_reference.attached? %>
 		<% if setting.sports_reference.representable? %>
@@ -41,6 +65,30 @@
 		<br/>
 	<% else %>
 		<%= f.input :sports_maps, as: :file, label: 'Sports Maps: ' %>
+
+        <br/>
+
+        <%= f.button :submit, "Upload" %>
+	<% end %>
+
+	<br/>
+
+	<h3>Maps of Sport Venue Setup</h3>
+	<% if setting.sports_setup_maps.attached? %>
+		<% if setting.sports_setup_maps.representable? %>
+		    <%= link_to(image_tag(setting.sports_setup_maps.representation(resize_to_limit: [80, 100])), rails_blob_path(setting.sports_setup_maps, disposition: "attachment")) %>
+		<% else %>
+		    <%= link_to "File", rails_blob_path(setting.sports_setup_maps, disposition: "attachment") %>
+		<% end %>
+		<%= link_to "Remove file", purge_sports_setup_maps_admin_setting_path(setting),
+        	          method: :patch,
+					  class: danger_button_class,
+            	      role: "button" %>
+
+		<br/>
+		<br/>
+	<% else %>
+		<%= f.input :sports_setup_maps, as: :file, label: 'Sports Setup Maps: ' %>
 
         <br/>
 

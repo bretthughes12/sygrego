@@ -82,6 +82,8 @@ class Setting < ApplicationRecord
   has_one_attached :results_reference
   has_one_attached :sports_reference
   has_one_attached :sports_maps
+  has_one_attached :sports_setup_maps
+  has_one_attached :disclaimer
 
   validates :new_group_sports_allocation_factor,
                                            numericality: { only_integer: true },
