@@ -933,11 +933,17 @@ class Participant < ApplicationRecord
 
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['Name'] == 'Name'
+        # the ticket system could be in either Ticket or Registration mode
+        # and the column heading for the registration number could be either 
+        # Ticket# or Registration#, so check both
+        rego_nbr = row['Ticket#'].to_s.strip
+        rego_nbr ||= row['Registration#'].to_s.strip
+
         unless row['Question 12'].blank?
           participant = Participant.where(id: row['Question 12']).first
         
           if participant
-            participant.registration_nbr        = row['Ticket#']
+            participant.registration_nbr        = rego_nbr
             participant.booking_nbr             = row['Booking#']
             participant.updated_by = user.id
 
@@ -978,7 +984,7 @@ class Participant < ApplicationRecord
               participant.driver_signature = driver_signature
               participant.dietary_requirements = 'Unknown'
               participant.wwcc_number = row['Question 8'].blank? ? "Unknown" : row['Question 8']
-              participant.registration_nbr = row['Ticket#']
+              participant.registration_nbr = rego_nbr
               participant.booking_nbr = row['Booking#'] 
               participant.exported = true
               participant.updated_by = user.id
@@ -1007,7 +1013,7 @@ class Participant < ApplicationRecord
                 driver_signature:        driver_signature,
                 dietary_requirements:    'Unknown',
                 wwcc_number:             row['Question 8'].blank? ? "Unknown" : row['Question 8'],
-                registration_nbr:        row['Ticket#'],
+                registration_nbr:        rego_nbr,
                 booking_nbr:             row['Booking#'],
                 exported:                true,
                 updated_by:              user.id)
