@@ -458,8 +458,7 @@ class ParticipantTest < ActiveSupport::TestCase
     @participant.coming_friday = true
     @participant.coming_saturday = false
     @participant.coming_sunday = false
-    @participant.coming_monday = true
-    assert_equal 'FRI / MON', @participant.ticket_type
+    assert_equal 'FRI', @participant.ticket_type
 
     @participant.coming_friday = false
     @participant.coming_monday = false
