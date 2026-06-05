@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_21_095224) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_052151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -494,6 +494,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_21_095224) do
     t.boolean "registered", default: false
     t.string "rego_mobile", limit: 30
     t.string "rego_rep", limit: 40
+    t.text "safety_notes"
     t.string "second_mobile", limit: 30
     t.string "second_rep", limit: 40
     t.string "site_check_church_contact"

@@ -15,6 +15,7 @@
 #  registered                :boolean          default(FALSE)
 #  rego_mobile               :string(30)
 #  rego_rep                  :string(40)
+#  safety_notes              :text
 #  second_mobile             :string(30)
 #  second_rep                :string(40)
 #  site_check_church_contact :string
