@@ -50,6 +50,7 @@ class Section < ApplicationRecord
   
     scope :active, -> { where(active: true) }
     scope :round_robin, -> { where(draw_type: "Round Robin") }
+    scope :incomplete, -> { where(results_locked: false) }
   
     has_one_attached :draw_file
 

@@ -1,5 +1,18 @@
 <h1>Sport results</h1>
 
+<%= link_to "By session", sc_sections_path(order: :session),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "By sport", sc_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Show all", sc_sections_path(filter: :none),
+                  class: primary_button_class,
+                  role: "button" %>
+
+<br/>
+<br/>
+
 <table class="table table-dark table-striped">
   <thead>
     <th>Session</th>
@@ -10,3 +23,13 @@
     <%= render @sections %>
   </tbody>
 </table>
+
+<%= link_to "By session", sc_sections_path(order: :session),
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "By sport", sc_sections_path,
+                  class: primary_button_class,
+                  role: "button" %>
+<%= link_to "Show all", sc_sections_path(filter: :none),
+                  class: primary_button_class,
+                  role: "button" %>
