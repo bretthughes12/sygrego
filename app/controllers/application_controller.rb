@@ -96,7 +96,7 @@ class ApplicationController < ActionController::Base
             if current_user && current_user.groups.count > 0
               @group = current_user.groups.first
             else
-              @group = Group.first
+              @group = Group.where('id > 0').first
             end
         end
     end
