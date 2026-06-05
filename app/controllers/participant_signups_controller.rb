@@ -209,7 +209,7 @@ class ParticipantSignupsController < ApplicationController
           end
         end
       else
-        @group = Group.find_by_abbr("DFLT").first
+        @group = Group.find_by_abbr("DFLT")
         flash[:notice] = "This replacement link has already been used"
         redirect_to mysyg_signup_url(group: @group.mysyg_name)
       end
