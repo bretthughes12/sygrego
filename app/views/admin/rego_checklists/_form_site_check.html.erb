@@ -1,16 +1,6 @@
 <%= simple_form_for(@rego_checklist, url: url, html: { method: method }) do |f| %> 
 	<%= f.error_notification %>
 
-	<h2>Safety Discussions</h2>
-	<%= f.input :site_check_safety_1, :label => "Child Protection & Responsibilities" %>
-	<%= f.input :site_check_safety_2, :label => "Your Site / Your Participants is your Church's Responsibility" %>
-	<%= f.input :site_check_safety_3, :label => "Shower Plan/Supervision" %>
-	<%= f.input :site_check_safety_4, :label => "Sleeping Arrangements (Under 18 & Over 18, and Genders to be Separated)" %>
-	<%= f.input :site_check_safety_5, :label => "Driving requirements as per policies, and speed limits around Lardner park" %>
-	<%= f.input :site_check_safety_6, :label => "Waste management policy and process" %>
-
-	<br/>
-
 	<h2>Electrical Safety</h2>
 	<%= f.input :site_check_electrical_1, :label => "All Electrical Appliances and Leads have been tested and tagged by a qualified electrician as stated by WorkSafe Victoria (Including New out the the box items)?" %>
 	<%= f.input :site_check_electrical_2, :label => "An orange box or apporiate RCD is required between Lardner Park power and your group's SYG appliance?" %>
@@ -20,6 +10,12 @@
 	<%= f.input :site_check_electrical_6, :label => "Power cords are elevated where possible? If cords are on the ground are they covered by mat to prevent injury?" %>
 	<%= f.input :site_check_electrical_7, :label => "No pegs or holes are dug into the ground without express permission from Lardner park due to underground power?" %>
 	<%= f.input :site_check_electrical_8, :label => "No electricity and power cords are to run into tents" %>
+
+	<br/>
+
+	<h2>Food safety</h2>
+	<%= f.input :site_check_food_2, :label => "Two separate sinks are present, one for hand washing and one for food preparation?" %>
+	<%= f.input :site_check_food_3, :label => "Your hand washing sink is easily accessible by everyone (Not within your cooking space) and must be clearly signed" %>
 
 	<br/>
 
@@ -48,27 +44,9 @@
 
 	<br/>
 
-	<h2>Food safety</h2>
-	<%= f.input :site_check_food_1, :label => "All food safety protocols are to be met, clean work benches, non slip flooring has been laid in food preparation area, different cutting boards for meats and vegetables etc.?" %>
-	<%= f.input :site_check_food_2, :label => "Two separate sinks are present, one for hand washing and one for food preparation?" %>
-	<%= f.input :site_check_food_3, :label => "Your hand washing sink is easily accessible by everyone (Not within your cooking space) and must be clearly signed" %>
-
-	<br/>
-
 	<h2>Site</h2>
 	<%= f.input :site_check_site_1, :label => "Self supplied marquees have been pre-approved. They have been installed and secured correctly. Must have guide ropes/straps" %>
 	<%= f.input :site_check_site_2, :label => "All marquees are at least 1m apart (this includes popup gazebo's) and they are all under 100 Sqm" %>
-
-	<br/>
-
-	<h2>Medical</h2>
-	<%= f.input :site_check_medical_1, :label => "All medications are safety handled, stored and distributed by first aid officer." %>
-	<%= f.input :site_check_medical_2, :label => "All individuals are aware SYG is a illicit drug and alcohol free event" %>
-	<%= f.input :site_check_medical_3, :label => "Safety plan uploaded" %>
-	<%= f.input :site_check_medical_4, :label => "Hand Sanitiser avalible" %>
-	<%= f.input :site_check_medical_5, :label => "RATS avalible" %>
-	<%= f.input :site_check_medical_6, :label => "In an emergency everyone to return to their sites" %>
-	<%= f.input :site_check_medical_7, :label => "All incidents need to be record via the SYG QR code, we need to know what has happened" %>
 
 	<br/>
 

@@ -72,6 +72,20 @@
 				<%= @rego_checklist.group.event_detail.warden_info %>
 			</td>
 		</tr>
+	</table>
+	<% unless @rego_checklist.site_check_status == "Passed" %>
+		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
+	<% end %>
+
+	<br/>
+
+	<h2>Safety Discussions</h2>
+	<%= f.input :site_check_safety_1, :label => "Child Protection & Responsibilities", hint: "What steps have you taken to ensure all leaders and volunteers meet child protection requirements? Training?" %>
+	<%= f.input :site_check_safety_2, :label => "Your Site / Your Participants is your Church's Responsibility", hint: "How will your leadership team maintain oversight of participants throughout the event?" %>
+	<%= f.input :site_check_safety_3, :label => "Shower Plan/Supervision", hint: "Have you communicated shower expectations and procedures to your participants? And what were they?" %>
+	<%= f.input :site_check_safety_4, :label => "Sleeping Arrangements (Under 18 & Over 18, and Genders to be Separated)", hint: "Have your sleeping arrangements been planned in accordance with SYG policies?" %>
+	<%= f.input :site_check_safety_5, :label => "Driving requirements as per policies, and speed limits around Lardner park", hint: "Have all drivers been made aware of SYG driving requirements and site speed limits?" %>
+	<table class="table table-dark table-striped">
 		<tr>
 			<td> 
 				<strong>Rubbish</strong>
@@ -84,13 +98,16 @@
 			</td>
 		</tr>
 	</table>
-	<% unless @rego_checklist.site_check_status == "Passed" %>
-		<%= f.input :site_check_notes, :label => "Time ready for check / recheck" %>
-	<% end %>
+	<%= f.input :site_check_safety_6, :label => "Waste management policy and process", hint: "Ensure GC is aware of the Rubbish instructions above" %>
 
 	<br/>
 
-	<h2>Finances
+	<h2>Food safety</h2>
+	<%= f.input :site_check_food_1, :label => "All food safety protocols are to be met, clean work benches, non slip flooring has been laid in food preparation area, different cutting boards for meats and vegetables etc.?", hint: "Are all kitchen volunteers aware of food safety expectations?" %>
+
+	<br/>
+
+	<h2>Finances</h2>
 	<% if @rego_checklist.group.amount_outstanding == 0 %>
 		<span class="badge bg-success">All Good</span>
 	<% end %>
@@ -132,10 +149,17 @@
 				<strong>Registration</strong>
 			</td>
 			<td> 
-				Day Visitors can register at Warragul Leisure Centre from 7:45am on Saturday only so they do not need to drive out to Lardner Park to collect their Wristbands to be able to play sport. Sunday day visitors need to drive to Lardner park to collect their wristbands.
+				Day Visitors can register at Warragul Leisure Centre from 7:45am on Saturday only so they do not need to drive out to Lardner Park to collect their Wristbands to be able to play sport. Sunday day visitors need to drive to Lardner park to collect their wristbands. If day vititors are not registered, they can use the supplied QR code to register and pay to avoid queues.
 			</td>
 		</tr>
 	</table>
+
+	<h2>Medical</h2>
+	<%= f.input :site_check_medical_1, :label => "All medications are safety handled, stored and distributed by first aid officer.", hint: "How will medications be safely stored and administered throughout the event? Who is your Designated first aider? " %>
+	<%= f.input :site_check_medical_2, :label => "All individuals are aware SYG is a illicit drug and alcohol free event", hint: "Have all participants and leaders been informed that SYG is an illicit drug and alcohol free event?" %>
+	<%= f.input :site_check_medical_4, :label => "Hand Sanitiser avalible", hint: "Is hand sanitiser readily accessible at key location around your site?" %>
+
+	<br/>
 
 	<h2>Emergency</h2>
 	<table class="table table-dark table-striped">
@@ -160,7 +184,7 @@
 	<% end %>
 		<tr>
 			<td> 
-				<strong>Accidents</strong>
+				<strong>Accidents / near misses</strong>
 			</td>
 			<td> 
 				If a non-emergency accident/incident occurs during the day, please call VFAST if you need a first aid crew (0488 405 605) and inform SYG Admin (0484 003 382).
@@ -178,12 +202,26 @@
 	</table> 
 
 	<%= f.input :disabled_participants, :label => "Do you have any participants with special needs that would be unable to easily participate in an emergency evacuation? You will need to allocate a person to be with them." %>
-	<%= f.input :disabled_notes, :label => "Notes about disabled participants" %>
+	<%= f.input :disabled_notes, :label => "Notes about participants with special requirements" %>
 
 	<br/>
 
 	<h2>Uploads
-	<% if @rego_checklist.group.event_detail.food_cert.attached? && @rego_checklist.group.event_detail.covid_plan.attached? && @rego_checklist.group.event_detail.insurance.attached? %>
+	<% if  @rego_checklist.group.event_detail.food_cert.attached? && 
+	       @rego_checklist.group.event_detail.covid_plan.attached? && 
+		   @rego_checklist.group.event_detail.insurance.attached? &&
+		   @rego_checklist.group.event_detail.child_safe_policy.attached? && 
+		   @rego_checklist.group.event_detail.code_of_conduct.attached? &&
+		   @rego_checklist.group.event_detail.code_of_conduct_u18.attached? && 
+		   @rego_checklist.group.event_detail.wwcc_policy.attached? &&
+		   @rego_checklist.group.event_detail.day_visitor_policy.attached? &&
+		   @rego_checklist.group.event_detail.driving_policy.attached? &&
+		   @rego_checklist.group.event_detail.drone_policy.attached? &&
+		   @rego_checklist.group.event_detail.medicine_policy.attached? &&
+		   @rego_checklist.group.event_detail.image_use_policy.attached? &&
+		   @rego_checklist.group.event_detail.refund_policy.attached? &&
+		   @rego_checklist.group.event_detail.shower_policy.attached? &&
+		   @rego_checklist.group.event_detail.website_policy.attached? %>
 		<span class="badge bg-success">All Good</span>
 	<% end %>
 	</h2>
@@ -230,6 +268,190 @@
 					<% end %>
 				<% else %>
 					<%= f.input :insurance_sighted, :label => "Sighted?" %>
+				<% end %>
+			</td>
+		</tr>
+
+		<thead>
+			<tr>
+				<th>Child Safe Policy</th>
+				<th>Code of Conduct</th>
+				<th>Code of Conduct (U18)</th>
+			</tr>
+		</thead>
+
+		<tr>
+			<td> 
+				<% if @rego_checklist.group.event_detail.child_safe_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.child_safe_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.child_safe_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.child_safe_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.child_safe_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.code_of_conduct.attached? %>
+					<% if @rego_checklist.group.event_detail.code_of_conduct.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.code_of_conduct.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.code_of_conduct, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Code", rails_blob_path(@rego_checklist.group.event_detail.code_of_conduct, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.code_of_conduct_u18.attached? %>
+					<% if @rego_checklist.group.event_detail.code_of_conduct_u18.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.code_of_conduct_u18.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.code_of_conduct_u18, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Code", rails_blob_path(@rego_checklist.group.event_detail.code_of_conduct_u18, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+		</tr>
+
+		<thead>
+			<tr>
+				<th>WWCC Policy</th>
+				<th>Day Visitor Policy</th>
+				<th>Driving Policy</th>
+			</tr>
+		</thead>
+
+		<tr>
+			<td> 
+				<% if @rego_checklist.group.event_detail.wwcc_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.wwcc_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.wwcc_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.wwcc_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.wwcc_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.day_visitor_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.day_visitor_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.day_visitor_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.day_visitor_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.day_visitor_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.driving_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.driving_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.driving_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.driving_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.driving_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+		</tr>
+
+		<thead>
+			<tr>
+				<th>Drone Use Policy</th>
+				<th>Medicine Policy</th>
+				<th>Image Use Policy</th>
+			</tr>
+		</thead>
+
+		<tr>
+			<td> 
+				<% if @rego_checklist.group.event_detail.drone_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.drone_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.drone_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.drone_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.drone_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.medicine_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.medicine_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.medicine_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.medicine_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.medicine_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.image_use_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.image_use_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.image_use_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.image_use_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.image_use_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+		</tr>
+
+		<thead>
+			<tr>
+				<th>Refund Policy</th>
+				<th>Shower Policy</th>
+				<th>Website Policy</th>
+			</tr>
+		</thead>
+
+		<tr>
+			<td> 
+				<% if @rego_checklist.group.event_detail.refund_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.refund_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.refund_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.refund_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.refund_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.shower_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.shower_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.shower_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.shower_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.shower_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
+				<% end %>
+			</td>
+			
+			<td> 
+				<% if @rego_checklist.group.event_detail.website_policy.attached? %>
+					<% if @rego_checklist.group.event_detail.website_policy.representable? %>
+						<%= link_to(image_tag(@rego_checklist.group.event_detail.website_policy.representation(resize_to_limit: [80, 100])), rails_blob_path(@rego_checklist.group.event_detail.website_policy, disposition: "attachment")) %>
+					<% else %>
+						<%= link_to "Policy", rails_blob_path(@rego_checklist.group.event_detail.website_policy, disposition: "attachment") %>
+					<% end %>
+				<% else %>
+					&nbsp;
 				<% end %>
 			</td>
 		</tr>
@@ -319,7 +541,7 @@
 				<strong>Wrist Bands</strong>
 			</td>
 			<td> 
-				To play sport everyone must wear a wrist band.  We will be asking people to display their wristband before they play sport. No under 18’s playing Level 1 sport, they will not allowed to play.
+				To play sport everyone must wear a wrist band.  We will be asking people to display their wristband before they play sport. No under 18’s playing Level 1 sport, they will not allowed to play. Please also ensure that while playing sports for safety reasons that everyone is wearing their supplied sweat band.
 			</td>
 		</tr>
 	</table>
