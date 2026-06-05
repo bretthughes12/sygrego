@@ -114,6 +114,7 @@ class Admin::RegoChecklistsController < AdminController
                                     :insurance_sighted,
                                     :upload_notes,
                                     :driving_notes,
+                                    :safety_notes,
                                     :site_check_safety_1,
                                     :site_check_safety_2,
                                     :site_check_safety_3,
