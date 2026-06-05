@@ -8,7 +8,7 @@ class Admin::UsersController < AdminController
       @users = User.order(:email).load
 
       respond_to do |format|
-        format.html # index.html.erb
+        format.html { @users = @users.paginate(page: params[:page], per_page: 50) }
       end
     end
 
@@ -17,7 +17,10 @@ class Admin::UsersController < AdminController
       @users = User.search(params[:search]).order("email")
   
       respond_to do |format|
-        format.html { render action: 'index' }
+        format.html do 
+          @users = @users.paginate(page: params[:page], per_page: 50)
+          render action: 'index' 
+        end
       end
     end
   
