@@ -3,8 +3,8 @@ module Admin::SportsHelper
         if sport.allow_negative_score
             [*-99..-1, 'Forfeit', *0..99]
         else
-            ['Forfeit', *0..250]
-        end
+            ['Forfeit', *0..400]
+        end         
     end
 
     def tie_breaker(sport)
