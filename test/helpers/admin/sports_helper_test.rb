@@ -12,7 +12,7 @@ class Admin::SportsHelperTest < ActionView::TestCase
   
   test "score ranges for results" do
     @sport.allow_negative_score = false
-    assert_equal ['Forfeit', *0..99], score_range(@sport)
+    assert_equal ['Forfeit', *0..400], score_range(@sport)
 
     @sport.allow_negative_score = true
     assert_equal [*-99..-1, 'Forfeit', *0..99], score_range(@sport)
