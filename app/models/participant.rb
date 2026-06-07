@@ -987,9 +987,9 @@ class Participant < ApplicationRecord
               participant.coming = true
               participant.age = age
               participant.gender = gender
-              participant.coming_friday = rego_type.include?('FRI') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type)  
-              participant.coming_saturday = rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type)
-              participant.coming_sunday = rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type)
+              participant.coming_friday = rego_type.include?('FRI') || ['All Days', 'Day Visitor - Friday', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type)  
+              participant.coming_saturday = rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day', 'Sport Participant - All Days', 'Spectator - All Days'].include?(rego_type)
+              participant.coming_sunday = rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day', 'Sport Participant - All Days', 'Spectator - All Days'].include?(rego_type)
               participant.coming_monday = rego_type.include?('MON') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type)
               participant.mobile_phone_number = row['Phone']
               participant.email = row['Email']
@@ -1016,9 +1016,9 @@ class Participant < ApplicationRecord
                 coming:                  true,
                 age:                     age,
                 gender:                  gender,
-                coming_friday:           rego_type.include?('FRI') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type),
-                coming_saturday:         rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type),
-                coming_sunday:           rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type),
+                coming_friday:           rego_type.include?('FRI') || ['All Days', 'Day Visitor - Friday', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type),
+                coming_saturday:         rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day', 'Sport Participant - All Days', 'Spectator - All Days'].include?(rego_type),
+                coming_sunday:           rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day', 'Sport Participant - All Days', 'Spectator - All Days'].include?(rego_type),
                 coming_monday:           rego_type.include?('MON') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type),
                 mobile_phone_number:     row['Phone'],
                 email:                   row['Email'],
@@ -1042,8 +1042,8 @@ class Participant < ApplicationRecord
             else
               errors += 1
               error_list << participant
-              # puts "Name: #{participant.first_name} #{participant.surname} Type: #{rego_type}"
-              # pp participant.errors.full_messages
+              puts "Name: #{participant.first_name} #{participant.surname} Type: #{rego_type}"
+              pp participant.errors.full_messages
             end
           end
         end
