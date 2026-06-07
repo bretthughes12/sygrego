@@ -1042,8 +1042,8 @@ class Participant < ApplicationRecord
             else
               errors += 1
               error_list << participant
-              puts "Name: #{participant.first_name} #{participant.surname} Type: #{rego_type}"
-              pp participant.errors.full_messages
+              # puts "Name: #{participant.first_name} #{participant.surname} Type: #{rego_type}"
+              # pp participant.errors.full_messages
             end
           end
         end
