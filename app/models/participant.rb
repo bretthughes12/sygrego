@@ -953,7 +953,7 @@ class Participant < ApplicationRecord
             misses += 1
           end
         else
-          if !row['Registration Type'].nil?
+#          if !row['Registration Type'].nil?
             participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'], row['Last Name'], day_group.id)
 
             if row['Question 11'].blank?
@@ -1032,7 +1032,7 @@ class Participant < ApplicationRecord
               error_list << participant
               # pp participant.errors.full_messages
             end
-          end
+#          end
         end
       end
     end
