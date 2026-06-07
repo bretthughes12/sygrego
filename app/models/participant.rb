@@ -941,15 +941,11 @@ class Participant < ApplicationRecord
         else
           rego_nbr = row['Registration#'].to_s.strip
         end
-        # rego_nbr = row['Ticket#'].to_s.strip
-        # rego_nbr ||= row['Registration#'].to_s.strip
         if row['Ticket Type']
           rego_type = row['Ticket Type'].to_s.strip
         else
           rego_type = row['Registration Type'].to_s.strip
         end
-        # rego_type = row['Ticket Type'].to_s.strip
-        # rego_type ||= row['Registration Type'].to_s.strip
 
         unless row['Question 12'].blank?
           participant = Participant.where(id: row['Question 12']).first
