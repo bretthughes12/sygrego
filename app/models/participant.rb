@@ -964,8 +964,10 @@ class Participant < ApplicationRecord
               driver_signature = true
             end
 
-            age = row['Question 13'].to_i || 30
-            gender = row['Question 5'].to_s.upcase[0] || 'U'
+            age = row['Question 13'].to_i 
+            age = 30 if age <= 0 || age > 130
+            gender = row['Question 5'].strip.to_s.upcase[0]
+            gender = 'U' unless ['M', 'F'].include?(gender)
             spectator = row['Question 16'].to_s.downcase == 'no' ? false : true
             onsite = row['Question 3'].to_s.downcase == 'yes' ? true : false
 
