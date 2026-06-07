@@ -964,10 +964,15 @@ class Participant < ApplicationRecord
               driver_signature = true
             end
 
+            age = row['Question 13'].to_i || 30
+            gender = row['Question 5'].to_s.upcase[0] || 'U'
+            spectator = row['Question 16'].to_s.downcase == 'no' ? false : true
+            onsite = row['Question 3'].to_s.downcase == 'yes' ? true : false
+
             if participant
               participant.coming = true
-              participant.age = 30
-              participant.gender = 'U'
+              participant.age = age
+              participant.gender = gender
               participant.coming_friday = row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days'
               participant.coming_saturday = row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days'
               participant.coming_sunday = row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days'
@@ -975,8 +980,8 @@ class Participant < ApplicationRecord
               participant.mobile_phone_number = row['Phone']
               participant.email = row['Email']
               participant.allergies = 'Unknown'
-              participant.spectator = true
-              participant.onsite = false
+              participant.spectator = spectator
+              participant.onsite = onsite
               participant.driver = !row['Question 11'].blank?
               participant.number_plate = row['Question 11']
               participant.licence_type = licence_type
@@ -995,8 +1000,8 @@ class Participant < ApplicationRecord
                 first_name:              row['Name'],
                 surname:                 row['Last Name'],
                 coming:                  true,
-                age:                     30,
-                gender:                  'U',
+                age:                     age,
+                gender:                  gender,
                 coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
                 coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
                 coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
@@ -1004,8 +1009,8 @@ class Participant < ApplicationRecord
                 mobile_phone_number:     row['Phone'],
                 email:                   row['Email'],
                 allergies:               'Unknown',
-                spectator:               true,
-                onsite:                  false,
+                spectator:               spectator,
+                onsite:                  onsite,
                 driver:                  !row['Question 11'].blank?,
                 number_plate:            row['Question 11'],
                 licence_type:            licence_type,
