@@ -933,10 +933,23 @@ class Participant < ApplicationRecord
     xlsx.sheet(xlsx.default_sheet).parse(headers: true).each do |row|
       unless row['Name'] == 'Name'
         # the ticket system could be in either Ticket or Registration mode
-        # and the column heading for the registration number could be either 
-        # Ticket# or Registration#, so check both
-        rego_nbr = row['Ticket#'].to_s.strip
-        rego_nbr ||= row['Registration#'].to_s.strip
+        # and the column heading for the registration number and ticket type 
+        # could be either Ticket# or Registration#, Ticket Type or 
+        # Registration Type, so check both
+        if row['Ticket#']
+          rego_nbr = row['Ticket#'].to_s.strip
+        else
+          rego_nbr = row['Registration#'].to_s.strip
+        end
+        # rego_nbr = row['Ticket#'].to_s.strip
+        # rego_nbr ||= row['Registration#'].to_s.strip
+        if row['Ticket Type']
+          rego_type = row['Ticket Type'].to_s.strip
+        else
+          rego_type = row['Registration Type'].to_s.strip
+        end
+        # rego_type = row['Ticket Type'].to_s.strip
+        # rego_type ||= row['Registration Type'].to_s.strip
 
         unless row['Question 12'].blank?
           participant = Participant.where(id: row['Question 12']).first
@@ -953,8 +966,8 @@ class Participant < ApplicationRecord
             misses += 1
           end
         else
-#          if !row['Registration Type'].nil?
-            participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'], row['Last Name'], day_group.id)
+          if !rego_type.blank?
+            participant = Participant.find_by_first_name_and_surname_and_group_id(row['Name'].to_s.strip, row['Last Name'].to_s.strip, day_group.id)
 
             if row['Question 11'].blank?
               licence_type = nil
@@ -964,21 +977,24 @@ class Participant < ApplicationRecord
               driver_signature = true
             end
 
-            age = row['Question 13'].to_i 
-            age = 30 if age <= 0 || age > 130
-            gender = row['Question 5'].strip.to_s.upcase[0]
+            age = row['Question 13'].to_i unless row['Question 13'].nil?
+            age ||= 30
+            age = 30 if age <= 18 || age > 130
+            gender = row['Question 5'].strip.to_s.upcase[0] unless row['Question 5'].nil?
             gender = 'U' unless ['M', 'F'].include?(gender)
-            spectator = row['Question 16'].to_s.downcase == 'no' ? false : true
-            onsite = row['Question 3'].to_s.downcase == 'yes' ? true : false
+            spectator = row['Question 16'].to_s.downcase == 'no' unless row['Question 16'].nil?
+            spectator = spectator == 'no' ? false : true
+            onsite = row['Question 3'].to_s.downcase unless row['Question 3'].nil?
+            onsite = onsite == 'yes' ? true : false
 
             if participant
               participant.coming = true
               participant.age = age
               participant.gender = gender
-              participant.coming_friday = row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days'
-              participant.coming_saturday = row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days'
-              participant.coming_sunday = row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days'
-              participant.coming_monday = row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days'
+              participant.coming_friday = rego_type.include?('FRI') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type)  
+              participant.coming_saturday = rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type)
+              participant.coming_sunday = rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type)
+              participant.coming_monday = rego_type.include?('MON') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type)
               participant.mobile_phone_number = row['Phone']
               participant.email = row['Email']
               participant.allergies = 'Unknown'
@@ -1004,10 +1020,10 @@ class Participant < ApplicationRecord
                 coming:                  true,
                 age:                     age,
                 gender:                  gender,
-                coming_friday:           row['Registration Type'].include?('FRI') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
-                coming_saturday:         row['Registration Type'].include?('SAT') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
-                coming_sunday:           row['Registration Type'].include?('SUN') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
-                coming_monday:           row['Registration Type'].include?('MON') || row['Registration Type'] == 'All Days' || row['Registration Type'] == 'Registration',
+                coming_friday:           rego_type.include?('FRI') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type),
+                coming_saturday:         rego_type.include?('SAT') || ['All Days', 'Day Visitor - Saturday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type),
+                coming_sunday:           rego_type.include?('SUN') || ['All Days', 'Day Visitor - Sunday', 'Primary School & Under - Full Event', 'Team Helper - All Days', 'Sport Participant - Single Day'].include?(rego_type),
+                coming_monday:           rego_type.include?('MON') || ['All Days', 'Primary School & Under - Full Event', 'Team Helper - All Days'].include?(rego_type),
                 mobile_phone_number:     row['Phone'],
                 email:                   row['Email'],
                 allergies:               'Unknown',
@@ -1030,9 +1046,10 @@ class Participant < ApplicationRecord
             else
               errors += 1
               error_list << participant
+              # puts "Name: #{participant.first_name} #{participant.surname} Type: #{rego_type}"
               # pp participant.errors.full_messages
             end
-#          end
+          end
         end
       end
     end
