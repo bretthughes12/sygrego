@@ -46,12 +46,16 @@
 
     <h2>Quick Links</h2>
 
+    <% unless @settings.participant_feedback_url.nil? %>
     <%= link_to "Participant Feedback", @settings.participant_feedback_url,
             class: primary_button_class,
-            role: "button" unless @settings.participant_feedback_url.nil? %>
+            role: "button" %>
+    <% end %>
+    <% unless @settings.gc_feedback_url.nil? %>
     <%= link_to "GC Feedback", @settings.gc_feedback_url,
             class: primary_button_class,
-            role: "button" unless @settings.gc_feedback_url.nil? %>
+            role: "button" %>
+    <% end %>
     <br/>
     <br/>
     <%= link_to "Lost Property", lost_items_url,
