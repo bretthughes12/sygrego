@@ -8,6 +8,15 @@
 
 <br/>
 
+<h2>Participants</h2>
+
+<table class="table table-dark">
+    <%= render partial: "voucher_participant", collection: @voucher.participants.order(:surname, :first_name) %>
+</table>
+
+<br/>
+
+<br/>
 <%= link_to "Back", admin_vouchers_path,
                   class: primary_button_class,
                   role: "button" %>
