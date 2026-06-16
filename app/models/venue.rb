@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  active        :boolean
 #  address       :string
+#  court_notes   :text
 #  database_code :string(4)
 #  hub           :string(50)
 #  name          :string(50)       default(""), not null
@@ -52,6 +53,8 @@ class Venue < ApplicationRecord
                     venue.active               = row['Active']
                     venue.name                 = row['Name']
                     venue.address              = row['Address']
+                    venue.hub                  = row['Hub']
+                    venue.court_notes          = row['CourtNotes']
                     venue.updated_by           = user.id
         
                     if venue.save
@@ -66,6 +69,8 @@ class Venue < ApplicationRecord
                         database_code:        row['RowID'],
                         active:               row['Active'],
                         address:              row['Address'],
+                        hub:                  row['Hub'],
+                        court_notes:          row['CourtNotes'],
                         updated_by:           user.id)
 
                     if venue.errors.empty?

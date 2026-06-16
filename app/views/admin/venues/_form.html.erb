@@ -5,6 +5,8 @@
 	<%= f.input :database_code, label: "Venue code" %>
 	<%= f.input :active %>
 	<%= f.input :address, :label => "Street address" %>
+	<%= f.input :hub %>
+	<%= f.input :court_notes, :label => "Court notes", as: :text, input_html: { rows: 4 } %>
 
 	<%= f.button :submit %>
 <% end %>	

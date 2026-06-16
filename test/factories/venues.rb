@@ -5,6 +5,7 @@
 #  id            :bigint           not null, primary key
 #  active        :boolean
 #  address       :string
+#  court_notes   :text
 #  database_code :string(4)
 #  hub           :string(50)
 #  name          :string(50)       default(""), not null

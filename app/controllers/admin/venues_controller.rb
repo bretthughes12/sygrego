@@ -68,7 +68,7 @@ class Admin::VenuesController < AdminController
                 format.html { redirect_to admin_venues_url }
             end
         
-          else
+        else
             flash[:notice] = "Can't delete, as sections exist"
         
             respond_to do |format|
@@ -108,6 +108,8 @@ class Admin::VenuesController < AdminController
       params.require(:venue).permit(:name, 
                                     :database_code, 
                                     :active,
-                                    :address)
+                                    :address,
+                                    :hub,
+                                    :court_notes)
     end
-  end
+end
