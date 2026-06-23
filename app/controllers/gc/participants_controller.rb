@@ -595,7 +595,8 @@ class Gc::ParticipantsController < GcController
         :lock_version,
         :driver,
         :licence_type,
-        :number_plate
+        :number_plate,
+        :car_capacity
       )
     end
   

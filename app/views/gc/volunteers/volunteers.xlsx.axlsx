@@ -7,7 +7,7 @@ header_border = s.add_style border: [
 row_border = s.add_style border: { style: :thin, color: "000000", edges: [:left, :right, :top, :bottom]}
 
 wb.add_worksheet(name: "Volunteers") do |sheet|
-	sheet.add_row ["Type","Description","Session","Name","Email","Mobile"], 
+	sheet.add_row ["Type","Description","Session","Venue","Hub","Name","Email","Mobile"], 
 		style: header_border
 
 	@volunteers.each do |volunteer|
@@ -20,6 +20,17 @@ wb.add_worksheet(name: "Volunteers") do |sheet|
 		else
 			session = volunteer.session.name
 		end
+		if volunteer.venue.nil? 
+			if volunteer.sections.empty?
+				venue_name = nil
+				venue_hub = nil
+			else
+				venue_name = volunteer.sections.first.venue_name
+				venue_hub = volunteer.sections.first.venue_hub
+			end
+		else
+			venue_hub = volunteer.venue.hub
+		end
 		participant_name = volunteer.participant.nil? ? nil : volunteer.participant.name
 		email = volunteer.email_recipients
 		mobile = volunteer.mobile_phone_number
@@ -28,6 +39,8 @@ wb.add_worksheet(name: "Volunteers") do |sheet|
 		    volunteer.volunteer_type.name,
             volunteer.description,
             session,
+			venue_name,
+			venue_hub,
             participant_name,
             email,
             mobile

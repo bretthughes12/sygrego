@@ -220,7 +220,8 @@ class Mysyg::ParticipantsController < MysygController
         :driver,
         :licence_type,
         :number_plate,
-        :driver_signature
+        :driver_signature,
+        :car_capacity
       )
     end
     

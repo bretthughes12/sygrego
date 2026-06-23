@@ -47,6 +47,7 @@ class Volunteer < ApplicationRecord
     belongs_to :volunteer_type
     belongs_to :session, optional: true
     belongs_to :participant, optional: true
+    belongs_to :venue, optional: true
   
     has_rich_text :instructions
 
@@ -110,21 +111,33 @@ class Volunteer < ApplicationRecord
     searchable_by 'volunteers.description'
   
     def venue_name
-        if sections.empty?
-          '(not venue-specific)'
-        else
-          sections.first.venue_name
-        end
+      if venue
+        venue.name
+      elsif sections.empty?
+        '(not venue-specific)'
+      else
+        sections.first.venue_name
+      end
+    end
+    
+    def venue_hub
+      if venue
+        venue.hub
+      elsif sections.empty?
+        '(not venue-specific)'
+      else
+        sections.first.venue_hub
+      end
     end
     
     def session_name
-        if session
-          session.name
-        elsif sections.empty?
-          '(not session-specific)'
-        else
-          sections.first.session_name
-        end
+      if session
+        session.name
+      elsif sections.empty?
+        '(not session-specific)'
+      else
+        sections.first.session_name
+      end
     end
     
     def section_names
@@ -308,12 +321,14 @@ class Volunteer < ApplicationRecord
           type = row['Type'].nil? ? nil : VolunteerType.find_by_database_code(row['Type'])
           section_names = row['Sections'].nil? ? [] : row['Sections'].split(', ')
           session = row['VolunteerSession'].nil? ? nil : Session.find_by_name(row['VolunteerSession'])
+          venue = row['VolunteerVenue'].nil? ? nil : Venue.find_by_name(row['VolunteerVenue'])
           participant = row['ParticipantID'].nil? ? nil : Participant.find_by_id(row['ParticipantID'].to_i)
 
           if volunteer
 
             volunteer.volunteer_type = type
             volunteer.session = session
+            volunteer.venue = venue
             volunteer.participant = participant
             volunteer.description = row['Description']
             volunteer.email = row['Email']
@@ -348,6 +363,7 @@ class Volunteer < ApplicationRecord
             volunteer = Volunteer.create(
                 volunteer_type: type,
                 session:        session,
+                venue:          venue,
                 participant:    participant,
                 description:    row['Description'],
                 email:          row['Email'],

@@ -77,6 +77,7 @@
    	<%= f.input :driver, label: "Nominated Driver"  %>
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
    	<%= f.input :number_plate, label: "Number Plate", hint: "drivers only"%>
+	<%= f.input :car_capacity, label: "Car Capacity (including driver)", hint: "drivers only" %>
    	<%= f.input :driver_signature, label: "Driver Electronic Signature" %>
    	<%= f.input :driver_signature_date, as: :date, label: "Date Signed", include_blank: true %>
 

@@ -55,6 +55,7 @@ class Section < ApplicationRecord
     has_one_attached :draw_file
 
     delegate :name, to: :venue, prefix: 'venue'
+    delegate :hub, to: :venue, prefix: 'venue'
     delegate :name, to: :session, prefix: 'session'
     delegate :sport_name, :sport, to: :grade
   

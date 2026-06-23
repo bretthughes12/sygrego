@@ -198,6 +198,17 @@ class SportEntry < ApplicationRecord
     end
   end
 
+  def venue_hub
+    if section
+      section.venue_hub
+    elsif preferred_section  
+      "Preferred: #{preferred_section.venue_hub}"
+    elsif cached_grade
+      cached_grade.venue_hub
+      # else no action
+    end
+  end
+
   def session_known?
     if section
       true

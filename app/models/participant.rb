@@ -172,6 +172,10 @@ class Participant < ApplicationRecord
         length: { maximum: 15 },
         inclusion: { in: LICENCE_TYPES }, 
         allow_blank: true
+    validates :car_capacity,                    
+        numericality: { only_integer: true },
+        inclusion: { in: 0..20, message: 'should be between 0 and 20' },
+        allow_blank: true
     validates :amount_paid,            
         numericality: true,
         allow_blank: true

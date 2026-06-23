@@ -440,6 +440,7 @@ private
       :driver,
       :licence_type,
       :number_plate,
+      :car_capacity,
       :early_bird,
       :email,
       :mobile_phone_number,

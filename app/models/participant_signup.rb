@@ -49,6 +49,7 @@ class ParticipantSignup
                   :driver,
                   :licence_type,
                   :number_plate,
+                  :car_capacity,
                   :driver_signature,
                   :participant,
                   :user,
@@ -119,7 +120,8 @@ class ParticipantSignup
       :driver,
       :licence_type,
       :number_plate,
-      :driver_signature
+      :driver_signature,
+      :car_capacity
     ].compact
   
     USER_ATTRIBUTES = {
@@ -172,6 +174,9 @@ class ParticipantSignup
     validates :number_plate,           length: { maximum: 10 }
     validates :licence_type,           length: { maximum: 15 },
                                        inclusion: { in: Participant::LICENCE_TYPES }, 
+                                       allow_blank: true
+    validates :car_capacity,           numericality: { only_integer: true },
+                                       inclusion: { in: 0..20, message: 'should be between 0 and 20' },
                                        allow_blank: true
     validates :address,                length: { maximum: 200 }
     validates :suburb,                 length: { maximum: 40 }

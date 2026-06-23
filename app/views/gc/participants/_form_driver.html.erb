@@ -5,6 +5,7 @@
    	<%= f.input :driver, label: "Nominated Driver"  %>
     <%= f.input :licence_type, as: :select, collection: Participant::LICENCE_TYPES, include_blank: true %>
    	<%= f.input :number_plate, label: "Number Plate" %>
+	<%= f.input :car_capacity, label: "Car Capacity (including driver)" %>
 
 	<% unless @driving_answers.empty? %>
 		<%= render partial: 'questions', collection: @driving_answers, as: :answer, locals: {f: f} %>

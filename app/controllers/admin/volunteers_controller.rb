@@ -73,6 +73,7 @@ class Admin::VolunteersController < AdminController
       @volunteer_types = get_volunteer_types 
       @sessions = Session.order(:name).load
       @sections = Section.order(:name).load
+      @venues = Venue.order(:name).load
     end
   
     # GET /admin/volunteers/1/edit
@@ -82,6 +83,7 @@ class Admin::VolunteersController < AdminController
       @volunteer_types = get_volunteer_types 
       @sessions = Session.order(:name).load
       @sections = Section.order(:name).load
+      @venues = Venue.order(:name).load
     end
 
     # GET /admin/volunteers/1/collect
@@ -107,6 +109,7 @@ class Admin::VolunteersController < AdminController
           @volunteer_types = get_volunteer_types 
           @sessions = Session.order(:name).load
           @sections = Section.order(:name).load
+          @venues = Venue.order(:name).load
 
           format.html { render action: "edit" }
         else
@@ -115,6 +118,7 @@ class Admin::VolunteersController < AdminController
           @volunteer_types = get_volunteer_types 
           @sessions = Session.order(:name).load
           @sections = Section.order(:name).load
+          @venues = Venue.order(:name).load
 
           format.html { render action: "new" }
         end
@@ -153,7 +157,7 @@ class Admin::VolunteersController < AdminController
         @volunteer_types = get_volunteer_types 
         @sessions = Session.order(:name).load
         @sections = Section.order(:name).load
-
+        @venues = Venue.order(:name).load 
         format.html { render action: "edit" }
       end
     end
@@ -187,6 +191,7 @@ class Admin::VolunteersController < AdminController
         @volunteer_types = get_volunteer_types 
         @sessions = Session.order(:name).load
         @sections = Section.order(:name).load
+        @venues = Venue.order(:name).load
 
         format.html { render action: "edit" }
       end
@@ -206,7 +211,8 @@ class Admin::VolunteersController < AdminController
           @volunteer_types = get_volunteer_types 
           @sessions = Session.order(:name).load
           @sections = Section.order(:name).load
-
+          @venues = Venue.order(:name).load
+          
           format.html { render action: "edit" }
         end
       end
@@ -293,6 +299,7 @@ class Admin::VolunteersController < AdminController
                                     :returned,
                                     :notes,
                                     :session_id,
+                                    :venue_id,
                                     :participant_id,
                                     :volunteer_type_id,
                                     :email_strategy,

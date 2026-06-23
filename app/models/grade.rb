@@ -137,6 +137,15 @@ class Grade < ApplicationRecord
         end
     end
     
+    def venue_hub
+        venues = possible_venues
+        if venues.size == 1
+          venues[0].hub
+        else
+          'Multiple venues available'
+        end
+    end
+    
     def venue_id
         venues = possible_venues
         venues[0].id if venues.size == 1

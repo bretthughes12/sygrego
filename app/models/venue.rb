@@ -34,7 +34,7 @@ class Venue < ApplicationRecord
     validates :database_code,           uniqueness: true,
                                         length: { maximum: 4 }
     validates :address,                 length: { maximum: 255 }
-    # validates :hub,                     length: { maximum: 50 }
+    validates :hub,                     length: { maximum: 50 }
   
     def self.import_excel(file, user)
         creates = 0
