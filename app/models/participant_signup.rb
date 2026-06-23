@@ -75,7 +75,7 @@ class ParticipantSignup
                     "question_id_#{i}"
     end
   
-    INTEGER_FIELDS = %w[age postcode years_attended].freeze
+    INTEGER_FIELDS = %w[age postcode years_attended, car_capacity].freeze
     DATE_FIELDS = %w[medicare_expiry(1i) date_of_birth(1i)].freeze
     DATE_IGNORE = %w[medicare_expiry(2i) medicare_expiry(3i) date_of_birth(2i) date_of_birth(3i)].freeze
   
