@@ -45,6 +45,7 @@
 #  rego_email                           :string(100)      default("")
 #  rego_website                         :string           default("")
 #  restricted_sports_allocated          :boolean          default(FALSE)
+#  send_emails                          :boolean          default(TRUE), not null
 #  show_orientation_details             :boolean          default(TRUE)
 #  small_division_ceiling               :integer          default(20)
 #  social_facebook_gc_url               :string           default("")
