@@ -3,8 +3,10 @@ class ParticipantMailer < ApplicationMailer
         @participant = participant
         @token = token
     
-        mail(to:      @participant.transfer_email, 
-             subject: "#{APP_CONFIG[:email_subject]} SYG Registration")
+        if @settings.send_emails
+            mail(to:      @participant.transfer_email, 
+                    subject: "#{APP_CONFIG[:email_subject]} SYG Registration")
+        end
     end
 end
   

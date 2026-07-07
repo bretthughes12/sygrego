@@ -7,7 +7,9 @@ class RoundRobinMatchMailer < ApplicationMailer
       @section = section
       @results = @section.round_robin_matches.order(:match)
   
-      mail(subject: "#{APP_CONFIG[:email_subject]} Results submitted online for #{@section.name}")
+      if @settings.send_emails
+        mail(subject: "#{APP_CONFIG[:email_subject]} Results submitted online for #{@section.name}")
+      end
     end
 end
   

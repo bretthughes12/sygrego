@@ -1,8 +1,10 @@
 class UserMailer < ApplicationMailer
     def welcome_church_rep(user)
         @user = user
-        mail(to:      user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+        if @settings.send_emails
+            mail(to:      user.email, 
+                 subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+        end
     end
     
     def gc_nomination(user, group, church_rep, token)
@@ -11,16 +13,20 @@ class UserMailer < ApplicationMailer
         @church_rep = church_rep
         @token = token
     
-        mail(to:      user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} SYG Group Coordinator Nomination")
+        if @settings.send_emails
+            mail(to:      user.email, 
+                 subject: "#{APP_CONFIG[:email_subject]} SYG Group Coordinator Nomination")
+        end
     end
 
     def gc_approval(user, group)
         @user = user
         @group = group
         
-        mail(to:      user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Welcome Group Coordinator")
+        if @settings.send_emails
+            mail(to:      user.email, 
+                 subject: "#{APP_CONFIG[:email_subject]} Welcome Group Coordinator")
+        end
     end
     
     def welcome_participant(user, participant)
@@ -28,8 +34,10 @@ class UserMailer < ApplicationMailer
         @participant = participant
         @group = @participant.group
     
-        mail(to:      user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+        if @settings.send_emails
+            mail(to:      user.email, 
+                 subject: "#{APP_CONFIG[:email_subject]} Welcome to the SYG Registrations website")
+        end
     end
     
     def reject_participant(participant, group)
@@ -37,8 +45,10 @@ class UserMailer < ApplicationMailer
         @user = participant.users.first
         @group = group
         
-        mail(to:      @settings.rego_email, 
-             subject: "#{APP_CONFIG[:email_subject]} Participant rejected by #{group.short_name}")
+        if @settings.send_emails
+            mail(to:      @settings.rego_email, 
+                 subject: "#{APP_CONFIG[:email_subject]} Participant rejected by #{group.short_name}")
+        end
     end
     
     def accept_participant(participant, group, token)
@@ -47,8 +57,10 @@ class UserMailer < ApplicationMailer
         @group = group
         @token = token
         
-        mail(to:      @user.email, 
-             subject: "#{APP_CONFIG[:email_subject]} Participant accepted by #{group.short_name}")
+        if @settings.send_emails
+            mail(to:      @user.email, 
+                 subject: "#{APP_CONFIG[:email_subject]} Participant accepted by #{group.short_name}")
+        end
     end
     
     def new_participant(user, participant)
@@ -57,8 +69,10 @@ class UserMailer < ApplicationMailer
         @group = @participant.group
         notifies = @participant.group.email_recipients
     
-        mail(to:      notifies,
-             subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
+        if @settings.send_emails
+            mail(to:      notifies,
+                 subject: "#{APP_CONFIG[:email_subject]} New participant details (#{@group.short_name}): #{participant.first_name} #{participant.surname}") 
+        end
     end
 end
   

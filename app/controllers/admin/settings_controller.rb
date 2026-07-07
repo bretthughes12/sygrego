@@ -280,6 +280,7 @@ class Admin::SettingsController < AdminController
   
     def settings_params
       params.require(:setting).permit(:generate_stats,
+                                      :send_emails,
                                       :show_orientation_details,
                                       :early_bird,
                                       :sports_loaded,
