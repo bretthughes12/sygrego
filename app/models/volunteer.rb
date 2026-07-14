@@ -40,6 +40,7 @@
 class Volunteer < ApplicationRecord
     include Auditable
     include Searchable
+    include Anonymisable
 
     require 'roo'
 
@@ -402,6 +403,13 @@ class Volunteer < ApplicationRecord
         'session_id',
         'participant_id',
         'volunteer_type_id']
+    end
+
+    def self.anonymisable_fields
+      {
+        mobile_number: ->(volunteer) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+        email: ->(volunteer) { Faker::Internet.email }
+      }
     end
 
     def check_participant_on_create

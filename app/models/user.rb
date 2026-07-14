@@ -33,6 +33,7 @@
 
 class User < ApplicationRecord
   include Searchable
+  include Anonymisable
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -144,5 +145,20 @@ class User < ApplicationRecord
     string = ''.dup
     1.upto(len) { |_i| string << chars[rand(chars.size - 1)] }
     string
+  end
+
+  private
+
+  def self.anonymisable_fields
+    {
+      name: ->(user) { Faker::Name.name },
+      address: ->(user) { Faker::Address.street_address },
+      suburb: ->(user) { Faker::Address.city },
+      postcode: ->(user) { Faker::Number.between(from: 3000, to: 3999) },
+      phone_number: ->(user) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+      gc_reference: ->(user) { Faker::Name.name },
+      gc_reference_phone: ->(user) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+      wwcc_number: ->(user) { Faker::Number.number(digits: 8).to_s }
+    }
   end
 end

@@ -93,3 +93,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[ windows jruby ]
+
+# Add Faker gem for generating fake data in non-Production environments
+gem 'faker'

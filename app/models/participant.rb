@@ -88,6 +88,7 @@ class Participant < ApplicationRecord
     include Auditable
     include Searchable
     include Ticketable
+    include Anonymisable
 
     require 'pp'
     require 'roo'
@@ -1392,5 +1393,25 @@ private
       'email',
       'age'
     ]
+  end
+
+  def self.anonymisable_fields
+    {
+      first_name: ->(participant) { Faker::Name.first_name },
+      surname: ->(participant) { Faker::Name.last_name },
+      address: ->(participant) { Faker::Address.street_address },
+      suburb: ->(participant) { Faker::Address.city },
+      postcode: ->(participant) { Faker::Number.between(from: 3000, to: 3999) },
+      mobile_phone_number: ->(participant) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+      email: ->(participant) { Faker::Internet.email },
+      date_of_birth: ->(participant) { Faker::Date.birthday(min_age: participant.age, max_age: participant.age) },
+      emergency_contact: ->(participant) { Faker::Name.name },
+      emergency_relationship: ->(participant) { Faker::Relationship.familial },
+      emergency_phone_number: ->(participant) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+      emergency_email: ->(participant) { Faker::Internet.email },
+      number_plate: ->(participant) { Faker::Vehicle.license_plate },
+      wwcc_number: ->(participant) { Faker::Number.number(digits: 8).to_s },
+      medicare_number: ->(participant) { Faker::Number.number(digits: 10).to_s }
+    }
   end
 end

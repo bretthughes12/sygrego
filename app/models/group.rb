@@ -59,6 +59,7 @@
 class Group < ApplicationRecord
     include Auditable
     include Searchable
+    include Anonymisable
 
     attr_reader :file
 
@@ -879,5 +880,17 @@ class Group < ApplicationRecord
          'new_group',
          'last_year'
         ]
+    end
+
+    def self.anonymisable_fields
+      {
+        address: ->(group) { Faker::Address.street_address },
+        suburb: ->(group) { Faker::Address.city },
+        postcode: ->(group) { Faker::Number.between(from: 3000, to: 3999) },
+        phone_number: ->(group) { Faker::Number.between(from: 400000000, to: 499999999).to_s },
+        email: ->(group) { Faker::Internet.email },
+        ticket_email: ->(group) { Faker::Internet.email },
+        website: ->(group) { Faker::Internet.url }
+      }
     end
 end
