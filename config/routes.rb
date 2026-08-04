@@ -449,7 +449,7 @@ Rails.application.routes.draw do
     end
   end
 
-  # API routes
+  # API routes (XML)
   namespace :api do
     resources :audit_trail, only: [:index]
     resources :groups, only: [:show]
@@ -466,6 +466,11 @@ Rails.application.routes.draw do
     resources :venues, only: [:show]
     resources :volunteer_types, only: [:show]
     resources :volunteers, only: [:show]
+
+  # API v1 routes (JSON)
+    namespace :v1 do
+      resources :participants, only: [:index, :show, :create, :update, :destroy]
+    end
   end
 
   # Sport Coordinator routes
