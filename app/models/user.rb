@@ -9,6 +9,7 @@
 #  gc_reference           :string(40)
 #  gc_reference_phone     :string(30)
 #  group_role             :string(100)
+#  jti                    :string           not null
 #  name                   :string(40)       default(""), not null
 #  phone_number           :string(30)
 #  postcode               :integer          default(0)
@@ -27,6 +28,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti) UNIQUE
 #  index_users_on_name                  (name)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
@@ -38,7 +40,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :groups
@@ -76,6 +79,8 @@ class User < ApplicationRecord
                             allow_blank: true
 
   searchable_by :name, :email
+
+  before_validation :set_jti, on: :create
 
   def role?(role)
     !roles.find_by_name(role.to_s).nil?
@@ -148,6 +153,17 @@ class User < ApplicationRecord
   end
 
   private
+
+  def set_jti
+    self.jti = generate_hex unless jti.present?
+  end
+
+  def generate_hex
+    loop do
+      hex = SecureRandom.hex
+      break hex unless self.class.where(jti: hex).any?
+    end
+  end
 
   def self.anonymisable_fields
     {

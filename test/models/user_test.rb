@@ -9,6 +9,7 @@
 #  gc_reference           :string(40)
 #  gc_reference_phone     :string(30)
 #  group_role             :string(100)
+#  jti                    :string           not null
 #  name                   :string(40)       default(""), not null
 #  phone_number           :string(30)
 #  postcode               :integer          default(0)
@@ -27,6 +28,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_jti                   (jti) UNIQUE
 #  index_users_on_name                  (name)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #

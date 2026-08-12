@@ -32,35 +32,6 @@
 #  index_users_on_name                  (name)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-
-FactoryBot.define do
-  factory :user do
-    sequence(:email)      { |n| "peter#{n}@piper.com" }
-    sequence(:name)       { |n| "Peter Piper #{n}" }
-    password              { "secret" }
-    password_confirmation { "secret" }
-    sequence(:phone_number) { |n| "555-#{n}"}
-    sequence(:wwcc_number) { |n| "222222#{n}"}
-    status                { "Verified" }
-
-    trait :admin do
-      roles               { [association(:role, :admin)] }
-    end
-
-    trait :church_rep do
-      roles               { [association(:role, :church_rep)] }
-    end
-
-    trait :gc do
-      roles               { [association(:role, :gc)] }
-    end
-
-    trait :sc do
-      roles               { [association(:role, :sc)] }
-    end
-
-    trait :participant do
-      roles               { [association(:role, :participant)] }
-    end
-  end
+class ApiUser < User
+  
 end

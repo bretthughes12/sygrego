@@ -25,6 +25,17 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   } 
 
+  devise_for :api_users, 
+    only: [:sessions],
+    path: "api/v1", 
+    path_names: { 
+      sign_in: 'login', 
+      sign_out: 'logout'
+    },
+    controllers: {
+      sessions: 'api/v1/sessions'
+    } 
+
   # Public and general routes
   resources :pages, only: [:show]
   resources :lost_items, only: [:show, :index, :edit, :update] do

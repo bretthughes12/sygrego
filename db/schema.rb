@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_07_100531) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_100115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -795,6 +795,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_07_100531) do
     t.string "gc_reference", limit: 40
     t.string "gc_reference_phone", limit: 30
     t.string "group_role", limit: 100
+    t.string "jti", null: false
     t.string "name", limit: 40, default: "", null: false
     t.string "phone_number", limit: 30
     t.integer "postcode", default: 0
@@ -809,6 +810,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_07_100531) do
     t.string "wwcc_number"
     t.integer "years_as_gc", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
